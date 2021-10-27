@@ -12,11 +12,11 @@ Currently, there are **1** articles published:
 ### Bias Variance Tradeoff
 <img src="./assets/mlu-explain_biasvariance.gif" alt="Bias Variance Tradeoff Article Image" width="400"/>
 
-**Title**: The Bias Variance Tradeoff
+**Title**: [The Bias Variance Tradeoff](https://mlu-explain.github.io/bias-variance/)
 
 **Summary**: Understand the tradeoff between under- and over-fitting models, how it relates to bias and variance, and explore interactive examples related to LASSO and KNN.
 
-**Code**:
+**Code**:[/bias-variance](bias-variance)
 
 **Authors**: Jared Wilber, Brent Werness
 
