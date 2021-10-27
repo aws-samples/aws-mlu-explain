@@ -1,0 +1,10 @@
+build
+.cache
+node_modules
+dist
+yarn.lock
+thurs.todo
+outline.txt
+*.todo
+.DS_Store
+data
