@@ -10,7 +10,7 @@ This material exists as supplementary educational material for [Machine Learning
 Currently, there are **1** articles published:
 
 ### Bias Variance Tradeoff
-<img src="./assets/bias-variance.png" alt="Bias Variance Tradeoff Article Image" width="400"/>
+<img src="./assets/mlu-explain_biasvariance.gif" alt="Bias Variance Tradeoff Article Image" width="400"/>
 
 **Title**: The Bias Variance Tradeoff
 
@@ -56,12 +56,10 @@ cd dist/
 python3 -m http.server # or just `live-server`
 ```
 
-Running the articles locally requires 
-## Security
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+## License Summary
 
-## License
+This open source articles are made available under the Creative Commons Attribution-ShareAlike 4.0 International License. See [LICENSE](LICENSE) file.
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+The sample and reference code within this open source book is made available under a modified MIT license. See the [LICENSE-SAMPLECODE](LICENSE-SAMPLECODE) file.
 
