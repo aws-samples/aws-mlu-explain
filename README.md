@@ -16,7 +16,7 @@ Currently, there are **1** articles published:
 
 **Summary**: Understand the tradeoff between under- and over-fitting models, how it relates to bias and variance, and explore interactive examples related to LASSO and KNN.
 
-**Code**:[/bias-variance](bias-variance)
+**Code**: [bias-variance/](bias-variance)
 
 **Authors**: Jared Wilber, Brent Werness
 
