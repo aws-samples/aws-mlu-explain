@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>MLU-Explain</title>
+    <meta name="description" content="MLU-Explain" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="MLU-Explain" />
+    <meta
+      property="og:image"
+      content="https://mlu-explain.github.io/assets/mluexplain-homepage-ogimage.png"
+    />
+    <meta
+      property="og:description"
+      content="Visual explanations of core machine learning concepts."
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="600" />
+    <link rel="icon" href="./assets/mlu_robot.png" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <main>
+      <section id="intro">
+        <div class="wrapper">
+          <div id="intro-container">
+            <div id="intro-text">
+              <span class="intro-icon-container">
+                <span class="icon">
+                  <svg
+                    width="60"
+                    height="100"
+                    viewBox="0 0 300 180"
+                    fill="none"
+                    xmlns="https://www.w3.org/2000/svg"
+                    id="mlu-icon"
+                  >
+                    <g id="mlu_robot 1" clip-path="url(#clip0)">
+                      <g>
+                        <g id="eyes">
+                          <path
+                            id="Vector"
+                            d="M90.6641 83.1836C96.8828 83.1836 101.941 78.1289 101.941 71.8906V71.8242C101.941 65.5898 96.8945 60.5312 90.6641 60.5312C84.4453 60.5312 79.3828 65.5898 79.3828 71.8242V71.8906C79.3828 78.1289 84.4336 83.1836 90.6641 83.1836Z"
+                            fill="#232F3E"
+                          ></path>
+                          <path
+                            id="Vector_2"
+                            d="M143.305 83.1836C149.523 83.1836 154.586 78.1289 154.586 71.8906V71.8242C154.586 65.5898 149.535 60.5312 143.305 60.5312C137.09 60.5312 132.027 65.5898 132.027 71.8242V71.8906C132.027 78.1289 137.078 83.1836 143.305 83.1836Z"
+                            fill="#232F3E"
+                          ></path>
+                        </g>
+                        <path
+                          id="Vector_3"
+                          d="M163.586
+                    159.402H173.609V122.641H163.586V159.402Z"
+                          fill="#232F3E"
+                        ></path>
+                        <path
+                          id="Vector_4"
+                          d="M60.3594 159.402H70.3867V122.641H60.3594V159.402Z"
+                          fill="#232F3E"
+                        ></path>
+                        <g id="Group">
+                          <path
+                            id="Vector_5"
+                            d="M182.16 30.0781H51.8047V10.0234H182.16V30.0781ZM182.16 103.609H51.8047V40.1055H182.16V103.609ZM144.559 168.789H89.4062V113.641H144.559V168.789ZM0 0V10.0234H15.8789V46.7891H25.9023V10.0234H41.7812V113.641H79.3867V178.816H96.9297V215.578H106.957V178.816H127.016V215.578H137.039V178.816H154.586V113.641H192.188V10.0234H233.969V0"
+                            fill="#232F3E"
+                          ></path>
+                        </g>
+                      </g>
+                    </g>
+                    <defs>
+                      <clipPath id="clip0">
+                        <rect
+                          width="233.97"
+                          height="215.58"
+                          fill="white"
+                        ></rect>
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+                <span class="text"
+                  ><h1>MLU-EXPL<span id="ai">AI</span>N</h1></span
+                >
+              </span>
+              <h3 class="subtitle">
+                Visual explanations of core machine learning concepts
+              </h3>
+              <br />
+              <p>
+                <a
+                  href="https://aws.amazon.com/machine-learning/mlu/"
+                  id="mlu-link"
+                  >Machine Learning University (<span id="mlu-acronym">MLU</span
+                  >)</a
+                >
+                is an education initiative from Amazon designed to teach machine
+                learning theory and practical application.
+                <!-- Our goal is to -->
+                <!-- democratize machine learning education. -->
+                <br /><br />
+                As part of that goal,
+                <span class="havy">MLU-Explain</span> exists to teach important
+                machine learning concepts through visual essays in a fun,
+                informative, and accessible manner.
+                <br />
+              </p>
+            </div>
+            <div id="image-container">
+              <img
+                id="intro-image"
+                src="./assets/mlu-drawing-transparent.png"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="articles-section">
+        <p class="section-segue">Explore Published Articles...</p>
+        <br />
+        <br />
+        <div class="articles-container">
+          <!-- card -->
+
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./bias-variance/';"
+              style="cursor: pointer"
+            >
+              <img src="./images/bias-variance.png" />
+            </div>
+            <div class="content">
+              <h2 class="article-title">The Bias Variance Tradeoff</h2>
+              <p class="article-description">
+                Understand the tradeoff between under- and over-fitting models,
+                how it relates to bias and variance, and explore interactive
+                examples related to LOESS and KNN.
+              </p>
+              <button class="content-button">
+                <a href="./bias-variance/">Dive In.</a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <br /><br />
+    <br /><br />
+
+    <script src="js/rough-notation.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
