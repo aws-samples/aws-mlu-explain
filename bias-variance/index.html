@@ -13,35 +13,21 @@
       property="og:image"
       content="https://mlu-explain.github.io/assets/bvogimage.png"
     />
-
     <meta property="og:title" content="Bias Variance Tradeoff" />
-
     <meta
       property="og:description"
       content="Learn the tradeoff between under- and over-fitting models, how it relates to bias and variance, and explore interactive examples related to LASSO and KNN."
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-
-    <link rel="icon" href="./assets/mlu_robot.png" />
-    <link rel="stylesheet" href="css/katex.min.css" />
-    <link rel="stylesheet" href="css/styles.scss" />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <link rel="icon" href="mlu_robot.5a492771.png" />
+    <link rel="stylesheet" href="katex.min.3c2484b0.css" />
+    <link rel="stylesheet" href="styles.565b223c.css" />
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-1FYW57GW3G"
     ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-1FYW57GW3G");
-    </script>
   </head>
-
   <body>
     <main>
       <div id="intro-icon">
@@ -59,34 +45,34 @@
                   id="Vector"
                   d="M90.6641 83.1836C96.8828 83.1836 101.941 78.1289 101.941 71.8906V71.8242C101.941 65.5898 96.8945 60.5312 90.6641 60.5312C84.4453 60.5312 79.3828 65.5898 79.3828 71.8242V71.8906C79.3828 78.1289 84.4336 83.1836 90.6641 83.1836Z"
                   fill="#232f3e"
-                />
+                ></path>
                 <path
                   id="Vector_2"
                   d="M143.305 83.1836C149.523 83.1836 154.586 78.1289 154.586 71.8906V71.8242C154.586 65.5898 149.535 60.5312 143.305 60.5312C137.09 60.5312 132.027 65.5898 132.027 71.8242V71.8906C132.027 78.1289 137.078 83.1836 143.305 83.1836Z"
                   fill="#232f3e"
-                />
+                ></path>
                 <path
                   id="Vector_3"
                   d="M163.586 159.402H173.609V122.641H163.586V159.402Z"
                   fill="#232f3e"
-                />
+                ></path>
                 <path
                   id="Vector_4"
                   d="M60.3594 159.402H70.3867V122.641H60.3594V159.402Z"
                   fill="#232f3e"
-                />
+                ></path>
                 <g id="Group">
                   <path
                     id="Vector_5"
                     d="M182.16 30.0781H51.8047V10.0234H182.16V30.0781ZM182.16 103.609H51.8047V40.1055H182.16V103.609ZM144.559 168.789H89.4062V113.641H144.559V168.789ZM0 0V10.0234H15.8789V46.7891H25.9023V10.0234H41.7812V113.641H79.3867V178.816H96.9297V215.578H106.957V178.816H127.016V215.578H137.039V178.816H154.586V113.641H192.188V10.0234H233.969V0"
                     fill="#232f3e"
-                  />
+                  ></path>
                 </g>
               </g>
             </g>
             <defs>
               <clipPath id="clip0">
-                <rect width="233.97" height="215.58" fill="#232f3e" />
+                <rect width="233.97" height="215.58" fill="#232f3e"></rect>
               </clipPath>
             </defs>
           </svg>
@@ -94,15 +80,13 @@
         </a>
       </div>
       <section id="intro">
-        <!-- MLU Robot Icon -->
-
         <h1 id="intro__hed">
-          The <span id="bias">Bias</span> <span id="variance">Variance</span>
-          Tradeoff
+          The <span id="bias">Bias</span>
+          <span id="variance">Variance</span> Tradeoff
         </h1>
         <h3 id="intro__date">
-          <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
-          & Brent Werness, January 2021
+          <a href="https://twitter.com/jdwlbr">Jared Wilber</a> & Brent Werness,
+          January 2021
         </h3>
         <p id="intro__dek">
           Prediction errors can be decomposed into two main subcomponents of
@@ -113,8 +97,6 @@
           the concept.
         </p>
       </section>
-
-      <!-- BEGIN SCROLLYTELLING SECTION -->
       <section id="scrolly">
         <figure id="scroll-figure">
           <div id="scroll-viz"></div>
@@ -123,14 +105,12 @@
         <article>
           <div class="step" data-step="1">
             <p class="step-head"></p>
-
             <p>
               Using our wildest imagination, we can picture a dataset consisting
               of features X and labels Y, as on the left. Also imagine that we’d
               like to generalize this relationship to additional values of X -
               that we’d like to predict future values based on what we’ve
-              already seen before.
-              <br /><br />
+              already seen before. <br /><br />
               With our imagination now undoubtedly spent, we can take a very
               simple approach to modeling the relationship between X and Y by
               just drawing a line to the general trend of the data.
@@ -138,12 +118,10 @@
           </div>
           <div class="step" data-step="2">
             <p class="step-head">A Simple Model</p>
-
             <p>
               Our simple model isn’t the best at modeling the relationship -
               clearly there's information in the data that it's failing to
-              capture.
-              <br /><br />
+              capture. <br /><br />
               We'll measure the performance of our model by looking at the
               <a href="https://en.wikipedia.org/wiki/Mean_squared_error"
                 >mean-squared error</a
@@ -151,7 +129,6 @@
               of its output and the true values (displayed in the bottom
               barchart). Our model is close to some of the training points, but
               overall there's definitely room for improvement. <br /><br />
-
               The error on the training data is important for model tuning, but
               what we really care about is how it performs on data we haven't
               seen before, called test data. So let's check that out as well.
@@ -159,12 +136,10 @@
           </div>
           <div class="step" data-step="3">
             <p class="step-head">Low Complexity & Underfitting</p>
-
             <p>
               Uh-oh, it looks like our earlier suspicions were correct - our
               model is garbage. The test error is even higher than the train
-              error!
-              <br /><br />
+              error! <br /><br />
               In this case, we say that our model is
               <span id="underfit-highlight">underfitting</span> the data: our
               model is so simple that it fails to adequately capture the
@@ -177,16 +152,13 @@
               >
             </p>
           </div>
-
           <div class="step" data-step="4">
             <p class="step-head">A Complex Model</p>
-
             <p>
               Our previous model performed poorly because it was too simple.
               Let's try our luck with something more complex. In fact, let's get
               as complex as we can - let's train a model that predicts every
-              point in our training data perfectly.
-              <br /><br />
+              point in our training data perfectly. <br /><br />
               Great! Now our training error is zero. As the old saying goes in
               Tennessee: Fool me once - shame on you. Fool me twice - er... you
               can't get fooled again ;).
@@ -194,7 +166,6 @@
           </div>
           <div class="step" data-step=" 5">
             <p class="step-head">High Complexity & Overfitting</p>
-
             <p>
               Wait a second... Even though our training error from our model was
               effectively zero, the error on our test data is high. What gives?
@@ -226,12 +197,9 @@
                 noise.</span
               >
               <br /><br />
-              <span class="katex-bv-text"></span>
-              <br /><br />
-              Or, mathematically:
-              <br /><br />
-              <span class="katex-bv-equation"></span>
-              <br /><br />
+              <span class="katex-bv-text"></span> <br /><br />
+              Or, mathematically: <br /><br />
+              <span class="katex-bv-equation"></span> <br /><br />
               We can’t do much about the irreducible<span
                 class="katex-noise"
               ></span>
@@ -246,9 +214,7 @@
                 >Bias represents the difference between the average prediction
                 and the true value</span
               >: <br /><br />
-              <span class="katex-bias"></span>
-              <br /><br />
-
+              <span class="katex-bias"></span> <br /><br />
               The term <span class="katex-bias-inline"></span> is a tricky one.
               It refers to the average prediction after the model has been
               trained over several independent datasets. We can think of the
@@ -260,7 +226,6 @@
               comes from bias.
             </p>
           </div>
-
           <div class="step" data-step="8">
             <p class="step-head">Variance</p>
             <p>
@@ -270,8 +235,7 @@
                 >variance measures how much, on average, predictions vary for a
                 given data point</span
               >: <br /><br />
-              <span class="katex-var"></span>
-              <br /><br />
+              <span class="katex-var"></span> <br /><br />
               As you can see in the bottom plot, predictions from overfit
               (high-complexity) models show a lot more error from variance than
               from bias. It’s easy to imagine that any unseen data points will
@@ -284,13 +248,11 @@
               To obtain our best results, we should work to find a happy medium
               between a model that is so basic it fails to learn meaningful
               patterns in our data, and one that is so complex it fails to
-              generalize to unseen data .
-              <br /><br />
+              generalize to unseen data . <br /><br />
               In other words, we don’t want an underfit model, but we don’t want
               an overfit model either. We want something in between - something
               with enough complexity to learn learn the generalizable patterns
-              in our data.
-              <br /><br />
+              in our data. <br /><br />
               <span id="balance-def"
                 >By trading some bias for variance (i.e. increasing the
                 complexity of our model), and without going overboard, we can
@@ -303,35 +265,29 @@
             <p>
               We just showed, at different levels of complexity, a sample of
               model realizations alongside their corresponding prediction error
-              decompositions.
-              <br /><br />
+              decompositions. <br /><br />
               Let’s direct our focus to the error decompositions across model
-              complexities.
-              <br /><br />
+              complexities. <br /><br />
               For each level of complexity, we’ll aggregate the error
               decomposition across all data-points, and plot the aggregate
-              errors at their level of complexity.
-              <br /><br />
+              errors at their level of complexity. <br /><br />
               This aggregation applied to our balanced model (i.e. the middle
               level of complexity) is shown to the left.
             </p>
           </div>
           <div class="step" data-step="11">
-            <p class="step-head">The Bias Variance Trade-off</p>
+            <p class="step-head">The Bias Variance Tradeoff</p>
             <p>
               Repeating this aggregation across our range of model complexities,
               we can see the relationship between bias and variance in
               prediction errors manifests itself as a U-shaped curve detailing
-              the trade off between bias and variance.
-              <br /><br />
+              the tradeoff between bias and variance. <br /><br />
               When a model is too simple (i.e. small values along the x-axis),
               it ignores useful information, and the error is composed mostly of
-              that from bias.
-              <br /><br />
+              that from bias. <br /><br />
               When a model is too complex (i.e. large values along the x-axis),
               it memorizes non-general patterns, and the error is composed
-              mostly of that from variance.
-              <br /><br />
+              mostly of that from variance. <br /><br />
               <span id="conclusion"
                 >The ideal model aims to minimize both bias and variance. It
                 lays in the sweet spot - not too simple, nor too complex.
@@ -341,21 +297,18 @@
           </div>
         </article>
       </section>
-      <!-- END SCROLLYTELLING -->
       <div class="model-text">
         <br /><br />
         <p>
           Many models have parameters that change the final learned models,
-          called hyperparameters Let's look at how these hyperparameters may be
-          used to control the the bias-variance tradeoff with two examples:
-          LOESS Regression and K-Nearest Neighbors.
+          called hyperparameters. Let's look at how these hyperparameters may be
+          used to control the bias variance tradeoff with two examples: LOESS
+          Regression and K-Nearest Neighbors.
         </p>
         <br />
       </div>
-      <section class="models" class="section-offset">
+      <section class="models">
         <hr />
-
-        <!-- LOESS -->
         <div class="model-text-wrapper">
           <h1 class="model-header">LOESS Regression</h1>
           <p class="model-text">
@@ -364,22 +317,19 @@
             outcome and some predictor variables. The curve fitting at a given
             point is weighted by nearby data. This weighting is governed by a
             smoothing hyperparameter, which represents the proportion of
-            neighboring data used to calculate each local fit.
-            <br /><br />
+            neighboring data used to calculate each local fit. <br /><br />
             Thus, the bias variance tradeoff for LOESS may be controlled for via
             the smoothness parameter. When the smoothness is small, the amount
             of data we consider is insufficient for an accurate fit, resulting
             in large variance. However, if we make the smoothness too high (i.e.
             over-smoothed), we trade local information for global, resulting in
-            large bias.
-            <br /><br />
+            large bias. <br /><br />
             Below a LOESS curve is fit to two variables. Randomize the training
             data to observe the effect different model realizations have on
             variance, and control the smoothness to observe the tradeoff between
             under- and over-fitting (and thus, bias and variance).
           </p>
         </div>
-
         <div class="model-controls">
           <button class="data-button" id="button-loess">
             Randomize Train Data
@@ -393,12 +343,9 @@
           <div id="fit-container-loess"></div>
           <div id="predict-container-loess"></div>
         </div>
-        <!-- </section> -->
-        <!-- END LOESS -->
         <hr />
       </section>
-      <section class="models" class="section-offset">
-        <!-- KNN -->
+      <section class="models">
         <div class="model-text-wrapper">
           <h1 class="model-header">K-Nearest Neighbors</h1>
           <p class="model-text">
@@ -407,8 +354,7 @@
             of its K-nearest neighbors. For example, when K = 1, the data point
             is simply assigned to the class of that single nearest neighbor. If
             K = 69, the data point is assigned to the majority class of its
-            69-nearest neighbors.
-            <br /><br />
+            69-nearest neighbors. <br /><br />
             We can observe the bias variance tradeoff in KNN directly by playing
             with the hyperparameter K. When K is small, only a small number of
             neighbors are considered during the classification vote. The
@@ -418,8 +364,7 @@
             that deviate sharply from the true decision boundary - go too high
             and you’ll just obtain a majority vote. This is high bias. On the
             other hand, for medium values of K, we see smooth the regions that
-            follow along the true decision boundary.
-            <br /><br />
+            follow along the true decision boundary. <br /><br />
             Explore the trade-off for yourself below! The plot on the left shows
             the training data. The plot on the right shows decision regions
             based on the current value of K. Deeper colors reflect more
@@ -439,7 +384,6 @@
           <div id="fit-container"></div>
           <div id="predict-container"></div>
         </div>
-        <!-- End KNN --><!-- KNN -->
       </section>
       <hr />
       <section class="section-offset">
@@ -458,21 +402,11 @@
           <p class="model-text">
             Fret not, dear reader! As we will detail in our next series of
             articles, Double Descent actually supports the classical notion of
-            the bias variance trade off. Stay tuned to learn more!
-            <!-- For while the phenomena is still
-            somewhat unknown, leading explanations actually <i>support</i> the
-            classical notion of the bias-variance tradeoff.
-            <a href="https://mlu-explain.github.io/double-descent/"
-              >You can learn more about the phenomena, and what we think we know
-              about it, in our article on the topic.</a
-            > -->
-            <br /><br />
+            the bias variance trade off. Stay tuned to learn more! <br /><br />
           </p>
         </div>
       </section>
       <hr />
-
-      <!-- CONCLUSION -->
       <section>
         <div style="text-align: center">
           <h1 class="model-header">It's Finally Over</h1>
@@ -480,12 +414,11 @@
             <i>Exhales deeply.</i> It's finally over. Thanks for reading! We
             hope that the article is insightful no matter where you are along
             your machine learning journey, and that you came away with a better
-            undersatnding of the bias variance tradeoff. <br /><br />
+            understanding of the bias variance tradeoff. <br /><br />
             To make things compact, we skipped over some relevant topics (such
             as regularization), but stay-tuned for more MLU-Explain articles,
             where we plan to explain those, and other, topics related to machine
-            learning.
-            <br /><br />
+            learning. <br /><br />
             To learn more about machine learning, check out our
             <a href="https://aws.amazon.com/machine-learning/mlu/"
               >self-paced courses</a
@@ -503,7 +436,6 @@
         </div>
       </section>
       <hr />
-
       <section id="outro">
         <br /><br />
         <h1 class="model-header">References + Open Source</h1>
@@ -527,9 +459,8 @@
             <br />(Trevor Hastie; Robert Tibshirani; Jerome Friedman, 2009).
           </li>
           <li>
-            <a href="https://d2l.ai/"> Dive into Deep Learning</a>
-            (Aston Zhang and Zachary C. Lipton and Mu Li and Alexander J. Smola,
-            2020).
+            <a href="https://d2l.ai/"> Dive into Deep Learning</a> (Aston Zhang
+            and Zachary C. Lipton and Mu Li and Alexander J. Smola, 2020).
           </li>
           <li>
             <a href="https://scott.fortmann-roe.com/docs/BiasVariance.html">
@@ -545,7 +476,6 @@
             >
             (statsdirect.com).
           </li>
-
           <li>
             <a href="https://d3js.org/">D3.js</a> (Mike Bostock, Philippe
             Rivière)
@@ -574,10 +504,7 @@
         <br /><br />
       </section>
     </main>
-    <script></script>
-
-    <!-- <div class='debug'></div> -->
-    <script src="js/index.js"></script>
-    <script src="js/katexCalls.js"></script>
+    <script src="js.e890906e.js"></script>
+    <script src="katexCalls.eb206bfb.js"></script>
   </body>
 </html>
