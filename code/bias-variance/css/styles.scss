@@ -1,0 +1,927 @@
+/* ====================== */
+/* FONTS */
+/* ====================== */
+
+@font-face {
+  font-family: AmazonEmberDisplayHeavy;
+  src: url("../fonts/AmazonEmberDisplay_He.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmber;
+  src: url("../fonts/AmazonEmber_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberMono;
+  src: url("../fonts/AmazonEmberMono_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberDisplayLight;
+  src: url("../fonts/AmazonEmberDisplay_Lt.otf") format("opentype");
+}
+
+* {
+  font-family: AmazonEmber;
+}
+
+/* ====================== */
+/* RESPONSIVE VARS */
+/* ====================== */
+
+html {
+  font-size: 16px;
+}
+
+body {
+  max-width: 2500px;
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+// Breakpoints
+$bp-small: 48em; // 768px
+$bp-medium: 64em; // 1024px
+$bp-large: 85.375em; // 1366px
+$bp-xlarge: 120em; // 1920px
+$bp-xxlarge: 160em; // 2560px
+
+// Media Queries
+$mq-small: "(min-width: #{$bp-small})";
+$mq-medium: "(min-width: #{$bp-medium})";
+$mq-large: "(min-width: #{$bp-large})";
+$mq-xlarge: "(min-width: #{$bp-xlarge})";
+$mq-xxlarge: "(min-width: #{$bp-xxlarge})";
+$mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
+
+// colors
+$squid-ink: #232f3e;
+$test-color: #e57873;
+$train-color: #94cae0;
+$bg-color: white;
+$ai_color: #354848;
+
+// Font-Size
+$base-font-size: 1rem;
+
+// Line-Height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+/* ====================== */
+/* Variables */
+/* ====================== */
+/* circle.test, rect.errorB */
+
+/* ====================== */
+/* LAYOUT STYLES */
+/* ====================== */
+
+#intro {
+  text-align: center;
+  max-width: 90%;
+  padding-bottom: 5rem;
+  margin: auto;
+}
+
+#intro__hed {
+  font-size: 4rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+  letter-spacing: 1.5px;
+  font-family: AmazonEmberDisplayHeavy;
+  text-transform: uppercase;
+  max-width: 70%;
+  margin: auto;
+}
+
+#ai {
+  color: #7bacc9;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+.logo {
+  color: $squid-ink;
+  width: 10rem;
+}
+
+.bolder {
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+#intro-icon {
+  display: flex;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $ai_color;
+  flex-direction: row;
+  padding-top: 1rem;
+  justify-content: center;
+}
+
+#intro-icon h2 {
+  padding-left: 2%;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#intro__dek {
+  text-align: left;
+  font-size: 17px;
+  margin-top: 1rem;
+  max-width: 60%;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+#intro__author,
+#intro__date {
+  font-size: 1.1rem;
+  margin: 0px;
+  margin-top: 15px;
+  font-family: AmazonEmberDisplayLight;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#bias,
+#variance {
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+a {
+  color: $squid-ink;
+  text-decoration: underline;
+}
+
+a:hover {
+  background-color: #999;
+  color: white;
+  text-decoration: none;
+}
+
+/* ====================== */
+/* SCROLLY-TELLING STYLES */
+/* ====================== */
+
+#scrolly {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem;
+  padding: 0 2%;
+
+  @media #{$mq-large} {
+    padding: 0 4%;
+  }
+
+  @media #{$mq-xlarge} {
+    padding: 0 10%;
+  }
+}
+
+#scrolly > * {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+article {
+  position: relative;
+  padding: 0 1rem;
+  max-width: 40rem;
+}
+
+figure {
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100%;
+  margin: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  z-index: -999;
+  vertical-align: center;
+}
+
+figure p {
+  text-align: center;
+  padding: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 8rem;
+  font-weight: 900;
+}
+
+.step {
+  margin: 0 auto 2rem auto;
+  color: $squid-ink;
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+.step p {
+  padding: 1rem;
+  padding-left: 15%;
+  text-align: left;
+  max-width: 750px;
+  line-height: 1.55em;
+  font-size: 1rem;
+  letter-spacing: 0.1px;
+  color: $squid-ink;
+  padding-top: 0px;
+}
+
+.step ul {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.2rem;
+  padding-left: 25%;
+  text-align: left;
+  max-width: 750px;
+  line-height: 1.55em;
+  font-size: 16px;
+  letter-spacing: 0.1px;
+  color: $squid-ink;
+  padding-top: 0px;
+}
+
+.step p.step-head {
+  margin-bottom: 5px;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 1.1rem;
+}
+
+/* ====================== */
+/* svg animate */
+/* ====================== */
+
+#eyes {
+  fill: $squid-ink;
+  animation: eye 4s linear infinite 0s;
+}
+
+@keyframes eye {
+  0% {
+    fill: $squid-ink;
+  }
+  5%,
+  20% {
+    fill: $squid-ink;
+  }
+  15%,
+  30% {
+    fill: white;
+  }
+  40% {
+    fill: $squid-ink;
+  }
+}
+
+/* ====================== */
+/* SCATTER PLOT */
+/* ====================== */
+
+#regression-line-1 {
+  fill: none;
+  opacity: 0.85;
+  stroke: darkorange;
+  stroke-width: 5.5px;
+}
+
+.model-realization {
+  fill: none;
+  opacity: 0.85;
+  stroke: darkorange;
+  stroke-width: 5px;
+}
+
+.axis line {
+  stroke: #ddd;
+}
+.axis .baseline line {
+  stroke: #555;
+}
+.axis .domain {
+  opacity: 0.2;
+}
+
+#svg2 .domain {
+  opacity: 0.2;
+}
+
+#errorBarSvg .axes .line {
+  opacity: 0;
+}
+
+.errorLine,
+.testErrorLine,
+.errorLineComplex {
+  fill: none;
+  stroke: $squid-ink;
+  stroke-width: 3.5px;
+  pointer-events: none;
+  stroke-dasharray: 3, 3;
+  fill: none;
+  z-index: -1;
+}
+
+#svg-scatter {
+  -moz-transition: transform 2s ease-in-out 0s;
+  -webkit-transition: transform 2s ease-in-out 0s;
+  -o-transition: transform 2s ease-in-out 0s;
+  transform: scale(1);
+}
+
+circle.train {
+  fill: $train-color;
+  stroke: $bg-color;
+  stroke-width: 2;
+}
+
+circle.test {
+  fill: $test-color;
+  stroke: $bg-color;
+  stroke-width: 2;
+}
+
+/* ====================== */
+/* BAR PLOT */
+/* ====================== */
+.decomp-text {
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 1rem;
+}
+
+#noise-line,
+#error-line,
+#bias-line,
+#var-line {
+  fill: none;
+  opacity: 0.65;
+  stroke-width: 8px;
+}
+
+path#noise-line {
+  stroke: coral;
+}
+path#error-line {
+  stroke: red;
+}
+path#bias-line {
+  stroke: skyblue;
+}
+path#var-line {
+  stroke: teal;
+}
+
+circle.complex-noise {
+  fill: coral;
+}
+circle.complex-error {
+  fill: red;
+}
+circle.complex-bias {
+  fill: skyblue;
+}
+circle.complex-var {
+  fill: teal;
+}
+
+/* ====================== */
+/* KNN */
+/* ====================== */
+.models {
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 0;
+  //   background-color: pink;
+
+  padding: 0 2%;
+
+  @media #{$mq-large} {
+    padding: 0 4%;
+  }
+
+  @media #{$mq-xlarge} {
+    padding: 0 10%;
+  }
+}
+
+.model-header {
+  font-family: AmazonEmberDisplayHeavy;
+  max-width: 60%;
+  margin: 0 auto;
+  padding-bottom: 0.5rem;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.model-text {
+  max-width: 60%;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.5em;
+}
+
+.model-text-wrapper {
+  padding-top: 5px;
+  margin-top: 0px;
+}
+
+.model-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  grid-template-rows: minmax(300px, 55%);
+}
+
+#k-text,
+#loess-text {
+  padding-bottom: 3px;
+  margin: 0;
+  font-size: 0.9rem;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+.model-controls {
+  padding-top: 2em;
+  padding-bottom: 1em;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(2, 15%);
+  grid-row-gap: 0.5em;
+  grid-column-gap: 0.5em;
+  grid-template-rows: minmax(40px, 3%);
+}
+/* ====================== */
+/* LOESS */
+/* ====================== */
+path#loess-line {
+  fill: none;
+  stroke: darkorange;
+  stroke-width: 2px;
+}
+
+circle.loess-train {
+  fill: $train-color;
+  stroke: $bg-color;
+  stroke-width: 1.5;
+}
+circle.loess-test {
+  fill: $test-color;
+  stroke: $bg-color;
+  stroke-width: 1.5;
+  opacity: 0.8;
+}
+
+.loess-legend {
+  #loess-train {
+    fill: $train-color;
+  }
+  #loess-test {
+    fill: $test-color;
+  }
+}
+
+/* ====================== */
+/* Outro */
+/* ====================== */
+#outro {
+  margin: 0 auto;
+  font-family: AmazonEmberDisplayLight;
+  //   background-color: #eceff1;
+
+  h1 {
+    text-decoration: underline;
+  }
+
+  p {
+    font-size: 1rem;
+    font-family: AmazonEmberDisplayLight;
+  }
+
+  ul {
+    margin: auto;
+    max-width: 60%;
+    list-style-position: outside;
+  }
+  li {
+    text-align: left;
+    font-size: 1rem;
+    padding-left: 0px;
+  }
+}
+
+/* ====================== */
+/* Body Centering */
+/* ====================== */
+body {
+  text-align: center;
+  font-size: $base-font-size;
+  line-height: $base-line-height;
+  margin: 0px;
+
+  // responsive font sizes
+  @media #{$mq-medium} {
+    font-size: $base-font-size * 1;
+    line-height: $base-line-height * 1;
+  }
+
+  @media #{$mq-large} {
+    font-size: $base-font-size * 1;
+  }
+
+  @media #{$mq-xlarge} {
+    font-size: $base-font-size * 1.2;
+  }
+
+  @media #{$mq-xxlarge} {
+    font-size: $base-font-size * 1.5;
+  }
+}
+
+// label font-size
+.decomp-text,
+#error-text {
+  font-size: 0.75rem;
+  @media #{$mq-medium} {
+    font-size: 0.9rem;
+  }
+  @media #{$mq-large} {
+    font-size: 0.9rem;
+  }
+
+  @media #{$mq-xlarge} {
+    font-size: $base-font-size;
+  }
+
+  @media #{$mq-xxlarge} {
+    font-size: $base-font-size;
+  }
+}
+
+/* ====================== */
+/* Math Equations */
+/* ====================== */
+.katex {
+  font-size: 1.1rem;
+}
+
+/* ====================== */
+/* SLIDER STYLES  */
+/* ====================== */
+
+.slider-container {
+  width: 100%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.metric-slider {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 1em; /* Specified height */
+  background: #999; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+  transition: opacity 0.2s;
+}
+
+/* Mouse-over effects */
+.metric-slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.metric-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 1.5em; /* Set a specific slider handle width */
+  height: 1.5em; /* Slider handle height */
+  background: $squid-ink;
+  border: 1px solid white;
+  cursor: pointer; /* Cursor on hover */
+}
+
+.metric-slider::-moz-range-thumb {
+  width: 1.5em; /* Set a specific slider handle width */
+  height: 1.5em; /* Slider handle height */
+  background: $squid-ink;
+  border: 1px solid white;
+  cursor: pointer; /* Cursor on hover */
+}
+
+.data-button {
+  display: table;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  max-width: 90%;
+  text-align: center;
+  font-size: 0.85em;
+  border: 1px solid #e0e0e0;
+  text-decoration: none;
+  color: $squid-ink;
+  outline: none;
+  border-radius: 2px;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+#button-knn:hover,
+#button-loess:hover {
+  //   color: #fff;
+  background: #e0e0e0;
+}
+
+/* ====================== */
+/* DOUBLE DESCENT */
+/* ====================== */
+.dd-text {
+  font-size: 0.7rem;
+  font-family: AmazonEmberDisplayLight;
+}
+
+.dd-line {
+  fill: none;
+  stroke-width: 4;
+}
+
+#dd-line-u {
+  stroke: black;
+  stroke-dasharray: 8, 8;
+  stroke-width: 2;
+}
+#dd-line-train {
+  stroke: $train-color;
+}
+#dd-line-test {
+  stroke: $test-color;
+}
+
+.dd-circle {
+  stroke: $bg-color;
+}
+
+#dd-circle-train {
+  fill: $train-color;
+}
+
+#dd-circle-test {
+  fill: $test-color;
+}
+
+#dd-x-axis,
+#dd-y-axis {
+  .tick {
+    opacity: 0;
+  }
+}
+
+.dd-axis-text {
+  font-size: 0.85rem;
+}
+
+hr {
+  max-width: 5%;
+  margin: 2rem auto;
+}
+
+body {
+  background-color: white;
+}
+
+@media (max-width: 1100px) {
+  .model-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-row-gap: 10px;
+    grid-column-gap: 10px;
+    grid-template-rows: minmax(300px, 55%);
+  }
+}
+
+@media (max-width: 900px) {
+  #scrolly {
+    padding: 0rem;
+    padding-right: 0.5rem;
+  }
+  #intro__author,
+  #intro__date {
+    font-size: 1.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  #intro__dek {
+    font-size: 1.2rem;
+    max-width: 100%;
+  }
+
+  .model-wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: 1px;
+    grid-template-rows: minmax(250px, 45%);
+  }
+
+  .model-text,
+  .model-header,
+  #outro ul {
+    max-width: 80%;
+  }
+
+  // new
+  article {
+    position: relative;
+    padding: 0rem;
+    max-width: 45%;
+  }
+
+  figure {
+    position: -webkit-sticky;
+    position: sticky;
+    width: 55%;
+    margin: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    z-index: -999;
+    vertical-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .katex {
+    font-size: 0.8rem;
+  }
+
+  .model-wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-row-gap: 1px;
+    grid-template-rows: minmax(200px, 40%);
+  }
+
+  .model-controls {
+    grid-template-columns: 40% 55%;
+    font-size: 1rem;
+    align-items: center;
+  }
+
+  .data-button {
+    padding: 0.5rem 1rem;
+    // font-size: 1rem;
+  }
+
+  #k-text,
+  #loess-text {
+    font-size: 1rem;
+    font-family: AmazonEmberDisplayHeavy;
+  }
+
+  .model-text {
+    max-width: 80%;
+    font-size: 0.9rem;
+  }
+  .model-header {
+    max-width: 80%;
+  }
+  #intro__hed {
+    max-width: 100%;
+    font-size: 3.3rem;
+  }
+
+  #intro-icon {
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+  }
+
+  #intro__dek {
+    font-size: 0.9rem;
+  }
+
+  #intro__author,
+  #intro__date {
+    font-size: 1.2rem;
+    padding-top: 3rem;
+  }
+
+  #regression-line-1 {
+    stroke-width: 3.5px;
+  }
+  .errorLine,
+  .errorLineComplex,
+  .testErrorLine {
+    stroke-width: 2px;
+    opacity: 0.5;
+  }
+  circle.train,
+  circle.test {
+    stroke-width: 1.5px;
+    r: 4.5;
+  }
+
+  .model-realization {
+    stroke-width: 3px;
+  }
+
+  .step p {
+    text-align: center;
+    padding: 0rem;
+    font-size: 0.9rem;
+    margin: 0rem;
+    padding-left: 0.5%;
+    text-align: left;
+    max-width: 100%;
+    line-height: 1.55em;
+    // font-size: 16px;
+    letter-spacing: 0.1px;
+    color: $squid-ink;
+    padding-top: 0px;
+  }
+
+  .model-text p {
+    font-size: 0.9rem;
+  }
+
+  .axis {
+    color: $squid-ink;
+    font-size: 0.5rem;
+  }
+
+  .models {
+    padding-top: 0px;
+    max-width: 100%;
+  }
+
+  #scatter-x-axis-label,
+  #scatter-y-axis-label {
+    display: none;
+  }
+  .scatter-legend-text {
+    font-size: 0.7rem;
+  }
+  .scatter-legend-circle {
+    r: 4.2;
+  }
+  #errorBarTitle {
+    font-size: 0.75rem;
+  }
+  .scatter-title {
+    font-size: 0.7rem;
+  }
+  .decomp-text,
+  #error-text,
+  .error-symbol {
+    font-size: 0.55rem;
+  }
+
+  #bias-line,
+  #noise-line,
+  #error-line,
+  #var-line {
+    stroke-width: 5px;
+  }
+
+  #error-x-text,
+  #error-y-text {
+    font-size: 0.85rem;
+  }
+
+  #dd-title {
+    font-size: 0.9rem;
+  }
+  .dd-text {
+    font-size: 0.6rem;
+  }
+}
+
+// one of these should work
+article {
+  z-index: 999999;
+}
+
+#intro-icon > a {
+  display: flex;
+  text-decoration: none;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+#intro-icon > a:hover {
+  background-color: white;
+}
