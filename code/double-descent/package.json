@@ -1,0 +1,42 @@
+{
+  "name": "@amzn/mlu-explain_double-descent",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "description": "MLU-Explain article about the double descent phenomena in machine learning.",
+  "author": "Jared Wilber",
+  "main": "dist/index.html",
+  "files": [
+    "dist/**"
+  ],
+  "npm-pretty-much": {
+    "appName": "mlu-explain_double-descent",
+    "runRelease": "always",
+    "runTest": "always"
+  },
+  "scripts": {
+    "clean": "rm -rf dist/ build/*",
+    "test": "echo \"Error: no test specified\" ",
+    "start": "parcel index.html",
+    "prebuild": "rm -rf dist",
+    "build": "parcel build index.html --public-url ./",
+    "release": "npm run build"
+  },
+  "dependencies": {
+    "d3-axis": "^2.1.0",
+    "d3-interpolate": "^2.0.1",
+    "d3-scale": "^3.3.0",
+    "d3-selection": "^2.0.0",
+    "d3-shape": "^2.1.0",
+    "d3-transition": "^2.0.0",
+    "intersection-observer": "^0.5.0",
+    "katex": "^0.12.0",
+    "rough-notation": "^0.4.0",
+    "scrollama": "^2.2.1",
+    "stickyfill": "^1.1.1-strict"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.29.0"
+  }
+}

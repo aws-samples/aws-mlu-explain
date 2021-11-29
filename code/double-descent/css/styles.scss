@@ -1,0 +1,899 @@
+/* ====================== */
+/* FONTS */
+/* ====================== */
+
+@font-face {
+  font-family: AmazonEmberDisplayHeavy;
+  src: url("../fonts/AmazonEmberDisplay_He.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmber;
+  src: url("../fonts/AmazonEmber_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberMono;
+  src: url("../fonts/AmazonEmberMono_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberDisplayLight;
+  src: url("../fonts/AmazonEmberDisplay_Lt.otf") format("opentype");
+}
+
+/* ====================== */
+/* MLU RESETS */
+/* ====================== */
+
+body > div.content-wrapper > div.container-fluid.wbo-header {
+  display: none;
+}
+.wbo-header {
+  display: none;
+}
+
+footer {
+  display: none;
+}
+
+/* ====================== */
+/* VARIABLES */
+/* ====================== */
+
+html {
+  font-size: 16px;
+}
+
+// Breakpoints
+$bp-small: 48em; // 768px
+$bp-medium: 64em; // 1024px
+$bp-large: 85.375em; // 1366px
+$bp-xlarge: 120em; // 1920px
+$bp-xxlarge: 160em; // 2560px
+
+// Media Queries
+$mq-small: "(min-width: #{$bp-small})";
+$mq-medium: "(min-width: #{$bp-medium})";
+$mq-large: "(min-width: #{$bp-large})";
+$mq-xlarge: "(min-width: #{$bp-xlarge})";
+$mq-xxlarge: "(min-width: #{$bp-xxlarge})";
+$mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
+
+// colors
+$squid-ink: #232f3e;
+$bg-color: $squid-ink;
+$bg-color2: #feefd7;
+$font-color: white;
+$color: rgb(8, 183, 183);
+$ai_color: $color;
+$test-color: $color;
+$train-color: #ff8f00;
+// Font-Size
+$base-font-size: 1em;
+$main-font: AmazonEmber;
+
+// Line-Height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+/* ====================== */
+/* BASE STYLLES */
+/* ====================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  min-height: 1280px;
+  color: #3b3b3b;
+  font-size: 24px;
+}
+
+p.intro-text {
+  font-size: 21px;
+  text-align: left;
+  color: $font-color;
+  font-family: $main-font;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+a {
+  margin: 0;
+  font-weight: 400;
+}
+
+a:visited,
+a:hover {
+  color: $color;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: underline;
+  color: $color;
+}
+
+a:hover {
+  color: $font-color;
+  background-color: $color;
+  text-decoration: none;
+}
+
+#intro {
+  max-width: 55rem;
+  margin: 1rem auto;
+  text-align: center;
+  padding-top: 3rem;
+}
+
+// .intro-hed {
+//   font-size: 3.5rem;
+//   margin: 2rem auto 0.5rem auto;
+//   color: $font-color;
+//   font-family: AmazonEmberDisplayHeavy;
+// }
+
+// #intro {
+//   text-align: center;
+//   max-width: 90%;
+//   padding-bottom: 5rem;
+//   margin: auto;
+// }
+
+#intro-hed {
+  font-size: 4.5rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+  letter-spacing: 1.5px;
+  font-family: AmazonEmberDisplayHeavy;
+  text-transform: uppercase;
+  max-width: 100%;
+  margin: auto;
+  color: white;
+}
+
+.intro-sub {
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 1rem;
+  font-family: AmazonEmberDisplayHeavy;
+  opacity: 0.75;
+  color: $color;
+  padding: 2rem;
+}
+#intro__author,
+#intro__date {
+  font-size: 1.1rem;
+  margin: 0px;
+  margin-top: 15px;
+  font-family: AmazonEmber;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  color: white;
+  padding-bottom: 5rem;
+}
+
+.model-header {
+  padding-top: 5rem;
+  font-family: AmazonEmberDisplayHeavy;
+  max-width: 45rem;
+  margin: 0 auto;
+  padding-bottom: 0.5rem;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.model-text {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 21px;
+  line-height: 1.5em;
+  font-family: $main-font;
+}
+
+hr {
+  max-width: 5%;
+  margin: 3.5rem auto;
+  border: 2px solid $color;
+  opacity: 0;
+}
+
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+#intro {
+  margin-bottom: 4rem;
+}
+
+#outro {
+  height: 640px;
+}
+.tooltip-item {
+  position: relative;
+  display: inline-block;
+  color: $color;
+  font-family: AmazonEmberDisplayHeavy;
+
+  .tooltiptext {
+    font-size: 1rem;
+    visibility: hidden;
+    width: 11rem;
+    background-color: white;
+    color: $squid-ink;
+    text-align: center;
+    padding: 2px;
+    bottom: 30%;
+    position: absolute;
+    z-index: 1;
+    border: 2px solid $squid-ink;
+    // font-family: $main-font;
+    font-family: AmazonEmber;
+    border-radius: 5px;
+  }
+}
+
+.tooltip-item:hover .tooltiptext {
+  visibility: visible;
+  font-weight: bold;
+}
+
+ul {
+  margin-left: auto;
+  list-style-position: outside;
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 1.5em;
+  font-family: $main-font;
+}
+li {
+  text-align: left;
+  font-size: 21px;
+  padding-bottom: 8px;
+}
+
+/* ====================== */
+/* LAYOUT STYLES */
+/* ====================== */
+
+#ai {
+  color: $color;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+body {
+  background-color: $bg-color;
+}
+
+.section-title,
+.model-header {
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 2.2rem;
+}
+/* ====================== */
+/* SCROLLYTELLING CENTER STYLLES */
+/* ====================== */
+
+#scrolly {
+  position: relative;
+  padding: 1rem;
+
+  article {
+    position: relative;
+    padding: 0;
+    max-width: 55%;
+    margin: 0 auto;
+  }
+
+  figure {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    z-index: -999;
+  }
+
+  .step {
+    margin: 0 auto 2rem auto;
+    color: $font-color;
+    width: 100%;
+  }
+
+  .step:last-child {
+    margin-bottom: 0;
+  }
+
+  .step p {
+    text-align: center;
+    padding: 1rem;
+    font-size: 21px;
+    background-color: white;
+    color: $squid-ink;
+    box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
+    opacity: 0.95;
+  }
+
+  .axis {
+    stroke: $font-color;
+  }
+}
+
+/* ====================== */
+/* SCROLLYTELLING SIDE STYLLES */
+/* ====================== */
+
+#scrolly-side {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: $bg-color2;
+  padding: 10rem;
+  padding-top: 5rem;
+  justify-content: center;
+
+  article {
+    position: relative;
+    padding: 0 1rem;
+    padding-left: 1rem;
+    max-width: 33rem;
+  }
+
+  figure {
+    position: -webkit-sticky;
+    position: sticky;
+    width: 100%;
+    margin: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    // z-index: -999;
+    vertical-align: center;
+  }
+
+  .step-side {
+    margin: 0 auto 2rem auto;
+    color: $squid-ink;
+  }
+
+  .step-side:last-child {
+    margin-bottom: 0;
+  }
+
+  .step-side p {
+    text-align: center;
+    padding: 1rem;
+    padding-right: 0;
+    font-size: 21px;
+    font-family: $main-font;
+  }
+
+  .axis {
+    font-family: AmazonEmberDisplayHeavy;
+  }
+
+  .tick line {
+    opacity: 0.2;
+    stroke-width: 1;
+  }
+
+  #scatter-y-axis .domain,
+  #error-y-axis .domain {
+    opacity: 0;
+  }
+  #scatter-x-axis,
+  #error-x-axis {
+    font-size: 0.7rem;
+    .domain {
+      stroke-width: 2;
+    }
+  }
+}
+
+#scrolly-side > * {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+/* ====================== */
+/* DOUBLE DESCENT */
+/* ====================== */
+
+#dd-title {
+  fill: $font-color;
+  font-size: 1.4rem;
+  font-size-adjust: 0.1;
+  font-stretch: 50%;
+  font-family: AmazonEmberDisplayHeavy;
+}
+.dd-text {
+  font-size: 0.85rem;
+  font-family: AmazonEmberDisplayLight;
+  color: $font-color;
+}
+
+.rect-text {
+  font-size: 0.9rem;
+  font-family: AmazonEmberDisplayLight;
+  fill: $font-color;
+}
+
+.dd-line {
+  fill: none;
+  stroke-width: 5;
+}
+
+#arrowhead-right,
+#arrowhead-left {
+  stroke: $font-color;
+}
+
+#dd-circle-train {
+  fill: $train-color;
+}
+
+#dd-circle-test {
+  fill: $test-color;
+}
+#dd-line-train {
+  stroke: $train-color;
+}
+#dd-line-test {
+  stroke: $test-color;
+}
+
+.dd-circle {
+  stroke: $bg-color;
+}
+
+#dd-circle-train {
+  fill: $train-color;
+}
+
+#dd-circle-test {
+  fill: $test-color;
+}
+
+#dd-x-axis {
+  .tick {
+    opacity: 0;
+  }
+}
+
+.dd-axis-text {
+  font-size: 0.85rem;
+  font-size-adjust: 0.1;
+  font-stretch: 50%;
+  fill: $font-color;
+}
+
+#dd-y-axis {
+  line {
+    stroke-width: 1;
+    stroke: $font-color;
+    stroke-dasharray: 3, 3;
+    opacity: 0.2;
+  }
+}
+
+#doubledescent-container {
+  text-align: center;
+}
+
+.dd-legend-text {
+  fill: $font-color;
+  font-size: 0.9rem;
+}
+
+#doubledescent-container {
+  height: 100%;
+  width: 100%;
+}
+
+#doubledescent-container > #text-svg {
+  height: 85%;
+  width: 85%;
+}
+
+/* ====================== */
+/* ERROR CHARTS */
+/* ====================== */
+
+.scatter-text {
+  font-size: 1rem;
+}
+
+.scatter-circle {
+  fill: $squid-ink;
+  stroke-width: 1.5;
+}
+
+#scatter-line {
+  fill: none;
+  opacity: 0.85;
+  stroke: $train-color;
+  stroke-width: 4;
+}
+
+#ttt {
+  text-align: center;
+  justify-content: center;
+}
+
+.scatter-title {
+  font-size: 1.3rem;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+.error-line {
+  fill: none;
+  stroke: $train-color;
+  stroke-width: 4;
+}
+
+.error-axis-text {
+  font-size: 1rem;
+  font-family: AmazonEmberDisplayHeavy;
+}
+/* ====================== */
+/* SLIDER STYLES  */
+/* ====================== */
+
+.slider-container {
+  width: 90%; /* Width of the outside container */
+}
+
+/* The slider itself */
+.metric-slider {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+  width: 85%; /* Full-width */
+  height: 0.8rem; /* Specified height */
+  background: $squid-ink; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+  transition: opacity 0.2s;
+}
+
+/* Mouse-over effects */
+.metric-slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.metric-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 1rem; /* Set a specific slider handle width */
+  height: 1.2rem; /* Slider handle height */
+  background: $train-color;
+  border: 1px solid black;
+  cursor: pointer; /* Cursor on hover */
+}
+
+.metric-slider::-moz-range-thumb {
+  width: 1rem; /* Set a specific slider handle width */
+  height: 1rem; /* Slider handle height */
+  background: $train-color;
+  border: 1px solid black;
+  cursor: pointer; /* Cursor on hover */
+}
+
+#error-text {
+  font-size: 1.4rem;
+  font-family: AmazonEmberDisplayHeavy;
+  color: $squid-ink;
+}
+
+.data-button {
+  display: table;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  max-width: 90%;
+  text-align: center;
+  font-size: 0.85rem;
+  border: 1px solid #e0e0e0;
+  text-decoration: none;
+  color: $squid-ink;
+  outline: none;
+  border-radius: 2px;
+}
+
+#section2,
+#conclusion {
+  background-color: $bg-color2;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  text-align: center;
+  justify-content: center;
+}
+
+// gap
+#gap {
+  color: $font-color;
+}
+
+#gap-container {
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  font-family: $main-font;
+
+  p {
+    color: white;
+  }
+}
+#gap-container img {
+  width: 100%;
+  max-width: 18rem;
+  height: 100%;
+  max-height: 240px;
+  float: left;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 1100px) {
+  /* ====================== */
+  /* LAYOUT  */
+  /* ====================== */
+  #intro {
+    padding-right: 0;
+    padding: 10%;
+    // max-width: 100%;
+  }
+
+  .intro-hed {
+    margin-top: 0;
+    font-size: 3.5rem;
+  }
+
+  #intro-icon {
+    padding-bottom: 0;
+  }
+
+  #intro-icon h2 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .body-text {
+    padding: 10%;
+    padding-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  #gap-container,
+  #conclusion {
+    padding: 10%;
+    font-family: $main-font;
+  }
+
+  /* ====================== */
+  /* DOUBLE DESCENT  */
+  /* ====================== */
+
+  #dd-title {
+    font-size: 1rem;
+    font-size-adjust: 0.1;
+    font-stretch: 50%;
+  }
+
+  .dd-legend-text {
+    font-size: 0.8rem;
+  }
+
+  .rect-text {
+    font-size: 0.8rem;
+  }
+
+  #scrolly {
+    .step p {
+      font-size: 1.1rem;
+    }
+  }
+
+  /* ====================== */
+  /* SIDE SCROLL  */
+  /* ====================== */
+  #scrolly-side {
+    position: relative;
+    padding: 1rem;
+    display: block;
+    padding-bottom: 10rem;
+    article {
+      position: relative;
+      padding: 0;
+      max-width: 50%;
+      margin: 0 auto;
+      font-family: $main-font;
+    }
+
+    figure {
+      position: -webkit-sticky;
+      position: sticky;
+      width: 100%;
+      margin: 0;
+      -webkit-transform: translate3d(0, 0, 0);
+      -moz-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+      // z-index: -999;
+    }
+
+    .step-side {
+      margin: 0 auto 2rem auto;
+      color: $font-color;
+      width: 100%;
+    }
+
+    .step-side:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-side p {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1rem;
+      background-color: $bg-color2;
+      color: black;
+      box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
+      opacity: 0.95;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  /* ====================== */
+  /* LAYOUT  */
+  /* ====================== */
+  #intro {
+    padding-right: 0;
+    padding: 20px;
+  }
+
+  .intro-hed {
+    margin-top: 0;
+    font-size: 2.5rem;
+  }
+
+  #intro-icon {
+    padding-bottom: 0;
+  }
+
+  #intro-icon h2 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  #gap-container,
+  #conclusion {
+    padding: 10%;
+  }
+
+  /* ====================== */
+  /* DOUBLE DESCENT  */
+  /* ====================== */
+
+  #scrolly article,
+  #scrolly-side article {
+    max-width: 90%;
+  }
+
+  #dd-title {
+    font-size: 1.2rem;
+    font-size-adjust: 0.1;
+    font-stretch: 50%;
+  }
+
+  .dd-legend-text {
+    font-size: 0.8rem;
+  }
+
+  #scrolly {
+    .step p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .step-side {
+    height: 100vh;
+  }
+}
+
+// one of these should work
+article {
+  z-index: 999999;
+}
+
+#ai {
+  color: $ai_color;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+.logo {
+  color: $squid-ink;
+  width: 10rem;
+}
+
+.bolder {
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+#intro-icon {
+  display: flex;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $ai_color;
+  flex-direction: row;
+  padding-top: 1rem;
+  justify-content: center;
+}
+
+#intro-icon h2 {
+  padding-left: 5%;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 21px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#intro-icon > a {
+  display: flex;
+  text-decoration: none;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.logo {
+  color: white;
+  width: 10rem;
+}
+
+#intro-icon > a:hover {
+  background-color: none;
+}
