@@ -1,16 +1,16 @@
 export const ddTrainTest = [
   { x: 1, y_train: 18, y_test: 20 },
-  // { x: 5, y_train: 9, y_test: 13 },
-  { x: 6.5, y_train: 5.5, y_test: 7.5 },
-  { x: 10, y_train: 2, y_test: 5 },
-  { x: 13, y_train: 1.4, y_test: 5 },
-  { x: 16, y_train: 1, y_test: 8.5 },
-  { x: 19, y_train: 0.3, y_test: 22 },
-  { x: 20, y_train: 0.195, y_test: 5 },
-  { x: 21, y_train: 0.195, y_test: 2.5 },
-  { x: 22, y_train: 0.195, y_test: 1.3 },
-  { x: 23, y_train: 0.195, y_test: 1.3 },
-  { x: 30, y_train: 0.195, y_test: 1.3 },
+  { x: 5.5, y_train: 4.5, y_test: 5.5 },
+  { x: 10, y_train: 1, y_test: 2 },
+  { x: 13, y_train: 0.86, y_test: 1.9 },
+  { x: 16.5, y_train: 0.84, y_test: 2.7 },
+  { x: 18, y_train: 0.82, y_test: 8.5 },
+  { x: 19, y_train: 0.78, y_test: 22 },
+  { x: 20, y_train: 0.7, y_test: 5 },
+  { x: 21, y_train: 0.6, y_test: 2.5 },
+  { x: 22, y_train: 0.5, y_test: 0.7 },
+  { x: 23, y_train: 0.4, y_test: 0.6 },
+  { x: 30, y_train: 0.2, y_test: 0.3 },
 ];
 
 export const circleData = [

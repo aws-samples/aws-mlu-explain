@@ -262,6 +262,27 @@ export class DoubleDescent {
       .style("pointer-events", "none")
       .style("stroke-dasharray", 5)
       .attr("vector-effect", "non-scaling-stroke");
+
+    // // add circles
+    // this.ddG
+    //   .selectAll("circle.test")
+    //   .data(ddTrainTest)
+    //   .join("circle")
+    //   .attr("r", 5)
+    //   .attr("class", "test")
+    //   .attr("cx", (d) => this.xScale(d.x))
+    //   .attr("cy", (d) => this.yScale(d.y_test))
+    //   .attr("fill", "teal");
+    // this.ddG
+    //   .selectAll("circle.train")
+    //   .data(ddTrainTest)
+    //   .join("circle")
+    //   .attr("r", 9)
+    //   .attr("class", "train")
+    //   .attr("cx", (d) => this.xScale(d.x))
+    //   .attr("cy", (d) => this.yScale(d.y_train))
+    //   .attr("fill", "coral")
+    //   .attr("opacity", 0.5);
   }
 
   drawTransition0Down() {
@@ -456,52 +477,52 @@ export class DoubleDescent {
       .style("font-weight", "bold");
   }
 
-  addAnnotations() {
-    // add text annotations to chart
-    // train label & circle
-    this.ddG
-      .attr("class", "dd-text")
-      .append("text")
-      .attr("x", this.xScale(19.25))
-      .attr("y", this.yScale(1))
-      .text("Train");
-    this.ddG
-      .append("circle")
-      .attr("class", "dd-circle")
-      .attr("id", "dd-circle-train")
-      .attr("cx", this.xScale(19))
-      .attr("cy", this.yScale(1.2))
-      .attr("r", 5);
+  // addAnnotations() {
+  //   // add text annotations to chart
+  //   // train label & circle
+  //   this.ddG
+  //     .attr("class", "dd-text")
+  //     .append("text")
+  //     .attr("x", this.xScale(19.25))
+  //     .attr("y", this.yScale(1))
+  //     .text("Train");
+  //   this.ddG
+  //     .append("circle")
+  //     .attr("class", "dd-circle")
+  //     .attr("id", "dd-circle-train")
+  //     .attr("cx", this.xScale(19))
+  //     .attr("cy", this.yScale(1.2))
+  //     .attr("r", 5);
 
-    // test label
-    this.ddG
-      .attr("class", "dd-text")
-      .append("text")
-      .attr("x", this.xScale(19.25))
-      .attr("y", this.yScale(5))
-      .text("Test");
-    this.ddG
-      .append("circle")
-      .attr("class", "dd-circle")
-      .attr("id", "dd-circle-test")
-      .attr("cx", this.xScale(19))
-      .attr("cy", this.yScale(5.2))
-      .attr("r", 5);
+  //   // test label
+  //   this.ddG
+  //     .attr("class", "dd-text")
+  //     .append("text")
+  //     .attr("x", this.xScale(19.25))
+  //     .attr("y", this.yScale(5))
+  //     .text("Test");
+  //   this.ddG
+  //     .append("circle")
+  //     .attr("class", "dd-circle")
+  //     .attr("id", "dd-circle-test")
+  //     .attr("cx", this.xScale(19))
+  //     .attr("cy", this.yScale(5.2))
+  //     .attr("r", 5);
 
-    // U label
-    this.ddG
-      .attr("class", "dd-text")
-      .append("text")
-      .attr("x", this.xScale(9.8))
-      .attr("y", this.yScale(30.25))
-      .text("Expected Test Error");
-    this.ddG
-      .append("circle")
-      .attr("class", "dd-circle")
-      .attr("cx", this.xScale(9.55))
-      .attr("cy", this.yScale(30.5))
-      .attr("r", 4.5);
-  }
+  //   // U label
+  //   this.ddG
+  //     .attr("class", "dd-text")
+  //     .append("text")
+  //     .attr("x", this.xScale(9.8))
+  //     .attr("y", this.yScale(30.25))
+  //     .text("Expected Test Error");
+  //   this.ddG
+  //     .append("circle")
+  //     .attr("class", "dd-circle")
+  //     .attr("cx", this.xScale(9.55))
+  //     .attr("cy", this.yScale(30.5))
+  //     .attr("r", 4.5);
+  // }
 
   addLegend() {
     const that = this;

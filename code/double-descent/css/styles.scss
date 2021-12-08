@@ -131,6 +131,9 @@ a:hover {
   text-decoration: none;
 }
 
+.bold {
+  font-family: AmazonEmberDisplayHeavy;
+}
 #intro {
   max-width: 55rem;
   margin: 1rem auto;
@@ -806,7 +809,7 @@ body {
 
   #intro-hed {
     margin-top: 0;
-    font-size: 4rem;
+    font-size: 3.6rem;
     padding-top: 3rem;
   }
 
@@ -876,6 +879,13 @@ body {
       fill: white;
       font-family: AmazonEmberDisplayHeavy;
     }
+  }
+
+  #dd-line-train {
+    stroke-width: 2.5;
+  }
+  #dd-line-test {
+    stroke-width: 2.5;
   }
 
   #scrolly {

@@ -12,7 +12,7 @@ const figure = scrolly.select("figure");
 const article = scrolly.select("article");
 const step = article.selectAll(".step");
 
-const stepHPercentage = 1.1;
+const stepHPercentage = window.innerWidth < 600 ? 1.5 : 1.1;
 const offsetTriggerFromTop = 0.65;
 
 // initialize the scrollama
