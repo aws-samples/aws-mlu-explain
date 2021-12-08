@@ -6,6 +6,27 @@
     <title>Double Descent</title>
     <meta name="description" content="Double Descent" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta name="viewport" content="width=device-width;" /> -->
+    <meta
+      name="description"
+      content="MLU-Explain: Visual Introduction to Dobule Descent."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      property="og:image"
+      content="https://mlu-explain.github.io/assets/bvogimage.png"
+    />
+
+    <meta property="og:title" content="Double Descent" />
+
+    <meta
+      property="og:description"
+      content="An introduction to the Double Descent phenomena in modern machine learning."
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <link rel="icon" href="./assets/mlu_robot.png" />
     <link rel="stylesheet" href="css/styles.scss" />
   </head>
 
@@ -62,10 +83,8 @@
       </div>
 
       <section id="intro">
-        <h1 id="intro-hed">A Visual Introduction To Double Descent</h1>
-        <h1 class="intro-sub">
-          An introduction to the phenomena as it relates to linear models.
-        </h1>
+        <h1 id="intro-hed">Double Descent</h1>
+        <h1 class="intro-sub">A Visual Introduction</h1>
         <h3 id="intro__date">
           <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
           & Brent Werness, December 2021
@@ -79,7 +98,8 @@
           understanding of the bias-variance tradeoff. Namely, while we expect
           the best model performance to be obtained via some balance between
           bias (underfitting) and variance (overfitting), we instead observe
-          strong test performance from very overfitted, complex models<span
+          strong test performance from very overfitted, complex models
+          <!-- <span
             class="tooltip-item"
             >[0]<span class="tooltiptext"
               >What’s more, this phenomenon exists across many definitions of
@@ -89,9 +109,11 @@
                 on</a
               >, which adds more confusion to the matter.</span
             ></span
-          >. As a result, many practitioners and researchers are left
-          questioning the relevance of the traditional bias-variance tradeoff in
-          modern machine learning. <br /><br />
+          >. -->
+
+          As a result, many practitioners and researchers are left questioning
+          the relevance of the traditional bias-variance tradeoff in modern
+          machine learning. <br /><br />
           Here, we'll first introduce the phenomenon in detail and then offer a
           soft explanation for why it's occurring. (In a follow up article,
           we'll describe the phenomena in more low level, mathematical detail).
@@ -105,7 +127,7 @@
       <section id="scrolly">
         <figure>
           <div id="doubledescent-container">
-            <svg id="text-svg"></svg>
+            <!-- <svg id="text-svg"></svg> -->
           </div>
         </figure>
 
@@ -166,7 +188,7 @@
         <hr />
         <div class="model-text">
           <h2 class="section-title">What's Going On?</h2>
-          <br /><br />
+
           <p class="body-text">
             To better understand this phenomenon, let's explore it together!
             <i

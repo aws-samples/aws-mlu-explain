@@ -18,8 +18,10 @@ const offsetTriggerFromTop = 0.65;
 // initialize the scrollama
 const scroller = scrollama();
 
+let centerTransitionIndex = -1;
+
 // draw double descent chart
-const ddModel = new DoubleDescent({
+const doubleDescentChart = new DoubleDescent({
   ddContainer: chart1Container,
 });
 
@@ -27,39 +29,45 @@ const ddModel = new DoubleDescent({
 const stepEventsCenter = {
   down: {
     0: () => {
-      ddModel.drawTransition0Down();
+      doubleDescentChart.drawTransition0Down();
+      centerTransitionIndex = 0;
     },
     1: () => {
-      ddModel.drawTransition1Down();
+      doubleDescentChart.drawTransition1Down();
+      centerTransitionIndex = 1;
     },
     2: () => {
-      ddModel.drawTransition2Down();
+      doubleDescentChart.drawTransition2Down();
+      centerTransitionIndex = 2;
     },
     3: () => {
-      ddModel.drawTransition3Down();
+      doubleDescentChart.drawTransition3Down();
+      centerTransitionIndex = 3;
     },
     4: () => {
-      ddModel.drawTransition4Down();
+      doubleDescentChart.drawTransition4Down();
+      centerTransitionIndex = 4;
     },
     5: () => {
-      ddModel.drawTransition5Down();
+      doubleDescentChart.drawTransition5Down();
+      centerTransitionIndex = 5;
     },
   },
   up: {
     0: () => {
-      ddModel.drawTransition0Up();
+      doubleDescentChart.drawTransition0Up();
     },
     1: () => {
-      ddModel.drawTransition1Up();
+      doubleDescentChart.drawTransition1Up();
     },
     2: () => {
-      ddModel.drawTransition2Up();
+      doubleDescentChart.drawTransition2Up();
     },
     3: () => {
-      ddModel.drawTransition3Up();
+      doubleDescentChart.drawTransition3Up();
     },
     4: () => {
-      ddModel.drawTransition4Up();
+      doubleDescentChart.drawTransition4Up();
     },
     5: () => {},
   },
@@ -81,13 +89,20 @@ function handleResize() {
 
   // 3. tell scrollama to update new element dimensions
   scroller.resize();
-  ddModel.resizeChart();
+  doubleDescentChart.resizeChart();
+  if (centerTransitionIndex > -1) {
+    if (centerTransitionIndex > 2) {
+      stepEventsCenter["down"][2]();
+    }
+    stepEventsCenter["down"][centerTransitionIndex]();
+  }
 }
 
 // scrollama event handlers
 function handleStepEnter(response) {
   // update graphic based on step
   figure.select("p").text(response.index + 1);
+  console.log(response.index);
 
   // update chart based on step
   stepEventsCenter[response.direction][response.index]();

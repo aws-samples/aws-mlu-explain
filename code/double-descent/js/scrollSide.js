@@ -18,7 +18,7 @@ const stepSide = articleSide.selectAll(".step-side");
 const scatterContainer = "#scatter-container";
 const errorContainer = "#error-container";
 
-const offsetTriggerFromTopSide = 0.4;
+const offsetTriggerFromTopSide = 0.7;
 
 // initialize the scrollama
 const scrollerSide = scrollama();

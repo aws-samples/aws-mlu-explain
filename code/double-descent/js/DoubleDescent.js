@@ -57,26 +57,36 @@ export class DoubleDescent {
       RIGHT: window.innerWidth * 0.1,
     };
 
-    this.WIDTH = window.innerWidth * 0.8;
-    this.HEIGHT = window.innerHeight * 0.5;
+    this.WIDTH = window.innerWidth * 0.75;
+    this.HEIGHT = window.innerHeight * 0.2;
 
     this.plotXMin = 0.8;
 
-    this.textSvg = select(this.ddContainer).select("#text-svg").append("g");
+    // this.svg = select(this.ddContainer).select("#text-svg").append("g");
 
+    // create svg for chart
+    this.initChart(this.ddContainer);
+
+    // draw axes
+    this.drawAxes();
+
+    // draw  lines
+    this.drawDoubleDescentLines();
+
+    // draw title
+    this.addTitle();
+
+    // draw Legend
+    this.addLegend();
+  }
+
+  initChart(container) {
     // create svg
-    this.svg = this.textSvg
+    this.svg = select(container)
       .append("svg")
       .attr("id", `dd-svg`)
       .attr("width", this.WIDTH + this.MARGIN.LEFT + this.MARGIN.RIGHT)
       .attr("height", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM);
-    // .attr(
-    //   "viewBox",
-    //   `0 0 ${this.WIDTH + this.MARGIN.LEFT + this.MARGIN.RIGHT} ${
-    //     this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM
-    //   }  `
-    // )
-    // .attr("preserveAspectRatio", "none");
 
     // g container for double descent (dd)
     this.ddG = this.svg
@@ -93,6 +103,40 @@ export class DoubleDescent {
       .attr("y", 10)
       .attr("width", this.WIDTH + this.MARGIN.LEFT + this.MARGIN.RIGHT)
       .attr("height", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM);
+  }
+
+  resizeChart() {
+    console.log("resizing");
+    select("#dd-svg").remove();
+    // this.MARGIN = {
+    //   TOP: window.innerHeight * 0.05,
+    //   BOTTOM: 0,
+    //   LEFT: (window.innerWidth / 22) * 5,
+    //   RIGHT: (window.innerWidth / 22) * 5,
+    // };
+    this.MARGIN = {
+      TOP: 50,
+      BOTTOM: 60,
+      // LEFT: window.innerWidth < 600 ? 55 : 90,
+      LEFT: window.innerWidth < 600 ? 30 : 25,
+      RIGHT: window.innerWidth < 600 ? 5 : 25,
+    };
+    // this.MARGIN = {
+    //   TOP: window.innerHeight * 0.1,
+    //   BOTTOM: window.innerHeight * 0.1,
+    //   LEFT: window.innerWidth * 0.1,
+    //   RIGHT: window.innerWidth * 0.1,
+    // };
+    this.WIDTH =
+      window.innerWidth < 600
+        ? window.innerWidth * 0.85
+        : window.innerWidth * 0.8;
+    this.HEIGHT =
+      window.innerWidth < 600
+        ? window.innerHeight * 0.3
+        : window.innerHeight * 0.5;
+
+    this.initChart(this.ddContainer);
 
     // draw axes
     this.drawAxes();
@@ -101,34 +145,24 @@ export class DoubleDescent {
     this.drawDoubleDescentLines();
 
     // draw title
-    // this.addTitle();
+    this.addTitle();
 
     // draw Legend
     this.addLegend();
-  }
+    // select("#dd-x-axis-text")
+    //   .attr("x", (this.WIDTH + this.MARGIN.RIGHT) / 2)
+    //   .attr("y", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM / 1.4)
+    //   .attr("text-anchor", "middle");
+    // select("dd-y-axis-text")
+    //   .attr("y", this.WIDTH * 0.2)
+    //   .attr("x", -(this.HEIGHT / 2 + this.MARGIN.TOP));
 
-  resizeChart() {
-    this.MARGIN = {
-      TOP: window.innerHeight * 0.05,
-      BOTTOM: window.innerHeight * 0.1,
-      LEFT: (window.innerWidth / 22) * 5,
-      RIGHT: (window.innerWidth / 22) * 5,
-    };
-    this.WIDTH = window.innerWidth * 0.8;
-    this.HEIGHT = window.innerHeight * 0.5;
-    select("#dd-x-axis-text")
-      .attr("x", (this.WIDTH + this.MARGIN.RIGHT) / 2)
-      .attr("y", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM / 1.4);
-    select("dd-y-axis-text")
-      .attr("y", this.WIDTH * 0.2)
-      .attr("x", -(this.HEIGHT / 2 + this.MARGIN.TOP));
+    // // redraw title
+    // select("#dd-title").remove();
+    // this.addTitle();
 
-    // redraw title
-    select("#dd-title").remove();
-    this.addTitle();
-
-    select(".dd-legend").remove();
-    this.addLegend();
+    // select(".dd-legend").remove();
+    // this.addLegend();
   }
 
   drawAxes() {
@@ -159,16 +193,16 @@ export class DoubleDescent {
     // make tick longer for y-axis
     select("#dd-y-axis").selectAll("line").attr("x2", this.WIDTH);
 
-    // // add labels to axes
-    // this.textSvg
-    //   .append("text")
-    //   .attr("class", "dd-axis-text")
-    //   .attr("id", "dd-x-axis-text")
-    //   .attr("x", (this.WIDTH + this.MARGIN.LEFT + this.MARGIN.RIGHT) / 2)
-    //   .attr("y", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM / 2)
-    //   .text("Model Complexity")
-    //   .attr("text-anchor", "middle");
-    // this.textSvg
+    // add labels to axes
+    this.svg
+      .append("text")
+      .attr("class", "dd-axis-text")
+      .attr("id", "dd-x-axis-text")
+      .attr("x", (this.WIDTH + this.MARGIN.LEFT + this.MARGIN.RIGHT) / 2)
+      .attr("y", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM - 20)
+      .text("Measure of Model Complexity")
+      .attr("text-anchor", "middle");
+    // this.svg
     //   .append("text")
     //   .attr("class", "dd-axis-text")
     //   .attr("id", "dd-y-axis-text")
@@ -177,7 +211,7 @@ export class DoubleDescent {
     //   .attr("dy", ".05em")
     //   .attr("transform", "rotate(-90)")
     //   .attr("text-anchor", "middle")
-    //   .text("Error");
+    //   .text("Prediction Error");
 
     // add arrow for x-axis
     this.svg
@@ -342,7 +376,7 @@ export class DoubleDescent {
       .attr("x2", this.xScale(19))
       .attr("y2", this.yScale(0))
       .transition(trans)
-      .attr("y2", this.yScale(30));
+      .attr("y2", this.yScale(25));
 
     this.rectOver.transition(trans).attr("fill-opacity", 0.95);
   }
@@ -411,13 +445,14 @@ export class DoubleDescent {
 
   addTitle() {
     // add title to plot
-    this.textSvg
+    this.svg
       .append("text")
       .attr("id", "dd-title")
       .attr("x", 0)
       .attr("y", this.MARGIN.TOP / 1.9)
       .attr("text-anchor", "left")
       .text("The Double Descent Phenomenon")
+      .text("Prediction Error")
       .style("font-weight", "bold");
   }
 
@@ -429,7 +464,7 @@ export class DoubleDescent {
       .append("text")
       .attr("x", this.xScale(19.25))
       .attr("y", this.yScale(1))
-      .text("Train Error");
+      .text("Train");
     this.ddG
       .append("circle")
       .attr("class", "dd-circle")
@@ -444,7 +479,7 @@ export class DoubleDescent {
       .append("text")
       .attr("x", this.xScale(19.25))
       .attr("y", this.yScale(5))
-      .text("Test Error");
+      .text("Test");
     this.ddG
       .append("circle")
       .attr("class", "dd-circle")
@@ -470,38 +505,37 @@ export class DoubleDescent {
 
   addLegend() {
     const that = this;
-    const legendData = ["Train Error", "Test Error"];
+    const legendData = ["Train", "Test"];
 
     const nodeWidth = (d) => d.getBBox().width;
 
-    const legend = this.textSvg
+    const legend = this.svg
       .append("g")
       .attr("class", "dd-legend")
-      .attr("transform", "translate(0,30)");
+      .attr("transform", "translate(0,40)");
 
     const lg = legend.selectAll("g").data(legendData).enter().append("g");
 
     const legendCircle = lg
       .append("rect")
-      .attr("width", 9.5)
-      .attr("height", 8.5)
+      .attr("width", 10.5)
+      .attr("height", 7.5)
       .attr("id", (d, i) => (i % 2 == 0 ? "dd-circle-train" : "dd-circle-test"))
-      .attr("x", 0)
+      .attr("x", -1)
       .attr("y", 1)
       .attr("stroke-width", 0);
 
     lg.append("text")
       .attr("class", "dd-legend-text")
-      .style("font-size", "14px")
       .attr("x", 11.5)
       .attr("y", 10)
       .text((d) => d);
 
-    let offset = 0;
+    let offset = 5;
 
     lg.attr("transform", function (d) {
       let x = offset;
-      offset += nodeWidth(this) + 10;
+      offset += nodeWidth(this) + 15;
       return `translate(${x}, ${0})`;
     });
   }

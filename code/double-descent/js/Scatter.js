@@ -49,8 +49,8 @@ export class Scatter {
       window.innerWidth >= 1000
         ? window.innerWidth / 4.1
         : window.innerWidth / 1.6;
-    this.innerHeight = window.innerHeight * 0.3;
-    this.margin = { left: 40, right: 9, top: 55, bottom: 40 };
+    this.innerHeight = window.innerHeight * 0.28;
+    this.margin = { left: 40, right: 9, top: 15, bottom: 50 };
 
     this.drawBaseChart();
     this.drawCircles();

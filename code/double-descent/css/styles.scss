@@ -153,7 +153,7 @@ a:hover {
 // }
 
 #intro-hed {
-  font-size: 4.5rem;
+  font-size: 6.5rem;
   margin-top: 5px;
   margin-bottom: 0;
   letter-spacing: 1.5px;
@@ -165,7 +165,7 @@ a:hover {
 }
 
 .intro-sub {
-  font-size: 1.2rem;
+  font-size: 2.2rem;
   text-align: center;
   margin: 1rem;
   font-family: AmazonEmberDisplayHeavy;
@@ -249,7 +249,7 @@ hr {
   .tooltiptext {
     font-size: 1rem;
     visibility: hidden;
-    width: 11rem;
+    // width: 11rem;
     background-color: white;
     color: $squid-ink;
     text-align: center;
@@ -302,6 +302,10 @@ body {
 .model-header {
   font-family: AmazonEmberDisplayHeavy;
   font-size: 2.2rem;
+}
+
+.section-title {
+  padding-bottom: 3rem;
 }
 /* ====================== */
 /* SCROLLYTELLING CENTER STYLLES */
@@ -439,9 +443,9 @@ body {
 
 #dd-title {
   fill: $font-color;
-  font-size: 1.4rem;
-  font-size-adjust: 0.1;
-  font-stretch: 50%;
+  font-size: 2rem;
+  // font-size-adjust: 0.1;
+  // font-stretch: 50%;
   font-family: AmazonEmberDisplayHeavy;
 }
 .dd-text {
@@ -499,18 +503,20 @@ body {
 }
 
 .dd-axis-text {
-  font-size: 0.85rem;
-  font-size-adjust: 0.1;
-  font-stretch: 50%;
+  font-size: 1.3rem;
   fill: $font-color;
+  font-family: AmazonEmberDisplayLight;
 }
 
 #dd-y-axis {
   line {
-    stroke-width: 1;
+    stroke-width: 1.5;
     stroke: $font-color;
-    stroke-dasharray: 3, 3;
+    // stroke-dasharray: 3, 3;
     opacity: 0.2;
+  }
+  .domain {
+    opacity: 0;
   }
 }
 
@@ -520,18 +526,21 @@ body {
 
 .dd-legend-text {
   fill: $font-color;
-  font-size: 0.9rem;
+  font-family: AmazonEmberDisplayLight;
+  font-size: 1.1rem;
 }
 
-#doubledescent-container {
-  height: 100%;
-  width: 100%;
-}
+// #doubledescent-container {
+//   height: 80vh;
+//   width: 70%;
+//   max-width: 20rem;
+//   margin: auto;
+// }
 
-#doubledescent-container > #text-svg {
-  height: 85%;
-  width: 85%;
-}
+// #doubledescent-container > svg {
+//   height: 85%;
+//   width: 85%;
+// }
 
 /* ====================== */
 /* ERROR CHARTS */
@@ -570,7 +579,7 @@ body {
 }
 
 .error-axis-text {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-family: AmazonEmberDisplayHeavy;
 }
 /* ====================== */
@@ -683,9 +692,9 @@ body {
     // max-width: 100%;
   }
 
-  .intro-hed {
+  #intro-hed {
     margin-top: 0;
-    font-size: 3.5rem;
+    // font-size: 3.5rem;
   }
 
   #intro-icon {
@@ -717,13 +726,13 @@ body {
   /* ====================== */
 
   #dd-title {
-    font-size: 1rem;
+    font-size: 2rem;
     font-size-adjust: 0.1;
     font-stretch: 50%;
   }
 
   .dd-legend-text {
-    font-size: 0.8rem;
+    font-size: 1.1rem;
   }
 
   .rect-text {
@@ -785,7 +794,8 @@ body {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
+  // mobile
   /* ====================== */
   /* LAYOUT  */
   /* ====================== */
@@ -794,9 +804,10 @@ body {
     padding: 20px;
   }
 
-  .intro-hed {
+  #intro-hed {
     margin-top: 0;
-    font-size: 2.5rem;
+    font-size: 4rem;
+    padding-top: 3rem;
   }
 
   #intro-icon {
@@ -808,8 +819,27 @@ body {
     padding-bottom: 0;
   }
 
+  p.intro-text {
+    line-height: 1.65;
+    font-size: 19px;
+    max-width: 500px;
+    width: 95%;
+  }
+
   .section-title {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
+    text-align: center;
+    padding-bottom: 1.5rem;
+  }
+
+  .body-text,
+  .model-text {
+    padding: 4%;
+
+    line-height: 1.65;
+    font-size: 19px;
+    max-width: 500px;
+    width: 95%;
   }
 
   #gap-container,
@@ -833,10 +863,28 @@ body {
   }
 
   .dd-legend-text {
-    font-size: 0.8rem;
+    font-size: 1rem;
+  }
+  .dd-axis-text {
+    font-size: 0.9rem;
+  }
+
+  #dd-y-axis {
+    text {
+      font-size: 0.9rem;
+      stroke: none;
+      fill: white;
+      font-family: AmazonEmberDisplayHeavy;
+    }
   }
 
   #scrolly {
+    padding: 0.1rem;
+
+    figure {
+      padding-top: 30%;
+    }
+
     .step p {
       font-size: 0.9rem;
     }
@@ -896,4 +944,8 @@ article {
 
 #intro-icon > a:hover {
   background-color: none;
+}
+
+svg {
+  // outline: 2px solid red;
 }
