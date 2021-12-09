@@ -31,6 +31,9 @@ const error = new Error({
   container: errorContainer,
 });
 
+// let initHeightSide = window.innerHeight;
+// let initWidthSide = window.innerWidth;
+
 // step events for chart
 const stepEventsSide = {
   down: {
@@ -142,7 +145,11 @@ function initSide() {
     .onStepEnter(handleStepEnterSide);
 
   // setup resize event
+  // if (window.innerWidth > 900) {
+  // prevent resize when height changes, width doesnt
+  // if (!(window.innerHeight === initHeightSide && window.innerWidth !== initWidthSide)) {
   window.addEventListener("resize", handleResizeSide);
+  // }
 }
 
 // kick scrolly things off

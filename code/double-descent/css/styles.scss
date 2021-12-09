@@ -835,6 +835,10 @@ body {
   /* ====================== */
   /* LAYOUT  */
   /* ====================== */
+  // body {
+  //   height: 95vh;
+  //   max-height: 95vh;
+  // }
   #intro {
     padding-right: 0;
     padding: 20px;
@@ -938,7 +942,7 @@ body {
   }
 
   .step-side {
-    height: 100vh;
+    height: 100%;
   }
 }
 
@@ -1007,3 +1011,8 @@ svg {
   stroke-width: 4px;
   font-size: 1.1rem;
 }
+
+// body {
+//   height: 95vh;
+//   max-height: 95vh;
+// }

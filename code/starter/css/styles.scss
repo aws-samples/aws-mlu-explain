@@ -1,0 +1,179 @@
+/* ====================== */
+/* FONTS */
+/* ====================== */
+
+@font-face {
+  font-family: AmazonEmberDisplayHeavy;
+  src: url("../fonts/AmazonEmberDisplay_He.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmber;
+  src: url("../fonts/AmazonEmber_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberMono;
+  src: url("../fonts/AmazonEmberMono_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberDisplayLight;
+  src: url("../fonts/AmazonEmberDisplay_Lt.otf") format("opentype");
+}
+
+* {
+  font-family: AmazonEmber;
+}
+
+/* ====================== */
+/* RESPONSIVE VARS */
+/* ====================== */
+
+html {
+  font-size: 16px;
+}
+
+body {
+  max-width: 2500px;
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+// Breakpoints
+$bp-small: 48em; // 768px
+$bp-medium: 64em; // 1024px
+$bp-large: 85.375em; // 1366px
+$bp-xlarge: 120em; // 1920px
+$bp-xxlarge: 160em; // 2560px
+
+// Media Queries
+$mq-small: "(min-width: #{$bp-small})";
+$mq-medium: "(min-width: #{$bp-medium})";
+$mq-large: "(min-width: #{$bp-large})";
+$mq-xlarge: "(min-width: #{$bp-xlarge})";
+$mq-xxlarge: "(min-width: #{$bp-xxlarge})";
+$mq-retina: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)";
+
+// colors
+$squid-ink: #232f3e;
+$test-color: #e57873;
+$train-color: #94cae0;
+$bg-color: white;
+$ai_color: #354848;
+
+// Font-Size
+$base-font-size: 1rem;
+
+// Line-Height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+/* ====================== */
+/* Variables */
+/* ====================== */
+/* circle.test, rect.errorB */
+
+/* ====================== */
+/* LAYOUT STYLES */
+/* ====================== */
+
+#intro {
+  text-align: center;
+  max-width: 90%;
+  padding-bottom: 5rem;
+  margin: auto;
+}
+
+#intro__hed {
+  font-size: 4rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+  letter-spacing: 1.5px;
+  font-family: AmazonEmberDisplayHeavy;
+  text-transform: uppercase;
+  max-width: 70%;
+  margin: auto;
+}
+
+#ai {
+  color: #7bacc9;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+.logo {
+  color: $squid-ink;
+  width: 10rem;
+}
+
+.bolder {
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+#intro-icon {
+  display: flex;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $ai_color;
+  flex-direction: row;
+  padding-top: 1rem;
+  justify-content: center;
+}
+
+#intro-icon h2 {
+  padding-left: 2%;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+// one of these should work
+article {
+  z-index: 999999;
+}
+
+#intro-icon > a {
+  display: flex;
+  text-decoration: none;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+#intro-icon > a:hover {
+  background-color: white;
+}
+
+#intro__dek {
+  text-align: left;
+  font-size: 17px;
+  margin-top: 1rem;
+  max-width: 60%;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+#intro__author,
+#intro__date {
+  font-size: 1.1rem;
+  margin: 0px;
+  margin-top: 15px;
+  font-family: AmazonEmberDisplayLight;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#bias,
+#variance {
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+a {
+  color: $squid-ink;
+  text-decoration: underline;
+}
+
+a:hover {
+  background-color: #999;
+  color: white;
+  text-decoration: none;
+}

@@ -19,6 +19,8 @@ const offsetTriggerFromTop = 0.65;
 const scroller = scrollama();
 
 let centerTransitionIndex = -1;
+let initHeightSide = window.innerHeight;
+let initWidthSide = window.innerWidth;
 
 // draw double descent chart
 const doubleDescentChart = new DoubleDescent({
@@ -84,12 +86,20 @@ function handleResize() {
   let figureMarginTop = (window.innerHeight - figureHeight) / 2;
 
   figure
-    .style("height", figureHeight + "px")
+    // .style("height", figureHeight + "px")
     .style("top", figureMarginTop + "px");
 
   // 3. tell scrollama to update new element dimensions
   scroller.resize();
-  doubleDescentChart.resizeChart();
+  // resize if width changes
+  if (window.innerWidth !== initWidthSide) {
+    initWidthSide = window.innerWidth;
+    initHeightSide = window.innerHeight;
+    // console.log("resize");
+    doubleDescentChart.resizeChart();
+  }
+
+  // resolve previous transition
   if (centerTransitionIndex > -1) {
     if (centerTransitionIndex > 2) {
       stepEventsCenter["down"][2]();
@@ -102,7 +112,7 @@ function handleResize() {
 function handleStepEnter(response) {
   // update graphic based on step
   figure.select("p").text(response.index + 1);
-  console.log(response.index);
+  // console.log(response.index);
 
   // update chart based on step
   stepEventsCenter[response.direction][response.index]();
@@ -119,6 +129,7 @@ function init() {
 
   // 1. force a resize on load to ensure proper dimensions are sent to scrollama
   handleResize();
+  doubleDescentChart.resizeChart();
 
   // 2. setup the scroller passing options
   // 		this will also initialize trigger observations
@@ -132,7 +143,11 @@ function init() {
     .onStepEnter(handleStepEnter);
 
   // setup resize event
+  // setup resize event
+  // if (window.innerWidth > 900) {
   window.addEventListener("resize", handleResize);
+  // }
+  // prevent resize when height changes, width doesnt
 }
 
 // kick things off

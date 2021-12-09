@@ -1,0 +1,144 @@
+/* ====================== */
+/* FONTS */
+/* ====================== */
+@font-face {
+  font-family: AmazonEmberDisplayHeavy;
+  src: url("/AmazonEmberDisplay_He.ddb0115a.otf") format("opentype");
+}
+@font-face {
+  font-family: AmazonEmber;
+  src: url("/AmazonEmber_Rg.f947c4ff.otf") format("opentype");
+}
+@font-face {
+  font-family: AmazonEmberMono;
+  src: url("/AmazonEmberMono_Rg.283667ba.otf") format("opentype");
+}
+@font-face {
+  font-family: AmazonEmberDisplayLight;
+  src: url("/AmazonEmberDisplay_Lt.5462acb9.otf") format("opentype");
+}
+* {
+  font-family: AmazonEmber;
+}
+
+/* ====================== */
+/* RESPONSIVE VARS */
+/* ====================== */
+html {
+  font-size: 16px;
+}
+
+body {
+  max-width: 2500px;
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+/* ====================== */
+/* Variables */
+/* ====================== */
+/* circle.test, rect.errorB */
+/* ====================== */
+/* LAYOUT STYLES */
+/* ====================== */
+#intro {
+  text-align: center;
+  max-width: 90%;
+  padding-bottom: 5rem;
+  margin: auto;
+}
+
+#intro__hed {
+  font-size: 4rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+  letter-spacing: 1.5px;
+  font-family: AmazonEmberDisplayHeavy;
+  text-transform: uppercase;
+  max-width: 70%;
+  margin: auto;
+}
+
+#ai {
+  color: #7bacc9;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+.logo {
+  color: #232f3e;
+  width: 10rem;
+}
+
+.bolder {
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+#intro-icon {
+  display: flex;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #354848;
+  flex-direction: row;
+  padding-top: 1rem;
+  justify-content: center;
+}
+
+#intro-icon h2 {
+  padding-left: 2%;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+article {
+  z-index: 999999;
+}
+
+#intro-icon > a {
+  display: flex;
+  text-decoration: none;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+#intro-icon > a:hover {
+  background-color: white;
+}
+
+#intro__dek {
+  text-align: left;
+  font-size: 17px;
+  margin-top: 1rem;
+  max-width: 60%;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+#intro__author,
+#intro__date {
+  font-size: 1.1rem;
+  margin: 0px;
+  margin-top: 15px;
+  font-family: AmazonEmberDisplayLight;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#bias,
+#variance {
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+a {
+  color: #232f3e;
+  text-decoration: underline;
+}
+
+a:hover {
+  background-color: #999;
+  color: white;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=/styles.5c32a3d8.css.map */

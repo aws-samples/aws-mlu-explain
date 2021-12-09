@@ -51,14 +51,16 @@ export class DoubleDescent {
 
     // set constant SVG parameters
     this.MARGIN = {
-      TOP: window.innerHeight * 0.1,
-      BOTTOM: window.innerHeight * 0.1,
-      LEFT: window.innerWidth * 0.1,
-      RIGHT: window.innerWidth * 0.1,
+      TOP: 50,
+      BOTTOM: window.innerWidth < 600 ? 50 : 50,
+      LEFT: window.innerWidth < 600 ? 38 : 42,
+      RIGHT: window.innerWidth < 600 ? 5 : 25,
     };
-
     this.WIDTH = window.innerWidth * 0.75;
-    this.HEIGHT = window.innerHeight * 0.2;
+    this.HEIGHT =
+      window.innerWidth < 600
+        ? window.innerHeight * 0.35
+        : window.innerHeight * 0.53;
 
     this.plotXMin = 0.8;
 
@@ -117,7 +119,6 @@ export class DoubleDescent {
     this.MARGIN = {
       TOP: 50,
       BOTTOM: window.innerWidth < 600 ? 50 : 50,
-      // LEFT: window.innerWidth < 600 ? 55 : 90,
       LEFT: window.innerWidth < 600 ? 38 : 42,
       RIGHT: window.innerWidth < 600 ? 5 : 25,
     };
@@ -131,10 +132,10 @@ export class DoubleDescent {
       window.innerWidth < 600
         ? window.innerWidth * 0.85
         : window.innerWidth * 0.8;
-    this.HEIGHT =
-      window.innerWidth < 600
-        ? window.innerHeight * 0.35
-        : window.innerHeight * 0.53;
+    // this.HEIGHT =
+    //   window.innerWidth < 600
+    //     ? window.innerHeight * 0.35
+    //     : window.innerHeight * 0.53;
 
     this.initChart(this.ddContainer);
 
