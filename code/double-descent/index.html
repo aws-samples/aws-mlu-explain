@@ -98,7 +98,7 @@
           classical understanding of the bias-variance tradeoff. Namely, while
           we expect the best model performance to be obtained via some balance
           between bias (underfitting) and variance (overfitting), we instead
-          observe strong test performance from very overfitted, complex models
+          observe strong test performance from very overfit, complex models.
           <!-- <span
             class="tooltip-item"
             >[0]<span class="tooltiptext"
@@ -114,9 +114,10 @@
           As a result, many practitioners and researchers are left questioning
           the relevance of the traditional bias-variance tradeoff in modern
           machine learning. <br /><br />
-          Here, we'll first introduce the phenomenon in detail and then offer a
-          soft explanation for why it's occurring. (In a follow up article,
-          we'll describe the phenomena in more low level, mathematical detail).
+          Here, we'll first introduce the phenomenon for a general example and
+          then offer a soft explanation for why it's occurring. (In a follow up
+          article, we'll describe the phenomena in more low level, mathematical
+          detail).
           <br /><br />
           At the end of it all, we conclude that the double descent phenomenon
           actually reinforces the importance of the bias-variance tradeoff.
@@ -155,27 +156,29 @@
               shoot up, but it does so before descending back down to a new
               minimum. In other words, even though our model is extremely
               overfitted, it has achieved its best performance, and it has done
-              so during this second (the <i>&quot;double&quot;</i>) descent!
+              so during this second descent (hence the name,
+              <span class="bold">double descent</span>)!
             </p>
           </div>
           <div class="step" data-step="4">
             <p>
               We call the under-parameterized region to the left of the second
-              descent the <i>classical regime</i>, and the point of peak error
-              the interpolation threshold. In the classical regime, the
-              bias-variance tradeoff behaves as expected, with the test error
-              drawing out the familiar U-shape.
+              descent the <span class="bold">classical regime</span>, and the
+              point of peak error the
+              <span class="bold">interpolation threshold</span>. In the
+              classical regime, the bias-variance tradeoff behaves as expected,
+              with the test error drawing out the familiar U-shape.
             </p>
           </div>
           <div class="step" data-step="5">
             <p>
               To the right of the interpolation threshold, the behavior changes.
               We call this over-parameterized region the
-              <i>interpolation regime</i>. In this regime, the model perfectly
-              memorizes, or interpolates, the training data. That is, every
-              model passes exactly through the given training data, thus the
-              only thing that changes is how the model connects the dots between
-              these data points.
+              <span class="bold">interpolation regime</span>. In this regime,
+              the model perfectly memorizes, or interpolates, the training data.
+              That is, every model passes exactly through the given training
+              data, thus the only thing that changes is how the model connects
+              the dots between these data points.
             </p>
           </div>
           <!-- add empty div for extra space at bottom -->
@@ -185,19 +188,20 @@
       <!-- end center scroll -->
 
       <section id="section2">
-        <hr />
+        <!-- <hr /> -->
         <div class="model-text">
-          <h2 class="section-title">What's Going On?</h2>
+          <h1 class="model-header">What's Going On?</h1>
 
           <p class="body-text">
             To better understand this phenomenon, let's explore it together!
-            <i
-              >(Note&mdash;for a mathematical explanation,
-              <a href="https://mla.corp.amazon.com/explain/double-descent-math/"
-                >read our sibling article</a
-              >).</i
-            >
-            <br /><br />
+            Quick note - in this article, we'll keep things fairly high-level.
+            However, if you're interested in more mathematical, lower-level
+            details,
+            <a href="https://mla.corp.amazon.com/explain/double-descent-math/"
+              ><span class="bold"
+                >check out our sibling article on double descent</span
+              ></a
+            >. <br /><br />
             Let's begin with a simple problem. We will train on data sampled
             from a cubic curve that has been occasionally corrupted with noise.
             We will generate a tiny training set and a larger test set so that
@@ -308,9 +312,7 @@
       <section id="gap">
         <!-- <hr /> -->
         <div class="model-text">
-          <br /><br />
-          <h2 class="section-title">Minding The Gap</h2>
-          <br /><br />
+          <h1 class="model-header">Minding The Gap</h1>
           <div id="gap-container">
             <!-- BAND MEMBER INFO CONTAINER START -->
 
@@ -394,31 +396,7 @@
       </section>
 
       <section id="conclusion">
-        <!-- <div class="model-text">
-          <p>
-            <h1 class="model-header">The End</h1>
-            Thanks for reading! To learn more about machine learning, check out
-            our
-            <a href="https://aws.amazon.com/machine-learning/mlu/"
-              >self-paced courses</a
-            >, our
-            <a href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
-              >youtube videos</a
-            >, and the
-            <a href="https://d2l.ai/">Dive into Deep Learning</a> textbook.
-           If you have any comments or ideas related to MLU-Explain
-            articles, feel free to
-            <a href="https://twitter.com/jdwlbr"> reach out directly</a>. The
-            code for this article is available
-            <a
-              href="https://code.amazon.com/packages/Mlu-explain_double-descent/trees/mainline"
-              >here</a
-            >.
-          </p>
-        </div> -->
-        <br />
-
-        <h1 class="model-header">References + Open Source</h1>
+        <h1 class="model-header">References & Open Source</h1>
         <p class="model-text">
           This article is a product of the following resources + the awesome
           people who made (& contributed to) them:

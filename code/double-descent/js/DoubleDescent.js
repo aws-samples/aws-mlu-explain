@@ -116,9 +116,9 @@ export class DoubleDescent {
     // };
     this.MARGIN = {
       TOP: 50,
-      BOTTOM: 60,
+      BOTTOM: window.innerWidth < 600 ? 50 : 50,
       // LEFT: window.innerWidth < 600 ? 55 : 90,
-      LEFT: window.innerWidth < 600 ? 30 : 25,
+      LEFT: window.innerWidth < 600 ? 38 : 42,
       RIGHT: window.innerWidth < 600 ? 5 : 25,
     };
     // this.MARGIN = {
@@ -133,8 +133,8 @@ export class DoubleDescent {
         : window.innerWidth * 0.8;
     this.HEIGHT =
       window.innerWidth < 600
-        ? window.innerHeight * 0.3
-        : window.innerHeight * 0.5;
+        ? window.innerHeight * 0.35
+        : window.innerHeight * 0.53;
 
     this.initChart(this.ddContainer);
 
@@ -149,20 +149,6 @@ export class DoubleDescent {
 
     // draw Legend
     this.addLegend();
-    // select("#dd-x-axis-text")
-    //   .attr("x", (this.WIDTH + this.MARGIN.RIGHT) / 2)
-    //   .attr("y", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM / 1.4)
-    //   .attr("text-anchor", "middle");
-    // select("dd-y-axis-text")
-    //   .attr("y", this.WIDTH * 0.2)
-    //   .attr("x", -(this.HEIGHT / 2 + this.MARGIN.TOP));
-
-    // // redraw title
-    // select("#dd-title").remove();
-    // this.addTitle();
-
-    // select(".dd-legend").remove();
-    // this.addLegend();
   }
 
   drawAxes() {
@@ -188,7 +174,12 @@ export class DoubleDescent {
       .attr("class", "axis")
       .attr("id", "dd-y-axis");
 
-    this.yAxis.call(axisLeft(this.yScale).tickSizeOuter(0).ticks(4));
+    this.yAxis.call(
+      axisLeft(this.yScale)
+        .tickSizeOuter(0)
+        .ticks(4)
+        .tickFormat((d, i) => ["0%", "20%", "40%", "60%", "80%"][i])
+    );
 
     // make tick longer for y-axis
     select("#dd-y-axis").selectAll("line").attr("x2", this.WIDTH);
@@ -199,7 +190,7 @@ export class DoubleDescent {
       .attr("class", "dd-axis-text")
       .attr("id", "dd-x-axis-text")
       .attr("x", (this.WIDTH + this.MARGIN.LEFT + this.MARGIN.RIGHT) / 2)
-      .attr("y", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM - 20)
+      .attr("y", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM / 1.2)
       .text("Measure of Model Complexity")
       .attr("text-anchor", "middle");
     // this.svg
@@ -283,6 +274,33 @@ export class DoubleDescent {
     //   .attr("cy", (d) => this.yScale(d.y_train))
     //   .attr("fill", "coral")
     //   .attr("opacity", 0.5);
+
+    // texts
+    this.ddG
+      .append("text")
+      .attr("class", "dd-annotation-text")
+      .attr("id", "text-classic-regime")
+      .attr("x", this.xScale(10))
+      .attr("y", this.yScale(0))
+      .attr("text-anchor", "middle")
+      .text("Classical Regime");
+    this.ddG
+      .append("text")
+      .attr("class", "dd-annotation-text")
+      .attr("id", "text-interpolation-threshold")
+      .attr("x", this.xScale(19))
+      .attr("y", this.yScale(21))
+      .attr("text-anchor", "middle")
+      .text("Interpolation");
+    // texts
+    this.ddG
+      .append("text")
+      .attr("class", "dd-annotation-text")
+      .attr("id", "text-interpolation-regime")
+      .attr("x", this.xScale(25))
+      .attr("y", this.yScale(0))
+      .attr("text-anchor", "middle")
+      .text("Interpolation Regime");
   }
 
   drawTransition0Down() {
@@ -299,10 +317,33 @@ export class DoubleDescent {
     // // draw line to gien distance
     this.trainLine.call((d) => pathTransition(d, trainLenStart, trainLenEnd));
     this.testLine.call((d) => pathTransition(d, testLenStart, testLenEnd));
+
+    const trainLenStartOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(startPoint)
+    );
+    const testLenStartOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(startPoint)
+    );
+    const trainLenEndOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(endPoint)
+    );
+    const testLenEndOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(endPoint)
+    );
+    this.trainLineOutline.call((d) =>
+      pathTransition(d, trainLenStartOutline, trainLenEndOutline)
+    );
+    this.testLineOutline.call((d) =>
+      pathTransition(d, testLenStartOutline, testLenEndOutline)
+    );
   }
 
   drawTransition0Up() {
-    const startPoint = 18.6;
+    const startPoint = 18.9;
     const endPoint = 1;
 
     const trainLenStart = findPathLen(this.trainLine, this.xScale(startPoint));
@@ -315,11 +356,34 @@ export class DoubleDescent {
     // // draw line to gien distance
     this.trainLine.call((d) => pathTransition(d, trainLenStart, trainLenEnd));
     this.testLine.call((d) => pathTransition(d, testLenStart, testLenEnd));
+
+    const trainLenStartOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(startPoint)
+    );
+    const testLenStartOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(startPoint)
+    );
+    const trainLenEndOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(endPoint)
+    );
+    const testLenEndOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(endPoint)
+    );
+    this.trainLineOutline.call((d) =>
+      pathTransition(d, trainLenStartOutline, trainLenEndOutline)
+    );
+    this.testLineOutline.call((d) =>
+      pathTransition(d, testLenStartOutline, testLenEndOutline)
+    );
   }
 
   drawTransition1Down() {
     const startPoint = 12.5;
-    const endPoint = 18.6;
+    const endPoint = 18.9;
 
     const trainLenStart = findPathLen(this.trainLine, this.xScale(startPoint));
     const testLenStart = findPathLen(this.testLine, this.xScale(startPoint));
@@ -331,10 +395,33 @@ export class DoubleDescent {
     // // draw line to gien distance
     this.trainLine.call((d) => pathTransition(d, trainLenStart, trainLenEnd));
     this.testLine.call((d) => pathTransition(d, testLenStart, testLenEnd));
+
+    const trainLenStartOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(startPoint)
+    );
+    const testLenStartOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(startPoint)
+    );
+    const trainLenEndOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(endPoint)
+    );
+    const testLenEndOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(endPoint)
+    );
+    this.trainLineOutline.call((d) =>
+      pathTransition(d, trainLenStartOutline, trainLenEndOutline)
+    );
+    this.testLineOutline.call((d) =>
+      pathTransition(d, testLenStartOutline, testLenEndOutline)
+    );
   }
 
   drawTransition2Down() {
-    const startPoint = 18.6;
+    const startPoint = 18.9;
     const endPoint = 30;
 
     const trainLenStart = findPathLen(this.trainLine, this.xScale(startPoint));
@@ -347,11 +434,34 @@ export class DoubleDescent {
     // // draw line to gien distance
     this.trainLine.call((d) => pathTransition(d, trainLenStart, trainLenEnd));
     this.testLine.call((d) => pathTransition(d, testLenStart, testLenEnd));
+
+    const trainLenStartOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(startPoint)
+    );
+    const testLenStartOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(startPoint)
+    );
+    const trainLenEndOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(endPoint)
+    );
+    const testLenEndOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(endPoint)
+    );
+    this.trainLineOutline.call((d) =>
+      pathTransition(d, trainLenStartOutline, trainLenEndOutline)
+    );
+    this.testLineOutline.call((d) =>
+      pathTransition(d, testLenStartOutline, testLenEndOutline)
+    );
   }
 
   drawTransition1Up() {
     const startPoint = 30;
-    const endPoint = 18.6;
+    const endPoint = 18.9;
 
     const trainLenStart = findPathLen(this.trainLine, this.xScale(startPoint));
     const testLenStart = findPathLen(this.testLine, this.xScale(startPoint));
@@ -363,6 +473,29 @@ export class DoubleDescent {
     // // draw line to gien distance
     this.trainLine.call((d) => pathTransition(d, trainLenStart, trainLenEnd));
     this.testLine.call((d) => pathTransition(d, testLenStart, testLenEnd));
+
+    const trainLenStartOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(startPoint)
+    );
+    const testLenStartOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(startPoint)
+    );
+    const trainLenEndOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(endPoint)
+    );
+    const testLenEndOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(endPoint)
+    );
+    this.trainLineOutline.call((d) =>
+      pathTransition(d, trainLenStartOutline, trainLenEndOutline)
+    );
+    this.testLineOutline.call((d) =>
+      pathTransition(d, testLenStartOutline, testLenEndOutline)
+    );
   }
 
   drawTransition2Up() {
@@ -421,6 +554,13 @@ export class DoubleDescent {
       .y((d) => this.yScale(d[`y_train`]))
       .curve(curveCatmullRom.alpha(0.8));
 
+    this.trainLineOutline = this.ddG
+      .append("path")
+      .attr("class", "dd-line-outline")
+      .attr("id", `dd-line-train-outline`)
+      .attr("d", this.lineGenTrain(ddTrainTest))
+      .call((d) => pathTransition(d, 0, 0));
+
     this.trainLine = this.ddG
       .append("path")
       .attr("class", "dd-line")
@@ -435,12 +575,59 @@ export class DoubleDescent {
       .curve(curveCatmullRom.alpha(0.8));
 
     // draw line for given stage
+    this.testLineOutline = this.ddG
+      .append("path")
+      .attr("class", "dd-line-outline")
+      .attr("id", `dd-line-test-outline`)
+      .attr("d", this.lineGenTest(ddTrainTest))
+      .call((d) => pathTransition(d, 0, 0));
+
     this.testLine = this.ddG
       .append("path")
       .attr("class", "dd-line")
       .attr("id", `dd-line-test`)
       .attr("d", this.lineGenTest(ddTrainTest))
       .call((d) => pathTransition(d, 0, 0));
+
+    const interpolationGradient = this.svg
+      .append("defs")
+      .append("linearGradient")
+      .attr("id", "interpolationGradient")
+      .attr("x1", "0%")
+      .attr("y1", "100%")
+      .attr("x2", "0%")
+      .attr("y2", "0%");
+
+    interpolationGradient
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#0f151b")
+      .attr("stop-opacity", 0.76);
+    interpolationGradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#232f3e")
+      .attr("stop-opacity", 0);
+
+    const classicalGradient = this.svg
+      .append("defs")
+      .append("linearGradient")
+      .attr("id", "classicalGradient")
+      .attr("x1", "0%")
+      .attr("y1", "100%")
+      .attr("x2", "0%")
+      .attr("y2", "0%");
+
+    classicalGradient
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "rgb(3, 117, 117)")
+      .attr("stop-opacity", 0.76);
+    classicalGradient
+      .append("stop")
+      .attr("offset", "70%")
+      .attr("stop-color", "#232f3e")
+      .attr("stop-opacity", 0);
 
     // add rects after so overlap
     this.rectOver = this.ddG
@@ -450,8 +637,9 @@ export class DoubleDescent {
       .attr("y", this.yScale(23))
       .attr("width", this.WIDTH - this.xScale(19))
       .attr("height", this.yScale(0))
-      .attr("fill", "#232f3e")
-      .attr("fill-opacity", 0);
+      // .attr("fill", "#232f3e")
+      .style("fill", "url(#interpolationGradient)")
+      .attr("fill-opacity", ``);
 
     this.rectUnder = this.ddG
       .append("rect")
@@ -460,8 +648,12 @@ export class DoubleDescent {
       .attr("y", this.yScale(23))
       .attr("width", this.xScale(19))
       .attr("height", this.yScale(0))
-      .attr("fill", "#232f3e")
-      .attr("fill-opacity", 0);
+      // .attr("fill", "#232f3e")
+      .style("fill", "url(#classicalGradient)");
+    // .attr("fill-opacity", 0);
+
+    this.rectOver.lower();
+    this.rectUnder.lower();
   }
 
   addTitle() {

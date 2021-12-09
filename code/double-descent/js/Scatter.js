@@ -50,7 +50,7 @@ export class Scatter {
         ? window.innerWidth / 4.1
         : window.innerWidth / 1.6;
     this.innerHeight = window.innerHeight * 0.28;
-    this.margin = { left: 40, right: 9, top: 15, bottom: 50 };
+    this.margin = { left: 45, right: 9, top: 15, bottom: 50 };
 
     this.drawBaseChart();
     this.drawCircles();
@@ -111,7 +111,7 @@ export class Scatter {
       .enter()
       .append("circle")
       .attr("class", "scatter-circle")
-      .attr("r", 3.5)
+      .attr("r", 4)
       .attr("cx", (d) => this.xScale(d.x))
       .attr("cy", (d) => this.yScale(d.y));
 

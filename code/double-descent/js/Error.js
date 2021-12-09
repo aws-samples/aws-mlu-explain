@@ -51,7 +51,7 @@ export class Error {
         ? window.innerWidth / 4.1
         : window.innerWidth / 1.6;
     this.innerHeight = window.innerHeight * 0.28;
-    this.margin = { left: 40, right: 9, top: 15, bottom: 50 };
+    this.margin = { left: 45, right: 9, top: 15, bottom: 50 };
 
     this.drawBaseChart();
     this.drawAxes();

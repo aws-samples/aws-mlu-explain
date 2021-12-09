@@ -8,22 +8,19 @@
   "files": [
     "dist/**"
   ],
-  "npm-pretty-much": {
-    "appName": "mlu-explain_double-descent",
-    "runRelease": "always",
-    "runTest": "always"
-  },
   "scripts": {
     "clean": "rm -rf dist/ build/*",
     "test": "echo \"Error: no test specified\" ",
     "start": "parcel index.html",
-    "prebuild": "rm -rf dist",
+    "prebuild": "rm -rf dist && rm -rf ../../double-descent",
     "build": "parcel build index.html --public-url ./",
+    "postbuild": "mkdir -p ../../double-descent && cp -r dist/* ../../double-descent ",
     "release": "npm run build"
   },
   "dependencies": {
     "d3-axis": "^2.1.0",
     "d3-interpolate": "^2.0.1",
+    "d3-format": "^2.0.0",
     "d3-scale": "^3.3.0",
     "d3-selection": "^2.0.0",
     "d3-shape": "^2.1.0",

@@ -92,7 +92,7 @@ const stepEventsSide = {
 // generic window resize listener event
 function handleResizeSide() {
   // 1. update height of step elements
-  let stepHPerc = window.innerHeight < 600 ? 1.5 : 1.4;
+  let stepHPerc = window.innerHeight < 600 ? 1.5 : 1.5;
   let stepSideH = Math.floor(window.innerHeight * stepHPerc);
   stepSide.style("height", stepSideH + "px");
 

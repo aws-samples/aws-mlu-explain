@@ -67,8 +67,8 @@ $bg-color2: #feefd7;
 $font-color: white;
 $color: rgb(8, 183, 183);
 $ai_color: $color;
-$test-color: $color;
-$train-color: #ff8f00;
+$test-color: #ff8f00;
+$train-color: $color;
 // Font-Size
 $base-font-size: 1em;
 $main-font: AmazonEmber;
@@ -123,6 +123,7 @@ a:hover {
 a {
   text-decoration: underline;
   color: $color;
+  font-family: AmazonEmberDisplayHeavy;
 }
 
 a:hover {
@@ -208,12 +209,12 @@ a:hover {
   font-family: $main-font;
 }
 
-hr {
-  max-width: 5%;
-  margin: 3.5rem auto;
-  border: 2px solid $color;
-  opacity: 0;
-}
+// hr {
+//   max-width: 5%;
+//   margin: 3.5rem auto;
+//   border: 2px solid $color;
+//   opacity: 0;
+// }
 
 .github-corner:hover .octo-arm {
   animation: octocat-wave 560ms ease-in-out;
@@ -286,6 +287,11 @@ li {
   text-align: left;
   font-size: 21px;
   padding-bottom: 8px;
+  font-family: AmazonEmberDisplayLight;
+
+  a {
+    font-family: AmazonEmberDisplayHeavy;
+  }
 }
 
 /* ====================== */
@@ -308,8 +314,12 @@ body {
 }
 
 .section-title {
-  padding-bottom: 3rem;
+  padding-bottom: 2rem;
+  padding-left: 10%;
+  padding-top: 2rem;
+  text-align: left;
 }
+
 /* ====================== */
 /* SCROLLYTELLING CENTER STYLLES */
 /* ====================== */
@@ -463,9 +473,20 @@ body {
   fill: $font-color;
 }
 
+#rect-interpolate {
+  fill: linear-gradient(white, #9198e5);
+}
+
 .dd-line {
   fill: none;
   stroke-width: 5;
+}
+
+.dd-line-outline {
+  fill: none;
+  stroke-width: 8;
+  stroke: white;
+  opacity: 0.8;
 }
 
 #arrowhead-right,
@@ -521,6 +542,12 @@ body {
   .domain {
     opacity: 0;
   }
+  text {
+    font-size: 0.9rem;
+    stroke: none;
+    fill: white;
+    font-family: AmazonEmberDisplayHeavy;
+  }
 }
 
 #doubledescent-container {
@@ -556,13 +583,14 @@ body {
 .scatter-circle {
   fill: $squid-ink;
   stroke-width: 1.5;
+  stroke: #feefd7;
 }
 
 #scatter-line {
   fill: none;
   opacity: 0.85;
-  stroke: $train-color;
-  stroke-width: 4;
+  stroke: $test-color;
+  stroke-width: 4.5;
 }
 
 #ttt {
@@ -577,7 +605,7 @@ body {
 
 .error-line {
   fill: none;
-  stroke: $train-color;
+  stroke: $test-color;
   stroke-width: 4;
 }
 
@@ -601,9 +629,9 @@ body {
   height: 0.8rem; /* Specified height */
   background: $squid-ink; /* Grey background */
   outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
-  transition: opacity 0.2s;
+  // opacity: 0.9; /* Set transparency (for mouse-over effects on hover) */
+  // -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+  // transition: opacity 0.2s;
 }
 
 /* Mouse-over effects */
@@ -617,16 +645,16 @@ body {
   appearance: none;
   width: 1rem; /* Set a specific slider handle width */
   height: 1.2rem; /* Slider handle height */
-  background: $train-color;
-  border: 1px solid black;
+  background: $test-color;
+  border: 1px solid #feefd7;
   cursor: pointer; /* Cursor on hover */
 }
 
 .metric-slider::-moz-range-thumb {
   width: 1rem; /* Set a specific slider handle width */
-  height: 1rem; /* Slider handle height */
-  background: $train-color;
-  border: 1px solid black;
+  height: 1.2rem; /* Slider handle height */
+  background: $test-color;
+  border: 1px solid #feefd7;
   cursor: pointer; /* Cursor on hover */
 }
 
@@ -715,13 +743,18 @@ body {
   }
 
   .section-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   #gap-container,
   #conclusion {
-    padding: 10%;
+    // padding: 10%;
+    padding-top: 0;
     font-family: $main-font;
+
+    .section-title {
+      padding-left: 0;
+    }
   }
 
   /* ====================== */
@@ -730,7 +763,7 @@ body {
 
   #dd-title {
     font-size: 2rem;
-    font-size-adjust: 0.1;
+    // font-size-adjust: 0.1;
     font-stretch: 50%;
   }
 
@@ -861,7 +894,7 @@ body {
 
   #dd-title {
     font-size: 1.2rem;
-    font-size-adjust: 0.1;
+    // font-size-adjust: 0.1;
     font-stretch: 50%;
   }
 
@@ -874,7 +907,7 @@ body {
 
   #dd-y-axis {
     text {
-      font-size: 0.9rem;
+      font-size: 0.75rem;
       stroke: none;
       fill: white;
       font-family: AmazonEmberDisplayHeavy;
@@ -882,10 +915,14 @@ body {
   }
 
   #dd-line-train {
-    stroke-width: 2.5;
+    stroke-width: 1.9;
   }
   #dd-line-test {
-    stroke-width: 2.5;
+    stroke-width: 1.9;
+  }
+  .dd-line-outline {
+    stroke-width: 3.7;
+    opacity: 0.8;
   }
 
   #scrolly {
@@ -957,5 +994,16 @@ article {
 }
 
 svg {
-  // outline: 2px solid red;
+  // outline: 1px solid red;
+}
+
+.dd-annotation-text {
+  font-family: AmazonEmberDisplayHeavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke: rgb(3, 117, 117);
+  stroke: black;
+  stroke-width: 4px;
+  font-size: 1.1rem;
 }
