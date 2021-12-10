@@ -1,0 +1,552 @@
+/* ====================== */
+/* FONTS */
+/* ====================== */
+
+@font-face {
+  font-family: AmazonEmberDisplayHeavy;
+  src: url("../fonts/AmazonEmberDisplay_He.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmber;
+  src: url("../fonts/AmazonEmber_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberMono;
+  src: url("../fonts/AmazonEmberMono_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberDisplayLight;
+  src: url("../fonts/AmazonEmberDisplay_Lt.otf") format("opentype");
+}
+
+/* ====================== */
+/* VARIABLES */
+/* ====================== */
+
+html {
+  font-size: 16px;
+}
+
+// colors
+$squid-ink: #232f3e;
+$bg-color: #feefd7; //$squid-ink; // rgba(255, 97, 56, 0.8);
+$bg-color2: #feefd7; // rgb(246, 233, 218); //rgb(154, 222, 222);
+$font-color: $squid-ink;
+$color: rgb(8, 183, 183);
+$test-color: $color;
+$train-color: #ff8f00;
+$ai_color: $color;
+// Font-Size
+$base-font-size: 1em;
+$main-font: AmazonEmber;
+
+// Line-Height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+
+/* ====================== */
+/* BASE STYLLES */
+/* ====================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  min-height: 1280px;
+  color: #3b3b3b;
+  font-size: 24px;
+}
+
+p.intro-text {
+  font-size: 1.1rem;
+  text-align: left;
+  color: $font-color;
+  font-family: $main-font;
+  padding: 1rem;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+a {
+  margin: 0;
+  font-weight: 400;
+  color: $font-color;
+}
+
+// h1 {
+//   text-align: left;
+//   font-size: 1.6rem;
+//   padding-left: 1rem;
+// }
+
+h2 {
+  text-align: left;
+  // font-size: 1.3rem;
+  // padding: 1rem;
+  color: $font-color;
+}
+
+a:visited,
+a:hover {
+  color: $color;
+  text-decoration: none;
+  // border-bottom: 2px solid currentColor;
+}
+
+a {
+  text-decoration: underline;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+a:hover {
+  color: $font-color;
+  background-color: $color;
+  text-decoration: none;
+  // border-bottom: 2px solid currentColor;
+}
+
+// #intro {
+//   max-width: 45rem;
+//   margin: 1rem auto;
+//   text-align: center;
+// }
+
+// .intro-hed {
+//   font-size: 3.5rem;
+//   margin: 2rem auto 0.5rem auto;
+//   color: $font-color;
+//   font-family: AmazonEmberDisplayHeavy;
+//   text-align: center;
+// }
+
+// .intro-sub {
+//   font-size: 1.4rem;
+//   text-align: center;
+//   margin: 1rem;
+//   font-family: AmazonEmberDisplayHeavy;
+//   opacity: 0.6;
+//   color: $color;
+// }
+
+// .intro-author {
+//   color: #bcbcbc;
+//   font-size: 0.9rem;
+// }
+
+// .model-text {
+//   max-width: 45rem;
+//   margin: 0 auto;
+//   text-align: left;
+//   font-size: 1rem;
+//   line-height: 1.5em;
+//   font-family: $main-font;
+// }
+#intro {
+  max-width: 55rem;
+  margin: 1rem auto;
+  text-align: center;
+  padding-top: 3rem;
+}
+
+// .intro-hed {
+//   font-size: 3.5rem;
+//   margin: 2rem auto 0.5rem auto;
+//   color: $font-color;
+//   font-family: AmazonEmberDisplayHeavy;
+// }
+
+// #intro {
+//   text-align: center;
+//   max-width: 90%;
+//   padding-bottom: 5rem;
+//   margin: auto;
+// }
+
+#intro-hed {
+  font-size: 6.5rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+  letter-spacing: 1.5px;
+  font-family: AmazonEmberDisplayHeavy;
+  text-transform: uppercase;
+  max-width: 100%;
+  margin: auto;
+  color: $squid-ink;
+}
+
+.intro-sub {
+  font-size: 2.2rem;
+  text-align: center;
+  margin: 1rem;
+  font-family: AmazonEmberDisplayHeavy;
+  opacity: 0.75;
+  color: $color;
+  padding: 2rem;
+}
+#intro__author,
+#intro__date {
+  font-size: 1.1rem;
+  margin: 0px;
+  margin-top: 15px;
+  font-family: AmazonEmber;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  color: $squid-ink;
+  padding-bottom: 5rem;
+}
+
+.model-header {
+  padding-top: 5rem;
+  font-family: AmazonEmberDisplayHeavy;
+  max-width: 45rem;
+  margin: 0 auto;
+  padding-bottom: 0.5rem;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.model-text {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 21px;
+  line-height: 1.5em;
+  font-family: $main-font;
+}
+
+hr {
+  max-width: 15%;
+  margin: 3rem auto;
+  border: 1px solid $font-color;
+  opacity: 0.5;
+}
+
+#intro {
+  margin-bottom: 4rem;
+}
+
+/* ====================== */
+/* LAYOUT STYLES */
+/* ====================== */
+
+// #ai {
+//   color: $color;
+//   font-family: AmazonEmberDisplayHeavy;
+// }
+
+// #intro-icon {
+//   display: flex;
+//   justify-content: center;
+//   vertical-align: center;
+//   text-transform: uppercase;
+//   letter-spacing: 1.5px;
+//   padding: 2rem;
+//   font-weight: bold;
+//   color: $font-color;
+// }
+
+// #intro-icon h2 {
+//   padding-left: 2%;
+//   font-family: AmazonEmberDisplayHeavy;
+//   font-size: 1.2rem;
+//   margin-top: 10px;
+//   margin-bottom: 10px;
+// }
+
+body {
+  background-color: $bg-color;
+}
+
+.section-title {
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+.bold {
+  font-size: 1rem;
+  font-family: AmazonEmberDisplayHeavy;
+  font-weight: bold;
+}
+
+@media (max-width: 1100px) {
+  /* ====================== */
+  /* LAYOUT  */
+  /* ====================== */
+  #intro {
+    padding-right: 0;
+    padding: 10%;
+    // max-width: 100%;
+  }
+
+  .intro-hed {
+    margin-top: 0;
+    font-size: 3.5rem;
+  }
+
+  // #intro-icon {
+  //   padding-bottom: 0;
+  // }
+
+  // #intro-icon h2 {
+  //   margin-bottom: 0;
+  //   padding-bottom: 0;
+  // }
+
+  .body-text {
+    padding: 10%;
+    padding-bottom: 4rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 400px) {
+  /* ====================== */
+  /* LAYOUT  */
+  /* ====================== */
+  #intro {
+    padding-right: 0;
+    padding: 20px;
+  }
+
+  .intro-hed {
+    margin-top: 0;
+    font-size: 2.5rem;
+  }
+
+  #intro-icon {
+    padding-bottom: 0;
+  }
+
+  #intro-icon h2 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
+
+ul {
+  margin-left: auto;
+  list-style-position: outside;
+  list-style-type: none;
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 1.5em;
+  font-family: $main-font;
+}
+li {
+  text-align: left;
+  font-size: 1.1rem;
+}
+
+// @media (max-width)
+.katex-eq {
+  font-size: 1.1rem;
+}
+
+.block-text {
+  font-size: 1.05rem;
+  text-align: left;
+  color: $font-color;
+  font-family: $main-font;
+  padding: 1rem;
+  padding-left: 2rem;
+  font-family: AmazonEmberDisplayLight;
+}
+
+p.list-text {
+  font-size: 1.1rem;
+  text-align: left;
+  color: $font-color;
+  font-family: $main-font;
+  padding-top: 1rem;
+}
+
+.list {
+  text-align: left;
+  padding: 1rem;
+  padding-left: 2rem;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  font-family: AmazonEmberDisplayHeavy;
+  padding: 1rem;
+}
+
+.katex-eq-prop {
+  font-size: 1rem;
+  padding-bottom: 1rem;
+}
+
+.katex-eq-list {
+  display: block;
+  font-size: 1rem;
+  // padding-bottom: 1rem
+  padding-top: 0.5rem;
+  text-align: center;
+}
+
+/* ====================== */
+/* CHART STYLES  */
+/* ====================== */
+
+.scatter-line {
+  stroke: red;
+  stroke-width: 10;
+}
+
+.axis {
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+.tick line {
+  opacity: 0.2;
+  stroke-width: 1;
+}
+
+#scatter-y-axis {
+  font-size: 0.75rem;
+  .domain {
+    opacity: 0;
+  }
+}
+#scatter-x-axis {
+  font-size: 0.75rem;
+  .domain {
+    stroke-width: 2;
+  }
+}
+
+.scatter-circle {
+  fill: $squid-ink;
+  stroke-width: 1.5;
+}
+
+.scatter-line {
+  fill: none;
+  opacity: 0.85;
+  stroke: $train-color;
+  stroke-width: 4;
+}
+
+line.vertical-line {
+  stroke: #08b7b7;
+  stroke-width: 3;
+  opacity: 0.5;
+}
+
+/* ====================== */
+/* DELTA CHART  */
+/* ====================== */
+
+#delta-y-axis {
+  .tick,
+  .domain {
+    opacity: 0;
+  }
+}
+#delta-x-axis {
+  font-size: 0.75rem;
+  .domain {
+    opacity: 0;
+  }
+}
+line.interpretation-vertical-line {
+  stroke: $font-color;
+  stroke-width: 3;
+  opacity: 0.3;
+  stroke-dasharray: 3, 3;
+}
+
+line.delta-line {
+  stroke: $font-color;
+  stroke-width: 3;
+  opacity: 0.5;
+}
+
+.axis-text {
+  font-family: AmazonEmberMono;
+}
+
+/* ====================== */
+/* REFERENCES  */
+/* ====================== */
+
+#references {
+  padding-top: 2rem;
+  ul {
+    margin-left: auto;
+    list-style-position: outside;
+    max-width: 45rem;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 1.2rem;
+    line-height: 1.5em;
+    font-family: $main-font;
+  }
+  li {
+    text-align: left;
+    font-size: 0.95;
+  }
+
+  h3 {
+    font-family: AmazonEmberDisplayLight;
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+}
+
+#intro-icon {
+  display: flex;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $ai_color;
+  flex-direction: row;
+  padding-top: 1rem;
+  justify-content: center;
+}
+
+#intro-icon h2 {
+  padding-left: 5%;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 21px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#intro-icon > a {
+  display: flex;
+  text-decoration: none;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.logo {
+  color: black;
+  width: 15rem;
+}
+
+#intro-icon a:hover {
+  background-color: $bg-color;
+}

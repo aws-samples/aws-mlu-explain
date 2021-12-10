@@ -19,10 +19,19 @@ const offsetTriggerFromTop = 0.65;
 const scroller = scrollama();
 
 let centerTransitionIndex = -1;
-let initHeightSide = window.innerHeight;
-let initWidthSide = window.innerWidth;
+// let initHeightSide = window.innerHeight;
+// let initWidthSide = window.innerWidth;
+// let stepH = Math.floor(window.innerHeight * stepHPercentage);
+// step.style("height", stepH + "px");
 
-// draw double descent chart
+// //   let figureHeight = window.innerHeight / 1.5;
+// let figureHeight = window.innerHeight * 0.8;
+// let figureMarginTop = (window.innerHeight - figureHeight) / 2;
+
+// figure
+//   .style("height", figureHeight + "px")
+//   .style("top", figureMarginTop + "px");
+// // draw double descent chart
 const doubleDescentChart = new DoubleDescent({
   ddContainer: chart1Container,
 });
@@ -86,19 +95,22 @@ function handleResize() {
   let figureMarginTop = (window.innerHeight - figureHeight) / 2;
 
   figure
-    // .style("height", figureHeight + "px")
+    .style("height", figureHeight + "px")
     .style("top", figureMarginTop + "px");
 
   // 3. tell scrollama to update new element dimensions
   scroller.resize();
   // resize if width changes
-  if (window.innerWidth !== initWidthSide) {
-    initWidthSide = window.innerWidth;
-    initHeightSide = window.innerHeight;
-    // console.log("resize");
-    doubleDescentChart.resizeChart();
-  }
-
+  // if (window.innerWidth !== initWidthSide) {
+  //   initWidthSide = window.innerWidth;
+  //   initHeightSide = window.innerHeight;
+  //   figure
+  //     .style("height", figureHeight + "px")
+  //     .style("top", figureMarginTop + "px");
+  //   // console.log("resize");
+  //   doubleDescentChart.resizeChart();
+  // }
+  doubleDescentChart.resizeChart();
   // resolve previous transition
   if (centerTransitionIndex > -1) {
     if (centerTransitionIndex > 2) {
@@ -111,8 +123,7 @@ function handleResize() {
 // scrollama event handlers
 function handleStepEnter(response) {
   // update graphic based on step
-  figure.select("p").text(response.index + 1);
-  // console.log(response.index);
+  console.log(response.index);
 
   // update chart based on step
   stepEventsCenter[response.direction][response.index]();
@@ -144,9 +155,9 @@ function init() {
 
   // setup resize event
   // setup resize event
-  // if (window.innerWidth > 900) {
-  window.addEventListener("resize", handleResize);
-  // }
+  if (window.innerWidth > 900) {
+    window.addEventListener("resize", handleResize);
+  }
   // prevent resize when height changes, width doesnt
 }
 

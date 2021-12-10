@@ -9,12 +9,12 @@
     <!-- <meta name="viewport" content="width=device-width;" /> -->
     <meta
       name="description"
-      content="MLU-Explain: Visual Introduction to Dobule Descent."
+      content="MLU-Explain: Visual Introduction to Double Descent."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       property="og:image"
-      content="https://mlu-explain.github.io/assets/bvogimage.png"
+      content="https://mlu-explain.github.io/assets/dd1ogimage.png"
     />
 
     <meta property="og:title" content="Double Descent" />
@@ -23,7 +23,7 @@
       property="og:description"
       content="An introduction to the Double Descent phenomena in modern machine learning."
     />
-    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:width" content="1000" />
     <meta property="og:image:height" content="630" />
 
     <link rel="icon" href="./assets/mlu_robot.png" />
@@ -318,7 +318,7 @@
 
             <img src="line.gif" class="img-responsive nobbyboulder" />
 
-            <p>
+            <p class="body-text">
               It's important to pay attention to the gap
               <i>between the points</i> once we've entered our interpolation
               region (K > 36). In the image to the left, we show, for a small
@@ -326,7 +326,7 @@
               to 500 features.
             </p>
             <br />
-            <p>
+            <p class="body-text">
               Once we're at the interpolation threshold, every model from that
               complexity level onwards passes through each training data point.
               <span class="bolder"
@@ -341,7 +341,7 @@
             <!-- BAND MEMBER INFO CONTAINER END-->
             <h1 class="model-header">Final Takeaways</h1>
             <br />
-            <p>
+            <p class="body-text">
               The key takeaway here is that double descent is a real phenomenon,
               although its existence does not nullify the bias-variance
               tradeoff. It is believed that double descent contributes to
@@ -358,7 +358,7 @@
               results in superior generalization to unseen data.
             </p>
             <br /><br />
-            <p>
+            <p class="body-text">
               If you've made it this far, congratulations! You should now
               understand the double descent phenomena enough to read our
               follow-up article explaining the concept in more detail. This
@@ -367,7 +367,7 @@
               <a href="#">jupyter notebook</a>
             </p>
             <br /><br />
-            <p>
+            <p class="body-text">
               Thanks for reading! To learn more about machine learning, check
               out our
               <a href="https://aws.amazon.com/machine-learning/mlu/"
@@ -387,6 +387,8 @@
               >.
             </p>
           </div>
+          <!-- <div id="slider-container"></div> -->
+
           <br /><br />
 
           <p></p>
@@ -401,7 +403,6 @@
           This article is a product of the following resources + the awesome
           people who made (& contributed to) them:
         </p>
-        <br />
         <br />
         <ul>
           <li>
@@ -424,11 +425,11 @@
             >
             (Preetum Nakkiran, 2019).
           </li>
-          <!-- <li>
+          <li>
             <a href="https://d2l.ai/"> Dive into Deep Learning</a>
             (Aston Zhang and Zachary C. Lipton and Mu Li and Alexander J. Smola,
             2020).
-          </li> -->
+          </li>
 
           <li>
             <a href="https://d3js.org/">D3.js</a> (Mike Bostock, Philippe

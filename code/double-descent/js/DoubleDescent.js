@@ -1,6 +1,6 @@
 import { ddTrainTest } from "./dataFiles";
 import { interpolateString } from "d3-interpolate";
-import { select } from "d3-selection";
+import { select, selectAll } from "d3-selection";
 import { scaleLinear } from "d3-scale";
 import { axisBottom, axisLeft } from "d3-axis";
 import { transition } from "d3-transition";
@@ -89,6 +89,8 @@ export class DoubleDescent {
       .attr("id", `dd-svg`)
       .attr("width", this.WIDTH + this.MARGIN.LEFT + this.MARGIN.RIGHT)
       .attr("height", this.HEIGHT + this.MARGIN.TOP + this.MARGIN.BOTTOM);
+
+    // this.svg;
 
     // g container for double descent (dd)
     this.ddG = this.svg
@@ -276,32 +278,42 @@ export class DoubleDescent {
     //   .attr("fill", "coral")
     //   .attr("opacity", 0.5);
 
-    // texts
-    this.ddG
+    // // texts
+    // this.ddG
+    //   .append("text")
+    //   .attr("class", "dd-annotation-text")
+    //   .attr("id", "text-classic-regime")
+    //   .attr("x", this.xScale(10))
+    //   .attr("y", this.yScale(0))
+    //   .attr("text-anchor", "middle")
+    //   .text("Classical Regime");
+    this.interpolationText = this.ddG
       .append("text")
       .attr("class", "dd-annotation-text")
-      .attr("id", "text-classic-regime")
-      .attr("x", this.xScale(10))
-      .attr("y", this.yScale(0))
-      .attr("text-anchor", "middle")
-      .text("Classical Regime");
-    this.ddG
-      .append("text")
-      .attr("class", "dd-annotation-text")
-      .attr("id", "text-interpolation-threshold")
+      .attr("id", "text-interpolation-threshold");
+
+    this.interpolationText
       .attr("x", this.xScale(19))
-      .attr("y", this.yScale(21))
+      .attr("y", this.yScale(22.9))
       .attr("text-anchor", "middle")
-      .text("Interpolation");
-    // texts
-    this.ddG
-      .append("text")
-      .attr("class", "dd-annotation-text")
-      .attr("id", "text-interpolation-regime")
-      .attr("x", this.xScale(25))
-      .attr("y", this.yScale(0))
-      .attr("text-anchor", "middle")
-      .text("Interpolation Regime");
+      .text("Interpolation")
+      .append("tspan")
+      .text("Threshold")
+      // .style('font-size', '.1rem')
+      .attr("x", this.xScale(19))
+      .attr("dy", "1.1em");
+    this.interpolationText.attr("opacity", 0);
+    // // texts
+    // this.ddG
+    //   .append("text")
+    //   .attr("class", "dd-annotation-text")
+    //   .attr("id", "text-interpolation-regime")
+    //   .attr("x", this.xScale(25))
+    //   .attr("y", this.yScale(0))
+    //   .attr("text-anchor", "middle")
+    //   .text("Interpolation Regime");
+
+    selectAll(".dd-annotation-text").raise();
   }
 
   drawTransition0Down() {
@@ -509,6 +521,11 @@ export class DoubleDescent {
     // hide area
     const trans = transition().duration(durationTime);
     this.rectUnder.transition(trans).attr("fill-opacity", 0);
+
+    // toggle "Interpolation Threshold" text
+    // this.interpolationText.raise();
+    this.rectOver.transition(trans).attr("fill-opacity", 0);
+    this.interpolationText.attr("opacity", 0);
   }
 
   drawTransition3Up() {
@@ -531,9 +548,13 @@ export class DoubleDescent {
       .attr("x2", this.xScale(19))
       .attr("y2", this.yScale(0))
       .transition(trans)
-      .attr("y2", this.yScale(25));
+      .attr("y2", this.yScale(23));
 
     this.rectOver.transition(trans).attr("fill-opacity", 0.95);
+
+    // toggle "Interpolation Threshold" text
+    this.interpolationText.raise();
+    this.interpolationText.transition(trans).attr("opacity", 1);
   }
 
   drawTransition4Down() {
@@ -590,45 +611,55 @@ export class DoubleDescent {
       .attr("d", this.lineGenTest(ddTrainTest))
       .call((d) => pathTransition(d, 0, 0));
 
-    const interpolationGradient = this.svg
+    // const interpolationGradient = this.svg
+    //   .append("defs")
+    //   .append("linearGradient")
+    //   .attr("id", "interpolationGradient")
+    //   .attr("x1", "0%")
+    //   .attr("y1", "100%")
+    //   .attr("x2", "0%")
+    //   .attr("y2", "0%");
+
+    // interpolationGradient
+    //   .append("stop")
+    //   .attr("offset", "0%")
+    //   .attr("stop-color", "#0f151b")
+    //   .attr("stop-opacity", 0.76);
+    // interpolationGradient
+    //   .append("stop")
+    //   .attr("offset", "100%")
+    //   .attr("stop-color", "#232f3e")
+    //   .attr("stop-opacity", 0);
+
+    const bgGradient = this.svg
       .append("defs")
       .append("linearGradient")
-      .attr("id", "interpolationGradient")
+      .attr("id", "bgGradient")
       .attr("x1", "0%")
       .attr("y1", "100%")
       .attr("x2", "0%")
-      .attr("y2", "0%");
+      .attr("y2", "40%");
 
-    interpolationGradient
+    bgGradient
       .append("stop")
       .attr("offset", "0%")
-      .attr("stop-color", "#0f151b")
+      .attr("stop-color", "rgba(3, 117, 117, .25)")
       .attr("stop-opacity", 0.76);
-    interpolationGradient
+    bgGradient
       .append("stop")
-      .attr("offset", "100%")
+      .attr("offset", "90%")
       .attr("stop-color", "#232f3e")
       .attr("stop-opacity", 0);
 
-    const classicalGradient = this.svg
-      .append("defs")
-      .append("linearGradient")
-      .attr("id", "classicalGradient")
-      .attr("x1", "0%")
-      .attr("y1", "100%")
-      .attr("x2", "0%")
-      .attr("y2", "0%");
-
-    classicalGradient
-      .append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "rgb(3, 117, 117)")
-      .attr("stop-opacity", 0.76);
-    classicalGradient
-      .append("stop")
-      .attr("offset", "70%")
-      .attr("stop-color", "#232f3e")
-      .attr("stop-opacity", 0);
+    // make rect for bg gradient
+    this.bgRect = this.ddG
+      .append("rect")
+      .attr("id", "rect-bg")
+      .attr("x", this.xScale(this.plotXMin))
+      .attr("y", this.yScale(23))
+      .attr("width", this.WIDTH)
+      .attr("height", this.yScale(0))
+      .style("fill", "url(#bgGradient)");
 
     // add rects after so overlap
     this.rectOver = this.ddG
@@ -637,10 +668,9 @@ export class DoubleDescent {
       .attr("x", this.xScale(19))
       .attr("y", this.yScale(23))
       .attr("width", this.WIDTH - this.xScale(19))
-      .attr("height", this.yScale(0))
-      // .attr("fill", "#232f3e")
-      .style("fill", "url(#interpolationGradient)")
-      .attr("fill-opacity", ``);
+      .attr("height", this.yScale(0) + 10)
+      .attr("fill", "#232f3e")
+      .attr("fill-opacity", 0);
 
     this.rectUnder = this.ddG
       .append("rect")
@@ -648,13 +678,13 @@ export class DoubleDescent {
       .attr("x", this.xScale(this.plotXMin))
       .attr("y", this.yScale(23))
       .attr("width", this.xScale(19))
-      .attr("height", this.yScale(0))
-      // .attr("fill", "#232f3e")
-      .style("fill", "url(#classicalGradient)");
-    // .attr("fill-opacity", 0);
+      .attr("height", this.yScale(0) + 10)
+      .attr("fill", "#232f3e")
+      .attr("fill-opacity", 0);
 
-    this.rectOver.lower();
-    this.rectUnder.lower();
+    // this.rectOver.lower();
+    // this.rectUnder.lower();
+    this.bgRect.lower();
   }
 
   addTitle() {

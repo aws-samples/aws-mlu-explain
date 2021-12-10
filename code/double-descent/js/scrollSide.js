@@ -6,7 +6,7 @@ import { Scatter } from "./Scatter";
 import "intersection-observer";
 
 // ensure refresh goes to top of page
-window.onbeforeunload = () => window.scrollTo(0, 0);
+// window.onbeforeunload = () => window.scrollTo(0, 0);
 
 // using d3 for convenience
 const scrollySide = select("#scrolly-side");
@@ -113,9 +113,9 @@ function handleResizeSide() {
 // scrollama event handlers
 function handleStepEnterSide(response) {
   // add color to current step only
-  stepSide.classed("is-active", function (d, i) {
-    return i === response.index;
-  });
+  // stepSide.classed("is-active", function (d, i) {
+  //   return i === response.index;
+  // });
 
   // update chart based on step
   stepEventsSide[response.direction][response.index]();
@@ -148,8 +148,11 @@ function initSide() {
   // if (window.innerWidth > 900) {
   // prevent resize when height changes, width doesnt
   // if (!(window.innerHeight === initHeightSide && window.innerWidth !== initWidthSide)) {
-  window.addEventListener("resize", handleResizeSide);
+  // window.addEventListener("resize", handleResizeSide);
   // }
+  if (window.innerWidth > 900) {
+    window.addEventListener("resize", handleResizeSide);
+  }
 }
 
 // kick scrolly things off
@@ -157,7 +160,7 @@ initSide();
 
 // add slider
 
-const slider = select(`#slider-container-loess`);
+const slider = select(`#slider-container`);
 
 // draw text
 slider.append("h4").attr("id", `error-text`).html(`K (# features): 29`);

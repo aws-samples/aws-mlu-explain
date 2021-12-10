@@ -364,7 +364,7 @@ body {
     background-color: white;
     color: $squid-ink;
     box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
-    opacity: 0.95;
+    // opacity: 0.95;
   }
 
   .axis {
@@ -391,6 +391,7 @@ body {
     padding: 0 1rem;
     padding-left: 1rem;
     max-width: 33rem;
+    // z-index: 99999;
   }
 
   figure {
@@ -401,7 +402,7 @@ body {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    // z-index: -999;
+    z-index: 1;
     vertical-align: center;
   }
 
@@ -473,9 +474,20 @@ body {
   fill: $font-color;
 }
 
-#rect-interpolate {
-  fill: linear-gradient(white, #9198e5);
+.dd-annotation-text {
+  font-family: AmazonEmberDisplayHeavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke: rgb(3, 117, 117);
+  stroke: black;
+  stroke-width: 4px;
+  font-size: 1.1rem;
 }
+
+// #rect-interpolate {
+//   fill: linear-gradient(white, #9198e5);
+// }
 
 .dd-line {
   fill: none;
@@ -789,12 +801,20 @@ body {
     padding: 1rem;
     display: block;
     padding-bottom: 10rem;
+    z-index: 2;
+
     article {
       position: relative;
       padding: 0;
       max-width: 50%;
       margin: 0 auto;
       font-family: $main-font;
+      z-index: 6;
+    }
+
+    #scatter-container,
+    #error-container {
+      z-index: 4;
     }
 
     figure {
@@ -805,13 +825,14 @@ body {
       -webkit-transform: translate3d(0, 0, 0);
       -moz-transform: translate3d(0, 0, 0);
       transform: translate3d(0, 0, 0);
-      // z-index: -999;
+      z-index: 4;
     }
 
     .step-side {
       margin: 0 auto 2rem auto;
       color: $font-color;
       width: 100%;
+      z-index: 100;
     }
 
     .step-side:last-child {
@@ -825,7 +846,8 @@ body {
       background-color: $bg-color2;
       color: black;
       box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
-      opacity: 0.95;
+      // opacity: 0.95;
+      z-index: 100;
     }
   }
 }
@@ -860,10 +882,10 @@ body {
   }
 
   p.intro-text {
-    line-height: 1.65;
-    font-size: 19px;
+    line-height: 1.5;
+    font-size: 17.5px;
     max-width: 500px;
-    width: 95%;
+    // width: 95%;
   }
 
   .section-title {
@@ -875,16 +897,27 @@ body {
   .body-text,
   .model-text {
     padding: 4%;
-
-    line-height: 1.65;
-    font-size: 19px;
+    line-height: 1.5;
+    font-size: 17.5px;
     max-width: 500px;
-    width: 95%;
+    // width: 95%;
+  }
+
+  .model-header {
+    padding-top: 2rem;
+    font-size: 1.75rem;
+    padding-left: 4%;
   }
 
   #gap-container,
   #conclusion {
-    padding: 10%;
+    // padding: 10%;
+  }
+
+  ul,
+  li {
+    font-size: 17px;
+    line-height: 1.5;
   }
 
   /* ====================== */
@@ -929,26 +962,35 @@ body {
     opacity: 0.8;
   }
 
+  .dd-annotation-text {
+    font-size: 0.7rem;
+    stroke-width: 2px;
+  }
+
   #scrolly {
     padding: 0.1rem;
 
     figure {
-      padding-top: 30%;
+      padding-top: 20%;
     }
 
     .step p {
-      font-size: 0.9rem;
+      // font-size: 0.9rem;
+      font-size: 17px;
     }
   }
 
   .step-side {
-    height: 100%;
+    height: 100vh;
   }
-}
 
-// one of these should work
-article {
-  z-index: 999999;
+  // side
+  #error-text {
+    font-size: 1rem;
+  }
+  #slider-container {
+    padding: 1rem;
+  }
 }
 
 #ai {
@@ -993,26 +1035,26 @@ article {
   width: 10rem;
 }
 
-#intro-icon > a:hover {
-  background-color: none;
+#intro-icon a:hover {
+  background-color: $squid-ink;
 }
 
-svg {
-  // outline: 1px solid red;
-}
-
-.dd-annotation-text {
-  font-family: AmazonEmberDisplayHeavy;
-  stroke-linejoin: round;
-  fill: white;
-  paint-order: stroke fill;
-  stroke: rgb(3, 117, 117);
-  stroke: black;
-  stroke-width: 4px;
-  font-size: 1.1rem;
-}
+// svg {
+//   // outline: 1px solid red;
+// }
 
 // body {
-//   height: 95vh;
-//   max-height: 95vh;
+//   height: 90vh;
+//   max-height: 90vh;
+//   // position: fixed;
+//   // height: 100%;
+//   overscroll-behavior: none;
+// }
+
+article {
+  z-index: 999999;
+}
+
+// #scrolly-side {
+//   z-index: 9999999999;
 // }
