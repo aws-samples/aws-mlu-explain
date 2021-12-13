@@ -1,9 +1,9 @@
 {
   "name": "double-descent2",
   "version": "1.0.0",
-  "license": "UNLICENSED",
+  "license": "Creative Commons Attribution-ShareAlike 4.0 International License",
   "description": "MLU-Explain article about double descent, but with more math.",
-  "author": "Jared Wilber",
+  "author": "Brent Werness & Jared Wilber",
   "main": "dist/index.html",
   "files": [
     "dist/**"
