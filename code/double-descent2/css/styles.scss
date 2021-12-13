@@ -68,12 +68,25 @@ body {
   font-size: 24px;
 }
 
-p.intro-text {
-  font-size: 1.1rem;
+.body-text {
+  // font-size: 1.1rem;
   text-align: left;
   color: $font-color;
   font-family: $main-font;
   padding: 1rem;
+  // padding: 4%;
+  line-height: 1.5;
+  font-size: 21px;
+  // max-width: 500px;
+}
+
+.model-header,
+.subtitle {
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 2.2rem;
+  text-align: left;
+  padding: 1rem;
+  padding-top: 2rem;
 }
 
 p,
@@ -87,16 +100,9 @@ a {
   color: $font-color;
 }
 
-// h1 {
-//   text-align: left;
-//   font-size: 1.6rem;
-//   padding-left: 1rem;
-// }
-
 h2 {
   text-align: left;
-  // font-size: 1.3rem;
-  // padding: 1rem;
+
   color: $font-color;
 }
 
@@ -104,7 +110,6 @@ a:visited,
 a:hover {
   color: $color;
   text-decoration: none;
-  // border-bottom: 2px solid currentColor;
 }
 
 a {
@@ -116,65 +121,14 @@ a:hover {
   color: $font-color;
   background-color: $color;
   text-decoration: none;
-  // border-bottom: 2px solid currentColor;
 }
 
-// #intro {
-//   max-width: 45rem;
-//   margin: 1rem auto;
-//   text-align: center;
-// }
-
-// .intro-hed {
-//   font-size: 3.5rem;
-//   margin: 2rem auto 0.5rem auto;
-//   color: $font-color;
-//   font-family: AmazonEmberDisplayHeavy;
-//   text-align: center;
-// }
-
-// .intro-sub {
-//   font-size: 1.4rem;
-//   text-align: center;
-//   margin: 1rem;
-//   font-family: AmazonEmberDisplayHeavy;
-//   opacity: 0.6;
-//   color: $color;
-// }
-
-// .intro-author {
-//   color: #bcbcbc;
-//   font-size: 0.9rem;
-// }
-
-// .model-text {
-//   max-width: 45rem;
-//   margin: 0 auto;
-//   text-align: left;
-//   font-size: 1rem;
-//   line-height: 1.5em;
-//   font-family: $main-font;
-// }
 #intro {
-  max-width: 55rem;
+  max-width: 50rem;
   margin: 1rem auto;
   text-align: center;
   padding-top: 3rem;
 }
-
-// .intro-hed {
-//   font-size: 3.5rem;
-//   margin: 2rem auto 0.5rem auto;
-//   color: $font-color;
-//   font-family: AmazonEmberDisplayHeavy;
-// }
-
-// #intro {
-//   text-align: center;
-//   max-width: 90%;
-//   padding-bottom: 5rem;
-//   margin: auto;
-// }
 
 #intro-hed {
   font-size: 6.5rem;
@@ -193,7 +147,6 @@ a:hover {
   text-align: center;
   margin: 1rem;
   font-family: AmazonEmberDisplayHeavy;
-  opacity: 0.75;
   color: $color;
   padding: 2rem;
 }
@@ -206,18 +159,17 @@ a:hover {
   padding-bottom: 0px;
   margin-bottom: 0px;
   color: $squid-ink;
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
+
+  a {
+    color: $font-color;
+  }
 }
 
 .model-header {
-  padding-top: 5rem;
   font-family: AmazonEmberDisplayHeavy;
-  max-width: 45rem;
-  margin: 0 auto;
-  padding-bottom: 0.5rem;
+  font-size: 2.2rem;
   text-align: left;
-  font-weight: bold;
-  font-size: 1.3rem;
 }
 
 .model-text {
@@ -244,29 +196,10 @@ hr {
 /* LAYOUT STYLES */
 /* ====================== */
 
-// #ai {
-//   color: $color;
-//   font-family: AmazonEmberDisplayHeavy;
-// }
-
-// #intro-icon {
-//   display: flex;
-//   justify-content: center;
-//   vertical-align: center;
-//   text-transform: uppercase;
-//   letter-spacing: 1.5px;
-//   padding: 2rem;
-//   font-weight: bold;
-//   color: $font-color;
-// }
-
-// #intro-icon h2 {
-//   padding-left: 2%;
-//   font-family: AmazonEmberDisplayHeavy;
-//   font-size: 1.2rem;
-//   margin-top: 10px;
-//   margin-bottom: 10px;
-// }
+#ai {
+  color: $color;
+  font-family: AmazonEmberDisplayHeavy;
+}
 
 body {
   background-color: $bg-color;
@@ -279,45 +212,78 @@ body {
 }
 
 .bold {
-  font-size: 1rem;
   font-family: AmazonEmberDisplayHeavy;
-  font-weight: bold;
 }
 
-@media (max-width: 1100px) {
-  /* ====================== */
-  /* LAYOUT  */
-  /* ====================== */
+ul {
+  margin-left: auto;
+  list-style-position: outside;
+  // max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 21px;
+  line-height: 1.5em;
+  font-family: $main-font;
+}
+li {
+  text-align: left;
+  padding-bottom: 8px;
+  font-family: AmazonEmberDisplayLight;
+
+  a {
+    font-family: AmazonEmberDisplayHeavy;
+  }
+}
+
+@media (max-width: 600px) {
   #intro {
     padding-right: 0;
-    padding: 10%;
-    // max-width: 100%;
+    padding: 20px;
   }
 
-  .intro-hed {
+  #intro-hed {
     margin-top: 0;
-    font-size: 3.5rem;
+    font-size: 3.6rem;
+    padding-top: 3rem;
   }
 
-  // #intro-icon {
-  //   padding-bottom: 0;
-  // }
+  #intro-icon {
+    padding-bottom: 0;
+  }
 
-  // #intro-icon h2 {
-  //   margin-bottom: 0;
-  //   padding-bottom: 0;
-  // }
+  #intro-icon h2 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 
-  .body-text {
-    padding: 10%;
-    padding-bottom: 4rem;
+  .intro-text {
+    line-height: 1.5;
+    font-size: 21px;
+    max-width: 500px;
+    // width: 95%;
   }
 
   .section-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
+    text-align: center;
+    padding-bottom: 1.5rem;
   }
-}
-@media (max-width: 400px) {
+
+  .body-text,
+  .model-text {
+    padding: 4%;
+    line-height: 1.5;
+    font-size: 21px;
+    max-width: 500px;
+    // width: 95%;
+  }
+
+  .model-header {
+    padding-top: 2rem;
+    font-size: 1.75rem;
+    padding-left: 4%;
+  }
+
   /* ====================== */
   /* LAYOUT  */
   /* ====================== */
@@ -345,39 +311,30 @@ body {
   }
 }
 
-ul {
-  margin-left: auto;
-  list-style-position: outside;
-  list-style-type: none;
-  max-width: 45rem;
-  margin: 0 auto;
-  text-align: left;
-  font-size: 1.2rem;
-  line-height: 1.5em;
-  font-family: $main-font;
-}
-li {
-  text-align: left;
-  font-size: 1.1rem;
-}
-
-// @media (max-width)
 .katex-eq {
-  font-size: 1.1rem;
+  font-size: 20px;
 }
 
 .block-text {
-  font-size: 1.05rem;
+  font-size: 19px;
   text-align: left;
   color: $font-color;
   font-family: $main-font;
   padding: 1rem;
   padding-left: 2rem;
   font-family: AmazonEmberDisplayLight;
+  border: 4px solid $squid-ink;
+  padding: 1rem;
+  width: 80%;
+  margin: 1rem auto;
+
+  .katex-eq {
+    font-size: 18px;
+  }
 }
 
 p.list-text {
-  font-size: 1.1rem;
+  font-size: 20px;
   text-align: left;
   color: $font-color;
   font-family: $main-font;
@@ -388,12 +345,6 @@ p.list-text {
   text-align: left;
   padding: 1rem;
   padding-left: 2rem;
-}
-
-.subtitle {
-  font-size: 1.4rem;
-  font-family: AmazonEmberDisplayHeavy;
-  padding: 1rem;
 }
 
 .katex-eq-prop {
@@ -506,6 +457,7 @@ line.delta-line {
     font-size: 1.2rem;
     line-height: 1.5em;
     font-family: $main-font;
+    border: none;
   }
   li {
     text-align: left;
@@ -522,7 +474,7 @@ line.delta-line {
 #intro-icon {
   display: flex;
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 700;
   color: $ai_color;
   flex-direction: row;
   padding-top: 1rem;
@@ -544,9 +496,110 @@ line.delta-line {
 }
 .logo {
   color: black;
-  width: 15rem;
+  width: 10rem;
 }
 
 #intro-icon a:hover {
   background-color: $bg-color;
+}
+
+#top-note {
+  font-family: AmazonEmberDisplayLight;
+  padding: none;
+  text-align: center;
+  color: $squid-ink;
+  font-size: 1.1rem;
+  font-style: italic;
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  #intro {
+    // padding-right: 0;
+    padding: 5px;
+  }
+
+  #intro-hed {
+    margin-top: 0;
+    font-size: 3.6rem;
+    padding-top: 1rem;
+  }
+
+  #intro-icon {
+    padding-bottom: 0;
+    padding-top: 2rem;
+  }
+
+  #intro-icon h2 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .intro-sub {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 2rem 0;
+  }
+
+  p.intro-text {
+    line-height: 1.5;
+    font-size: 21px;
+    max-width: 500px;
+    // width: 95%;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+    text-align: center;
+    padding-bottom: 1.5rem;
+  }
+
+  .body-text,
+  .model-text {
+    padding: 4%;
+    line-height: 1.5;
+    font-size: 17.5px;
+    max-width: 500px;
+    // width: 95%;
+  }
+
+  .katex-eq {
+    font-size: 16.5px;
+  }
+
+  .model-header {
+    padding-top: 2rem;
+    font-size: 1.75rem;
+    padding-left: 4%;
+  }
+
+  .subtitle {
+    font-size: 21px;
+    // padding-bottom: 1rem;
+  }
+
+  .block-text {
+    width: 95%;
+    font-size: 17px;
+
+    .katex-eq {
+      font-size: 16px;
+    }
+  }
+
+  .list {
+    padding-left: 1rem;
+  }
+
+  p.list-text {
+    font-size: 17.5px;
+  }
+
+  ul {
+    font-size: 17.5px;
+  }
+}
+
+a.reference-link {
+  font-family: AmazonEmber;
 }
