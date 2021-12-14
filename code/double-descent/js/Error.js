@@ -1,9 +1,11 @@
 import { interpolateString } from "d3-interpolate";
+import { bisect } from "d3-array";
 import { select } from "d3-selection";
 import { scaleLinear } from "d3-scale";
 import { axisBottom, axisLeft } from "d3-axis";
 import { errorData } from "./dataFiles";
 import { line } from "d3-shape";
+import { format } from "d3-format";
 import { transition } from "d3-transition";
 
 function errorPathLen(path, x) {
@@ -15,7 +17,7 @@ function errorPathLen(path, x) {
 
   while (target >= start && target <= pathLength) {
     let pos = path.getPointAtLength(target);
-    if (Math.abs(pos.x - x) < 0.1) {
+    if (Math.abs(pos.x - x) < 0.01) {
       return target;
     } else if (pos.x > x) {
       end = target;
@@ -45,17 +47,26 @@ export class Error {
   constructor(opts) {
     // load in arguments from config object
     this.element = opts.container;
+    this.data = errorData.map((d, i) => {
+      return { i: i + 1, x: d.x, mae: d.mae };
+    });
 
     this.innerWidth =
       window.innerWidth >= 1000
-        ? window.innerWidth / 4.1
+        ? window.innerWidth / 4
         : window.innerWidth / 1.6;
     this.innerHeight = window.innerHeight * 0.27;
-    this.margin = { left: 45, right: 9, top: 15, bottom: 50 };
+    this.margin = {
+      left: 55,
+      right: 30,
+      top: window.innerWidth > 600 ? 15 : 22,
+      bottom: 50,
+    };
 
     this.drawBaseChart();
     this.drawAxes();
     this.drawErrorLine();
+    this.showToolTip();
   }
 
   drawBaseChart() {
@@ -115,7 +126,7 @@ export class Error {
     this.errorSvg
       .append("text")
       .attr("class", "error-axis-text")
-      .attr("x", this.innerWidth / 2 + this.margin.left + this.margin.right)
+      .attr("x", (this.innerWidth + this.margin.left + this.margin.right) / 2)
       .attr("y", this.innerHeight + this.margin.bottom)
       .text("Log(# of Non-linear Features)")
       .attr("text-anchor", "middle");
@@ -131,6 +142,23 @@ export class Error {
   }
 
   drawErrorLine() {
+    this.tooltip = this.errorPlot.append("g");
+    this.tooltip
+      .append("text")
+      .attr("id", "text-top")
+      .attr("class", "error-tooltip-text")
+      .attr("text-anchor", "middle")
+      .attr("alignment-baseline", "middle")
+      .text(`K=5`);
+    this.tooltip
+      .append("text")
+      .attr("id", "text-bottom")
+      .attr("class", "error-tooltip-text")
+      .attr("text-anchor", "middle")
+      .attr("alignment-baseline", "middle")
+      .html(`MAE=.232`)
+      .attr("dy", "1.1em");
+
     // init line generator
     this.errorLineGen = line()
       .x((d) => this.xScale(d.x))
@@ -141,130 +169,88 @@ export class Error {
       .append("path")
       .attr("class", "error-line")
       .attr("id", `error-line`)
-      .attr("d", this.errorLineGen(errorData))
+      .attr("d", this.errorLineGen(this.data))
       .call((d) => transitionError(d, 0, 0));
   }
 
   showToolTip() {
     this.verticalToolTip
-      .attr("x1", this.xScale(errorData[28].x))
+      .attr("x1", this.xScale(this.data[4].x))
       .attr("y1", this.yScale(0))
-      .attr("x2", this.xScale(errorData[28].x))
-      .attr("y2", this.yScale(0))
-      .transition()
+      .attr("x2", this.xScale(this.data[4].x))
       .attr("y2", this.yScale(1.6));
 
     this.verticalToolTip.raise();
+    this.tooltip.raise();
+  }
+
+  updateText(val) {
+    this.tooltip
+      .transition()
+      .attr(
+        "transform",
+        `translate(${this.xScale(this.data[val].x)}, ${this.yScale(
+          this.data[val].mae
+        )})`
+      );
+    select("#text-top").text(`K: ${format(".0f")(val + 1)}`);
+    select("#text-bottom").text(`MAE: ${format(".3f")(this.data[val].mae)}`);
   }
 
   updateToolTip(val) {
     this.verticalToolTip
-      .attr("x1", this.xScale(val))
-      .attr("x2", this.xScale(val));
+      .transition()
+      .attr("x1", this.xScale(errorData[val].x))
+      .attr("x2", this.xScale(errorData[val].x));
+
+    this.updateText(val);
+  }
+
+  dragToolTip(val) {
+    this.verticalToolTip
+      .attr("x1", this.xScale(this.data[val].x))
+      .attr("x2", this.xScale(this.data[val].x));
+    this.tooltip.attr(
+      "transform",
+      `translate(${this.xScale(this.data[val].x)}, ${this.yScale(
+        this.data[val].mae
+      )})`
+    );
+    select("#text-top").text(`K: ${format(".0f")(val + 1)}`);
+    select("#text-bottom").text(`MAE: ${format(".3f")(this.data[val].mae)}`);
   }
 
   drawTransition0Down() {
-    const startPoint = 0;
-    const endPoint = 1.609;
+    const startPoint = 0.01;
+    const endPoint = 5.6;
     const trainLenStart = errorPathLen(this.trainLine, this.xScale(startPoint));
     const trainLenEnd = errorPathLen(this.trainLine, this.xScale(endPoint));
     // // draw line to gien distance
     this.trainLine.call((d) => transitionError(d, trainLenStart, trainLenEnd));
+    this.updateToolTip(4);
   }
   drawTransition1Down() {
-    const startPoint = 1.609;
-    const endPoint = 3.1;
-    const trainLenStart = errorPathLen(this.trainLine, this.xScale(startPoint));
-    const trainLenEnd = errorPathLen(this.trainLine, this.xScale(endPoint));
-    // // draw line to gien distance
-    this.trainLine.call((d) => transitionError(d, trainLenStart, trainLenEnd));
+    this.updateToolTip(11);
   }
   drawTransition2Down() {
-    const startPoint = 2.75;
-    const endPoint = 3.33;
-    const trainLenStart = errorPathLen(this.trainLine, this.xScale(startPoint));
-    const trainLenEnd = errorPathLen(this.trainLine, this.xScale(endPoint));
-    // // draw line to gien distance
-    this.trainLine.call((d) => transitionError(d, trainLenStart, trainLenEnd));
+    this.updateToolTip(28);
   }
   drawTransition3Down() {
-    const startPoint = 3.33;
-    const endPoint = 5.5;
-    const trainLenStart = errorPathLen(this.trainLine, this.xScale(startPoint));
-    const trainLenEnd = errorPathLen(this.trainLine, this.xScale(endPoint));
-    // // draw line to gien distance
-    this.trainLine.call((d) => transitionError(d, trainLenStart, trainLenEnd));
+    this.updateToolTip(255);
   }
   drawTransition0Up() {
-    const startPoint = 3.1;
-    const endPoint = 1.609;
-    const trainLenStart = errorPathLen(this.trainLine, this.xScale(startPoint));
-    const trainLenEnd = errorPathLen(this.trainLine, this.xScale(endPoint));
-    // // draw line to gien distance
-    this.trainLine.call((d) => transitionError(d, trainLenStart, trainLenEnd));
+    this.updateToolTip(5);
   }
   drawTransition1Up() {
-    const startPoint = 3.33;
-    const endPoint = 3.1;
-    const trainLenStart = errorPathLen(this.trainLine, this.xScale(startPoint));
-    const trainLenEnd = errorPathLen(this.trainLine, this.xScale(endPoint));
-    // // draw line to gien distance
-    this.trainLine.call((d) => transitionError(d, trainLenStart, trainLenEnd));
+    this.updateToolTip(11);
   }
   drawTransition2Up() {
-    const startPoint = 5.5;
-    const endPoint = 3.33;
-    const trainLenStart = errorPathLen(this.trainLine, this.xScale(startPoint));
-    const trainLenEnd = errorPathLen(this.trainLine, this.xScale(endPoint));
-    // // draw line to gien distance
-    this.trainLine.call((d) => transitionError(d, trainLenStart, trainLenEnd));
+    this.updateToolTip(28);
   }
-  drawTransition3Up() {}
-  drawTransition4Up() {
-    this.verticalToolTip
-      .transition()
-      .attr("y1", this.yScale(0))
-      .attr("y2", this.yScale(0));
+  drawTransition3Up() {
+    this.updateToolTip(255);
   }
-
-  addLegend() {
-    const that = this;
-    const legendData = ["Train Data", "Test Data"];
-
-    const nodeWidth = (d) => d.getBBox().width;
-
-    const legend = this.errorPlot
-      .append("g")
-      .attr("class", "legend")
-      .attr("transform", "translate(0,0)");
-
-    const lg = legend.selectAll("g").data(legendData).enter().append("g");
-
-    const legendCircle = lg
-      .append("circle")
-      .attr("r", 6)
-      .attr("fill", (d, i) => (i % 2 == 0 ? trainColorDot : testColorDot))
-      .attr("cy", 5)
-      .attr("cx", 1)
-      .attr("stroke-width", 0);
-    lg.append("text")
-      .style("font-size", "16px")
-      .attr("x", 11.5)
-      .attr("y", 10)
-      .text((d) => d);
-
-    let offset = 0;
-
-    lg.attr("transform", function (d) {
-      let x = offset;
-      offset += nodeWidth(this) + 10;
-      return `translate(${x}, ${0})`;
-    });
-
-    legend.attr("transform", function () {
-      return `translate(${(that.innerWidth - nodeWidth(this)) / 2}, 0)`;
-    });
-  }
+  drawTransition4Up() {}
 
   addTitle(title) {
     // remove title if shown
