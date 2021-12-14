@@ -5,13 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Double Descent</title>
     <meta name="description" content="Double Descent" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
     <!-- <meta name="viewport" content="width=device-width;" /> -->
     <meta
       name="description"
       content="MLU-Explain: Visual Introduction to Double Descent."
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
     <meta
       property="og:image"
       content="https://mlu-explain.github.io/assets/dd1ogimage.png"
@@ -84,12 +87,17 @@
 
       <section id="intro">
         <h1 id="intro-hed">Double Descent</h1>
-        <h1 class="intro-sub">A Visual Introduction</h1>
+        <h1 class="intro-sub">Part 1: A Visual Introduction</h1>
         <h3 id="intro__date">
           <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
           & Brent Werness, December 2021
         </h3>
-        <p class="intro-text">
+        <p id="top-note">
+          Note - this is part 1 of a two article series on
+          <span class="bold">Double Descent</span>. Part 2 is available
+          <a href="https://mlu-explain.github.io/double-descent2/">here</a>.
+        </p>
+        <p class="model-text">
           In our<a href="https://mlu-explain.github.io/bias-variance/">
             previous discussion of the bias-variance tradeoff</a
           >, we ended with a note about one of modern machine learning’s more
@@ -182,7 +190,7 @@
             </p>
           </div>
           <!-- add empty div for extra space at bottom -->
-          <div class="step" data-step="6"></div>
+          <!-- <div class="step" data-step="6"></div> -->
         </article>
       </section>
       <!-- end center scroll -->
@@ -192,7 +200,7 @@
         <div class="model-text">
           <h1 class="model-header">What's Going On?</h1>
 
-          <p class="body-text">
+          <p class="model-text">
             To better understand this phenomenon, let's explore it together!
             Quick note - in this article, we'll keep things fairly high-level.
             However, if you're interested in more mathematical, lower-level
@@ -232,6 +240,7 @@
             <div id="scatter-container"></div>
             <br />
             <div id="error-container"></div>
+            <!-- <div id="slider-container-mobile"></div> -->
           </figure>
 
           <article>
@@ -294,13 +303,11 @@
 
             <div class="step-side" data-step="6">
               <p>
-                To get a feel for the different results across the complexity
-                level, toggle the slider to modify the number of non-linear
-                features used to build the models. Note that the max error
-                occurs at values around our interpolation threshold (K &equals;
-                36).
+                Try for yourself! Toggle the slider to modify the number of
+                non-linear features used to build the models.
+                <div id="slider-container"></div>
               </p>
-              <div id="slider-container-loess"></div>
+             
             </div>
           </article>
           <br /><br />
@@ -316,8 +323,10 @@
           <div id="gap-container">
             <!-- BAND MEMBER INFO CONTAINER START -->
 
-            <img src="line.gif" class="img-responsive nobbyboulder" />
-
+            <img
+              src="line.gif"
+              alt="Image of interpolation region from above."
+            />
             <p class="body-text">
               It's important to pay attention to the gap
               <i>between the points</i> once we've entered our interpolation
@@ -358,18 +367,11 @@
               results in superior generalization to unseen data.
             </p>
             <br /><br />
-            <p class="body-text">
-              If you've made it this far, congratulations! You should now
-              understand the double descent phenomena enough to read our
-              follow-up article explaining the concept in more detail. This
-              article is also available as an interactive python in better
-              detail. Feel free to check out the articles code as a
-              <a href="#">jupyter notebook</a>
-            </p>
-            <br /><br />
-            <p class="body-text">
-              Thanks for reading! To learn more about machine learning, check
-              out our
+
+            <!-- <p class="body-text">
+              Thanks for reading! If you've made it this far, consider viewing
+              our follow-up article explaining double descent in more detail. To
+              learn more about machine learning, check out our
               <a href="https://aws.amazon.com/machine-learning/mlu/"
                 >self-paced courses</a
               >, our
@@ -385,11 +387,9 @@
                 href="https://code.amazon.com/packages/Mlu-explain_double-descent/trees/mainline"
                 >here</a
               >.
-            </p>
+            </p> -->
           </div>
           <!-- <div id="slider-container"></div> -->
-
-          <br /><br />
 
           <p></p>
         </div>
@@ -398,6 +398,29 @@
       </section>
 
       <section id="conclusion">
+        <br /><br />
+        <p class="model-text">
+          Thanks for reading! If you've made it this far, consider viewing
+          <a href="https://mlu-explain.github.io/double-descent2/"
+            >our follow-up article</a
+          >
+          explaining double descent in more detail. To learn more about machine
+          learning, check out our
+          <a href="https://aws.amazon.com/machine-learning/mlu/"
+            >self-paced courses</a
+          >, our
+          <a href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
+            >youtube videos</a
+          >, and the
+          <a href="https://d2l.ai/">Dive into Deep Learning</a> textbook. If you
+          have any comments or ideas related to MLU-Explain articles, feel free
+          to <a href="https://twitter.com/jdwlbr"> reach out directly</a>. The
+          code for this article is available
+          <a
+            href="https://code.amazon.com/packages/Mlu-explain_double-descent/trees/mainline"
+            >here</a
+          >.
+        </p>
         <h1 class="model-header">References & Open Source</h1>
         <p class="model-text">
           This article is a product of the following resources + the awesome

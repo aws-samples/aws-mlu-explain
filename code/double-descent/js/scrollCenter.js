@@ -114,7 +114,7 @@ function handleResize() {
   // resolve previous transition
   if (centerTransitionIndex > -1) {
     if (centerTransitionIndex > 2) {
-      stepEventsCenter["down"][2]();
+      doubleDescentChart.redrawResize();
     }
     stepEventsCenter["down"][centerTransitionIndex]();
   }

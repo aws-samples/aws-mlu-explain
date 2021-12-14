@@ -187,6 +187,10 @@ a:hover {
   margin-bottom: 0px;
   color: white;
   padding-bottom: 5rem;
+
+  a {
+    color: $font-color;
+  }
 }
 
 .model-header {
@@ -449,6 +453,10 @@ body {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+
+#mobile-break {
+  display: none;
 }
 
 /* ====================== */
@@ -725,6 +733,32 @@ body {
   padding-bottom: 1rem;
 }
 
+#slider-container-mobile {
+  display: none;
+}
+
+#top-note {
+  font-family: AmazonEmberDisplayLight;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-style: italic;
+  max-width: 45rem;
+  margin: auto;
+  padding-bottom: 2.5rem;
+}
+
+.error-tooltip-text {
+  font-family: AmazonEmberDisplayHeavy;
+  stroke-linejoin: round;
+  fill: $squid-ink;
+  paint-order: stroke fill;
+  stroke-width: 4px;
+  pointer-events: none;
+  font-size: 0.9rem;
+  stroke: $bg-color2;
+}
+
 @media (max-width: 1100px) {
   /* ====================== */
   /* LAYOUT  */
@@ -749,10 +783,10 @@ body {
     padding-bottom: 0;
   }
 
-  .body-text {
-    padding: 10%;
-    padding-bottom: 4rem;
-  }
+  // .body-text {
+  //   padding: 10%;
+  //   padding-bottom: 4rem;
+  // }
 
   .section-title {
     font-size: 2.2rem;
@@ -796,6 +830,11 @@ body {
   /* ====================== */
   /* SIDE SCROLL  */
   /* ====================== */
+  #scrolly-side > article > div:nth-child(6) {
+    p {
+      padding-bottom: 0;
+    }
+  }
   #scrolly-side {
     position: relative;
     padding: 1rem;
@@ -850,6 +889,11 @@ body {
       z-index: 100;
     }
   }
+
+  #slider-container {
+    background-color: $bg-color2;
+    box-shadow: 0px 10px 10px 0px rgba(105, 105, 105, 0.25);
+  }
 }
 
 @media (max-width: 600px) {
@@ -860,6 +904,33 @@ body {
   // body {
   //   height: 95vh;
   //   max-height: 95vh;
+  // }
+  #gap-container img {
+    padding: 4%;
+    padding-bottom: 1.5rem;
+    max-width: none;
+  }
+
+  .scatter-title {
+    font-size: 0.95rem;
+  }
+  .error-axis-text {
+    font-size: 0.85rem;
+    font-family: AmazonEmberDisplayHeavy;
+  }
+
+  #top-note {
+    font-size: 17px;
+    padding-bottom: 2.5rem;
+  }
+  // #slider-container-mobile {
+  //   display: block;
+  //   width: 85%;
+  //   margin: auto;
+  // }
+
+  // #slider-container {
+  //   display: none;
   // }
   #intro {
     padding-right: 0;
@@ -923,6 +994,11 @@ body {
   /* ====================== */
   /* DOUBLE DESCENT  */
   /* ====================== */
+
+  .error-tooltip-text {
+    stroke-width: 2px;
+    font-size: 0.75rem;
+  }
 
   #scrolly article,
   #scrolly-side article {
@@ -1058,3 +1134,11 @@ article {
 // #scrolly-side {
 //   z-index: 9999999999;
 // }
+
+#intro p.body-text {
+  color: white;
+}
+
+#intro .model-text {
+  color: white;
+}

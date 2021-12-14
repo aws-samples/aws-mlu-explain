@@ -39,50 +39,61 @@ const stepEventsSide = {
   down: {
     0: () => {
       scatter.transition0Down();
-      scatter.addTitle("K = 4, MAE = 0.59");
+      scatter.addTitle("Model with K=5 Features");
+      // scatter.addTitle("K = 5, MAE = 0.2515");
       error.drawTransition0Down();
+      // error.showToolTip();
     },
     1: () => {
       scatter.updateLine("y-11");
-      scatter.addTitle("K = 12, MAE = 0.16");
+      scatter.addTitle("Model with K=5 Features");
+      // scatter.addTitle("K = 12, MAE = 0.22");
       error.drawTransition1Down();
     },
     2: () => {
       scatter.updateLine("y-28");
-      scatter.addTitle("K = 29, MAE = 1.58");
+      scatter.addTitle("Model with K=28 Features");
+      // scatter.addTitle("K = 29, MAE = 0.78");
       error.drawTransition2Down();
     },
     3: () => {
       scatter.updateLine("y-255");
-      scatter.addTitle("K = 256, MAE = 0.12");
+      scatter.addTitle("Model with K=255 Features");
+      // scatter.addTitle("K = 255, MAE = 0.21");
       error.drawTransition3Down();
     },
     4: () => {},
     5: () => {
       scatter.updateLine("y-28");
-      scatter.addTitle("K = 29, MAE = 1.58");
-      error.showToolTip();
+      scatter.addTitle("Model with K=28 Features");
+      // scatter.addTitle("K = 29, MAE = 0.78");
+      error.updateToolTip(4);
+      // error.showToolTip();
     },
   },
   up: {
     0: () => {
       scatter.transition0Up();
-      scatter.addTitle("K = 4, MAE = 0.59");
+      scatter.addTitle("Model with K=5 Features");
+      // scatter.addTitle("K = 5, MAE = 0.2515");
       error.drawTransition0Up();
     },
     1: () => {
       scatter.updateLine("y-11");
-      scatter.addTitle("K = 12, MAE = 0.16");
+      scatter.addTitle("Model with K=11 Features");
+      // scatter.addTitle("K = 12, MAE = 0.22");
       error.drawTransition1Up();
     },
     2: () => {
-      scatter.updateLine("y-26");
-      scatter.addTitle("K = 25 MAE = 1.58");
+      scatter.updateLine("y-28");
+      scatter.addTitle("Model with K=26 Features");
+      // scatter.addTitle("K = 25 MAE = 0.78");
       error.drawTransition2Up();
     },
     3: () => {
       scatter.updateLine("y-255");
-      scatter.addTitle("K = 256, MAE = 0.12");
+      scatter.addTitle("Model with K=255 Features");
+      // scatter.addTitle("K = 255, MAE = 0.21");
       error.drawTransition3Up();
     },
     4: () => {
@@ -160,10 +171,13 @@ initSide();
 
 // add slider
 
-const slider = select(`#slider-container`);
+const slider =
+  window.innerWidth > 600
+    ? select(`#slider-container`)
+    : select(`#slider-container`);
 
 // draw text
-slider.append("h4").attr("id", `error-text`).html(`K (# features): 29`);
+slider.append("h4").attr("id", `error-text`).html(`Model With K=28 Features`);
 
 // draw slider
 slider
@@ -186,6 +200,7 @@ selectAll(`#error-slider`).on("input", function (d) {
 
   // get current error data
   const errorValue = errorData[currValue - 1];
-  scatter.addTitle(`K = ${currValue}, MAE = ${errorValue.mae.toFixed(4)}`);
-  error.updateToolTip(errorValue.x);
+  scatter.addTitle(`Model With K=${currValue} Features`);
+  // scatter.addTitle(`K = ${currValue}, MAE = ${errorValue.mae.toFixed(4)}`);
+  error.dragToolTip(currValue - 1);
 });

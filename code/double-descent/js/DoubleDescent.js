@@ -6,7 +6,7 @@ import { axisBottom, axisLeft } from "d3-axis";
 import { transition } from "d3-transition";
 import { curveCatmullRom, line } from "d3-shape";
 
-const durationTime = 1500;
+const durationTime = 1300;
 
 function findPathLen(path, x) {
   path = path.node();
@@ -255,7 +255,11 @@ export class DoubleDescent {
       .style("stroke-width", 4)
       .style("pointer-events", "none")
       .style("stroke-dasharray", 5)
-      .attr("vector-effect", "non-scaling-stroke");
+      .attr("vector-effect", "non-scaling-stroke")
+      .attr("x1", this.xScale(19))
+      .attr("y1", this.yScale(0))
+      .attr("x2", this.xScale(19))
+      .attr("y2", this.yScale(0));
 
     // // add circles
     // this.ddG
@@ -392,6 +396,8 @@ export class DoubleDescent {
     this.testLineOutline.call((d) =>
       pathTransition(d, testLenStartOutline, testLenEndOutline)
     );
+
+    this.interpolationText.attr("opacity", 0);
   }
 
   drawTransition1Down() {
@@ -509,6 +515,54 @@ export class DoubleDescent {
     this.testLineOutline.call((d) =>
       pathTransition(d, testLenStartOutline, testLenEndOutline)
     );
+
+    this.interpolationText.attr("opacity", 0);
+  }
+
+  redrawResize() {
+    const trans = transition().duration(durationTime);
+    const startPoint = 18.9;
+    const endPoint = 30;
+
+    const trainLenStart = findPathLen(this.trainLine, this.xScale(startPoint));
+    const testLenStart = findPathLen(this.testLine, this.xScale(startPoint));
+
+    // get desired len of paths
+    const trainLenEnd = findPathLen(this.trainLine, this.xScale(endPoint));
+    const testLenEnd = findPathLen(this.testLine, this.xScale(endPoint));
+
+    // // draw line to gien distance
+    this.trainLine.call((d) => pathTransition(d, trainLenStart, trainLenEnd));
+    this.testLine.call((d) => pathTransition(d, testLenStart, testLenEnd));
+
+    const trainLenStartOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(startPoint)
+    );
+    const testLenStartOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(startPoint)
+    );
+    const trainLenEndOutline = findPathLen(
+      this.trainLineOutline,
+      this.xScale(endPoint)
+    );
+    const testLenEndOutline = findPathLen(
+      this.testLineOutline,
+      this.xScale(endPoint)
+    );
+    this.trainLineOutline.call((d) =>
+      pathTransition(d, trainLenStartOutline, trainLenEndOutline)
+    );
+    this.testLineOutline.call((d) =>
+      pathTransition(d, testLenStartOutline, testLenEndOutline)
+    );
+
+    // previous stuff
+    this.lineSeparator.transition(trans).attr("y2", this.yScale(23));
+    // toggle "Interpolation Threshold" text
+    this.interpolationText.raise();
+    this.interpolationText.transition(trans).attr("opacity", 1);
   }
 
   drawTransition2Up() {
@@ -520,7 +574,7 @@ export class DoubleDescent {
 
     // hide area
     const trans = transition().duration(durationTime);
-    this.rectUnder.transition(trans).attr("fill-opacity", 0);
+    // this.rectUnder.transition(trans).attr("fill-opacity", 0);
 
     // toggle "Interpolation Threshold" text
     // this.interpolationText.raise();
@@ -531,24 +585,19 @@ export class DoubleDescent {
   drawTransition3Up() {
     const trans = transition().duration(durationTime);
     this.rectOver.transition(trans).attr("fill-opacity", 0);
-    this.rectUnder.transition(trans).attr("fill-opacity", 0);
+    // this.rectUnder.transition(trans).attr("fill-opacity", 0);
+    this.interpolationText.attr("opacity", 0);
   }
 
   drawTransition4Up() {
     const trans = transition().duration(durationTime);
     this.rectOver.transition(trans).attr("fill-opacity", 0);
-    this.rectUnder.transition(trans).attr("fill-opacity", 0.95);
+    // this.rectUnder.transition(trans).attr("fill-opacity", 0.95);
   }
 
   drawTransition3Down() {
     const trans = transition().duration(durationTime);
-    this.lineSeparator
-      .attr("x1", this.xScale(19))
-      .attr("y1", this.yScale(0))
-      .attr("x2", this.xScale(19))
-      .attr("y2", this.yScale(0))
-      .transition(trans)
-      .attr("y2", this.yScale(23));
+    this.lineSeparator.transition(trans).attr("y2", this.yScale(23));
 
     this.rectOver.transition(trans).attr("fill-opacity", 0.95);
 
@@ -559,14 +608,26 @@ export class DoubleDescent {
 
   drawTransition4Down() {
     const trans = transition().duration(durationTime);
-    this.rectUnder.transition(trans).attr("fill-opacity", 0.95);
+    // this.rectUnder.transition(trans).attr("fill-opacity", 0.95);
     this.rectOver.transition(trans).attr("fill-opacity", 0);
+
+    // previous stuff
+    this.lineSeparator.transition(trans).attr("y2", this.yScale(23));
+    // toggle "Interpolation Threshold" text
+    this.interpolationText.raise();
+    this.interpolationText.transition(trans).attr("opacity", 1);
   }
 
   drawTransition5Down() {
     const trans = transition().duration(durationTime);
-    this.rectUnder.transition(trans).attr("fill-opacity", 0);
+    // this.rectUnder.transition(trans).attr("fill-opacity", 0);
     this.rectOver.transition(trans).attr("fill-opacity", 0);
+
+    // previous stuff
+    this.lineSeparator.transition(trans).attr("y2", this.yScale(23));
+    // toggle "Interpolation Threshold" text
+    this.interpolationText.raise();
+    this.interpolationText.transition(trans).attr("opacity", 1);
   }
 
   drawDoubleDescentLines() {

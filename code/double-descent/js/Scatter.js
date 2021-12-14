@@ -47,10 +47,12 @@ export class Scatter {
 
     this.innerWidth =
       window.innerWidth >= 1000
-        ? window.innerWidth / 4.1
+        ? window.innerWidth / 4
         : window.innerWidth / 1.6;
     this.innerHeight = window.innerHeight * 0.27;
-    this.margin = { left: 45, right: 9, top: 15, bottom: 30 };
+    this.margin = { left: 55, right: 30, top: 15, bottom: 30 };
+
+    this.circleRadius = window.innerWidth > 600 ? 4 : 3;
 
     this.drawBaseChart();
     this.drawCircles();
@@ -111,7 +113,7 @@ export class Scatter {
       .enter()
       .append("circle")
       .attr("class", "scatter-circle")
-      .attr("r", 4)
+      .attr("r", this.circleRadius)
       .attr("cx", (d) => this.xScale(d.x))
       .attr("cy", (d) => this.yScale(d.y));
 
@@ -124,6 +126,7 @@ export class Scatter {
     this.regressionLine = this.scatterPlot
       .selectAll("#scatter-line")
       .data([scatterData], (d) => d.x);
+
     // Updata the line
     this.regressionLine
       .enter()
@@ -197,45 +200,6 @@ export class Scatter {
       .merge(this.regressionLine)
       .transition()
       .attr("d", this.lineGen);
-  }
-
-  addLegend() {
-    const that = this;
-    const legendData = ["Train Data", "Test Data"];
-
-    const nodeWidth = (d) => d.getBBox().width;
-
-    const legend = this.scatterPlot
-      .append("g")
-      .attr("class", "legend")
-      .attr("transform", "translate(0,0)");
-
-    const lg = legend.selectAll("g").data(legendData).enter().append("g");
-
-    const legendCircle = lg
-      .append("circle")
-      .attr("r", 6)
-      .attr("fill", (d, i) => (i % 2 == 0 ? trainColorDot : testColorDot))
-      .attr("cy", 5)
-      .attr("cx", 1)
-      .attr("stroke-width", 0);
-    lg.append("text")
-      .style("font-size", "16px")
-      .attr("x", 11.5)
-      .attr("y", 10)
-      .text((d) => d);
-
-    let offset = 0;
-
-    lg.attr("transform", function (d) {
-      let x = offset;
-      offset += nodeWidth(this) + 10;
-      return `translate(${x}, ${0})`;
-    });
-
-    legend.attr("transform", function () {
-      return `translate(${(that.innerWidth - nodeWidth(this)) / 2}, 0)`;
-    });
   }
 
   addTitle(title) {
