@@ -237,7 +237,7 @@ export class Error {
   }
   drawTransition3Down() {
     this.updateToolTip(254);
-  
+  }
   drawTransition0Up() {
     this.updateToolTip(4);
   }
