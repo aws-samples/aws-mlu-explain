@@ -59,7 +59,7 @@ export class Error {
     this.margin = {
       left: 55,
       right: 30,
-      top: window.innerWidth > 600 ? 15 : 22,
+      top: window.innerWidth > 600 ? 25 : 22,
       bottom: 50,
     };
 
@@ -233,22 +233,22 @@ export class Error {
     this.updateToolTip(11);
   }
   drawTransition2Down() {
-    this.updateToolTip(28);
+    this.updateToolTip(32);
   }
   drawTransition3Down() {
-    this.updateToolTip(255);
-  }
+    this.updateToolTip(254);
+  
   drawTransition0Up() {
-    this.updateToolTip(5);
+    this.updateToolTip(4);
   }
   drawTransition1Up() {
-    this.updateToolTip(11);
+    this.updateToolTip(10);
   }
   drawTransition2Up() {
-    this.updateToolTip(28);
+    this.updateToolTip(32);
   }
   drawTransition3Up() {
-    this.updateToolTip(255);
+    this.updateToolTip(254);
   }
   drawTransition4Up() {}
 

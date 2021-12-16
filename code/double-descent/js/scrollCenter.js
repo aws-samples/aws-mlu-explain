@@ -19,19 +19,7 @@ const offsetTriggerFromTop = 0.65;
 const scroller = scrollama();
 
 let centerTransitionIndex = -1;
-// let initHeightSide = window.innerHeight;
-// let initWidthSide = window.innerWidth;
-// let stepH = Math.floor(window.innerHeight * stepHPercentage);
-// step.style("height", stepH + "px");
 
-// //   let figureHeight = window.innerHeight / 1.5;
-// let figureHeight = window.innerHeight * 0.8;
-// let figureMarginTop = (window.innerHeight - figureHeight) / 2;
-
-// figure
-//   .style("height", figureHeight + "px")
-//   .style("top", figureMarginTop + "px");
-// // draw double descent chart
 const doubleDescentChart = new DoubleDescent({
   ddContainer: chart1Container,
 });
@@ -100,16 +88,7 @@ function handleResize() {
 
   // 3. tell scrollama to update new element dimensions
   scroller.resize();
-  // resize if width changes
-  // if (window.innerWidth !== initWidthSide) {
-  //   initWidthSide = window.innerWidth;
-  //   initHeightSide = window.innerHeight;
-  //   figure
-  //     .style("height", figureHeight + "px")
-  //     .style("top", figureMarginTop + "px");
-  //   // console.log("resize");
-  //   doubleDescentChart.resizeChart();
-  // }
+
   doubleDescentChart.resizeChart();
   // resolve previous transition
   if (centerTransitionIndex > -1) {

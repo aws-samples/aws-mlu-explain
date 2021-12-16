@@ -46,13 +46,13 @@ const stepEventsSide = {
     },
     1: () => {
       scatter.updateLine("y-11");
-      scatter.addTitle("Model with K=5 Features");
+      scatter.addTitle("Model with K=12 Features");
       // scatter.addTitle("K = 12, MAE = 0.22");
       error.drawTransition1Down();
     },
     2: () => {
-      scatter.updateLine("y-28");
-      scatter.addTitle("Model with K=28 Features");
+      scatter.updateLine("y-33");
+      scatter.addTitle("Model with K=33 Features");
       // scatter.addTitle("K = 29, MAE = 0.78");
       error.drawTransition2Down();
     },
@@ -64,8 +64,8 @@ const stepEventsSide = {
     },
     4: () => {},
     5: () => {
-      scatter.updateLine("y-28");
-      scatter.addTitle("Model with K=28 Features");
+      scatter.updateLine("y-5");
+      scatter.addTitle("Model with K=5 Features");
       // scatter.addTitle("K = 29, MAE = 0.78");
       error.updateToolTip(4);
       // error.showToolTip();
@@ -85,8 +85,8 @@ const stepEventsSide = {
       error.drawTransition1Up();
     },
     2: () => {
-      scatter.updateLine("y-28");
-      scatter.addTitle("Model with K=26 Features");
+      scatter.updateLine("y-33");
+      scatter.addTitle("Model with K=33 Features");
       // scatter.addTitle("K = 25 MAE = 0.78");
       error.drawTransition2Up();
     },
@@ -177,7 +177,7 @@ const slider =
     : select(`#slider-container`);
 
 // draw text
-slider.append("h4").attr("id", `error-text`).html(`Model With K=28 Features`);
+slider.append("h4").attr("id", `error-text`).html(`K=5`);
 
 // draw slider
 slider
@@ -188,14 +188,14 @@ slider
   .attr("min", 1)
   .attr("max", 255)
   .attr("step", 1)
-  .attr("value", 29);
+  .attr("value", 4);
 
 selectAll(`#error-slider`).on("input", function (d) {
   // only update text
   let val = select(this).property("value");
   // set price to object state
   const currValue = Number(val);
-  select("#error-text").html(`k: ${currValue}`);
+  select("#error-text").html(`K=${currValue}`);
   scatter.updateLineInput(`y-${currValue - 1}`);
 
   // get current error data

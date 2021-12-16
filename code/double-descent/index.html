@@ -31,6 +31,20 @@
 
     <link rel="icon" href="./assets/mlu_robot.png" />
     <link rel="stylesheet" href="css/styles.scss" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1FYW57GW3G"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1FYW57GW3G");
+    </script>
   </head>
 
   <body>
@@ -205,7 +219,7 @@
             Quick note - in this article, we'll keep things fairly high-level.
             However, if you're interested in more mathematical, lower-level
             details,
-            <a href="https://mla.corp.amazon.com/explain/double-descent-math/"
+            <a href="https://mlu-explain.github.io/double-descent2/"
               ><span class="bold"
                 >check out our sibling article on double descent</span
               ></a
@@ -217,14 +231,15 @@
             values for the test error, which is obtained from predictions on the
             test set. To maximize the stability of training, we will not employ
             a full neural network, but rather pick random non-linear features
-            and then train a linear model on top<span class="tooltip-item"
+            and then train a linear model on top.
+            <!-- <span class="tooltip-item"
               >[*]<span class="tooltiptext"
                 >None of these choices are fundamental and, indeed,
                 <a href="https://arxiv.org/abs/1912.02292">more recent work</a>
                 shows this phenomenon occurs in commonly used large-scale
                 language models.</span
               ></span
-            >.
+            >. -->
 
             <br /><br />
             Below we show our data, as well as each model's associated mean
@@ -417,7 +432,7 @@
           to <a href="https://twitter.com/jdwlbr"> reach out directly</a>. The
           code for this article is available
           <a
-            href="https://code.amazon.com/packages/Mlu-explain_double-descent/trees/mainline"
+            href="https://github.com/aws-samples/aws-mlu-explain"
             >here</a
           >.
         </p>
