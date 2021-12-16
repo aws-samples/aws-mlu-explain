@@ -29,6 +29,20 @@
 
     <link rel="stylesheet" href="css/katex.min.css" />
     <link rel="stylesheet" href="css/styles.scss" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1FYW57GW3G"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1FYW57GW3G");
+    </script>
   </head>
 
   <body>
@@ -122,23 +136,7 @@
           Throughout this discussion, we will see that the behavior boils down
           to <span class="bold">two core principles:</span>
         </p>
-        <!-- <ul class="list-points">
-          <li>
-            <span class="\"
-              >1. At the interpolation threshold, there can often be a
-              <i>single</i>
-              choice of model that works, and there is no reason to believe that
-              said model will be good.</span
-            >
-          </li>
-          <li>
-            <span class="\"
-              >2. In the limit of infinitely large models, there will be a vast
-              number of interpolating models, and we can pick the best amongst
-              them.</span
-            >
-          </li>
-        </ul> -->
+
         <p class="block-text">
           <span class="bold">1.</span> At the interpolation threshold, there can
           often be a
@@ -638,10 +636,7 @@
           have any comments, ideas, etc related to MLU-Explain articles, feel
           free to <a href="https://twitter.com/jdwlbr"> reach out directly</a>.
           The code is available
-          <a
-            href="https://code.amazon.com/packages/Mlu-explain_double-descent-math/trees/mainline"
-            >here</a
-          >.
+          <a href="https://github.com/aws-samples/aws-mlu-explain">here</a>.
         </p>
 
         <br /><br />
