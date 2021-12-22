@@ -1,6 +1,4 @@
-This repo holds code for the MLU-Explain visual essay: A Visual Introduction to Double Descent.
-
-To view the essay, first clone the repo, then:
+This repo holds a starter template using `parcel` to bundle article ocntent.
 
 ```
 # install libraries
