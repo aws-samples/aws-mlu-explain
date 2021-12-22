@@ -1,0 +1,613 @@
+/* ====================== */
+/* MLU RESETS */
+/* ====================== */
+
+body > div.content-wrapper > div.container-fluid.wbo-header {
+  display: none;
+}
+.wbo-header {
+  display: none;
+}
+
+footer {
+  display: none;
+}
+
+/* ====================== */
+/* VARIABLES */
+/* ====================== */
+
+html {
+  font-size: 16px;
+}
+
+// colors
+$squid-ink: #232f3e;
+$bg-color: white;
+$bg-color2: white;
+$font-color: white;
+$color: rgb(8, 183, 183);
+$ai_color: $color;
+$test-color: #ff8f00;
+$color-left: white;
+$train-color: $color;
+
+// colors
+$squid-ink: #232f3e;
+// $squid-ink: #a7d1b4;
+$bg-color: white; // rgba(255, 97, 56, 0.8);
+$bg-color2: white; // rgb(246, 233, 218); //rgb(154, 222, 222);
+$bg-color-dark: rgba(252, 244, 232, 0.98);
+$color: #ff8f00;
+$test-color: $color;
+
+// colors
+$ai_color: #354848; // rgb(246, 233, 218); //rgb(154, 222, 222);
+
+// font-colors
+$color-left: $squid-ink;
+$color-right: $squid-ink;
+
+// background colors // Light Green
+$bg-color-left: white;
+$bg-color-right: white;
+
+// Fonts
+$font-color: $squid-ink;
+$font-main: "Amazon Ember";
+$font-heavy: "Amazon Ember Display Heavy";
+$font-light: "Amazon Ember Display Light";
+$font-mono: "Amazon Ember Mono";
+
+// Font-Size
+$base-font-size: 21px;
+$main-font: "Amazon Ember";
+
+// Line-Height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+
+/* ====================== */
+/* BASE STYLLES */
+/* ====================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  min-height: 1280px;
+  color: #3b3b3b;
+  font-size: 24px;
+  background-color: $bg-color;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+a {
+  margin: 0;
+  font-weight: 400;
+}
+
+a:visited,
+a:hover {
+  color: $color;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: underline;
+  color: $color;
+  font-family: "Amazon Ember Display Heavy";
+}
+
+a:hover {
+  color: $font-color;
+  background-color: $color;
+  text-decoration: none;
+}
+
+.bold {
+  font-family: "Amazon Ember Display Heavy";
+}
+
+#intro {
+  max-width: 55rem;
+  margin: 1rem auto;
+  text-align: center;
+  padding-top: 3rem;
+}
+
+#intro-hed {
+  font-size: 6.5rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+  letter-spacing: 1.5px;
+  font-family: "Amazon Ember Display Heavy";
+  text-transform: uppercase;
+  max-width: 100%;
+  margin: auto;
+  color: $squid-ink;
+}
+
+.intro-sub {
+  font-size: 2.2rem;
+  text-align: center;
+  margin: 1rem;
+  font-family: "Amazon Ember Display Heavy";
+  opacity: 0.75;
+  color: $color;
+  padding: 2rem;
+}
+
+#author {
+  font-size: 21px;
+  margin: 0px;
+  margin-top: 15px;
+  font-family: "Amazon Ember";
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  color: $squid-ink;
+  padding-bottom: 5rem;
+
+  a {
+    color: $squid-ink;
+  }
+}
+
+#top-note {
+  font-family: "Amazon Ember Display Light";
+  text-align: center;
+  color: $squid-ink;
+  font-size: 18px;
+  font-style: italic;
+  max-width: 45rem;
+  margin: auto;
+  padding-bottom: 2.5rem;
+}
+
+.body-header {
+  padding-top: 5rem;
+  font-family: "Amazon Ember Display Heavy";
+  max-width: 45rem;
+  margin: 0 auto;
+  padding-bottom: 0.5rem;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-align: left;
+}
+
+.body-text {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 21px;
+  line-height: 1.5em;
+  font-family: $main-font;
+}
+
+ul {
+  margin-left: auto;
+  list-style-position: outside;
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 1.5em;
+  font-family: $main-font;
+}
+li {
+  text-align: left;
+  font-size: 21px;
+  padding-bottom: 8px;
+  font-family: "Amazon Ember Display Light";
+
+  a {
+    font-family: "Amazon Ember Display Heavy";
+  }
+}
+
+/* ====================== */
+/* LAYOUT STYLES */
+/* ====================== */
+
+#ai {
+  color: $color;
+  font-family: "Amazon Ember Display Heavy";
+}
+
+.section-title,
+.body-header {
+  font-family: "Amazon Ember Display Heavy";
+  font-size: 2.2rem;
+}
+
+.section-title {
+  padding-bottom: 2rem;
+  padding-left: 10%;
+  padding-top: 2rem;
+  text-align: left;
+}
+
+.logo {
+  color: $squid-ink;
+  width: 10rem;
+}
+
+.bolder {
+  font-family: "Amazon Ember Display Heavy";
+}
+
+#intro-icon {
+  display: flex;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $ai_color;
+  flex-direction: row;
+  padding-top: 1rem;
+  justify-content: center;
+}
+
+#intro-icon h2 {
+  padding-left: 5%;
+  font-family: "Amazon Ember Display Heavy";
+  font-size: 21px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#intro-icon > a {
+  display: flex;
+  text-decoration: none;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+#intro-icon a:hover {
+  background-color: $squid-ink;
+}
+
+// article {
+//   z-index: 999999;
+// }
+
+// /* ====================== */
+// /* SCROLLYTELLING CENTER STYLLES */
+// /* ====================== */
+
+// #scrolly {
+//   position: relative;
+//   padding: 1rem;
+
+//   article {
+//     position: relative;
+//     padding: 0;
+//     max-width: 55%;
+//     margin: 0 auto;
+//   }
+
+//   figure {
+//     position: -webkit-sticky;
+//     position: sticky;
+//     left: 0;
+//     width: 100%;
+//     margin: 0;
+//     -webkit-transform: translate3d(0, 0, 0);
+//     -moz-transform: translate3d(0, 0, 0);
+//     transform: translate3d(0, 0, 0);
+//     z-index: -999;
+//   }
+
+//   .step {
+//     margin: 0 auto 2rem auto;
+//     color: $font-color;
+//     width: 100%;
+//   }
+
+//   .step:last-child {
+//     margin-bottom: 0;
+//   }
+
+//   .step p {
+//     text-align: center;
+//     padding: 1rem;
+//     font-size: 21px;
+//     background-color: white;
+//     color: $squid-ink;
+//     box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
+//   }
+// }
+
+// /* ====================== */
+// /* SCROLLYTELLING SIDE STYLLES */
+// /* ====================== */
+
+// #scrolly-side {
+//   position: relative;
+//   display: -webkit-box;
+//   display: -ms-flexbox;
+//   display: flex;
+//   background-color: $bg-color2;
+//   padding: 10rem;
+//   padding-top: 5rem;
+//   justify-content: center;
+
+//   article {
+//     position: relative;
+//     padding: 0 1rem;
+//     padding-left: 1rem;
+//     max-width: 33rem;
+//   }
+
+//   figure {
+//     position: -webkit-sticky;
+//     position: sticky;
+//     width: 100%;
+//     margin: 0;
+//     -webkit-transform: translate3d(0, 0, 0);
+//     -moz-transform: translate3d(0, 0, 0);
+//     transform: translate3d(0, 0, 0);
+//     z-index: 1;
+//     vertical-align: center;
+//   }
+
+//   .step-side {
+//     margin: 0 auto 2rem auto;
+//     color: $squid-ink;
+//   }
+
+//   .step-side:last-child {
+//     margin-bottom: 0;
+//   }
+
+//   .step-side p {
+//     text-align: center;
+//     padding: 1rem;
+//     padding-right: 0;
+//     font-size: 21px;
+//     font-family: $main-font;
+//   }
+
+//   .axis {
+//     font-family: "Amazon Ember Display Heavy";
+//   }
+
+//   .tick line {
+//     opacity: 0.2;
+//     stroke-width: 1;
+//   }
+
+//   #scatter-y-axis .domain,
+//   #error-y-axis .domain {
+//     opacity: 0;
+//   }
+//   #scatter-x-axis,
+//   #error-x-axis {
+//     font-size: 0.7rem;
+//     .domain {
+//       stroke-width: 2;
+//     }
+//   }
+// }
+
+// #scrolly-side > * {
+//   -webkit-box-flex: 1;
+//   -ms-flex: 1;
+//   flex: 1;
+// }
+
+// @media (max-width: 1100px) {
+//   /* ====================== */
+//   /* LAYOUT  */
+//   /* ====================== */
+//   #intro {
+//     padding-right: 0;
+//     padding: 10%;
+//   }
+
+//   #intro-hed {
+//     margin-top: 0;
+//   }
+
+//   #intro-icon {
+//     padding-bottom: 0;
+//   }
+
+//   #intro-icon h2 {
+//     margin-bottom: 0;
+//     padding-bottom: 0;
+//   }
+
+//   .section-title {
+//     font-size: 2.2rem;
+//   }
+
+//   #scrolly {
+//     .step p {
+//       font-size: 1.1rem;
+//     }
+//   }
+
+//   /* ====================== */
+//   /* SIDE SCROLL  */
+//   /* ====================== */
+//   #scrolly-side > article > div:nth-child(6) {
+//     p {
+//       padding-bottom: 0;
+//     }
+//   }
+//   #scrolly-side {
+//     position: relative;
+//     padding: 1rem;
+//     display: block;
+//     padding-bottom: 10rem;
+//     z-index: 2;
+
+//     article {
+//       position: relative;
+//       padding: 0;
+//       max-width: 50%;
+//       margin: 0 auto;
+//       font-family: $main-font;
+//       z-index: 6;
+//     }
+
+//     #scatter-container,
+//     #error-container {
+//       z-index: 4;
+//     }
+
+//     figure {
+//       position: -webkit-sticky;
+//       position: sticky;
+//       width: 100%;
+//       margin: 0;
+//       -webkit-transform: translate3d(0, 0, 0);
+//       -moz-transform: translate3d(0, 0, 0);
+//       transform: translate3d(0, 0, 0);
+//       z-index: 4;
+//     }
+
+//     .step-side {
+//       margin: 0 auto 2rem auto;
+//       color: $font-color;
+//       width: 100%;
+//       z-index: 100;
+//     }
+
+//     .step-side:last-child {
+//       margin-bottom: 0;
+//     }
+
+//     .step-side p {
+//       text-align: center;
+//       padding: 1rem;
+//       font-size: 1rem;
+//       background-color: $bg-color2;
+//       color: black;
+//       box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
+//       z-index: 100;
+//     }
+//   }
+
+//   #slider-container {
+//     background-color: $bg-color2;
+//     box-shadow: 0px 10px 10px 0px rgba(105, 105, 105, 0.25);
+//   }
+// }
+
+// @media (max-width: 600px) {
+//   // mobile
+//   /* ====================== */
+//   /* LAYOUT  */
+//   /* ====================== */
+
+//   #gap-container img {
+//     padding: 4%;
+//     padding-bottom: 1.5rem;
+//     max-width: none;
+//   }
+
+//   .scatter-title {
+//     font-size: 0.95rem;
+//   }
+//   .error-axis-text {
+//     font-size: 0.85rem;
+//     font-family: "Amazon Ember Display Heavy";
+//   }
+
+//   #top-note {
+//     font-size: 17px;
+//     padding-bottom: 2.5rem;
+//   }
+
+//   #intro {
+//     padding-right: 0;
+//     padding: 5px;
+//   }
+
+//   #intro-hed {
+//     margin-top: 0;
+//     font-size: 3.6rem;
+//     padding-top: 3rem;
+//   }
+
+//   #intro-icon {
+//     padding-bottom: 0;
+//   }
+
+//   #intro-icon h2 {
+//     margin-bottom: 0;
+//     padding-bottom: 0;
+//   }
+
+//   p.intro-text {
+//     line-height: 1.5;
+//     font-size: 17.5px;
+//     max-width: 500px;
+//   }
+
+//   .section-title {
+//     font-size: 2.2rem;
+//     text-align: center;
+//     padding-bottom: 1.5rem;
+//   }
+
+//   .body-text {
+//     padding: 4%;
+//     line-height: 1.5;
+//     font-size: 17.5px;
+//     max-width: 500px;
+//   }
+
+//   .body-header {
+//     padding-top: 2rem;
+//     font-size: 1.75rem;
+//     padding-left: 4%;
+//   }
+
+//   ul,
+//   li {
+//     font-size: 17px;
+//     line-height: 1.5;
+//   }
+
+//   #scrolly article,
+//   #scrolly-side article {
+//     max-width: 90%;
+//   }
+
+//   #scrolly {
+//     padding: 0.1rem;
+
+//     figure {
+//       padding-top: 20%;
+//     }
+
+//     .step p {
+//       font-size: 17px;
+//     }
+//   }
+
+//   .step-side {
+//     height: 100vh;
+//   }
+
+//   // side
+//   #error-text {
+//     font-size: 1rem;
+//   }
+//   #slider-container {
+//     padding: 1rem;
+//   }
+// }

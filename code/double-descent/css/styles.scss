@@ -142,20 +142,6 @@ a:hover {
   padding-top: 3rem;
 }
 
-// .intro-hed {
-//   font-size: 3.5rem;
-//   margin: 2rem auto 0.5rem auto;
-//   color: $font-color;
-//   font-family: AmazonEmberDisplayHeavy;
-// }
-
-// #intro {
-//   text-align: center;
-//   max-width: 90%;
-//   padding-bottom: 5rem;
-//   margin: auto;
-// }
-
 #intro-hed {
   font-size: 6.5rem;
   margin-top: 5px;
@@ -213,13 +199,6 @@ a:hover {
   font-family: $main-font;
 }
 
-// hr {
-//   max-width: 5%;
-//   margin: 3.5rem auto;
-//   border: 2px solid $color;
-//   opacity: 0;
-// }
-
 .github-corner:hover .octo-arm {
   animation: octocat-wave 560ms ease-in-out;
 }
@@ -257,7 +236,6 @@ a:hover {
   .tooltiptext {
     font-size: 1rem;
     visibility: hidden;
-    // width: 11rem;
     background-color: white;
     color: $squid-ink;
     text-align: center;
@@ -266,7 +244,6 @@ a:hover {
     position: absolute;
     z-index: 1;
     border: 2px solid $squid-ink;
-    // font-family: $main-font;
     font-family: AmazonEmber;
     border-radius: 5px;
   }
@@ -368,7 +345,6 @@ body {
     background-color: white;
     color: $squid-ink;
     box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
-    // opacity: 0.95;
   }
 
   .axis {
@@ -395,7 +371,6 @@ body {
     padding: 0 1rem;
     padding-left: 1rem;
     max-width: 33rem;
-    // z-index: 99999;
   }
 
   figure {
@@ -466,8 +441,7 @@ body {
 #dd-title {
   fill: $font-color;
   font-size: 2rem;
-  // font-size-adjust: 0.1;
-  // font-stretch: 50%;
+
   font-family: AmazonEmberDisplayHeavy;
 }
 .dd-text {
@@ -492,10 +466,6 @@ body {
   stroke-width: 4px;
   font-size: 1.1rem;
 }
-
-// #rect-interpolate {
-//   fill: linear-gradient(white, #9198e5);
-// }
 
 .dd-line {
   fill: none;
@@ -556,7 +526,6 @@ body {
   line {
     stroke-width: 1.5;
     stroke: $font-color;
-    // stroke-dasharray: 3, 3;
     opacity: 0.2;
   }
   .domain {
@@ -579,18 +548,6 @@ body {
   font-family: AmazonEmberDisplayLight;
   font-size: 1.1rem;
 }
-
-// #doubledescent-container {
-//   height: 80vh;
-//   width: 70%;
-//   max-width: 20rem;
-//   margin: auto;
-// }
-
-// #doubledescent-container > svg {
-//   height: 85%;
-//   width: 85%;
-// }
 
 /* ====================== */
 /* ERROR CHARTS */
@@ -649,9 +606,6 @@ body {
   height: 0.8rem; /* Specified height */
   background: $squid-ink; /* Grey background */
   outline: none; /* Remove outline */
-  // opacity: 0.9; /* Set transparency (for mouse-over effects on hover) */
-  // -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
-  // transition: opacity 0.2s;
 }
 
 /* Mouse-over effects */
@@ -659,7 +613,6 @@ body {
   opacity: 1; /* Fully shown on mouse-over */
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .metric-slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
@@ -766,12 +719,10 @@ body {
   #intro {
     padding-right: 0;
     padding: 10%;
-    // max-width: 100%;
   }
 
   #intro-hed {
     margin-top: 0;
-    // font-size: 3.5rem;
   }
 
   #intro-icon {
@@ -783,18 +734,12 @@ body {
     padding-bottom: 0;
   }
 
-  // .body-text {
-  //   padding: 10%;
-  //   padding-bottom: 4rem;
-  // }
-
   .section-title {
     font-size: 2.2rem;
   }
 
   #gap-container,
   #conclusion {
-    // padding: 10%;
     padding-top: 0;
     font-family: $main-font;
 
@@ -809,7 +754,6 @@ body {
 
   #dd-title {
     font-size: 2rem;
-    // font-size-adjust: 0.1;
     font-stretch: 50%;
   }
 
@@ -885,7 +829,6 @@ body {
       background-color: $bg-color2;
       color: black;
       box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
-      // opacity: 0.95;
       z-index: 100;
     }
   }
@@ -901,10 +844,7 @@ body {
   /* ====================== */
   /* LAYOUT  */
   /* ====================== */
-  // body {
-  //   height: 95vh;
-  //   max-height: 95vh;
-  // }
+
   #gap-container img {
     padding: 4%;
     padding-bottom: 1.5rem;
@@ -923,15 +863,7 @@ body {
     font-size: 17px;
     padding-bottom: 2.5rem;
   }
-  // #slider-container-mobile {
-  //   display: block;
-  //   width: 85%;
-  //   margin: auto;
-  // }
 
-  // #slider-container {
-  //   display: none;
-  // }
   #intro {
     padding-right: 0;
     padding: 5px;
@@ -956,7 +888,6 @@ body {
     line-height: 1.5;
     font-size: 17.5px;
     max-width: 500px;
-    // width: 95%;
   }
 
   .section-title {
@@ -971,18 +902,12 @@ body {
     line-height: 1.5;
     font-size: 17.5px;
     max-width: 500px;
-    // width: 95%;
   }
 
   .model-header {
     padding-top: 2rem;
     font-size: 1.75rem;
     padding-left: 4%;
-  }
-
-  #gap-container,
-  #conclusion {
-    // padding: 10%;
   }
 
   ul,
@@ -1007,7 +932,6 @@ body {
 
   #dd-title {
     font-size: 1.2rem;
-    // font-size-adjust: 0.1;
     font-stretch: 50%;
   }
 
@@ -1051,7 +975,6 @@ body {
     }
 
     .step p {
-      // font-size: 0.9rem;
       font-size: 17px;
     }
   }
@@ -1115,25 +1038,9 @@ body {
   background-color: $squid-ink;
 }
 
-// svg {
-//   // outline: 1px solid red;
-// }
-
-// body {
-//   height: 90vh;
-//   max-height: 90vh;
-//   // position: fixed;
-//   // height: 100%;
-//   overscroll-behavior: none;
-// }
-
 article {
   z-index: 999999;
 }
-
-// #scrolly-side {
-//   z-index: 9999999999;
-// }
 
 #intro p.body-text {
   color: white;

@@ -1,0 +1,72 @@
+@import "global.scss";
+
+// Side Scrolls
+#scrolly-side > * {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+#scrolly-side {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 3%;
+
+  section {
+    min-height: 100vh;
+  }
+}
+
+article#article-side {
+  position: relative;
+  padding: 0 1.5rem;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 50%; // size of text section
+  color: $color-left;
+  background-color: $bg-color-left;
+  padding-right: 20%;
+  padding-left: 0%;
+  margin-left: 0px;
+
+  p {
+    font-size: 21px;
+    margin: 4px;
+    padding-top: 0.5rem;
+    justify-content: center;
+    text-align: left;
+    background-color: $bg-color-left;
+    font-family: $font-main;
+  }
+
+  h2 {
+    background-color: $bg-color-left;
+    font-family: $font-heavy;
+    padding: 0px;
+    margin: 0px;
+    color: $color-left;
+    text-align: left;
+    font-size: 1.2rem;
+  }
+}
+
+figure#figure-side {
+  position: -webkit-sticky;
+  position: sticky;
+  height: 90vh;
+  width: 80%;
+  margin: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  z-index: 0;
+  vertical-align: center;
+  top: 3rem;
+  justify-content: center;
+  text-align: center;
+}

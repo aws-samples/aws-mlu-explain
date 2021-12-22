@@ -1,0 +1,61 @@
+@import "global.scss";
+
+/* ====================== */
+/* SCROLLYTELLING CENTER STYLLES */
+/* ====================== */
+
+#scrolly {
+  position: relative;
+  padding: 1rem;
+
+  section.center-scroll {
+    min-height: 100vh;
+  }
+
+  article {
+    position: relative;
+    padding: 0;
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  figure {
+    position: -webkit-sticky;
+    position: sticky;
+    height: 90vh;
+    width: 100%;
+    margin: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    // z-index: 9999;
+    vertical-align: center;
+    top: 3rem;
+    justify-content: center;
+    text-align: center;
+  }
+
+  section.center-scroll {
+    margin: 0 auto 2rem auto;
+    color: $font-color;
+    width: 100%;
+    // z-index: -9999;
+  }
+
+  section.center-scroll:last-child {
+    margin-bottom: 0;
+  }
+
+  section.center-scroll p {
+    text-align: center;
+    padding: 1rem;
+    font-size: 21px;
+    background-color: white;
+    color: $squid-ink;
+    box-shadow: 0 0 10px 2px rgba(105, 105, 105, 0.25);
+  }
+
+  .axis {
+    stroke: $font-color;
+  }
+}

@@ -9,12 +9,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
-    <!-- <meta name="viewport" content="width=device-width;" /> -->
     <meta
       name="description"
       content="MLU-Explain: Visual Introduction to Double Descent."
     />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
     <meta
       property="og:image"
       content="https://mlu-explain.github.io/assets/dd1ogimage.png"
@@ -121,17 +119,7 @@
           we expect the best model performance to be obtained via some balance
           between bias (underfitting) and variance (overfitting), we instead
           observe strong test performance from very overfit, complex models.
-          <!-- <span
-            class="tooltip-item"
-            >[0]<span class="tooltiptext"
-              >What’s more, this phenomenon exists across many definitions of
-              complexity, ranging from
-              <a href="https://openai.com/blog/deep-double-descent/"
-                >data-size, parameter size, and the number of epochs trained
-                on</a
-              >, which adds more confusion to the matter.</span
-            ></span
-          >. -->
+
 
           As a result, many practitioners and researchers are left questioning
           the relevance of the traditional bias-variance tradeoff in modern
@@ -150,7 +138,6 @@
       <section id="scrolly">
         <figure>
           <div id="doubledescent-container">
-            <!-- <svg id="text-svg"></svg> -->
           </div>
         </figure>
 
@@ -203,14 +190,11 @@
               the dots between these data points.
             </p>
           </div>
-          <!-- add empty div for extra space at bottom -->
-          <!-- <div class="step" data-step="6"></div> -->
         </article>
       </section>
       <!-- end center scroll -->
 
       <section id="section2">
-        <!-- <hr /> -->
         <div class="model-text">
           <h1 class="model-header">What's Going On?</h1>
 
@@ -232,14 +216,6 @@
             test set. To maximize the stability of training, we will not employ
             a full neural network, but rather pick random non-linear features
             and then train a linear model on top.
-            <!-- <span class="tooltip-item"
-              >[*]<span class="tooltiptext"
-                >None of these choices are fundamental and, indeed,
-                <a href="https://arxiv.org/abs/1912.02292">more recent work</a>
-                shows this phenomenon occurs in commonly used large-scale
-                language models.</span
-              ></span
-            >. -->
 
             <br /><br />
             Below we show our data, as well as each model's associated mean
@@ -255,7 +231,6 @@
             <div id="scatter-container"></div>
             <br />
             <div id="error-container"></div>
-            <!-- <div id="slider-container-mobile"></div> -->
           </figure>
 
           <article>
@@ -330,13 +305,10 @@
           <br /><br />
         </section>
       </div>
-      <!-- end side scroll -->
       <section id="gap">
-        <!-- <hr /> -->
         <div class="model-text">
           <h1 class="model-header">Minding The Gap</h1>
           <div id="gap-container">
-            <!-- BAND MEMBER INFO CONTAINER START -->
 
             <img
               src="line.gif"
@@ -362,7 +334,6 @@
               can perform so well.
             </p>
 
-            <!-- BAND MEMBER INFO CONTAINER END-->
             <h1 class="model-header">Final Takeaways</h1>
             <br />
             <p class="body-text">
@@ -383,33 +354,11 @@
             </p>
             <br /><br />
 
-            <!-- <p class="body-text">
-              Thanks for reading! If you've made it this far, consider viewing
-              our follow-up article explaining double descent in more detail. To
-              learn more about machine learning, check out our
-              <a href="https://aws.amazon.com/machine-learning/mlu/"
-                >self-paced courses</a
-              >, our
-              <a href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
-                >youtube videos</a
-              >, and the
-              <a href="https://d2l.ai/">Dive into Deep Learning</a> textbook. If
-              you have any comments or ideas related to MLU-Explain articles,
-              feel free to
-              <a href="https://twitter.com/jdwlbr"> reach out directly</a>. The
-              code for this article is available
-              <a
-                href="https://code.amazon.com/packages/Mlu-explain_double-descent/trees/mainline"
-                >here</a
-              >.
-            </p> -->
           </div>
-          <!-- <div id="slider-container"></div> -->
 
           <p></p>
         </div>
 
-        <!-- <hr /> -->
       </section>
 
       <section id="conclusion">
@@ -489,7 +438,6 @@
         <br /><br />
       </section>
 
-      <!-- <section id="outro"></section> -->
     </main>
 
     <script src="js/scrollCenter.js"></script>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Article Title</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="MLU-Explain: Visual Introduction to Article Title."
+    />
+    <meta
+      property="og:image"
+      content="https://mlu-explain.github.io/assets/dd1ogimage.png"
+    />
+
+    <meta property="og:title" content="Article Title" />
+
+    <meta
+      property="og:description"
+      content="An introduction to the Article Title phenomena in modern machine learning."
+    />
+    <meta property="og:image:width" content="1000" />
+    <meta property="og:image:height" content="630" />
+
+    <link rel="icon" href="./assets/mlu_robot.png" />
+    <!-- <link rel="stylesheet" href="css/styles.scss" /> -->
+    <link rel="stylesheet" href="assets/styles/normalize.css" />
+    <link rel="stylesheet" href="assets/styles/font.css" />
+    <link rel="stylesheet" href="assets/styles/katex.css" />
+    <link rel="stylesheet" href="assets/styles/global.scss" />
+    <link rel="stylesheet" href="assets/styles/sideScroll.scss" />
+    <link rel="stylesheet" href="assets/styles/centerScroll.scss" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1FYW57GW3G"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1FYW57GW3G");
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <div id="intro-icon">
+        <a href="https://mlu-explain.github.io"
+          ><svg
+            width="50"
+            height="50"
+            viewBox="0 0 234 216"
+            fill="none"
+            xmlns="https://www.w3.org/2000/svg"
+          >
+            <g id="mlu_robot 1" clip-path="url(#clip0)">
+              <g>
+                <path
+                  id="Vector"
+                  d="M90.6641 83.1836C96.8828 83.1836 101.941 78.1289 101.941 71.8906V71.8242C101.941 65.5898 96.8945 60.5312 90.6641 60.5312C84.4453 60.5312 79.3828 65.5898 79.3828 71.8242V71.8906C79.3828 78.1289 84.4336 83.1836 90.6641 83.1836Z"
+                  fill="#232f3e"
+                ></path>
+                <path
+                  id="Vector_2"
+                  d="M143.305 83.1836C149.523 83.1836 154.586 78.1289 154.586 71.8906V71.8242C154.586 65.5898 149.535 60.5312 143.305 60.5312C137.09 60.5312 132.027 65.5898 132.027 71.8242V71.8906C132.027 78.1289 137.078 83.1836 143.305 83.1836Z"
+                  fill="#232f3e"
+                ></path>
+                <path
+                  id="Vector_3"
+                  d="M163.586 159.402H173.609V122.641H163.586V159.402Z"
+                  fill="#232f3e"
+                ></path>
+                <path
+                  id="Vector_4"
+                  d="M60.3594 159.402H70.3867V122.641H60.3594V159.402Z"
+                  fill="#232f3e"
+                ></path>
+                <g id="Group">
+                  <path
+                    id="Vector_5"
+                    d="M182.16 30.0781H51.8047V10.0234H182.16V30.0781ZM182.16 103.609H51.8047V40.1055H182.16V103.609ZM144.559 168.789H89.4062V113.641H144.559V168.789ZM0 0V10.0234H15.8789V46.7891H25.9023V10.0234H41.7812V113.641H79.3867V178.816H96.9297V215.578H106.957V178.816H127.016V215.578H137.039V178.816H154.586V113.641H192.188V10.0234H233.969V0"
+                    fill="#232f3e"
+                  ></path>
+                </g>
+              </g>
+            </g>
+            <defs>
+              <clipPath id="clip0">
+                <rect width="233.97" height="215.58" fill="white"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+          <h2 class="logo">MLU-expl<span id="ai">AI</span>n</h2>
+        </a>
+      </div>
+      <!-- Intro -->
+      <section id="intro">
+        <h1 id="intro-hed">Article Title</h1>
+        <h1 class="intro-sub">Article Subheader</h1>
+        <h3 id="author">
+          <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
+          & Brent Werness, December 2021
+        </h3>
+        <p id="top-note">
+          Note - if you want to add a top-note it will show up here.
+        </p>
+        <!-- Intro Paragraph -->
+        <p class="body-text">
+          This is a bunch of intro sample text. Here is
+          <a href="https://mlu-explain.github.io/bias-variance/"> a link</a>,
+          here is an item that is classed as bold:
+          <span class="bold">I am bold</span>. This is what a normal paragraph
+          looks like. I am some more text. And some more! More text here.
+        </p>
+        <!-- Math Example -->
+        <h1 class="body-header">Including Math Equations</h1>
+        <p class="body-text">
+          There are a few different ways we can include math equations in our
+          markup. We can include them as inline equations:
+          <span id="equation-1"></span>. We can also have equations that render
+          as their own center display:
+        </p>
+        <span id="equation-2"></span>
+        <p class="body-text">
+          Control the sizing with the .katex class in global.scss, and use the
+          katexCalls.js file to add new equations.
+        </p>
+      </section>
+      <!-- static chart -->
+      <h1 class="body-header">Static Chart</h1>
+      <p class="body-text">Just a basic chart.</p>
+      <div id="static-chart"></div>
+      <p class="body-text">What a chart!</p>
+      <!-- center scrollytelling -->
+      <h1 class="body-header">Center Scrolly-telling:</h1>
+      <section id="scrolly">
+        <figure>
+          <div id="doubledescent-container">
+            <svg
+              id="svg-center-scroll"
+              style="background: black"
+              width="600"
+              height="500"
+              fill="black"
+            ></svg>
+          </div>
+        </figure>
+
+        <article id="article-center">
+          <section data-index="0" class="center-scroll">
+            <p>
+              Plotting the training and testing error against some measure of
+              model complexity (say, training time) for a typical case may look
+              like in this figure, with both following the same decreasing
+              direction and the test error hovering slightly above the train
+              error.
+            </p>
+          </section>
+          <section data-index="1" class="center-scroll">
+            <p>
+              Under the classical bias-variance tradeoff, as we move further
+              right along the x axis (i.e. increasing the complexity of our
+              model), we overfit and expect the test error to skyrocket further
+              and further upwards even as the train error continues decreasing.
+            </p>
+          </section>
+        </article>
+      </section>
+
+      <!-- side scrollytelling -->
+      <h1 class="body-header">Side Scrolly-telling:</h1>
+      <div id="scrolly-side">
+        <figure id="figure-side">
+          <svg
+            id="svg-side-scroll"
+            style="background: black"
+            width="600"
+            height="500"
+            fill="black"
+          ></svg>
+        </figure>
+        <article id="article-side">
+          <section data-index="0" class="side-scroll">
+            <br /><br />
+            <h2>But First: A Theorem From 1785</h2>
+            <p id="two_columns">
+              All the way back in the year 1785 [0], Marquis de Condorcet
+              expressed a political science theorem about the relative
+              probability of a given group of individuals arriving at a correct
+              <i>majority</i> decision. <br /><br />
+              Despite its age, the theorem has been applied to a number of
+              different fields, most notably for us the field of machine
+              learning. To see how, let's start with one model, a decision tree
+              with an accuracy of 60 percent. <br /><br />
+            </p>
+          </section>
+          <section data-index="1" class="side-scroll">
+            <p id="two_columns">
+              <span class="bold">Condorcet's Jury Theorem</span> says that if
+              each person is more than 50% correct, then adding more people to
+              vote increases the probability that the majority is correct.<br /><br />
+              True to form, if we ask two more decision trees, each also with
+              60% accuracy, and decide by the majority vote, then the
+              probability of the vote being right goes up to 65%!
+            </p>
+          </section>
+        </article>
+      </div>
+
+      <!-- Conclusion & References -->
+      <section id="conclusion">
+        <br /><br />
+        <p class="body-text">
+          Thanks for reading! To learn more about machine learning, check out
+          our
+          <a href="https://aws.amazon.com/machine-learning/mlu/"
+            >self-paced courses</a
+          >, our
+          <a href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
+            >youtube videos</a
+          >, and the
+          <a href="https://d2l.ai/">Dive into Deep Learning</a> textbook. If you
+          have any comments or ideas related to MLU-Explain articles, feel free
+          to <a href="https://twitter.com/jdwlbr"> reach out directly</a>. The
+          code for this article is available
+          <a href="https://github.com/aws-samples/aws-mlu-explain">here</a>.
+        </p>
+        <h1 class="body-header">References & Open Source</h1>
+        <p class="body-text">
+          This article is a product of the following resources + the awesome
+          people who made (& contributed to) them:
+        </p>
+        <br />
+        <ul>
+          <li>
+            <a href="#"> Name of some reference</a>
+            (Auhtor, 2019).
+          </li>
+          <li>
+            <a href="https://d2l.ai/"> Dive into Deep Learning</a>
+            (Aston Zhang and Zachary C. Lipton and Mu Li and Alexander J. Smola,
+            2020).
+          </li>
+          <li>
+            <a href="https://d3js.org/">D3.js</a> (Mike Bostock, Philippe
+            Rivière)
+          </li>
+
+          <li>
+            <a href="https://katex.org/">KaTeX</a> (Emily Eisenberg, Sophie
+            Alpert)
+          </li>
+        </ul>
+
+        <br /><br />
+      </section>
+    </main>
+
+    <!-- <script src="js/scrollCenter.js"></script>
+    <script src="js/scrollSide.js"></script> -->
+    <script src="js/katexCalls.js"></script>
+    <script src="js/sideScroll.js"></script>
+    <script src="js/centerScroll.js"></script>
+  </body>
+</html>

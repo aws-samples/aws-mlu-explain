@@ -1,0 +1,38 @@
+{
+  "name": "@amzn/article-starter",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "description": "MLU-Explain article about .",
+  "author": "Jared Wilber",
+  "main": "dist/index.html",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist/ build/*",
+    "test": "echo \"Error: no test specified\" ",
+    "start": "parcel index.html",
+    "prebuild": "rm -rf dist && rm -rf ../../double-descent",
+    "build": "parcel build index.html --public-url ./",
+    "postbuild": "mkdir -p ../../double-descent && cp -r dist/* ../../double-descent ",
+    "release": "npm run build"
+  },
+  "dependencies": {
+    "d3-array": "^2.12.1",
+    "d3-axis": "^2.1.0",
+    "d3-interpolate": "^2.0.1",
+    "d3-format": "^2.0.0",
+    "d3-scale": "^3.3.0",
+    "d3-selection": "^2.0.0",
+    "d3-shape": "^2.1.0",
+    "d3-transition": "^2.0.0",
+    "intersection-observer": "^0.5.0",
+    "katex": "^0.12.0",
+    "stickyfill": "^1.1.1-strict"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.29.0"
+  }
+}
