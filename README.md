@@ -7,19 +7,42 @@ This material exists as supplementary educational material for [Machine Learning
 
 # Articles
 
-Currently, there are **1** articles published:
+Currently, there are **3** articles published:
 
-### Bias Variance Tradeoff
+
+## Bias Variance Tradeoff
 <img src="./assets/mlu-explain_biasvariance.gif" alt="Bias Variance Tradeoff Article Image" width="400"/>
 
 **Title**: [The Bias Variance Tradeoff](https://mlu-explain.github.io/bias-variance/)
 
 **Summary**: Understand the tradeoff between under- and over-fitting models, how it relates to bias and variance, and explore interactive examples related to LASSO and KNN.
 
-**Code**: [bias-variance/](bias-variance)
+**Code**: [/code/bias-variance/](/code/bias-variance)
 
 **Authors**: Jared Wilber, Brent Werness
 
+
+## Double Descent: A Visual Introduction
+<img src="./assets/double-descent1.gif" alt="Double Descent Article Image" width="400"/>
+
+**Title**: [Double Descent](https://mlu-explain.github.io/double-descent/)
+
+**Summary**: Meet the double descent phenomenon in modern machine learning: what it is, how it relates to the bias-variance tradeoff, the importance of the interpolation regime, and a theory of what lies behind.
+
+**Code**: [/code/double-descent/](/code/double-descent)
+
+**Authors**: Jared Wilber, Brent Werness
+
+## Double Descent 2: A Mathematical Explanation
+<img src="./assets/double-desent2.gif" alt="Double Descent 2 Article Image" width="400"/>
+
+**Title**: [Double Descent 2](https://mlu-explain.github.io/double-descent2/)
+
+**Summary**: Deepen your understanding of the double descent phenomenon. The article builds on the cubic spline example introduced in Double Descent 1, describing in mathematical detail what is happening.
+
+**Code**: [/code/double-descent2/](/code/double-descent2)
+
+**Authors**: Brent Werness, Jared Wilber
 
 
 ## Running Locally
