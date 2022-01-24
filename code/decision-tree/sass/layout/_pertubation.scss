@@ -1,0 +1,114 @@
+/* ====================== */
+/* 
+    Styles for pertubation small multiples section 
+*/
+/* ====================== */
+@use 'utilities/fonts';
+@import "../utilities/variables";
+
+#pertubations {
+  text-align: center;
+  padding: 5rem;
+  background-color: $bg-color-right;
+  color: $color-right;
+  margin-bottom: 0;
+
+  h2 {
+    font-size: 2.5rem;
+    font-family: $font-light;
+    padding-bottom: 1rem;
+    color: $color-right;
+  }
+
+  p {
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+}
+
+#pertubation-wrapper {
+  // height: 0; //need to fix FireFox rendering
+  display: grid;
+  grid-template-columns: 25% 20% 25% 20%;
+  grid-template-rows: repeat(4, 18vh);
+  gap: 4rem 1.5rem;
+  min-height: 110vh;
+  width: 100%;
+  margin: auto;
+  max-width: 75rem;
+  padding-bottom: 1rem;
+}
+
+.pertubation-text {
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke-width: 3px;
+  font-size: 0.65rem;
+}
+
+.perturbed-sample-title {
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke: $squid-ink;
+  stroke-width: 3px;
+  font-size: 1.1rem;
+}
+// iPad
+@media (max-width: 850px) {
+  #pertubations {
+    padding: 0.75rem;
+  }
+
+  #pertubation-wrapper {
+    grid-template-columns: 46% 43%;
+    grid-template-rows: repeat(8, 19vh);
+    gap: 4rem 1.5rem;
+    min-height: 110vh;
+    width: 100%;
+    margin: auto;
+    max-width: 75rem;
+    padding-bottom: 5rem;
+  }
+
+  .perturbed-sample-title {
+    stroke-width: 2.5px;
+    font-size: 1rem;
+  }
+
+  .pertubation-text {
+    stroke-width: 1.5px;
+    font-size: 0.7rem;
+  }
+}
+
+// moible
+@media (max-width: 600px) {
+  #pertubations {
+    padding: 0.75rem;
+  }
+
+  #pertubation-wrapper {
+    grid-template-columns: 46% 43%;
+    grid-template-rows: repeat(8, 19vh);
+    gap: 4rem 1.5rem;
+    min-height: 110vh;
+    width: 100%;
+    margin: auto;
+    max-width: 75rem;
+    padding-bottom: 5rem;
+  }
+
+  .perturbed-sample-title {
+    stroke-width: 2.5px;
+    font-size: 1rem;
+  }
+
+  .pertubation-text {
+    stroke-width: 1.5px;
+    font-size: 0.42rem;
+  }
+}
