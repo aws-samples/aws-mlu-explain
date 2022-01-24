@@ -1,0 +1,321 @@
+/* ====================== */
+/* 
+    Styles for Entropy Bubble Chart 
+*/
+/* ====================== */
+@use "utilities/fonts";
+@import "../utilities/variables";
+
+.subheader {
+  text-align: left;
+  font-size: 2rem;
+}
+
+.sectionheader {
+  text-align: left;
+  font-size: 3.3rem;
+}
+
+#entropy-chart {
+  min-height: 70vh;
+  width: 95%;
+  max-width: 72rem;
+  margin: auto;
+  padding-bottom: 1rem;
+}
+
+#entropy-buttons {
+  padding: 0.5rem;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+
+#entropy-buttons > button {
+  margin-right: 1rem;
+}
+
+.entropy-class-label {
+  fill: white;
+  font-family: $font-heavy;
+  font-size: 1.1rem;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke: $bg-color-right;
+  stroke-width: 3px;
+}
+
+.entropy-x-axis {
+  fill: white;
+  font-size: 1rem;
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke: $bg-color-right;
+  stroke-width: 3px;
+  text-align: left;
+}
+
+.center-label {
+  fill: white;
+  font-size: 1.2rem;
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke: $bg-color-right;
+  stroke-width: 3px;
+  text-align: left;
+}
+
+#entropy-x-axis,
+#entropy-y-axis {
+  opacity: 0.9;
+  text {
+    opacity: 0.8;
+    font-size: 0.85rem;
+    font-family: $font-heavy;
+    stroke-linejoin: round;
+    fill: white;
+    paint-order: stroke fill;
+    stroke: $bg-color-right;
+    stroke-width: 3px;
+    text-align: left;
+  }
+  line {
+    opacity: 0.15;
+  }
+}
+
+.entropy-button-text {
+  fill: white;
+  font-family: $font-heavy;
+  font-size: 0.9rem;
+  pointer-events: none;
+  stroke-linejoin: round;
+}
+
+.entropy-button-rect {
+  stroke: white;
+  stroke-width: 2px;
+  fill: rgb(85, 85, 85);
+}
+
+.entropy-button-rect:hover {
+  stroke: $squid-ink;
+}
+
+.entropy-button-rect:checked {
+  stroke: $bg-color-right;
+}
+
+// entropy-tree
+#entropy-chart-tree {
+  padding-top: 2rem;
+  min-height: 150vh;
+  width: 100%;
+  max-width: 72rem;
+  margin: auto;
+  padding-bottom: 1rem;
+  // outline: 1px solid black;
+}
+
+.entropy-tree-text {
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke: $bg-color-right;
+  stroke-width: 3px;
+  font-size: 1rem;
+}
+
+.ttt {
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  font-size: 1.2rem;
+}
+
+.entropy-values {
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke: $bg-color-left;
+  stroke-width: 2px;
+  font-size: 0.9rem;
+}
+
+.annotation-group-entropy {
+  .annotation-note-label {
+    font-family: $font-light;
+    font-size: 1.1rem;
+    fill: $color-right;
+  }
+
+  .annotation-note-title {
+    font-family: $font-light;
+    font-size: 1rem;
+    fill: $color-right;
+    display: none;
+  }
+
+  .connector {
+    stroke: white;
+    stroke-dasharray: (4, 4);
+  }
+}
+
+// ipad
+@media (max-width: 850px) {
+  .sectionheader {
+    font-size: 2rem;
+  }
+  #entropy-chart {
+    width: 100%;
+    min-height: 50vh;
+  }
+
+  .entropy-class-label {
+    font-size: 0.9rem;
+    stroke-width: 3px;
+  }
+
+  .entropy-x-axis {
+    font-size: 1rem;
+    stroke-width: 3px;
+  }
+
+  .center-label {
+    font-size: 1rem;
+    stroke-width: 3px;
+  }
+
+  #entropy-x-axis,
+  #entropy-y-axis {
+    text {
+      font-size: 0.7rem;
+      stroke-width: 2px;
+    }
+  }
+
+  .entropy-button-text {
+    font-size: 0.7rem;
+  }
+
+  .entropy-button-rect {
+    stroke-width: 1px;
+  }
+
+  // tree
+  #entropy-chart-tree {
+    padding-top: 2rem;
+    min-height: 150vh;
+    max-width: 100%;
+    padding-bottom: 1rem;
+  }
+
+  .entropy-tree-text {
+    stroke-width: 2px;
+    font-size: 0.8rem;
+  }
+
+  .ttt {
+    font-size: 1rem;
+    stroke-width: 2px;
+  }
+
+  .entropy-values {
+    font-size: 0.9rem;
+  }
+
+  .annotation-group-entropy {
+    .annotation-note-label {
+      font-size: 0.9rem;
+      fill: $squid-ink;
+    }
+
+    .connector {
+      stroke: $squid-ink;
+    }
+  }
+}
+
+// mobile
+@media (max-width: 650px) {
+  .sectionheader {
+    font-size: 2rem;
+  }
+  #entropy-chart {
+    width: 100%;
+    min-height: 50vh;
+  }
+
+  .entropy-class-label {
+    font-size: 0.9rem;
+    stroke-width: 3px;
+  }
+
+  .entropy-x-axis {
+    font-size: 1rem;
+    stroke-width: 3px;
+  }
+
+  .center-label {
+    font-size: 1rem;
+    stroke-width: 3px;
+  }
+
+  #entropy-x-axis,
+  #entropy-y-axis {
+    text {
+      font-size: 0.7rem;
+      stroke-width: 2px;
+    }
+  }
+
+  .entropy-button-text {
+    font-size: 0.7rem;
+  }
+
+  .entropy-button-rect {
+    stroke-width: 1px;
+  }
+
+  // tree
+  #entropy-chart-tree {
+    padding-top: 2rem;
+    min-height: 200vh;
+    max-width: 100%;
+    padding-bottom: 1rem;
+  }
+
+  .entropy-tree-text {
+    stroke-width: 2px;
+    font-size: 0.8rem;
+  }
+
+  .ttt {
+    font-size: 1rem;
+    stroke-width: 2px;
+  }
+
+  .entropy-values {
+    font-size: 0.9rem;
+  }
+
+  .annotation-group-entropy {
+    .annotation-note-label {
+      font-size: 0.9rem;
+      fill: $squid-ink;
+    }
+
+    .connector {
+      stroke: $squid-ink;
+    }
+  }
+}

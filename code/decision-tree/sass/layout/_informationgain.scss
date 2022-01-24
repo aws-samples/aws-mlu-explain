@@ -1,0 +1,270 @@
+/* ====================== */
+/* 
+    Styles for Entropy Bubble Chart 
+*/
+/* ====================== */
+@use 'utilities/fonts';
+@import "../utilities/variables";
+
+#informationgain {
+  text-align: center;
+  padding: 5rem;
+  background-color: $bg-color-right;
+  color: $color-right;
+  margin-bottom: 0;
+
+  h2 {
+    font-size: 2.5rem;
+    font-family: $font-light;
+    padding-bottom: 1rem;
+    color: $color-right;
+  }
+
+  p {
+    // padding: 1rem;
+    font-size: 1.2rem;
+  }
+}
+
+#ig-container {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  column-gap: 1rem;
+  margin: auto;
+  max-width: 75%;
+  min-height: 85vh;
+  padding: 3rem 0;
+
+  #ig-text {
+    // border: 6px solid white;
+    padding: 0.75rem;
+    // border-radius: 20px;
+
+    h3 {
+      font-size: 1.75rem;
+      // padding: 1rem;
+      padding-bottom: 2rem;
+      text-align: left;
+    }
+
+    p {
+      font-size: 20px;
+      text-align: left;
+    }
+  }
+}
+
+#entropy-scatter-charts {
+  display: grid;
+  grid-template-rows: 50% 50%;
+  grid-auto-columns: 1fr;
+}
+
+// entropy-scatter
+#entropy-chart-scatter,
+#entropy-chart-ig {
+  min-height: 100%;
+  width: 100%;
+  // max-width: 72rem;
+  margin: auto;
+  padding-bottom: 1rem;
+}
+
+.ig-line {
+  fill: none;
+  //   stroke: black;
+  stroke-width: 3;
+  //   stroke-dasharray: 2, 2;
+}
+
+#ig-line-ig {
+  stroke-width: 5;
+  stroke: $ig-color;
+  //   stroke-dasharray: none;
+}
+
+.outline-line {
+  fill: none;
+  //stroke: rgb(245, 180, 178);
+  stroke: $bg-color-right;
+  stroke-width: 10;
+}
+
+#ig-line,
+#entropy-scatter-line {
+  fill: none;
+  stroke: black;
+  stroke-width: 3;
+  stroke-dasharray: (4, 4);
+}
+
+.entropy-right {
+  stroke: $ig-color-r;
+}
+.entropy-left {
+  stroke: $ig-color-l;
+}
+
+.entropy-left-circle {
+  fill: $ig-color-l;
+}
+.entropy-right-circle {
+  fill: $ig-color-r;
+}
+.ig-circle {
+  fill: $ig-color;
+}
+
+.ig-tooltip-text {
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  fill: white;
+  paint-order: stroke fill;
+  stroke-width: 4px;
+  pointer-events: none;
+}
+
+#ig-equation {
+  margin: 10px;
+  padding: 10px;
+}
+
+#ig-tooltip-entRight {
+  font-size: 1.25rem;
+  stroke: $ig-color-r;
+}
+
+#ig-tooltip-entLeft {
+  font-size: 1.25rem;
+  stroke: $ig-color-l;
+}
+
+#ig-tooltip-ig {
+  font-size: 1.3rem;
+  stroke: $ig-color;
+}
+
+.dt-scatter-legend {
+  text {
+    fill: white;
+    color: white;
+  }
+}
+
+#mobile-on,
+#ig-mobile-text {
+  display: none;
+}
+#mobile-off,
+#ig-desktop-text {
+  display: block;
+}
+// iPad
+@media (max-width: 850px) {
+  #mobile-on,
+  #ig-mobile-text {
+    display: block;
+  }
+  #mobile-off,
+  #ig-desktop-text {
+    display: none;
+  }
+  #informationgain {
+    padding: 0.5rem;
+  }
+
+  #ig-container {
+    grid-template-columns: 0% 95%;
+    grid-template-rows: 95%;
+    column-gap: 0rem;
+    margin: auto;
+    max-width: 100%;
+    padding: 1rem 0;
+
+    #ig-text {
+      // border: 6px solid white;
+      padding: 0rem;
+      padding-left: 0.5rem;
+      // border-radius: 20px;
+
+      h3 {
+        font-size: 1.2rem;
+        // padding: 1rem;
+        padding-bottom: 2rem;
+        text-align: left;
+      }
+
+      p {
+        font-size: 1.2rem;
+        text-align: left;
+      }
+    }
+  }
+
+  #ig-tooltip-entRight {
+    font-size: 1rem;
+  }
+
+  #ig-tooltip-entLeft {
+    font-size: 1rem;
+  }
+
+  #ig-tooltip-ig {
+    font-size: 1.05rem;
+  }
+}
+
+// mobile
+@media (max-width: 600px) {
+  #mobile-on,
+  #ig-mobile-text {
+    display: block;
+  }
+  #mobile-off,
+  #ig-desktop-text {
+    display: none;
+  }
+  #informationgain {
+    padding: 0.5rem;
+  }
+
+  #ig-container {
+    grid-template-columns: 0% 95%;
+    grid-template-rows: 95%;
+    column-gap: 0rem;
+    margin: auto;
+    max-width: 100%;
+    padding: 1rem 0;
+
+    #ig-text {
+      // border: 6px solid white;
+      padding: 0rem;
+      padding-left: 0.5rem;
+      // border-radius: 20px;
+
+      h3 {
+        font-size: 1.2rem;
+        // padding: 1rem;
+        padding-bottom: 2rem;
+        text-align: left;
+      }
+
+      p {
+        font-size: 1.2rem;
+        text-align: left;
+      }
+    }
+  }
+
+  #ig-tooltip-entRight {
+    font-size: 1rem;
+  }
+
+  #ig-tooltip-entLeft {
+    font-size: 1rem;
+  }
+
+  #ig-tooltip-ig {
+    font-size: 1.05rem;
+  }
+}
