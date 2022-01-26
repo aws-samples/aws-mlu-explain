@@ -43,21 +43,12 @@ a {
 
 a:hover {
   color: $squid-ink;
-  // text-decoration: none;
-  // border-bottom: 2px solid currentColor;
 }
 
 a {
   color: $squid-ink;
   text-decoration: underline;
 }
-
-// a:hover {
-//   color: $color-right;
-//   background-color: $bg-color-left;
-//   text-decoration: none;
-//   // border-bottom: 2px solid currentColor;
-// }
 
 #intro {
   max-width: 45rem;
@@ -74,7 +65,6 @@ a {
 }
 
 #intro__icon h2 {
-  // padding-left: 2%;
   font-family: AmazonEmberDisplayHeavy;
   font-size: 1rem;
 }
@@ -108,11 +98,7 @@ a {
 
 #intro-icon {
   display: flex;
-  // justify-content: center;
-  // vertical-align: center;
   text-transform: uppercase;
-  // letter-spacing: 1.5px;
-  // padding: 2rem;
   font-weight: bold;
   color: $color-left;
   flex-direction: row;
@@ -175,7 +161,6 @@ section p {
   text-align: center;
   align-items: center;
   justify-content: center;
-  // max-width: 60%;
   text-align: left;
 }
 
@@ -212,20 +197,15 @@ article {
 
   p {
     font-size: 1.2rem;
-    // margin: 4px;
-    // padding: 1rem;
     padding-top: 2rem;
     justify-content: center;
     text-align: center;
-    // border: 2px solid black;
-    // box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     background-color: $bg-color-left;
   }
 
   h2 {
     background-color: $bg-color-left;
     font-family: $font-heavy;
-    // display: inline-block;
     padding: 0px;
     margin: 0px;
     color: $color-left;
@@ -417,13 +397,6 @@ li {
     padding-bottom: 1rem;
     color: $color-left;
   }
-
-  // p {
-  //   padding: 1rem;
-  //   font-size: 1.2rem;
-  //   max-width: 60%;
-  //   margin: 0 auto;
-  // }
 }
 
 #final {
@@ -464,7 +437,6 @@ li {
     text-align: left;
     font-size: 1.1rem;
     padding-left: 2rem;
-    // color: $bg-color-right;
   }
 
   p {
@@ -472,9 +444,6 @@ li {
     text-align: center;
     margin: 0 auto;
   }
-}
-svg {
-  // outline: 2px solid red;
 }
 
 // utils
@@ -520,10 +489,7 @@ article {
 }
 
 #intro-tree-chart {
-  // display: flex;
-  // justify-content: center;
   margin: auto;
-  // padding-left: 5rem;
   width: 100%;
 }
 
@@ -565,12 +531,10 @@ a.on-end {
 
 a.on-end:hover {
   color: $squid-ink;
-  // border-bottom: 2px solid currentColor;
 }
 
 p.resource-item {
   padding: 0.2rem 1rem;
-  // padding-top: 0.5rem;
   max-width: 60%;
   margin: auto;
   font-size: 1.1rem;
@@ -676,7 +640,7 @@ p.resource-item {
   }
 
   section {
-    margin-bottom: 0vh;
+    margin-bottom: 5vh;
   }
 
   .annotation-note {
@@ -797,6 +761,10 @@ p.resource-item {
 
   article section:nth-child(n + 2) {
     padding: 0.5rem;
+  }
+
+  section {
+    margin-bottom: 40vh;
   }
 
   section#intro-text p {

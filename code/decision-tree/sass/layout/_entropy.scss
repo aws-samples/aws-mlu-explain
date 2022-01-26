@@ -243,6 +243,10 @@
       stroke: $squid-ink;
     }
   }
+
+  path.link {
+    opacity: 0.75;
+  }
 }
 
 // mobile
