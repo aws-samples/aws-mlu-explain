@@ -19,6 +19,20 @@
     <meta property="og:image:height" content="600" />
     <link rel="icon" href="./assets/mlu_robot.png" />
     <link rel="stylesheet" href="css/styles.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1FYW57GW3G"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1FYW57GW3G");
+    </script>
   </head>
 
   <body>
@@ -99,8 +113,6 @@
                 >
                 is an education initiative from Amazon designed to teach machine
                 learning theory and practical application.
-                <!-- Our goal is to -->
-                <!-- democratize machine learning education. -->
                 <br /><br />
                 As part of that goal,
                 <span class="havy">MLU-Explain</span> exists to teach important
@@ -113,6 +125,7 @@
               <img
                 id="intro-image"
                 src="./assets/mlu-drawing-transparent.png"
+                alt="MLU Robot Deriving Beta Coefficient For Least Squares on Whiteboard"
               />
             </div>
           </div>
@@ -124,7 +137,83 @@
         <br />
         <div class="articles-container">
           <!-- card -->
-
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./decision-tree/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-decision-tree.jpg"
+                alt="Decision Tree Title Image"
+              />
+            </div>
+            <div class="content">
+              <br />
+              <p class="article-description">
+                Explore one of machine learning's most popular supervised
+                algorithms: the Decision Tree. Learn how the tree makes its
+                splits, the concepts of Entropy and Information Gain, and why
+                going too deep is problematic.
+              </p>
+              <button class="content-button">
+                <a href="./decision-tree/">Dive In.</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./double-descent/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-double-descent.jpg"
+                alt="Double Descent Title Image"
+              />
+            </div>
+            <div class="content">
+              <br />
+              <p class="article-description">
+                Meet the double descent phenomenon in modern machine learning:
+                what it is, how it relates to the bias-variance tradeoff, the
+                importance of the interpolation regime, and a theory of what
+                lies behind.
+              </p>
+              <button class="content-button">
+                <a href="./double-descent/">Dive In.</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
+          <!-- card -->
+          <div class="article-card">
+            <div
+              class="imgBx"
+              onclick="location.href='./double-descent2/';"
+              style="cursor: pointer"
+            >
+              <img
+                src="./assets/thumbnails/thumbnail-double-descent2.jpg"
+                alt="Double Descent 2 Title Image"
+              />
+            </div>
+            <div class="content">
+              <br />
+              <p class="article-description">
+                Deepen your understanding of the double descent phenomenon. The
+                article builds on the cubic spline example introduced in
+                <span class="bold">Double Descent 1</span>, describing in
+                mathematical detail what is happening.
+              </p>
+              <button class="content-button">
+                <a href="./double-descent2/">Dive In.</a>
+              </button>
+            </div>
+          </div>
+          <!-- card end -->
           <!-- card -->
           <div class="article-card">
             <div
@@ -132,10 +221,13 @@
               onclick="location.href='./bias-variance/';"
               style="cursor: pointer"
             >
-              <img src="./images/bias-variance.png" />
+              <img
+                src="./assets/thumbnails/thumbnail-bias-variance.jpg"
+                alt="Bias Variance Title Image"
+              />
             </div>
             <div class="content">
-              <h2 class="article-title">The Bias Variance Tradeoff</h2>
+              <br />
               <p class="article-description">
                 Understand the tradeoff between under- and over-fitting models,
                 how it relates to bias and variance, and explore interactive
@@ -146,6 +238,7 @@
               </button>
             </div>
           </div>
+          <!-- card end -->
         </div>
       </section>
     </main>

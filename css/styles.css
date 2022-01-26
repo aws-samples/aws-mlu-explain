@@ -194,7 +194,7 @@ body {
   grid-template-columns: 55% 42%;
   grid-template-rows: 350px;
   column-gap: 1rem;
-  max-width: 85%;
+  max-width: 70%;
   margin: auto;
   align-items: center;
   max-height: 100vh;
@@ -292,7 +292,7 @@ main h1#title {
 
 #articles-section {
   padding-left: 5%;
-  max-width: 85%;
+  max-width: 75%;
   margin: auto;
   padding-top: 4rem;
 }
@@ -365,9 +365,7 @@ button.content-button > a {
 
 .articles-container .article-card .imgBx img {
   max-width: 100%;
-  width: 342px;
-  width: 100%;
-  height: 200px;
+  height: auto;
   border: 0.5px solid #232f3e;
 }
 
@@ -431,6 +429,9 @@ button.content-button > a {
   #image-container {
     margin-top: 10%;
     height: 98%;
+  }
+  .articles-container .article-card .imgBx img {
+    /* height: 200px; */
   }
 }
 
@@ -507,7 +508,7 @@ button.content-button > a {
   }
   .articles-container .article-card .imgBx img {
     width: 100%;
-    height: 150px;
+    /* height: 150px; */
     border: 2px solid #232f3e;
   }
   .articles-container .article-title {
