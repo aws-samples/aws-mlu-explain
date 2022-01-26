@@ -12,8 +12,9 @@
     "clean": "rm -rf dist/ build/*",
     "test": "echo \"Error: no test specified\" ",
     "start": "parcel index.html",
-    "prebuild": "rm -rf dist",
+    "prebuild": "rm -rf dist && rm -rf ../../bias-variance",
     "build": "parcel build index.html --public-url ./",
+    "postbuild": "mkdir -p ../../bias-variance && cp -r dist/* ../../bias-variance ",
     "release": "npm run build"
   },
   "dependencies": {
