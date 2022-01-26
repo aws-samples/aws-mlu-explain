@@ -30,7 +30,7 @@ function generateTree(idx, num) {
 const treeDataset = generateTree(0, 3);
 
 // draw tree
-let height = mobile ? 400 : 400;
+let height = mobile ? 350 : 400;
 let width = mobile ? dims.width * 0.98 : dims.width * 0.9;
 const margin = {
   top: window.innerWidth <= 650 ? 30 : 30,

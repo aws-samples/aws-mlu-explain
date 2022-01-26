@@ -550,6 +550,10 @@ p.resource-item {
 
 // iPad
 @media (max-width: 850px) {
+  #intro-tree-chart {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
   .intro-text-desktop {
     display: none;
   }
