@@ -206,8 +206,6 @@ export class EntropyTree {
         });
     });
 
-    console.log("APEARARRRARY", packedDataArray);
-
     const annotations = [
       {
         type: annotationLabel,
@@ -225,8 +223,8 @@ export class EntropyTree {
           packedDataArray[0]["y"] +
           self.radius +
           packedDataArray[0]["packedData"]["y"], // margin top
-        dy: etMobile ? 160 : -1,
-        dx: etMobile ? -90 : -180,
+        dy: etMobile ? 150 : -1,
+        dx: etMobile ? -60 : -180,
       },
       {
         type: annotationLabel,
@@ -368,10 +366,7 @@ export class EntropyTree {
       .call(makeAnnotations);
 
     selectAll(".annotation-group-entropy").lower();
-
-    selectAll(".annotation-group-entropy")
-      .selectAll(".annotation-note-label")
-      .raise();
+    selectAll("path.link").lower();
   }
 
   drawDepth() {
