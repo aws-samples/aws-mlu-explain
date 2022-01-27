@@ -7,7 +7,18 @@ This material exists as supplementary educational material for [Machine Learning
 
 # Articles
 
-Currently, there are **3** articles published:
+Currently, there are **4** articles published:
+
+## Decision Trees
+<img src="./assets/decision-tree.gif" alt="Decision Trees Article Image" width="400"/>
+
+**Title**: [Decision Trees](https://mlu-explain.github.io/decision-tree/)
+
+**Summary**: Explore one of machine learning's most popular supervised algorithms: the Decision Tree. Learn how the tree makes its splits, the concepts of Entropy and Information Gain, and why going too deep is problematic.
+
+**Code**: [/code/decision-tree/](/code/decision-tree)
+
+**Authors**: Jared Wilber, Lucía Santamaría
 
 
 ## Bias Variance Tradeoff
