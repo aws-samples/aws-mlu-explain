@@ -25,7 +25,6 @@ export class PerturbedDecisionTree {
       .getBoundingClientRect();
     this.WIDTH = containerSize.width * 0.95;
     this.HEIGHT = containerSize.height * 0.94;
-    console.log("TREE HEIGHT", this.HEIGHT);
 
     this.depth = 3;
     this.classNames = ["apple", "cherry", "oak"];
@@ -87,8 +86,6 @@ export class PerturbedDecisionTree {
     const splitNodes = this.nodes.filter(
       (d) => d.depth === depth && "name" in d.data
     );
-
-    // console.log("nodes", splitNodes);
 
     // filter links to desired depth
     let link = this.g

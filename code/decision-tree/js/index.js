@@ -48,15 +48,10 @@ const options = {
 
 // dict for target events
 const target2event = {
-  0: () => {
-    //decisionTree.drawDepth(0);
-    //select(".dt-text").attr("opacity", 0);
-    // select("#chart2").style("background-color", "plum");
-  },
+  0: () => {},
   1: () => {
     decisionTree.drawDepth(1);
     scatter.drawSplitRectangles(1);
-    // select()
   },
 
   2: () => {
@@ -76,17 +71,14 @@ const target2event = {
 
   5: () => {
     decisionTree.drawDepth(4);
-    //scatter.drawSplitRectangles(5);
   },
 
   6: () => {
     decisionTree.drawDepth(4);
-    // scatter.drawSplitRectangles();
   },
 
   7: () => {
     decisionTree.drawDepth(4);
-    // scatter.drawSplitRectangles();
   },
 };
 
@@ -110,7 +102,6 @@ sections.forEach((section) => {
 });
 
 // perturbed trees
-console.log("keys", Object.keys(dataPerturbed));
 const numTrees = 8;
 for (let i = 0; i < numTrees; i++) {
   const ithTreeData = dataPerturbed[`data_${i}`];
@@ -132,6 +123,5 @@ for (let i = 0; i < numTrees; i++) {
 // generic window resize listener event
 const resize = (window.onresize = () => {
   entropyTree.resizeChart();
-  console.log("YUMP");
 });
 window.addEventListener("resize", resize);

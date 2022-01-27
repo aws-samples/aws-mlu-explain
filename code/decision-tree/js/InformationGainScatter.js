@@ -143,7 +143,6 @@ export class InformationGainScatter {
 
     // // What happens when the mouse move -> show the annotations at the right positions.
     function mouseover() {
-      console.log("over");
       select("#ig-tooltip-ig").style("opacity", 1);
       select("#ig-tooltip-entLeft").style("opacity", 1);
       select("#ig-tooltip-entRight").style("opacity", 1);

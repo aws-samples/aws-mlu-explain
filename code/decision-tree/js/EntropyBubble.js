@@ -143,9 +143,7 @@ export class EntropyBubble {
       .attr("stroke", "white");
 
     // add center labels
-    this.centerLabelsGroup = this.entroypG
-      .append("g")
-      .attr("transform", `translateX(${this.WIDTH / 2}px)`);
+    this.centerLabelsGroup = this.entroypG.append("g");
 
     this.centerLabels = this.centerLabelsGroup
       .selectAll(".center-label")
@@ -196,7 +194,6 @@ export class EntropyBubble {
 
       // update bounding circle based on length of entropyArr
       const n = entropyArr.length;
-      console.log("n", n);
 
       // update center labels values
       selectAll("text.center-label").text((d, i) => {
@@ -547,19 +544,5 @@ export class EntropyBubble {
         y: this.positionYScale(4),
       },
     };
-
-    // const scaleRects = [...Array(nSplits).keys()];
-    // // console.log("scaleRects", scaleRects);
-    // this.entroypG
-    //   .selectAll("rect.scale")
-    //   .data(scaleRects)
-    //   .enter()
-    //   .append("rect")
-    //   .attr("class", "scale")
-    //   .attr("width", 10)
-    //   .attr("height", 30)
-    //   .attr("fill", (d, i) => (i % 2 == 0 ? "red" : "blue"))
-    //   .attr("x", (d) => this.positionXScale(d))
-    //   .attr("y", (d) => this.positionYScale(7));
   }
 }

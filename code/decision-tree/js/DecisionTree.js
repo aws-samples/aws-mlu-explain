@@ -80,8 +80,6 @@ export class DecisionTree {
       (d) => d.depth === depth && "name" in d.data
     );
 
-    // console.log("nodes", splitNodes);
-
     // filter links to desired depth
     let link = this.g
       .selectAll("path.link")
