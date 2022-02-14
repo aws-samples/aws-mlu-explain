@@ -10,8 +10,11 @@
 	
 	// math equations
   const f1Eq = `\\begin{aligned} F1 = \\frac{(2 * Precision * Recall)}{Precision + Recall} \\end{aligned}`
-  $: f1EqReactive =  `\\begin{aligned}    = \\frac{(2 * ${formatter($f1Precision)} * ${formatter($f1Recall)})}{${formatter($f1Precision)} + ${formatter($f1Recall)} }\\end{aligned}`
   $: f1Score = (2 * parseFloat($f1Precision) * parseFloat($f1Recall)) / (parseFloat($f1Precision) + parseFloat($f1Recall));
+  $: f1EqReactive =  `\\begin{aligned}    
+  F1 = \\frac{(2 * Precision * Recall)}{Precision + Recall} = \\frac{(2 * ${formatter($f1Precision)} * ${formatter($f1Recall)})}{${formatter($f1Precision)} + ${formatter($f1Recall)} }
+  = ${formatter(f1Score)}
+  \\end{aligned}`
 
   $: {
     // reset strokes first
@@ -54,9 +57,7 @@ The F1-score of a classification model is calculated as follows:
 <div id="f1-container">
   <Heatmap />
   <div id="f1-equations">
-    {@html katexify(f1Eq, true)}
     {@html katexify(f1EqReactive, true)}
-    {@html katexify(`= ${formatter(f1Score)}`)}
     <Slider label="Precision" value={f1Precision}/>
     <Slider label="Recall" value={f1Recall}/>
   </div>
@@ -67,21 +68,22 @@ The F1-score of a classification model is calculated as follows:
 <style>
   #f1-container{
     display: grid;
-    grid-template-columns: 80% 20%;
-    grid-template-rows: 100%;
-    column-gap: 0.2rem;
+    grid-template-columns: 100%;
+    grid-template-rows: 68% 32%;
+    row-gap: 3rem;
     margin: auto;
     align-items: center;
-    height: 60vh;
-    width: 60%;
-    margin: 2rem auto;
+    height: 75vh;
+    width: 70%;
+    margin: auto;
+    margin-top: 1rem;
     /* border: 1px solid green; */
   }
 
   #f1-equations{
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 20% 15% 15% 15% 15% 15%;
+    grid-template-rows: 30% 20% 20%;
     column-gap: .1rem;
     margin: auto;
     align-items: center;
@@ -92,4 +94,15 @@ The F1-score of a classification model is calculated as follows:
     text-align: center;
   }
 
+  /* mobile */
+  @media screen and (max-width: 768px) {
+        #f1-container {
+          width: 100%;
+          height: 95vh;
+        }
+
+        .katex, #f1-equations {
+          font-size: .75rem;
+        }
+  }
 </style>
