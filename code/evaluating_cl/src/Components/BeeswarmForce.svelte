@@ -50,31 +50,29 @@
 
 <g class='bee-group'>
 	{#each simulation.nodes() as node}
+    <g class='node-g'>
 		<circle
             class='node'
-            animal='{node.animal}'
+            outcome='{node.outcome}'
 			fill='{$zGet(node)}'
 			stroke='{stroke}'
 			stroke-width='{strokeWidth}'
-			cx='{node.x}'
-			cy='{node.y}'
 			r='{r}'
+            cx='{node.x}'
+            cy='{node.y}'
 		>
-			{#if getTitle}
-				<title>{getTitle(node)}</title>
-			{/if}
 		</circle>
-        <!-- <rect
-			fill='{$zGet(node)}'
-			stroke='{stroke}'
-			stroke-width='{strokeWidth}'
-			x='{node.x}'
-			y='{node.y}'
-            width='0'
-            height='20'
-		>
-		
-		</rect> -->
+        <text 
+            text-anchor="middle"
+            x='{node.x}'
+            y='{node.y + r / 2}'
+            fill="{node.outcome === "Positive" ? "white" : "white"}"
+            
+            >
+            {node.outcome === "Positive" ? "+" : "-"}
+        </text>
+    </g>
+
 	{/each}
    
 </g>

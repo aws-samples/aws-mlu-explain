@@ -28,6 +28,10 @@ The F1-score of a classification model is calculated as follows:
     For example, here's 
     a four-class confusion matrix:
     <!-- 4-class matrix w equations -->
+    or exemplary reasoins, the previous were just binary. nut applying to multiclass extending to multiclass is trivial.
+    take the following multiclass confusion matrix: (note now that each column... blah)
+
+    to calculate precision or recall, an appropriate measure is to___, ____.
   </p>
 
 

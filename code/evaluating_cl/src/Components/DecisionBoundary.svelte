@@ -10,36 +10,24 @@
     import { TP, FP, TN, FN } from './data-store.js';
 
     const { data, xScale, xRange, yRange } = getContext('LayerCake');
-    // const nodes = $data.map((d) => ({ ...d }));
-    // console.log('nodes', nodes)
 
 
-    function updateCounts(e) {
-        console.log('EEE', e)
+    $: updateCounts = function(e) {
         // get xposition of decision boundary
         const xPos = $xScale.invert(e.detail.offsetX);
-        console.log('xPos', xPos)
         let circs = selectAll('circle')
-        let pos = circs.filter(function(d) { return select(this).attr('animal') == 'Cow'})
-        let neg = circs.filter(function(d) { return select(this).attr('animal') == 'Pig'})
-        // let pos = circs.filter(function(d){ 
-            // return $xScale.invert(select(this).attr('cx')) >= xPos
-            //  cirlceX >= xPos 
-        // })
-             
+        let pos = circs.filter(function(d) { return select(this).attr('outcome') == 'Positive'})
+        let neg = circs.filter(function(d) { return select(this).attr('outcome') == 'Negative'})
         $TP = pos.filter(function(d) { return $xScale.invert(select(this).attr('cx')) >= xPos }).size();
-        $FP = pos.filter(function(d) { return $xScale.invert(select(this).attr('cx')) < xPos }).size();
-        $TN = neg.filter(function(d) { return $xScale.invert(select(this).attr('cx')) >= xPos }).size();
-        $FN = neg.filter(function(d) { return $xScale.invert(select(this).attr('cx')) < xPos }).size();
-        console.log('t', pos.size())
-     
-        // count positives to the left of line
+        $FP = neg.filter(function(d) { return $xScale.invert(select(this).attr('cx')) >= xPos }).size();
+        $TN = neg.filter(function(d) { return $xScale.invert(select(this).attr('cx')) < xPos }).size();
+        $FN = pos.filter(function(d) { return $xScale.invert(select(this).attr('cx')) < xPos }).size();
+    }
 
-        // count negatives to the right of line
-
-        // count positives to the left of line
-        $TN += 1
-        // $xRange[0] + $xRange[1]) / 2
+    function initialPosition() {
+        select("rect.decision-boundary-bar")
+            .attr('fill', 'red')
+            .attr('x', 50)
     }
     
   
@@ -50,13 +38,13 @@
   </script>
   
   <g class="bar" 
-  use:draggable={{ axis: 'x', bounds: 'parent'}}
-  on:svelte-drag:start={(e) => {
-  }}
-  on:svelte-drag={(e) => {
-      updateCounts(e);
-  }}
-  on:svelte-drag:end={(e) => ''}
+    use:draggable={{ axis: 'x', bounds: 'parent'}}
+    on:svelte-drag:start={(e) => {
+    }}
+    on:svelte-drag={(e) => {
+        updateCounts(e);
+    }}
+    on:svelte-drag:end={(e) => ''}
   >
       <rect
         class='decision-boundary-bar'
@@ -69,4 +57,5 @@
         stroke-width="1"
         {fill}
       ></rect>
+
   </g>

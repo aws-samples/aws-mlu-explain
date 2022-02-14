@@ -67,7 +67,7 @@
 </style>
 
 <div class='key' style="justify-content: {align === 'end' ? 'flex-end': align};">
-    <p id="key-title">Animal Weights:</p>
+    <p id="key-title">Test Outcomes:</p>
 	{#each $zDomain as item}
 		<div class='key-item'>
 			<div

@@ -14,27 +14,18 @@
   import Conclusion from "./Components/Conclusion.svelte";
   import Resources from "./Components/Resources.svelte";
   import ConfusionMatrix from "./Components/ConfusionMatrix.svelte";
+
   
-    export let name;
-  
-    function toggleName() {
-      if (name === 'world') {
-        name = 'Jared'
-      } else {
-        name = 'World'
-      }
-    }
-    console.log('hey')
   </script>
     <Meta />
     <Logo />
     <Title />
     <Intro />
-    <ConfusionMatrix />
     <AAA />
     <F1Score />
-    <Recall />
-    <Vocabulary />
+    <!-- <Recall /> -->
+    <!-- <Vocabulary /> -->
+    <MultiClass />
     <Conclusion />
     <Resources />
    

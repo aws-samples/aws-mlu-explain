@@ -1,8 +1,9 @@
 <script>
+  import { getContext } from 'svelte';
   import Scrolly from "./Scrolly.svelte";
   import Scatterplot from "./Scatterplot.svelte";
   import katexify from '../katexify';
-  import Table from './Table.svelte';
+  import ConfusionMatrix from './ConfusionMatrix.svelte';
   import { TP, FP, TN, FN } from './data-store.js';
   import { LayerCake, Svg, Html } from 'layercake';
 	import { scaleOrdinal } from 'd3-scale';
@@ -14,17 +15,17 @@
 	import Beeswarm from './BeeswarmForce.svelte';
   import DecisionBoundary from "./DecisionBoundary.svelte";
 
-	import data from './animals.js';
+	import { data } from './animals.js';
 
 	const xKey = 'weight';
 	const yKey = 'weight';
-	const zKey = 'animal';
+	const zKey = 'outcome';
 	const titleKey = 'gender';
 
 	const r = 12;
 
 	const seriesNames = new Set();
-	const seriesColors = ['#262262', '#ff99ff'];
+	const seriesColors = ['#7e93ee', '#ff99ff'];
 
 	const dataTransformed = data.map(d => {
 		seriesNames.add(d[zKey]);
@@ -54,51 +55,72 @@
   // Paragraph text for scrolly
   $: steps = [
 		 `<h1>Accuracy</h1>
-     <p>Our rock classifier is quite simple, classifying items greater than 3.5 as late, otherwise early.
-      The true colors are represented as rocks being white, else being oraneg. To calculate accuracy, we'll use the simple formula:<br><br>
+     <p>Our Diabetes classifier is quite simple, classifying patients with AIc greater than 3.5 as Positive for Diabetes, otherwise negative.
+      We can easily measure the accuracy of our model using the following equation:<br><br>
       ${katexify(`\\begin{aligned} \\frac{TP + TN}{TP + FP + TN + FN} = \\frac{${$TP + $TN} }{${$TP + $FP + $TN + $FN}} \\end{aligned}`)} 
        ${katexify(`\\approx ${Math.round(accuracy * 100)}`)}
        <br><br>
-      this gives our model an accuracy of ${$TP}%, which isn't too bad.!
+      This gives our model an accuracy of ${$TP}% on our imbalanced data, which isn't too bad!
       </p>`,
       `<h1>Problems</h1>
-      <p>This is sraeraerfaefaome text </p>
+      <p>However, a big issue with our data (and common amongst many classification tasks) is imbalance: our data has three times the amount of negative examples than positive.
+        This is problematic, because if our model were to simply predict <i>every</i> test as being negative, it would have an accuracy of <br><br>
+        ${katexify(`\\begin{aligned} \\frac{Num Positive}{Total Samples} = \\frac{24 }{32} = 0.75 \\end{aligned}`) }<br><br>
+        In other words, we can better by simply predicting ALL tests as negative - no modeling required!
+        </p>
       `,
       `<h1>Precision</h1>
-      <p>It is calculated as the proportion of <i>correctly predicted</i> positive classes. :<br><br>
-      ${katexify(`\\begin{aligned} \\frac{TP}{TP + FP } = \\frac{${$TP} }{${$TP + $FP}} \\approx ${Math.round(precision * 100)} \\end{aligned}`) } <br></p>`,
+      <p>Precision is the ratio of correctly predicted positive classes to <i>all items predicted to be positive:</i><br><br>
+      ${katexify(`\\begin{aligned} \\frac{TP}{TP + FP } = \\frac{${$TP} }{${$TP + $FP}} \\approx ${Math.round(precision * 100)} \\end{aligned}`) } <br><br>
+      Intuitively, this tells us how correct, or <i>precise</i>, are our model's positive predictions. 
+      Such a metric is important when the identification of False Positives is needed. </p>`,
       `<h1>Recall</h1>
-      <p>It is calculated as the proportion of correct positive classes identified. :<br><br>
-      ${katexify(`\\frac{TP}{TP + FN } = \\frac{${$TP} }{${$TP + $FN}} \\approx ${Math.round(recall * 100)} `) } <br></p>`,
+      <p>Recall is the ratio of correctly predicted positive classes to <i>all items that are actually positive:</i><br><br>
+      ${katexify(`\\frac{TP}{TP + FN } = \\frac{${$TP} }{${$TP + $FN}} \\approx ${Math.round(recall * 100)} `) } <br><br>
+      It measures how many of the actual positive instances we were able to correctly predict (or '<i>recall</i>'). 
+      Recall is important when the identification of False Positives is needed.</p>`,
       `<h1>Tradeoff</h1>
-      <p>This is some . we'll use the simple formula:<br>  ${katexify("2x")} <br></p>`,
+      <p>This is some . we'll use the simple formula:<br> <br>
+        Precision: ${Math.round(precision * 100)} 
+        <br><br>
+        Recall: ${Math.round(recall * 100)} 
+        <br><br>
+        Accuracy:  ${Math.round(accuracy * 100)} </p>`,
   ];
 
 
   const target2event = {
   0: () => {
+    // move decision bonudary to middle position
+    // console.log(select("rect.decision-boundary-bar"))
+    // console.log('0' )
+    
+
+
   },
   1: () => {
-    $TP += 1;
+    // $TP += 1;
     // selectAll('circle').attr('r', 40)
+
   },
 
   2: () => {
-	$FP += 3;
+	// $FP += 3;
   },
   3: () => {
-	$TN += 3;
+	// $TN += 3;
   },
   4: () => {
-	$TN += 5;
+	// $TN += 5;
   },
   5: () => {
-	$FP += 4;
+	// $FP += 4;
   }
 };
 
-// trigger events on scroll
-$: if (value) target2event[value]()
+// trigger events on scroll typeof lastname !== "undefined"
+// $: if (value) target2event[value]()
+$: if (typeof value !== "undefined") target2event[value]()
 
 
 
@@ -153,7 +175,7 @@ $: if (value) target2event[value]()
       
         </LayerCake>
       </div>
-      <Table step={value}/>
+      <ConfusionMatrix />
     </div>
   </div>
   <!-- end scroll -->
@@ -175,7 +197,7 @@ $: if (value) target2event[value]()
 		width: 95%;
 		height: 100%;
 	}
-	
+	/* space after scroll is finished */
   .spacer {
     height: 40vh;
   }
@@ -253,16 +275,30 @@ $: if (value) target2event[value]()
     .section-container {
       flex-direction: column-reverse;
     }
+
+    .steps-container {
+      pointer-events: none;
+    }
     .charts-container {
       width: 95%;
 			margin: auto;
+    }
+
+    .step {
+      height: 130vh;
     }
 
     .step-content {
       width: 90%;
       max-width: 768px;
     }
+
+    .spacer {
+      height: 100vh;
+    }
   }
+
+  
 </style>
 
 

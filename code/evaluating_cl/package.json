@@ -26,6 +26,7 @@
     "d3-force": "^2.1.1",
     "d3-format": "^2.0.0",
     "d3-hierarchy": "^2.0.0",
+    "d3-interpolate": "^3.0.1",
     "d3-random": "^2.2.2",
     "d3-scale": "^3.3.0",
     "d3-selection": "^2.0.0",

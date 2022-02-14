@@ -1,5 +1,5 @@
 <script>
-    export let aiLogoColor = 'green';
+    export let aiLogoColor = 'black';
     export let robotLogoColor = 'black'
 </script>
   
@@ -83,8 +83,9 @@
     padding-bottom: 1rem;
   }
   .logo {
-    color: black;
-    width: 10rem;
+    color: #ff99ff;
+    letter-spacing: 2px;
+    width: 12rem;
   }
 
   #intro-icon a:hover {
