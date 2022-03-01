@@ -104,4 +104,13 @@
 	.axis.snapTicks .tick.tick-0 text {
 		transform: translateX(-3px);
 	}
+
+	@media screen and (max-width: 768px) {
+        .tick {
+			font-size: .85rem;
+		}
+    }
+
+
+	
 </style>

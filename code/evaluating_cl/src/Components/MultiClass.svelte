@@ -1,7 +1,9 @@
-<script></script>
+<script>
+  import MulticlassConfusionMatrix from "./MulticlassConfusionMatrix.svelte";
+</script>
 
 
-<h1 class='body-header'>Multiclass Classification</h1>
+<h1 class='body-header'>What About Multiclass?</h1>
 <p class='body-text'>This component is a scope example of a D3 chart.
     It's pretty simple.
 </p>
@@ -10,8 +12,9 @@
 
 The F1-score of a classification model is calculated as follows:
   </p>
-
-  <div id="static-chart"></div>
+  <br>
+  <MulticlassConfusionMatrix />
+  <br>
   <p class="body-text">
     Above, you can compute the entropy of a collection of labeled data
     points belonging to two classes, which is typical for

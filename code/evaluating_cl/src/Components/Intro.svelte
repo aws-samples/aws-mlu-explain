@@ -5,17 +5,16 @@
   <p class="body-text">
     Many machine learning tasks involve <span class="bold">classification</span>: 
     the act of predicting a discrete category for some given input. Examples of classifiers include 
-    determining  whether the item in front of your phone's camera is a hot dog or not (2 categories, i.e. <span class='bold'>binary</span> classification), or
-    predicting whether a package will arrive early, late, or on time (+2 categories, i.e. <span class='bold'>multiclass</span> classification).
+    determining  whether the item in front of your phone's camera is a hot dog or not (two or less categories, so <span class='bold'>binary</span> classification), or
+    predicting whether your Amazon package will arrive early, late, or on time (more than two categories, so <span class='bold'>multiclass</span> classification).
   </p>
   <br>
   <p class="body-text">
    Evaluating classifiers requires careful consideration. 
     In this article, we'll explore why accuracy isn't always a great measure of classification performance, and 
-    discuss some other evaluation metrics often used in its place: <span class='bold'>precision</span>, <span class='bold'>recall</span>,
+    discuss three other evaluation metrics often used in its place: <span class='bold'>precision</span>, <span class='bold'>recall</span>,
      and the <span class='bold'>f1-score</span>.
-     <br><br>
-    To aid us in our evaluation, we'll make use of the confusion matrix:
+    To help qualify the importance of these metrics, we'll make use of the <span class='bold'>confusion matrix</span>, a simple technique for visualizing the performance of a classification model:
   </p>
 
 <br><br>
@@ -38,8 +37,7 @@
 </table>
 <br><br><br>
 <p class='body-text'>
-    The confusion matrix is a simple tool for visualizing the performance of a classification model.
-    Instead of looking at the model's raw accuracy, it decomposes its predictions into several categories of interest,
+    Instead of looking at the model's raw accuracy, the confusion matrix decomposes predictions into several categories of interest,
     making explicit how one class may be <i>confused</i> for another:
 </p>
 <br>
@@ -55,12 +53,8 @@
 </ul>
 <br>
 <p class='body-text'>
-    The distinction between these four different prediction outcomes is very important, and as we'll soon learn, tradeoffs exist between False Positives and False Negatives.
-    For example, in some applications, such as cancer detection, more weight is often placed on reducing False Negatives, as 
-    the consequence of a False Negative in this instance (telling someone they're cancer free when they're not) is death.
-    On the other hand, for spam detection, False Positives carry much less weight, as the consequence is a minor annoyance.
-     and informs the type of model we'll pick, application 
-    at hand. Moreover, we'll soon see that a tradeoff between some of these terms exists, meaning we'll have to take these into consideration during many steps of our modeling process.
+    As we'll soon learn, the distinction between these four different prediction outcomes has important consequences,
+    so it's very important to have a solid understanding of them!
 </p>
 <br>
 <p class='body-text'>
@@ -74,15 +68,7 @@
 </section>
 
 <style>
-     h2 {
-        margin: auto;
-        width: 50%;
-        padding-top: 1rem;
-        padding-bottom: 2rem;
-        max-width: 45rem;
-        color: var(--squid-ink)
-    }
-    
+
     ul {
         max-width: 45rem;
         margin: auto;
@@ -92,7 +78,7 @@
     }
     li {
         padding: .25rem;
-        list-style: none;
+        /* list-style: none; */
     }
     table {
       border-collapse: collapse;
@@ -110,10 +96,6 @@
       color: var(--squid-ink)
     }
     
-    tr:nth-child(even) {
-      /* background-color: #dddddd; */
-    }
-    
     th:nth-child(1) {
       border: 0;
     }
@@ -123,4 +105,24 @@
         color: var(--squid-ink);
         border: none;
     }
+
+    /* mobile */
+ @media screen and (max-width: 950px) {
+    table {
+      width: 95%;
+      font-size: 18px;
+    }
+
+    ul {
+      font-size: 18px;
+      max-width: 80%;
+    }
+
+    td, th {
+      padding: 4px;
+    }
+
+   
+  }
+
 </style>

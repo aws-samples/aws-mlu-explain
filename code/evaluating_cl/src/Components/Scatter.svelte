@@ -2,7 +2,7 @@
     import { scaleLinear, scaleSequential } from "d3-scale"
     import { extent } from "d3-array"
     import { interpolate } from "d3-interpolate"
-    import { f1_data } from "./animals.js"
+    import { f1_data } from "./datasets.js"
 
     let height;
     let width;

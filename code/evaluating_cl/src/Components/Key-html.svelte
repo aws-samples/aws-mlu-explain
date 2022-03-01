@@ -37,12 +37,13 @@
 	}
 	.key-item {
 		margin-right: 14px;
+        color: white;
 	}
 	.chip {
 		display: inline-block;
 		position: relative;
-		width: 12px;
-		height: 12px;
+		width: 17px;
+		height: 17px;
 	}
 	.chip__circle {
 		border-radius: 50%;
@@ -57,6 +58,7 @@
 	}
 	.name {
 		display: inline;
+        color: black;
 		font-size: 1rem;
 		text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 	}
@@ -64,19 +66,19 @@
         padding-right: 0.5rem;
         text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
     }
+
+    @media screen and (max-width: 768px) {
+    }
 </style>
 
 <div class='key' style="justify-content: {align === 'end' ? 'flex-end': align};">
-    <p id="key-title">Test Outcomes:</p>
+    <p id="key-title">Diagnosis:</p>
 	{#each $zDomain as item}
 		<div class='key-item'>
 			<div
 				class='chip chip__{shape}'
-				style='background: {
-					shape === `line` ?
-					`linear-gradient(-45deg, #ffffff 40%, ${$zScale(item)} 41%, ${$zScale(item)} 59%, #ffffff 60%)`
-					: $zScale(item)};'
-			></div>
+				style='background: {$zScale(item)};'
+			>{displayName(item) == "Positive" ? '+' : '-'}</div>
 			<div class='name'>{displayName(item)}</div>
 		</div>
 	{/each}

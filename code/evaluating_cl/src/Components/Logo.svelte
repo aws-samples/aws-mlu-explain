@@ -83,7 +83,7 @@
     padding-bottom: 1rem;
   }
   .logo {
-    color: #ff99ff;
+    color: #7e93ee;
     letter-spacing: 2px;
     width: 12rem;
   }

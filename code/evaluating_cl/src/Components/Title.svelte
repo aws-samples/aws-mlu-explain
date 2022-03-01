@@ -22,7 +22,6 @@
   margin-top: 5px;
   margin-bottom: 0;
   letter-spacing: 1.5px;
-  /* font-family: AmazonEmberDisplayHeavy; */
   text-transform: uppercase;
   max-width: 100%;
   margin: auto;
@@ -33,9 +32,7 @@
   font-size: 2.2rem;
   text-align: center;
   margin: 1rem;
-  /* font-family: AmazonEmberDisplayHeavy; */
   opacity: 0.75;
-  /* color: $color; */
   padding: 2rem;
 }
 
@@ -43,13 +40,21 @@
   font-size: 1.1rem;
   margin: 0px;
   margin-top: 15px;
-  /* font-family: AmazonEmber; */
   padding-bottom: 0px;
   margin-bottom: 0px;
   color: black;
   padding-bottom: 5rem;
-
-
 }
+
+ /* mobile */
+ @media screen and (max-width: 950px) {
+    #intro-hed {
+      font-size: 3.5rem;
+    }
+
+    #intro-sub {
+      font-size: 1.5rem;
+    }
+  }
 
 </style>

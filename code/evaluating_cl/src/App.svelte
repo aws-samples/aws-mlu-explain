@@ -14,6 +14,7 @@
   import Conclusion from "./Components/Conclusion.svelte";
   import Resources from "./Components/Resources.svelte";
   import ConfusionMatrix from "./Components/ConfusionMatrix.svelte";
+  import ErrorLine from "./Components/ErrorLine.svelte";
 
   
   </script>
@@ -23,9 +24,10 @@
     <Intro />
     <AAA />
     <F1Score />
+    <ErrorLine />
     <!-- <Recall /> -->
     <!-- <Vocabulary /> -->
-    <MultiClass />
+    <!-- <MultiClass /> -->
     <Conclusion />
     <Resources />
    

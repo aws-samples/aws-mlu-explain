@@ -14,37 +14,39 @@
 <style>
     .slider-holder {
         margin: auto;
-        width: 20%;
+        width: 80%;
     }
     p {
         margin: 5px auto;
-        font-size: 1rem;
+        font-size: 1.11rem;
         font-family: var(--font-heavy);
     }
     input {
         width: 100%;
+        margin-bottom: 2rem;   
     }
     input[type=range] {
         -webkit-appearance: none;
-        background: linear-gradient(0.25turn, #7e93ee, #ff99ff);
+        background: #d4dada;
+        background: #7e93ee;
         width: 100%;
-        height:15px;
-        border: 1px solid black;
+        height:10px;
+        /* border: 1px solid #232F3E; */
     }
 
     input[type="range"]::-webkit-slider-thumb {
         -webkit-appearance: none;
-        background-color: black;
-        opacity: 0.85;
+        background-color: #232F3E;
+        /* opacity: 0.85; */
         width: 10px;
         height: 20px;
     }
 
-     /* mobile */
-  @media screen and (max-width: 768px) {
-        .slider-holder {
-            width: 80%;
-        }
-  }
+    /* mobile */
+    @media screen and (max-width: 950px) {
+            .slider-holder {
+                width: 80%;
+            }
+    }
 
 </style>

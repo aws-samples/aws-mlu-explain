@@ -27,7 +27,6 @@
 
 table {
   border-collapse: collapse;
-  /* max-width: 75%; */
   margin: auto;
   font-size: 21px;
   font-family: var(--font-main);
@@ -53,6 +52,14 @@ th:nth-child(1) {
 @media screen and (max-width: 768px) {
     table {
 		max-width: 95%;
+	}
+
+	.table-head {
+		font-size: 17px;
+	}
+
+	td, th {
+		font-size: 17px;
 	}
   }
 

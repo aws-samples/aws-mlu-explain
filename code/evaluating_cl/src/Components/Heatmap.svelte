@@ -1,9 +1,9 @@
 <script>
+
     import { f1Precision, f1Recall } from './data-store.js';
-    import { scaleLinear, scaleSequential } from "d3-scale"
+    import { scaleLinear } from "d3-scale"
     import { extent } from "d3-array"
-    import { interpolate } from "d3-interpolate"
-    import { f1_data } from "./animals.js"
+    import { f1_data } from "./datasets.js"
     import { select } from 'd3-selection';
     import { format } from "d3-format";
 
@@ -13,14 +13,12 @@
     let width = 500;
     $: mobile = window.innerWidth <= 700;
     const margin = { 
-        top: mobile ? 40 : 40, 
+        top: mobile ? 40 : 30, 
         bottom: mobile ? 10 : 30, 
         left: mobile ? 0 : 50, 
-        right: mobile ? 0 : 30 
+        right: mobile ? 0 : 10 
     };
 
-    // const buffer = 20;
-    // const axisPad = 25;
     const rectBuffer = 2
 
     let data = f1_data;
@@ -30,11 +28,10 @@
     $: rectWidth = width / 21 - rectBuffer;
     $: rectHeight = height / 21 - rectBuffer;
 
-    let f1Extent = extent(data, d => +d.f1)
     let xExtent = extent(data, d => +d.precision)
     let yExtent = extent(data, d => +d.recall)
 
-    let colorScale = scaleSequential(interpolate('#7e93ee', '#ff99ff')).domain(f1Extent)
+    let colorScale = scaleLinear().domain([0, .33, .66, 1]).range([ '#504bab', '#7e93ee', '#ff99ff','#c9208a', ])
     $: xScale = scaleLinear().domain(xExtent).range([margin.left, width - margin.right])
     $: yScale = scaleLinear().domain(yExtent).range([height - margin.top, margin.bottom])
 
@@ -65,8 +62,8 @@
                     x={xScale(d.precision)}
                     y={yScale(d.recall)}
                     fill={colorScale(d.f1)}
-                    rx=4
-                    ry=4
+                    rx=3
+                    ry=3
                     precision={d.precision}
                     recall={d.recall}
                 ></rect>
@@ -81,14 +78,12 @@
         <!-- x-ticks -->
         {#each xScale.ticks() as tick}
             <g transform={`translate(${xScale(tick) + rectWidth} ${height})`}>
-                <!-- <line y1="-5" y2="0" stroke="black" ></line> -->
                 <text class='f1-axis-text' y="5" text-anchor="end">{formatter(tick)}</text>
             </g>
         {/each}
         <!-- y-ticks -->
         {#each yScale.ticks() as tick}
             <g transform={`translate(${margin.left - 5} ${yScale(tick) + rectWidth})`}>
-                <!-- <line y1="-5" y2="0" stroke="black"></line> -->
                 <text class='f1-axis-text' y="-10" text-anchor="end">{formatter(tick)}</text>
             </g>
         {/each}
@@ -106,13 +101,11 @@
 
 
 <style>
-    svg {
-        border: 1px solid red;
-    }
+
     #f1-chart {
         margin: auto;
-        max-height: 100%;
-        width: 50%;
+        max-height: 95%;
+        width: 80%;
     }
 
     .f1-rect:hover {
@@ -148,8 +141,8 @@
 
     @media screen and (max-width: 768px) {
         #f1-chart {
-            width: 98%;
+            width: 90%;
         }
-  }
+    }
 
 </style>

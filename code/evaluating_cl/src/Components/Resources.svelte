@@ -1,25 +1,83 @@
 <script></script>
 
+<!-- <hr> -->
+<br>
+<br>
+<br>
+<section id='resources'>
+  <br>
+  <h3 class="body-header">References + Open Source</h3>
+    <p class="body-text">
+      This article is a product of the following resources + the awesome
+      people who made (and contributed to) them:
+    </p>
+    <br>
+    <p class="resource-item">
+      <a
+        class="on-end"
+        href="https://www.researchgate.net/publication/228529307_Evaluation_From_Precision_Recall_and_F-Factor_to_ROC_Informedness_Markedness_Correlation"
+        >Evaluation: From Precision, Recall and F-Factor to ROC, Informedness, Markedness & Correlation</a
+      ><br />
+      (David Martin Ward Powers, 2008).
+    </p>
+    <p class="resource-item">
+      <a
+        class="on-end"
+        href="https://link.springer.com/article/10.1007/BF00116251"
+        >Classification assessment methods</a
+      ><br />
+      (John Ross Quinlan, 1986).
+    </p>
+    <p class="resource-item">
+      <a class="on-end" href="https://d3js.org/">D3.js</a><br />(Mike Bostock
+      & Philippe Rivière)
+    </p>
+    <p class="resource-item">
+      <a class="on-end" href="https://layercake.graphics/">LayerCake</a><br />(Michael Keller)
+    </p>
+    <p class="resource-item">
+      <a class="on-end" href="https://katex.org/">KaTeX</a> <br />(Emily
+      Eisenberg & Sophie Alpert)
+    </p>
+    <p class="resource-item">
+      <a class="on-end" href="https://svelte.dev/">Svelte</a><br />(Rich Harris)
+    </p>
+    <br />
+    <br />
+    <br />
+</section>
+  
 
-<h1 class='body-header'>Resources</h1>
-<p class='body-text'>This component is a scope example of a D3 chart.
-    It's pretty simple.
-</p>
-<p class="body-text">
-    The F1-score combines the precision and recall of a classifier into a single metric by taking their harmonic mean. It is primarily used to compare the performance of two classifiers. Suppose that classifier A has a higher recall, and classifier B has higher precision. In this case, the F1-scores for both the classifiers can be used to determine which one produces better results.
+<style>
+  #resources {
+    background-color: #504bab;
+    color: white;
+  }
+  hr {
+    margin: 2.5rem auto;
+    max-width: 35rem;
+  }
+  .resource-item {
+    max-width: 45rem;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 21px;
+    line-height: 1.5em;
+    font-family: "Amazon Ember";
+    color: white;
+  }
 
-The F1-score of a classification model is calculated as follows:
-  </p>
+  a.on-end {
+    text-decoration: underline;
+    color: #f1f3f3;
+  }
 
-  <div id="static-chart"></div>
-  <p class="body-text">
-    Above, you can compute the entropy of a collection of labeled data
-    points belonging to two classes, which is typical for
-    <span class="bold">binary classification</span> problems. Click on the
-    <span class="bold">Add</span> and
-    <span class="bold">Remove</span> buttons to modify the composition of
-    the bubble.
-  </p>
+  /* mobile */
+ @media screen and (max-width: 950px) {
+  .resource-item {
+    max-width: 80%;
+    font-size: 17px;
+  }
+  }
 
-
-<style></style>
+</style>
