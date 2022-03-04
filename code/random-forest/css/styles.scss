@@ -1,0 +1,1623 @@
+/* ====================== */
+/* FONTS */
+/* ====================== */
+
+@font-face {
+  font-family: AmazonEmberDisplayHeavy;
+  src: url("../fonts/AmazonEmberDisplay_He.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmber;
+  src: url("../fonts/AmazonEmber_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberMono;
+  src: url("../fonts/AmazonEmberMono_Rg.otf") format("opentype");
+}
+
+@font-face {
+  font-family: AmazonEmberDisplayLight;
+  src: url("../fonts/AmazonEmberDisplay_Lt.otf") format("opentype");
+}
+
+/* ====================== */
+/* RESET */
+/* ====================== */
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+fieldset,
+img {
+  border: 0;
+}
+input {
+  border: 1px solid #b0b0b0;
+  padding: 3px 5px 4px;
+  color: #979797;
+  width: 100px;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+th,
+var {
+  font-style: normal;
+  font-weight: normal;
+}
+ol,
+ul {
+  list-style: none;
+}
+caption,
+th {
+  text-align: left;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+q:before,
+q:after {
+  content: "";
+}
+abbr,
+acronym {
+  border: 0;
+}
+
+/* ====================== */
+/* MLU RESETS */
+/* ====================== */
+body > div.content-wrapper > div.container-fluid.wbo-header {
+  display: none;
+}
+.wbo-header {
+  display: none;
+}
+
+footer {
+  height: auto;
+}
+footer .container {
+  padding: none;
+}
+
+footer .container .content div {
+  font-size: 1.1rem;
+}
+
+/* ====================== */
+/* VARIABLES */
+/* ====================== */
+
+html {
+  font-size: 16px;
+}
+
+#intro {
+  display: block;
+}
+
+// colors
+$squid-ink: #232f3e;
+$bg-color: #f4e9d4; // rgba(255, 97, 56, 0.8);
+$bg-color2: #fae1b5; // rgb(246, 233, 218); //rgb(154, 222, 222);
+$bg-color-dark: rgba(252, 244, 232, 0.98);
+$color: #ff8f00;
+$test-color: $color;
+
+// colors
+$ai_color: #354848; // rgb(246, 233, 218); //rgb(154, 222, 222);
+
+// font-colors
+$color-left: #354848;
+$color-right: #354848;
+
+// background colors // Light Green
+$bg-color-left: #c9e7c9;
+$bg-color-right: #c9e7c9;
+
+// Fonts
+$font-color: #a7d1b4;
+$font-main: AmazonEmber;
+$font-heavy: AmazonEmberDisplayHeavy;
+$font-light: AmazonEmberDisplayLight;
+$font-mono: AmazonEmberMono;
+
+@mixin border-padding {
+  padding: 1rem 10rem;
+}
+
+// Line-Height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+/* ====================== */
+/* BASE STYLLES */
+/* ====================== */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: $font-main, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  min-height: 1280px;
+  color: #3b3b3b;
+  font-size: 20px;
+  line-height: 1.6;
+  background-color: $bg-color-right;
+}
+
+p.intro-text {
+  font-size: 1.1rem;
+  text-align: left;
+  color: $font-color;
+  font-family: $font-main;
+  color: $ai_color;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+a {
+  margin: 0;
+  font-weight: 400;
+}
+
+a:visited,
+a:hover {
+  text-decoration: none;
+}
+
+a {
+  color: $ai_color;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: $font-color;
+  background-color: $color;
+  text-decoration: none;
+}
+
+#intro {
+  max-width: 45rem;
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.text {
+  h2 {
+    font-size: 1.5rem;
+    padding-left: 1px;
+    font-family: AmazonEmberDisplayHeavy;
+  }
+}
+
+.icon,
+.text {
+  vertical-align: middle;
+  display: inline-block;
+}
+/* ====================== */
+/* LAYOUT STYLES */
+/* ====================== */
+
+#ai {
+  color: #7bacc9;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+.logo {
+  color: whitesmoke;
+  width: 10rem;
+}
+
+#intro-icon {
+  display: flex;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $ai_color;
+  flex-direction: row;
+  padding-top: 1rem;
+}
+
+#intro-icon h2 {
+  padding-left: 2%;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-main;
+}
+
+header {
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0px;
+  background: $ai_color;
+  z-index: 999;
+}
+
+section {
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    padding-top: 20vh;
+    font-size: 2.5rem;
+    color: $color-left;
+    font-family: $font-heavy;
+  }
+  h3 {
+    font-size: 1.5rem;
+    padding-top: 1rem;
+    font-family: AmazonEmberDisplayHeavy;
+    color: $color-left;
+    opacity: 0.9;
+  }
+
+  p {
+    vertical-align: middle;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+#intro-icon svg {
+  color: black;
+  fill: black;
+}
+
+section {
+  padding-bottom: 2rem;
+}
+
+#scrolly-condurcet > * {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+#scrolly-condurcet {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 3%;
+
+  section {
+    min-height: 100vh;
+  }
+}
+
+text.percent {
+  font-size: 0.5rem;
+}
+
+article#article-condurcet {
+  position: relative;
+  padding: 0 1.5rem;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 50%; // size of text section
+  color: $color-left;
+  background-color: $bg-color-left;
+  padding-right: 20%;
+  padding-left: 0%;
+  margin-left: 0px;
+
+  p {
+    font-size: 1.15rem;
+    margin: 4px;
+    padding-top: 0.5rem;
+    justify-content: center;
+    text-align: left;
+    background-color: $bg-color-left;
+    font-family: $font-main;
+  }
+
+  h2 {
+    background-color: $bg-color-left;
+    font-family: $font-heavy;
+    padding: 0px;
+    margin: 0px;
+    color: $color-left;
+    text-align: left;
+    font-size: 1.2rem;
+  }
+
+  .bold {
+    font-weight: bold;
+    color: $color-left;
+  }
+}
+
+figure#figure-condurcet {
+  position: -webkit-sticky;
+  position: sticky;
+  height: 90vh;
+  width: 80%;
+  margin: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  z-index: 0;
+  vertical-align: center;
+  top: 3rem;
+  justify-content: center;
+  text-align: center;
+}
+
+section {
+  h2 {
+    padding-top: 0vh;
+  }
+}
+
+// new
+#introduction {
+  background-color: $ai_color;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  min-width: 35%;
+  min-height: 110vh;
+
+  h1 {
+    color: whitesmoke;
+    font-family: $font-heavy;
+    font-size: 4rem;
+    padding: 1rem;
+    max-width: 50%;
+  }
+
+  p {
+    color: whitesmoke;
+    font-family: $font-heavy;
+    opacity: 0.9;
+    font-size: 1.45rem;
+  }
+
+  a,
+  a:hover {
+    color: whitesmoke;
+    background-color: $ai_color;
+    text-decoration: underline;
+    font-size: 1.4rem;
+  }
+
+  #subtitle {
+    color: whitesmoke;
+    font-family: $font-light;
+    font-size: 1.4rem;
+    padding: 1rem;
+    opacity: 0.8;
+  }
+}
+
+section#ensemble {
+  #emStaticChart {
+    max-width: 800px;
+    width: 70%;
+    height: 30%;
+    .st0 {
+      fill: #f5c3bc;
+      stroke: #354848;
+      stroke-width: 0.2rem;
+      stroke-miterlimit: 10;
+    }
+    .st1 {
+      font-family: "AmazonEmberDisplayLight";
+      color: #354848;
+    }
+    .st2 {
+      font-size: 40px;
+    }
+    .st3 {
+      display: none;
+      fill: #f3e8d4;
+      stroke: #354848;
+      stroke-miterlimit: 10;
+    }
+    .st4 {
+      fill: #cae0ed;
+      stroke: #354848;
+      stroke-width: 0.2rem;
+      stroke-miterlimit: 10;
+    }
+    circle {
+      fill: #354848;
+    }
+    text {
+      color: #354848;
+    }
+    .st5 {
+      fill: #354848;
+    }
+  }
+}
+
+section#random-forest {
+  h2 {
+    padding: 2rem 0rem;
+  }
+}
+
+#scrolly-rf > * {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+
+  section {
+    min-height: 100vh;
+  }
+}
+
+#scrolly-rf {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row-reverse;
+  @include border-padding;
+}
+
+article#article-rf {
+  position: relative;
+  padding: 0 1.5rem;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin: 0 auto;
+  max-width: 34%; // size of text section
+  color: $color-left;
+  background-color: $bg-color-left;
+
+  p {
+    font-size: 1.15rem;
+    margin: 4px;
+    padding: 1rem;
+    padding-top: 2rem;
+    justify-content: center;
+    text-align: left;
+    background-color: $bg-color-left;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  h2 {
+    background-color: $bg-color-left;
+    font-family: $font-heavy;
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+    color: $color-left;
+  }
+
+  h3 {
+    background-color: $bg-color-left;
+    font-family: $font-heavy;
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+    color: $color-left;
+  }
+
+  #end-p {
+    display: none;
+  }
+}
+
+figure#figure-rf {
+  position: -webkit-sticky;
+  position: sticky;
+  height: 90vh;
+  width: 100%;
+  margin: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  z-index: 0;
+  vertical-align: center;
+  top: 6rem;
+  justify-content: center;
+  text-align: center;
+
+  svg#chart-rf {
+    width: 90%;
+    height: 75%;
+  }
+
+  path.route {
+    stroke: #fcff00;
+    stroke-width: 5px;
+  }
+
+  text.tooltip {
+    font-size: 0.9rem;
+    paint-order: stroke;
+    stroke: white;
+    stroke-width: 1px;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+  }
+}
+.one-column {
+  color: $ai_color;
+  background-color: #f4e9d4;
+  text-align: center;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+
+  h2 {
+    font-size: 2.6rem;
+    color: $ai_color;
+    padding-top: 2rem;
+  }
+
+  p {
+    margin: 0 auto;
+    text-align: left;
+    max-width: 70%;
+  }
+  .bold {
+    font-weight: bold;
+  }
+}
+
+section#barcode {
+  color: $ai_color;
+  background-color: $bg-color;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+
+  h2 {
+    color: $ai_color;
+  }
+
+  p {
+    margin: 0 auto;
+  }
+}
+
+section#cantor-section {
+  color: $ai_color;
+  background-color: $bg-color-left;
+  text-align: center;
+  margin: 0 auto;
+
+  h2 {
+    color: $ai_color;
+  }
+
+  path.route {
+    stroke: #fcff00;
+  }
+}
+
+section#conclusion {
+  color: $ai_color;
+  background-color: $bg-color;
+  text-align: center;
+  margin: 0 auto;
+
+  h2 {
+    color: $ai_color;
+  }
+}
+section#resources {
+  color: #c9c9c9;
+  background-color: #354848;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: none;
+  @include border-padding;
+
+  hr {
+    color: #c9c9c9;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+    color: white;
+    max-width: 40rem;
+    padding-top: 4rem;
+    text-align: left;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+  }
+
+  p {
+    margin: 0 auto;
+    max-width: 40rem;
+    font-size: 1rem;
+    text-align: left;
+    color: #c9c9c9;
+  }
+
+  a {
+    color: white;
+  }
+}
+
+#chart-wrapper-condurcet {
+  display: grid;
+  grid-template-columns: 60%;
+  grid-column-gap: 2rem;
+  grid-template-rows: 6% 44% 6% 44%;
+  justify-content: right;
+  padding-right: 5%;
+  height: 85vh;
+  padding-top: 2%;
+
+  .chart {
+    margin-top: 5%;
+    margin-bottom: 4%;
+    position: relative;
+  }
+  // This is for resizing using transformations.
+  .grid {
+    justify-self: end;
+  }
+
+  .chartControls {
+    text-align: left;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 48%);
+    grid-template-rows: minmax(45px, 5%);
+    text-align: left;
+    color: white;
+    padding-left: 0px;
+    margin-left: 0px;
+  }
+
+  .sliderText {
+    font-size: 1rem;
+    color: $ai_color;
+    font-family: $font-heavy;
+    vertical-align: bottom;
+  }
+  .slider {
+    margin-top: 10%;
+    -webkit-appearance: none;
+    background: $bg-color;
+    width: 100%;
+    height: 30%;
+    outline: none;
+    opacity: 0.8;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 0.8vw;
+    height: 3vh;
+    background: $ai_color;
+    cursor: pointer;
+  }
+  .slider:hover {
+    opacity: 1;
+  }
+  .axis {
+    font-size: 0.8vw;
+  }
+}
+
+// barcode
+#barcode-chart {
+  width: 90%;
+  height: 85vh;
+  min-height: 500px;
+  margin: auto;
+}
+//Cantor
+#cantor-chart {
+  width: 100%;
+  height: 100vh;
+  min-height: 500px;
+}
+
+.bar-text {
+  font-family: $font-heavy;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  text-anchor: left;
+}
+
+.bar-text-percent {
+  font-size: 1rem;
+  font-family: $font-mono;
+}
+
+.outlined {
+  stroke: $squid-ink;
+  stroke-width: 2;
+}
+
+.stop-left {
+  stop-color: teal; /* Indigo */
+}
+
+.stop-right {
+  stop-color: pink; /* Teal */
+}
+
+/*D3 Annotation Styles*/
+.annotation-note {
+  font-family: $font-mono;
+  font-size: 0.9rem;
+  fill: $color-right;
+}
+
+path.note-line {
+  stroke-width: 0;
+}
+
+.annotation-note-label {
+  font-family: $font-light;
+  font-size: 0.9rem;
+  fill: $color-right;
+}
+
+.annotation-note-title {
+  font-family: $font-light;
+  font-size: 0.9rem;
+  fill: $color-right;
+}
+
+.connector {
+  stroke-dasharray: (4, 4);
+}
+
+.annotation-subject {
+  stroke-width: 0.1rem;
+  fill-opacity: 0;
+}
+
+.annotation-rect {
+  stroke-width: 0.1rem;
+  fill-opacity: 0.3;
+  fill: black;
+  stroke: white;
+}
+
+.subject {
+  opacity: 0.5;
+  fill: none;
+  fill-opacity: 0;
+}
+
+.tree-text {
+  font-family: $font-heavy;
+  stroke-linejoin: round;
+  color: $font-color;
+  paint-order: stroke fill;
+  stroke: #f4e9d4;
+  stroke-width: 5px;
+  font-size: 1.3rem;
+}
+
+#rf-text {
+  color: $font-color;
+  font-family: $font-heavy;
+  letter-spacing: 8px;
+  font-size: 1.4rem;
+  paint-order: stroke fill;
+  stroke: #f4e9d4;
+  stroke-width: 5px;
+}
+
+.rf-circle-text,
+.bar-circle-text {
+  color: $font-color;
+  font-family: $font-mono;
+  font-size: 1rem;
+  paint-order: stroke fill;
+  stroke: #f4e9d4;
+  stroke-width: 1.5px;
+}
+
+// styles for text-path arc in random forest scroll
+.features {
+  text {
+    font-family: $font-light;
+  }
+}
+
+.voteText {
+  font-family: $font-light;
+}
+#enclosing-path-clickme {
+  fill: none;
+  stroke: none;
+  stroke-width: 1;
+}
+
+#clickme-text {
+  font-family: $font-heavy;
+  font-size: 1rem;
+}
+
+#x-axis,
+#y-axis {
+  text {
+    font-family: $font-light;
+    font-size: 0.8rem;
+  }
+  line {
+    opacity: 0.15;
+  }
+}
+
+.scatter-axis-text {
+  font-family: $font-light;
+  font-size: 1rem;
+}
+
+/* ====================== */
+/* CANTOR CHARTS (bottom-most charts) */
+/* ====================== */
+
+#chart-wrapper-cantor {
+  display: grid;
+  grid-template-columns: 70%;
+  grid-template-rows: 60% 30%;
+  justify-content: center;
+  text-align: center;
+  justify-items: center;
+  padding-right: 5%;
+  height: 85vh;
+  padding-top: 2%;
+
+  .chart {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    position: relative;
+  }
+}
+#cantor-treegrid {
+  width: 60%;
+}
+#cantor-scatter {
+  width: 85%;
+  height: 100%; //10% more for the room for text at the bottom
+}
+
+.legend-text,
+.cantor-label-text {
+  font-size: 1rem;
+  font-family: $font-light;
+}
+
+/* ====================== */
+/* RESPONSIVE */
+/* ====================== */
+
+/* ====================== */
+/* SUPER WIDE SCREENS */
+/* ====================== */
+@media screen and (min-width: 1500px) {
+  #scrolly-condurcet,
+  #scrolly-rf {
+    margin: auto;
+    max-width: 75%;
+  }
+
+  .one-column {
+    p {
+      max-width: 800px;
+    }
+  }
+
+  #chart-wrapper-cantor {
+    grid-template-columns: 50%;
+    grid-template-rows: 55% 40%;
+  }
+
+  // barcode
+  #barcode-chart {
+    width: 70%;
+    height: 85vh;
+    min-height: 500px;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  // condurcet updates
+  text.percent {
+    font-size: 0.3rem;
+  }
+
+  // make chart title smaller
+  .scatter-axis-text {
+    font-size: 1rem;
+  }
+
+  #chart-wrapper-condurcet {
+    grid-template-columns: 85%;
+    grid-column-gap: 2rem;
+    grid-template-rows: 6% 44% 6% 44%;
+    padding-right: 5%;
+    height: 85vh;
+    padding-top: 2%;
+
+    .chart {
+      margin-top: 5%;
+      margin-bottom: 4%;
+    }
+
+    .chartControls {
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      grid-template-columns: 48% 44%;
+      grid-template-rows: minmax(45px, 5%);
+      padding-left: 0px;
+      margin-left: 0px;
+    }
+
+    .sliderText {
+      font-size: 1rem;
+      text-align: left;
+    }
+    .slider {
+      text-align: right;
+      margin-top: 10%;
+      width: 100%;
+      height: 30%;
+    }
+
+    .slider::-webkit-slider-thumb {
+      width: 0.8vw;
+      height: 3vh;
+    }
+    .axis {
+      font-size: 0.8vw;
+    }
+  }
+
+  article#article-condurcet {
+    padding: 0 1.5rem;
+    max-width: 50%; // size of text section
+    padding-right: 15%;
+    padding-left: 0%;
+    margin-left: 0px;
+  }
+
+  figure#figure-condurcet {
+    height: 90vh;
+    width: 95%;
+    top: 3rem;
+  }
+
+  section {
+    h2 {
+      padding-top: 0vh;
+    }
+  }
+  // make scrolls longer
+  #scrolly-rf {
+    min-height: 130vh;
+    padding: 1rem 1rem;
+  }
+
+  section#ensemble {
+    #emStaticChart {
+      width: 80%;
+      height: 30%;
+    }
+  }
+
+  article#article-rf {
+    padding: 0 1.5rem;
+    max-width: 45%; // size of text section
+    padding-right: 0%;
+    padding-left: 0%;
+    margin-left: 30px;
+
+    p {
+      font-size: 1.2rem;
+      padding: 1rem;
+      margin: 0rem;
+    }
+
+    h3 {
+      text-align: left;
+      font-size: 1.3rem;
+    }
+  }
+
+  figure#figure-rf {
+    height: 80vh;
+    width: 90%;
+    top: 1.5rem;
+    padding-left: 0.5%;
+  }
+
+  // =================
+  // end rf updates
+  // =================
+}
+
+/* ====================================== */
+/* TABLET (e.g. iPad) ?& below RESPONSIVE */
+/* ====================================== */
+
+@media screen and (max-width: 768px) {
+  // update intro title
+  #introduction h1 {
+    padding: 0rem;
+    max-width: none;
+  }
+
+  #intro-icon {
+    padding-top: 1rem;
+    h2 {
+      font-size: 1.3rem;
+    }
+  }
+
+  section#ensemble {
+    #emStaticChart {
+      width: 90%;
+      height: 30%;
+    }
+  }
+
+  section#random-forest {
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  // control center text
+  .one-column {
+    padding: 1rem 1rem;
+    padding-bottom: 4rem;
+    p {
+      max-width: 90%;
+      font-size: 1rem;
+      text-align: left;
+    }
+    h2 {
+      padding: 1rem 0.5rem;
+      font-size: 2rem;
+    }
+  }
+
+  // make resources section take full-width
+  section#resources {
+    padding: 2rem;
+
+    p {
+      font-size: 1rem;
+    }
+
+    h1 {
+      padding-top: 1rem;
+    }
+
+    p.resource-item {
+      padding-top: 1.1em;
+    }
+  }
+  // end center text controls
+
+  // =================
+  // CONDURCET updates
+  // =================
+
+  // make chart title smaller
+  .scatter-axis-text {
+    font-size: 0.77rem;
+  }
+
+  // make scrolls longer
+  #scrolly-condurcet section {
+    min-height: 130vh;
+  }
+
+  #chart-wrapper-condurcet {
+    grid-template-columns: 100%;
+    grid-column-gap: 2rem;
+    grid-template-rows: 10% 40% 10% 40%;
+    padding: 2%;
+    height: 90vh;
+
+    .chart {
+      margin-bottom: 4%;
+    }
+
+    #x-axis text,
+    #y-axis text {
+      font-size: 0.75rem;
+    }
+
+    .chartControls {
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      grid-template-columns: 90%;
+      grid-template-rows: 50% 50%;
+      padding-left: 0px;
+      margin-left: 0px;
+    }
+
+    .sliderText {
+      font-size: 1rem;
+      text-align: left;
+    }
+    .slider {
+      text-align: right;
+      margin-top: 10%;
+      width: 100%;
+      height: 2vh;
+    }
+
+    .slider::-webkit-slider-thumb {
+      width: 3vw;
+      height: 3vh;
+    }
+    .axis {
+      font-size: 0.8vw;
+    }
+  }
+
+  article#article-condurcet {
+    padding: 0 1.5rem;
+    max-width: 50%; // size of text section
+    padding-right: 2%;
+    padding-left: 0%;
+    margin-left: 0px;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  figure#figure-condurcet {
+    height: 90vh;
+    width: 95%;
+    top: 1.5rem;
+    padding-left: 5%;
+  }
+
+  // =================
+  // end CONDURCET updates
+  // =================
+
+  // =================
+  // rf updates
+  // =================
+
+  // make scrolls longer
+  #scrolly-rf {
+    min-height: 130vh;
+    padding: 1rem 1rem;
+  }
+
+  article#article-rf {
+    padding: 0 1.5rem;
+    max-width: 45%; // size of text section
+    padding-right: 0%;
+    padding-left: 0%;
+    margin-left: 0px;
+
+    p {
+      font-size: 1rem;
+      padding: 0rem;
+      margin: 0rem;
+    }
+
+    h3 {
+      text-align: left;
+      font-size: 1.2rem;
+    }
+  }
+
+  figure#figure-rf {
+    height: 75vh;
+    width: 98%;
+    top: 1.5rem;
+    padding-left: 0.5%;
+  }
+
+  // =================
+  // end rf updates
+  // =================
+
+  .tree-text {
+    stroke-width: 4px;
+    font-size: 1rem;
+  }
+
+  #rf-text {
+    letter-spacing: 7px;
+    font-size: 1.3rem;
+    stroke-width: 5px;
+  }
+
+  .rf-circle-text,
+  .bar-circle-text {
+    font-size: 1rem;
+    stroke-width: 1.5px;
+  }
+
+  #barcode-chart {
+    width: 100%;
+    height: 100vh;
+  }
+  #cantor-treegrid {
+    width: 70%;
+    height: 50vh;
+  }
+
+  section {
+    h2 {
+      padding-top: 0vh;
+    }
+  }
+}
+/* ====================================== */
+/* IPAD RESPONSIVE */
+/* ====================================== */
+@media all and (device-width: 768px) and (device-height: 1024px) and (orientation: portrait) {
+  #barcode-chart {
+    width: 90%;
+    height: 80vh;
+    min-height: 500px;
+    margin: auto;
+  }
+}
+
+/* ====================================== */
+/* MOBILE */
+/* ====================================== */
+
+@media screen and (max-width: 500px) {
+  #introduction h1 {
+    padding: 0rem;
+    max-width: none;
+  }
+
+  #intro-icon {
+    padding-top: 1rem;
+    h2 {
+      font-size: 1.3rem;
+    }
+  }
+
+  // control center text
+  .one-column {
+    padding: 1rem 1rem;
+    padding-bottom: 4rem;
+    p {
+      max-width: 90%;
+      font-size: 1rem;
+      text-align: left;
+    }
+    h2 {
+      padding-top: 1rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      font-size: 2rem;
+    }
+  }
+
+  section#ensemble {
+    #emStaticChart {
+      width: 100%;
+      height: 30%;
+    }
+  }
+
+  // make resources section take full-width
+  section#resources {
+    padding: 2rem;
+
+    p {
+      font-size: 1rem;
+    }
+
+    h1 {
+      padding-top: 1rem;
+    }
+
+    p.resource-item {
+      padding-top: 1.1em;
+    }
+  }
+  // end center text controls
+
+  // =================
+  // CONDURCET updates
+  // =================
+
+  // make chart title smaller
+  .scatter-axis-text {
+    font-size: 0.67rem;
+  }
+
+  // make scrolls longer
+  #scrolly-condurcet section {
+    min-height: 130vh;
+  }
+
+  #chart-wrapper-condurcet {
+    grid-template-columns: 100%;
+    grid-column-gap: 2rem;
+    grid-template-rows: 10% 40% 10% 40%;
+    padding: 2%;
+    height: 90vh;
+
+    .chart {
+      margin-bottom: 4%;
+    }
+
+    #x-axis text,
+    #y-axis text {
+      font-size: 0.75rem;
+    }
+
+    .chartControls {
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      grid-template-columns: 90%;
+      grid-template-rows: 50% 50%;
+      padding-left: 0px;
+      margin-left: 0px;
+    }
+
+    .sliderText {
+      font-size: 0.8rem;
+      text-align: left;
+    }
+    .slider {
+      text-align: right;
+      margin-top: 10%;
+      width: 100%;
+      height: 2vh;
+    }
+
+    .slider::-webkit-slider-thumb {
+      width: 3vw;
+      height: 3vh;
+    }
+    .axis {
+      font-size: 0.8vw;
+    }
+  }
+
+  article#article-condurcet {
+    padding: 0 1.5rem;
+    max-width: 50%; // size of text section
+    padding-right: 2%;
+    padding-left: 0%;
+    margin-left: 0px;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  figure#figure-condurcet {
+    height: 90vh;
+    width: 95%;
+    top: 1.5rem;
+    padding-left: 5%;
+  }
+
+  // =================
+  // end CONDURCET updates
+  // =================
+
+  // =================
+  // rf updates
+  // =================
+
+  // make scrolls longer
+  #scrolly-rf {
+    min-height: 130vh;
+    padding: 1rem 1rem;
+  }
+
+  article#article-rf {
+    padding: 0 1.5rem;
+    max-width: 45%; // size of text section
+    padding-right: 0%;
+    padding-left: 0%;
+    margin-left: 0px;
+
+    p {
+      font-size: 1rem;
+      padding: 0rem;
+      margin: 0rem;
+    }
+
+    h3 {
+      text-align: left;
+      font-size: 1.2rem;
+    }
+  }
+
+  figure#figure-rf {
+    height: 70vh;
+    width: 98%;
+    top: 1.5rem;
+    padding-left: 0.5%;
+    padding-top: 40%;
+    // Make annotation smaller
+    .annotation-note-label {
+      font-size: 0.6rem;
+    }
+    .annotation-note-title {
+      font-size: 0.8rem;
+    }
+    .voteText {
+      font-size: 0.9rem;
+    }
+
+    svg#chart-rf {
+      height: 90%;
+    }
+    path.route {
+      stroke: #fcff00;
+      stroke-width: 2px;
+    }
+  }
+
+  #clickme-text {
+    font-size: 0.6rem;
+  }
+
+  // =================
+  // end rf updates
+  // =================
+
+  //  jellyfish
+  .tree-text {
+    stroke-width: 4px;
+    font-size: 0.8rem;
+  }
+
+  #rf-text {
+    letter-spacing: 7px;
+    font-size: 1.3rem;
+    stroke-width: 5px;
+  }
+
+  .rf-circle-text,
+  .bar-circle-text {
+    font-size: 0.85rem;
+    stroke-width: 1.5px;
+  }
+
+  //  CANTOR
+  #chart-wrapper-cantor {
+    grid-template-columns: 100%;
+    grid-template-rows: 55% 33%;
+    justify-content: center;
+    text-align: center;
+    justify-items: center;
+    height: 95vh;
+    padding-top: 2%;
+
+    .chart {
+      margin-top: 1%;
+      margin-bottom: 1%;
+      position: relative;
+    }
+  }
+  #cantor-treegrid {
+    width: 60%;
+  }
+  #cantor-scatter {
+    width: 85%;
+    height: 100%; //10% more for the room for text at the bottom
+  }
+  #cantor-treegrid {
+    width: 100%;
+    height: 90%;
+  }
+
+  .legend-text,
+  .cantor-label-text {
+    font-size: 0.55rem;
+    font-family: $font-light;
+  }
+
+  section {
+    h2 {
+      padding-top: 0vh;
+    }
+  }
+}
+
+.annotation-subject,
+.annotation-connector,
+.annotation-note-context {
+  stroke-width: 0;
+}

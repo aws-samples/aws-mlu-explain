@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Random Forest</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta
+      name="description"
+      content="MLU-Explain: Visual Introduction to the Random Forest algorithm."
+    />
+    <meta
+      property="og:image"
+      content="https://mlu-explain.github.io/assets/ogimages/ogimage-random-forest.png"
+    />
+
+    <meta property="og:title" content="Random Forest" />
+
+    <meta
+      property="og:description"
+      content="An introduction to the Random Forest algorithm."
+    />
+
+    <link rel="icon" href="./assets/mlu_robot.png" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1FYW57GW3G"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1FYW57GW3G");
+    </script>
+    <link rel="stylesheet" href="css/styles.scss" />
+  </head>
+
+  <body>
+    <!-- main content -->
+    <section id="introduction">
+      <div id="intro-icon">
+        <a href="https://mlu-explain.github.io/"
+          ><svg
+            width="50"
+            height="50"
+            viewBox="0 0 234 216"
+            fill="none"
+            xmlns="https://www.w3.org/2000/svg"
+          >
+            <g id="mlu_robot 1" clip-path="url(#clip0)">
+              <g>
+                <path
+                  id="Vector"
+                  d="M90.6641 83.1836C96.8828 83.1836 101.941 78.1289 101.941 71.8906V71.8242C101.941 65.5898 96.8945 60.5312 90.6641 60.5312C84.4453 60.5312 79.3828 65.5898 79.3828 71.8242V71.8906C79.3828 78.1289 84.4336 83.1836 90.6641 83.1836Z"
+                  fill="whitesmoke"
+                />
+                <path
+                  id="Vector_2"
+                  d="M143.305 83.1836C149.523 83.1836 154.586 78.1289 154.586 71.8906V71.8242C154.586 65.5898 149.535 60.5312 143.305 60.5312C137.09 60.5312 132.027 65.5898 132.027 71.8242V71.8906C132.027 78.1289 137.078 83.1836 143.305 83.1836Z"
+                  fill="whitesmoke"
+                />
+                <path
+                  id="Vector_3"
+                  d="M163.586 159.402H173.609V122.641H163.586V159.402Z"
+                  fill="whitesmoke"
+                />
+                <path
+                  id="Vector_4"
+                  d="M60.3594 159.402H70.3867V122.641H60.3594V159.402Z"
+                  fill="whitesmoke"
+                />
+                <g id="Group">
+                  <path
+                    id="Vector_5"
+                    d="M182.16 30.0781H51.8047V10.0234H182.16V30.0781ZM182.16 103.609H51.8047V40.1055H182.16V103.609ZM144.559 168.789H89.4062V113.641H144.559V168.789ZM0 0V10.0234H15.8789V46.7891H25.9023V10.0234H41.7812V113.641H79.3867V178.816H96.9297V215.578H106.957V178.816H127.016V215.578H137.039V178.816H154.586V113.641H192.188V10.0234H233.969V0"
+                    fill="whitesmoke"
+                  />
+                </g>
+              </g>
+            </g>
+            <defs>
+              <clipPath id="clip0">
+                <rect width="233.97" height="215.58" fill="whitesmoke" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+        <h2 class="logo">MLU-expl<span id="ai">AI</span>n</h2>
+      </div>
+      <h1>The Random Forest Algorithm<br /></h1>
+      <p id="subtitle">
+        How the majority vote and well-placed randomness can enhance the
+        decision tree model.
+      </p>
+
+      <p>
+        By
+        <a href="https://hjyeon.github.io/">Jenny Yeon</a>
+        &
+        <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
+
+        <br /><br /><br /><br />
+      </p>
+    </section>
+    <div id="scrolly-condurcet">
+      <figure id="figure-condurcet">
+        <div id="main-wrapper">
+          <div class="explore1" id="explore1">
+            <div id="chart-wrapper-condurcet">
+              <div class="chartControls">
+                <p class="sliderText" id="numTrees-value"># of Trees: 1</p>
+                <input
+                  class="slider"
+                  id="numSlider"
+                  type="range"
+                  min="1"
+                  max="25"
+                  value="1"
+                  step="2"
+                  style="opacity: 0"
+                />
+              </div>
+              <div class="chart" id="gridOfTrees"></div>
+              <div class="chartControls">
+                <p class="sliderText" id="probability-value">
+                  Tree Accuracy: 60%
+                </p>
+                <input
+                  class="slider"
+                  id="probSlider"
+                  type="range"
+                  min="0.5"
+                  max="1"
+                  value="0.6"
+                  step="0.01"
+                  style="opacity: 0"
+                />
+              </div>
+              <div class="chart" id="scatter"></div>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <article id="article-condurcet">
+        <section data-index="0" class="condurcet-scrolly">
+          <br /><br />
+          <h2>But First: A Theorem From 1785</h2>
+          <p id="two_columns">
+            All the way back in the year 1785, Marquis de Condorcet expressed a
+            political science theorem about the relative probability of a given
+            group of individuals arriving at a correct
+            <i>majority</i> decision. <br /><br />
+            Despite its age, the theorem has been applied to a number of
+            different fields, most notably for us the field of machine learning.
+            To see how, let's start with one model, a decision tree with an
+            accuracy of 60 percent. <br /><br />
+          </p>
+        </section>
+        <section data-index="1" class="condurcet-scrolly">
+          <p id="two_columns">
+            <span class="bold">Condorcet's Jury Theorem</span> says that if each
+            person is more than 50% correct, then adding more people to vote
+            increases the probability that the majority is correct.<br /><br />
+            True to form, if we ask two more decision trees, each also with 60%
+            accuracy, and decide by the majority vote, then the probability of
+            the vote being right goes up to 65%!
+          </p>
+        </section>
+        <section data-index="2" class="condurcet-scrolly">
+          <p id="two_columns">
+            The theorem suggests that the probability of the majority vote being
+            correct can go up as we add more and more models. With eleven
+            models, the majority can reach 75% accuracy!
+            <br /><br />
+            There is a caveat. The accuracy may not improve if each model
+            produces the same prediction, for example. The mistake of one model
+            would not be caught by the other models. Therefore, we would want to
+            cast a majority vote using the models that are different.
+          </p>
+        </section>
+
+        <section data-index="3" class="condurcet-scrolly">
+          <p id="two_columns">
+            We can add more and more models.
+            <br /><br />
+            <span class="bold">Play with the scrollers yourself!</span> The top
+            controls the number of trees in the ensemble. The bottom controls
+            each tree's accuracy. <br /><br />
+            In machine learning, this concept of multiple models working
+            together to come to an aggregate prediction is called
+            <span class="bold">ensemble learning.</span>
+            It provides the basis for many important machine learning models,
+            including random forests.
+          </p>
+        </section>
+      </article>
+    </div>
+    <section id="ensemble" class="one-column">
+      <h2>Ensemble Learning</h2>
+      <!-- width can be 80% for a large screen, then change to 100% for small screen sizes -->
+      <svg
+        version="1.1"
+        id="emStaticChart"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        viewBox="0 0 1909 645"
+        style="enable-background: new 0 0 1909 645"
+        xml:space="preserve"
+      >
+        <g id="tails">
+          <circle class="st0" cx="155.5" cy="323.5" r="115" />
+          <text transform="matrix(1 0 0 1 115.3315 335.127)" class="st1 st2">
+            Data
+          </text>
+          <circle class="st0" cx="1754.5" cy="327.5" r="115" />
+          <text transform="matrix(1 0 0 1 1661.2827 315.127)">
+            <tspan x="0" y="0" class="st1 st2">Aggregate</tspan>
+            <tspan x="3.36" y="48" class="st1 st2">Prediction</tspan>
+          </text>
+        </g>
+        <g id="brackets">
+          <path
+            class="st5"
+            d="M302.8,318.2c-4,0-7.3,3.3-7.3,7.3c0,4.1,3.3,7.3,7.3,7.3c8.5,0,15.2,2.8,20.5,8.4c15.4,16.6,13.3,51.3,13.3,52.2V487
+       c0,23.6,6.5,41.8,19.3,54c15.4,14.7,34.8,15.8,40,15.8c0.7,0,1.2,0,1.3,0c4-0.2,7.1-3.7,6.9-7.7c-0.2-4.1-3.7-7.2-7.7-7
+       c-0.2,0.1-17.4,0.8-30.4-11.7c-9.8-9.4-14.8-24-14.8-43.4v-93.1c0.1-1.7,2.5-41.5-17.2-62.7c-2-2.2-4.2-4.1-6.6-5.8
+       c2.3-1.6,4.5-3.6,6.6-5.8c19.7-21.2,17.3-61,17.2-62.2V164c0-19.3,4.9-33.9,14.7-43.3c12.9-12.4,30.3-11.9,30.6-11.8
+       c4,0.2,7.4-2.9,7.6-7s-2.9-7.5-6.9-7.7c-1,0-23.7-1-41.2,15.7c-12.8,12.3-19.3,30.4-19.3,54V258c0.7,9.7-0.5,37.8-13.3,51.6
+       C318,315.5,311.3,318.2,302.8,318.2z"
+          />
+          <path
+            class="st5"
+            d="M1606.7,333c4,0,7.3-3.3,7.3-7.3c0-4.1-3.3-7.3-7.3-7.3c-8.5,0-15.2-2.8-20.5-8.4c-15.4-16.6-13.3-51.3-13.3-52.2V164
+       c0-23.6-6.5-41.8-19.3-54c-15.4-14.7-34.8-15.8-40-15.8c-0.7,0-1.2,0-1.3,0c-4,0.2-7.1,3.7-6.9,7.7c0.2,4.1,3.7,7.2,7.7,7
+       c0.2-0.1,17.4-0.8,30.4,11.7c9.8,9.4,14.8,24,14.8,43.4v93.1c-0.1,1.7-2.5,41.5,17.2,62.7c2,2.2,4.2,4.1,6.6,5.8
+       c-2.3,1.6-4.5,3.6-6.6,5.8c-19.7,21.2-17.3,61-17.2,62.2v93.6c0,19.3-4.9,33.9-14.7,43.3c-12.9,12.4-30.3,11.9-30.6,11.8
+       c-4-0.2-7.4,2.9-7.6,7s2.9,7.5,6.9,7.7c1,0,23.7,1,41.2-15.7c12.8-12.3,19.3-30.4,19.3-54v-94.1c-0.7-9.7,0.5-37.8,13.3-51.6
+       C1591.5,335.7,1598.2,333,1606.7,333z"
+          />
+        </g>
+        <g id="samples">
+          <path
+            class="st4"
+            d="M621.5,132H458c-11.6,0-21-9.4-21-21V95.5c0-11.6,9.4-21,21-21h163.5c11.6,0,21,9.4,21,21V111
+       C642.5,122.6,633.1,132,621.5,132z"
+          />
+          <path
+            class="st4"
+            d="M621.26,254.34h-163.5c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h163.5c11.6,0,21,9.4,21,21v15.5
+       C642.26,244.94,632.86,254.34,621.26,254.34z"
+          />
+          <path
+            class="st4"
+            d="M621.26,376.34h-163.5c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h163.5c11.6,0,21,9.4,21,21v15.5
+       C642.26,366.94,632.86,376.34,621.26,376.34z"
+          />
+          <path
+            class="st4"
+            d="M621.26,574.34h-163.5c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h163.5c11.6,0,21,9.4,21,21v15.5
+       C642.26,564.94,632.86,574.34,621.26,574.34z"
+          />
+          <text transform="matrix(1 0 0 1 458.7754 115.5913)" class="st1 st2">
+            Sample 1
+          </text>
+          <text transform="matrix(1 0 0 1 457.7911 237.9929)" class="st1 st2">
+            Sample 2
+          </text>
+          <text transform="matrix(1 0 0 1 457.7912 362.9931)" class="st1 st2">
+            Sample 3
+          </text>
+          <text transform="matrix(1 0 0 1 451.4709 557.9931)" class="st1 st2">
+            Sample N
+          </text>
+          <circle cx="542" cy="408" r="7" />
+          <circle cx="542" cy="445" r="7" />
+          <circle cx="542" cy="488" r="7" />
+        </g>
+        <g id="models">
+          <path
+            class="st4"
+            d="M1022.5,132H859c-11.6,0-21-9.4-21-21V95.5c0-11.6,9.4-21,21-21h163.5c11.6,0,21,9.4,21,21V111
+       C1043.5,122.6,1034.1,132,1022.5,132z"
+          />
+          <path
+            class="st4"
+            d="M1022.26,254.34h-163.5c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h163.5c11.6,0,21,9.4,21,21v15.5
+       C1043.26,244.94,1033.85,254.34,1022.26,254.34z"
+          />
+          <path
+            class="st4"
+            d="M1022.26,376.34h-163.5c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h163.5c11.6,0,21,9.4,21,21v15.5
+       C1043.26,366.94,1033.85,376.34,1022.26,376.34z"
+          />
+          <path
+            class="st4"
+            d="M1022.26,574.34h-163.5c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h163.5c11.6,0,21,9.4,21,21v15.5
+       C1043.26,564.94,1033.85,574.34,1022.26,574.34z"
+          />
+          <text transform="matrix(1 0 0 1 872.1152 116.5913)" class="st1 st2">
+            Model 1
+          </text>
+          <text transform="matrix(1 0 0 1 872.131 237.9929)" class="st1 st2">
+            Model 2
+          </text>
+          <text transform="matrix(1 0 0 1 872.1311 362.9931)" class="st1 st2">
+            Model 3
+          </text>
+          <text transform="matrix(1 0 0 1 868.8108 557.9931)" class="st1 st2">
+            Model N
+          </text>
+          <circle cx="943" cy="408" r="7" />
+          <circle cx="943" cy="445" r="7" />
+          <circle cx="943" cy="488" r="7" />
+        </g>
+        <g id="predictions">
+          <path
+            class="st4"
+            d="M1456.5,574.34h-202.74c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h202.74c11.6,0,21,9.4,21,21v15.5
+       C1477.5,564.94,1468.1,574.34,1456.5,574.34z"
+          />
+          <path
+            class="st4"
+            d="M1456.5,378.34h-202.74c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h202.74c11.6,0,21,9.4,21,21v15.5
+       C1477.5,368.94,1468.1,378.34,1456.5,378.34z"
+          />
+          <path
+            class="st4"
+            d="M1456.5,254.34h-202.74c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h202.74c11.6,0,21,9.4,21,21v15.5
+       C1477.5,244.94,1468.1,254.34,1456.5,254.34z"
+          />
+          <path
+            class="st4"
+            d="M1456.5,134.34h-202.74c-11.6,0-21-9.4-21-21v-15.5c0-11.6,9.4-21,21-21h202.74c11.6,0,21,9.4,21,21v15.5
+       C1477.5,124.94,1468.1,134.34,1456.5,134.34z"
+          />
+          <text transform="matrix(1 0 0 1 1249.6523 116.5913)" class="st2 st1">
+            Prediction 1
+          </text>
+          <text transform="matrix(1 0 0 1 1249.6681 237.9929)" class="st2 st1">
+            Prediction 2
+          </text>
+          <text transform="matrix(1 0 0 1 1249.6682 362.9931)" class="st2 st1">
+            Prediction 3
+          </text>
+          <text transform="matrix(1 0 0 1 1246.3479 557.9931)" class="st2 st1">
+            Prediction N
+          </text>
+          <circle cx="1355" cy="445" r="7" />
+          <circle cx="1355" cy="488" r="7" />
+          <circle cx="1355" cy="408" r="7" />
+        </g>
+        <g id="arrow" fill="#354848">
+          <g id="Layer_24">
+            <path
+              d="M769.45,126.09l30.29-17.5c1.43-0.94,1.83-2.85,0.9-4.29c-0.23-0.36-0.54-0.66-0.9-0.9l-30.29-17.5
+         c-1.47-0.8-3.3-0.25-4.1,1.22c-0.53,0.97-0.48,2.15,0.12,3.08l8.78,12.79h-110.4c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3h110.4
+         l-8.78,12.79c-0.9,1.4-0.5,3.28,0.9,4.18C767.3,126.57,768.48,126.61,769.45,126.09L769.45,126.09z"
+            />
+          </g>
+          <g id="Layer_24_1_">
+            <path
+              d="M769.22,246.09l30.29-17.5c1.43-0.94,1.83-2.85,0.9-4.29c-0.23-0.36-0.54-0.66-0.9-0.9l-30.29-17.5
+         c-1.47-0.8-3.3-0.25-4.1,1.22c-0.53,0.97-0.48,2.15,0.12,3.08l8.78,12.79h-110.4c-1.66,0-3,1.34-3,3s1.34,3,3,3h110.4l-8.78,12.79
+         c-0.9,1.4-0.5,3.28,0.9,4.18C767.07,246.57,768.25,246.61,769.22,246.09L769.22,246.09z"
+            />
+          </g>
+          <g id="Layer_24_2_">
+            <path
+              d="M769.22,368.09l30.29-17.5c1.43-0.94,1.83-2.85,0.9-4.29c-0.23-0.36-0.54-0.66-0.9-0.9l-30.29-17.5
+         c-1.47-0.8-3.3-0.25-4.1,1.22c-0.53,0.97-0.48,2.15,0.12,3.08l8.78,12.79h-110.4c-1.66,0-3,1.34-3,3s1.34,3,3,3h110.4l-8.78,12.79
+         c-0.9,1.4-0.5,3.28,0.9,4.18C767.07,368.57,768.25,368.61,769.22,368.09L769.22,368.09z"
+            />
+          </g>
+          <g id="Layer_24_3_">
+            <path
+              d="M769.22,566.09l30.29-17.5c1.43-0.94,1.83-2.85,0.9-4.29c-0.23-0.36-0.54-0.66-0.9-0.9l-30.29-17.5
+         c-1.47-0.8-3.3-0.25-4.1,1.22c-0.53,0.97-0.48,2.15,0.12,3.08l8.78,12.79h-110.4c-1.66,0-3,1.34-3,3s1.34,3,3,3h110.4l-8.78,12.79
+         c-0.9,1.4-0.5,3.28,0.9,4.18C767.07,566.57,768.25,566.61,769.22,566.09L769.22,566.09z"
+            />
+          </g>
+        </g>
+        <g id="arrow" fill="#354848">
+          <g id="Layer_24_7_">
+            <path
+              d="M1173.45,126.09l30.29-17.5c1.43-0.94,1.83-2.85,0.9-4.29c-0.23-0.36-0.54-0.66-0.9-0.9l-30.29-17.5
+         c-1.47-0.8-3.3-0.25-4.1,1.22c-0.53,0.97-0.48,2.15,0.12,3.08l8.78,12.79h-110.4c-1.66,0-3,1.34-3,3c0,1.66,1.34,3,3,3h110.4
+         l-8.78,12.79c-0.9,1.4-0.5,3.28,0.9,4.18C1171.3,126.57,1172.48,126.61,1173.45,126.09L1173.45,126.09z"
+            />
+          </g>
+          <g id="Layer_24_6_">
+            <path
+              d="M1173.22,246.09l30.29-17.5c1.43-0.94,1.83-2.85,0.9-4.29c-0.23-0.36-0.54-0.66-0.9-0.9l-30.29-17.5
+         c-1.47-0.8-3.3-0.25-4.1,1.22c-0.53,0.97-0.48,2.15,0.12,3.08l8.78,12.79h-110.4c-1.66,0-3,1.34-3,3s1.34,3,3,3h110.4l-8.78,12.79
+         c-0.9,1.4-0.5,3.28,0.9,4.18C1171.07,246.57,1172.25,246.61,1173.22,246.09L1173.22,246.09z"
+            />
+          </g>
+          <g id="Layer_24_5_">
+            <path
+              d="M1173.22,368.09l30.29-17.5c1.43-0.94,1.83-2.85,0.9-4.29c-0.23-0.36-0.54-0.66-0.9-0.9l-30.29-17.5
+         c-1.47-0.8-3.3-0.25-4.1,1.22c-0.53,0.97-0.48,2.15,0.12,3.08l8.78,12.79h-110.4c-1.66,0-3,1.34-3,3s1.34,3,3,3h110.4l-8.78,12.79
+         c-0.9,1.4-0.5,3.28,0.9,4.18C1171.07,368.57,1172.25,368.61,1173.22,368.09L1173.22,368.09z"
+            />
+          </g>
+          <g id="Layer_24_4_">
+            <path
+              d="M1173.22,566.09l30.29-17.5c1.43-0.94,1.83-2.85,0.9-4.29c-0.23-0.36-0.54-0.66-0.9-0.9l-30.29-17.5
+         c-1.47-0.8-3.3-0.25-4.1,1.22c-0.53,0.97-0.48,2.15,0.12,3.08l8.78,12.79h-110.4c-1.66,0-3,1.34-3,3s1.34,3,3,3h110.4l-8.78,12.79
+         c-0.9,1.4-0.5,3.28,0.9,4.18C1171.07,566.57,1172.25,566.61,1173.22,566.09L1173.22,566.09z"
+            />
+          </g>
+        </g>
+      </svg>
+      <p>
+        Ensemble learning creates a stronger model by aggregating the
+        predictions of multiple weak models, such as decision trees. Please
+        check this article on Decision Tree to learn more about some of its
+        limitations. Condorcet’s Jury Theorem suggests that the majority vote
+        aggregation can have better accuracy than the individual models. There
+        are other methods to aggregate predictions, such as weighted majority
+        vote.
+      </p>
+      <br />
+      <p>
+        Random Forest is an example of ensemble learning where each model is a
+        decision tree. In the next section, we will build a random forest model
+        to classify if a road sign is a pedestrian crossing sign or not. These
+        signs come in many variations, and we will use four simple features:
+        Size, number of sides, number of colors used, and if the sign has text
+        or symbol. <br /><br />
+        We will start with a sampling method called the
+        <span class="bold">Bagging Method</span> to create multiple samples from
+        the training data to build each tree.
+      </p>
+    </section>
+    <section id="random-forest">
+      <h2>Random Forest</h2>
+      <div id="scrolly-rf">
+        <figure id="figure-rf">
+          <svg id="chart-rf"></svg>
+        </figure>
+        <article id="article-rf">
+          <section data-index="0" class="rf-scrolly">
+            <h3>Bagging Method</h3>
+            <p id="two_columns">
+              One way to produce multiple models that are different is to train
+              each model using a different training set. The
+              <span class="bold">Bagging (Bootstrap Aggregating) method</span>
+              randomly draws a fixed number of samples from the training set
+              with replacement. This means that a data point can be drawn more
+              than once.
+            </p>
+          </section>
+          <section data-index="1" class="rf-scrolly">
+            <p id="two_columns">
+              This results in several training sets that are different. Here, we
+              have three samples. Notice that some data points are shared among
+              some samples. Each sample then can be used to build a model. Let’s
+              build some decision trees with these samples!
+            </p>
+          </section>
+          <section data-index="2" class="rf-scrolly">
+            <h3>Feature Selection</h3>
+            <p id="two_columns">
+              Here are the features: Size, Number of Sides, Number of Colors
+              Used, and Text or Symbol.
+              <br /><br />
+              For each split of the tree building, we compute the best splitting
+              using only a randomly selected subset of the features. This is
+              another way to ensure that the decision trees are as different as
+              possible.
+            </p>
+          </section>
+          <section data-index="3" class="rf-scrolly">
+            <p id="two_columns">
+              Let's build the first tree with the first sample! For the first
+              split, three features are selected to find the best split.
+            </p>
+          </section>
+          <section data-index="4" class="rf-scrolly">
+            <p id="two_columns">
+              The best feature to split is "Number of Colors used."
+            </p>
+          </section>
+          <section data-index="5" class="rf-scrolly">
+            <p id="two_columns">
+              Likewise, for the second split, another set of three features are
+              selected to find the best split. The best feature to split this
+              time is "Text or Symbol."
+            </p>
+          </section>
+          <section data-index="6" class="rf-scrolly">
+            <p id="two_columns">
+              This process continues until the tree is constructed. The other
+              samples will build other trees using the same process.
+            </p>
+          </section>
+          <section data-index="7" class="rf-scrolly">
+            <h3>Here are trees built from each sample.</h3>
+            <p id="two_columns">
+              Notice how these trees are quite different from each other.
+              <br /><br />Let's bring some test data to see the random forest in
+              action!
+            </p>
+          </section>
+          <section data-index="8" class="rf-scrolly">
+            <h3>Each tree produces a prediction.</h3>
+            <p id="two_columns">
+              Can a small circular sign be a crossings sign? Let's ask the three
+              trees!
+            </p>
+          </section>
+          <section data-index="9" class="rf-scrolly">
+            <h3>Majority vote</h3>
+            <p id="two_columns">
+              The first tree thinks that the sign is not a crossings sign.
+              However, the other trees voted yes. By the majority vote, the
+              prediction is "Yes"!
+            </p>
+          </section>
+          <section data-index="10" class="rf-scrolly">
+            <h3>It's your turn</h3>
+            <p id="two_columns">
+              Click the remaining data points to see how the random forest makes
+              a prediction.
+
+              <br /><br />
+              Did you notice that even though the trees produce the same
+              prediction, the decision path - the reason why each thinks the
+              sign is a crossing sign or not - is different from each other?
+              This is good news: The random forest models perform better when
+              the trees in the forest are different. Let's dive deep into this!
+            </p>
+          </section>
+        </article>
+      </div>
+    </section>
+    <section id="barcode" class="one-column">
+      <h2>Variance in Composition</h2>
+      <br />
+      <p>
+        We previously discussed
+        <a href="https://mlu-explain.github.io/decision-tree/"
+          >how decision tree model suffers from high variance.</a
+        >
+        However, this variance among trees is employed in the random forest as a
+        feature, not a bug. The inventor of the random forest model Leo Breiman
+        says in his paper
+        <i
+          >"[o]ur results indicate that better (lower generalization error)
+          random forests have lower correlation between classifiers and higher
+          strength."</i
+        >
+        [Random Forest Article] <br /><br />
+        The high variance of the decision tree model can help keep the
+        correlation among trees low. The Bagging Method as well as the Feature
+        Selection are the key innovations to keep correlation low. <br /><br />
+        We've just shown how to construct random forests for a given dataset,
+        but how different are our trees from one another in reality? To find
+        out, we've trained a nine-tree random forest on our sign dataset and
+        plotted it below.
+        <br /><br />
+        The outer enclosing circle represents the random forest. Each inner
+        circle represents a unique decision tree in the forest. Hovering over a
+        tree will highlight the tree's classification accuracy, and its feature
+        importances* for four features.
+      </p>
+      <div id="barcode-chart"></div>
+      <br />
+
+      <br /><br />
+      <p>
+        Observe that each tree has a fairly unique combination of feature
+        importances and accuracy and there is no obvious pattern. Some trees
+        only use two out of four features, and the tree with similar feature
+        importances as the random forest model still performs much worse than
+        the forest. As discussed in Condorcet's theorem, the key takeaway is the
+        power these models employ when aggregated together in a smart (tooltip
+        here referring to randomness previously discussed) way, as shown by the
+        random forest model having the highest accuracy.
+      </p>
+      <br />
+      <p>
+        As expected, the random forest model (the red dots on the right)
+        performs better than any individual tree. Notice the wide range of the
+        feature importance scores across our trees, which can contribute to low
+        correlation. In the very first random forest visualization tool
+        developed by Breiman, he also attempted to show the range in feature
+        importances.
+      </p>
+    </section>
+    <section id="cantor-section" class="one-column">
+      <h2>Variance in Predictions</h2>
+      <br />
+      <p>
+        If each tree produces the same prediction, then the accuracy can not
+        improve. Below, each circle represents a prediction from a model.
+        Circles in the same row share the same model, while circles in the same
+        column share the same test data. Blue means "Yes" and pink means "No".
+        Solid color means that the prediction is correct, while the strip means
+        that the prediction is incorrect. Not all test data points are shown.
+      </p>
+
+      <div id="cantor-wrapper">
+        <div id="chart-wrapper-cantor">
+          <div class="chart" id="cantor-treegrid"></div>
+          <div class="chart" id="cantor-scatter"></div>
+        </div>
+      </div>
+
+      <p>
+        The irregular pattern in the grid shows how the trees are different in
+        where they make mistakes. As expected, the random forest model performs
+        the best overall even if there are trees with very low accuracy. Note
+        that for the first data point (first column), there are still three
+        trees with the correct prediction while the majority is incorrect. This
+        inspired people to consider other methods, such as Boosting, which is
+        very popular today.
+      </p>
+    </section>
+    <section id="conclusion" class="one-column">
+      <h2>Conclusion</h2>
+      <p>
+        Random Forest models are a popular model for a large number of tasks. In
+        short, it's a method to produce aggregated predictions using the
+        predictions from several decision trees. The old theorem of Condorcet
+        suggests that the majority vote from several weak models with more than
+        50% accuracy may do the trick. Later, Breiman came up with Bagging and
+        Feature Selection that helps to keep correlation among the trees low
+        which is a key to success.
+        <br /><br />
+        There has been some theory built around the bias and variance of random
+        forest model in relation to the trees that it has. Please check out this
+        article on the bias-variance tradeoff to learn more about these
+        concepts.
+      </p>
+      <p>
+        <br /><br />
+        Thanks for reading! To learn more about machine learning, check out our
+        <a href="https://aws.amazon.com/machine-learning/mlu/"
+          >self-paced courses</a
+        >, our
+        <a href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
+          >youtube videos</a
+        >, and the
+        <a href="https://d2l.ai/">Dive into Deep Learning</a> textbook.
+        <br /><br />
+        If you have any comments or ideas related to MLU-Explain articles, feel
+        free to reach out directly to
+        <a href="https://hjyeon.github.io/">Jenny</a> or
+        <a href="https://twitter.com/jdwlbr">Jared</a>. The code for this
+        article is available
+        <a href="https://github.com/aws-samples/aws-mlu-explain">here</a>.
+      </p>
+    </section>
+
+    <section id="resources">
+      <h1>Notes & Resources</h1>
+      <p>
+        To make things more concise, some details were left out. Additionally,
+        we went with Brieman's implementation using Scikit-Learn's
+        <a
+          href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html?highlight=randomforest#sklearn.ensemble.RandomForestClassifier"
+          >RandomForestClassifier.</a
+        >
+        <br /><br />
+        A special thanks goes out to Brent Werness for his valuable input for
+        this article.
+        <br /><br />
+        Additionally, this article is a product of the following resources + the
+        awesome people who made (& contributed to) them:
+        <br />
+        <br />
+      </p>
+      <p class="resource-item">
+        <a href="https://link.springer.com/article/10.1023/A:1010933404324"
+          >Random Forests</a
+        ><br />
+        (Leo Breiman, 2001).
+      </p>
+      <p class="resource-item">
+        <a
+          href="https://www.stat.berkeley.edu/~breiman/RandomForests/cc_graphics.htm"
+          >RAFT (RAndom Forest Tool)</a
+        ><br />
+        (Leo Breiman; Adele Cutler).
+      </p>
+      <p class="resource-item">
+        <a href="http://gallica.bnf.fr/ark:/12148/bpt6k417181"
+          >Essai sur l'application de l'analyse à la probabilité des décisions
+          rendues à la pluralité des voix </a
+        ><br />
+        (Jean-Antoine-Nicolas de Caritat Condorcet, 1785).
+      </p>
+
+      <p class="resource-item">
+        <a href="https://web.stanford.edu/~hastie/Papers/ESLII.pdf">
+          The Elements of Statistical Learning</a
+        >
+        <br />(Trevor Hastie; Robert Tibshirani; Jerome Friedman, 2009).
+      </p>
+      <p class="resource-item">
+        <a href="https://d2l.ai/"> Dive into Deep Learning</a>
+        (Aston Zhang and Zachary C. Lipton and Mu Li and Alexander J. Smola,
+        2020).
+      </p>
+
+      <p class="resource-item">
+        <a href="https://d3js.org/">D3.js</a> (Mike Bostock, Philippe Rivière)
+      </p>
+      <br />
+      <br />
+    </section>
+    <script type="module" src="./js/index.js"></script>
+    <script type="module" src="./js/indexRF.js"></script>
+    <script type="module" src="./js/indexBarcode.js"></script>
+  </body>
+</html>
