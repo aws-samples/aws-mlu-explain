@@ -1,0 +1,96 @@
+:root {
+  --sans: "Amazon Ember", Helvetica, Arial, sans-serif;
+  --serif: "Amazon Ember Mono", Georgia, Times, serif;
+  --mono: Menlo, Consolas, Monaco, "Courier New", monospace;
+
+  --z-bottom: -100;
+  --z-middle: 0;
+  --z-top: 100;
+  --z-overlay: 1000;
+
+  --bg: var(--white);
+  --fg: var(--off-black);
+  --default: var(--gray-light);
+  --primary: var(--red);
+  --secondary: var(--green);
+}
+
+.skip-to-main {
+  border: none;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+}
+
+.skip-to-main:focus {
+  width: auto;
+  height: auto;
+  padding: 0.5em;
+  z-index: 1000;
+}
+
+/* pudding */
+.wordmark svg path {
+  fill: currentColor;
+}
+
+/* demo */
+#demo svg {
+  width: 1em;
+  vertical-align: middle;
+}
+
+body {
+  font-family: "Amazon Ember Display Heavy";
+}
+
+/* Global Reusable Styles For Convenience */
+.body-text {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.5em;
+  font-family: "Amazon Ember";
+  max-width: 600px;
+}
+
+.body-header {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 30px;
+  line-height: 1.5em;
+  font-family: "Amazon Ember Display Heavy";
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  max-width: 600px;
+}
+
+.centered {
+  margin: auto;
+  max-width: 45rem;
+  max-width: 600px;
+}
+
+.bold {
+  font-family: "Amazon Ember Display Heavy";
+}
+
+a {
+  color: #7e93ee;
+}
+
+/* mobile */
+@media screen and (max-width: 950px) {
+  .body-text {
+    max-width: 80%;
+    font-size: 18px;
+  }
+
+  .body-header {
+    max-width: 80%;
+    font-size: 30px;
+  }
+}
