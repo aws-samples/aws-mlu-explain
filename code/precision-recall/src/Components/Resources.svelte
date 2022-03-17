@@ -72,8 +72,8 @@
   /* mobile */
  @media screen and (max-width: 950px) {
   .resource-item {
-    max-width: 600px;
-    font-size: 17px;
+    max-width: 80%;
+    font-size: 18px;
   }
   }
 

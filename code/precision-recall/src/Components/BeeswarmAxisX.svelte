@@ -40,8 +40,6 @@
 				ticks($xScale.ticks()) :
 					$xScale.ticks(ticks);
 
-	console.log('tickVals', tickVals)
-
 	function textAnchor(i) {
 		if (snapTicks === true) {
 			if (i === 0) {
@@ -94,7 +92,8 @@
 	}
 
 	.tick text {
-		fill: #666;
+		fill: var(--squid-ink);
+		font-size: 15px;
 	}
 
 	.tick .tick-mark,

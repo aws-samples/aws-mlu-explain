@@ -37,14 +37,16 @@
         $FN = pos.filter(function(d) { return $xScale.invert(select(this).attr('cx')) < xPos }).size();
     }
 
-    function dragstarted() {}
+    function dragstarted() {
+        select('#dragme').remove();
+        select('#dragline').remove();
+    }
 
     function dragged(event, d) {
         // get scaled x-position
-        let xPos = $xScale.invert(event.x)
-        console.log('xpos', xPos)
+        let xPos = $xScale.invert(event.x);
         // ensure x-position in range
-        if (xPos <= 0.01 || xPos >= 14.6) {
+        if (xPos <= 0.005 || xPos >= 0.95) {
             // out of range, do nothing
         } else {
             // update decision boundary position
@@ -87,26 +89,20 @@
             neg.filter(function(d) { return $xScale.invert(select(this).attr('cx')) < xPosition}).attr('opacity', 0.5).attr('stroke', 'white')
         }
     }
-    console.log('yScale', $yRange)
-    console.log('yRange', $yScale(0))
-    
   </script>
-  
-  <!-- Create decision boundary -->
-  <!-- <g class="bar" 
-  >
-      <rect
-        class='decision-boundary-bar'
-        data-id="decision-boundary-bar"
-        x="{($xRange[0] + $xRange[1]) / 2}"
-        y="0"
-        height="{$yRange[0]}"
-        width="{12}"
-        stroke="whitesmoke"
-        stroke-width="1"
-        fill="#232F3E"
-      ></rect>
-  </g> -->
+
+
+<!-- add 'Drag Me!' annotation -->
+<line 
+    id="dragline"
+    x1="{($xRange[0] + $xRange[1]) / 2 + 10}"
+    x2="{($xRange[0] + $xRange[1]) / 2 + 40}"
+    y1="36"
+    y2="30"
+    stroke-width="1.4"
+    stroke="#c9208a"
+    ></line>
+<text id='dragme' x="{($xRange[0] + $xRange[1]) / 2 + 20}" y="30" font-size="11" text-anchor="start" dominant-baseline="middle">Drag The Line!</text>
 
   <g class="bar" 
   >
@@ -119,7 +115,7 @@
         height="{$yRange[0]}"
         width="{12}"
         stroke="whitesmoke"
-        stroke-width="1"
+        stroke-width="1.4"
         fill="#232F3E"
       ></rect>
     
@@ -166,8 +162,20 @@
         cursor: pointer;
       }
       .arrow-holder {
-          border: 1px solid red;
           display: flex;
       }
+
+      #dragme {
+        font-family: var(--font-heavy);
+        stroke-linejoin: round;
+        fill: #c9208a;
+        paint-order: stroke fill;
+        stroke-width: 4.4px;
+        pointer-events: none;
+        stroke: white;
+        font-size: .75rem;
+      }
+
+
 
   </style>

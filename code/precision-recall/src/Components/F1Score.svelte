@@ -11,10 +11,13 @@
     const formatter = format(".2f") 
     
     // math equations
-    const f1Eq = `\\begin{aligned} F1 = \\frac{(2 * Precision * Recall)}{Precision + Recall} \\end{aligned}`
+    const f1Eq = `\\begin{aligned}
+    F_1 = \\frac{2\\cdot\\mathrm{Precision}\\cdot\\mathrm{Recall}}{\\mathrm{Precision}+\\mathrm{Recall}} 
+    \\end{aligned}`
+    const f1Eq2 = `\\begin{aligned}\\frac{\\mathrm{TP}}{\\mathrm{TP} + \\frac{1}{2}(\\mathrm{FP} + \\mathrm{FN})}\\end{aligned}.`
     $: f1Score = (2 * parseFloat($f1Precision) * parseFloat($f1Recall)) / (parseFloat($f1Precision) + parseFloat($f1Recall));
     $: f1EqReactive =  `\\begin{aligned}    
-    F1 = \\frac{(2 * ${formatter($f1Precision)} * ${formatter($f1Recall)})}{${formatter($f1Precision)} + ${formatter($f1Recall)} }
+    F_1 = \\frac{(2 \\cdot ${formatter($f1Precision)} \\cdot ${formatter($f1Recall)})}{${formatter($f1Precision)} + ${formatter($f1Recall)} }
     = ${formatter(f1Score)}
     \\end{aligned}`
 
@@ -52,19 +55,21 @@
   <p class='body-text'>
     Given this competing tradeoff, it would be very convenient to have a single performance metric that takes into account <i>both</i> precision and recall.
     And, given that I wrote that sentence in the first place, you can probably guess that there is. And that it's called the 
-    <span class='bold'>F1-Score</span>... Nice.
+    <span class='bold'>F1-score</span>... Nice.
     <br><br>
 
-    The F1-Score (also sometimes called the <i>F-Measure</i>) is a single performance metric that takes both precision and recall into account. 
+    The F1-score (also sometimes called the <i>F-Measure</i>) is a single performance metric that takes both precision and recall into account. 
     It's calculated by taking the harmonic mean of the two metrics::
       {@html katexify(f1Eq, true)}
+      which is equivalent to
+      {@html katexify(f1Eq2, true)}
      </p>
   <p class="body-text">
     For this reason, it takes values from zero to one, with values closer to one indicating better performance, and values closer to zero indicating poorer performance.
-    In situations where <i>either</i> precision or recall are poor, the F1-Score will also be poor. Only when <i>both</i> precision and recall have good performance 
-    will the F1-Score be high. 
+    In situations where <i>either</i> precision or recall are poor, the F1-score will also be poor. Only when <i>both</i> precision and recall have good performance 
+    will the F1-score be high. 
     To see for yourself, try toggling the various values of precision and/or recall below. Or hover over the corresponding region to see the 
-    corresponding F1-Score, and the precision and recall values used to obtain it:
+    corresponding F1-score, and the precision and recall values used to obtain it:
   </p>
 
 
@@ -86,10 +91,10 @@
     When choosing between multiple models, all with varying values of precision and/or recall, it may be used to determine which one produces the 'best' results
     for the problem at hand. For this reason, it's often used in practice as a metric by which to rank models by performance. 
     <br><br>
-    That said, the F1-Score isn't perfect, and isn't suitable for every classification problem. For one,
+    That said, the F1-score isn't perfect, and isn't suitable for every classification problem. For one,
     it completely ignores true negatives in its calculations, so it's misleading for unbalanced classes. (Indeed,
      this is true for precision and recall as well, so if true negatives are important, consider a different metric such as specificity).
-    The F1-Score also gives equal importance to precision and recall. This is sometimes problematic because, as previously discussed,
+    The F1-score also gives equal importance to precision and recall. This is sometimes problematic because, as previously discussed,
     different types of mis-classifications incur different costs, and these costs themselves are tied deeply to the performance of the model.
   </p>
 
@@ -119,7 +124,6 @@
       width: 100%;
       margin: 1.5rem auto;
       margin-top: 1rem;
-      /* border: 2px solid red; */
     }
 
     #f1-equations{
@@ -132,7 +136,6 @@
       width: 100%;
       text-align: center;
       justify-content: center;
-      /* border: 2px solid red; */
     }
 
 
@@ -162,7 +165,7 @@
             text-align: center;
           }
 
-          .katex, #f1-equations {
+          #f1-equations {
             font-size: .95rem;
           }
     }

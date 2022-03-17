@@ -5,7 +5,7 @@
   <p class="body-text">
     Many machine learning tasks involve <span class="bold">classification</span>: 
     the act of predicting a discrete category for some given input. Examples of classifiers include 
-    determining  whether the item in front of your phone's camera is a hot dog or not (two or less categories, so <span class='bold'>binary</span> classification), or
+    determining  whether the item in front of your phone's camera is a hot dog or not (two categories, so <span class='bold'>binary</span> classification), or
     predicting whether your Amazon package will arrive early, late, or on time (more than two categories, so <span class='bold'>multiclass</span> classification).
   </p>
   <br>
@@ -13,8 +13,9 @@
    Evaluating classifiers requires careful consideration. 
     In this article, we'll explore why accuracy isn't always a great measure of classification performance, and 
     discuss three other evaluation metrics often used in its place: <span class='bold'>precision</span>, <span class='bold'>recall</span>,
-     and the <span class='bold'>f1-score</span>.
-    To help qualify the importance of these metrics, we'll make use of the <span class='bold'>confusion matrix</span>, a simple technique for visualizing the performance of a classification model:
+     and the <span class='bold'>F1-score</span>.
+    To help qualify the importance of these metrics, we'll make use of the <span class='bold'>confusion matrix</span>, a simple technique 
+    for visualizing the performance of a classification model. 
   </p>
 
 <br><br>
@@ -37,7 +38,7 @@
 </table>
 <br><br><br>
 <p class='body-text'>
-    Instead of looking at the model's raw accuracy, the confusion matrix decomposes predictions into several categories of interest,
+    Instead of looking at the model's raw accuracy (the number of correctly assigned categories divided by te total number of predictions) , the confusion matrix decomposes predictions into several categories of interest,
     making explicit how one class may be <i>confused</i> for another:
 </p>
 <br>
@@ -48,7 +49,7 @@
       E.g., predicting an email as not spam when it actually is spam.</li>
     <li><span class='bold'>True Negatives (TN)</span>: The number of negative instances correctly classified as negative.
       E.g., predicting an email is not spam when it actually is not spam.</li>
-    <li><span class='bold'>False Negatives (FN)</span>: The number of positive instances incorrectly classified as positive.
+    <li><span class='bold'>False Negatives (FN)</span>: The number of positive instances incorrectly classified as negative.
       E.g., predicting an email is not spam when it actually is spam.</li>
 </ul>
 <br>
@@ -63,13 +64,8 @@
   Under the hood, our model will output a probability for each individual of having cancer, and we'll compare this probability to the value 
   of our classification threshold to determine whether or not an individual has cancer or not. The classification threshold is just a value 
   we use to translate our probabilities into binary outputs. It is a decision threshold used to bin values into distinct categories. For example, if
-  our classification threshold is 0.5, we'll classify any patient with a probability greater-than-or-equal-to 0.5 as being cancer positive, 
-  and any patient with a probability less than 0.5 as being cancer free: 
-  
-  <!-- A classification threshold of 0.5 is usually the default for such models
-  (it has the intuitive effect of assigning values to be positive when the model determines that they're more than 50% likely to be positive),
-  but we have control to change this threshold ourselves. As we'll soon see, such control is important when we need to pay attention to tradeoffs 
-  between False Positives and Fale Negatives! -->
+  our classification threshold is 0.5, we'll classify any patient with a probability greater than 0.5 as being cancer-positive, 
+  and any patient with a probability less than 0.5 as being cancer-free: 
 </section>
 
 <style>
@@ -83,7 +79,6 @@
     }
     li {
         padding: .25rem;
-        /* list-style: none; */
     }
     table {
       border-collapse: collapse;

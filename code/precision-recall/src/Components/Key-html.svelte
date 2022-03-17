@@ -46,10 +46,11 @@
 		vertical-align: middle;
 	}
 	.chip {
-		display: inline-block;
-		position: relative;
-		width: 17px;
-		height: 17px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 15px;
+		height: 15px;
 	}
 	.chip__circle {
 		border-radius: 50%;
@@ -59,22 +60,24 @@
 		content: '';
 		position: absolute;
 		border-width: 3px;
-		width: 14px;
+		width: 15px;
 		transform: rotate(-45deg);
 		transform-origin: 14px 5px;
+		
 	}
 	.name {
 		display: inline;
         color: var(--squid-ink);
-		font-size: 14px;
+		font-size: 12px;
         font-family: var(--font-heavy);
 		-webkit-text-fill-color: var(--squid-ink);; /* Will override color (regardless of order) */
 		-webkit-text-stroke-width: .5px;
 		-webkit-text-stroke-color: white;
+		
 	}
     #key-title {
 		color: var(--squid-ink);
-		font-size: 14px;
+		font-size: 12px;
         font-family: var(--font-heavy);
 		-webkit-text-fill-color: var(--squid-ink);; /* Will override color (regardless of order) */
 		-webkit-text-stroke-width: .5px;

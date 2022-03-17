@@ -9,13 +9,13 @@
 
     let height = 500;
     let width = 500;
-    $: mobile = window.innerWidth <= 700;
-    const margin = { 
-        top: mobile ? 40 : 50, 
-        bottom: mobile ? 10 : 25, 
-        left: mobile ? 0 : 80, 
-        right: mobile ? 0 : 10 
-    };
+
+    const margin = {
+        top: 15,
+        bottom: 25,
+        left: 0,
+        right: 0
+    }
 
 
     $: xScale = scaleLinear().domain([0, 14.4]).range([margin.left, width - margin.right])
@@ -101,7 +101,7 @@
 
         <!-- axis labels -->
         <text class='error-axis-label' y="{height + margin.bottom}" x="{(width + margin.left) / 2}" text-anchor="middle">Decision Boundary Threshold</text>
-        <text class='error-axis-label' y="{margin.left / 3}" x="{-((height ) / 2)}" text-anchor="middle" transform="rotate(-90)">Score</text>
+        <!-- <text class='error-axis-label' y="{margin.left / 3}" x="{-((height ) / 2)}" text-anchor="middle" transform="rotate(-90)">Score</text> -->
 
         <!-- x-ticks -->
         {#each xScale2.ticks() as tick}

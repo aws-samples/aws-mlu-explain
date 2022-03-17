@@ -5,7 +5,6 @@
   import { TP, FP, TN, FN, stage } from './data-store.js';
   import { LayerCake, Svg, Html } from 'layercake';
 	import { scaleLinear, scaleOrdinal } from 'd3-scale';
-  import { select, selectAll } from "d3-selection";
 
 	import Key from './Key-html.svelte';
 	import AxisX from './BeeswarmAxisX.svelte';
@@ -34,12 +33,6 @@
 		}
 	});
 
-  console.log('dt', dataTransformed)
-
-
-  // 
-  // Article Text
-  // 
 
   // Track metrics
   $: accuracy = ($TP + $TN) / ($TP + $TN + $FP + $FN)
@@ -54,7 +47,7 @@
   $: steps = [
 		 `<h1>Accuracy</h1>
      <p>Our cancer classifier uses a classification threshold of 0.5, so we classify patients with probabilities
-       greater than 0.5 to be cancer positive, otherwise cancer free. This is a common threshold for models that output probabilities,
+       greater than 0.5 to be cancer-positive, otherwise cancer-free. This is a common threshold for models that output probabilities,
       as it has the intuitive effect of assigning values to be positive when the model determines that they're more than 50% likely to be positive. 
       (<span class='bold'>Try moving the threshold for yourself!</span>)<br><br>
       Our model's accuracy is then:<br><br>
@@ -62,11 +55,11 @@
        ${katexify(`\\approx ${Math.round(accuracy * 100)}\\%`)}
       </p>`,
       `<h1>Problems</h1>
-      <p>A big issue with our data (and common amongst many classification tasks) is imbalance: our data has three times more negative examples than positive.
-        This is problematic, because if our model were to simply predict <i>every</i> individual as being cancer free, it would have an accuracy of <br><br>
+      <p>A big issue with our data (and common amongst many classification tasks) is imbalance: our data has three times more negative examples than positive!
+        This is problematic, because if our model were to simply predict <i>every</i> individual as being cancer-free, it would have an accuracy of <br><br>
         ${katexify(`\\begin{aligned} \\frac{Num Positive}{Total Samples} = \\frac{26}{34} = 76\\% \\end{aligned}`) }<br><br>
-        If the model learns this during optimization, we'll misdiagnose every cancer patient as being cancer free! This is hugely problematic, and is 
-        one example why accuracy is not a great choice for classification tasks. To address this, we'll turn to more suitable evalutation techniques.
+        The more imbalanced the data, the more Severe the issue: imagine a search engine that never gives results because the information you are looking
+         for is only 0.01% of the internet!  We need other metrics.
         </p>
       `,
       `<h1>Precision</h1>
@@ -91,42 +84,24 @@
         </p>`,
   ];
 
-
   const target2event = {
   0: () => {
-    // move decision bonudary to middle position
-    // console.log(select("rect.decision-boundary-bar"))
-    // console.log('0' )
     $stage = 'none';
-
-
   },
   1: () => {
-    // $TP += 1;
-    // selectAll('circle').attr('r', 40)
     $stage = 'none';
-
   },
-
   2: () => {
-	// $FP += 3;
   $stage = 'precision';
-
   },
   3: () => {
     $stage = 'recall';
-
-	// $TN += 3;
   },
   4: () => {
-	// $TN += 5;
   $stage = 'none';
-
   },
   5: () => {
-	// $FP += 4;
   $stage = 'none';
-
   }
 };
 
@@ -199,7 +174,7 @@ $: if (typeof value !== "undefined") target2event[value]()
   at the cost of misdiagnosing healthy individuals as having cancer (<i>false positives</i>), subjecting them to expensive and dangerous treatments like chemotherapy.
   On the other hand, designing a model for precision yields confident diagnoses (i.e. someone predicted as having cancer very likely does have cancer), but at the cost of 
   failing to identify everyone who has the disease (false negatives), resulting in potentially fatal consequences for those left undiagnosed. 
-  (Because False Negatives result in death, our classifcation threshold would likely be set to optimize recall over precision). 
+  (Because False Negatives result in death, our classification threshold would likely be set to optimize recall over precision). 
   <br><br>
   Thus, it's important to understand and decide ahead of time what's more consequential,
    <span class="bold">False Positives</span> or <span class="bold">False Negatives</span>, to investigate how the tradeoff manifests for your particular dataset, 
@@ -244,7 +219,7 @@ $: if (typeof value !== "undefined") target2event[value]()
   }
 
   .step {
-    height: 80vh;
+    height: 105vh;
     display: flex;
     place-items: center;
     justify-content: center;
@@ -301,20 +276,33 @@ $: if (typeof value !== "undefined") target2event[value]()
     }
 
     .step {
-      height: 130vh;
+      height: 150vh;
     }
 
     .step-content {
       width: 95%;
       max-width: 768px;
       font-size: 17px;
-      line-height: 1.6;
+      line-height: 1.5;
+      padding: 0.5rem;
     }
 
     .spacer {
       height: 100vh;
     }
   }
+
+  /* responsive height for small screens */
+  @media screen and (max-height: 620px) {
+
+    .step {
+      height: 170vh;
+    }
+    .spacer {
+      height: 120vh;
+    }
+  }
+
 
 
   

@@ -106,6 +106,7 @@
         margin: auto;
         max-height: 95%;
         width: 80%;
+
     }
 
     .f1-rect:hover {
