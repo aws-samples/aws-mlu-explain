@@ -1,5 +1,5 @@
 <script>
-  import Meta from "./Meta.svelte";
+  import Meta from "./Components/Meta.svelte";
   import Logo from './Components/Logo.svelte'
   import Title from './Components/Title.svelte'
   import Intro from "./Components/Intro.svelte";
