@@ -17,7 +17,7 @@
 	const xKey = 'weight';
 	const zKey = 'outcome';
 
-	const r = 12;
+	const r = 11;
 
 	const seriesNames = new Set();
 	const seriesColors = ['#7e93ee', '#ff99ff'];
@@ -167,7 +167,7 @@ $: if (typeof value !== "undefined") target2event[value]()
   <!-- end scroll -->
 <br><br>
 <p class='body-text'>
-  Because of this tradeoff, it's important to understant the problem that you're trying to solve and 
+  Because of this tradeoff, it's important to understand the problem that you're trying to solve and 
   any inherent consequences of favoring False Positives over False Negatives (or vice versa). 
   <br><br>
   Take our cancer example: designing a model with high recall will identify most people that have cancer (<i>true positives</i>), saving their lives, but
