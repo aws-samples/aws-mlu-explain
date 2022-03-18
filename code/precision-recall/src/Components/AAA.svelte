@@ -17,7 +17,7 @@
 	const xKey = 'weight';
 	const zKey = 'outcome';
 
-	const r = 10;
+	const r = 12;
 
 	const seriesNames = new Set();
 	const seriesColors = ['#7e93ee', '#ff99ff'];

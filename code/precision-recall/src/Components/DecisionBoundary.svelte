@@ -50,7 +50,7 @@
             // out of range, do nothing
         } else {
             // update decision boundary position
-            select(this).raise().attr("transform", `translate(${event.x})`);
+            select(this).raise().attr("transform", `translate(${event.x}, 16)`);
             // recalculate metrics
             updateCounts(xPos)
         }
@@ -102,17 +102,18 @@
     stroke-width="1.4"
     stroke="#c9208a"
     ></line>
-<text id='dragme' x="{($xRange[0] + $xRange[1]) / 2 + 20}" y="30" font-size="11" text-anchor="start" dominant-baseline="middle">Drag The Line!</text>
+<text id='dragme' x="{($xRange[0] + $xRange[1]) / 2 + 20}" y="30" font-size="13" text-anchor="start" dominant-baseline="middle">Drag The Line!</text>
 
+  <!-- decision boundary -->
   <g class="bar" 
   >
     <g
     class='decision-boundary-bar'
         data-id="decision-boundary-bar"
-        transform='translate({($xRange[0] + $xRange[1]) / 2},{0})'
+        transform='translate({($xRange[0] + $xRange[1]) / 2},{16})'
   >
       <rect
-        height="{$yRange[0]}"
+        height="{$yRange[0] - 2}"
         width="{12}"
         stroke="whitesmoke"
         stroke-width="1.4"
@@ -122,9 +123,9 @@
     <!-- right arrow -->
     <g class='arrow-holder'
         transform={`translate(15 ${$yRange[0] - 20})`}>
-        <text x="0" y="0" font-size="10" text-anchor="start" dominant-baseline="middle">Classify</text>
-        <text x="0" y="12" font-size="10" text-anchor="start" dominant-baseline="middle">Positive</text>
-        <g transform="translate(45 -4.5)">
+        <text x="0" y="0" font-size="13" text-anchor="start" dominant-baseline="middle">Classify</text>
+        <text x="0" y="13" font-size="13" text-anchor="start" dominant-baseline="middle">Positive</text>
+        <g transform="translate(54 -4.5)">
             {#each arrows as arrow}
                 <path d="{arrow}"
                     style="{`transform: rotate(0deg) scale(0.8)`}"
@@ -138,9 +139,9 @@
     <!-- left arrow -->
     <g class='arrow-holder'
         transform={`translate(-45 ${$yRange[0] - 20})`}>
-        <text x="0" y="0" font-size="10" text-anchor="start" dominant-baseline="middle">Classify</text>
-        <text x="0" y="12" font-size="10" text-anchor="start" dominant-baseline="middle">Negative</text>
-        <g transform={`translate(-8 15)`}>
+        <text x="-14" y="0" font-size="13" text-anchor="start" dominant-baseline="middle">Classify</text>
+        <text x="-14" y="13" font-size="13" text-anchor="start" dominant-baseline="middle">Negative</text>
+        <g transform={`translate(-21 16)`}>
             {#each arrows as arrow}
                 <path d="{arrow}"
                     style="{`transform: rotate(-180deg) scale(0.8)`}"

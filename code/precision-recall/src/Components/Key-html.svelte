@@ -49,8 +49,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 15px;
-		height: 15px;
+		width: 17px;
+		height: 17px;
 	}
 	.chip__circle {
 		border-radius: 50%;
@@ -68,20 +68,14 @@
 	.name {
 		display: inline;
         color: var(--squid-ink);
-		font-size: 12px;
+		font-size: 14px;
         font-family: var(--font-heavy);
-		-webkit-text-fill-color: var(--squid-ink);; /* Will override color (regardless of order) */
-		-webkit-text-stroke-width: .5px;
-		-webkit-text-stroke-color: white;
 		
 	}
     #key-title {
 		color: var(--squid-ink);
-		font-size: 12px;
+		font-size: 14px;
         font-family: var(--font-heavy);
-		-webkit-text-fill-color: var(--squid-ink);; /* Will override color (regardless of order) */
-		-webkit-text-stroke-width: .5px;
-		-webkit-text-stroke-color: white;
         padding-right: 0.5rem;
     }
 
