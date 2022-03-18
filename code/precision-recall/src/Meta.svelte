@@ -7,20 +7,20 @@
     <!-- add prop -->
     <meta
         name="description"
-        content="MLU-Explain: Visual Introduction to Double Descent."
+        content="MLU-Explain: Visual Introduction to Precision & Recall."
     />
     <!-- add prop -->
     <meta
         property="og:image"
-        content="https://mlu-explain.github.io/assets/dd1ogimage.png"
+        content="https://mlu-explain.github.io/assets/ogimages/ogimage-precision-recall.png"
     />
     <!-- add prop -->
-    <meta property="og:title" content="Double Descent" />
+    <meta property="og:title" content="Precision and Recall" />
     <!-- add prop -->
     <meta
         property="og:description"
-        content="An introduction to the Double Descent phenomena in modern machine learning."
+        content="A visual introduction to Precision, Recall, and the F1-score in machine learning."
     />
-    <meta property="og:image:width" content="1000" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="400" />
 </svelte:head>
