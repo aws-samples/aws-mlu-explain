@@ -13,8 +13,8 @@
     const margin = {
         top: 15,
         bottom: 25,
-        left: 0,
-        right: 0
+        left: 42,
+        right: 20
     }
 
 
@@ -66,7 +66,7 @@
     bind:offsetWidth={width}
     bind:offsetHeight={height}
 >
-    <svg width={width + margin.left + margin.right} height={height + margin.top + margin.bottom}>
+    <svg width={width} height={height + margin.top + margin.bottom}>
         <!-- y-ticks -->
         {#each [0.2, 0.4, 0.6, 0.8, 1.0] as tick}
             <g transform={`translate(${margin.left - 5} ${accuracyScale(tick) + 0})`}>
@@ -134,8 +134,13 @@
         stroke-width: 4px;
         pointer-events: none;
         stroke: #f1f3f3;
-        font-size: .85rem;
+        font-size: 12px;
         letter-spacing: 2px;
+    }
+
+    .error-axis-text, .error-axis-label {
+        font-size: 14px;
+        fill: var(--squid-ink);
     }
 
     .y-axis-line {
@@ -190,7 +195,7 @@
             max-height: 55vh;
         }
        .error-text {
-           font-size: .75rem;
+           font-size: 11px;
        }
     }
     /* mobile */
@@ -200,9 +205,9 @@
             max-height: 55vh;
         }
        .error-text {
-           font-size: .55rem;
-           stroke-width: 2.5px;
-           letter-spacing: 1.5px;
+           font-size: 10px;
+           stroke-width: 2px;
+           letter-spacing: 1px;
        }
        .path-line {
             stroke-width: 3;
