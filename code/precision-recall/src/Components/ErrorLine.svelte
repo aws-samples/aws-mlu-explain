@@ -57,7 +57,7 @@
 <h1 class='body-header'>The Tradeoff... Again</h1>
 <p class='body-text'>
     To wrap everything up, let's look again at our cancer dataset again, this time from the lens of the tradeoff between the four different evaluation metrics
-    we've discussed: <span class='bold'>accuracy</span>, <span class='bold'>precision</span>, <span class='bold'>recall</span>, and the <span class='bold'>f1-score</span>.
+    we've discussed: <span class='bold'>accuracy</span>, <span class='bold'>precision</span>, <span class='bold'>recall</span>, and the <span class='bold'>F1-score</span>.
     To view this tradeoff explicitly, we'll plot each metric's score as a function of our classification threshold:
 </p>
 <br>
