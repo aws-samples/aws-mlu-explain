@@ -43,7 +43,7 @@
   let value;
 
 
-  // Paragraph text for scrolly
+  // Paragraph text for scrolly 
   $: steps = [
 		 `<h1>Accuracy</h1>
      <p>Our cancer classifier uses a classification threshold of 0.5, so we classify patients with probabilities
@@ -51,26 +51,26 @@
       as it has the intuitive effect of assigning values to be positive when the model determines that they're more than 50% likely to be positive. 
       (<span class='bold'>Try moving the threshold for yourself!</span>)<br><br>
       Our model's accuracy is then:<br><br>
-      ${katexify(`\\begin{aligned} \\frac{TP + TN}{TP + FP + TN + FN} = \\frac{${$TP + $TN} }{${$TP + $FP + $TN + $FN}} \\end{aligned}`)} 
+      ${katexify(`\\begin{aligned} \\frac{\\mathrm{TP + TN}}{\\mathrm{TP + FP + TN + FN}} = \\frac{${$TP + $TN} }{${$TP + $FP + $TN + $FN}} \\end{aligned}`)} 
        ${katexify(`\\approx ${Math.round(accuracy * 100)}\\%`)}
       </p>`,
       `<h1>Problems</h1>
       <p>A big issue with our data (and common amongst many classification tasks) is imbalance: our data has three times more negative examples than positive!
         This is problematic, because if our model were to simply predict <i>every</i> individual as being cancer-free, it would have an accuracy of <br><br>
-        ${katexify(`\\begin{aligned} \\frac{Num Positive}{Total Samples} = \\frac{26}{34} = 76\\% \\end{aligned}`) }<br><br>
+        ${katexify(`\\begin{aligned} \\frac{\\mathrm{\\# Positive}}{\\mathrm{\\# Samples}} = \\frac{26}{34} = 76\\% \\end{aligned}`) }<br><br>
         The more imbalanced the data, the more Severe the issue: imagine a search engine that never gives results because the information you are looking
          for is only 0.01% of the internet!  We need other metrics.
         </p>
       `,
       `<h1>Precision</h1>
       <p>One such metric is precision. Precision is the ratio of correctly predicted positive classes to <i>all items predicted to be positive:</i><br><br>
-      ${katexify(`\\begin{aligned} \\frac{TP}{TP + FP } = \\frac{${$TP} }{${$TP + $FP}} \\approx ${Math.round(precision * 100)}\\% \\end{aligned}`) } <br><br>
+      ${katexify(`\\begin{aligned} \\frac{\\mathrm{TP}}{\\mathrm{TP + FP}} = \\frac{${$TP} }{${$TP + $FP}} \\approx ${Math.round(precision * 100)}\\% \\end{aligned}`) } <br><br>
       Intuitively, this tells us how correct, or <i>precise</i>, are our model's positive predictions. 
       Precision is important when we believe False Positives are more important than False Negatives (e.g. spam detection). 
       <span class='bold'>Try moving the threshold</span> to see how precision worsens with the increase of False Positives.</p>`,
       `<h1>Recall</h1>
       <p>A related metric is recall. Recall is the ratio of correctly predicted positive classes to <i>all items that are actually positive:</i><br><br>
-      ${katexify(`\\begin{aligned} \\frac{TP}{TP + FN } = \\frac{${$TP} }{${$TP + $FN}} \\approx ${Math.round(recall * 100)}\\%  \\end{aligned}`) } <br><br>
+      ${katexify(`\\begin{aligned} \\frac{\\mathrm{TP}}{\\mathrm{TP + FN}} = \\frac{${$TP} }{${$TP + $FN}} \\approx ${Math.round(recall * 100)}\\%  \\end{aligned}`) } <br><br>
       It measures how many of the actual positive instances we were able to correctly predict (or <i>recall</i>). 
       Recall is important when we believe False Negatives are more important than False Positives (e.g. our problem of cancer detection).
       </p>`,
