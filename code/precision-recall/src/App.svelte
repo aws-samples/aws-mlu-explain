@@ -7,7 +7,6 @@
   import F1Score from "./Components/F1Score.svelte"
   import Conclusion from "./Components/Conclusion.svelte";
   import Resources from "./Components/Resources.svelte";
-  import ConfusionMatrix from "./Components/ConfusionMatrix.svelte";
   import ErrorLine from "./Components/ErrorLine.svelte";
 
   
@@ -16,7 +15,7 @@
     <Logo />
     <Title />
     <Intro />
-    <AAA />/
+    <AAA />
     <F1Score />
     <ErrorLine />
     <Conclusion />
