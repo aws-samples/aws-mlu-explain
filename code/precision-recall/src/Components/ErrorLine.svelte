@@ -195,7 +195,7 @@
             max-height: 55vh;
         }
        .error-text {
-           font-size: 11px;
+           font-size: 13px;
        }
     }
     /* mobile */
