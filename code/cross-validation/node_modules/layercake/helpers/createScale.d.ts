@@ -1,0 +1,1 @@
+export default function createScale(s: any): ([$scale, $extents, $domain, $padding, $nice, $reverse, $width, $height, $range, $percentScale]: [any, any, any, any, any, any, any, any, any, any]) => any;

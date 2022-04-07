@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script>
+// delete window.IntersectionObserver;
+    </script>
+    <script src="intersection-observer.js"></script>
+    <script>
+function init() {
+  function callback(entries, observer) {
+    Array.prototype.forEach.call(entries, function(entry) {
+      if (entry.intersectionRatio > 0) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }
+  var observer = new IntersectionObserver(callback, { root: document.getElementById('outer') });
+  Array.prototype.forEach.call(document.querySelectorAll('#outer div'), function(el) {
+    observer.observe(el);
+  });
+}
+window.addEventListener('load', init);
+    </script>
+    <style>
+#outer {
+  overflow-y: hidden;
+  height: 2em;
+  border: 10px solid #0000;
+}
+#outer div {
+  height: 100%;
+}
+#el2 {
+  background: red;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="outer">
+      <div id="el1">Element 1</div>
+      <div id="el2">Element 2</div>
+      <div id="el3">Element 3</div>
+    </div>
+  </body>
+</html>
