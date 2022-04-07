@@ -43,6 +43,8 @@
 
 body {
   font-family: "Amazon Ember Display Heavy";
+  background-color: #f1f3f3;
+  background-color: #d4dada;
 }
 
 /* Global Reusable Styles For Convenience */
@@ -79,8 +81,37 @@ body {
 }
 
 a {
-  color: #7e93ee;
+  color: var(--squid-ink);
+  text-decoration: underline;
+  font-family: "Amazon Ember Display Heavy";
 }
+
+a:hover {
+  /* text-decoration: underline; */
+}
+/* 
+a {
+  display: inline-block;
+  position: relative;
+}
+
+a:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ff9900;
+  transform-origin: bottom right;
+  transition: transform 0.2s ease-out;
+}
+
+a:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+} */
 
 /* mobile */
 @media screen and (max-width: 950px) {

@@ -17,9 +17,9 @@
 
   const xKey = "xVal";
   const zKey = "yVal";
-  const r = 6.5;
+  const r = 7;
   const seriesNames = new Set();
-  const seriesColors = ["#c9208a", "#7cd1ea"];
+  const seriesColors = ["#7e93ee", "#ff99ff"];
   const reScaleX = scaleLinear().domain([0.4, 15]).range([0, 1]);
   const dataTransformed = scatterData.map((d) => {
     seriesNames.add(d[zKey]);
@@ -30,23 +30,25 @@
     };
   });
 
+  console.log("dt", dataTransformed);
+
   // scroll iterator
   let value;
 
   // Paragraph text for scrolly
   $: steps = [
     `<h1 class='step-title'>Step 1</h1>
-   
-       <br><br>
-       The chart on the top shows our classification model. Our ‘classification threshold’ is simply the current position of this model’s decision boundary, in this case 5, so anything greater than 5 we classify as an apple, otherwise we call it a banana. Different classification thresholds may output predictions, and therefore different values for False Positives or True Positives. We’ll build out our ROC Curve in the chart below by plotting the TPR vs FPR for different thresholds of our model, starting with our current point:
-      </p>`,
+     
+         <br><br>
+         The chart on the top shows our classification model. Our ‘classification threshold’ is simply the current position of this model’s decision boundary, in this case 5, so anything greater than 5 we classify as an apple, otherwise we call it a banana. Different classification thresholds may output predictions, and therefore different values for False Positives or True Positives. We’ll build out our ROC Curve in the chart below by plotting the TPR vs FPR for different thresholds of our model, starting with our current point:
+        </p>`,
     `<h1 class='step-title'>Step 2</h1>
-      <p>By moving our decision boundary to the right, we can observe that we’ve correctly classified 2 more values, at the cost of 5 poor values. We’ll plot this point and see if we can do better: </p>
-      `,
+        <p>By moving our decision boundary to the right, we can observe that we’ve correctly classified 2 more values, at the cost of 5 poor values. We’ll plot this point and see if we can do better: </p>
+        `,
     `<h1 class='step-title'>Step 3</h1>
-      <p>By moving our classification boundary threshold yet again, we obtain yet another point</p>`,
+        <p>By moving our classification boundary threshold yet again, we obtain yet another point</p>`,
     `<h1 class='step-title'>Step 4</h1>
-      <p>As we try more and more points, we build out a clear curve of results. This curve is our ROC curve. Each point refers to a TP vs FP rate for a different threshold of our model. </p>`,
+        <p>As we try more and more points, we build out a clear curve of results. This curve is our ROC curve. Each point refers to a TP vs FP rate for a different threshold of our model. </p>`,
   ];
 
   const target2event = {
@@ -121,7 +123,7 @@
             <!-- <AxisY /> -->
             <Beeswarm
               r={width < 400 ? r / 1.15 : r}
-              strokeWidth={1}
+              strokeWidth={2}
               xStrength={0.05}
               yStrength={0.075}
             />
@@ -162,7 +164,6 @@
     /* margin: auto; */
     width: 90%;
     max-height: 95%;
-    padding-left: 10%;
     /* max-height: 50%; */
     /* border: 3px solid skyblue; */
   }
@@ -180,11 +181,9 @@
     grid-template-columns: 100%;
     grid-row-gap: 3rem;
     grid-column-gap: 0rem;
-    grid-template-rows: 45% 45%;
+    grid-template-rows: 40% 45%;
     height: 80vh;
     padding-right: 1rem;
-    padding-left: 8%;
-    /* margin: auto; */
     /* border: 3px solid black; */
   }
 
@@ -193,7 +192,6 @@
     text-align: center;
     transition: background 100ms;
     display: flex;
-    flex-direction: row-reverse;
   }
 
   .step {
@@ -213,18 +211,17 @@
     flex-direction: column;
     justify-content: center;
     transition: background 500ms ease;
-    /* box-shadow: 1px 1px 8px var(--squid-ink); */
+    box-shadow: 1px 1px 8px #7e93ee;
     text-align: left;
     width: 75%;
     margin: auto;
     max-width: 500px;
     font-family: var(--font-main);
     line-height: 1.3;
-    border: 5px solid #232f3e;
   }
 
   .step.active .step-content {
-    background: #f1f3f3bd;
+    background: white;
     color: var(--squid-ink);
   }
 

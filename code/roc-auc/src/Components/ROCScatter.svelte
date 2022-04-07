@@ -12,10 +12,10 @@
   // responsive margins
   const mobile = window.innerWidth <= 700;
   const margin = {
-    top: mobile ? 40 : 50,
+    top: mobile ? 20 : 20,
     bottom: mobile ? 10 : 25,
-    left: mobile ? 0 : 80,
-    right: mobile ? 0 : 10,
+    left: mobile ? 0 : 50,
+    right: mobile ? 0 : 40,
   };
 
   // scales
@@ -29,41 +29,18 @@
   // line generator
   $: rocPath = line()
     .x((d) => xScale(d.fpr))
-    .y((d) => rocScale(d.tpr))
-    .curve(curveStep);
+    .y((d) => rocScale(d.tpr));
+  // .curve(curveStep);
 
   $: aucPath = area()
     .x((d) => xScale(d.fpr))
     .y1((d) => rocScale(d.tpr))
-    .y0(rocScale(0))
-    .curve(curveStep);
+    .y0(rocScale(0));
+  // .curve(curveStep);
 </script>
 
-<h1 class="body-header">Area Under the Curve (AUC)</h1>
-<p class="body-text">
-  This component is a scope example of a D3 chart. It's pretty simple.
-</p>
-<p class="body-text">
-  The entropy can be used to quantify the
-  <span class="bold">impurity</span> of a collection of labeled data points: a node
-  containing multiple classes is impure whereas a node including only one class is
-  pure.
-</p>
-
-<div id="static-chart" />
-<p class="body-text">
-  Above, you can compute the entropy of a collection of labeled data points
-  belonging to two classes, which is typical for
-  <span class="bold">binary classification</span> problems. Click on the
-  <span class="bold">Add</span> and
-  <span class="bold">Remove</span> buttons to modify the composition of the bubble.
-</p>
-
-<div id="error-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg
-    width={width + margin.left + margin.right}
-    height={height + margin.top + margin.bottom}
-  >
+<div id="roc-scatter-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
+  <svg {width} height={height + margin.top + margin.bottom}>
     <!-- x-ticks -->
     {#each xScale.ticks() as tick}
       <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
@@ -111,7 +88,7 @@
       x1={margin.left}
       x2={width}
       stroke="black"
-      stroke-width="2"
+      stroke-width="0"
     />
     <!-- y -->
     <!-- svelte-ignore component-name-lowercase -->
@@ -122,18 +99,24 @@
       x1={margin.left}
       x2={margin.left}
       stroke="black"
-      stroke-width="2"
+      stroke-width="0"
     />
 
     <!-- our data -->
     <!-- <path class="outline-line" d={auc(rocData)} /> -->
     <path class="path-line" d={rocPath(rocData)} stroke="#9e1f63" />
-    <path
-      class="path-area"
-      d={aucPath(rocData)}
-      fill="#7cd1ea"
-      fill-opacity="0.4"
-    />
+
+    <!-- circles -->
+    {#each rocData as d}
+      <circle
+        class="roc-circle"
+        fill="#9e1f63"
+        stroke-width="1.5"
+        r="5.5"
+        cx={xScale(d.fpr)}
+        cy={rocScale(d.tpr)}
+      />
+    {/each}
 
     <!-- chart labels -->
     <text
@@ -147,70 +130,32 @@
     <!-- axis labels -->
     <text
       class="error-axis-label"
-      y={margin.top / 2}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">Area Under The (ROC) Curve</text
-    >
-    <text
-      class="error-axis-label"
       y={height + margin.bottom}
       x={(width + margin.left) / 2}
-      text-anchor="middle">False Positive Rate (FPR)</text
+      text-anchor="middle">FPR</text
     >
     <text
       class="error-axis-label"
       y={margin.left / 3}
       x={-(height / 2)}
       text-anchor="middle"
-      transform="rotate(-90)">True Positive Rate (TPR)</text
+      transform="rotate(-90)">TPR</text
     >
-
-    <!-- x-ticks -->
-    {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
-        <text class="error-axis-text" y="15" text-anchor="end">{tick}</text>
-      </g>
-    {/each}
-
-    <!--  Our AUC annotation -->
-    <text
-      class="annotation"
-      transform={`translate(${xScale(0.5)},${rocScale(0.55)}) `}
-      text-anchor="middle"
-      fill="#9e1f63"
-      alignment-baseline="middle"
-    >
-      OUR AUC: 0.73
-    </text>
   </svg>
 </div>
-<br /><br />
-<p class="body-text">
-  Our model shows something that hangs somewhere between perfect and random.
-  Indeed, this is the kind of result you’d expect to get in the real-world.
-  Obtaining a perfect or exactly random result likely indicates a problem. In
-  the former case, overfitting. In the latter, reassess the appropriateness of
-  the problem. (reword).
-</p>
 
 <style>
-  #error-chart {
-    margin: auto;
-    max-height: 48vh;
-    width: 40%;
-    margin: 1rem auto;
+  svg {
+    /* border: 3px solid teal; */
   }
 
-  .annotation {
-    font-family: var(--font-heavy);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4.4px;
-    pointer-events: none;
-    stroke: #f1f3f3;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    opacity: 1;
+  #roc-scatter-chart {
+    /* margin: auto; */
+    width: 95%;
+    max-height: 90%;
+    padding-left: 3%;
+    /* max-height: 50%; */
+    /* border: 3px solid skyblue; */
   }
 
   .error-text {
@@ -229,7 +174,7 @@
   }
 
   .y-axis-line {
-    opacity: 0.15;
+    opacity: 0.2;
   }
 
   #error-text-accuracy {
@@ -245,7 +190,7 @@
     fill: none;
     stroke-linejoin: round;
     stroke-linecap: round;
-    stroke-width: 6;
+    stroke-width: 2;
   }
 
   .outline-line {
