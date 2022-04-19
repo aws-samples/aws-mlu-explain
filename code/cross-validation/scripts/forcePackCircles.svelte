@@ -14,6 +14,7 @@
   } from 'd3-force';
 import { range } from 'd3-array';
 import { updateData } from './utils';
+import {kFoldsData} from '../scripts/store.js'
 
   const { width, height, xScale, yScale, zScale, xGet, yGet, zGet } = getContext('LayerCake');
 
@@ -43,22 +44,25 @@ import { updateData } from './utils';
   */
 
 
-let data = updateData(foldsCount)
+// let data = updateData(foldsCount)
 
- let initialNodes = data.map((d) => ({ ...d }));
+$kFoldsData = updateData(foldsCount)
+
+ let initialNodes = $kFoldsData.map((d) => ({ ...d }));
  
  let simulation = forceSimulation(initialNodes)
  
  $: nodes = []
+
  
  $: {
    simulation.on("tick", () => {
-   data = updateData(foldsCount)
-    initialNodes = data.map((d)=> ({...d}))
+   $kFoldsData = updateData(foldsCount)
+    initialNodes = $kFoldsData.map((d)=> ({...d}))
     nodes = simulation.nodes()  
   })
-  simulation = forceSimulation(initialNodes)
 }
+simulation = forceSimulation($kFoldsData)
   
   /* ----------------------------------------------
   * When variables change, set forces and restart the simulation
@@ -75,7 +79,7 @@ let data = updateData(foldsCount)
   }
 
 </script>
-{console.log({data, initialNodes})}
+{console.log({data:$kFoldsData, initialNodes})}
 {#each range(0,foldsCount,1) as tick}
   <!-- svelte-ignore component-name-lowercase -->
     <text 
