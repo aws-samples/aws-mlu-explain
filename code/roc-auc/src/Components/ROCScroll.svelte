@@ -6,7 +6,18 @@
   import ROCScatter from "./ROCScatter.svelte";
   // import ConfusionMatrix from "./ConfusionMatrix.svelte";
   // import { TP, FP, TN, FN, stage } from "./data-store.js";
+  import {
+    TP,
+    FP,
+    TN,
+    FN,
+    TPR,
+    FPR,
+    rocCircles,
+    xPoss,
+  } from "../data-store.js";
   import { LayerCake, Svg, Html } from "layercake";
+  import { range } from "d3-array";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import Key from "./Key-html.svelte";
   import AxisX from "./BeeswarmAxisX.svelte";
@@ -14,6 +25,7 @@
   import Beeswarm from "./BeeswarmForce.svelte";
   import DecisionBoundary from "./DecisionBoundary.svelte";
   import { scatterData } from "../datasets.js";
+  import { transition } from "d3-transition";
 
   const xKey = "xVal";
   const zKey = "yVal";
@@ -43,11 +55,25 @@
     `<h1 class='step-title'>Step 2</h1>
       <p>By moving our decision boundary to the right, we can observe that we’ve correctly classified 2 more values, at the cost of 5 poor values. We’ll plot this point and see if we can do better: </p>
       `,
-    `<h1 class='step-title'>Step 3</h1>
+    `<h1 class='step-title'>Step 3,</h1>
       <p>By moving our classification boundary threshold yet again, we obtain yet another point</p>`,
     `<h1 class='step-title'>Step 4</h1>
       <p>As we try more and more points, we build out a clear curve of results. This curve is our ROC curve. Each point refers to a TP vs FP rate for a different threshold of our model. </p>`,
   ];
+
+  // function dragged(event, d) {
+  //   // get scaled x-position
+  //   let xPos = xScale.invert(event.x);
+  //   // ensure x-position in range
+  //   if (xPos <= 0.005 || xPos >= 0.95) {
+  //     // out of range, do nothing
+  //   } else {
+  //     // update decision boundary position
+  //     select(this).raise().attr("transform", `translate(${event.x}, 16)`);
+  //     // recalculate metrics
+  //     updateCounts(xPos);
+  //   }
+  // }
 
   const target2event = {
     0: () => {
@@ -55,29 +81,52 @@
       // console.log(select("rect.decision-boundary-bar"))
       // console.log('0' )
       // $stage = 'none';
+      // $rocCircles = [];
+      // $rocCircles = [];
+
+      $xPoss = 0.05;
     },
     1: () => {
-      // $TP += 1;
-      // selectAll('circle').attr('r', 40)
-      // $stage = 'none';
+      // $rocCircles = [];
+
+      const xs = range(0.05, 0.5, 0.01);
+      xs.forEach((x, i) => {
+        setTimeout(() => {
+          $xPoss = x;
+        }, i * 4);
+      });
     },
 
     2: () => {
-      // $FP += 3;
-      // $stage = 'precision';
+      selectAll(".roc-circle").transition().attr("r", 5.5);
+
+      const xs = range(0.5, 0.98, 0.01);
+      xs.forEach((x, i) => {
+        setTimeout(() => {
+          $xPoss = x;
+        }, i * 4);
+      });
+
+      // select(".path-line").remove();
+
+      select(".highlight-circle").style("opacity", 1);
+      select("#highlight-text").style("opacity", 1);
+      select("#highlight-tspan").style("opacity", 1);
     },
+
     3: () => {
-      // $stage = 'recall';
-      // $TN += 3;
+      // $rocCircles = [];
+      selectAll(".roc-circle")
+        .transition()
+        .attr("r", 6)
+        .transition()
+        .attr("r", 0);
+
+      select(".highlight-circle").style("opacity", 0);
+      select("#highlight-text").style("opacity", 0);
+      select("#highlight-tspan").style("opacity", 0);
     },
-    4: () => {
-      // $TN += 5;
-      // $stage = 'none';
-    },
-    5: () => {
-      // $FP += 4;
-      // $stage = 'none';
-    },
+    4: () => {},
   };
 
   // trigger events on scroll typeof lastname !== "undefined"

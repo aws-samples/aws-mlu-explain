@@ -41,7 +41,7 @@
         .y($height / 2)
         .strength(yStrength)
     )
-    .force("collide", forceCollide(r + 1))
+    .force("collide", forceCollide(r + 0.5))
     .stop();
 
   $: {

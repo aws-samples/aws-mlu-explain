@@ -1,5 +1,5 @@
 <script>
-  import { line, curveCatmullRom } from "d3-shape";
+  import { line, curveStep } from "d3-shape";
   import { scaleLinear } from "d3-scale";
   import { rocData } from "../datasets.js";
   import { format } from "d3-format";
@@ -29,20 +29,20 @@
   // line generator
   $: rocPath = line()
     .x((d) => xScale(d.fpr))
-    .y((d) => rocScale(d.tpr));
-  // .curve(curveCatmullRom.alpha(1));
+    .y((d) => rocScale(d.tpr))
+    .curve(curveStep);
 
   // line generator
   $: perfectPath = line()
     .x((d) => xScale(d.threshold))
     .y((d) => rocScale(d.ones));
-  // .curve(curveCatmullRom);
+  // .curve(curveStep);
 
   // line generator
   $: randomPath = line()
     .x((d) => xScale(d.threshold))
     .y((d) => rocScale(d.threshold));
-  // .curve(curveCatmullRom);
+  // .curve(curveStep);
 
   // path for svg arrows
   const arrows = [
@@ -177,7 +177,7 @@
     />
     <text
       class="annotation"
-      transform={`translate(${xScale(0.42)},${rocScale(0.78)}) rotate(-18)`}
+      transform={`translate(${xScale(0.45)},${rocScale(0.74)}) rotate(-18)`}
       text-anchor="middle"
       fill="#9e1f63"
       alignment-baseline="middle"

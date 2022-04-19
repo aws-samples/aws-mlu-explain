@@ -53,10 +53,7 @@
     .force(
       "x",
       forceX()
-        .x((d) => {
-          // console.log("d", d, "d.x", d.x);
-          return d.xVal;
-        })
+        .x((d) => d.xVal)
         .strength(0.95)
     )
     .force(

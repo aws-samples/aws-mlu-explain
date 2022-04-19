@@ -6,3 +6,5 @@ export const TN = writable(0);
 export const FN = writable(0);
 export const TPR = writable(0);
 export const FPR = writable(0);
+export const xPoss = writable(0.005);
+export const rocCircles = writable([]);

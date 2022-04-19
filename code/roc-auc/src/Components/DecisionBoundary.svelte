@@ -4,12 +4,22 @@
 
   import { getContext } from "svelte";
   import { select, selectAll } from "d3-selection";
+  import { transition } from "d3-transition";
 
-  import { TP, FP, TN, FN, TPR, FPR } from "../data-store.js";
+  import {
+    TP,
+    FP,
+    TN,
+    FN,
+    TPR,
+    FPR,
+    rocCircles,
+    xPoss,
+  } from "../data-store.js";
 
   const { data, xScale, yScale, xRange, yRange } = getContext("LayerCake");
 
-  let xPosition = $xScale.invert(($xRange[0] + $xRange[1]) / 2);
+  let xPosition = $xScale.invert($xRange[0]);
 
   onMount(() => {
     // attack drag event handlers to decision boundary
@@ -17,9 +27,21 @@
       drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
     );
 
+    // loop through xRange0 - xRange1
+    // track update counts for each loop and store to rocData
+
     // init decision boundary at halfway point
-    updateCounts($xScale.invert(($xRange[0] + $xRange[1]) / 2));
+    // updateCounts($xScale.invert($xRange[0]));
   });
+  console.log(
+    "range",
+    $xRange[0],
+    $xRange[1],
+    $xScale.invert($xRange[0]),
+    $xScale.invert($xRange[1]),
+    $xScale($xRange[0]),
+    $xScale($xRange[1])
+  );
 
   // function to calculate confusion matrix metrics
   $: updateCounts = function (xPos) {
@@ -61,26 +83,52 @@
   function dragstarted() {
     select("#dragme").remove();
     select("#dragline").remove();
-    console.log("io");
   }
 
   function dragged(event, d) {
     // get scaled x-position
     let xPos = $xScale.invert(event.x);
+    console.log("xpos", xPos, "event.x", event.x); //
     // ensure x-position in range
     if (xPos <= 0.005 || xPos >= 0.95) {
       // out of range, do nothing
     } else {
       // update decision boundary position
-      select(this).raise().attr("transform", `translate(${event.x}, 16)`);
+      select("g.decision-boundary-bar")
+        .raise()
+        .attr("transform", `translate(${event.x}, 16)`);
       // recalculate metrics
       updateCounts(xPos);
     }
-    console.log("TPR", $TPR, "FPR", $FPR);
-    console.log("hmm");
   }
 
   function dragended(event, d) {}
+
+  function moveBoundary(newPosition) {
+    let xPos = $xScale.invert(newPosition);
+    select("g.decision-boundary-bar").attr(
+      "transform",
+      `translate(${newPosition}, 16)`
+    );
+    // recalculate metrics
+    updateCounts(xPos);
+  }
+
+  function moveBoundary2(newPosition) {
+    let xPosition = $xScale(newPosition);
+    select("g.decision-boundary-bar").attr(
+      "transform",
+      `translate(${xPosition}, 16)`
+    );
+    // recalculate metrics
+    updateCounts(newPosition);
+    console.log("new roc", $rocCircles);
+  }
+
+  $: {
+    console.log("EAREAREREAR");
+    moveBoundary2($xPoss);
+  }
 
   const arrows = [
     "M0.200275 13.2782C0.200275 12.4153 0.89983 11.7157 1.76278 11.7157H23.6378C24.5007 11.7157 25.2003 12.4153 25.2003 13.2782C25.2003 14.1411 24.5007 14.8407 23.6378 14.8407H1.76278C0.89983 14.8407 0.200275 14.1411 0.200275 13.2782Z",
@@ -114,7 +162,7 @@
   <g
     class="decision-boundary-bar"
     data-id="decision-boundary-bar"
-    transform="translate({($xRange[0] + $xRange[1]) / 2},{16})"
+    transform="translate({($xRange[0] + $xRange[0]) / 2},{16})"
   >
     <rect
       height={$yRange[0] - 2}
