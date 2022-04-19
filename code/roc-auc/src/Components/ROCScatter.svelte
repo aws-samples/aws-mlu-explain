@@ -197,7 +197,7 @@
       />
     {/each}
     <!-- {#each $rocCircles as d} -->
-    <text id="highlight-text" opacity="0" x="0" y="0"
+    <text id="highlight-text" text-anchor="middle" opacity="0" x="0" y="0"
       >{@html `TPR: ${formatter2($TPR)}`}<tspan id="highlight-tspan" dy="16"
         >{@html `FPR: ${formatter2($FPR)}`}</tspan
       ></text

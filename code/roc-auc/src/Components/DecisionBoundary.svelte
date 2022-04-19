@@ -26,22 +26,7 @@
     select("g.decision-boundary-bar").call(
       drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
     );
-
-    // loop through xRange0 - xRange1
-    // track update counts for each loop and store to rocData
-
-    // init decision boundary at halfway point
-    // updateCounts($xScale.invert($xRange[0]));
   });
-  console.log(
-    "range",
-    $xRange[0],
-    $xRange[1],
-    $xScale.invert($xRange[0]),
-    $xScale.invert($xRange[1]),
-    $xScale($xRange[0]),
-    $xScale($xRange[1])
-  );
 
   // function to calculate confusion matrix metrics
   $: updateCounts = function (xPos) {
@@ -86,11 +71,12 @@
   }
 
   function dragged(event, d) {
+    selectAll(".roc-circle").attr("r", 5.5);
     // get scaled x-position
     let xPos = $xScale.invert(event.x);
     console.log("xpos", xPos, "event.x", event.x); //
     // ensure x-position in range
-    if (xPos <= 0.005 || xPos >= 0.95) {
+    if (xPos <= 0.0 || xPos >= 0.99) {
       // out of range, do nothing
     } else {
       // update decision boundary position

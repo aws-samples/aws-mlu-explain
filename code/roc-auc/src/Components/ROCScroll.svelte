@@ -44,6 +44,10 @@
 
   // scroll iterator
   let value;
+  // variable to break loop if scroll up too fast
+  let scrollStageTrack = 2;
+  let t1;
+  let t2;
 
   // Paragraph text for scrolly
   $: steps = [
@@ -83,28 +87,38 @@
       // $stage = 'none';
       // $rocCircles = [];
       // $rocCircles = [];
-
-      $xPoss = 0.05;
+      // select(".highlight-circle").attr("fill", "red").raise();
+      // select("#highlight-text").attr("fill", "red").raise();
+      // select("#highlight-tspan").attr("fill", "red").raise();
+      $rocCircles = [];
+      $xPoss = -0.01;
     },
     1: () => {
+      clearTimeout(t2);
       // $rocCircles = [];
-
-      const xs = range(0.05, 0.5, 0.01);
+      scrollStageTrack = 1;
+      const xs = range(0.0, 0.5, 0.015);
       xs.forEach((x, i) => {
-        setTimeout(() => {
-          $xPoss = x;
-        }, i * 4);
+        t1 = setTimeout(() => {
+          if (scrollStageTrack === 1) {
+            $xPoss = x;
+          }
+        }, i * 40);
       });
     },
 
     2: () => {
-      selectAll(".roc-circle").transition().attr("r", 5.5);
+      clearTimeout(t1);
 
-      const xs = range(0.5, 0.98, 0.01);
+      scrollStageTrack = 2;
+      selectAll(".roc-circle").transition().attr("r", 5.5);
+      const xs = range(0.5, 0.98, 0.015);
       xs.forEach((x, i) => {
-        setTimeout(() => {
-          $xPoss = x;
-        }, i * 4);
+        t2 = setTimeout(() => {
+          if (scrollStageTrack === 2) {
+            $xPoss = x;
+          }
+        }, i * 40);
       });
 
       // select(".path-line").remove();

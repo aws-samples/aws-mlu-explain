@@ -6,17 +6,15 @@
   <p class="body-text">
     In our <a href="https://mlu-explain.github.io/precision-recall/"
       >previous article discussing evaluating classification models</a
-    >, we discussed the important consequences of favoring false positives to
-    false negatives (or vice versa). Left unmentioned were two closely-related
-    concepts, the Receiver Operating Curve, (often called just the ROC Curve),
-    and AUC (which stands for Area under the ROC Curve, or AUROC). These
-    concepts go hand-in-hand with our previous discussion on informed evaluation
-    of classification models.
-    <br /><br />
-    The ROC Curve provides us with a visual way to observe how such changes in our
-    model’s classification thresholds affect the model’s performance. (They originated
-    during World War II as a way of measuring how well radar operators could distinguish
-    noise from actual signals). An ROC curve is composed by plotting the
+    >, we discussed the consequences of favoring False Positives over False
+    Negatives (or vice versa). Left unmentioned were two closely-related
+    concepts, the Receiver Operating Curve (the
+    <span class="bold">ROC Curve</span>) and the Area under the ROC Curve (<span
+      class="bold">AUC</span
+    >, or <span class="bold">AUROC</span>). The ROC Curve provides us with a
+    visual way to observe how such changes in our model’s classification
+    thresholds affect the model’s performance. An ROC curve is composed by
+    plotting the
     <span class="bold">True-Positive Rate (TPR)</span>
     versus the <span class="bold">False-Positive Rate (FPR)</span> for different
     classification threshold, where
@@ -27,26 +25,28 @@
       <span class="bold">True Positive Rate (TPR)</span>: The probability that a
       positive sample is predicted in the positive class:<br /><br />
       {@html katexify(
-        `\\begin{aligned}{\\mathrm{True~Positive~Rate}} = \\frac{\\mathrm{\\#~True~Positives}}{\\mathrm{\\#~True~Positives + \\#~False~Negatives}} \\end{aligned}`
+        `\\begin{aligned}  \\frac{\\mathrm{\\#~True~Positives}}{\\mathrm{\\#~True~Positives + \\#~False~Negatives}} \\end{aligned}`
       )} <br /> and
     </li>
+
     <li>
       <span class="bold">False Positive Rate (FPR)</span>: The probability that
       a negative sample is predicted in the positive class:<br /><br />
       {@html katexify(
-        `\\begin{aligned}{\\mathrm{False~Positive~Rate}} = \\frac{\\mathrm{\\#~False~Positives}}{\\mathrm{\\#~False~Positives + \\#~True~Negatives}} \\end{aligned}`
+        `\\begin{aligned} \\frac{\\mathrm{\\#~False~Positives}}{\\mathrm{\\#~False~Positives + \\#~True~Negatives}} \\end{aligned}`
       )}
     </li>
   </ul>
   <br />
   <p class="body-text">
-    Changing the way our model makes decisions (e.g. by changing our
-    classification threshold) is liable to give us completely different outputs.
-    That is, if we were to move the decision boundary our model uses for
-    classification, we’d expect the resulting outputs, and thus the model’s TPR
-    and FPR, to be different. These changes will be visualized as different
-    points along the ROC Curve - results from different thresholds will become
-    different points on our ROC curve.
+    Changing our model's classification threshold may give us completely
+    different True Positive Rates and False Positive Rates Changing the way our
+    model makes decisions (e.g. by changing our classification threshold) is
+    liable to give us completely different outputs. That is, if we were to move
+    the decision boundary our model uses for classification, we’d expect the
+    resulting outputs, and thus the model’s TPR and FPR, to be different. These
+    changes will be visualized as different points along the ROC Curve - results
+    from different thresholds will become different points on our ROC curve.
     <br /><br />
     <!-- To make this concept more clear, we’ll imagine that we’re trying to predict bananas
     from apples using just the item’s weight. Recall that ROC Curve is composed by
@@ -69,6 +69,7 @@
     padding: 0.25rem;
     list-style: none;
   }
+
   /* mobile */
   @media screen and (max-width: 950px) {
     ul {

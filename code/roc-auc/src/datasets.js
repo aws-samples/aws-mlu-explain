@@ -82,6 +82,7 @@ export const scatterData = [
 ];
 
 export const rocData = [
+  { threshold: 0.0, tpr: 1.0, fpr: 1.0, zeros: 0.0, halfs: 0.5, ones: 0 },
   { threshold: 0.0, tpr: 1.0, fpr: 0.975, zeros: 0.0, halfs: 0.5, ones: 0 },
   { threshold: 0.0, tpr: 1.0, fpr: 0.975, zeros: 0.0, halfs: 0.5, ones: 1.0 },
   { threshold: 0.025, tpr: 1.0, fpr: 0.975, zeros: 0.0, halfs: 0.5, ones: 1.0 },
