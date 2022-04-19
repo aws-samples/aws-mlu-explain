@@ -22,10 +22,10 @@ import { each } from "svelte/internal";
 
   // scales
   $: waffleXScale = scaleBand()
-    .domain(range(0,10,1))
+    .domain(range(0,11,1))
     .range([margin.left, width - margin.right])
   $: waffleYScale = scaleBand()
-    .domain(range(0,10,1))
+    .domain(range(0,11,1))
     .range([margin.top, height - margin.bottom])
 
   // path for svg arrows
@@ -64,6 +64,7 @@ import { each } from "svelte/internal";
   <svg
     width={width + margin.left + margin.right}
     height={height + margin.top + margin.bottom}
+    overflow="visible"
   >
     <!-- waffleChart -->
     <g
@@ -76,10 +77,9 @@ import { each } from "svelte/internal";
           id={`waffle-cell-${cell}`}
           x={waffleXScale(Math.floor(cell / 10))}
           y={waffleYScale(cell % 10)}
-          rx="1"
           height={waffleYScale.bandwidth()}
           width={waffleXScale.bandwidth()}
-          fill={cell <= 64 ?"green"  : cell < 80 ? "goldenrod" : "darkslateblue"}
+          fill={cell <= 54 ?"darkslateblue"  : cell < 90 ? "hotpink" : "limegreen"}
           stroke="black"
           stroke-width=".5"
         />
@@ -89,12 +89,12 @@ import { each } from "svelte/internal";
         id="train-outline"
         d={
           `
-          M${waffleXScale(0)},${waffleYScale(0)}
-          L${waffleXScale(7)},${waffleYScale(0)}
-          L${waffleXScale(7)},${waffleYScale(5)}
-          L${waffleXScale(6)},${waffleYScale(5)}
-          L${waffleXScale(6)},${waffleYScale(9)}
-          L${waffleXScale(0)},${waffleYScale(9)}
+          M${waffleXScale(0)} ${waffleYScale(0)}
+          H${waffleXScale(6)}
+          V${waffleYScale(5)}
+          H${waffleXScale(5)}
+          V${waffleYScale(10)}
+          H${waffleXScale(0)}
           Z`
         }
         fill="none"
@@ -108,12 +108,12 @@ import { each } from "svelte/internal";
         id="test-outline"
         d={
           `
-          M${waffleXScale(7)},${waffleYScale(0)}
-          L${waffleXScale(8)},${waffleYScale(0)}
-          L${waffleXScale(8)},${waffleYScale(9)}
-          L${waffleXScale(6)},${waffleYScale(9)}
-          L${waffleXScale(6)},${waffleYScale(5)}
-          L${waffleXScale(7)},${waffleYScale(5)}
+          M${waffleXScale(6)} ${waffleYScale(0)}
+          H${waffleXScale(9)}
+          V${waffleYScale(10)}
+          H${waffleXScale(5)}
+          V${waffleYScale(5)}
+          H${waffleXScale(6)}
           Z`
         }
         fill="none"
@@ -128,10 +128,10 @@ import { each } from "svelte/internal";
         id="validate-outline"
         d={
           `
-          M${waffleXScale(8)},${waffleYScale(0)}
-          L${waffleXScale(9)},${waffleYScale(0)}
-          L${waffleXScale(9)},${waffleYScale(9)}
-          L${waffleXScale(8)},${waffleYScale(9)}
+          M${waffleXScale(9)} ${waffleYScale(0)}
+          H${waffleXScale(10)}
+          V${waffleYScale(10)}
+          H${waffleXScale(9)}
           Z`
         }
         fill="none"
@@ -143,13 +143,35 @@ import { each } from "svelte/internal";
       />
       
 
-    <!-- axis labels -->
+    <!-- waffle labels -->
     <text
-      class="error-axis-label"
-      y={margin.top / 2}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">The Validation Set Approach</text
-    >
+    class="error-axis-label"
+    y={margin.top / 2}
+    x={(width + margin.left) / 2}
+    text-anchor="middle">The Validation Set Approach</text
+  >
+    <text
+      class="annotation"
+      y={height / 2}
+      x={waffleXScale(3)}
+      text-anchor="middle"
+      >Train</text>
+      
+      <text
+      class="annotation"
+      y={height / 2}
+      x={waffleXScale(7) + waffleXScale(0)/4}
+      text-anchor="middle"
+      >Validate</text>
+      
+      <text
+      class="annotation"
+      y={height / 2}
+      x={waffleXScale(10)}
+      dx="-2"
+      text-anchor="end"
+    >Test</text>
+
   </svg>
 </div>
 <br /><br />
