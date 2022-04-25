@@ -43,22 +43,19 @@ import {kFoldsData} from '../scripts/store.js'
   * Make a copy because the simulation will alter the objects
   */
 
-
-// let data = updateData(foldsCount)
-
-$kFoldsData = updateData(foldsCount)
-
- let initialNodes = $kFoldsData.map((d) => ({ ...d }));
+// $kFoldsData = updateData(foldsCount)
  
- let simulation = forceSimulation(initialNodes)
+ let simulation = forceSimulation($kFoldsData)
  
- $: nodes = []
+ let nodes = []
 
- 
+ $:{
+   $kFoldsData = updateData(foldsCount)
+   simulation = forceSimulation($kFoldsData)
+ }
+
  $: {
    simulation.on("tick", () => {
-   $kFoldsData = updateData(foldsCount)
-    initialNodes = $kFoldsData.map((d)=> ({...d}))
     nodes = simulation.nodes()  
   })
 }
@@ -79,7 +76,6 @@ simulation = forceSimulation($kFoldsData)
   }
 
 </script>
-{console.log({data:$kFoldsData, initialNodes})}
 {#each range(0,foldsCount,1) as tick}
   <!-- svelte-ignore component-name-lowercase -->
     <text 
