@@ -1,27 +1,13 @@
 <script>
   import Scrolly from "./Scrolly.svelte";
-  import katexify from "../katexify";
   import { select, selectAll } from "d3-selection";
-  // import BeeSwarm from "./Beeswarm.svelte";
   import ROCScatter from "./ROCScatter.svelte";
-  // import ConfusionMatrix from "./ConfusionMatrix.svelte";
-  // import { TP, FP, TN, FN, stage } from "./data-store.js";
-  import {
-    TP,
-    FP,
-    TN,
-    FN,
-    TPR,
-    FPR,
-    rocCircles,
-    xPoss,
-  } from "../data-store.js";
+  import { radius, rocCircles, xPoss } from "../data-store.js";
   import { LayerCake, Svg, Html } from "layercake";
   import { range } from "d3-array";
-  import { scaleLinear, scaleOrdinal } from "d3-scale";
+  import { scaleOrdinal } from "d3-scale";
   import Key from "./Key-html.svelte";
   import AxisX from "./BeeswarmAxisX.svelte";
-  import AxisY from "./AxisY.svelte";
   import Beeswarm from "./BeeswarmForce.svelte";
   import DecisionBoundary from "./DecisionBoundary.svelte";
   import { scatterData } from "../datasets.js";
@@ -29,10 +15,8 @@
 
   const xKey = "xVal";
   const zKey = "yVal";
-  const r = 6.5;
   const seriesNames = new Set();
   const seriesColors = ["#c9208a", "#7cd1ea"];
-  const reScaleX = scaleLinear().domain([0.4, 15]).range([0, 1]);
   const dataTransformed = scatterData.map((d) => {
     seriesNames.add(d[zKey]);
     return {
@@ -46,60 +30,51 @@
   let value;
   // variable to break loop if scroll up too fast
   let scrollStageTrack = 2;
-  let t1;
-  let t2;
 
   // Paragraph text for scrolly
   $: steps = [
-    `<h1 class='step-title'>Step 1</h1>
-   
-       <br><br>
-       The chart on the top shows our classification model. Our ‘classification threshold’ is simply the current position of this model’s decision boundary, in this case 5, so anything greater than 5 we classify as an apple, otherwise we call it a banana. Different classification thresholds may output predictions, and therefore different values for False Positives or True Positives. We’ll build out our ROC Curve in the chart below by plotting the TPR vs FPR for different thresholds of our model, starting with our current point:
+    `<h1 class='step-title'>Our First Threshold</h1>
+       <p>We'll start with our model's classification threshold at 0,
+        so anything with a probability greater-than-or-equal-to zero of being an airplane,
+         we'll classify as an airplane. In other words, everything will be classified as an airplane!
+         <br><br>
+        While this model will correctly classify every pairplane as an airplane (yielding a perfect <span class='bold'>TPR=1</span>), 
+       it will also incorrectly classify every radar noise as an airplane (giving us the worst possible <span class='bold'>FPR=1</span>). 
       </p>`,
-    `<h1 class='step-title'>Step 2</h1>
-      <p>By moving our decision boundary to the right, we can observe that we’ve correctly classified 2 more values, at the cost of 5 poor values. We’ll plot this point and see if we can do better: </p>
-      `,
-    `<h1 class='step-title'>Step 3,</h1>
-      <p>By moving our classification boundary threshold yet again, we obtain yet another point</p>`,
-    `<h1 class='step-title'>Step 4</h1>
-      <p>As we try more and more points, we build out a clear curve of results. This curve is our ROC curve. Each point refers to a TP vs FP rate for a different threshold of our model. </p>`,
+    `<h1 class='step-title'>Some New Thresholds</h1>
+      <p>Clearly our first model was awful - we can do better! But how much better?
+        <br><br> To find out, let's try some new threshold values.
+        We'll move our threshold more and more to the right, increasing the threshold at which we classify a radar signal as an airplane.
+        To assess the performance, we calculate the TPR and FPR for each new threshold choice, and plot them below.
+    `,
+    `<h1 class='step-title'>And More Thresholds</h1>
+      <p>
+        Recall that our goal is to find the classification threshold that best maximizes true positives while minimizing false positives. 
+        <br><br>
+        To find that threshold, we'll have to try all possible values for our threshold!
+        <br><br>
+        So that's exactly what we'll do: continue increasing our threshold until we can't any further (i.e. moving it all the way to the right),
+         logging each TPR and FPR along the way.</p>`,
+    `<h1 class='step-title'>The R.O.C. Curve</h1>
+      <p>After plotting each classification threshold's corresponding TPR and FPR, we obtain our ROC curve! 
+        <br><br>This curve gives us a convenient
+        visual of the performance of our classifier. It allows us to understand how that performance changes as a function of the model's classification threshold.
+        <br><br>
+        <span class='bold'>Drag the threshold for yourself to see its corresponding point along our ROC Curve!</span>
+        <br>(Which threshold would you choose?)
+      </p>`,
   ];
-
-  // function dragged(event, d) {
-  //   // get scaled x-position
-  //   let xPos = xScale.invert(event.x);
-  //   // ensure x-position in range
-  //   if (xPos <= 0.005 || xPos >= 0.95) {
-  //     // out of range, do nothing
-  //   } else {
-  //     // update decision boundary position
-  //     select(this).raise().attr("transform", `translate(${event.x}, 16)`);
-  //     // recalculate metrics
-  //     updateCounts(xPos);
-  //   }
-  // }
 
   const target2event = {
     0: () => {
-      // move decision bonudary to middle position
-      // console.log(select("rect.decision-boundary-bar"))
-      // console.log('0' )
-      // $stage = 'none';
-      // $rocCircles = [];
-      // $rocCircles = [];
-      // select(".highlight-circle").attr("fill", "red").raise();
-      // select("#highlight-text").attr("fill", "red").raise();
-      // select("#highlight-tspan").attr("fill", "red").raise();
       $rocCircles = [];
       $xPoss = -0.01;
     },
     1: () => {
-      clearTimeout(t2);
-      // $rocCircles = [];
       scrollStageTrack = 1;
-      const xs = range(0.0, 0.5, 0.015);
+      const xs = range(0.0, 0.45, 0.015);
       xs.forEach((x, i) => {
-        t1 = setTimeout(() => {
+        setTimeout(() => {
           if (scrollStageTrack === 1) {
             $xPoss = x;
           }
@@ -108,20 +83,16 @@
     },
 
     2: () => {
-      clearTimeout(t1);
-
       scrollStageTrack = 2;
-      selectAll(".roc-circle").transition().attr("r", 5.5);
-      const xs = range(0.5, 0.98, 0.015);
+      selectAll(".roc-circle").transition().attr("r", $radius);
+      const xs = range(0.45, 0.98, 0.015);
       xs.forEach((x, i) => {
-        t2 = setTimeout(() => {
+        setTimeout(() => {
           if (scrollStageTrack === 2) {
             $xPoss = x;
           }
         }, i * 40);
       });
-
-      // select(".path-line").remove();
 
       select(".highlight-circle").style("opacity", 1);
       select("#highlight-text").style("opacity", 1);
@@ -129,10 +100,9 @@
     },
 
     3: () => {
-      // $rocCircles = [];
       selectAll(".roc-circle")
         .transition()
-        .attr("r", 6)
+        .attr("r", $radius + 1)
         .transition()
         .attr("r", 0);
 
@@ -144,15 +114,9 @@
   };
 
   // trigger events on scroll typeof lastname !== "undefined"
-  // $: if (value) target2event[value]()
   $: if (typeof value !== "undefined") target2event[value]();
 </script>
 
-<h2 class="body-header">Radio Operator Curves (ROC)</h2>
-<p class="body-text">
-  Here's an example of a typical side-scroller. It's responsive, and will fold
-  to an overlap scroll if the screen gets small enough:
-</p>
 <section>
   <!-- scroll container -->
   <div class="section-container">
@@ -181,9 +145,8 @@
         >
           <Svg>
             <AxisX />
-            <!-- <AxisY /> -->
             <Beeswarm
-              r={width < 400 ? r / 1.15 : r}
+              r={width < 600 ? 5.5 : 6.5}
               strokeWidth={1}
               xStrength={0.05}
               yStrength={0.075}
@@ -196,13 +159,11 @@
           </Html>
         </LayerCake>
       </div>
-      <!-- <BeeSwarm /> -->
       <ROCScatter />
     </div>
   </div>
   <!-- end scroll -->
   <br /><br />
-  <p class="body-text">And that's the end of our scrolly.</p>
 </section>
 
 <style>
@@ -222,12 +183,9 @@
   }
 
   .bs-chart {
-    /* margin: auto; */
-    width: 90%;
+    width: 94%;
     max-height: 95%;
-    padding-left: 10%;
-    /* max-height: 50%; */
-    /* border: 3px solid skyblue; */
+    padding-left: 5%;
   }
 
   /* space after scroll is finished */
@@ -243,12 +201,9 @@
     grid-template-columns: 100%;
     grid-row-gap: 3rem;
     grid-column-gap: 0rem;
-    grid-template-rows: 45% 45%;
+    grid-template-rows: 45% 47%;
     height: 80vh;
     padding-right: 1rem;
-    padding-left: 8%;
-    /* margin: auto; */
-    /* border: 3px solid black; */
   }
 
   .section-container {
@@ -276,7 +231,6 @@
     flex-direction: column;
     justify-content: center;
     transition: background 500ms ease;
-    /* box-shadow: 1px 1px 8px var(--squid-ink); */
     text-align: left;
     width: 75%;
     margin: auto;
@@ -287,7 +241,7 @@
   }
 
   .step.active .step-content {
-    background: #f1f3f3bd;
+    background: #f1f3f3ee;
     color: var(--squid-ink);
   }
 
@@ -312,12 +266,12 @@
 
     .charts-container {
       top: 7.5%;
-      width: 95%;
+      width: 99%;
       margin: auto;
     }
 
     .step {
-      height: 130vh;
+      height: 185vh;
     }
 
     .step-content {
@@ -329,6 +283,52 @@
 
     .spacer {
       height: 100vh;
+    }
+  }
+
+  @media screen and (max-width: 750px) {
+    .section-container {
+      flex-direction: column-reverse;
+    }
+
+    .steps-container {
+      pointer-events: none;
+    }
+
+    .charts-container {
+      top: 7.5%;
+      width: 99%;
+      grid-template-columns: 90%;
+      grid-row-gap: 20%;
+      grid-column-gap: 0rem;
+      grid-template-rows: 40% 40%;
+      padding-right: 0.1rem;
+      padding-left: 2rem;
+    }
+
+    .step {
+      height: 185vh;
+    }
+
+    .step-content {
+      width: 95%;
+      max-width: 768px;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .spacer {
+      height: 100vh;
+    }
+  }
+
+  @media screen and (max-height: 550px) {
+    .step {
+      height: 195vh;
+    }
+    .charts-container {
+      top: 5.5%;
+      height: 90vh;
     }
   }
 </style>

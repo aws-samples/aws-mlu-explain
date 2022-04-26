@@ -2,9 +2,6 @@
   import { onMount } from "svelte";
   import { annotate } from "rough-notation";
 
-  const col2 = "rgba(255, 241, 118, .5)";
-  const biasColor = "skyblue";
-
   onMount(() => {
     const n1 = document.querySelector("#title-roc");
     const n2 = document.querySelector("#title-auc");
@@ -41,7 +38,8 @@
     >
   </h1>
   <h1 class="intro-sub">
-    A Visual Explanation of Radio Operator Curves and Area-Under-the-Curve
+    A Visual Explanation of Receiver Operating Characteristic Curves and
+    Area-Under-the-Curve
   </h1>
   <h3 id="intro__date">
     <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, April 2022
@@ -98,10 +96,6 @@
   @media screen and (max-width: 950px) {
     #intro-hed {
       font-size: 3.5rem;
-    }
-
-    #intro-sub {
-      font-size: 1.5rem;
     }
   }
 </style>

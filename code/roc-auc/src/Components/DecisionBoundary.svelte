@@ -6,18 +6,9 @@
   import { select, selectAll } from "d3-selection";
   import { transition } from "d3-transition";
 
-  import {
-    TP,
-    FP,
-    TN,
-    FN,
-    TPR,
-    FPR,
-    rocCircles,
-    xPoss,
-  } from "../data-store.js";
+  import { TP, FP, TN, FN, TPR, FPR, xPoss, radius } from "../data-store.js";
 
-  const { data, xScale, yScale, xRange, yRange } = getContext("LayerCake");
+  const { xScale, xRange, yRange } = getContext("LayerCake");
 
   let xPosition = $xScale.invert($xRange[0]);
 
@@ -71,10 +62,9 @@
   }
 
   function dragged(event, d) {
-    selectAll(".roc-circle").attr("r", 5.5);
+    selectAll(".roc-circle").attr("r", $radius);
     // get scaled x-position
     let xPos = $xScale.invert(event.x);
-    console.log("xpos", xPos, "event.x", event.x); //
     // ensure x-position in range
     if (xPos <= 0.0 || xPos >= 0.99) {
       // out of range, do nothing
@@ -91,16 +81,6 @@
   function dragended(event, d) {}
 
   function moveBoundary(newPosition) {
-    let xPos = $xScale.invert(newPosition);
-    select("g.decision-boundary-bar").attr(
-      "transform",
-      `translate(${newPosition}, 16)`
-    );
-    // recalculate metrics
-    updateCounts(xPos);
-  }
-
-  function moveBoundary2(newPosition) {
     let xPosition = $xScale(newPosition);
     select("g.decision-boundary-bar").attr(
       "transform",
@@ -108,12 +88,10 @@
     );
     // recalculate metrics
     updateCounts(newPosition);
-    console.log("new roc", $rocCircles);
   }
 
   $: {
-    console.log("EAREAREREAR");
-    moveBoundary2($xPoss);
+    moveBoundary($xPoss);
   }
 
   const arrows = [

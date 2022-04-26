@@ -1,5 +1,4 @@
 <script>
-  import Meta from "./Meta.svelte";
   import Logo from "./Components/Logo.svelte";
   import Title from "./Components/Title.svelte";
   import Intro from "./Components/Intro.svelte";
@@ -8,9 +7,32 @@
   import ROCScroll from "./Components/ROCScroll.svelte";
   import ROCStatic from "./Components/ROCStatic.svelte";
   import AUCStatic from "./Components/AUCStatic.svelte";
+  import { margin, marginScroll, radius } from "./data-store.js";
+
+  // reset margin on resize
+  function handleResize() {
+    const mobile = window.innerWidth <= 700;
+
+    $margin = {
+      top: mobile ? 40 : 50,
+      bottom: mobile ? 20 : 25,
+      left: mobile ? 50 : 70,
+      right: 10,
+    };
+
+    $marginScroll = {
+      top: mobile ? 10 : 12,
+      bottom: mobile ? 15 : 18,
+      left: mobile ? 40 : 50,
+      right: mobile ? 15 : 35,
+    };
+
+    $radius = mobile ? 3 : 5;
+  }
 </script>
 
-<Meta />
+<svelte:window on:resize={handleResize} />
+
 <Logo />
 <Title />
 <Intro />

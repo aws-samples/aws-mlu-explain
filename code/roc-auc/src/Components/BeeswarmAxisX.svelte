@@ -73,13 +73,13 @@
           x2={xTick || isBandwidth ? $xScale.bandwidth() / 2 : 0}
         />
       {/if}
-      <!-- <text
+      <text
         x={xTick || isBandwidth ? $xScale.bandwidth() / 2 : 0}
         y={yTick}
         dx=""
         dy=""
         text-anchor={textAnchor(i)}>{formatTick(tick)}</text
-      > -->
+      >
     </g>
   {/each}
   {#if baseline === true}

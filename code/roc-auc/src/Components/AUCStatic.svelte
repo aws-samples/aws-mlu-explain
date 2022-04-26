@@ -3,28 +3,21 @@
   import { scaleLinear } from "d3-scale";
   import { rocData } from "../datasets.js";
   import { format } from "d3-format";
+  import { margin } from "../data-store.js";
 
   const formatter = format(".1f");
 
   // these don't matter, but make the stretching less obvious at load
   let height = 500;
   let width = 500;
-  // responsive margins
-  const mobile = window.innerWidth <= 700;
-  const margin = {
-    top: mobile ? 40 : 50,
-    bottom: mobile ? 10 : 25,
-    left: mobile ? 0 : 80,
-    right: mobile ? 0 : 10,
-  };
 
   // scales
   $: xScale = scaleLinear()
     .domain([0.0, 1.0])
-    .range([margin.left, width - margin.right]);
+    .range([$margin.left, width - $margin.right]);
   $: rocScale = scaleLinear()
     .domain([0.0, 1.0])
-    .range([height - margin.bottom, margin.top]);
+    .range([height - $margin.bottom, $margin.top]);
 
   // line generator
   $: rocPath = line()
@@ -39,165 +32,179 @@
     .curve(curveStep);
 </script>
 
-<h1 class="body-header">Area Under the Curve (AUC)</h1>
-<p class="body-text">
-  This component is a scope example of a D3 chart. It's pretty simple.
-</p>
-<p class="body-text">
-  The entropy can be used to quantify the
-  <span class="bold">impurity</span> of a collection of labeled data points: a node
-  containing multiple classes is impure whereas a node including only one class is
-  pure.
-</p>
+<section>
+  <h1 class="body-header">AUC: Area Under the Curve</h1>
+  <p class="body-text">
+    AUC (sometimes written AUROC) is just the area underneath the entire ROC
+    curve. Think integration from calculus. AUC provides us with a nice, single
+    measure of performance for our classifiers, independent of the exact
+    classification threshold chosen. This allows us to compare models to each
+    other without even looking at their ROC curves (though visualizing the
+    performance of your models is never a bad idea!).
 
-<div id="static-chart" />
-<p class="body-text">
-  Above, you can compute the entropy of a collection of labeled data points
-  belonging to two classes, which is typical for
-  <span class="bold">binary classification</span> problems. Click on the
-  <span class="bold">Add</span> and
-  <span class="bold">Remove</span> buttons to modify the composition of the bubble.
-</p>
+    <br /><br />AUC ranges in value from 0 to 1, with higher numbers indicating
+    better performance. A perfect classifier will have an AUC of 1, while a
+    perfectly random classifier an AUC of 0.5. A model that always predicts a
+    negative sample is more likely to have a positive label than a positive
+    sample will have AUC of 0, indicating severe failure on the modeling side.
+    Scores in the range [0.5, 1] imply good performance, while anything under
+    0.5 indicates very poor performance.
+    <br /><br />
+    At 0.73, our model's AUC isn't too shabby:
+  </p>
 
-<div id="error-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg
-    width={width + margin.left + margin.right}
-    height={height + margin.top + margin.bottom}
-  >
-    <!-- x-ticks -->
-    {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="y-axis-line"
-          x1="0"
-          x2="0"
-          y1="0"
-          y2={-height + margin.bottom + margin.top}
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text class="error-axis-text" y="15" text-anchor="end">{tick}</text>
-      </g>
-    {/each}
-    <!-- y-ticks -->
-    {#each [0, 0.2, 0.4, 0.6, 0.8, 1.0] as tick}
-      <g transform={`translate(${margin.left - 5} ${rocScale(tick) + 0})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="y-axis-line"
-          x1="0"
-          x2={width - margin.right - margin.left}
-          y1="0"
-          y2="0"
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text
-          class="error-axis-text"
-          y="0"
-          text-anchor="end"
-          dominant-baseline="middle">{formatter(tick)}</text
+  <div id="auc-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
+    <svg {width} height={height + $margin.top + $margin.bottom}>
+      <!-- x-ticks -->
+      {#each xScale.ticks() as tick}
+        <g
+          transform={`translate(${xScale(tick) + 0} ${
+            height - $margin.bottom
+          })`}
         >
-      </g>
-    {/each}
-    <!-- axis lines -->
-    <!-- x -->
-    <!-- svelte-ignore component-name-lowercase -->
-    <line
-      class="error-axis-line"
-      y1={height - margin.bottom}
-      y2={height - margin.bottom}
-      x1={margin.left}
-      x2={width}
-      stroke="black"
-      stroke-width="2"
-    />
-    <!-- y -->
-    <!-- svelte-ignore component-name-lowercase -->
-    <line
-      class="error-axis-line"
-      y1={margin.top}
-      y2={height - margin.bottom}
-      x1={margin.left}
-      x2={margin.left}
-      stroke="black"
-      stroke-width="2"
-    />
+          <!-- svelte-ignore component-name-lowercase -->
+          <line
+            class="y-axis-line"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2={-height + $margin.bottom + $margin.top}
+            stroke="black"
+            stroke-dasharray="4"
+          />
+          <text class="auc-axis-text" y="15" text-anchor="middle">{tick}</text>
+        </g>
+      {/each}
+      <!-- y-ticks -->
+      {#each [0, 0.2, 0.4, 0.6, 0.8, 1.0] as tick}
+        <g transform={`translate(${$margin.left - 5} ${rocScale(tick) + 0})`}>
+          <!-- svelte-ignore component-name-lowercase -->
+          <line
+            class="y-axis-line"
+            x1="0"
+            x2={width - $margin.right - $margin.left}
+            y1="0"
+            y2="0"
+            stroke="black"
+            stroke-dasharray="4"
+          />
+          <text
+            class="auc-axis-text"
+            y="0"
+            text-anchor="end"
+            dominant-baseline="middle">{formatter(tick)}</text
+          >
+        </g>
+      {/each}
+      <!-- axis lines -->
+      <!-- x -->
+      <!-- svelte-ignore component-name-lowercase -->
+      <line
+        class="error-axis-line"
+        y1={height - $margin.bottom}
+        y2={height - $margin.bottom}
+        x1={$margin.left}
+        x2={width}
+        stroke="black"
+        stroke-width="2"
+      />
+      <!-- y -->
+      <!-- svelte-ignore component-name-lowercase -->
+      <line
+        class="error-axis-line"
+        y1={$margin.top}
+        y2={height - $margin.bottom}
+        x1={$margin.left}
+        x2={$margin.left}
+        stroke="black"
+        stroke-width="2"
+      />
 
-    <!-- our data -->
-    <!-- <path class="outline-line" d={auc(rocData)} /> -->
-    <path class="path-line" d={rocPath(rocData)} stroke="#9e1f63" />
-    <path
-      class="path-area"
-      d={aucPath(rocData)}
-      fill="#7cd1ea"
-      fill-opacity="0.4"
-    />
+      <!-- our data -->
+      <path class="outline-line" d={rocPath(rocData)} />
+      <path class="path-line" d={rocPath(rocData)} stroke="#9e1f63" />
+      <path
+        class="path-area"
+        d={aucPath(rocData)}
+        fill="#7cd1ea"
+        fill-opacity="0.4"
+      />
 
-    <!-- chart labels -->
-    <text
-      id="error-text-accuracy"
-      class="error-text"
-      y={rocScale(0.79)}
-      x={xScale(9.2)}
-      dominant-baseline="middle">Label</text
-    >
+      <!-- chart labels -->
+      <text
+        id="auc-text-accuracy"
+        class="auc-text"
+        y={rocScale(0.79)}
+        x={xScale(9.2)}
+        dominant-baseline="middle">Label</text
+      >
 
-    <!-- axis labels -->
-    <text
-      class="error-axis-label"
-      y={margin.top / 2}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">Area Under The (ROC) Curve</text
-    >
-    <text
-      class="error-axis-label"
-      y={height + margin.bottom}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">False Positive Rate (FPR)</text
-    >
-    <text
-      class="error-axis-label"
-      y={margin.left / 3}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">True Positive Rate (TPR)</text
-    >
+      <!-- axis labels -->
+      <text
+        class="auc-axis-label"
+        y={$margin.top / 2}
+        x={(width + $margin.left) / 2}
+        text-anchor="middle">Area Under The (ROC) Curve</text
+      >
+      <text
+        class="auc-axis-label"
+        y={height + $margin.bottom}
+        x={(width + $margin.left) / 2}
+        text-anchor="middle">False Positive Rate</text
+      >
+      <text
+        class="auc-axis-label"
+        y={15}
+        x={-(height / 2)}
+        text-anchor="middle"
+        transform="rotate(-90)">True Positive Rate</text
+      >
 
-    <!-- x-ticks -->
-    {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
-        <text class="error-axis-text" y="15" text-anchor="end">{tick}</text>
-      </g>
-    {/each}
+      <!--  Our AUC annotation -->
+      <text
+        class="annotation"
+        transform={`translate(${xScale(0.5)},${rocScale(0.55)}) `}
+        text-anchor="middle"
+        fill="#9e1f63"
+        alignment-baseline="middle"
+      >
+        OUR AUC: 0.73
+      </text>
+    </svg>
+  </div>
+  <br /><br />
+  <p class="body-text">
+    It may be surprising given how ad-hoc the metric appears, but AUC has a
+    deeper-than-expected interpretation. Actually, multiple interpretations
+    exist, but we prefer the probabilistic interpretation:
 
-    <!--  Our AUC annotation -->
-    <text
-      class="annotation"
-      transform={`translate(${xScale(0.5)},${rocScale(0.55)}) `}
-      text-anchor="middle"
-      fill="#9e1f63"
-      alignment-baseline="middle"
-    >
-      OUR AUC: 0.73
-    </text>
-  </svg>
-</div>
-<br /><br />
-<p class="body-text">
-  Our model shows something that hangs somewhere between perfect and random.
-  Indeed, this is the kind of result you’d expect to get in the real-world.
-  Obtaining a perfect or exactly random result likely indicates a problem. In
-  the former case, overfitting. In the latter, reassess the appropriateness of
-  the problem. (reword).
-</p>
+    <br /><br />
+    <i
+      >The AUC is the probability that the model will rank a randomly chosen
+      positive example more highly than a randomly chosen negative example.
+    </i>
+    <br /><br />
+    In other words, if you were to randomly select an observation belonging to the
+    positive class and an observation belonging to the negative class, the AUC tells
+    us the probability that the model will assign a higher score to the positive
+    class. This interpretation helps qualify the AUC: A model that always predicts
+    a negative sample is more likely to have a positive label than a positive sample
+    will have AUC of 0. If the predicted probabilities are random, it will be 0.5.
+    Finally if the model always predicts a positive sample is more likely to have
+    a positive label than a negative sample, then it will have an AUC of 1. This
+    strategy also provides a very easy method to estimate the AUC: simply tally up
+    the proportion of correctly ranked positive-negative pairs! And what's even coolor,
+    it has been shown that this method of estimating the AUC is equivalent to a popular
+    nonparametric statistical test: the Wilcoxon-Mann-Whitney test (see Mason and
+    Graham in the resources to learn more).
+  </p>
+</section>
 
 <style>
-  #error-chart {
+  #auc-chart {
     margin: auto;
     max-height: 48vh;
-    width: 40%;
+    width: 50%;
     margin: 1rem auto;
   }
 
@@ -213,7 +220,7 @@
     opacity: 1;
   }
 
-  .error-text {
+  .auc-text {
     text-transform: uppercase;
     font-family: var(--font-heavy);
     stroke-linejoin: round;
@@ -224,7 +231,7 @@
     font-size: 0.9rem;
     letter-spacing: 2px;
   }
-  .error-axis-text {
+  .auc-axis-text {
     font-size: 0.9rem;
   }
 
@@ -232,11 +239,11 @@
     opacity: 0.15;
   }
 
-  #error-text-accuracy {
+  #auc-text-accuracy {
     fill: #c9208a;
   }
 
-  .error-axis-label {
+  .auc-axis-label {
     text-transform: uppercase;
     font-size: 1rem;
   }
@@ -260,18 +267,18 @@
 
   /* ipad */
   @media screen and (max-width: 950px) {
-    #error-chart {
+    #auc-chart {
       max-height: 55vh;
       width: 85%;
       margin: 1rem auto;
     }
-    .error-axis-label {
-      font-size: 0.8rem;
+    .auc-axis-label {
+      font-size: 1rem;
     }
-    .error-axis-text {
-      font-size: 0.8rem;
+    .auc-axis-text {
+      font-size: 1rem;
     }
-    .error-text {
+    .auc-text {
       stroke-width: 3.5px;
       stroke: #f1f3f3;
       font-size: 0.8rem;
@@ -286,19 +293,19 @@
   }
   /* mobile */
   @media screen and (max-width: 750px) {
-    #error-chart {
+    #auc-chart {
       max-height: 55vh;
       width: 95%;
       margin: 1rem auto;
     }
 
-    .error-axis-label {
-      font-size: 0.75rem;
+    .auc-axis-label {
+      font-size: 0.9rem;
     }
-    .error-axis-text {
-      font-size: 0.7rem;
+    .auc-axis-text {
+      font-size: 0.8rem;
     }
-    .error-text {
+    .auc-text {
       stroke-width: 3px;
       stroke: #f1f3f3;
       font-size: 0.7rem;

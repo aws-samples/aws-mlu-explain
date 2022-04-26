@@ -45,16 +45,7 @@
     .stop();
 
   $: {
-    for (
-      let i = 0, n = 400;
-      // The REPL thinks there is an infinite loop with this next line but it's generally a better way to go
-      // n = Math.ceil(
-      //   Math.log(simulation.alphaMin()) /
-      //     Math.log(1 - simulation.alphaDecay())
-      // );
-      i < n;
-      ++i
-    ) {
+    for (let i = 0, n = 400; i < n; ++i) {
       simulation.tick();
     }
   }
@@ -62,7 +53,6 @@
 
 <g class="bee-group">
   {#each simulation.nodes() as node}
-    <!-- <g class="node-g"> -->
     <circle
       class="node"
       outcome={node.yVal}
@@ -73,14 +63,5 @@
       cx={node.x}
       cy={node.y}
     />
-    <!-- <text
-        text-anchor="middle"
-        x={node.x}
-        y={node.y + r / 2}
-        fill={node.outcome === "Positive" ? "white" : "white"}
-      >
-        {node.outcome === "Positive" ? "+" : "-"}
-      </text>
-    </g> -->
   {/each}
 </g>

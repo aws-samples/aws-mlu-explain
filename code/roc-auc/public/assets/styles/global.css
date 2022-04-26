@@ -47,6 +47,11 @@ body {
   background-color: #d4dada;
 }
 
+section {
+  max-width: 1300px;
+  margin: auto;
+}
+
 /* Global Reusable Styles For Convenience */
 .body-text {
   max-width: 45rem;
@@ -116,12 +121,12 @@ a:hover:after {
 /* mobile */
 @media screen and (max-width: 950px) {
   .body-text {
-    max-width: 80%;
+    max-width: 90%;
     font-size: 18px;
   }
 
   .body-header {
-    max-width: 80%;
-    font-size: 30px;
+    max-width: 90%;
+    font-size: 26px;
   }
 }
