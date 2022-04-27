@@ -1,8 +1,10 @@
 <script>
   import { line, curveCatmullRom } from "d3-shape";
-  import { scaleLinear } from "d3-scale";
+  import { scaleBand, scaleLinear } from "d3-scale";
   import { rocData } from "../datasets.js";
   import { format } from "d3-format";
+  import { range } from 'd3-array';
+import { each } from "svelte/internal";
 
   const formatter = format(".1f");
 
@@ -19,30 +21,12 @@
   };
 
   // scales
-  $: xScale = scaleLinear()
-    .domain([0.0, 1.0])
-    .range([margin.left, width - margin.right]);
-  $: rocScale = scaleLinear()
-    .domain([0.0, 1.0])
-    .range([height - margin.bottom, margin.top]);
-
-  // line generator
-  $: rocPath = line()
-    .x((d) => xScale(d.fpr))
-    .y((d) => rocScale(d.tpr));
-  // .curve(curveCatmullRom.alpha(1));
-
-  // line generator
-  $: perfectPath = line()
-    .x((d) => xScale(d.threshold))
-    .y((d) => rocScale(d.ones));
-  // .curve(curveCatmullRom);
-
-  // line generator
-  $: randomPath = line()
-    .x((d) => xScale(d.threshold))
-    .y((d) => rocScale(d.threshold));
-  // .curve(curveCatmullRom);
+  $: waffleXScale = scaleBand()
+    .domain(range(0,11,1))
+    .range([margin.left, width - margin.right])
+  $: waffleYScale = scaleBand()
+    .domain(range(0,11,1))
+    .range([margin.top, height - margin.bottom])
 
   // path for svg arrows
   const arrows = [
@@ -80,161 +64,114 @@
   <svg
     width={width + margin.left + margin.right}
     height={height + margin.top + margin.bottom}
+    overflow="visible"
   >
-    <!-- x-ticks -->
-    {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="axis-line"
-          x1="0"
-          x2="0"
-          y1="0"
-          y2={-height + margin.bottom + margin.top}
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text class="error-axis-text" y="15" text-anchor="end">{tick}</text>
-      </g>
-    {/each}
-    <!-- y-ticks -->
-    {#each [0, 0.2, 0.4, 0.6, 0.8, 1.0] as tick}
-      <g transform={`translate(${margin.left - 5} ${rocScale(tick) + 0})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="axis-line"
-          x1="0"
-          x2={width - margin.right - margin.left}
-          y1="0"
-          y2="0"
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text
-          class="error-axis-text"
-          x="-5"
-          y="0"
-          text-anchor="end"
-          dominant-baseline="middle">{formatter(tick)}</text
-        >
-      </g>
-    {/each}
-
-    <!-- axis lines -->
-    <!-- x -->
-    <!-- svelte-ignore component-name-lowercase -->
-    <line
-      class="error-axis-line"
-      y1={height - margin.bottom}
-      y2={height - margin.bottom}
-      x1={margin.left}
-      x2={width}
-      stroke="black"
-      stroke-width="2"
-    />
-    <!-- y -->
-    <!-- svelte-ignore component-name-lowercase -->
-    <line
-      class="error-axis-line"
-      y1={margin.top}
-      y2={height - margin.bottom}
-      x1={margin.left}
-      x2={margin.left}
-      stroke="black"
-      stroke-width="2"
-    />
-
-    <!-- perfect classifier line & text -->
-    <path class="outline-line" d={perfectPath(rocData)} />
-    <path
-      id="perfect-line"
-      class="path-line"
-      d={perfectPath(rocData)}
-      stroke="#c9208a"
-    />
-    <text
-      class="annotation"
-      transform={`translate(${xScale(0.03)},${rocScale(0.95)})`}
-      text-anchor="start"
-      fill="#c9208a"
-      alignment-baseline="middle"
-    >
-      Perfect Classifier
-    </text>
-
-    <!-- random classifier line & text -->
-    <path class="outline-line" stroke-dasharray="15" d={randomPath(rocData)} />
-    <path
-      id="random-line"
-      class="path-line"
-      d={randomPath(rocData)}
-      stroke="#232F3E"
-      stroke-dasharray="15"
-    />
-    <text dy="5" class="annotation">
-      <textPath
-        href="#random-line"
-        startOffset="50%"
-        text-anchor="middle"
-        fill="#232F3E"
-        dominant-baseline="hanging">Random Classifier</textPath
+    <!-- waffleChart -->
+    <g
+      id={"inital-waffleChart"}
       >
-    </text>
+    {#each range(0,100,1) as cell}
+        <!-- svelte-ignore component-name-lowercase -->
+        <rect
+          class="waffle-cell"
+          id={`waffle-cell-${cell}`}
+          x={waffleXScale(Math.floor(cell / 10))}
+          y={waffleYScale(cell % 10)}
+          height={waffleYScale.bandwidth()}
+          width={waffleXScale.bandwidth()}
+          fill={cell <= 54 ?"darkslateblue"  : cell < 90 ? "hotpink" : "limegreen"}
+          stroke="black"
+          stroke-width=".5"
+        />
+        {/each}
+      </g>
+      <path 
+        id="train-outline"
+        d={
+          `
+          M${waffleXScale(0)} ${waffleYScale(0)}
+          H${waffleXScale(6)}
+          V${waffleYScale(5)}
+          H${waffleXScale(5)}
+          V${waffleYScale(10)}
+          H${waffleXScale(0)}
+          Z`
+        }
+        fill="none"
+        stroke="black"
+        stroke-width="4"
+        stroke-linejoin="round"
+        stroke-linejcap="round"
+        rx="2px"
+      />
+      <path 
+        id="test-outline"
+        d={
+          `
+          M${waffleXScale(6)} ${waffleYScale(0)}
+          H${waffleXScale(9)}
+          V${waffleYScale(10)}
+          H${waffleXScale(5)}
+          V${waffleYScale(5)}
+          H${waffleXScale(6)}
+          Z`
+        }
+        fill="none"
+        stroke="black"
+        stroke-width="4"
+        stroke-linejoin="round"
+        stroke-linejcap="round"
+        rx="2px"
+      />
 
-    <!-- our data line & text -->
-    <path class="outline-line" d={rocPath(rocData)} />
-    <path
-      id="our-line"
-      class="path-line"
-      d={rocPath(rocData)}
-      stroke="#9e1f63"
-    />
+      <path 
+        id="validate-outline"
+        d={
+          `
+          M${waffleXScale(9)} ${waffleYScale(0)}
+          H${waffleXScale(10)}
+          V${waffleYScale(10)}
+          H${waffleXScale(9)}
+          Z`
+        }
+        fill="none"
+        stroke="black"
+        stroke-width="4"
+        stroke-linejoin="round"
+        stroke-linejcap="round"
+        rx="2px"
+      />
+      
+
+    <!-- waffle labels -->
+    <text
+    class="error-axis-label"
+    y={margin.top / 2}
+    x={(width + margin.left) / 2}
+    text-anchor="middle">The Validation Set Approach</text
+  >
     <text
       class="annotation"
-      transform={`translate(${xScale(0.42)},${rocScale(0.78)}) rotate(-18)`}
+      y={height / 2}
+      x={waffleXScale(3)}
       text-anchor="middle"
-      fill="#9e1f63"
-      alignment-baseline="middle"
-    >
-      Our Classifier
-    </text>
-
-    <!-- chart labels -->
-    <text
-      id="error-text-accuracy"
-      class="error-text"
-      y={rocScale(0.79)}
-      x={xScale(9.2)}
-      dominant-baseline="middle">Label</text
-    >
-
-    <!-- axis labels -->
-    <text
-      class="error-axis-label"
-      y={margin.top / 2}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">Comparing ROC Curves</text
-    >
-    <text
-      class="error-axis-label"
-      y={height + margin.bottom}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">False Positive Rate (FPR)</text
-    >
-    <text
-      class="error-axis-label"
-      y={margin.left / 3}
-      x={-(height / 2)}
+      >Train</text>
+      
+      <text
+      class="annotation"
+      y={height / 2}
+      x={waffleXScale(7) + waffleXScale(0)/4}
       text-anchor="middle"
-      transform="rotate(-90)">True Positive Rate (TPR)</text
-    >
+      >Validate</text>
+      
+      <text
+      class="annotation"
+      y={height / 2}
+      x={waffleXScale(10)}
+      dx="-2"
+      text-anchor="end"
+    >Test</text>
 
-    <!-- x-ticks -->
-    {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
-        <text class="error-axis-text" y="15" text-anchor="end">{tick}</text>
-      </g>
-    {/each}
   </svg>
 </div>
 <br /><br />
