@@ -11,7 +11,9 @@
     forceSimulation,
     forceX,
     forceY,
+    forceManyBody,
     forceCollide,
+    forceCenter,
   } from 'd3-force';
 import { range } from 'd3-array';
 import { updateData } from './utils';
@@ -80,13 +82,10 @@ $: simulation = forceSimulation(data)
  
  $: {
    simulation
-  //  .force('center',forceCenter([200, 200]))
-  //  .force('charge', forceManyBody().strength(manyBodyStrength))
    .force('collision', forceCollide().radius((circleRadius) * .95))
    .force('x', forceX().x(d => $xScale(d.fold)).strength(xStrength))
    .force('y', forceY().y(d => $yScale(d.subFold)).strength(yStrength))
    .alpha(.8)
-  //  .restart()
   }
 
 </script>

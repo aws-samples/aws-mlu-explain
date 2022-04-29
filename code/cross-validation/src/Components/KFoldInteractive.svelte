@@ -1,59 +1,33 @@
 <script>
-  import { onMount } from "svelte";
-  import { f1Precision, f1Recall } from "./data-store.js";
-  import katexify from "../katexify";
-  import Heatmap from "./Heatmap.svelte";
-  import Slider from "./Slider.svelte";
-  import { select, selectAll } from "d3-selection";
-  import { format } from "d3-format";
-  import HeatmapLegend from "./HeatmapLegend.svelte";
+  import { scalePoint, scaleOrdinal } from "d3-scale";
+  import { range } from "d3-array";
+  import { LayerCake, Svg } from 'layercake';
+  import ForcePackCircles from "../../scripts/forcePackCircles.svelte";
 
-  const formatter = format(".2f");
 
-  // math equations
-  const f1Eq = `\\begin{aligned}
-    F_1 = \\frac{2\\cdot\\mathrm{Precision}\\cdot\\mathrm{Recall}}{\\mathrm{Precision}+\\mathrm{Recall}} 
-    \\end{aligned}`;
-  const f1Eq2 = `\\begin{aligned}\\frac{\\mathrm{TP}}{\\mathrm{TP} + \\frac{1}{2}(\\mathrm{FP} + \\mathrm{FN})}\\end{aligned}.`;
-  $: f1Score =
-    (2 * parseFloat($f1Precision) * parseFloat($f1Recall)) /
-    (parseFloat($f1Precision) + parseFloat($f1Recall));
-  $: f1EqReactive = `\\begin{aligned}    
-    F_1 = \\frac{(2 \\cdot ${formatter($f1Precision)} \\cdot ${formatter(
-    $f1Recall
-  )})}{${formatter($f1Precision)} + ${formatter($f1Recall)} }
-    = ${formatter(f1Score)}
-    \\end{aligned}`;
+  // these don't matter, but make the stretching less obvious at load
+  let height = 500;
+  let width = 500;
+  // responsive margins
+  const mobile = window.innerWidth <= 700;
+  const margin = {
+    top: mobile ? 40 : 50,
+    bottom: mobile ? 10 : 25,
+    left: mobile ? 0 : 80,
+    right: mobile ? 0 : 10,
+  };
 
-  onMount(() => {
-    // default .5 .5 rect to be highlighted
-    selectAll("rect.f1-rect")
-      .filter(function (d) {
-        return select(this).attr("precision") == 0.5;
-      })
-      .filter(function (d) {
-        return select(this).attr("recall") == 0.5;
-      })
-      .attr("stroke", "black")
-      .attr("stroke-width", 3)
-      .raise();
-  });
+  const xKey = 'fold'
+  const yKey = 'subFold'
+  const zKey = 'category'
 
-  $: {
-    // reset strokes first
-    selectAll("rect.f1-rect").attr("stroke", "none");
-    // highlight rect corresponding to current f1 score
-    selectAll("rect.f1-rect")
-      .filter(function (d) {
-        return select(this).attr("precision") == $f1Precision;
-      })
-      .filter(function (d) {
-        return select(this).attr("recall") == $f1Recall;
-      })
-      .attr("stroke", "black")
-      .attr("stroke-width", 4)
-      .raise();
-  }
+  let foldsCount = 2;
+  let datasetSize = 100;
+  let manyBodyStrength = -1;
+  let xStrength = .5;
+  let yStrength = .1;
+  let interactive = true;
+
 </script>
 
 <h1 class="body-header">Try For Yourself</h1>
@@ -65,16 +39,53 @@
   results in a new data split alongside a newly trained model.
 </p>
 
-<div id="heatmap-container">
-  <div id="f1-container">
-    <Heatmap />
-    <HeatmapLegend />
-  </div>
-  <div id="f1-equations">
-    {@html katexify(f1EqReactive, true)}
-    <Slider label="Precision" value={f1Precision} />
-    <Slider label="Recall" value={f1Recall} />
-  </div>
+<div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
+  <div>
+    <input 
+      type="range"
+      min="2"
+      max="10"
+      step="1"
+      id="foldsCountSelector" 
+      bind:value={foldsCount}
+    />
+    <p 
+    x={"20"}
+    y={"0"}
+    class="error-axis-label"> 
+    {foldsCount} folds
+  </p>
+</div>
+  <div id="chart-container" bind:offsetWidth={width} bind:offsetHeight={height}>
+
+    <LayerCake
+      x={xKey}
+      y={yKey}
+      z={zKey}
+      xScale={scalePoint()}
+      xDomain={range(0,foldsCount+2,1)}
+      xRange={[0,width - margin.right]}
+      yScale={scalePoint()}
+      yDomain={range(0,foldsCount+2,1)}
+      yRange={[height - margin.bottom, margin.top]}
+      zScale={scaleOrdinal()}
+      zDomain={['test','train','validate']}
+      zRange={['limegreen','darkslateblue','hotpink']}
+    >
+    <Svg>
+      <ForcePackCircles
+      {manyBodyStrength}
+      {xStrength}
+      {yStrength}
+      bind:foldsCount={foldsCount}
+      {datasetSize}
+      {interactive}
+      nodeStroke="#000"
+      />
+    </Svg>
+  </LayerCake>
+</div>
+
 </div>
 <br />
 <br />
@@ -87,70 +98,47 @@
 </p>
 
 <style>
-  #heatmap-container {
-    display: grid;
-    grid-template-columns: 75% 20%;
-    grid-template-rows: 100%;
-    column-gap: 1rem;
-    align-items: center;
-    height: 65vh;
-    width: 70%;
-    margin: 1.5rem auto;
-    margin-top: 1rem;
-  }
-  #f1-container {
-    display: grid;
-    grid-template-columns: 80% 10%;
-    grid-template-rows: 100%;
-    column-gap: 0rem;
+  #cv-chart {
     margin: auto;
-    align-items: center;
-    height: 60vh;
-    width: 100%;
-    margin: 1.5rem auto;
-    margin-top: 1rem;
+    max-height: 48vh;
+    width: 40%;
+    margin: 1rem auto;
   }
 
-  #f1-equations {
-    display: flex;
-    flex-direction: column;
+  #chart-container {
     margin: auto;
-    align-items: center;
-    vertical-align: middle;
-    height: 60%;
+    min-height: 48vh;
     width: 100%;
-    text-align: center;
-    justify-content: center;
+    margin: 1rem auto;
   }
 
-  /* mobile */
+
+  /* ipad */
   @media screen and (max-width: 950px) {
-    #heatmap-container {
-      width: 100%;
-      height: 95vh;
-      display: grid;
-      grid-template-columns: 100%;
-      grid-template-rows: 68% 32%;
-      row-gap: 1.5rem;
-      margin: auto;
-      align-items: center;
-      margin: auto;
-      margin-top: 1rem;
+    #cv-chart {
+      max-height: 55vh;
+      width: 85%;
+      margin: 1rem auto;
     }
-    #f1-equations {
-      display: grid;
-      grid-template-columns: 100%;
-      grid-template-rows: 30% 23% 23%;
-      column-gap: 0.2rem;
-      align-items: center;
-      height: 100%;
-      width: 70%;
-      margin: 2rem auto;
-      text-align: center;
+    #chart-container {
+    margin: auto;
+    min-height: 48vh;
+    width: 100%;
+    margin: 1rem auto;
+  }
+  }
+  /* mobile */
+  @media screen and (max-width: 750px) {
+    #cv-chart {
+      max-height: 55vh;
+      width: 95%;
+      margin: 1rem auto;
     }
-
-    #f1-equations {
-      font-size: 0.95rem;
-    }
+    #chart-container {
+    margin: auto;
+    min-height: 48vh;
+    width: 100%;
+    margin: 1rem auto;
+  }
   }
 </style>

@@ -1,7 +1,7 @@
 <script>
-  import { scaleLinear, scalePoint, scaleOrdinal } from "d3-scale";
+  import { scalePoint, scaleOrdinal } from "d3-scale";
   import { range } from "d3-array";
-  import { LayerCake, Svg, Html } from 'layercake';
+  import { LayerCake, Svg } from 'layercake';
   import ForcePackCircles from "../../scripts/forcePackCircles.svelte";
 
   // these don't matter, but make the stretching less obvious at load
@@ -21,23 +21,11 @@
   const zKey = 'category'
 
   let foldsCount = 5
-  let manyBodyStrength = 2;
-  let xStrength = 0.2
-  let yStrength = 0.2
-
-  // $: data = range(0,(foldsCount*100),1).map((f)=>{
-  //   const fold = Math.floor(f/100) + 1
-  //   const subFold = (f % (foldsCount)) + 1
-  //   const category = () => {
-  //     if (fold === subFold) { return "validate" } else {return 'train'}
-  //   }
-  //     return {
-  //       category:category(),
-  //       fold,
-  //       subFold
-  //   }
-  // })
-
+  let radius = 10
+  let datasetSize = 100
+  let manyBodyStrength = .1;
+  let xStrength = .5
+  let yStrength = .1
 
 </script>
 <h1 class="body-header">K-Folds Cross-Validation</h1>
@@ -58,23 +46,8 @@
 
 <br />
 
-<div id="error-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <div>
-    <input 
-      type="range"
-      min="2"
-      max="10"
-      step="1"
-      id="foldsCountSelector" 
-      bind:value={foldsCount}
-    />
-    <p 
-    x={"20"}
-    y={"0"}
-    class="error-axis-label"> 
-    {foldsCount} folds
-  </p>
-</div>
+<div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
+
   <div id="chart-container" bind:offsetWidth={width} bind:offsetHeight={height}>
 
     <LayerCake
@@ -82,10 +55,10 @@
       y={yKey}
       z={zKey}
       xScale={scalePoint()}
-      xDomain={range(1,foldsCount+1,1)}
-      xRange={[margin.left, width - margin.right]}
+      xDomain={range(0,foldsCount+2,1)}
+      xRange={[0, width - margin.right]}
       yScale={scalePoint()}
-      yDomain={range(0,foldsCount+1,1)}
+      yDomain={range(0,foldsCount+2,1)}
       yRange={[height - margin.bottom, margin.top]}
       zScale={scaleOrdinal()}
       zDomain={['test','train','validate']}
@@ -96,7 +69,9 @@
       {manyBodyStrength}
       {xStrength}
       {yStrength}
-      bind:foldsCount={foldsCount}
+      {datasetSize}
+      {foldsCount}
+      {radius}
       nodeStroke="#000"
       />
     </Svg>
@@ -119,7 +94,7 @@
 </p>
 
 <style>
-  #error-chart {
+  #cv-chart {
     margin: auto;
     max-height: 48vh;
     width: 40%;
@@ -132,33 +107,32 @@
     margin: 1rem auto;
   }
 
-  .error-axis-label {
-    text-transform: uppercase;
-    font-size: 1rem;
-  }
-
-
   /* ipad */
   @media screen and (max-width: 950px) {
-    #error-chart {
+    #cv-chart {
       max-height: 55vh;
       width: 85%;
       margin: 1rem auto;
     }
-    .error-axis-label {
-      font-size: 0.8rem;
-    }
+    #chart-container {
+    margin: auto;
+    min-height: 48vh;
+    width: 100%;
+    margin: 1rem auto;
+  }
   }
   /* mobile */
   @media screen and (max-width: 750px) {
-    #error-chart {
+    #cv-chart {
       max-height: 55vh;
       width: 95%;
       margin: 1rem auto;
     }
-
-    .error-axis-label {
-      font-size: 0.75rem;
-    }
+    #chart-container {
+    margin: auto;
+    min-height: 48vh;
+    width: 100%;
+    margin: 1rem auto;
+  }
   }
 </style>

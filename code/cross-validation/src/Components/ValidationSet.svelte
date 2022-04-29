@@ -1,12 +1,16 @@
 <script>
-  import { line, curveCatmullRom } from "d3-shape";
-  import { scaleBand, scaleLinear } from "d3-scale";
-  import { rocData } from "../datasets.js";
-  import { format } from "d3-format";
+  import { scaleBand, scaleOrdinal } from "d3-scale";
   import { range } from 'd3-array';
-import { each } from "svelte/internal";
+  import {scale, draw} from 'svelte/transition'
+	import { quintIn, quintOut } from 'svelte/easing';
+  import {
+    forceSimulation,
+    forceX,
+    forceY,
+    forceCollide,
+  } from 'd3-force';
+  import { each } from "svelte/internal";
 
-  const formatter = format(".1f");
 
   // these don't matter, but make the stretching less obvious at load
   let height = 500;
@@ -21,19 +25,38 @@ import { each } from "svelte/internal";
   };
 
   // scales
-  $: waffleXScale = scaleBand()
-    .domain(range(0,11,1))
-    .range([margin.left, width - margin.right])
-  $: waffleYScale = scaleBand()
-    .domain(range(0,11,1))
-    .range([margin.top, height - margin.bottom])
+  let dotXScale = scaleBand()
+  .domain(['','train','validate','test',''])
+  .range([0, width - margin.right])
 
-  // path for svg arrows
-  const arrows = [
-    "M0.200275 13.2782C0.200275 12.4153 0.89983 11.7157 1.76278 11.7157H23.6378C24.5007 11.7157 25.2003 12.4153 25.2003 13.2782C25.2003 14.1411 24.5007 14.8407 23.6378 14.8407H1.76278C0.89983 14.8407 0.200275 14.1411 0.200275 13.2782Z",
-    "M11.5954 1.23584C12.2056 0.62565 13.1949 0.62565 13.8051 1.23584L24.7426 12.1733C25.3528 12.7835 25.3528 13.7729 24.7426 14.3831L13.8051 25.3206C13.1949 25.9307 12.2056 25.9307 11.5954 25.3206C10.9852 24.7104 10.9852 23.721 11.5954 23.1108L21.4281 13.2782L11.5954 3.44555C10.9852 2.83536 10.9852 1.84604 11.5954 1.23584Z",
-    "M 11.5954 1.23584 C 12.2056 0.62565 13.1949 0.62565 13.8051 1.23584 L 24.7426 12.1733 C 25.3528 12.7835 25.3528 13.7729 24.7426 14.3831 L 13.8051 25.3206 C 13.1949 25.9307 12.2056 25.9307 11.5954 25.3206 C 10.9852 24.7104 10.9852 23.721 11.5954 23.1108 L 21.4281 13.2782 L 11.5954 3.44555 C 10.9852 2.83536 10.9852 1.84604 11.5954 1.23584 Z",
-  ];
+  let colorScale = scaleOrdinal()
+  .domain(['train','validate','test'])
+  .range(['darkslateblue','hotpink','limegreen'])
+  
+  // simulation data
+  let xStrength = 1
+  let yStrength = 1
+  let nodes = [];
+  let data = range(1,100,1).map((d, dNdx)=>({
+    value:d,
+    category:(dNdx <= 70 ? 'train' : dNdx <= 90 ? 'validate' : 'test')
+  }))
+  let simulation = forceSimulation(data)
+
+
+  $: {
+    simulation.on("tick", () => {
+      nodes = simulation.nodes()  
+    })
+  }
+  $: {
+    simulation
+    .force('collision', forceCollide().radius(9.5))
+    .force('x', forceX().x((d) => dotXScale(d.category)).strength(xStrength))
+    .force('y', forceY().y(height/2).strength(yStrength))
+    .alpha(.8)
+    }
+
 </script>
 
 <h1 class="body-header">Our Previous Approach</h1>
@@ -60,88 +83,27 @@ import { each } from "svelte/internal";
 </ul>
 <br />
 
-<div id="error-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
+<div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
   <svg
     width={width + margin.left + margin.right}
     height={height + margin.top + margin.bottom}
     overflow="visible"
   >
     <!-- waffleChart -->
-    <g
-      id={"inital-waffleChart"}
-      >
-    {#each range(0,100,1) as cell}
+    <g>
+    {#each nodes as cell, ndx}
         <!-- svelte-ignore component-name-lowercase -->
-        <rect
-          class="waffle-cell"
-          id={`waffle-cell-${cell}`}
-          x={waffleXScale(Math.floor(cell / 10))}
-          y={waffleYScale(cell % 10)}
-          height={waffleYScale.bandwidth()}
-          width={waffleXScale.bandwidth()}
-          fill={cell <= 54 ?"darkslateblue"  : cell < 90 ? "hotpink" : "limegreen"}
+        <circle
+          cx={cell.x}
+          cy={cell.y}
+          r={10}
+          fill={colorScale(cell.category)}
+          fill-opacity=".8"
           stroke="black"
-          stroke-width=".5"
+          stroke-width="1"
         />
         {/each}
-      </g>
-      <path 
-        id="train-outline"
-        d={
-          `
-          M${waffleXScale(0)} ${waffleYScale(0)}
-          H${waffleXScale(6)}
-          V${waffleYScale(5)}
-          H${waffleXScale(5)}
-          V${waffleYScale(10)}
-          H${waffleXScale(0)}
-          Z`
-        }
-        fill="none"
-        stroke="black"
-        stroke-width="4"
-        stroke-linejoin="round"
-        stroke-linejcap="round"
-        rx="2px"
-      />
-      <path 
-        id="test-outline"
-        d={
-          `
-          M${waffleXScale(6)} ${waffleYScale(0)}
-          H${waffleXScale(9)}
-          V${waffleYScale(10)}
-          H${waffleXScale(5)}
-          V${waffleYScale(5)}
-          H${waffleXScale(6)}
-          Z`
-        }
-        fill="none"
-        stroke="black"
-        stroke-width="4"
-        stroke-linejoin="round"
-        stroke-linejcap="round"
-        rx="2px"
-      />
-
-      <path 
-        id="validate-outline"
-        d={
-          `
-          M${waffleXScale(9)} ${waffleYScale(0)}
-          H${waffleXScale(10)}
-          V${waffleYScale(10)}
-          H${waffleXScale(9)}
-          Z`
-        }
-        fill="none"
-        stroke="black"
-        stroke-width="4"
-        stroke-linejoin="round"
-        stroke-linejcap="round"
-        rx="2px"
-      />
-      
+    </g>  
 
     <!-- waffle labels -->
     <text
@@ -153,23 +115,23 @@ import { each } from "svelte/internal";
     <text
       class="annotation"
       y={height / 2}
-      x={waffleXScale(3)}
+      x={dotXScale('train')}
       text-anchor="middle"
       >Train</text>
       
       <text
       class="annotation"
       y={height / 2}
-      x={waffleXScale(7) + waffleXScale(0)/4}
+      x={dotXScale('validate')}
       text-anchor="middle"
       >Validate</text>
       
       <text
       class="annotation"
       y={height / 2}
-      x={waffleXScale(10)}
+      x={dotXScale('test')}
       dx="-2"
-      text-anchor="end"
+      text-anchor="middle"
     >Test</text>
 
   </svg>
@@ -192,7 +154,7 @@ import { each } from "svelte/internal";
 </p>
 
 <style>
-  #error-chart {
+  #cv-chart {
     margin: auto;
     max-height: 48vh;
     width: 40%;
@@ -265,7 +227,7 @@ import { each } from "svelte/internal";
 
   /* ipad */
   @media screen and (max-width: 950px) {
-    #error-chart {
+    #cv-chart {
       max-height: 55vh;
       width: 85%;
       margin: 1rem auto;
@@ -295,7 +257,7 @@ import { each } from "svelte/internal";
       font-size: 18px;
       max-width: 80%;
     }
-    #error-chart {
+    #cv-chart {
       max-height: 55vh;
       width: 95%;
       margin: 1rem auto;
