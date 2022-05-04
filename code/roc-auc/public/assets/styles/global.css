@@ -1,0 +1,132 @@
+:root {
+  --sans: "Amazon Ember", Helvetica, Arial, sans-serif;
+  --serif: "Amazon Ember Mono", Georgia, Times, serif;
+  --mono: Menlo, Consolas, Monaco, "Courier New", monospace;
+
+  --z-bottom: -100;
+  --z-middle: 0;
+  --z-top: 100;
+  --z-overlay: 1000;
+
+  --bg: var(--white);
+  --fg: var(--off-black);
+  --default: var(--gray-light);
+  --primary: var(--red);
+  --secondary: var(--green);
+}
+
+.skip-to-main {
+  border: none;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+}
+
+.skip-to-main:focus {
+  width: auto;
+  height: auto;
+  padding: 0.5em;
+  z-index: 1000;
+}
+
+/* pudding */
+.wordmark svg path {
+  fill: currentColor;
+}
+
+/* demo */
+#demo svg {
+  width: 1em;
+  vertical-align: middle;
+}
+
+body {
+  font-family: "Amazon Ember Display Heavy";
+  background-color: #f1f3f3;
+  background-color: #d4dada;
+}
+
+section {
+  max-width: 1300px;
+  margin: auto;
+}
+
+/* Global Reusable Styles For Convenience */
+.body-text {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.5em;
+  font-family: "Amazon Ember";
+  max-width: 600px;
+}
+
+.body-header {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 30px;
+  line-height: 1.5em;
+  font-family: "Amazon Ember Display Heavy";
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  max-width: 600px;
+}
+
+.centered {
+  margin: auto;
+  max-width: 45rem;
+  max-width: 600px;
+}
+
+.bold {
+  font-family: "Amazon Ember Display Heavy";
+}
+
+a {
+  color: var(--squid-ink);
+  text-decoration: underline;
+  font-family: "Amazon Ember Display Heavy";
+}
+
+a:hover {
+  /* text-decoration: underline; */
+}
+/* 
+a {
+  display: inline-block;
+  position: relative;
+}
+
+a:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #ff9900;
+  transform-origin: bottom right;
+  transition: transform 0.2s ease-out;
+}
+
+a:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+} */
+
+/* mobile */
+@media screen and (max-width: 950px) {
+  .body-text {
+    max-width: 90%;
+    font-size: 18px;
+  }
+
+  .body-header {
+    max-width: 90%;
+    font-size: 26px;
+  }
+}
