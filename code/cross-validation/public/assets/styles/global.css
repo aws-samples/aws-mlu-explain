@@ -1,0 +1,125 @@
+:root {
+  --sans: "Amazon Ember", Helvetica, Arial, sans-serif;
+  --serif: "Amazon Ember Mono", Georgia, Times, serif;
+  --mono: Menlo, Consolas, Monaco, "Courier New", monospace;
+
+  --z-bottom: -100;
+  --z-middle: 0;
+  --z-top: 100;
+  --z-overlay: 1000;
+
+  --black: #000;
+  --off-black: #282828;
+  --gray-dark: #5b5b5b;
+  --gray: #949494;
+  --gray-light: #c9c9c9;
+  --off-white: #f0f0f0;
+  --white: #fff;
+  --purple: #a239ca;
+  --blue: #4717f6;
+  --green: #34a29e;
+  --red: #ff533d;
+  --yellow: #e5e338;
+
+  --bg: var(--white);
+  --fg: var(--off-black);
+  --default: var(--gray-light);
+  --primary: var(--red);
+  --secondary: var(--green);
+
+  /* water.css */
+
+  --body-font: var(--sans);
+  --background-body: var(--white);
+  --background-ui: var(--off-white);
+  --background-alt: var(--off-white);
+  --selection: var(--gray);
+  --text-main: var(--off-black);
+  --links: var(--purple);
+  --focus: var(--green);
+  --border: var(--gray-light);
+  --animation-duration: 0.1s;
+  --button-hover: var(--gray-light);
+  --scrollbar-thumb: var(--gray-light);
+  --scrollbar-thumb-hover: var(--gray-dark);
+  --form-placeholder: var(--gray-dark);
+  --form-font: var(--sans);
+  --form-text: var(--gray-dark);
+  --input-thumb: var(--gray-dark);
+  --highlight: var(--yellow);
+}
+
+.skip-to-main {
+  border: none;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+}
+
+.skip-to-main:focus {
+  width: auto;
+  height: auto;
+  padding: 0.5em;
+  z-index: 1000;
+}
+
+/* pudding */
+.wordmark svg path {
+  fill: currentColor;
+}
+
+/* demo */
+#demo svg {
+  width: 1em;
+  vertical-align: middle;
+}
+
+body {
+  font-family: "Amazon Ember Display Heavy";
+  overflow-x: hidden;
+}
+
+/* Global Reusable Styles For Convenience */
+.body-text {
+  margin: 0 auto;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.5em;
+  font-family: "Amazon Ember";
+  max-width: 600px;
+}
+
+.body-header {
+  margin: 0 auto;
+  text-align: left;
+  font-size: 30px;
+  line-height: 1.5em;
+  font-family: "Amazon Ember Display Heavy";
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  max-width: 600px;
+}
+
+.centered {
+  margin: auto;
+
+  max-width: 600px;
+}
+
+.bold {
+  font-family: "Amazon Ember Display Heavy";
+}
+
+/* mobile */
+@media screen and (max-width: 950px) {
+  .body-text {
+    max-width: 80%;
+    font-size: 18px;
+  }
+
+  .body-header {
+    max-width: 80%;
+    font-size: 30px;
+  }
+}

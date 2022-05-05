@@ -1,0 +1,93 @@
+<template id="slot-test">
+  <style>
+
+  </style>
+  <div>
+    <h3>Title</h3>
+    <aside>
+      <slot name="contents"></slot>
+    </aside>
+  </div>
+</template>
+
+
+<my-el>
+  <ul slot="contents">
+    <li>one</li>
+    <li>two</li>
+    <li>three</li>
+  </ul>
+  <ul slot="contents">
+    <li>four</li>
+    <li>five</li>
+    <li>six</li>
+  </ul>
+</my-el>
+
+
+<script>
+class MyEl extends HTMLElement {
+  constructor() {
+    super();
+
+    const shadowRoot = this.attachShadow({mode: 'open'});
+    shadowRoot.innerHTML = `
+      <style>
+
+      </style>
+      <div>
+        <h3>Title</h3>
+        <aside>
+          <slot name="contents"></slot>
+        </aside>
+      </div>
+    `;
+  }
+}
+
+self.customElements.define('my-el', MyEl);
+
+
+/**
+ * Checks to see if a parent element contains a child elemnt (including inside
+ * shadow DOM).
+ * @param {Node} parent The parent element.
+ * @param {Node} child The child element.
+ * @return {boolean} True if the parent node contains the child node.
+ */
+function containsDeep(parent, child) {
+  var node = child;
+  while (node) {
+    if (node == parent) return true;
+
+    node = getParentNode(node);
+  }
+  return false;
+}
+
+
+/**
+ * Gets the parent node of an element or its host element if the parent node
+ * is a shadow root.
+ * @param {Node} node The node whose parent to get.
+ * @return {Node|null} The parent node or null if no parent exists.
+ */
+function getParentNode(node) {
+  var parent = node.parentNode;
+
+  if (parent) {
+    if (parent.nodeType == 11 && parent.host) {
+      // If the parent is a shadow root, return the host element.
+      return parent.host;
+    }
+
+    if (parent.assignedSlot) {
+      // If the parent is assigned a slot, return the slot's parent.
+      return parent.assignedSlot.parentNode;
+    }
+  }
+  return parent;
+}
+
+
+</script>
