@@ -1,9 +1,8 @@
 <script>
   import { scalePoint, scaleOrdinal } from "d3-scale";
   import { range } from "d3-array";
-  import { LayerCake, Svg } from 'layercake';
+  import { LayerCake, Svg } from "layercake";
   import ForcePackCircles from "../../scripts/forcePackCircles.svelte";
-
 
   // these don't matter, but make the stretching less obvious at load
   let height = 500;
@@ -17,17 +16,16 @@
     right: mobile ? 0 : 10,
   };
 
-  const xKey = 'fold'
-  const yKey = 'subFold'
-  const zKey = 'category'
+  const xKey = "fold";
+  const yKey = "subFold";
+  const zKey = "category";
 
   let foldsCount = 2;
   let datasetSize = 100;
   let manyBodyStrength = -1;
-  let xStrength = .5;
-  let yStrength = .1;
+  let xStrength = 0.5;
+  let yStrength = 0.1;
   let interactive = true;
-
 </script>
 
 <h1 class="body-header">Try For Yourself</h1>
@@ -41,51 +39,46 @@
 
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
   <div>
-    <input 
+    <input
       type="range"
       min="2"
       max="10"
       step="1"
-      id="foldsCountSelector" 
+      id="foldsCountSelector"
       bind:value={foldsCount}
     />
-    <p 
-    x={"20"}
-    y={"0"}
-    class="error-axis-label"> 
-    {foldsCount} folds
-  </p>
-</div>
+    <p x={"20"} y={"0"} class="error-axis-label">
+      {foldsCount} folds
+    </p>
+  </div>
   <div id="chart-container" bind:offsetWidth={width} bind:offsetHeight={height}>
-
     <LayerCake
       x={xKey}
       y={yKey}
       z={zKey}
       xScale={scalePoint()}
-      xDomain={range(0,foldsCount+2,1)}
-      xRange={[0,width - margin.right]}
+      xDomain={range(0, foldsCount + 2, 1)}
+      xRange={[0, width - margin.right]}
       yScale={scalePoint()}
-      yDomain={range(0,foldsCount+2,1)}
+      yDomain={range(0, foldsCount + 2, 1)}
       yRange={[height - margin.bottom, margin.top]}
       zScale={scaleOrdinal()}
-      zDomain={['test','train','validate']}
-      zRange={['limegreen','darkslateblue','hotpink']}
+      zDomain={["test", "train", "validate"]}
+      zRange={["limegreen", "darkslateblue", "hotpink"]}
     >
-    <Svg>
-      <ForcePackCircles
-      {manyBodyStrength}
-      {xStrength}
-      {yStrength}
-      bind:foldsCount={foldsCount}
-      {datasetSize}
-      {interactive}
-      nodeStroke="#000"
-      />
-    </Svg>
-  </LayerCake>
-</div>
-
+      <Svg>
+        <ForcePackCircles
+          {manyBodyStrength}
+          {xStrength}
+          {yStrength}
+          bind:foldsCount
+          {datasetSize}
+          {interactive}
+          nodeStroke="#000"
+        />
+      </Svg>
+    </LayerCake>
+  </div>
 </div>
 <br />
 <br />
@@ -100,45 +93,44 @@
 <style>
   #cv-chart {
     margin: auto;
-    max-height: 48vh;
+    height: 48vh;
     width: 40%;
     margin: 1rem auto;
   }
 
   #chart-container {
     margin: auto;
-    min-height: 48vh;
+    height: 48vh;
     width: 100%;
     margin: 1rem auto;
   }
-
 
   /* ipad */
   @media screen and (max-width: 950px) {
     #cv-chart {
-      max-height: 55vh;
+      height: 55vh;
       width: 85%;
       margin: 1rem auto;
     }
     #chart-container {
-    margin: auto;
-    min-height: 48vh;
-    width: 100%;
-    margin: 1rem auto;
-  }
+      margin: auto;
+      height: 48vh;
+      width: 100%;
+      margin: 1rem auto;
+    }
   }
   /* mobile */
   @media screen and (max-width: 750px) {
     #cv-chart {
-      max-height: 55vh;
+      height: 55vh;
       width: 95%;
       margin: 1rem auto;
     }
     #chart-container {
-    margin: auto;
-    min-height: 48vh;
-    width: 100%;
-    margin: 1rem auto;
-  }
+      margin: auto;
+      height: 48vh;
+      width: 100%;
+      margin: 1rem auto;
+    }
   }
 </style>
