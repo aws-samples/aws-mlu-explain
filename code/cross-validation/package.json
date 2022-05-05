@@ -10,7 +10,6 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
-    "layercake": "^6.0.2",
     "rollup": "^2.41.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
@@ -29,6 +28,7 @@
     "d3-interpolate": "^3.0.1",
     "d3-random": "^2.2.2",
     "d3-scale": "^3.3.0",
+    "layercake": "^6.0.2",
     "d3-selection": "^2.0.0",
     "d3-shape": "^2.1.0",
     "d3-svg-annotation": "^2.5.1",
