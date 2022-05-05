@@ -93,14 +93,14 @@
 <style>
   #cv-chart {
     margin: auto;
-    height: 48vh;
+    height: 58vh;
     width: 40%;
     margin: 1rem auto;
   }
 
   #chart-container {
     margin: auto;
-    height: 48vh;
+    height: 58vh;
     width: 100%;
     margin: 1rem auto;
   }
