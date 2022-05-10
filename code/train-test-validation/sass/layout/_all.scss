@@ -206,6 +206,10 @@ article p {
   color: $squid-ink;
 }
 
+#homepage-link {
+  text-decoration: none;
+}
+
 // Mobile
 @media (max-width: 1200px) {
   .text h2 {
