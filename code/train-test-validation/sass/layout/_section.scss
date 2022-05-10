@@ -1,0 +1,79 @@
+@import "../utilities/variables";
+
+section {
+  min-height: 100vh;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  min-height: 115vh;
+}
+
+section {
+  margin-bottom: 24vh;
+  h2 {
+    padding-top: 20vh;
+    font-size: 2.5rem;
+    color: $font-color;
+    font-family: $font-heavy;
+    padding-left: 5rem;
+    text-align: left;
+  }
+  h3 {
+    font-size: 1.5rem;
+    padding-top: 1rem;
+    font-family: AmazonEmberDisplayHeavy;
+    color: $font-color;
+    opacity: 0.9;
+  }
+}
+
+section p {
+  align-items: middle;
+  vertical-align: middle;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  section {
+    margin-bottom: 35vh;
+    height: 100%;
+
+    p {
+      font-size: 1rem;
+      background-color: rgba(252, 244, 232, 0.9);
+    }
+
+    h2 {
+      padding-top: 0vh;
+    }
+  }
+
+  #intro-mobile {
+    margin-bottom: 0vh;
+    height: none;
+  }
+
+  section#empty {
+    margin-bottom: 5vh;
+  }
+
+  section#summary {
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+
+  section#summary-mobile {
+    margin-top: 0px;
+    padding-top: 0px;
+    margin-bottom: 5vh;
+  }
+
+  .h2-intro {
+    text-align: center;
+  }
+}

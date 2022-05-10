@@ -1,0 +1,31 @@
+@import "../utilities/variables";
+
+.animal-eye1 {
+  animation: eye 2s linear infinite 0s;
+}
+.animal-eye2 {
+  animation: eye 2.5s linear infinite 0s;
+}
+.animal-eye3 {
+  animation: eye 1.5s linear infinite 0s;
+}
+.animal-eye4 {
+  animation: eye 3s linear infinite 0s;
+}
+
+@keyframes eye {
+  20% {
+    fill: $squid-ink;
+  }
+  35% {
+    fill: $bg-color;
+  }
+  40% {
+    fill: $squid-ink;
+  }
+}
+
+// animal svg
+.animal-head {
+  fill: $bg-color2;
+}

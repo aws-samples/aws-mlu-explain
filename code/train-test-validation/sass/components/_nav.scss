@@ -1,0 +1,27 @@
+nav {
+  min-height: 10vh;
+  margin: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+nav h1,
+nav ul {
+  font-size: 1.5rem;
+  flex: 1;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav a {
+  color: black;
+  text-decoration: none;
+}

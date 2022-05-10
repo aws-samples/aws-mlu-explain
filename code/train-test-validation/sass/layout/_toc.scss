@@ -1,0 +1,39 @@
+@import "../utilities/variables";
+
+#toc {
+  padding-left: 4rem;
+}
+
+#toc li {
+  font-family: $font-heavy;
+  font-size: 1.1rem;
+  color: black;
+}
+
+#toc li .selected {
+  font-family: $font-heavy;
+  color: $squid-ink;
+  border-bottom: 2.5px solid $color;
+}
+
+@media (max-width: 1200px) {
+  nav,
+  #toc {
+    padding-left: 2%;
+  }
+  #toc li {
+    font-size: 0.9rem;
+    padding-left: 5px;
+  }
+}
+
+@media (max-width: 750px) {
+  nav,
+  #toc {
+    padding-left: 1%;
+  }
+  #toc li {
+    font-size: 0.8rem;
+    padding-left: 5px;
+  }
+}

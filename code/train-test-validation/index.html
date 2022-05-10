@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Double Descent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="./assets/mlu_robot.png" />
+    <link rel="stylesheet" href="sass/main.scss" />
+    <!-- meta tags -->
+    <title>Train,Test, and Validation Sets</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="description"
+      content="A visual introduction to Train, Test, and Validation sets in machine learning."
+    />
+    <meta name="author" content="Jared Wilber" />
+    <meta
+      name="news_keywords"
+      content="train test validation sets split data machine learning logistic regression cats dogs amazon mlu university classification"
+    />
+    <meta property="og:title" content="Train, Test, and Validation Sets" />
+    <meta property="og:site_name" content="MLU-Explain" />
+    <meta
+      property="og:url"
+      content="https://mlu-explain.github.io/train-test-validation/"
+    />
+    <meta
+      property="og:description"
+      content="A visual, interactive introduction to Train, Test, and Validation sets in machine learning."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:image"
+      content="https://mlu-explain.github.io/assets/ogimages/ogimage-train-test-validation.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="600" />
+
+    <!-- js -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-1FYW57GW3G"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-1FYW57GW3G");
+    </script>
+  </head>
+
+  <body>
+    <main></main>
+    <!-- nav -->
+    <header>
+      <nav>
+        <span
+          class="cardSpan"
+          onclick="location.href='https://mlu-explain.github.io/';"
+        >
+          <span class="icon">
+            <object data="robot.svg" type="image/svg+xml"></object>
+          </span>
+          <span class="text"
+            ><h2>MLU-EXPL<span id="ai">AI</span>N</h2></span
+          >
+        </span>
+        <ul id="toc">
+          <li>
+            <a data-page="intro" href="#intro">Introduction</a>
+          </li>
+          <li>
+            <a data-page="split" href="#split">The Split</a>
+          </li>
+          <li>
+            <a data-page="train" href="#train">Train Set</a>
+          </li>
+          <li>
+            <a data-page="model" href="#model">Model</a>
+          </li>
+          <li>
+            <a data-page="validation" href="#validation">Validation Set</a>
+          </li>
+          <li>
+            <a data-page="test" href="#test">Test Set</a>
+          </li>
+          <li>
+            <a data-page="all" href="#all">Summary</a>
+          </li>
+
+          <div class="bubble"></div>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- main content -->
+    <div id="scrolly">
+      <section data-index="0" class="intro-mobile" id="intro-mobile">
+        <div id="intro-icon-mobile">
+          <a href="https://mlu-explain.github.io/"
+            ><svg
+              width="40"
+              height="40"
+              viewBox="0 0 234 216"
+              fill="none"
+              xmlns="https://www.w3.org/2000/svg"
+            >
+              <g id="mlu_robot 1" clip-path="url(#clip0)">
+                <g>
+                  <path
+                    id="Vector"
+                    d="M90.6641 83.1836C96.8828 83.1836 101.941 78.1289 101.941 71.8906V71.8242C101.941 65.5898 96.8945 60.5312 90.6641 60.5312C84.4453 60.5312 79.3828 65.5898 79.3828 71.8242V71.8906C79.3828 78.1289 84.4336 83.1836 90.6641 83.1836Z"
+                    fill="#232F3E"
+                  />
+                  <path
+                    id="Vector_2"
+                    d="M143.305 83.1836C149.523 83.1836 154.586 78.1289 154.586 71.8906V71.8242C154.586 65.5898 149.535 60.5312 143.305 60.5312C137.09 60.5312 132.027 65.5898 132.027 71.8242V71.8906C132.027 78.1289 137.078 83.1836 143.305 83.1836Z"
+                    fill="#232F3E"
+                  />
+                  <path
+                    id="Vector_3"
+                    d="M163.586 159.402H173.609V122.641H163.586V159.402Z"
+                    fill="#232F3E"
+                  />
+                  <path
+                    id="Vector_4"
+                    d="M60.3594 159.402H70.3867V122.641H60.3594V159.402Z"
+                    fill="#232F3E"
+                  />
+                  <g id="Group">
+                    <path
+                      id="Vector_5"
+                      d="M182.16 30.0781H51.8047V10.0234H182.16V30.0781ZM182.16 103.609H51.8047V40.1055H182.16V103.609ZM144.559 168.789H89.4062V113.641H144.559V168.789ZM0 0V10.0234H15.8789V46.7891H25.9023V10.0234H41.7812V113.641H79.3867V178.816H96.9297V215.578H106.957V178.816H127.016V215.578H137.039V178.816H154.586V113.641H192.188V10.0234H233.969V0"
+                      fill="#232F3E"
+                    />
+                  </g>
+                </g>
+              </g>
+              <defs>
+                <clipPath id="clip0">
+                  <rect width="233.97" height="215.58" fill="whitesmoke" />
+                </clipPath>
+              </defs>
+            </svg>
+          </a>
+          <h3 class="logo">MLU-expl<span id="ai">AI</span>n</h3>
+        </div>
+        <h2 class="h2-intro">
+          <span id="annotation1-mobile">Train</span>,
+          <span id="annotation2-mobile">Test</span>, and
+          <span id="annotation3-mobile">Validation</span> Sets <br />
+        </h2>
+        <h4>
+          By
+          <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
+          <!-- &
+          <a href="https://phonetool.amazon.com/users/bwernes">Brent Werness</a -->
+          <!-- >. -->
+        </h4>
+        <p>
+          <!-- By
+          <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
+          &
+          <a href="https://phonetool.amazon.com/users/bwernes">Brent Werness</a
+          >.<br /><br /><br /><br /> -->
+          In most supervised machine learning tasks, best practice recommends to
+          split your data into three independent sets: a
+          <b>training set</b>, a <b>testing set</b>, and a
+          <b>validation set</b>. <br /><br />
+
+          To demo the reasons for splitting data in this manner, we will pretend
+          that we have a dataset made of pets of the following two types:
+          <br /><br />
+          <span class="center"
+            ><span class="b">Cats</span>:&nbsp;
+            <img
+              width="1.5rem"
+              height="auto"
+              class="inline-svg"
+              src="./assets/noun_Cat_18061.svg" />&nbsp;&nbsp;&nbsp;
+            <span class="b">Dogs</span>:&nbsp;
+            <img
+              width="1.5rem"
+              height="auto"
+              class="inline-svg"
+              src="./assets/noun_Dog_79225.svg"
+          /></span>
+          <br /><br />
+          For each pet in the dataset we know only two features:
+          <span class="b">weight</span> and <span class="b">fluffiness</span>.
+          <br /><br />
+          Our goal is to make use of the different data splits and identify a
+          best model for classifying a given pet as either a cat or a dog, based
+          on the available features.
+        </p>
+      </section>
+      <figure>
+        <div id="main-wrapper">
+          <div class="button-container">
+            <p>Model Features:</p>
+            <button class="button" value="neither">None</button>
+            <button class="button active" value="weight">Weight</button>
+            <button class="button" value="fluffiness">Fluffiness</button>
+            <button class="button" value="both">Both</button>
+          </div>
+          <div id="chart-wrapper">
+            <div id="chart"></div>
+            <div id="table"></div>
+          </div>
+        </div>
+        <!-- @end #main-wrapper -->
+      </figure>
+      <article>
+        <section data-index="0" class="intro" id="intro">
+          <h2>The Importance of Data Splitting <br /></h2>
+          <p>
+            By
+            <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
+            &
+            <a href="https://phonetool.amazon.com/users/bwernes"
+              >Brent Werness</a
+            >.<br /><br /><br /><br />
+            In most supervised machine learning tasks, best practice recommends
+            to split your data into three independent sets: a
+            <span id="annotation1-intro"><b>training set</b></span
+            >, a <span id="annotation2-intro"><b>testing set</b></span
+            >, and a <span id="annotation3-intro"><b>validation set</b></span
+            >. <br /><br />
+
+            To learn why, let's pretend that we have a dataset of two types of
+            pets: <br /><br />
+            <span class="center"
+              ><span class="b">Cats</span>:&nbsp;
+              <img
+                width="1.5rem"
+                height="auto"
+                class="inline-svg"
+                src="./assets/noun_Cat_18061.svg" />&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="b">Dogs</span>:&nbsp;
+              <img
+                width="1.5rem"
+                height="auto"
+                class="inline-svg"
+                src="./assets/noun_Dog_79225.svg"
+            /></span>
+            <br /><br />
+            Each pet in our dataset has two features:
+            <span class="bold">weight</span> and
+            <span class="bold">fluffiness</span>. <br /><br />
+            Our goal is to identify and evaluate suitable models for classifying
+            a given pet as either a cat or a dog. We'll use
+            train/test/validations splits to do this!
+          </p>
+        </section>
+        <section data-index="1" class="split" id="split">
+          <h2>Train, Test, and Validation Splits</h2>
+          <p>
+            The first step in our classification task is to randomly
+            <!-- <span
+              class="tooltip-item"
+              >[*]<span class="tooltiptext">
+                The random assignment to each split is important to ensure that
+                each independent dataset is as representative and free from
+                confounding factors as possible
+              </span></span
+            > -->
+            split our pets into three independent sets:
+            <br /><br />
+            <span id="annotation4"><span class="bold">Training Set</span></span
+            >:
+            <span class="item-text"
+              >The dataset that we feed our model to learn potential underlying
+              patterns and relationships.</span
+            ><br /><br />
+            <span id="annotation5"
+              ><span class="bold">Validation Set</span></span
+            >:
+            <span class="item-text"
+              >The dataset that we use to understand our model's performance
+              across different model types and hyperparameter choices.</span
+            ><br /><br />
+            <span id="annotation6"><span class="bold">Test Set</span></span
+            >:
+            <span class="item-text"
+              >The dataset that we use to approximate our model's unbiased
+              accuracy in the wild.</span
+            >
+          </p>
+        </section>
+        <section data-index="2" class="train" id="train">
+          <h2>The Training Set</h2>
+          <p>
+            <span id="annotation7"
+              >The training set is the dataset that we employ to train our
+              model.</span
+            >
+            It is this dataset that our model uses to learn any underlying
+            patterns or relationships that will enable making predictions later
+            on. <br /><br />
+            The training set should be as representative as possible
+            <!-- <span
+              class="tooltip-item"
+              >[*]<span class="tooltiptext">
+                <a href="https://arxiv.org/abs/2103.03399"
+                  >This paper explores the importance of diverse and
+                  representative training data for machine learning
+                  performance</a
+                ></span
+              ></span
+            > -->
+            of the population that we are trying to model. Additionally, we need
+            to be careful and ensure that it is as unbiased as possible, as any
+            bias at this stage may be propagated downstream during inference.
+            <!-- <span class="tooltip-item"
+              >[*]<span class="tooltiptext">
+                <a href="https://arxiv.org/abs/1901.10002"
+                  >Downstream harms occur across many machine learning models</a
+                >. Examples abound, including such diverse areas as
+                <a
+                  href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing"
+                  >criminal sentencing</a
+                >
+                and
+                <a href="https://www.nature.com/articles/d41586-019-03228-6"
+                  >health-care</a
+                >
+              </span></span
+            > -->
+            <!-- during inference. <br /><br />
+            To give our model as much information to learn from as possible, we
+            typically assign the majority (e.g. 60&ndash;80%) of our original
+            data to the training set. -->
+          </p>
+        </section>
+        <section data-index="3" class="model" id="model">
+          <h2>Building Our Model</h2>
+          <p>
+            Our goal (to determine whether a given pet is a cat or a dog) is a
+            binary classification task, so we will use a simple but effective
+            model appropriate for this task:
+            <a href="https://www.youtube.com/watch?v=jhJwNpidiqM"
+              ><span class="bold">logistic regression</span></a
+            >. <br /><br />
+            Logistic regression will learn a decision boundary to best separate
+            the cats from dogs in our training data, using the selected feature
+            (<span class="bold">None</span>, <span class="bold">Weight</span>,
+            <span class="bold">Fluffiness</span>, or <i>both</i>
+            <span class="bold">Weight</span> and
+            <span class="bold">Fluffiness</span>). <br /><br />
+            Select the feature to visualize the corresponding logistic
+            regression model's decision boundary.
+            <b
+              >Drag each animal in the training set to a new position to see how
+              the boundary updates!</b
+            >
+          </p>
+        </section>
+
+        <section data-index="4" class="validation" id="validation">
+          <h2>The Validation Set</h2>
+          <p>
+            We can build four different logistic regression models (one for each
+            feature possibility),
+            <b>how do we decide which model to select?</b> <br /><br />
+
+            We could compare the accuracy of each model on the training set, but
+            if we use the same exact dataset for both training and tuning, the
+            model will overfit and won't generalize well.<br /><br />
+            <b>This is where the validation set comes in</b> &mdash;
+            <span id="annotation8"
+              >it acts as an independent, unbiased dataset for comparing the
+              performance of different algorithms trained on our training
+              set.</span
+            >
+            <br /><br />
+            <!-- In our case, we are only looking at one algorithm (logistic
+            regression), but we can view the number of considered features as a
+            hyperparameter that we would like to tune<span class="tooltip-item"
+              >[*]<span class="tooltiptext">
+                For expository purposes, we won't worry about other choices for
+                our logistic regression model, such as specific solvers or
+                 regularization penalties</span
+              ></span
+            >.<br /><br /> -->
+            Select a feature to view the model's performance on the validation
+            set in the table below.
+            <b
+              >Drag the feature across the line to see how the performance
+              updates!</b
+            >
+          </p>
+        </section>
+
+        <section data-index="5" class="test" id="test">
+          <h2>The Testing Set</h2>
+          <p>
+            <!-- So, assuming you did not go too crazy moving the pets around, our
+            best model (according to the validation set) is the model that takes
+            both features into account. <br /><br /> -->
+            Once we have used the validation set to determine the algorithm and
+            parameter choices that we would like to use in production, the test
+            set is used to approximate the models's true performance in the
+            wild.
+            <span id="annotation9"
+              >It is the final step in evaluating our model's performance on
+              unseen data.</span
+            >
+            <br /><br />
+            <b
+              >We should never, under any circumstance, look at the test set's
+              performance before selecting a model.</b
+            >
+            <br /><br />
+
+            Peeking at our test set performance ahead of time is a form of
+            overfitting, and will likely lead to unreliable performance
+            expectations in production. It should only be checked as the final
+            form of evaluation, after the validation set has been used to
+            identify the best model.
+          </p>
+        </section>
+        <section data-index="6" class="summary" id="summary">
+          <h2>Summary</h2>
+          <p>
+            You may have noticed that the test accuracy of the "just fluffiness"
+            model was higher than that of the "both features" model, despite the
+            validation set selecting the latter model as the best. This
+            occurrence of the validation performance not exactly matching the
+            test performance might happen, yet it is not a bad thing. Remember
+            that the test performance is not a number to optimize over &mdash;
+            it is a metric to assess future performance. It allows us to
+            estimate, with confidence, that our model can distinguish between
+            cats and dogs with 87.5% accuracy.
+
+            <br /><br />
+            <span class="bold">Key Takeaways</span>
+            <br /><br />
+            It is best practice in machine learning to split our data into the
+            following three groups:
+
+            <br /><br />
+            <span id="annotation10"
+              ><span class="bold">Training Set</span>:
+              <span class="item-text">For training of the model.</span></span
+            >
+            <br /><br />
+            <span id="annotation11">
+              <span class="bold">Validation Set</span>:
+              <span class="item-text"
+                >For unbiased evaluation of the model.</span
+              ></span
+            ><br /><br />
+            <span id="annotation12"
+              ><span class="bold">Test Set</span>:
+              <span class="item-text"
+                >For final evaluation of the model.</span
+              ></span
+            >
+            <br /><br />
+            Adhering to this setup helps ensure that we have a realistic
+            understanding of our model's performance, and that we (hopefully)
+            built a model that generalizes well to unseen data.
+            <br /><br />
+            <span class="center">🐾</span>
+            <br /><br />
+            Thanks for reading! To learn more about machine learning, check out
+            <a href="https://aws.amazon.com/machine-learning/mlu/"
+              >our website</a
+            >, watch
+            <a href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
+              >our videos</a
+            >, or read the <a href="https://d2l.ai/"> D2L book</a>. <br /><br />
+          </p>
+        </section>
+        <section data-index="7" class="empty" id="empty"></section>
+
+        <p id="end-p"></p>
+      </article>
+    </div>
+    <section data-index="6" class="summary-mobile" id="summary-mobile">
+      <p>
+        You may have noticed that the test accuracy of the "just fluffiness"
+        model was higher than that of the "both features" model, despite the
+        validation set selecting the latter model as the best. This occurrence
+        of the validation performance not exactly matching the test performance
+        might happen, yet it is not a bad thing. Remember that the test
+        performance is not a number to optimize over &mdash; it is a metric to
+        assess future performance. It allows us to estimate, with confidence,
+        that our model can distinguish between cats and dogs with 87.5%
+        accuracy.
+
+        <br /><br />
+        <span class="bold">Key Takeaways</span>
+        <br /><br />
+        It is best practice in machine learning to split our data into the
+        following three groups:
+
+        <br /><br />
+        <span id="annotation10"
+          ><span class="bold">Training Set</span>:
+          <span class="item-text">For training of the model.</span></span
+        >
+        <br /><br />
+        <span id="annotation11">
+          <span class="bold">Validation Set</span>:
+          <span class="item-text"
+            >For unbiased evaluation of the model.</span
+          ></span
+        ><br /><br />
+        <span id="annotation12"
+          ><span class="bold">Test Set</span>:
+          <span class="item-text"
+            >For final evaluation of the model.</span
+          ></span
+        >
+        <br /><br />
+        Adhering to this setup helps ensure that we have a realistic
+        understanding of our model's performance, and that we (hopefully) built
+        a model that generalizes well to unseen data.
+        <br /><br />
+        <span class="center">🐾</span>
+        <br /><br />
+        Thanks for reading! To learn more about machine learning, check out
+        <a href="https://aws.amazon.com/machine-learning/mlu/">our website</a>,
+        watch
+        <a href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
+          >our videos</a
+        >, or read the <a href="https://d2l.ai/"> D2L book</a>. <br /><br />
+      </p>
+    </section>
+    <script src="./js/index.js"></script>
+    <script src="./js/roughAnnotations.js"></script>
+  </body>
+</html>
