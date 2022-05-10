@@ -9,9 +9,6 @@ const annotation3Intro = document.querySelector("#annotation3-intro");
 const annotation1Mobile = document.querySelector("#annotation1-mobile");
 const annotation2Mobile = document.querySelector("#annotation2-mobile");
 const annotation3Mobile = document.querySelector("#annotation3-mobile");
-// const annotation1 = document.querySelector("#annotation1");
-// const annotation2 = document.querySelector("#annotation2");
-// const annotation3 = document.querySelector("#annotation3");
 const annotation4 = document.querySelector("#annotation4");
 const annotation5 = document.querySelector("#annotation5");
 const annotation6 = document.querySelector("#annotation6");
@@ -21,6 +18,9 @@ const annotation9 = document.querySelector("#annotation9");
 const annotation10 = document.querySelector("#annotation10");
 const annotation11 = document.querySelector("#annotation11");
 const annotation12 = document.querySelector("#annotation12");
+const annotation10Mobile = document.querySelector("#annotation10-mobile");
+const annotation11Mobile = document.querySelector("#annotation11-mobile");
+const annotation12Mobile = document.querySelector("#annotation12-mobile");
 
 const a1Intro = annotate(annotation1Intro, {
   type: "highlight",
@@ -68,29 +68,6 @@ const a3Mobile = annotate(annotation3Mobile, {
   animate: false,
   multiline: true,
 });
-// const a1 = annotate(annotation1, {
-//   type: "highlight",
-//   color: trainColor,
-//   strokeWidth: 1,
-//   iterations: 1,
-//   animate: false,
-//   multiline: true,
-// });
-// const a2 = annotate(annotation2, {
-//   type: "highlight",
-//   color: testColor,
-//   strokeWidth: 1,
-//   iterations: 1,
-//   animate: false,
-// });
-// const a3 = annotate(annotation3, {
-//   type: "highlight",
-//   color: validationColor,
-//   strokeWidth: 1,
-//   iterations: 1,
-//   animate: false,
-//   multiline: true,
-// });
 const a4 = annotate(annotation4, {
   type: "highlight",
   color: trainColor,
@@ -162,11 +139,32 @@ const a12 = annotate(annotation12, {
   animate: false,
   multiline: true,
 });
+const a10Mobile = annotate(annotation10Mobile, {
+  type: "highlight",
+  color: trainColor,
+  strokeWidth: 1,
+  iterations: 1,
+  animate: false,
+  multiline: true,
+});
+const a11Mobile = annotate(annotation11Mobile, {
+  type: "highlight",
+  color: validationColor,
+  strokeWidth: 1,
+  iterations: 1,
+  animate: false,
+  multiline: true,
+});
+const a12Mobile = annotate(annotation12Mobile, {
+  type: "highlight",
+  color: testColor,
+  strokeWidth: 1,
+  iterations: 1,
+  animate: false,
+  multiline: true,
+});
 
 const ag = annotationGroup([
-  // a3,
-  // a1,
-  // a2,
   a4,
   a5,
   a6,
@@ -182,5 +180,8 @@ const ag = annotationGroup([
   a1Mobile,
   a2Mobile,
   a3Mobile,
+  a10Mobile,
+  a11Mobile,
+  a12Mobile,
 ]);
 ag.show();
