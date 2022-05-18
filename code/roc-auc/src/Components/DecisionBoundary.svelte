@@ -72,7 +72,7 @@
       // update decision boundary position
       select("g.decision-boundary-bar")
         .raise()
-        .attr("transform", `translate(${event.x}, 16)`);
+        .attr("transform", `translate(${event.x}, 10)`);
       // recalculate metrics
       updateCounts(xPos);
     }
@@ -84,7 +84,7 @@
     let xPosition = $xScale(newPosition);
     select("g.decision-boundary-bar").attr(
       "transform",
-      `translate(${xPosition}, 16)`
+      `translate(${xPosition}, 10)`
     );
     // recalculate metrics
     updateCounts(newPosition);
@@ -101,36 +101,16 @@
   ];
 </script>
 
-<!-- add 'Drag Me!' annotation -->
-<line
-  id="dragline"
-  x1={($xRange[0] + $xRange[1]) / 2 + 10}
-  x2={($xRange[0] + $xRange[1]) / 2 + 40}
-  y1="36"
-  y2="30"
-  stroke-width="1.4"
-  stroke="#c9208a"
-  opacity="0"
-/>
-<text
-  id="dragme"
-  x={($xRange[0] + $xRange[1]) / 2 + 20}
-  y="30"
-  font-size="13"
-  text-anchor="start"
-  dominant-baseline="middle">Drag The Line!</text
->
-
 <!-- decision boundary -->
 <g class="bar">
   <g
     class="decision-boundary-bar"
     data-id="decision-boundary-bar"
-    transform="translate({($xRange[0] + $xRange[0]) / 2},{16})"
+    transform="translate({($xRange[0] + $xRange[0]) / 2},{10})"
   >
     <rect
       height={$yRange[0] - 2}
-      width={8}
+      width={9}
       stroke="whitesmoke"
       stroke-width="1.4"
       fill="#232F3E"
@@ -146,11 +126,11 @@
         dominant-baseline="middle">Classify</text
       >
       <text
-        x="22"
+        x="0"
         y="13"
         font-size="13"
         text-anchor="start"
-        dominant-baseline="middle">1</text
+        dominant-baseline="middle">Plane</text
       >
       <g transform="translate(52 -4.5)">
         {#each arrows as arrow}
@@ -174,11 +154,11 @@
         dominant-baseline="middle">Classify</text
       >
       <text
-        x="9"
+        x="0"
         y="13"
         font-size="13"
         text-anchor="start"
-        dominant-baseline="middle">0</text
+        dominant-baseline="middle">Cloud</text
       >
       <g transform={`translate(-20 16)`}>
         {#each arrows as arrow}
@@ -202,17 +182,5 @@
   }
   .arrow-holder {
     display: flex;
-  }
-
-  #dragme {
-    font-family: var(--font-heavy);
-    stroke-linejoin: round;
-    fill: var(--squid-ink);
-    paint-order: stroke fill;
-    stroke-width: 4.4px;
-    pointer-events: none;
-    stroke: white;
-    font-size: 0.75rem;
-    opacity: 0;
   }
 </style>

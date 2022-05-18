@@ -91,8 +91,9 @@ a {
   font-family: "Amazon Ember Display Heavy";
 }
 
-a:hover {
-  /* text-decoration: underline; */
+h3 {
+  font-family: "Amazon Ember Display Heavy";
+  padding: 1rem 0;
 }
 /* 
 a {
@@ -128,5 +129,9 @@ a:hover:after {
   .body-header {
     max-width: 90%;
     font-size: 26px;
+  }
+
+  h3 {
+    display: none;
   }
 }

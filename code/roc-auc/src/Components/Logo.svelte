@@ -75,6 +75,7 @@
     justify-content: center;
     align-items: center;
   }
+
   .logo {
     color: var(--squid-ink);
     letter-spacing: 2px;

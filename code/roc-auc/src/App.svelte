@@ -27,7 +27,7 @@
       right: mobile ? 15 : 35,
     };
 
-    $radius = mobile ? 3 : 5;
+    $radius = mobile ? 0 : 5;
   }
 </script>
 

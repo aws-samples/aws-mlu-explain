@@ -18,7 +18,7 @@
   </p>
   <hr />
   <p class="body-text">
-    Thanks for reading. We hope that the article is insightful no matter where
+    Thanks for reading! We hope that the article is insightful no matter where
     you are along your Machine Learning journey, and that you came away with a
     better understanding of ROC and AUC in the context of machine learning.
     <br /><br />
@@ -51,7 +51,7 @@
 <style>
   hr {
     margin: 3rem auto;
-    width: 5%;
-    border: 1px solid var(--squid-ink);
+    width: 3%;
+    border: 3px solid rgba(201, 32, 138, 0.7);
   }
 </style>
