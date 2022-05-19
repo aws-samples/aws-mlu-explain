@@ -5,6 +5,14 @@
 <script>
   import { getContext } from "svelte";
   import { forceSimulation, forceX, forceY, forceCollide } from "d3-force";
+  import {
+    planeBody,
+    planeWingLeft,
+    planeWingRight,
+    planeRotar,
+    cloudPath,
+  } from "../iconPaths";
+  import { collision, iconScale } from "../data-store.js";
 
   const { data, xGet, xScale, height, zGet } = getContext("LayerCake");
 
@@ -25,10 +33,7 @@
   /** @type {Number} [yStrength=0.075] – The value passed into the `.strength` method on `forceY`. See [the documentation](https://github.com/d3/d3-force#y_strength). */
   export let yStrength = 0.075;
 
-  /** @type {Function} [getTitle] — An accessor function to get the field on the data element to display as a hover label using a `<title>` tag. */
-  export let getTitle = (d) => d.weight;
-
-  const cloudPath = `m558.77 267.66c-2.4492-60.551-52.5-109.02-113.57-109.02-7.0859 0-14.176 0.61328-21.086 1.9258-28.613-33.426-71.398-53.375-115.32-53.375-72.363 0-134.05 50.664-148.4 121.19-51.891 8.9219-90.391 54.246-90.391 107.18v8.3984c0 59.938 48.824 108.76 108.85 108.76h357.18c51.801 0 93.977-42.176 93.977-93.977-0.003906-43.223-29.668-80.758-71.23-91.082z`;
+  // const cloudPath = `m558.77 267.66c-2.4492-60.551-52.5-109.02-113.57-109.02-7.0859 0-14.176 0.61328-21.086 1.9258-28.613-33.426-71.398-53.375-115.32-53.375-72.363 0-134.05 50.664-148.4 121.19-51.891 8.9219-90.391 54.246-90.391 107.18v8.3984c0 59.938 48.824 108.76 108.85 108.76h357.18c51.801 0 93.977-42.176 93.977-93.977-0.003906-43.223-29.668-80.758-71.23-91.082z`;
   const offsetX = 0;
   const offsetY = 0;
 
@@ -48,7 +53,7 @@
         .y($height / 2)
         .strength(yStrength)
     )
-    .force("collide", forceCollide(12 + 1.5))
+    .force("collide", forceCollide($collision))
     // .force("collide", forceCollide(r + 1.5))
     .stop();
 
@@ -72,23 +77,56 @@
       cx={node.x}
       cy={node.y}
     />
-    <path
-      fill={node.yVal === 0 ? "white" : "white"}
-      stroke="white"
-      stroke-width="7"
-      d={node.yVal === 0 ? cloudPath : planePath}
-      transform={`translate(${node.yVal === 0 ? node.x - 13 : node.x - 15} ${
-        node.yVal === 0 ? node.y - 13 : node.y - 16
-      }) scale(${node.yVal === 0 ? 0.043 : 0.05})`}
-    />
-    <path
-      fill={node.yVal === 0 ? "#7cd1ea" : "#c9208a"}
-      stroke="white"
-      stroke-width="7"
-      d={node.yVal === 0 ? cloudPath : planePath}
-      transform={`translate(${node.yVal === 0 ? node.x - 12 : node.x - 14} ${
-        node.yVal === 0 ? node.y - 12 : node.y - 14
-      }) scale(${node.yVal === 0 ? 0.04 : 0.046})`}
-    />
+
+    {#if node.yVal === 0}
+      <!-- render cloud -->
+      <path
+        fill={"#7cd1ea"}
+        stroke="white"
+        stroke-width="20"
+        d={cloudPath}
+        transform={`translate(${node.x - 12} ${
+          node.y - 12
+        }) scale(${$iconScale})`}
+      />
+    {:else}
+      <!-- render plane -->
+      <path
+        fill={"#c9208a"}
+        stroke="white"
+        stroke-width="8"
+        d={planeWingLeft}
+        transform={`translate(${node.x - 10} ${
+          node.y - 14
+        }) scale(${$iconScale})`}
+      />
+      <path
+        fill={"#c9208a"}
+        stroke="white"
+        stroke-width="8"
+        d={planeWingRight}
+        transform={`translate(${node.x - 10} ${
+          node.y - 14
+        }) scale(${$iconScale})`}
+      />
+      <path
+        fill={"#c9208a"}
+        stroke="white"
+        stroke-width="4"
+        d={planeRotar}
+        transform={`translate(${node.x - 10} ${
+          node.y - 14
+        }) scale(${$iconScale})`}
+      />
+      <path
+        fill={"#c9208a"}
+        stroke="white"
+        stroke-width="8"
+        d={planeBody}
+        transform={`translate(${node.x - 10} ${
+          node.y - 14
+        }) scale(${$iconScale})`}
+      />
+    {/if}
   {/each}
 </g>

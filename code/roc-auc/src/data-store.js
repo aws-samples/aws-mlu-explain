@@ -21,4 +21,6 @@ export const marginScroll = writable({
   left: 50,
   right: 40,
 });
+export const collision = writable(13.5);
+export const iconScale = writable(0.04);
 export const radius = writable(5);
