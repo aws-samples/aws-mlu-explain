@@ -34,9 +34,11 @@
     };
 
     $radius = mobile ? 0 : 5;
-    $collision = mobile ? 11.5 : 14;
-    $iconScale = mobile ? 0.035 : 0.4;
+    $collision = mobile ? 10 : 14;
+    $iconScale = mobile ? 0.032 : 0.04;
   }
+
+  handleResize();
 </script>
 
 <svelte:window on:resize={handleResize} />
