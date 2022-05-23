@@ -10,7 +10,6 @@
   <path stroke="white" stroke-width="30"  fill="#7cd1ea" transform="translate(2.5, 2.2) scale(0.042)" d="${cloudPath}"/>
   </svg>`;
   const planeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="${iconWidth}" height="${iconHeight}" viewBox="0 0 ${iconWidth} ${iconHeight}" >
- 
     <path stroke="white" stroke-width="12" fill="#c9208a" transform="translate(1, 0) scale(0.043)" d="${planePath}"/>
  </svg>`;
 </script>
@@ -95,6 +94,9 @@
   @media screen and (max-width: 950px) {
     ul {
       max-width: 80%;
+    }
+    li {
+      padding: 0.25rem 0;
     }
   }
 </style>
