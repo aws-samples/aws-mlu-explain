@@ -76,7 +76,7 @@
     align-items: center;
   }
   .logo {
-    color: var(--accent);
+    color: var(--primary);
     letter-spacing: 2px;
     width: 12rem;
   }
