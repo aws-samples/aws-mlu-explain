@@ -1,0 +1,42 @@
+{
+  "name": "train-test-validation",
+  "version": "1.0.0",
+  "license": "Creative Commons Attribution-ShareAlike 4.0 International License",
+  "description": "MLU-Explain article about train/test/validation splits.",
+  "author": "Jared Wilber",
+  "main": "dist/index.html",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist/ build/*",
+    "test": "echo \"Error: no test specified\" ",
+    "start": "parcel index.html",
+    "prebuild": "rm -rf dist",
+    "build": "parcel build index.html --public-url ./",
+    "postbuild": "mkdir -p ../../train-test-validation && cp -r dist/* ../../train-test-validation ",
+    "release": "npm run build"
+  },
+  "dependencies": {
+    "d3-array": "^2.12.1",
+    "d3-collection": "^1.0.7",
+    "d3-drag": "^2.0.0",
+    "d3-ease": "^2.0.0",
+    "d3-force": "^2.1.1",
+    "d3-format": "^3.0.0",
+    "d3-polygon": "^2.0.0",
+    "d3-scale": "^3.3.0",
+    "d3-selection": "^2.0.0",
+    "d3-shape": "^2.1.0",
+    "d3-transition": "^2.0.0",
+    "intersection-observer": "^0.5.0",
+    "rough-notation": "^0.4.0",
+    "smoothscroll-polyfill": "^0.4.4",
+    "stickyfill": "^1.1.1-strict"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.29.0"
+  }
+}

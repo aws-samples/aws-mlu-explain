@@ -1,0 +1,17 @@
+@import "../utilities/variables";
+
+/* ====================== */
+/* HULL STYLES */
+/* ====================== */
+#hull-path {
+  stroke-linejoin: round;
+}
+#hull-text {
+  font-family: $font-heavy;
+  font-size: 1.3rem;
+}
+
+.axes-text {
+  font-family: $font-light;
+  font-size: 1.2rem;
+}

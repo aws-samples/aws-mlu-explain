@@ -1,0 +1,53 @@
+@import "../utilities/variables";
+
+/* ====================== */
+/* TABLE STYLES */
+/* ====================== */
+#table {
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 33%;
+}
+table#data-table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  overflow-y: auto;
+  max-height: 200px;
+
+  th {
+    font-size: 1.1rem;
+
+    border: 1px solid black;
+    padding: 4px;
+    font-family: $font-heavy;
+  }
+  td {
+    font-size: 1.1rem;
+    padding: 2px;
+    border: 1px solid black;
+    font-family: $font-light;
+  }
+}
+
+// Mobile
+@media (max-width: 750px) {
+  table#data-table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    min-height: 20%;
+    th {
+      font-size: 1rem;
+
+      border: 1px solid black;
+      padding: 2px;
+      font-family: $font-heavy;
+    }
+    td {
+      font-size: 1rem;
+
+      border: 1px solid black;
+      font-family: $font-light;
+    }
+  }
+}

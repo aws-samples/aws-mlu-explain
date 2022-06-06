@@ -1,0 +1,376 @@
+@import "../utilities/variables";
+
+html {
+  font-size: 16px;
+}
+
+// hide nonmobile header
+#intro-mobile {
+  display: none;
+}
+
+#intro {
+  display: block;
+}
+
+#intro {
+  max-width: 45rem;
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.cardSpan {
+  cursor: pointer;
+}
+
+#intro__icon h2 {
+  // padding-left: 2%;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 1rem;
+}
+
+.text {
+  h2 {
+    font-size: 1.5rem;
+    padding-left: 1px;
+    font-family: AmazonEmberDisplayHeavy;
+  }
+}
+
+.icon,
+.text {
+  vertical-align: middle;
+  display: inline-block;
+}
+/* ====================== */
+/* LAYOUT STYLES */
+/* ====================== */
+
+#ai {
+  color: $color;
+  font-family: AmazonEmberDisplayHeavy;
+}
+
+#intro-icon {
+  display: flex;
+  justify-content: center;
+  vertical-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 2rem;
+  font-weight: bold;
+  color: $font-color;
+}
+
+#intro-icon h2 {
+  padding-left: 2%;
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+body {
+  background-color: $bg-color;
+}
+
+.section-title {
+  font-family: AmazonEmberDisplayHeavy;
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+header {
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0px;
+  background: white;
+  z-index: 999;
+}
+
+.bubble {
+  position: absolute;
+  z-index: -2;
+  transform: scale(0.25);
+  border-radius: 5px;
+  transition: all 0.5s;
+  background: linear-gradient(to right, #fffcdc, #d9a7c7);
+}
+
+#intro-icon svg {
+  color: black;
+  fill: black;
+}
+
+#scrolly {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 1rem;
+  flex-direction: row-reverse;
+  padding: 0 2%;
+}
+
+#scrolly > * {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+article {
+  position: relative;
+  //   padding: 0 1rem;
+  max-width: 30rem;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+figure {
+  position: -webkit-sticky;
+  position: sticky;
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  z-index: 0;
+  vertical-align: center;
+  top: 100px;
+  justify-content: center;
+  text-align: center;
+}
+
+article p {
+  font-size: 1rem;
+  margin: 4px;
+  padding: 5rem;
+  padding-top: 4rem;
+  text-align: left;
+}
+
+// bubble chart
+#bubble-svg {
+  transition: all 0.5s;
+}
+
+/* ====================== */
+/* BUBBLE LABEL STYLES */
+/* ====================== */
+
+.bubble-rect {
+  fill: $bg-color;
+  stroke-width: 2px;
+}
+.bubble-label {
+  font-family: $font-heavy;
+  font-size: 1.2rem;
+  color: $squid-ink;
+}
+
+// Mobile
+@media (max-width: 1200px) {
+  .text h2 {
+    font-size: 1.2rem;
+  }
+
+  article {
+    padding: 0;
+    p {
+      padding: 1rem;
+    }
+  }
+}
+
+header {
+  background-color: #fcf4e8da;
+}
+
+// BUTTON CONTAINER
+.button-container {
+  padding: 10px;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  p {
+    padding: 0;
+    font-size: 1.2rem;
+    font-family: $font-heavy;
+    padding-right: 2rem;
+  }
+  .button {
+    font-family: $font-heavy;
+    padding: 2px 4px;
+    font-size: 1.1rem;
+    margin: 2px 4px;
+  }
+
+  .button.active {
+    background-color: $squid-ink;
+    color: white;
+  }
+
+  input {
+    padding: 0;
+  }
+  label {
+    font-size: 1.1rem;
+    font-family: $font-heavy;
+    padding-right: 4px;
+    vertical-align: middle;
+  }
+}
+
+/* ====================== */
+/* CHART LAYOUT STYLES */
+/* ====================== */
+#chart-wrapper {
+  display: grid;
+  grid-template-columns: 1;
+  column-gap: 10px;
+  grid-template-rows: 1fr 1fr;
+}
+
+#end-p {
+  margin-bottom: 8vh;
+}
+
+/* ====================== */
+/* RESPONSIVE STYLES */
+/* ====================== */
+
+@media (max-width: 950px) {
+  #intro {
+    display: none;
+  }
+  #intro-mobile {
+    display: block;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+
+    p {
+      font-size: 1.15rem;
+      padding: 1rem 4rem;
+      padding-top: 2rem;
+      text-align: center;
+    }
+
+    h2 {
+      background-color: $bg-color-dark;
+      display: inline-block;
+      padding: 0px;
+      margin: 0px;
+    }
+  }
+  #scrolly {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: block;
+    padding: 1rem;
+    padding: 0 2%;
+  }
+
+  article {
+    position: relative;
+    padding: 0 1.5rem;
+    max-width: 60rem;
+    vertical-align: middle;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    margin-top: 10px;
+
+    p {
+      font-size: 1.15rem;
+      margin: 4px;
+      padding: 1rem;
+      padding-top: 2rem;
+      text-align: center;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+      background-color: $bg-color-dark;
+    }
+
+    h2 {
+      background-color: $bg-color-dark;
+      display: inline-block;
+      padding: 0px;
+      margin: 0px;
+    }
+
+    h3 {
+      display: none;
+    }
+
+    #end-p {
+      display: none;
+    }
+  }
+
+  figure {
+    position: -webkit-sticky;
+    position: sticky;
+    height: 90vh;
+    width: 100%;
+    margin: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    z-index: 0;
+    vertical-align: center;
+    top: 100px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  #all {
+    margin-bottom: 15vh;
+  }
+}
+
+// Mobile
+@media (max-width: 750px) {
+  .text h2 {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  .icon svg {
+    transform: scale(0.4);
+  }
+
+  header {
+    display: none;
+  }
+}
+
+img {
+  width: 1.5rem;
+  vertical-align: bottom;
+}
+
+#all {
+  margin-bottom: 25vh;
+}

@@ -1,0 +1,66 @@
+@import "../utilities/variables";
+
+section {
+  min-height: 100vh;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 115vh;
+}
+
+section {
+  margin-bottom: 24vh;
+  h2 {
+    padding-top: 20vh;
+    font-size: 2.5rem;
+    color: $font-color;
+    font-family: $font-heavy;
+  }
+  h3 {
+    font-size: 1.5rem;
+    padding-top: 1rem;
+    font-family: AmazonEmberDisplayHeavy;
+    color: $font-color;
+    opacity: 0.9;
+  }
+}
+
+section p {
+  align-items: middle;
+  vertical-align: middle;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+@media (max-width: 950px) {
+  section {
+    margin-bottom: 50vh;
+    margin-top: 10vh;
+
+    h2 {
+      padding-top: 0vh;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  section {
+    height: 180vh;
+  }
+}
+
+@media (max-height: 700px) and (min-width: 750px) {
+  section {
+    height: 160vh;
+  }
+}
+
+@media (max-height: 400px) and (min-width: 750px) {
+  section {
+    height: 220vh;
+  }
+}
