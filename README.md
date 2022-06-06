@@ -1,27 +1,39 @@
 ![MLU-Explain Logo & Title](./assets/readme_header.png)
 
-This repository holds the code used for Amazon's [MLU-Explain](https://mlu-explain.github.io/) educational articles on machine learning.  MLU-Explain exists to illustrate core machine learning concepts using visual essays in a fun, informative, and accessible manner.
+This repository holds the code used for Amazon's [MLU-Explain](https://mlu-explain.github.io/) educational articles on machine learning. MLU-Explain exists to illustrate core machine learning concepts using visual essays in a fun, informative, and accessible manner.
 
 This material exists as supplementary educational material for [Machine Learning University (MLU)](https://aws.amazon.com/machine-learning/mlu/), which provides anybody, anywhere, at any time access to the same machine learning courses used to train Amazon’s own developers on machine learning.
 
-
 # Articles
 
-Currently, there are **5** articles published:
+Currently, there are **7** articles published:
 
-## Random Forest
-<img src="./assets/random-forest.gif" alt="Random Forest Article Image" width="400"/>
+## Train, Test, And Validation Sets
 
-**Title**: [Random Forest](https://mlu-explain.github.io/random-forest/)
+<img src="./assets/train-test-validation.gif" alt="Train, Test, And Validation Sets Article Image" width="400"/>
 
-**Summary**: Learn how the majority vote and well-placed randomness can extend the decision tree model to one of machine learning's most widely-used algorithms, the Random Forest.
+**Title**: [Train, Test, and Validation Sets](https://mlu-explain.github.io/train-test-validation/)
 
-**Code**: [/code/random-forest/](/code/random-forest)
+**Summary**: Learn why it is best practice to split your data into training, testing, and validation sets, and explore the utility of each with a live machine learning model.
 
-**Authors**: Jenny Yeon, Jared Wilber
+**Code**: [/code/train-test-validation/](/code/train-test-validation)
 
+**Authors**: Jared Wilber, Brent Werness
+
+## Precision & Recall
+
+<img src="./assets/precision-recall.gif" alt="Precision & Recall Article Preview" width="400"/>
+
+**Title**: [Precision & Recall](https://mlu-explain.github.io/precision-recall/)
+
+**Summary**: When it comes to evaluating classification models, accuracy is often a poor metric. This article covers two common alternatives, Precision and Recall, as well as the F1-score and Confusion Matrices.
+
+**Code**: [/code/precision-recall/](/code/precision-recall)
+
+**Authors**: Jared Wilber
 
 ## Decision Trees
+
 <img src="./assets/decision-tree.gif" alt="Decision Trees Article Image" width="400"/>
 
 **Title**: [Decision Trees](https://mlu-explain.github.io/decision-tree/)
@@ -32,8 +44,8 @@ Currently, there are **5** articles published:
 
 **Authors**: Jared Wilber, Lucía Santamaría
 
-
 ## Bias Variance Tradeoff
+
 <img src="./assets/mlu-explain_biasvariance.gif" alt="Bias Variance Tradeoff Article Image" width="400"/>
 
 **Title**: [The Bias Variance Tradeoff](https://mlu-explain.github.io/bias-variance/)
@@ -44,8 +56,8 @@ Currently, there are **5** articles published:
 
 **Authors**: Jared Wilber, Brent Werness
 
-
 ## Double Descent: A Visual Introduction
+
 <img src="./assets/double-descent1.gif" alt="Double Descent Article Image" width="400"/>
 
 **Title**: [Double Descent](https://mlu-explain.github.io/double-descent/)
@@ -57,6 +69,7 @@ Currently, there are **5** articles published:
 **Authors**: Jared Wilber, Brent Werness
 
 ## Double Descent 2: A Mathematical Explanation
+
 <img src="./assets/double-desent2.gif" alt="Double Descent 2 Article Image" width="400"/>
 
 **Title**: [Double Descent 2](https://mlu-explain.github.io/double-descent2/)
@@ -66,7 +79,6 @@ Currently, there are **5** articles published:
 **Code**: [/code/double-descent2/](/code/double-descent2)
 
 **Authors**: Brent Werness, Jared Wilber
-
 
 ## Running Locally
 
@@ -88,11 +100,13 @@ npm install
 ```
 
 Now, to run the development version:
+
 ```bash
 npm start
 ```
 
 To build and view the static assests:
+
 ```bash
 # build assets
 npm run build
@@ -102,10 +116,8 @@ cd dist/
 python3 -m http.server # or just `live-server`
 ```
 
-
 ## License Summary
 
 This open source articles are made available under the Creative Commons Attribution-ShareAlike 4.0 International License. See [LICENSE](LICENSE) file.
 
 The sample and reference code within this open source book is made available under a modified MIT license. See the [LICENSE-SAMPLECODE](LICENSE-SAMPLECODE) file.
-
