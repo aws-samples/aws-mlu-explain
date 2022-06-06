@@ -1,11 +1,15 @@
 {
-  "name": "svelte-app",
+  "name": "Precision & Recall",
   "version": "1.0.0",
+  "license": "Creative Commons Attribution-ShareAlike 4.0 International License",
+  "description": "MLU-Explain article about precision and recall in machine learning.",
+  "author": "Jared Wilber",
   "private": true,
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public -D -m 1"
+    "start": "sirv public -D -m 1",
+    "postbuild": "mkdir -p ../../precision-recall && cp -r public/* ../../precision-recall "
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
