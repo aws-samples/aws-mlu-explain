@@ -4,8 +4,8 @@
 <p class="body-text">
   When it comes to evaluating classifiers (or any type of model), the above
   metrics are by no means exhaustive. Many other techniques exist, including
-  callibration, popular diagnostic tools (specificity, likelihood ratios, etc.),
-  and expectation frameworks. We cover the closley-related concepts of ROC and
+  calibration, popular diagnostic tools (specificity, likelihood ratios, etc.),
+  and expectation frameworks. We cover the closely-related concepts of ROC and
   AUC in an upcoming article, so look out for that!
   <br /><br />
   Additionally, while the concepts we introduced in this article were done so in
