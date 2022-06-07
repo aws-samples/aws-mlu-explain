@@ -7,7 +7,13 @@
   import ROCScroll from "./Components/ROCScroll.svelte";
   import ROCStatic from "./Components/ROCStatic.svelte";
   import AUCStatic from "./Components/AUCStatic.svelte";
-  import { margin, marginScroll, radius } from "./data-store.js";
+  import {
+    margin,
+    marginScroll,
+    radius,
+    collision,
+    iconScale,
+  } from "./data-store.js";
 
   // reset margin on resize
   function handleResize() {
@@ -27,8 +33,12 @@
       right: mobile ? 15 : 35,
     };
 
-    $radius = mobile ? 3 : 5;
+    $radius = mobile ? 0 : 5;
+    $collision = mobile ? 10 : 14;
+    $iconScale = mobile ? 0.032 : 0.04;
   }
+
+  handleResize();
 </script>
 
 <svelte:window on:resize={handleResize} />

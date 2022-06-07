@@ -6,7 +6,7 @@
   import { LayerCake, Svg, Html } from "layercake";
   import { range } from "d3-array";
   import { scaleOrdinal } from "d3-scale";
-  import Key from "./Key-html.svelte";
+  // import Key from "./Key-html.svelte";
   import AxisX from "./BeeswarmAxisX.svelte";
   import Beeswarm from "./BeeswarmForce.svelte";
   import DecisionBoundary from "./DecisionBoundary.svelte";
@@ -33,7 +33,7 @@
 
   // Paragraph text for scrolly
   $: steps = [
-    `<h1 class='step-title'>Our First Threshold</h1>
+    `<h3 class='step-title'>Our First Threshold</h3>
        <p>We'll start with our model's classification threshold at 0,
         so anything with a probability greater-than-or-equal-to zero of being an airplane,
          we'll classify as an airplane. In other words, everything will be classified as an airplane!
@@ -41,13 +41,13 @@
         While this model will correctly classify every pairplane as an airplane (yielding a perfect <span class='bold'>TPR=1</span>), 
        it will also incorrectly classify every radar noise as an airplane (giving us the worst possible <span class='bold'>FPR=1</span>). 
       </p>`,
-    `<h1 class='step-title'>Some New Thresholds</h1>
+    `<h3 class='step-title'>Some New Thresholds</h3>
       <p>Clearly our first model was awful - we can do better! But how much better?
         <br><br> To find out, let's try some new threshold values.
         We'll move our threshold more and more to the right, increasing the threshold at which we classify a radar signal as an airplane.
         To assess the performance, we calculate the TPR and FPR for each new threshold choice, and plot them below.
     `,
-    `<h1 class='step-title'>And More Thresholds</h1>
+    `<h3 class='step-title'>And More Thresholds</h3>
       <p>
         Recall that our goal is to find the classification threshold that best maximizes true positives while minimizing false positives. 
         <br><br>
@@ -55,7 +55,7 @@
         <br><br>
         So that's exactly what we'll do: continue increasing our threshold until we can't any further (i.e. moving it all the way to the right),
          logging each TPR and FPR along the way.</p>`,
-    `<h1 class='step-title'>The R.O.C. Curve</h1>
+    `<h3 class='step-title'>The R.O.C. Curve</h3>
       <p>After plotting each classification threshold's corresponding TPR and FPR, we obtain our ROC curve! 
         <br><br>This curve gives us a convenient
         visual of the performance of our classifier. It allows us to understand how that performance changes as a function of the model's classification threshold.
@@ -146,7 +146,7 @@
           <Svg>
             <AxisX />
             <Beeswarm
-              r={width < 600 ? 5.5 : 6.5}
+              r={width < 700 ? 5.5 : 6.5}
               strokeWidth={1}
               xStrength={0.05}
               yStrength={0.075}
@@ -154,9 +154,9 @@
             <DecisionBoundary />
           </Svg>
 
-          <Html pointerEvents={false}>
+          <!-- <Html pointerEvents={false}>
             <Key shape="circle" />
-          </Html>
+          </Html> -->
         </LayerCake>
       </div>
       <ROCScatter />
@@ -272,6 +272,10 @@
 
     .step {
       height: 185vh;
+    }
+
+    .step-title {
+      display: none;
     }
 
     .step-content {
