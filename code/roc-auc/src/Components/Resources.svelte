@@ -40,7 +40,11 @@
       ><br />
       (S. J. Mason, N. E. Graham, 2002).
     </p>
-
+    <p class="resource-item">
+      <a class="on-end" href="https://svelte.dev/"
+        >Cloud & Japanese Plane Icons</a
+      ><br />(iejank & Norbert de Graaff, respectively, from NounProject.com)
+    </p>
     <p class="resource-item">
       <a class="on-end" href="https://d3js.org/">D3.js</a><br />(Mike Bostock &
       Philippe Rivière)
