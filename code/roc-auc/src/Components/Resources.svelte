@@ -41,7 +41,7 @@
       (S. J. Mason, N. E. Graham, 2002).
     </p>
     <p class="resource-item">
-      <a class="on-end" href="https://svelte.dev/"
+      <a class="on-end" href="https://thenounproject.com/"
         >Cloud & Japanese Plane Icons</a
       ><br />(iejank & Norbert de Graaff, respectively, from NounProject.com)
     </p>
