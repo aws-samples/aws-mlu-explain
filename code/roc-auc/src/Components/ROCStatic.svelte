@@ -39,7 +39,7 @@
 <section id="roc-section">
   <h1 class="body-header">What Makes A Good ROC Curve?</h1>
   <p class="body-text">
-    The ROC Curve is valuabe not only because it gives us an overview of our
+    The ROC Curve is valuable not only because it gives us an overview of our
     model's performance (and lets us select an optimal classification threshold
     for that model), but because it also gives us an easy visual to compare the
     performance of different classifiers to one another.
@@ -228,8 +228,8 @@
     result may indicate that your problem is not well-framed, and may not have a
     solution without additional data. If the result shows a perfect classifier, make
     sure that there is no place where the training data is leaking information about
-    the label which would not be available when the model is in deployment, (as such
-    a result likely points to overfitting or data-leakage).
+    the label which would not be available when the model is in deployment, as such
+    a result likely points to overfitting or data-leakage.
   </p>
 </section>
 
