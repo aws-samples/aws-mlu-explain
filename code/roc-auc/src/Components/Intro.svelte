@@ -22,7 +22,7 @@
     outputs (e.g. the consequences of favoring False Positives over False
     Negatives, or vice versa). Left unmentioned were two closely-related
     concepts, the Receiver Operating Characteristic Curve (the
-    <span class="bold">ROC Curve</span>) and the Area under the ROC Curve (<span
+    <span class="bold">ROC Curve</span>) and the Area Under the ROC Curve (<span
       class="bold">AUC</span
     >, or <span class="bold">AUROC</span>).
     <br /><br />
@@ -40,7 +40,7 @@
     In machine learning, we use ROC Curves to analyze the predictive power of a classifier:
     they provide a visual way to observe how changes in our model’s classification
     thresholds affect our model’s performance. Similar to their original use in the
-    1940's, the curves allow us to select for classification thresholds that allow
+    1940s, the curves allow us to select for classification thresholds that allow
     our model to identify as many true positives as possible while minimizing false
     positives.
     <br /><br />

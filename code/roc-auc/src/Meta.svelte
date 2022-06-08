@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta
     name="description"
-    content="A Visual Explanation of Receiver Operating Characteristic Curves and Area-Under-the-Curve in machine learning."
+    content="A Visual Explanation of Receiver Operating Characteristic Curves and Area Under the Curve in machine learning."
   />
   <meta name="author" content="Jared Wilber" />
   <meta
@@ -18,7 +18,7 @@
   <meta property="og:url" content="https://mlu-explain.github.io/roc-auc/" />
   <meta
     property="og:description"
-    content="A Visual Explanation of Receiver Operating Characteristic Curves and Area-Under-the-Curve in machine learning."
+    content="A Visual Explanation of Receiver Operating Characteristic Curves and Area Under the Curve in machine learning."
   />
   <meta property="og:type" content="article" />
   <meta property="og:locale" content="en_US" />

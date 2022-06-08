@@ -55,7 +55,7 @@
         <br><br>
         So that's exactly what we'll do: continue increasing our threshold until we can't any further (i.e. moving it all the way to the right),
          logging each TPR and FPR along the way.</p>`,
-    `<h3 class='step-title'>The R.O.C. Curve</h3>
+    `<h3 class='step-title'>The ROC Curve</h3>
       <p>After plotting each classification threshold's corresponding TPR and FPR, we obtain our ROC curve! 
         <br><br>This curve gives us a convenient
         visual of the performance of our classifier. It allows us to understand how that performance changes as a function of the model's classification threshold.
