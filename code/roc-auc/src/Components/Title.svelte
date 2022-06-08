@@ -33,8 +33,8 @@
 
 <section id="intro">
   <h1 id="intro-hed">
-    <span id="title-roc">R.O.C.</span> <br />& <br /><span id="title-auc"
-      >A.U.C.</span
+    <span id="title-roc">ROC</span> <br />& <br /><span id="title-auc"
+      >AUC</span
     >
   </h1>
   <h1 class="intro-sub">
