@@ -38,7 +38,7 @@
         so anything with a probability greater-than-or-equal-to zero of being an airplane,
          we'll classify as an airplane. In other words, everything will be classified as an airplane!
          <br><br>
-        While this model will correctly classify every pairplane as an airplane (yielding a perfect <span class='bold'>TPR=1</span>), 
+        While this model will correctly classify every airplane as an airplane (yielding a perfect <span class='bold'>TPR=1</span>), 
        it will also incorrectly classify every radar noise as an airplane (giving us the worst possible <span class='bold'>FPR=1</span>). 
       </p>`,
     `<h3 class='step-title'>Some New Thresholds</h3>
