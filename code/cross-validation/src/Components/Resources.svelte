@@ -6,7 +6,9 @@
 <br />
 <section id="resources">
   <br />
-  <h3 class="body-header">References + Open Source</h3>
+  <h3 class="body-header">
+    <span class="section-arrow">&gt; </span> References + Open Source
+  </h3>
   <p class="body-text">
     This article is a product of the following resources + the awesome people
     who made (and contributed to) them:
@@ -50,31 +52,41 @@
 </section>
 
 <style>
-  #resources {
-    background-color: #f46ebb;
-    color: #232f3e;
+  /* overwrite */
+  .section-arrow {
+    color: var(--squidink);
   }
-
+  p.body-text {
+    color: white;
+  }
+  #resources {
+    background-color: var(--primary);
+    color: white;
+  }
+  hr {
+    margin: 2.5rem auto;
+    max-width: 35rem;
+  }
   .resource-item {
     max-width: 600px;
     margin: 0 auto;
     text-align: left;
-    font-size: 17px;
+    font-size: 18px;
     line-height: 1.5em;
     font-family: "Amazon Ember";
-    color: #232f3e;
+    color: var(--white);
   }
 
   a.on-end {
     text-decoration: underline;
-    color: #161e2d;
+    color: var(--white);
   }
 
   /* mobile */
   @media screen and (max-width: 950px) {
     .resource-item {
       max-width: 80%;
-      font-size: 18px;
+      font-size: 17px;
     }
   }
 </style>

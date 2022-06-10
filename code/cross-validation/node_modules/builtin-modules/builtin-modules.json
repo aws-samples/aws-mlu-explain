@@ -8,6 +8,7 @@
 	"constants",
 	"crypto",
 	"dgram",
+	"diagnostics_channel",
 	"dns",
 	"domain",
 	"events",

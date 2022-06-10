@@ -1,27 +1,39 @@
-<script>
-</script>
+<script></script>
 
-<section>
-  <h1 class="body-header">The End</h1>
-  <p class="body-text">
-    Thanks for reading! We hope that the article is insightful no matter where
-    you are along your Machine Learning journey, and that you came away with a
-    better understanding of k-folds cross-validation in machine learning.
-    <br /><br />
-    To learn more about Machine Learning, check out our self-paced courses, our YouTube
-    videos, and the Dive into Deep Learning textbook. If you have any comments or
-    ideas related to MLU-Explain articles, feel free to reach out directly to
-    <a href="https://twitter.com/jdwlbr">Jared</a>
-    or <a href="https://www.linkedin.com/in/jaspercroome/">Jasper</a>. The code
-    for this article is available here.
-    <br /><br />
-    A special thanks goes out to <span class="bold">Brent Werness</span> for valuable
-    contributions to this article.
-  </p>
-</section>
+<h1 class="body-header">
+  <span class="section-arrow">&gt; </span> Concluding Text
+</h1>
+<p class="body-text">
+  Write a paragraph here detailing that the article is over. Mention stuff that
+  you've learned. Mention stuff that's related that we didn't mention. You only
+  need edit the next two paragraphs slightly.
+</p>
+<br />
+<p class="body-text">
+  Thanks for reading. We hope that the article is insightful no matter where you
+  are along your Machine Learning journey, and that you came away with a better
+  understanding of some of the difficulties of evaluating classification models.
+  <br /><br />
+  To learn more about Machine Learning, check out our
+  <a class="on-end" href="https://aws.amazon.com/machine-learning/mlu/"
+    >self-paced courses</a
+  >, our
+  <a
+    class="on-end"
+    href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
+    >YouTube videos</a
+  >, and the
+  <a class="on-end" href="https://d2l.ai/">Dive into Deep Learning</a>
+  textbook. If you have any comments or ideas related to
+  <a class="on-end" href="https://mlu-explain.github.io/"
+    >MLU-Explain articles</a
+  >, feel free to reach out
+  <a class="on-end" href="https://twitter.com/jdwlbr">directly</a>. The code for
+  this article is available
+  <a class="on-end" href="https://github.com/aws-samples/aws-mlu-explain"
+    >here</a
+  >.
+</p>
 
 <style>
-  /* mobile */
-  @media screen and (max-width: 950px) {
-  }
 </style>

@@ -1,70 +1,33 @@
 <script>
-  import { scaleBand, scaleOrdinal } from "d3-scale";
-  import { range } from 'd3-array';
-  import {scale, draw} from 'svelte/transition'
-	import { quintIn, quintOut } from 'svelte/easing';
-  import {
-    forceSimulation,
-    forceX,
-    forceY,
-    forceCollide,
-  } from 'd3-force';
-  import { each } from "svelte/internal";
+  import { scaleLinear, scaleBand } from "d3-scale";
+  import { margin } from "../store.js";
+  import { arrowPath } from "../arrowPath";
+  import StackedRects from "./StackedRects.svelte";
 
-
-  // these don't matter, but make the stretching less obvious at load
-  let height = 500;
   let width = 500;
-  // responsive margins
-  const mobile = window.innerWidth <= 700;
-  const margin = {
-    top: mobile ? 40 : 50,
-    bottom: mobile ? 10 : 25,
-    left: mobile ? 0 : 80,
-    right: mobile ? 0 : 10,
-  };
+  let height = 500;
+  const nSplits = 3;
+  $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
+  $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
+  $: xDiff = width / ((nSplits + 1) * 4);
 
-  // scales
-  let dotXScale = scaleBand()
-  .domain(['','train','validate','test',''])
-  .range([0, width - margin.right])
-
-  let colorScale = scaleOrdinal()
-  .domain(['train','validate','test'])
-  .range(['darkslateblue','hotpink','limegreen'])
-  
-  // simulation data
-  let xStrength = 1
-  let yStrength = 1
-  let nodes = [];
-  let data = range(1,100,1).map((d, dNdx)=>({
-    value:d,
-    category:(dNdx <= 70 ? 'train' : dNdx <= 90 ? 'validate' : 'test')
-  }))
-  let simulation = forceSimulation(data)
-
-
-  $: {
-    simulation.on("tick", () => {
-      nodes = simulation.nodes()  
-    })
-  }
-  $: {
-    simulation
-    .force('collision', forceCollide().radius(9.5))
-    .force('x', forceX().x((d) => dotXScale(d.category)).strength(xStrength))
-    .force('y', forceY().y(height/2).strength(yStrength))
-    .alpha(.8)
-    }
-
+  let dataLabel = [{ label: "Data", y: 10, dy: -6.5 }];
+  let validationLabels = [
+    { label: "Train", y: 5, dy: 0 },
+    { label: "Validation", y: 13, dy: 6.5 },
+    { label: "Test", y: 18, dy: 0 },
+  ];
 </script>
 
-<h1 class="body-header">Our Previous Approach</h1>
+<h1 class="body-header">
+  <span class="section-arrow">&gt; </span> Our Previous Approach
+</h1>
 <p class="body-text">
-  In <a href="">a previous article</a>, we described a standard technique for
-  solving this problem: <span class="bold">The Validation Set Approach</span>.
-  Recall this involved randomly splitting our data into three mutually exclusive
-  sets:
+  In a <a href="https://mlu-explain.github.io/train-test-validation"
+    >previous article</a
+  >, we described a standard technique for solving this problem:
+  <span class="bold">The Validation Set Approach</span>. Recall this involved
+  randomly splitting our data into three mutually exclusive sets:
 </p>
 <br />
 <ul class="body-text">
@@ -82,60 +45,62 @@
   </li>
 </ul>
 <br />
-
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg
-    width={width + margin.left + margin.right}
-    height={height + margin.top + margin.bottom}
-    overflow="visible"
-  >
-    <!-- waffleChart -->
-    <g>
-    {#each nodes as cell, ndx}
-        <!-- svelte-ignore component-name-lowercase -->
-        <circle
-          cx={cell.x}
-          cy={cell.y}
-          r={10}
-          fill={colorScale(cell.category)}
-          fill-opacity=".8"
-          stroke="black"
-          stroke-width="1"
+  <svg {width} height={height + $margin.top + $margin.bottom}>
+    <!-- x-ticks -->
+    {#each [...Array(nSplits).keys()] as tick}
+      {#if tick === 1}
+        <!-- <text text-anchor="middle" x={xScale(tick)} y={yScale(0)}>hey</text> -->
+        <g transform="translate({xScale(tick) - xDiff}, {yScale(0) - xDiff})">
+          <path
+            d={arrowPath}
+            style={`transform: scale(0.1)`}
+            stroke="#232f3e"
+            stroke-width="3"
+            fill="#232f3e"
+          />
+        </g>
+      {:else if tick === 0}
+        <StackedRects
+          {height}
+          x={xScale(tick) - xDiff}
+          fillRule={() => {
+            return "#232f3e";
+          }}
+          labels={dataLabel}
         />
-        {/each}
-    </g>  
+      {:else}
+        <StackedRects
+          {height}
+          x={xScale(tick) - xDiff}
+          fillRule={(i) =>
+            i < 45 ? "#003181" : i < 75 ? "#f46ebb" : "#ffad97"}
+          labels={validationLabels}
+        />
+      {/if}
 
-    <!-- waffle labels -->
-    <text
-    class="error-axis-label"
-    y={margin.top / 2}
-    x={(width + margin.left) / 2}
-    text-anchor="middle">The Validation Set Approach</text
-  >
-    <text
-      class="annotation"
-      y={height / 2}
-      x={dotXScale('train')}
-      text-anchor="middle"
-      >Train</text>
-      
-      <text
-      class="annotation"
-      y={height / 2}
-      x={dotXScale('validate')}
-      text-anchor="middle"
-      >Validate</text>
-      
-      <text
-      class="annotation"
-      y={height / 2}
-      x={dotXScale('test')}
-      dx="-2"
-      text-anchor="middle"
-    >Test</text>
-
+      <!-- x-ticks -->
+      <!-- {#each xScale.ticks() as tick}
+        <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
+          <line
+            class="axis-line"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2={-height + $margin.bottom + $margin.top}
+            stroke="black"
+            stroke-dasharray="4"
+          />
+        </g>
+      {/each} -->
+    {/each}
+    <!-- title -->
+    <!-- <text class="title-text" x="0" y={$margin.top} text-anchor="middle"
+      >Validation Set Approach</text
+    > -->
   </svg>
 </div>
+
 <br /><br />
 <p class="body-text">
   The Validation Set Approach is still widely used, especially when resource
@@ -154,75 +119,15 @@
 </p>
 
 <style>
+  svg {
+    /* border: 1px solid black; */
+  }
   #cv-chart {
     margin: auto;
-    max-height: 48vh;
+    max-height: 50vh;
     width: 40%;
     margin: 1rem auto;
-  }
-
-  .annotation {
-    font-family: var(--font-heavy);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4.4px;
-    pointer-events: none;
-    stroke: #f1f3f3;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .error-text {
-    text-transform: uppercase;
-    font-family: var(--font-heavy);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4.5px;
-    pointer-events: none;
-    stroke: #f1f3f3;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-  }
-  .error-axis-text {
-    font-size: 0.9rem;
-  }
-
-  .axis-line {
-    opacity: 0.15;
-  }
-
-  #error-text-accuracy {
-    fill: #c9208a;
-  }
-
-  .error-axis-label {
-    text-transform: uppercase;
-    font-size: 1rem;
-  }
-
-  .path-line {
-    fill: none;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    stroke-width: 5;
-  }
-
-  .outline-line {
-    fill: none;
-    stroke: #f1f3f3;
-    stroke-width: 10;
-  }
-
-  ul {
-    max-width: 600px;
-    margin: auto;
-    font-family: var(--font-main);
-    font-size: 17px;
-    padding-top: 0.5rem;
-  }
-  li {
-    padding: 0.25rem;
+    /* border: 2px solid black; */
   }
 
   /* ipad */
@@ -231,24 +136,6 @@
       max-height: 55vh;
       width: 85%;
       margin: 1rem auto;
-    }
-    .error-axis-label {
-      font-size: 0.8rem;
-    }
-    .error-axis-text {
-      font-size: 0.8rem;
-    }
-    .error-text {
-      stroke-width: 3.5px;
-      stroke: #f1f3f3;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-    }
-    .path-line {
-      stroke-width: 5;
-    }
-    .outline-line {
-      stroke-width: 9;
     }
   }
   /* mobile */
@@ -261,25 +148,6 @@
       max-height: 55vh;
       width: 95%;
       margin: 1rem auto;
-    }
-
-    .error-axis-label {
-      font-size: 0.75rem;
-    }
-    .error-axis-text {
-      font-size: 0.7rem;
-    }
-    .error-text {
-      stroke-width: 3px;
-      stroke: #f1f3f3;
-      font-size: 0.7rem;
-      letter-spacing: 1px;
-    }
-    .path-line {
-      stroke-width: 4;
-    }
-    .outline-line {
-      stroke-width: 7;
     }
   }
 </style>

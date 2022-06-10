@@ -23,11 +23,4 @@
 <Resources />
 
 <style>
-  :global(:root) {
-    --squid-ink: #232f3e;
-    --font-main: "Amazon Ember";
-    --font-mono: "Amazon Ember Mono";
-    --font-heavy: "Amazon Ember Display Heavy";
-    --font-light: "Amazon Ember Display Light";
-  }
 </style>

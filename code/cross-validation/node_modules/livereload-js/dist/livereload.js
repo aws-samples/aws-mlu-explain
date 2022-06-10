@@ -2200,7 +2200,7 @@ var _require = require('./protocol'),
     PROTOCOL_6 = _require.PROTOCOL_6,
     PROTOCOL_7 = _require.PROTOCOL_7;
 
-var VERSION = "3.3.3";
+var VERSION = "3.4.0";
 
 var Connector = /*#__PURE__*/function () {
   function Connector(options, WebSocket, Timer, handlers) {
@@ -3349,6 +3349,7 @@ var IMAGE_STYLES = [{
 var DEFAULT_OPTIONS = {
   stylesheetReloadTimeout: 15000
 };
+var IMAGES_REGEX = /\.(jpe?g|png|gif|svg)$/i;
 
 var Reloader = /*#__PURE__*/function () {
   function Reloader(window, console, Timer) {
@@ -3395,7 +3396,7 @@ var Reloader = /*#__PURE__*/function () {
         }
       }
 
-      if (options.liveImg && path.match(/\.(jpe?g|png|gif)$/i)) {
+      if (options.liveImg && path.match(IMAGES_REGEX)) {
         this.reloadImages(path);
         return;
       }
@@ -3422,7 +3423,7 @@ var Reloader = /*#__PURE__*/function () {
         }
 
         if (pluginId === 'img') {
-          if (options.liveImg && path.match(/\.(jpe?g|png|gif)$/i)) {
+          if (options.liveImg && path.match(IMAGES_REGEX)) {
             _this.reloadImages(path);
 
             return true;
