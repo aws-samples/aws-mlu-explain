@@ -4,8 +4,9 @@
   import { max, min, extent } from "d3-array";
   import { select, selectAll } from "d3-selection";
   import { transition } from "d3-transition";
+  import { format } from "d3-format";
   import { line } from "d3-shape";
-
+  import { Temperature } from "../data-store.js";
 
   let width = 500;
   let height = 500;
@@ -14,6 +15,18 @@
   const colors = ["#ff9900", "#003181"];
   const labels = ["Rainy Day", "Rainless Day"];
   const classSet = new Set(scatterData.map((d) => d.Weather));
+
+  const formatter = format(".1f");
+
+  // const sigmoidEq = (d) => 1 / (1 + Math.exp(-d));
+  const arrows = [
+    "M0.200275 13.2782C0.200275 12.4153 0.89983 11.7157 1.76278 11.7157H23.6378C24.5007 11.7157 25.2003 12.4153 25.2003 13.2782C25.2003 14.1411 24.5007 14.8407 23.6378 14.8407H1.76278C0.89983 14.8407 0.200275 14.1411 0.200275 13.2782Z",
+    "M11.5954 1.23584C12.2056 0.62565 13.1949 0.62565 13.8051 1.23584L24.7426 12.1733C25.3528 12.7835 25.3528 13.7729 24.7426 14.3831L13.8051 25.3206C13.1949 25.9307 12.2056 25.9307 11.5954 25.3206C10.9852 24.7104 10.9852 23.721 11.5954 23.1108L21.4281 13.2782L11.5954 3.44555C10.9852 2.83536 10.9852 1.84604 11.5954 1.23584Z",
+    "M 11.5954 1.23584 C 12.2056 0.62565 13.1949 0.62565 13.8051 1.23584 L 24.7426 12.1733 C 25.3528 12.7835 25.3528 13.7729 24.7426 14.3831 L 13.8051 25.3206 C 13.1949 25.9307 12.2056 25.9307 11.5954 25.3206 C 10.9852 24.7104 10.9852 23.721 11.5954 23.1108 L 21.4281 13.2782 L 11.5954 3.44555 C 10.9852 2.83536 10.9852 1.84604 11.5954 1.23584 Z",
+  ];
+
+  $: {
+  }
 
   async function loadData() {
     let weather = new Set(scatterData.map((d) => d.Weather));
@@ -48,30 +61,61 @@
     .x((d) => xScale(d.x))
     .y((d) => yScale(d.y));
 
+  $: sigmoidValue = (d) => sigmoidCurve[d]["y"];
+
+  // var sigmoidValue = sigmoidCurve[0]["y"]
+
   let data = loadData();
 
   export function hidePoints() {
-    selectAll(".scatter-circle").transition().delay(500).attr("r", 0);
+    selectAll(".scatter-circle").transition().delay(1000).attr("r", 0);
+    selectAll(".legend-circle").transition().delay(1000).attr("r", 0);
+    selectAll(".legend-text").transition().delay(1000).attr("font-size", 0);
   }
 
   export function showPoints() {
-    selectAll(".scatter-circle").transition().delay(500).attr("r", 5);
+    selectAll(".scatter-circle").transition().delay(1000).attr("r", 5);
+    selectAll(".legend-circle").transition().delay(1000).attr("r", 5);
+    selectAll(".legend-text").transition().delay(1000).attr("font-size", 16);
   }
 
   export function hideCurve() {
-    selectAll(".sigmoid-line").transition().delay(500).attr("stroke-width", 0);
+    selectAll(".sigmoid-line").transition().delay(1000).attr("stroke-width", 0);
   }
 
   export function showCurve() {
-    selectAll(".sigmoid-line").transition().delay(500).attr("stroke-width", 5);
+    selectAll(".sigmoid-line").transition().delay(1000).attr("stroke-width", 5);
   }
 
   export function hideBoundary() {
-    selectAll(".boundary-line").transition().delay(500).attr("stroke-width", 0);
+    selectAll(".boundary-line").transition().delay(1000).attr("opacity", 0);
+    selectAll(".arrow-text").transition().delay(1000).attr("font-size", 0);
+    selectAll(".bottom-arrow").transition().delay(1000).attr("fill", "none");
+    selectAll(".top-arrow").transition().delay(1000).attr("fill", "none");
+    selectAll(".bottom-arrow").transition().delay(1000).attr("stroke-width", "0");
+    selectAll(".top-arrow").transition().delay(1000).attr("stroke-width", "0");
+    selectAll(".bottom-arrow").transition().delay(1000).attr("stroke", "none");
+    selectAll(".top-arrow").transition().delay(1000).attr("stroke", "none");
   }
 
   export function showBoundary() {
-    selectAll(".boundary-line").transition().delay(500).attr("stroke-width", 10);
+    selectAll(".boundary-line").transition().delay(1000).attr("opacity", 1);
+    selectAll(".arrow-text").transition().delay(1000).attr("font-size", 13);
+    selectAll(".bottom-arrow").transition().delay(1000).attr("fill", "var(--anchor)");
+    selectAll(".top-arrow").transition().delay(1000).attr("fill", "var(--smile");
+    selectAll(".bottom-arrow").transition().delay(1000).attr("stroke", "var(--anchor)");
+    selectAll(".top-arrow").transition().delay(1000).attr("stroke", "var(--smile");
+    selectAll(".bottom-arrow").transition().delay(1000).attr("stroke-width", 3);
+    selectAll(".top-arrow").transition().delay(1000).attr("stroke-width", 3);
+
+  }
+
+  export function hideExample() {
+    selectAll(".example-circle").transition().delay(1000).attr("r", 0);
+  }
+
+  export function showExample() {
+    selectAll(".example-circle").transition().delay(1000).attr("r", 10);
   }
 </script>
 
@@ -108,7 +152,7 @@
             text-anchor="end"
             dx="-5"
             dominant-baseline="middle"
-            >{d}
+            >{formatter(d)}
           </text>
         </g>
       {/each}
@@ -146,31 +190,119 @@
       <path
         class="sigmoid-line"
         d={sigmoidPath(sigmoidCurve)}
-        stroke="black"
         stroke-width="0"
       />
 
+      <!-- # make x-element a function of x-axis -->
+      <!-- cy={yScale(sigmoidEq($Temperature))}  -->
+      <g transform={`translate(0, 0)`}>
+        <circle
+          class="example-circle"
+          r="0"
+          cx={xScale($Temperature)}
+          cy={yScale(sigmoidValue($Temperature - 20))}
+          fill="var(--sky)"
+          opacity="1"
+        />
+      </g>
       <!-- svelte-ignore component-name-lowercase -->
       <!-- <line
         class="boundary-line"
-        stroke="#f1f3f3"
+        stroke=var(--sky)
         x1={margin.left}
         x2={width - margin.right}
         y1={yScale(0.5)}
         y2={yScale(0.5)}
         stroke-width="0"
       /> -->
+      <g transform={`translate(${margin.left}, ${yScale(0.5)})`}>
+        <rect
+          class="boundary-line"
+          stroke="var(--squidink)"
+          stroke-width="1.4"
+          fill="var(--paper)"
+          width={width - margin.right - margin.left}
+          height={10}
+          opacity={0}
+        />
+      </g>
+
+      <!-- bottom arrow -->
+      <g
+        class="arrow-holder"
+        transform={`translate(${margin.left + 50} ${yScale(0.5) + 20})`}
+      >
+        <text 
+          class="arrow-text" 
+          x="-14" 
+          y="0" 
+          dominant-baseline="middle">Predict</text>
+        <text
+          class="arrow-text"
+          x="-14"
+          y="13"
+          dominant-baseline="middle">Rainy</text
+        >
+        <g transform="translate(-20 -8)">
+          {#each arrows as arrow}
+            <path
+              class="bottom-arrow"
+              d={arrow}
+              style={`transform: rotate(90deg) scale(0.8)`}
+              stroke-width=0
+              fill=none
+              stroke=none
+            />
+          {/each}
+        </g>
+      </g>
+      <!-- top arrow -->
+      <g
+        class="arrow-holder"
+        transform={`translate(${margin.left + 50} ${yScale(0.5) - 20})`}
+      >
+        <text
+          class="arrow-text"
+          x="-14"
+          y="0"
+          dominant-baseline="middle">Predict</text
+        >
+        <text
+          class="arrow-text"
+          x="-14"
+          y="13"
+          dominant-baseline="middle">Rainless</text
+        >
+        <g transform={`translate(-40 16)`}>
+          {#each arrows as arrow}
+            <path
+              class="top-arrow"
+              d={arrow}
+              style={`transform: rotate(-90deg) scale(0.8)`}
+              stroke-width=0
+              fill=none
+              stroke=none
+            />
+          {/each}
+        </g>
+      </g>
 
       <!-- y-axis label -->
       <text
+        class="axis-label"
         text-anchor="middle"
         transform={`translate(${25},${yScale(0.5)}) rotate(-90)`}
       >
-        Weather
+        Probability
       </text>
 
       <!-- x-axis label -->
-      <text text-anchor="middle" x={xScale(63.6)} y={height - 10}>
+      <text
+        class="axis-label"
+        text-anchor="middle"
+        x={xScale(63.6)}
+        y={height - 10}
+      >
         Temperature (Degrees Fahrenheit)
       </text>
 
@@ -178,8 +310,13 @@
       <g transform={`translate(${margin.left}, ${20})`}>
         {#each labels as Weather, i}
           <g transform={`translate(${i * 110} 0)`}>
-            <circle r="5" fill={colorScale(i)} />
-            <text dominant-baseline="middle" x="20">
+            <circle class="legend-circle" r="0" fill={colorScale(i)} />
+            <text
+              class="legend-text"
+              dominant-baseline="middle"
+              x="20"
+              font-size="0"
+            >
               {labels[i]}
             </text>
           </g>
@@ -201,34 +338,51 @@
 
   .grid-line {
     fill: none;
-    stroke: black;
+    stroke: var(--squidink);
     stroke-dasharray: 4;
     stroke-opacity: 0.2;
   }
 
   .axis-line {
     fill: none;
-    stroke: black;
+    stroke: var(--squidink);
+  }
+
+  .axis-text {
+    font-family: var(--font-heavy);
+  }
+
+  .axis-label {
+    font-family: var(--font-heavy);
+  }
+
+  .legend-text {
+    font-family: var(--font-heavy);
   }
 
   .sigmoid-line {
     fill: none;
-    stroke: black;
+    stroke: var(--squidink);
     /* stroke-opacity: 0; */
     /* stroke-width: 0; */
   }
 
+  .arrow-holder {
+    display: flex;
+    paint-order: stroke fill;
+    stroke: var(--paper);
+    fill: black;
+    font-family: var(--font-heavy);
+    stroke-linejoin: round;
+    stroke-width: 5px;
+    pointer-events: none;
+    font-size: 0;
+  }
 
-  /* .charts-container {
-    position: sticky;
-    top: 10%;
-    display: grid;
-    width: 50%;
-    grid-template-columns: 100%;
-    grid-row-gap: 2rem;
-    grid-column-gap: 0rem;
-    grid-template-rows: repeat(2, 1fr);
-    height: 85vh;
-    border: 3px solid black;
-  } */
+  .arrow-text {
+    font-size: 13;
+    text-anchor: start;
+  }
+
+
 </style>

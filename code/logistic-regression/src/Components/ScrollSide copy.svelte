@@ -169,7 +169,7 @@
 
   .step.active .step-content {
     background: #f1f3f3ee;
-    color: var(--squid-ink);
+    color: var(--squidink);
   }
 
   .steps-container {

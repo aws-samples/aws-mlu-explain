@@ -26,10 +26,10 @@
     <a class="on-end" href="https://d3js.org/">D3.js</a><br />(Mike Bostock &
     Philippe Rivière)
   </p>
-  <p class="resource-item">
+  <!-- <p class="resource-item">
     <a class="on-end" href="https://layercake.graphics/">LayerCake</a><br
     />(Michael Keller)
-  </p>
+  </p> -->
   <p class="resource-item">
     <a class="on-end" href="https://katex.org/">KaTeX</a> <br />(Emily Eisenberg
     & Sophie Alpert)
@@ -45,11 +45,11 @@
 <style>
   /* overwrite */
   p.body-text {
-    color: white;
+    color: var(--paper);
   }
   #resources {
     background-color: var(--primary);
-    color: white;
+    color: var(--paper);
   }
   hr {
     margin: 2.5rem auto;
@@ -62,12 +62,12 @@
     font-size: 18px;
     line-height: 1.5em;
     font-family: "Amazon Ember";
-    color: white;
+    color: var(--paper);
   }
 
   a.on-end {
     text-decoration: underline;
-    color: #f1f3f3;
+    color: var(--paper);
   }
 
   /* mobile */

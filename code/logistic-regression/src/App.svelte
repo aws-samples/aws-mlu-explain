@@ -7,6 +7,7 @@
   //import LineChart from "./Components/LineChart.svelte";
   // import ScrollCenter from "./Components/ScrollCenter.svelte";
   import Evaluation from "./Components/Evaluation.svelte";
+  import GradientDescent from "./Components/GradientDescent.svelte";
   import Coefficients from "./Components/Coefficients.svelte";
   import Interpretations from "./Components/Interpretations.svelte";
   import Conclusion from "./Components/Conclusion.svelte";
@@ -20,6 +21,7 @@
 <Intro />
 <ScrollSide />
 <Evaluation />
+<!-- <GradientDescent /> -->
 <Coefficients />
 <Interpretations />
 <Conclusion />

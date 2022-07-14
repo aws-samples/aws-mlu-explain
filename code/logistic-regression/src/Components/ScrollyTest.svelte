@@ -243,7 +243,7 @@
 
     .step.active .step-content {
         background: var(--bg);
-        color: var(--squid-ink);
+        color: var(--squidink);
     }
 
     .steps-container {

@@ -3,7 +3,7 @@
   import { drag } from "d3-drag";
   import { getContext } from "svelte";
   import { select, selectAll } from "d3-selection";
-  import { yPoss } from "../data-store.js";
+  // import { yPoss } from "../data-store.js";
 
   const { xScale, yScale, xRange, yRange } = getContext("LayerCake");
   const margin = { top: 50, right: 40, bottom: 50, left: 70 };
@@ -102,7 +102,7 @@
   >
     <rect
       height={10}
-      width={$xRange[1] - margin.left - margin.right}
+      width={100}
       stroke="whitesmoke"
       stroke-width="1.4"
       fill="#2074d5"

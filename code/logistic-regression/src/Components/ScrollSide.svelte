@@ -5,35 +5,42 @@
   import Scatterplot from "./Scatterplot.svelte";
   import { scatterData } from "../datasets.js";
   import { onMount } from "svelte";
-  import { LayerCake, Svg, Html } from "layercake";
-  import DecisionBoundary from "./DecisionBoundary.svelte";
-  import { yPoss, Temperature } from "../data-store.js";
+  // import { LayerCake, Svg, Html } from "layercake";
+  // import DecisionBoundary from "./DecisionBoundary.svelte";
+  import { Temperature } from "../data-store.js";
 
   let scatterClass;
 
   const seriesNames = new Set();
   const seriesColors = ["#7e93ee", "#ff99ff"];
 
-  const xKey = "xVal";
-  const zKey = "yVal";
-  const dataTransformed = scatterData.map((d) => {
-    seriesNames.add(d[zKey]);
-    return {
-      [zKey]: d[zKey],
-      [xKey]: +d[xKey],
-      xx: +d[xKey],
-    };
-  });
+  // const xKey = "xVal";
+  // const zKey = "yVal";
+  // const dataTransformed = scatterData.map((d) => {
+  //   seriesNames.add(d[zKey]);
+  //   return {
+  //     [zKey]: d[zKey],
+  //     [xKey]: +d[xKey],
+  //     xx: +d[xKey],
+  //   };
+  // });
 
   const target2event = {
     0: () => {
       scatterClass.hidePoints();
       scatterClass.hideCurve();
+      scatterClass.hideBoundary();
+      scatterClass.hideExample();
+      console.log("0")
     },
     1: () => {
       // points appear
       scatterClass.hideCurve();
       scatterClass.showPoints();
+      scatterClass.hideBoundary();
+      scatterClass.hideExample();
+      console.log("1")
+
     },
 
     2: () => {
@@ -41,15 +48,20 @@
       scatterClass.showCurve();
       scatterClass.showPoints();
       scatterClass.hideBoundary();
+      scatterClass.hideExample();
+      console.log("2")
+
     },
     3: () => {
       // decision boundary appears
       scatterClass.showCurve();
       scatterClass.showPoints();
       scatterClass.showBoundary();
-      $yPoss = 0.5;
+      scatterClass.showExample();
+      // $yPoss = 0.5;
+      console.log("3")
+
     },
-    4: () => {},
   };
 
   function fireEvent(entryIndex) {
@@ -166,7 +178,7 @@
     </div>
     <div class="charts-container">
       <div class="chart-one">
-        <LayerCake
+        <!-- <LayerCake
           x={xKey}
           y="50"
           z={zKey}
@@ -175,12 +187,12 @@
           zRange={seriesColors}
           data={dataTransformed}
           let:width
-        >
-          <Scatterplot bind:this={scatterClass} />
-          <Svg>
+        > -->
+        <Scatterplot bind:this={scatterClass} />
+        <!-- <Svg>
             <DecisionBoundary />
           </Svg>
-        </LayerCake>
+        </LayerCake> -->
       </div>
     </div>
   </div>
@@ -242,7 +254,7 @@
 
   /* .step.active .step-content {
     background: var(--bg);
-    color: var(--squid-ink);
+    color: var(--squidink);
   } */
 
   .steps-container {
@@ -261,12 +273,11 @@
     border-radius: 5px;
     background: var(--stone);
     outline: none;
-    opacity: 0.7;
+    opacity: 0.9;
     -webkit-transition: 0.2s;
     transition: opacity 0.2s;
-    border-color: var(--squid-ink);
+    border-color: var(--squidink);
   }
-  
 
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -277,8 +288,6 @@
     background: var(--sky);
     cursor: pointer;
   }
-
-
 
   /* Comment out the following line to always make it 'text-on-top' */
   @media screen and (max-width: 950px) {
@@ -299,7 +308,7 @@
     .step {
       height: 130vh;
       background: var(--bg);
-      color: var(--squid-ink);
+      color: var(--squidink);
     }
 
     .step-content {

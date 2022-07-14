@@ -1,5 +1,7 @@
 <script>
     import katexify from "../katexify";
+    import GradientDescent from "./GradientDescent.svelte";
+
 
     const log_likelihood = "\\textrm{Log-Likelihood} = \\sum_{i=0}^n (y_i * \\textrm{log}(p_i) + (1-y_i)*\\textrm{log}(1-p_i))"
 
@@ -25,8 +27,10 @@
         increase of a function, which can be calculated using partial
         derivatives. The parameters are updated in the opposite direction of the
         gradient by the step size in an attempt to find the parameter values
-        that minimize the Log-Loss.
+        that minimize the Log-Loss.        
     </p>
+
+    <GradientDescent></GradientDescent>
 
     <h2 class="body-secondary-header">Maximum Likelihood Estimation</h2>
     <p class="body-text">

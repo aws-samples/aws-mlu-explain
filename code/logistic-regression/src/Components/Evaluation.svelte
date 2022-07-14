@@ -25,8 +25,9 @@
     {@html katexify("i")} is the index, {@html katexify("y_i")} is the true class
     for the index {@html katexify("i")}, and {@html katexify("p_i")} is the model
     prediction for the index {@html katexify("i")}.
+
+    {@html katexify(log_loss, true)}
   </p>
-  {@html katexify(log_loss, true)}
   <p class="body-text">
     Minimizing the Log-Loss is equivalent to maximizing the Log-Likelihood,
     since the Log-Loss is the negative of the Log-Likelihood.

@@ -48,8 +48,8 @@
   --bg: var(--rind);
   --fg: var(--off-black);
   --default: var(--squidink);
-  --primary: var(--sky);
-  --secondary: var(--anchor);
+  --primary: var(--anchor);
+  --secondary: var(--sky);
 }
 
 body {
@@ -88,6 +88,7 @@ body {
   font-size: 25px;
   line-height: 1.5em;
   font-family: var(--font-heavy);
+  color: var(--default);
   padding-top: 2rem;
   padding-bottom: 0.5rem;
   max-width: 600px;
@@ -109,12 +110,22 @@ a {
 }
 
 h1 {
-  color: var(--squid-ink);
+  color: var(--default);
+  font-family: var(--font-heavy);
+}
+
+h2 {
+  color: var(--default);
+  font-family: var(--font-heavy);
+}
+
+h3 {
+  color: var(--paper);
   font-family: var(--font-heavy);
 }
 
 p {
-  color: var(--squid-ink);
+  color: var(--default);
   font-family: var(--font-main);
   font-weight: none;
 }

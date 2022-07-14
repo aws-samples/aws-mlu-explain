@@ -22,12 +22,12 @@
     text-transform: uppercase;
     max-width: 100%;
     margin: auto;
-    color: var(--squid-ink);
+    color: var(--squidink);
   }
 
   .intro-sub {
     font-size: 1.4rem;
-    color: var(--squid-ink);
+    color: var(--squid-nk);
     text-align: center;
     margin: 1rem;
     opacity: 0.75;
@@ -37,12 +37,11 @@
 
   #intro__date {
     font-size: 1.1rem;
-    color: var(--squid-ink);
+    color: var(--squidink);
     margin: 0px;
     margin-top: 15px;
     padding-bottom: 0px;
     margin-bottom: 0px;
-    color: black;
     padding-bottom: 1rem;
     font-family: var(--font-main);
   }
