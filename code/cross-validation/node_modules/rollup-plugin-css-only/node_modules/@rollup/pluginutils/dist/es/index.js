@@ -301,7 +301,7 @@ const normalizePath = function normalizePath(filename) {
 
 function getMatcherString(id, resolutionBase) {
     if (resolutionBase === false || isAbsolute(id) || id.startsWith('*')) {
-        return id;
+        return normalizePath(id);
     }
     // resolve('') is valid and will default to process.cwd()
     const basePath = normalizePath(resolve(resolutionBase || ''))
@@ -311,7 +311,7 @@ function getMatcherString(id, resolutionBase) {
     // 1. the basePath has been normalized to use /
     // 2. the incoming glob (id) matcher, also uses /
     // otherwise Node will force backslash (\) on windows
-    return posix.join(basePath, id);
+    return posix.join(basePath, normalizePath(id));
 }
 const createFilter = function createFilter(include, exclude, options) {
     const resolutionBase = options && options.resolve;

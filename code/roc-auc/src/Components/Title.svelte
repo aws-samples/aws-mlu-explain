@@ -33,16 +33,15 @@
 
 <section id="intro">
   <h1 id="intro-hed">
-    <span id="title-roc">ROC</span> <br />& <br /><span id="title-auc"
-      >AUC</span
+    <span id="title-roc">ROC</span> <br />& <br /><span id="title-auc">AUC</span
     >
   </h1>
   <h1 class="intro-sub">
-    A Visual Explanation of Receiver Operating Characteristic Curves and
-    Area Under the Curve
+    A Visual Explanation of Receiver Operating Characteristic Curves and Area
+    Under the Curve
   </h1>
   <h3 id="intro__date">
-    <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, April 2022
+    <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, June 2022
   </h3>
 </section>
 
@@ -58,7 +57,7 @@
     font-size: 5rem;
     margin-top: 5px;
     margin-bottom: 0;
-    letter-spacing: 1.5px;
+    letter-spacing: 15px;
     text-transform: uppercase;
     max-width: 100%;
     margin: auto;

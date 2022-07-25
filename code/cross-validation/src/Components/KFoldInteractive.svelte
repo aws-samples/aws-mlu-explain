@@ -1,34 +1,45 @@
 <script>
-  import { scalePoint, scaleOrdinal } from "d3-scale";
-  import { range } from "d3-array";
-  import { LayerCake, Svg } from "layercake";
-  import ForcePackCircles from "../../scripts/forcePackCircles.svelte";
+  import { scaleLinear, scaleBand } from "d3-scale";
+  import { margin } from "../store.js";
+  import { arrowPath } from "../arrowPath";
+  import StackedRects from "./StackedRects.svelte";
 
-  // these don't matter, but make the stretching less obvious at load
-  let height = 500;
   let width = 500;
-  // responsive margins
-  const mobile = window.innerWidth <= 700;
-  const margin = {
-    top: mobile ? 40 : 50,
-    bottom: mobile ? 10 : 25,
-    left: mobile ? 0 : 80,
-    right: mobile ? 0 : 10,
+  let height = 500;
+  $: nSplits = 6;
+  $: xScale =
+    nSplits < 10
+      ? scaleLinear()
+          .domain([-1, nSplits])
+          .range([width * 0.2, width - width * 0.2])
+      : scaleLinear().domain([-1, nSplits]).range([0, width]);
+  $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
+  $: xDiff = width / ((nSplits + 1) * 4);
+  const numRects = 16;
+
+  // fill rule
+  $: numCol = nSplits > 11 + 2 ? 1 : 2;
+  $: numTest = 4;
+  $: numValidation = Math.floor((numRects - numTest) / nSplits);
+  $: numTrain = numRects - numTest - numValidation;
+
+  $: fillRule = (d) => {
+    // train colors
+    if (d > numTrain) {
+      return "#ffad97";
+    } else if (d > numValidation) {
+      return "#f46ebb";
+    }
+    // validation colors
+    // if (d === numRects - nSplits - 2) return "#f46ebb";
+    // test colors
+    return "#003181";
   };
-
-  const xKey = "fold";
-  const yKey = "subFold";
-  const zKey = "category";
-
-  let foldsCount = 2;
-  let datasetSize = 100;
-  let manyBodyStrength = -1;
-  let xStrength = 0.5;
-  let yStrength = 0.1;
-  let interactive = true;
 </script>
 
-<h1 class="body-header">Try For Yourself</h1>
+<h1 class="body-header">
+  <span class="section-arrow">&gt; </span> Try For Yourself
+</h1>
 <p class="body-text">
   To k-folds cross-validation more clear, we’ll see how the process works
   directly. Let’s assume that we’d like to use a one-dimensional linear
@@ -36,49 +47,87 @@
   the value of k for yourself to set the number of folds. Observe that each fold
   results in a new data split alongside a newly trained model.
 </p>
-
+<br /><br />
+<!-- <label> -->
+<div id="input-container">
+  <p id="input-label">K = {nSplits - 2}</p>
+  <input type="range" bind:value={nSplits} min="3" max="18" />
+</div>
+<!-- </label> -->
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <div>
-    <input
-      type="range"
-      min="2"
-      max="10"
-      step="1"
-      id="foldsCountSelector"
-      bind:value={foldsCount}
-    />
-    <p x={"20"} y={"0"} class="error-axis-label">
-      {foldsCount} folds
-    </p>
-  </div>
-  <div id="chart-container" bind:offsetWidth={width} bind:offsetHeight={height}>
-    <LayerCake
-      x={xKey}
-      y={yKey}
-      z={zKey}
-      xScale={scalePoint()}
-      xDomain={range(0, foldsCount + 2, 1)}
-      xRange={[0, width - margin.right]}
-      yScale={scalePoint()}
-      yDomain={range(0, foldsCount + 2, 1)}
-      yRange={[height - margin.bottom, margin.top]}
-      zScale={scaleOrdinal()}
-      zDomain={["test", "train", "validate"]}
-      zRange={["limegreen", "darkslateblue", "hotpink"]}
-    >
-      <Svg>
-        <ForcePackCircles
-          {manyBodyStrength}
-          {xStrength}
-          {yStrength}
-          bind:foldsCount
-          {datasetSize}
-          {interactive}
-          nodeStroke="#000"
+  <svg {width} height={height + $margin.top + $margin.bottom}>
+    <!-- legend -->
+    <g class="g-tag" transform="translate({width / 2 - 102}, {0})">
+      <rect x={0} y="3" fill="#003181" width="12" height="12" />
+      <text class="legend-text" x={15} y="15">Train</text>
+      <rect x={65} y="3" fill="#f46ebb" width="12" height="12" />
+      <text class="legend-text" x={80} y="15">Validation</text>
+      <rect x={170} y="3" fill="#ffad97" width="12" height="12" />
+      <text class="legend-text" x={185} y="15">Test</text>
+    </g>
+
+    <!-- x-ticks -->
+    {#each [...Array(nSplits).keys()] as tick}
+      {#if tick === 1}
+        <!-- <text text-anchor="middle" x={xScale(tick)} y={yScale(0)}>hey</text> -->
+        <g transform="translate({xScale(tick) - xDiff}, {height / 6 - xDiff})">
+          <path
+            d={arrowPath}
+            style={`transform: scale(0.07)`}
+            stroke="#232f3e"
+            stroke-width="3"
+            fill="#232f3e"
+          />
+        </g>
+      {:else if tick === 0}
+        <StackedRects
+          height={height / 2.75}
+          {numCol}
+          {numRects}
+          x={xScale(tick) - xDiff}
+          fillRule={() => {
+            return "#232f3e";
+          }}
         />
-      </Svg>
-    </LayerCake>
-  </div>
+      {:else}
+        <!-- {console.log("tick", (tick - 2)} -->
+        <!-- fillRule={fillRule(d, tick)} -->
+        <!-- fillRule={(d) => {
+          if (d > 59) return "#ffad97";
+          if (d >= 15 * (tick - 2) && d < 15 * (tick - 2) + 15)
+            return "#f46ebb";
+          return "#003181";
+        }} -->
+
+        <StackedRects
+          height={height / 2.75}
+          {numCol}
+          {numRects}
+          x={xScale(tick) - xDiff}
+          {fillRule}
+        />
+      {/if}
+
+      <!-- x-ticks -->
+      {#each xScale.ticks() as tick}
+        <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
+          <line
+            class="axis-line"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2={-height + $margin.bottom + $margin.top}
+            stroke="black"
+            stroke-dasharray="4"
+          />
+        </g>
+      {/each}
+    {/each}
+    <!-- title -->
+    <!-- <text class="title-text" x="0" y={$margin.top} text-anchor="middle"
+      >Validation Set Approach</text
+    > -->
+  </svg>
 </div>
 <br />
 <br />
@@ -91,45 +140,50 @@
 </p>
 
 <style>
-  #cv-chart {
-    margin: auto;
-    height: 58vh;
-    width: 40%;
-    margin: 1rem auto;
+  svg {
+    /* border: 1px solid black; */
   }
 
-  #chart-container {
+  #input-label {
+    font-family: var(--font-heavy);
+    font-size: 1.2rem;
+  }
+
+  .legend-text {
+    font-family: var(--font-heavy);
+  }
+
+  #cv-chart {
     margin: auto;
-    height: 58vh;
-    width: 100%;
+    max-height: 80vh;
+    width: 90%;
     margin: 1rem auto;
+    max-width: 1600px;
+    /* border: 2px solid black; */
+  }
+
+  #input-container {
+    max-width: 600px;
+    margin: 0 auto;
   }
 
   /* ipad */
   @media screen and (max-width: 950px) {
     #cv-chart {
-      height: 55vh;
+      max-height: 55vh;
       width: 85%;
-      margin: 1rem auto;
-    }
-    #chart-container {
-      margin: auto;
-      height: 48vh;
-      width: 100%;
       margin: 1rem auto;
     }
   }
   /* mobile */
   @media screen and (max-width: 750px) {
-    #cv-chart {
-      height: 55vh;
-      width: 95%;
-      margin: 1rem auto;
+    ul {
+      font-size: 18px;
+      max-width: 80%;
     }
-    #chart-container {
-      margin: auto;
-      height: 48vh;
-      width: 100%;
+    #cv-chart {
+      max-height: 55vh;
+      width: 95%;
       margin: 1rem auto;
     }
   }

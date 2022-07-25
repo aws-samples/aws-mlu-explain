@@ -1,6 +1,6 @@
 <script>
-  export let aiLogoColor = "#f46ebb";
-  export let robotLogoColor = "#232F3E";
+  export let aiLogoColor = "black";
+  export let robotLogoColor = "black";
 </script>
 
 <div id="intro-icon" style="--ai-color: {aiLogoColor}">
@@ -76,7 +76,7 @@
     align-items: center;
   }
   .logo {
-    color: var(--squid-ink);
+    color: var(--primary);
     letter-spacing: 2px;
     width: 12rem;
   }

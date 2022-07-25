@@ -1,34 +1,20 @@
 <script>
-  import { scalePoint, scaleOrdinal } from "d3-scale";
-  import { range } from "d3-array";
-  import { LayerCake, Svg } from "layercake";
-  import ForcePackCircles from "../../scripts/forcePackCircles.svelte";
+  import { scaleLinear, scaleBand } from "d3-scale";
+  import { margin } from "../store.js";
+  import { arrowPath } from "../arrowPath";
+  import StackedRects from "./StackedRects.svelte";
 
-  // these don't matter, but make the stretching less obvious at load
-  let height = 500;
   let width = 500;
-  // responsive margins
-  const mobile = window.innerWidth <= 700;
-  const margin = {
-    top: mobile ? 40 : 50,
-    bottom: mobile ? 10 : 25,
-    left: mobile ? 0 : 80,
-    right: mobile ? 0 : 10,
-  };
-
-  const xKey = "fold";
-  const yKey = "subFold";
-  const zKey = "category";
-
-  let foldsCount = 5;
-  let radius = 10;
-  let datasetSize = 100;
-  let manyBodyStrength = 0.1;
-  let xStrength = 0.5;
-  let yStrength = 0.1;
+  let height = 500;
+  const nSplits = 6;
+  $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
+  $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
+  $: xDiff = width / ((nSplits + 1) * 4);
 </script>
 
-<h1 class="body-header">K-Folds Cross-Validation</h1>
+<h1 class="body-header">
+  <span class="section-arrow">&gt; </span> K-Folds Cross-Validation
+</h1>
 <p class="body-text">
   Rather than worrying about which split of data to use for training versus
   validation, we’ll use them all in turn. Our strategy will be to iteratively
@@ -40,39 +26,87 @@
   fold will be used for evaluation. This process will be repeated on our data k
   times, using a different fold for the validation set at each iteration. This
   process is known as *k-folds cross validation*, and requires re-fitting our
-  data k times (once for each fold):
+  data k times (once for each fold).
+</p>
+<br />
+<p class="body-text">
+  Below we show the process for K=4 folds of our data. Note that the test data
+  always remains untouched (after all, it's the final hold out set). However, we
+  continously splice the training data into folds.
 </p>
 <br />
 
 <br />
 
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <LayerCake
-    x={xKey}
-    y={yKey}
-    z={zKey}
-    xScale={scalePoint()}
-    xDomain={range(0, foldsCount + 2, 1)}
-    xRange={[0, width - margin.right]}
-    yScale={scalePoint()}
-    yDomain={range(0, foldsCount + 2, 1)}
-    yRange={[height - margin.bottom, margin.top]}
-    zScale={scaleOrdinal()}
-    zDomain={["test", "train", "validate"]}
-    zRange={["limegreen", "darkslateblue", "hotpink"]}
-  >
-    <Svg>
-      <ForcePackCircles
-        {manyBodyStrength}
-        {xStrength}
-        {yStrength}
-        {datasetSize}
-        {foldsCount}
-        {radius}
-        nodeStroke="#000"
-      />
-    </Svg>
-  </LayerCake>
+  <svg {width} height={height + $margin.top + $margin.bottom}>
+    <!-- legend -->
+    <g class="g-tag" transform="translate({width / 2 - 102}, {0})">
+      <rect x={0} y="3" fill="#003181" width="12" height="12" />
+      <text class="legend-text" x={15} y="15">Train</text>
+      <rect x={65} y="3" fill="#f46ebb" width="12" height="12" />
+      <text class="legend-text" x={80} y="15">Validation</text>
+      <rect x={170} y="3" fill="#ffad97" width="12" height="12" />
+      <text class="legend-text" x={185} y="15">Test</text>
+    </g>
+
+    <!-- x-ticks -->
+    {#each [...Array(nSplits).keys()] as tick}
+      {#if tick === 1}
+        <g transform="translate({xScale(tick) - xDiff}, {yScale(0) - xDiff})">
+          <path
+            d={arrowPath}
+            style={`transform: scale(0.1)`}
+            stroke="#232f3e"
+            stroke-width="3"
+            fill="#232f3e"
+          />
+        </g>
+      {:else if tick === 0}
+        <StackedRects
+          {height}
+          numCol="3"
+          numRects={66}
+          x={xScale(tick) - xDiff}
+          fillRule={() => {
+            return "#232f3e";
+          }}
+        />
+      {:else}
+        <StackedRects
+          {height}
+          numCol="3"
+          numRects={66}
+          x={xScale(tick) - xDiff}
+          fillRule={(d) => {
+            if (d > 59) return "#ffad97";
+            if (d >= 15 * (3 - (tick - 2)) && d < 15 * (3 - (tick - 2)) + 15)
+              return "#f46ebb";
+            return "#003181";
+          }}
+        />
+      {/if}
+
+      <!-- x-ticks -->
+      <!-- {#each xScale.ticks() as tick}
+        <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
+          <line
+            class="axis-line"
+            x1="0"
+            x2="0"
+            y1="0"
+            y2={-height + $margin.bottom + $margin.top}
+            stroke="black"
+            stroke-dasharray="4"
+          />
+        </g>
+      {/each} -->
+    {/each}
+    <!-- title -->
+    <!-- <text class="title-text" x="0" y={$margin.top} text-anchor="middle"
+      >Validation Set Approach</text
+    > -->
+  </svg>
 </div>
 <br /><br />
 <p class="body-text">
@@ -89,17 +123,25 @@
 </p>
 
 <style>
+  svg {
+    /* border: 1px solid black; */
+  }
+
+  .legend-text {
+    font-family: var(--font-heavy);
+  }
   #cv-chart {
     margin: auto;
-    height: 48vh;
-    width: 50%;
+    max-height: 50vh;
+    width: 40%;
     margin: 1rem auto;
+    /* border: 2px solid black; */
   }
 
   /* ipad */
   @media screen and (max-width: 950px) {
     #cv-chart {
-      height: 55vh;
+      max-height: 55vh;
       width: 85%;
       margin: 1rem auto;
     }
@@ -107,7 +149,7 @@
   /* mobile */
   @media screen and (max-width: 750px) {
     #cv-chart {
-      height: 55vh;
+      max-height: 55vh;
       width: 95%;
       margin: 1rem auto;
     }

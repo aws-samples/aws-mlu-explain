@@ -3,7 +3,8 @@
 
 <section>
   <h1 class="body-header">
-    Selecting K and The Bias Variance Tradeoff - It’s Complicated
+    <span class="section-arrow">&gt; </span> Selecting K and The Bias Variance Tradeoff
+    - It’s Complicated
   </h1>
   <p class="body-text">
     Let's start first with how k affects bias. Recall that the Validation Set

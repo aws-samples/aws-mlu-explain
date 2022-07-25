@@ -44,8 +44,8 @@
 
     <br /><br />AUC ranges in value from 0 to 1, with higher numbers indicating
     better performance. A perfect classifier will have an AUC of 1, while a
-    perfectly random classifier an AUC of 0.5. A model that always predicts that a
-    negative sample is more likely to have a positive label than a positive
+    perfectly random classifier an AUC of 0.5. A model that always predicts that
+    a negative sample is more likely to have a positive label than a positive
     sample will have AUC of 0, indicating severe failure on the modeling side.
     Scores in the range [0.5, 1] imply good performance, while anything under
     0.5 indicates very poor performance.
@@ -187,16 +187,16 @@
     In other words, if you were to randomly select an observation belonging to the
     positive class and an observation belonging to the negative class, the AUC tells
     us the probability that the model will assign a higher score to the positive
-    class. This interpretation helps qualify the AUC: A model that always predicts that
-    a negative sample is more likely to have a positive label than a positive sample
-    will have AUC of 0. If the predicted probabilities are random, it will be 0.5.
-    Finally if the model always predicts a positive sample is more likely to have
-    a positive label than a negative sample, then it will have an AUC of 1. This
-    strategy also provides a very easy method to estimate the AUC: simply tally up
-    the proportion of correctly ranked positive-negative pairs! And what's even coolor,
-    it has been shown that this method of estimating the AUC is equivalent to a popular
-    nonparametric statistical test: the Wilcoxon-Mann-Whitney test (see Mason and
-    Graham in the resources to learn more).
+    class. This interpretation helps qualify the AUC: A model that always predicts
+    that a negative sample is more likely to have a positive label than a positive
+    sample will have AUC of 0. If the predicted probabilities are random, it will
+    be 0.5. Finally if the model always predicts a positive sample is more likely
+    to have a positive label than a negative sample, then it will have an AUC of
+    1. This strategy also provides a very easy method to estimate the AUC: simply
+    tally up the proportion of correctly ranked positive-negative pairs! And what's
+    even cooler, it has been shown that this method of estimating the AUC is equivalent
+    to a popular nonparametric statistical test: the Wilcoxon-Mann-Whitney test (see
+    Mason and Graham in the resources to learn more).
   </p>
 </section>
 

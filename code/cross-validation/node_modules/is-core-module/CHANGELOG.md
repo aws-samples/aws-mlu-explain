@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.9.0](https://github.com/inspect-js/is-core-module/compare/v2.8.1...v2.9.0) - 2022-04-19
+
+### Commits
+
+- [New] add `node:test`, in node 18+ [`f853eca`](https://github.com/inspect-js/is-core-module/commit/f853eca801d0a7d4e1dbb670f1b6d9837d9533c5)
+- [Tests] use `mock-property` [`03b3644`](https://github.com/inspect-js/is-core-module/commit/03b3644dff4417f4ba5a7d0aa0138f5f6b3e5c46)
+- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `aud`, `auto-changelog`, `tape` [`7c0e2d0`](https://github.com/inspect-js/is-core-module/commit/7c0e2d06ed2a89acf53abe2ab34d703ed5b03455)
+- [meta] simplify "exports" [`d6ed201`](https://github.com/inspect-js/is-core-module/commit/d6ed201eba7fbba0e59814a9050fc49a6e9878c8)
+
 ## [v2.8.1](https://github.com/inspect-js/is-core-module/compare/v2.8.0...v2.8.1) - 2022-01-05
 
 ### Commits

@@ -7,7 +7,7 @@
 
     const a1 = annotate(n1, {
       type: "box",
-      color: "#f46ebb",
+      // color: "#f46ebb",
       strokeWidth: 5,
       iterations: 4,
       multiline: true,
@@ -22,7 +22,7 @@
 
 <section id="intro">
   <h1 id="intro-hed" class="title-cv">
-    <span id="title-cv">K-Fold<br />Cross Validation</span>
+    <span id="title-cv">Cross Validation</span>
   </h1>
   <h1 class="intro-sub">More is Less is More is Less</h1>
   <h3 id="intro__date">
@@ -48,12 +48,12 @@
     text-transform: uppercase;
     max-width: 100%;
     margin: auto;
-    color: var(--squid-ink);
+    color: var(--default);
   }
 
   .intro-sub {
     font-size: 1.4rem;
-    color: var(--squid-ink);
+    color: var(--default);
     text-align: center;
     margin: 1rem;
     opacity: 0.75;
@@ -63,7 +63,7 @@
 
   #intro__date {
     font-size: 1.1rem;
-    color: var(--squid-ink);
+    color: var(--default);
     margin: 0px;
     margin-top: 15px;
     padding-bottom: 0px;
@@ -74,7 +74,7 @@
   }
 
   #intro__date a {
-    color: var(--squid-ink);
+    color: var(--primary);
     text-decoration: underline;
   }
 
