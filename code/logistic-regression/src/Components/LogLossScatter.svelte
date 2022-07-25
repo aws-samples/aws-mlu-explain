@@ -52,9 +52,8 @@
   $: {
     let selected = document.getElementById("true-select");
 
-    console.log(selected)
+    console.log(selected);
   }
-
 </script>
 
 <div id="loss-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
@@ -145,14 +144,15 @@
         class="example-circle"
         r="10"
         cx={xScale($llProbability)}
-        cy={$yVal ? yScale(-Math.log(1-$llProbability)) : yScale(-Math.log($llProbability))}
+        cy={$yVal
+          ? yScale(-Math.log(1 - $llProbability))
+          : yScale(-Math.log($llProbability))}
         fill="var(--sky)"
         opacity="1"
       />
     </g>
 
     <!-- cy={yScale(lossValueY0(Math.round($llProbability * 100) - 1))} -->
-
 
     <!-- <script type="text/javascript">
       var select = document.getElementById("true-select");
@@ -205,8 +205,12 @@
     <text
       class="loss-text"
       x={xScale($llProbability) + 10}
-      y={$yVal ? yScale(-Math.log(1-$llProbability)) : yScale(-Math.log($llProbability))}
-      >{formatter_loss($yVal ? -Math.log(1-$llProbability) : -Math.log($llProbability))}</text
+      y={$yVal
+        ? yScale(-Math.log(1 - $llProbability))
+        : yScale(-Math.log($llProbability))}
+      >{formatter_loss(
+        $yVal ? -Math.log(1 - $llProbability) : -Math.log($llProbability)
+      )}</text
     >
   </svg>
 </div>
@@ -217,7 +221,7 @@
   }
 
   #loss-chart {
-    width: 100%;
+    width: 600px;
     max-height: 98%;
   }
 

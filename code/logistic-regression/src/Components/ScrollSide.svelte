@@ -31,7 +31,7 @@
       scatterClass.hideCurve();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("0")
+      console.log("0");
     },
     1: () => {
       // points appear
@@ -39,8 +39,7 @@
       scatterClass.showPoints();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("1")
-
+      console.log("1");
     },
 
     2: () => {
@@ -49,8 +48,7 @@
       scatterClass.showPoints();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("2")
-
+      console.log("2");
     },
     3: () => {
       // decision boundary appears
@@ -59,8 +57,7 @@
       scatterClass.showBoundary();
       scatterClass.showExample();
       // $yPoss = 0.5;
-      console.log("3")
-
+      console.log("3");
     },
   };
 
@@ -162,7 +159,7 @@
           <br /><br />
 
           <div id="input-container">
-            <p>Temperature: {$Temperature} Degrees Fahrenheit </p>
+            <p>Temperature: {$Temperature} Degrees Fahrenheit</p>
             <input
               type="range"
               min="20"
@@ -297,7 +294,7 @@
     }
 
     .steps-container {
-      pointer-events: none;
+      /* pointer-events: none; */
     }
 
     .charts-container {
@@ -308,7 +305,7 @@
 
     .step {
       height: 130vh;
-      background: var(--bg);
+      background: transparent;
       color: var(--squidink);
     }
 

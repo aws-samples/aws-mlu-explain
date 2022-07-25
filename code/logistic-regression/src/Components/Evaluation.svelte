@@ -72,7 +72,7 @@
       </p>
       <br /><br />
 
-        <!-- <div class="input-container">
+      <!-- <div class="input-container">
           <label for="true-select" class="float-left"
             >Select true value for y:</label
           >
@@ -86,12 +86,9 @@
             <option value={false}>y = 1</option>
           </select>
         </div> -->
-        <div class="input-container">
-          <label for="true-select"
-            >Select true value for y:</label
-          >
-          <div class="container">
-
+      <div class="input-container">
+        <label for="true-select">Select true value for y:</label>
+        <div class="container">
           <Select
             name="true-select"
             id="true-select"
@@ -100,8 +97,8 @@
             on:clear={handleClear}
             bind:value={chosen}
           />
-          </div>
         </div>
+      </div>
       <div id="probability-slider">
         <div class="input-container">
           <label for="slider1" class="float-left">
@@ -258,8 +255,8 @@
   }
 
   .container {
-		width: 100%;
-	}
+    width: 100%;
+  }
 
   /* mobile */
   @media screen and (max-width: 950px) {
@@ -269,8 +266,7 @@
       margin: auto;
       max-width: 100%;
       width: 100%;
-      /* border: 1px solid black; */
-      height: 70vh;
+      height: 85vh;
       max-height: 100vh;
     }
 

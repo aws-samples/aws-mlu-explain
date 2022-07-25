@@ -63,9 +63,9 @@
 <div id="gd-container">
   <div id="equations-container">
     <p class="body-text">
-      Let's see how Gradient Descent works for our logistic regression
-      model. We'll use the algorithm to identify which values for our bias and
-      weight we should select. Click the buttons to run 1, 10, 50, or 100 steps of
+      Let's see how Gradient Descent works for our logistic regression model.
+      We'll use the algorithm to identify which values for our bias and weight
+      we should select. Click the buttons to run 1, 10, 50, or 100 steps of
       gradient descent, and see the curve update live. The error for each
       iteration is shown in the bottom error chart.
     </p>
@@ -118,13 +118,14 @@
     </div>
     <div id="equation-math">
       <div class="input-container">
-      <label for="equation-math" class="float-left">Our Model: </label>
-      {@html katexify(
-        `\\begin{aligned} P(Y=1|x) = \\frac{1}{1 + e^{-(${$gdWeight}x${$gdBias < 0 ? "" : "+"}${$gdBias})}} \\end{aligned}`
-      )}
+        <label for="equation-math" class="float-left">Our Model: </label>
+        {@html katexify(
+          `\\begin{aligned} P(Y=1|x) = \\frac{1}{1 + e^{-(${$gdWeight}x${
+            $gdBias < 0 ? "" : "+"
+          }${$gdBias})}} \\end{aligned}`
+        )}
       </div>
     </div>
-  
   </div>
   <div id="charts-container">
     <div id="gd-chart-regression">
@@ -174,7 +175,6 @@
   #equation-math {
     color: var(--squidink);
     justify-content: center;
-
   }
 
   #buttons-container {
@@ -299,9 +299,7 @@
       margin: auto;
       max-width: 100%;
       width: 100%;
-      /* border: 1px solid black; */
-      height: 70vh;
-      max-height: 100vh;
+      height: 90vh;
     }
 
     #charts-container {
