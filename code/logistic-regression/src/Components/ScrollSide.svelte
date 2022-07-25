@@ -116,7 +116,7 @@
 <section>
   <div class="section-container">
     <div class="steps-container">
-      <div class="step" data-index="0" />
+      <!-- <div class="step" data-index="0" /> -->
       <div class="step" data-index="1">
         <div class="step-content">
           <p>
@@ -162,7 +162,7 @@
           <br /><br />
 
           <div id="input-container">
-            <p>Temperature: {$Temperature}</p>
+            <p>Temperature: {$Temperature} Degrees Fahrenheit </p>
             <input
               type="range"
               min="20"
@@ -228,10 +228,11 @@
   }
 
   .step {
-    height: 110vh;
+    height: 100vh;
     display: flex;
     place-items: center;
     justify-content: center;
+    background: transparent;
   }
 
   .step-content {

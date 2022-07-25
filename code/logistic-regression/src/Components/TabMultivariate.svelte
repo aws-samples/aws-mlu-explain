@@ -29,27 +29,21 @@
   <i>multivariate regression model</i>. In this example, we model the
   probability of a rainless day as a function of temperature and whether or not
   it is foggy.
-  <br /><br />The intercept, 78, represents the predicted housing price for
-  houses with all {@html katexify(`xi = 0`, false)}: it represents the cost of
-  houses with no pools and a square-footage of zero.<span
-    class="info-tooltip"
-    title="Because this value doesn't make much intuitive sense, it's common for models to be transformed and standardized before carrying out a regression model."
-    use:tooltip
-  >
-    [&#8505;]
-  </span>
-  <br /><br /> The coefficient of {@html katexify(`has\\_pool`, false)}, 400,
+  <br /><br />The intercept represents the predicted probability of a rainless
+  day for Days with all {@html katexify(`x_i = 0`, false)}: it represents the
+  probability for days without fog and with a temperature of zero degrees
+  Fahrenheit.
+  <br /><br /> The weight {@html katexify(`\\beta_1`, false)} is the change in the
+  log odds ratio for a rainless day per unit change in temperature, and the weight
+  {@html katexify(`\\beta_2`, false)} is the change in the log odds ratio for a foggy
+  day relative to a non-foggy day.
+
+  <!-- <br /><br /> The coefficient of {@html katexify(`foggy`, false)}
   represents the average expected difference in houses of the same size (in
-  sqft) that differed in whether or not they had a pool.<span
-    class="info-tooltip"
-    title="In other words, we expect, on average, houses of the same size to cost 400 more if they have a pool than if they do not."
-    use:tooltip
-  >
-    [&#8505;]
-  </span>
+  sqft) that differed in whether or not they had a pool.
   <br /><br />The coefficient of {@html katexify(`sqft`, false)}, 12, represents
   the average expected difference in housing price for houses that have the same
-  value of {@html katexify(`has\\_pool`, false)} but differ in size by one square-foot.
+  value of {@html katexify(`has\\_pool`, false)} but differ in size by one square-foot. -->
 </p>
 
 <style>

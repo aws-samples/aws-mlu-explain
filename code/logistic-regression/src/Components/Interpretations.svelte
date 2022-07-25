@@ -23,17 +23,14 @@
   <br /><br />
   <p class="body-text">
     To understand log-odds, we must first understand odds. Odds are calculated
-    as p/(1-p). This gives the ratio of the probability of a rainless day to
+    as {@html katexify("\\frac{p}{1-p}")}. This gives the ratio of the probability of a rainless day to
     that of a rainy day. Say that the probability of a rainless day is 0.75.
     This implies that the probability of a rainy day is 0.25. The odds would
-    then be 0.75/0.25 = 3, which means that the odds of a rainless day are 3 to
-    1. If the probability of rain is 0.5, then the odds would be 0.5/0.5 = 1,
+    then be {@html katexify("\\frac{0.75}{0.25} = 3")}, which means that the odds of a rainless day are 3 to
+    1. If the probability of rain is 0.5, then the odds would be {@html katexify("\\frac{0.5}{0.5} = 1")},
     meaning that the odds of a rainless day are 1 to 1, so rain and no rain are
     equally likely. Taking the log of the odds yield the log-odds, and taking
-    ratios of log-odds yields log-odds ratios. Now that we understand log-odds a
-    bit more, we can discuss how to interpret the models. Since the coefficients
-    are on the log-odds scale, we can transform them to the odds scale by
-    exponentiating so that they are easier to interpret.
+    ratios of log-odds yields log-odds ratios.
   </p>
   <br /><br />
   <p class="body-text">

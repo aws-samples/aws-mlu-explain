@@ -12,7 +12,10 @@
   {@html katexify(
     `\\begin{aligned} P(Y=1|x) = \\frac{1}{1+e^{-(\\beta_0 + \\beta_1 * x)}} \\end{aligned}`,
     false
-  )} where {@html katexify(`\\beta_1 \\in \\llbracket \\Reals \\rrbracket`, false)}
+  )} where {@html katexify(
+    `\\beta_1 \\in \\llbracket \\Reals \\rrbracket`,
+    false
+  )}
 </p>
 <br />
 <p class="body-text">
@@ -24,15 +27,14 @@
 </p>
 <br />
 <p class="body-text">
-  <span class="bold">Interpretation</span>:
-  This model describes the probability of a rainless day across temperatures (measured
-  in degrees Fahrenheit). 
+  <span class="bold">Interpretation</span>: This model describes the probability
+  of a rainless day across temperatures (measured in degrees Fahrenheit).
   <br /><br />
   The weight {@html katexify(`\\beta_1`, false)} is the change in the log odds ratio
   for Y per unit change in X. When exponentiating the weight, this becomes the change
   in the odds ratio for Y per unit change in X. In other words, the odds are multiplied
   by e^{@html katexify(`\\beta_1`, false)}. Therefore, for a coefficient of 0.7,
-  the exponentiated value is exp(0.7) = 2.01, which indicates that on average,
+  the exponentiated value is {@html katexify(`e^{0.7}`, false)} = 2.01, which indicates that on average,
   for an increase of 1 degree in temperature, the odds that the day will be
   rainless multiplies by 2.01 (i.e. approximately doubles).
   <br /><br />
@@ -41,8 +43,10 @@
   day by using the following calculation:
   {@html katexify(`p = \\frac{e^{b}}{1 + e^{b}}`, false)}
   <br /><br />
-  If the intercept coefficient is 2, this means that there is a p = e^2/(1+e^2) =
-  0.88 probability that it will be a rainless degree at 0 degrees Fahrenheit.
+  If the intercept coefficient is 2, this means that there is a {@html katexify(
+    `p = \\frac{e^{2}}{1 + e^{2}} = 0.88`,
+    false
+  )} probability that it will be a rainless degree at 0 degrees Fahrenheit.
   <!-- <span
     class="info-tooltip"
     title="Because this value doesn't make much intuitive sense, it's common for models to be transformed and standardized before carrying out a regression model."

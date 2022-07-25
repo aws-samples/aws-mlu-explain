@@ -4,7 +4,6 @@
   import katexify from "../katexify";
   import GradientDescentScatterplot from "./GradientDescentScatterplot.svelte";
   import GradientDescentErrorPlot from "./GradientDescentErrorPlot.svelte";
-  import Hidden from "./Hidden.svelte";
 
   // math equations
   const math1 = "ax^2+bx+c=0";
@@ -58,18 +57,17 @@
   Because the gradient calculates where the function is increasing, going in the
   opposite direction leads us to the minimum of our function. In this manner, we
   can repeatedly update our model's cofficients such that we eventually reach the
-  minimum of our error function and obtain a line that fits our data well [i] mention
-  global vs local optima.
+  minimum of our error function and obtain a sigmoid curve that fits our data well.
 </p>
 <br /><br />
 <div id="gd-container">
   <div id="equations-container">
     <p class="body-text">
-      Let's see how Gradient Descent works directly for our linear regression
+      Let's see how Gradient Descent works for our logistic regression
       model. We'll use the algorithm to identify which values for our bias and
-      weight we should select. Click the buttons to run 1, 10, or 50 steps of
-      gradient descent, and see the line update live. The error for each
-      iteration will be shown in the bottom error chart.
+      weight we should select. Click the buttons to run 1, 10, 50, or 100 steps of
+      gradient descent, and see the curve update live. The error for each
+      iteration is shown in the bottom error chart.
     </p>
     <div id="buttons-container">
       <button on:click={() => gdScatterClass.runGradientDescent(1)}
@@ -81,6 +79,9 @@
       <button on:click={() => gdScatterClass.runGradientDescent(50)}
         >50 Steps</button
       >
+      <button on:click={() => gdScatterClass.runGradientDescent(100)}
+        >100 Steps</button
+      >
     </div>
     <div id="weight-slider">
       <div class="input-container">
@@ -89,8 +90,8 @@
         </label>
         <input
           type="range"
-          min="-5"
-          max="20"
+          min="-3"
+          max="3"
           step=".01"
           bind:value={$gdWeight}
           class="slider"
@@ -108,7 +109,7 @@
           type="range"
           min="-50"
           step="-1"
-          max="16"
+          max="10"
           bind:value={$gdBias}
           class="slider"
           id="slider2"
@@ -116,10 +117,14 @@
       </div>
     </div>
     <div id="equation-math">
-      Our model: {@html katexify(
-        `P(Y=1|x) = \\frac{1}{1 + e^{-(${$gdWeight}x${$gdBias < 0 ? "" : "+"}${$gdBias})}}`
+      <div class="input-container">
+      <label for="equation-math" class="float-left">Our Model: </label>
+      {@html katexify(
+        `\\begin{aligned} P(Y=1|x) = \\frac{1}{1 + e^{-(${$gdWeight}x${$gdBias < 0 ? "" : "+"}${$gdBias})}} \\end{aligned}`
       )}
+      </div>
     </div>
+  
   </div>
   <div id="charts-container">
     <div id="gd-chart-regression">
@@ -159,15 +164,17 @@
   }
 
   #equations-container {
-    text-align: center;
+    text-align: left;
     /* display: flex; */
     flex-direction: column;
     /* border: 1px solid red; */
-    /* justify-content: center; */
+    justify-content: center;
   }
 
   #equation-math {
     color: var(--squidink);
+    justify-content: center;
+
   }
 
   #buttons-container {
@@ -193,9 +200,9 @@
   }
 
   button {
-    background-color: var(--smile); /* Green */
+    background-color: var(--secondary); /* Green */
     border: none;
-    color: white;
+    color: var(--paper);
     padding: 8px 16px;
     text-align: center;
     text-decoration: none;
@@ -203,6 +210,7 @@
     font-size: 14px;
     margin: 4px 2px;
     cursor: pointer;
+    opacity: 0.9;
   }
 
   button:hover {

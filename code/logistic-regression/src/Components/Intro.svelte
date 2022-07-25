@@ -1,9 +1,9 @@
 <script>
   import katexify from "../katexify";
 
-  const sigmoid = "P(Y=1|X) = sigmoid(z) = \\frac{1}{1+e^{-z}}";
+  const sigmoid = "\\begin{aligned} P(Y=1|X) = \\text{sigmoid}(z) = \\frac{1}{1+e^{-z}} \\end{aligned}";
   const z_eq =
-    "z = X*\\beta = \\beta_0 + \\beta_1 * x_1 + \\beta_2*x_2 + ... + \\beta_n*x_n";
+    "\\begin{aligned} z = X*\\beta = \\beta_0 + \\beta_1 * x_1 + \\beta_2*x_2 + ... + \\beta_n*x_n \\end{aligned}";
 </script>
 
 <section>

@@ -12,13 +12,12 @@
   let height = 500;
   const margin = { top: 50, right: 40, bottom: 50, left: 70 };
 
-  const colors = ["#ff9900", "#003181"];
+  const colors = ["#003181", "#ff9900"];
   const labels = ["Rainy Day", "Rainless Day"];
   const classSet = new Set(scatterData.map((d) => d.Weather));
 
   const formatter = format(".1f");
 
-  // const sigmoidEq = (d) => 1 / (1 + Math.exp(-d));
   const arrows = [
     "M0.200275 13.2782C0.200275 12.4153 0.89983 11.7157 1.76278 11.7157H23.6378C24.5007 11.7157 25.2003 12.4153 25.2003 13.2782C25.2003 14.1411 24.5007 14.8407 23.6378 14.8407H1.76278C0.89983 14.8407 0.200275 14.1411 0.200275 13.2782Z",
     "M11.5954 1.23584C12.2056 0.62565 13.1949 0.62565 13.8051 1.23584L24.7426 12.1733C25.3528 12.7835 25.3528 13.7729 24.7426 14.3831L13.8051 25.3206C13.1949 25.9307 12.2056 25.9307 11.5954 25.3206C10.9852 24.7104 10.9852 23.721 11.5954 23.1108L21.4281 13.2782L11.5954 3.44555C10.9852 2.83536 10.9852 1.84604 11.5954 1.23584Z",
@@ -183,7 +182,7 @@
           cx={xScale(item.Temperature)}
           cy={yScale(item.Weather)}
           fill={colorScale(item.Weather)}
-          opacity="0.9"
+          opacity="1"
         />
       {/each}
 

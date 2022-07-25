@@ -2,7 +2,7 @@
   import { tweened } from "svelte/motion";
   import { linear } from "svelte/easing";
   import { line } from "d3-shape";
-  import { scaleLinear } from "d3-scale";
+  import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { format } from "d3-format";
   import { scatterData } from "../datasets.js";
   import { max, min } from "d3-array";
@@ -42,23 +42,20 @@
         };
       })
     );
-    console.log($dataset)
-
-    $dataset.sort((a, b) => b.Temperature - a.Temperature)
-    console.log($dataset)
-
+    // $dataset.sort((a, b) => b.Temperature - a.Temperature)
   }
 
-  const margin = {
-    top: 12,
-    bottom: 3,
-    left: 40,
-    right: 30,
-  };
+  const margin = { top: 40, right: 30, bottom: 30, left: 50 };
 
   // these don't matter, but make the stretching less obvious at load
   let height = 500;
   let width = 500;
+
+  const colors = ["#ff9900", "#003181"];
+  const labels = ["Rainy Day", "Rainless Day"];
+  const classSet = new Set(scatterData.map((d) => d.Weather));
+
+  $: colorScale = scaleOrdinal().domain(classSet).range(colors);
 
   // label formatter
   const formatter_x = format(".0f");
@@ -68,13 +65,29 @@
     $gdIteration += 1;
     // recalculate error if changes
     let errors = scatterData.map((d) => {
-      return (d.Weather - sigmoidEq($gdWeight * d.Temperature + $gdBias)) ** 2;
+      return (
+        -1 *
+        (d.Weather * Math.log(sigmoidEq($gdWeight * d.Temperature + $gdBias)) +
+          (1 - d.Weather) *
+            Math.log(1 - sigmoidEq($gdWeight * d.Temperature + $gdBias)))
+      );
     });
+
+    if (errors == "NaN" || errors == "Infinity") {
+      console.log("here");
+      $gdError = 0;
+    }
+
     $gdError = Number(errors.reduce((a, b) => a + b, 0));
+    $gdError = $gdError || 10000;
+
+    console.log($gdError);
+
     $gdErrors = [
       ...$gdErrors,
       {
         iteration: $gdIteration,
+        // error: $gdError !== "NaN" && $gdError !== "Infinity" ? $gdError : max($gdErrors, d => d.error),
         error: $gdError,
       },
     ];
@@ -84,8 +97,6 @@
     $gdBias;
     $gdWeight;
     $gdIteration += 1;
-
-    console.log($dataset);
   }
 
   export function runGradientDescent(iterations) {
@@ -97,6 +108,7 @@
       // update error and iterations
       $gdIteration += 1;
 
+      // update the bias term
       let biasDifference = scatterData.map((d) => {
         return d.Weather - sigmoidEq($gdWeight * d.Temperature + $gdBias);
       });
@@ -104,11 +116,11 @@
         biasDifference.reduce((a, b) => a + b, 0).toFixed(4)
       );
       $gdError = biasSum;
-      let b_gradient = (-2 / N) * biasSum;
-      const bias = $gdBias + learning_rate * b_gradient;
+      let b_gradient = (-1 / N) * biasSum;
+      const bias = $gdBias - learning_rate * b_gradient;
       $gdBias = Number(bias.toFixed(4));
 
-      // update the bias term
+      // update the weight term
       let weightDifference = scatterData.map((d) => {
         return (
           d.Temperature *
@@ -118,7 +130,7 @@
       let weightSum = Number(
         weightDifference.reduce((a, b) => a + b, 0).toFixed(4)
       );
-      let w_gradient = (-2 / N) * weightSum;
+      let w_gradient = (-1 / N) * weightSum;
       const weight = $gdWeight - learning_rate * w_gradient;
       $gdWeight = Number(weight.toFixed(4));
     }
@@ -205,6 +217,38 @@
       stroke="black"
       stroke-width="1"
     />
+
+    <!-- y-axis label -->
+    <text
+      class="axis-label"
+      text-anchor="middle"
+      transform={`translate(${15},${yScale(0.5)}) rotate(-90)`}
+    >
+      Probability
+    </text>
+
+    <!-- x-axis label -->
+    <text
+      class="axis-label"
+      text-anchor="middle"
+      x={(width + margin.left) / 2}
+      y={height}
+    >
+      Temperature (Degrees Fahrenheit)
+    </text>
+
+    <!-- legend -->
+    <g transform={`translate(${margin.left}, ${20})`}>
+      {#each labels as Weather, i}
+        <g transform={`translate(${i * 110} 0)`}>
+          <circle class="legend-circle-gd" r="5" fill={colorScale(i)} />
+          <text class="legend-text-gd" dominant-baseline="middle" x="20">
+            {labels[i]}
+          </text>
+        </g>
+      {/each}
+    </g>
+
     <!-- axis labels
       <text
         class="axis-label"
@@ -222,21 +266,21 @@
 
     <!-- chart data mappings -->
 
-    <!-- draw regression line -->
-    <path class="regression-line" d={regressionPath($dataset)} />
-
     <!-- draw circles -->
     {#each $dataset as d}
       <circle
         class="regression-circle"
-        fill="#c9208a"
-        stroke="black"
         stroke-width="1.5"
-        r="4.5"
+        r="5"
         cx={xScale(d.Temperature)}
         cy={yScale(d.Weather)}
+        fill={colorScale(d.Weather)}
+        opacity="1"
       />
     {/each}
+
+    <!-- draw regression line -->
+    <path class="regression-line" d={regressionPath($dataset)} />
   </svg>
 </div>
 
@@ -247,7 +291,6 @@
   }
 
   .regression-circle {
-    fill: var(--primary);
     stroke-width: 0;
   }
 
@@ -262,17 +305,29 @@
   }
 
   .axis-text {
+    font-family: var(--font-heavy);
     font-size: 0.7rem;
   }
 
+  .axis-label {
+    /* text-transform: uppercase; */
+    font-size: 0.7rem;
+    font-family: var(--font-heavy);
+  }
+
+  .legend-text-gd {
+    font-family: var(--font-heavy);
+    font-size: 14px;
+  }
+
   .error-text {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-family: var(--font-heavy);
     stroke-linejoin: round;
     paint-order: stroke fill;
     stroke-width: 4.5px;
     pointer-events: none;
-    stroke: #f1f3f3;
+    stroke: var(--paper);
     font-size: 0.9rem;
     letter-spacing: 2px;
   }
@@ -282,7 +337,7 @@
   }
 
   .axis-label {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-size: 0.7rem;
   }
 

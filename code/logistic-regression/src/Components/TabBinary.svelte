@@ -16,7 +16,7 @@
 </p>
 <br />
 <p class="body-text">
-  <span class="bold">Example:</span>
+  <span class="bold">Example: </span>
   {@html katexify(
     `\\begin{aligned} P(Day=Rainless|Foggy) = \\frac{1}{1+e^{-(\\beta_0 + \\beta_1 * Foggy)}} \\end{aligned}`,
     false

@@ -24,7 +24,7 @@
   
   <style>
     #tab-container {
-      max-width: 95%;
+      max-width: 75%;
       margin: auto;
       /* border: 4px solid var(--squidink); */
       border-radius: 4px;
@@ -32,7 +32,7 @@
     .box {
       margin-bottom: 10px;
       padding: 40px;
-      border: 2px solid var(--secondary);
+      border: 2px solid var(--primary);
       border-radius: 0 0 0.5rem 0.5rem;
       background: var(--paper);
       border-top: 0;
@@ -43,7 +43,7 @@
       padding-left: 0;
       margin-bottom: 0;
       list-style: none;
-      border-bottom: 2px solid var(--secondary);
+      border-bottom: 2px solid var(--primary);
     }
     li {
       margin-bottom: -2px;
@@ -61,17 +61,17 @@
     }
   
     span:hover {
-      /* border-color: #e9ecef #e9ecef var(--secondary); */
+      border-color: var(--paper) var(--paper) var(--primary);
     }
   
     li:hover {
-      color: var(--secondary);
+      color: var(--primary);
     }
   
     li.active > span {
       color: #495057;
       background-color: var(--paper);
-      border-color: var(--secondary) var(--secondary) var(--paper);
+      border-color: var(--primary) var(--primary) var(--paper);
       background: var(--paper);
     }
   </style>
