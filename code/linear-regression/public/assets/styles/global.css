@@ -78,7 +78,7 @@ body {
   max-width: var(--max-width);
   margin: 0 auto;
   text-align: left;
-  font-size: 30px;
+  font-size: 35px;
   line-height: 1.5em;
   font-family: var(--font-heavy);
   padding-top: 2rem;
@@ -135,6 +135,12 @@ p {
   color: var(--white);
   margin: 10px 4px;
   font-size: 14px;
+}
+
+hr {
+  margin: 3rem auto;
+  width: 3%;
+  border: 3px solid var(--smile);
 }
 
 /* mobile */

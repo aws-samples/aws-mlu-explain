@@ -65,10 +65,7 @@
     background-color: var(--primary);
     color: white;
   }
-  hr {
-    margin: 2.5rem auto;
-    max-width: 35rem;
-  }
+
   .resource-item {
     max-width: 600px;
     margin: 0 auto;

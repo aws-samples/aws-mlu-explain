@@ -32,7 +32,7 @@
     ])
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
-    .domain([0, $gdError < 1600 ? 1600 : $gdError + $gdError * 0.3])
+    .domain([0, $gdError < 200 ? 300 : $gdError + $gdError * 0.3])
     .range([height - margin.bottom, margin.top]);
 
   // line generator

@@ -4,7 +4,7 @@
   import { line } from "d3-shape";
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
-  import { gradientDescentData } from "../datasets.js";
+  import { mseData } from "../datasets.js";
   import { max, min } from "d3-array";
   import {
     shuffleIteration,
@@ -17,7 +17,7 @@
 
   // set tweened store for line
   const dataset = tweened(
-    gradientDescentData.map((d) => {
+    mseData.map((d) => {
       return {
         sqft: d[`sqft${$shuffleIteration}`],
         y: $mseBias + $mseWeight * d[`sqft${$shuffleIteration}`],
@@ -25,14 +25,14 @@
       };
     }),
     {
-      duration: 100,
+      duration: 200,
       easing: linear,
     }
   );
 
   // update line reactively
   $: dataset.set(
-    gradientDescentData.map((d) => {
+    mseData.map((d) => {
       return {
         sqft: d[`sqft${$shuffleIteration}`],
         y: $mseBias + $mseWeight * d[`sqft${$shuffleIteration}`],
@@ -59,7 +59,7 @@
     $shuffleIteration;
     $mseIteration += 1;
     // recalculate error if changes
-    let errors = gradientDescentData.map((d) => {
+    let errors = mseData.map((d) => {
       return (
         (d[`price${$shuffleIteration}`] -
           ($mseWeight * d[`sqft${$shuffleIteration}`] + $mseBias)) **
@@ -85,7 +85,7 @@
   export function shuffleData() {
     $shuffleIteration = ($shuffleIteration + 1) % 10;
     dataset.set(
-      gradientDescentData.map((d) => {
+      mseData.map((d) => {
         return {
           sqft: d[`sqft${$shuffleIteration}`],
           y: $mseBias + $mseWeight * d[`sqft${$shuffleIteration}`],
@@ -101,15 +101,19 @@
   // scales
   $: xScale = scaleLinear()
     .domain([
-      min(gradientDescentData, (d) => d[`sqft${$shuffleIteration}`]) - 2,
-      max(gradientDescentData, (d) => d[`sqft${$shuffleIteration}`]) + 2,
+      min($dataset, (d) => d.sqft) - 2,
+      max($dataset, (d) => d.sqft) + 2,
+      // min(mseData, (d) => d[`sqft${$shuffleIteration}`]) - 2,
+      // max(mseData, (d) => d[`sqft${$shuffleIteration}`]) + 2,
     ])
     // .domain([0, 11])
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
     .domain([
-      min(gradientDescentData, (d) => d[`price${$shuffleIteration}`]),
-      max(gradientDescentData, (d) => d[`price${$shuffleIteration}`]) + 2,
+      min($dataset, (d) => d.price) - 2,
+      max($dataset, (d) => d.price) + 2,
+      // min(mseData, (d) => d[`price${$shuffleIteration}`]),
+      // max(mseData, (d) => d[`price${$shuffleIteration}`]) + 2,
     ])
     // .domain([-1, 16])
     .range([height - margin.bottom, margin.top]);
@@ -184,33 +188,11 @@
       stroke="black"
       stroke-width="1"
     />
-    <!-- axis labels
-      <text
-        class="axis-label"
-        y={height + margin.bottom}
-        x={(width + margin.left) / 2}
-        text-anchor="middle">Size of House (sqft)</text
-      >
-      <text
-        class="axis-label"
-        y={margin.left / 4.8}
-        x={-(height / 2)}
-        text-anchor="middle"
-        transform="rotate(-90)">Housing Price ($)</text
-      > -->
 
     <!-- chart data mappings -->
     <!-- Residuals -->
     {#each $dataset as d}
       <!-- svelte-ignore component-name-lowercase -->
-      <!-- <line
-        class="residual-line"
-        x1={xScale(d.sqft)}
-        x2={xScale(d.sqft)}
-        y1={yScale(d.price)}
-        y2={yScale(d.y)}
-        stroke="black"
-      /> -->
       <rect
         class="residual-rect"
         x={d.price > d.y
@@ -256,15 +238,10 @@
     fill: none;
   }
 
-  .residual-line {
-    stroke: var(--cosmos);
-    stroke-width: 1.5;
-  }
-
   .residual-rect {
     stroke: var(--cosmos);
     fill: var(--cosmos);
-    fill-opacity: 0.25;
+    fill-opacity: 0.05;
   }
 
   .axis-label {

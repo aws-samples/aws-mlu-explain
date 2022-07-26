@@ -1,6 +1,6 @@
 <script>
   export let items = [];
-  export let activeTabValue = 3;
+  export let activeTabValue = 1;
 
   const handleClick = (tabValue) => () => (activeTabValue = tabValue);
 </script>
@@ -24,7 +24,8 @@
 
 <style>
   #tab-container {
-    max-width: 95%;
+    width: 95%;
+    max-width: 1200px;
     margin: auto;
     /* border: 4px solid var(--squidink); */
     border-radius: 4px;
@@ -34,7 +35,7 @@
     padding: 40px;
     border: 2px solid var(--smile);
     border-radius: 0 0 0.5rem 0.5rem;
-    background: var(--white);
+    background: #f1f3f3;
     border-top: 0;
   }
   ul {
@@ -69,8 +70,8 @@
 
   li.active > span {
     color: #495057;
-    background-color: var(--white);
-    border-color: var(--smile) var(--smile) var(--white);
-    background: var(--white);
+    background-color: #f1f3f3;
+    border-color: var(--smile) var(--smile) #f1f3f3;
+    background: #f1f3f3;
   }
 </style>

@@ -1,13 +1,22 @@
 <script>
   import { tweened } from "svelte/motion";
-  import { cubicInOut } from "svelte/easing";
+  import { linear } from "svelte/easing";
   import { line, curveNatural } from "d3-shape";
   import { select, selectAll } from "d3-selection";
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
   import { scatterData } from "../datasets.js";
   import { max } from "d3-array";
-  import { marginScroll, sqft, coeff, intercept, lineType } from "../store.js";
+  import {
+    showRegressionLine,
+    showResiduals,
+    marginScroll,
+    sqft,
+    coeff,
+    intercept,
+    lineType,
+  } from "../store.js";
+  import { draw } from "svelte/transition";
 
   // set tweened store for line
   const dataset = tweened(
@@ -16,7 +25,7 @@
     }),
     {
       duration: 500,
-      easing: cubicInOut,
+      easing: linear,
     }
   );
 
@@ -35,21 +44,19 @@
   const formatter = format(".2r");
 
   export function hideResidualLines() {
-    console.log("changing number");
-    selectAll(".residual-line").attr("opacity", 0);
+    // selectAll(".residual-line").attr("opacity", 0);
   }
 
   export function showResidualLines() {
-    console.log("residuals");
-    selectAll(".residual-line").attr("opacity", 1);
+    // selectAll(".residual-line").attr("opacity", 1);
   }
 
   export function showAnnotationLines() {
-    selectAll(".annotation-line").attr("opacity", 1);
+    selectAll(".annotation-line").attr("opacity", 0.5);
   }
 
   export function hideAnnotationLines() {
-    selectAll(".annotation-line").attr("opacity", 1);
+    selectAll(".annotation-line").attr("opacity", 0);
   }
 
   // scales
@@ -153,20 +160,27 @@
     <!-- chart data mappings -->
     <!-- Residuals -->
     {#each $dataset as d}
-      <!-- svelte-ignore component-name-lowercase -->
-      <line
-        class="residual-line"
-        opacity="0"
-        x1={xScale(d.sqft)}
-        x2={xScale(d.sqft)}
-        y1={yScale(d.price)}
-        y2={yScale(d.y)}
-        stroke="black"
-      />
+      {#if $showResiduals}
+        <!-- svelte-ignore component-name-lowercase -->
+        <line
+          transition:draw={{ duration: 1200 }}
+          class="residual-line"
+          x1={xScale(d.sqft)}
+          x2={xScale(d.sqft)}
+          y1={yScale(d.price)}
+          y2={yScale(d.y)}
+        />
+      {/if}
     {/each}
-    <!-- draw regression line -->
-    <path class="regression-line" d={regressionPath($dataset)} />
 
+    {#if $showRegressionLine}
+      <!-- draw regression line -->
+      <path
+        transition:draw={{ duration: 1200 }}
+        class="regression-line"
+        d={regressionPath($dataset)}
+      />
+    {/if}
     <!-- draw circles -->
     {#each $dataset as d}
       <circle
@@ -174,7 +188,7 @@
         fill="#c9208a"
         stroke="black"
         stroke-width="1.5"
-        r="6.5"
+        r="5.5"
         cx={xScale(d.sqft)}
         cy={yScale(d.price)}
       />
@@ -188,7 +202,7 @@
       stroke="black"
       opacity="0"
       cx={xScale($sqft)}
-      cy={$coeff === 25.65
+      cy={$coeff === 0.097
         ? yScale($intercept + $coeff * Math.sqrt($sqft))
         : yScale($intercept + $coeff * $sqft)}
     />
@@ -198,27 +212,28 @@
       class="annotation-line"
       x1={xScale($sqft)}
       x2={xScale($sqft)}
-      y1={$coeff === 25.65
+      y1={$coeff === 0.097
         ? yScale($intercept + $coeff * Math.sqrt($sqft))
         : yScale($intercept + $coeff * $sqft)}
       y2={yScale(0)}
       stroke="black"
       opacity="0"
     />
+
     <!-- svelte-ignore component-name-lowercase -->
     <!-- horizontal annotation line -->
     <line
       class="annotation-line"
       x1={xScale(0)}
       x2={xScale($sqft)}
-      y1={$coeff === 25.65
+      y1={$coeff === 0.097
         ? yScale($intercept + $coeff * Math.sqrt($sqft))
         : yScale($intercept + $coeff * $sqft)}
-      y2={$coeff === 25.65
+      y2={$coeff === 0.097
         ? yScale($intercept + $coeff * Math.sqrt($sqft))
         : yScale($intercept + $coeff * $sqft)}
       stroke="black"
-      opacity="1"
+      opacity="0"
     />
   </svg>
 </div>
@@ -242,12 +257,11 @@
 
   .residual-line {
     stroke: var(--cosmos);
-    stroke-width: 2.5;
-    /* stroke-dasharray: 2, 2; */
+    stroke-width: 1.5;
   }
 
   .annotation-line {
-    stroke-width: 0.5;
+    stroke-width: 1.5;
   }
 
   .axis-label {

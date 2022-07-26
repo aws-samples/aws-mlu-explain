@@ -35,138 +35,33 @@
 </p>
 <p class="body-text">
   <span class="bold">Assumption</span>: Error terms in a regression model have
-  constant variance.<span
-    class="info-tooltip"
-    title="Nonconstant variance across error terms is called 'Heteroscedasticity'."
-    use:tooltip
-  >
-    [&#8505;]
-  </span>
+  constant variance.
   <br /><br />
-  <span class="bold">Why</span>: make it difficult to gauge the true standard
-  deviation of the forecast errors, usually resulting in confidence intervals
-  that are too wide or too narrow. In particular, if the variance of the errors
-  is increasing over time, confidence intervals for out-of-sample predictions
-  will tend to be unrealistically narrow. Heteroscedasticity may also have the
-  effect of giving too much weight to a small subset of the data (namely the
-  subset where the error variance was largest) when estimating coefficients.
+  <span class="bold">Why</span>: The presence of <i>heteroscedasticity</i>
+  (unequal error variance) can make it difficult to gauge the true standard deviation
+  of the errors, which may yield confidence intervals that are too wide or too narrow.
+  It may also have the effect of giving higher weight to the subset of data that
+  has the larger error variance when estimating coefficients.
+  <span
+    class="info-tooltip"
+    title="That said, violation of the Homoscedasticity assumption is usually relatively minor, as it does not affect the information going into the predictors and how it's combined. 
+  "
+    use:tooltip
+    >[&#8505;]
+  </span>
   <br /><br />
   <span class="bold">Diagnose</span>: look at a plot of residuals versus
   predicted values and, in the case of time series data, a plot of residuals
   versus time. Be alert for evidence of residuals that grow larger either as a
-  function of time or as a function of the predicted value. To be really
-  thorough, you should also generate plots of residuals versus independent
-  variables to look for consistency there as well. Because of imprecision in the
-  coefficient estimates, the errors may tend to be slightly larger for forecasts
-  associated with predictions or values of independent variables that are
-  extreme in both directions, although the effect should not be too dramatic.
-  What you hope not to see are errors that systematically get larger in one
-  direction by a significant amount.
-
+  function of time or as a function of the predicted value.
   <br /><br />
 </p>
 
-<div id="scatter-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + margin.top + margin.bottom}>
-    <!-- x-ticks -->
-    {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="grid-line"
-          x1="0"
-          x2="0"
-          y1="0"
-          y2={-height + margin.bottom + margin.top}
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text class="axis-text" y="15" text-anchor="middle"
-          >{formatter(tick)}</text
-        >
-      </g>
-    {/each}
-    <!-- y-ticks -->
-    {#each yScale.ticks() as tick}
-      <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="grid-line"
-          x1={5}
-          x2={width - margin.right}
-          y1="0"
-          y2="0"
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text
-          class="axis-text"
-          y="0"
-          text-anchor="end"
-          dominant-baseline="middle">{formatter(tick)}</text
-        >
-      </g>
-    {/each}
-    <!-- axis lines -->
-    <!-- x -->
-    <!-- svelte-ignore component-name-lowercase -->
-    <line
-      class="axis-line"
-      y1={height - margin.bottom}
-      y2={height - margin.bottom}
-      x1={margin.left}
-      x2={width}
-      stroke="black"
-      stroke-width="1"
-    />
-    <!-- y -->
-    <!-- svelte-ignore component-name-lowercase -->
-    <line
-      class="axis-line"
-      y1={margin.top}
-      y2={height - margin.bottom}
-      x1={margin.left}
-      x2={margin.left}
-      stroke="black"
-      stroke-width="1"
-    />
-
-    <!-- <path class="outline-line" d={pricePath(scatterData)} />
-      <path class="path-line" d={pricePath(scatterData)} stroke="#c9208a" /> -->
-
-    <!-- axis labels -->
-    <text
-      class="error-axis-label"
-      y={height + margin.bottom}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">x</text
-    >
-    <text
-      class="error-axis-label"
-      y={margin.left / 3}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">y</text
-    >
-  </svg>
-</div>
 <p class="body-text">
-  <span class="bold">Fix</span>: If the dependent variable is strictly positive
-  and if the residual-versus-predicted plot shows that the size of the errors is
-  proportional to the size of the predictions (i.e., if the errors seem
-  consistent in percentage rather than absolute terms), a log transformation
-  applied to the dependent variable may be appropriate. In time series models,
-  heteroscedasticity often arises due to the effects of inflation and/or real
-  compound growth. Some combination of logging and/or deflating will often
-  stabilize the variance in this case. Stock market data may show periods of
-  increased or decreased volatility over time. This is normal and is often
-  modeled with so-called ARCH (auto-regressive conditional heteroscedasticity)
-  models in which the error variance is fitted by an autoregressive model. Such
-  models are beyond the scope of this discussion, but a simple fix would be to
-  work with shorter intervals of data in which volatility is more nearly
-  constant. Heteroscedasticity can also be a byproduct of a significant
-  violation of the linearity and/or independence assumptions, in which case it
-  may also be fixed as a byproduct of fixing those problem.
+  <span class="bold">Fix</span>: Work with shorter intervals of data.
+  Double-check assumptions of linearity and/or independence. Apply a relevant
+  transformation (e.g. a log transformation of the dependent variable). Apply
+  domain-specific fixes.
 </p>
 
 <style>
