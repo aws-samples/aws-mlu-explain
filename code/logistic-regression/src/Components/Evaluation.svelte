@@ -62,7 +62,7 @@
     <div id="equations-container">
       <p class="body-text">
         <br /><br />
-        The graph on the right shows how the Log-Loss depends on the true value for
+        This graph shows how the Log-Loss depends on the true value for
         {@html katexify("y")} and the predicted probability. You can see how as the
         probability gets closer to the true value ({@html katexify("p = 0")} when
         {@html katexify("y = 0")} and {@html katexify("p = 1")} when
@@ -115,14 +115,6 @@
           />
         </div>
       </div>
-
-      <!-- <div id="equation-math">
-        Our Model: {@html katexify(
-          `\\begin{aligned} P(Y=1|x) = \\frac{1}{1 + e^{-(${$llWeight}x${
-            $llBias < 0 ? "" : "+"
-          }${$llBias})}} \\end{aligned}`
-        )}
-      </div> -->
     </div>
     <div id="charts-container">
       <div id="ll-chart">
@@ -218,6 +210,9 @@
     -webkit-transition: 0.2s;
     transition: opacity 0.2s;
     border-color: var(--squidink);
+    vertical-align: middle;
+    margin-top: 16px;
+    
   }
 
   .slider::-webkit-slider-thumb {
@@ -233,6 +228,8 @@
   label {
     width: 100%;
     color: var(--squidink);
+    line-height:42px;
+    vertical-align: middle;
   }
 
   #equation-math {
@@ -250,8 +247,7 @@
     padding: 4px;
     border-radius: 9px;
     width: 100%;
-    text-align: center;
-    /* float: left; */
+    
   }
 
   .container {

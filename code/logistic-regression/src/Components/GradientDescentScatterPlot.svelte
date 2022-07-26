@@ -51,7 +51,7 @@
   let height = 500;
   let width = 500;
 
-  const colors = ["#ff9900", "#003181"];
+  const colors = ["#003181", "#ff9900"];
   const labels = ["Rainy Day", "Rainless Day"];
   const classSet = new Set(scatterData.map((d) => d.Weather));
 

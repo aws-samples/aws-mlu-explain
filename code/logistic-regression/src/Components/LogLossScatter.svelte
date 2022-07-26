@@ -217,7 +217,6 @@
 
 <style>
   svg {
-    /* background-color: blue; */
   }
 
   #loss-chart {

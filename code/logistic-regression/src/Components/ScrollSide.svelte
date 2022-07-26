@@ -5,47 +5,34 @@
   import Scatterplot from "./Scatterplot.svelte";
   import { scatterData } from "../datasets.js";
   import { onMount } from "svelte";
-  // import { LayerCake, Svg, Html } from "layercake";
-  // import DecisionBoundary from "./DecisionBoundary.svelte";
-  import { Temperature, DecisionBoundary } from "../data-store.js";
+  import { Temperature, DecisionBoundary, Prediction } from "../data-store.js";
 
   let scatterClass;
 
   const seriesNames = new Set();
   const seriesColors = ["#7e93ee", "#ff99ff"];
 
-  // const xKey = "xVal";
-  // const zKey = "yVal";
-  // const dataTransformed = scatterData.map((d) => {
-  //   seriesNames.add(d[zKey]);
-  //   return {
-  //     [zKey]: d[zKey],
-  //     [xKey]: +d[xKey],
-  //     xx: +d[xKey],
-  //   };
-  // });
-
   const target2event = {
     0: () => {
       scatterClass.hidePoints();
-      scatterClass.hideCurve();
-      scatterClass.hideBoundary();
-      scatterClass.hideExample();
+      // scatterClass.hideCurve();
+      // scatterClass.hideBoundary();
+      // scatterClass.hideExample();
     },
     1: () => {
       // points appear
-      scatterClass.hideCurve();
       scatterClass.showPoints();
-      scatterClass.hideBoundary();
-      scatterClass.hideExample();
+      // scatterClass.hideCurve();
+      // scatterClass.hideBoundary();
+      // scatterClass.hideExample();
     },
 
     2: () => {
       // curve appears
       scatterClass.showCurve();
       scatterClass.showPoints();
-      scatterClass.hideBoundary();
-      scatterClass.hideExample();
+      // scatterClass.hideBoundary();
+      // scatterClass.hideExample();
     },
     3: () => {
       // decision boundary appears
@@ -92,8 +79,6 @@
     });
   }, options);
 
-  // trigger events on scroll typeof lastname !== "undefined"
-  // $: if (typeof value !== "undefined") target2event[value]();
 </script>
 
 <h2 class="body-header">How It Works</h2>
@@ -176,6 +161,11 @@
               id="boundarySlider"
             />
           </div>
+
+          <br /><br />
+          <p>
+            The prediction is a {$Prediction}.
+          </p>
         </div>
       </div>
       <div class="spacer" />

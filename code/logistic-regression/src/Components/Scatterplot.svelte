@@ -6,7 +6,7 @@
   import { transition } from "d3-transition";
   import { format } from "d3-format";
   import { line } from "d3-shape";
-  import { Temperature, DecisionBoundary } from "../data-store.js";
+  import { Temperature, DecisionBoundary, Prediction } from "../data-store.js";
 
   let width = 500;
   let height = 500;
@@ -23,9 +23,6 @@
     "M11.5954 1.23584C12.2056 0.62565 13.1949 0.62565 13.8051 1.23584L24.7426 12.1733C25.3528 12.7835 25.3528 13.7729 24.7426 14.3831L13.8051 25.3206C13.1949 25.9307 12.2056 25.9307 11.5954 25.3206C10.9852 24.7104 10.9852 23.721 11.5954 23.1108L21.4281 13.2782L11.5954 3.44555C10.9852 2.83536 10.9852 1.84604 11.5954 1.23584Z",
     "M 11.5954 1.23584 C 12.2056 0.62565 13.1949 0.62565 13.8051 1.23584 L 24.7426 12.1733 C 25.3528 12.7835 25.3528 13.7729 24.7426 14.3831 L 13.8051 25.3206 C 13.1949 25.9307 12.2056 25.9307 11.5954 25.3206 C 10.9852 24.7104 10.9852 23.721 11.5954 23.1108 L 21.4281 13.2782 L 11.5954 3.44555 C 10.9852 2.83536 10.9852 1.84604 11.5954 1.23584 Z",
   ];
-
-  $: {
-  }
 
   async function loadData() {
     let weather = new Set(scatterData.map((d) => d.Weather));
@@ -60,7 +57,12 @@
 
   $: sigmoidValue = (d) => sigmoidCurve[d]["y"];
 
-  // var sigmoidValue = sigmoidCurve[0]["y"]
+  $: { if (sigmoidCurve[$Temperature-20]["y"] > $DecisionBoundary) {
+    $Prediction = "Rainless Day"
+  } else {
+    $Prediction = "Rainy Day"
+  }
+}
 
   let data = loadData();
 
@@ -202,7 +204,7 @@
         />
       </g>
       <!-- decision boundary -->
-      <g transform={`translate(${margin.left}, ${yScale($DecisionBoundary)})`}>
+      <g transform={`translate(${margin.left}, ${yScale($DecisionBoundary) - 5})`}>
         <rect
           class="boundary-line"
           stroke="var(--squidink)"
@@ -217,7 +219,7 @@
       <!-- bottom arrow -->
       <g
         class="arrow-holder"
-        transform={`translate(${margin.left + 50} ${yScale($DecisionBoundary) + 20})`}
+        transform={`translate(${margin.left + 50} ${yScale($DecisionBoundary) + 15})`}
       >
         <text 
           class="arrow-text" 
@@ -246,7 +248,7 @@
       <!-- top arrow -->
       <g
         class="arrow-holder"
-        transform={`translate(${margin.left + 50} ${yScale($DecisionBoundary) - 20})`}
+        transform={`translate(${margin.left + 50} ${yScale($DecisionBoundary) - 25})`}
       >
         <text
           class="arrow-text"
@@ -294,10 +296,14 @@
       </text>
 
       <!-- legend -->
-      <g transform={`translate(${margin.left}, ${20})`}>
+      <g transform={`translate(${margin.left}, ${10})`}>
         {#each labels as Weather, i}
-          <g transform={`translate(${i * 110} 0)`}>
-            <circle class="legend-circle" r="0" fill={colorScale(i)} />
+          <g transform={`translate(${i * 120} 0)`}>
+            <circle 
+              class="legend-circle" 
+              r="0" 
+              fill={colorScale(i)}
+              />
             <text
               class="legend-text"
               dominant-baseline="middle"
