@@ -1,6 +1,8 @@
 import { writable } from "svelte/store";
 
 export const Temperature = writable(20);
+export const DecisionBoundary = writable(0.5);
+
 export const gdWeight = writable(0.2);
 export const gdBias = writable(-10);
 export const gdIteration = writable(0);

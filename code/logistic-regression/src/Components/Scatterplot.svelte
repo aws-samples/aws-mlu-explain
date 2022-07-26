@@ -6,7 +6,7 @@
   import { transition } from "d3-transition";
   import { format } from "d3-format";
   import { line } from "d3-shape";
-  import { Temperature } from "../data-store.js";
+  import { Temperature, DecisionBoundary } from "../data-store.js";
 
   let width = 500;
   let height = 500;
@@ -41,8 +41,6 @@
   $: xScale = scaleLinear()
     .domain([
       20, 100,
-      // min(scatterData, (d) => +d.Temperature),
-      // max(scatterData, (d) => +d.Temperature),
     ])
     .range([margin.left, width - margin.right]);
 
@@ -192,8 +190,7 @@
         stroke-width="0"
       />
 
-      <!-- # make x-element a function of x-axis -->
-      <!-- cy={yScale(sigmoidEq($Temperature))}  -->
+      <!-- make x-element a function of x-axis -->
       <g transform={`translate(0, 0)`}>
         <circle
           class="example-circle"
@@ -204,17 +201,8 @@
           opacity="1"
         />
       </g>
-      <!-- svelte-ignore component-name-lowercase -->
-      <!-- <line
-        class="boundary-line"
-        stroke=var(--sky)
-        x1={margin.left}
-        x2={width - margin.right}
-        y1={yScale(0.5)}
-        y2={yScale(0.5)}
-        stroke-width="0"
-      /> -->
-      <g transform={`translate(${margin.left}, ${yScale(0.5)})`}>
+      <!-- decision boundary -->
+      <g transform={`translate(${margin.left}, ${yScale($DecisionBoundary)})`}>
         <rect
           class="boundary-line"
           stroke="var(--squidink)"
@@ -229,7 +217,7 @@
       <!-- bottom arrow -->
       <g
         class="arrow-holder"
-        transform={`translate(${margin.left + 50} ${yScale(0.5) + 20})`}
+        transform={`translate(${margin.left + 50} ${yScale($DecisionBoundary) + 20})`}
       >
         <text 
           class="arrow-text" 
@@ -258,7 +246,7 @@
       <!-- top arrow -->
       <g
         class="arrow-holder"
-        transform={`translate(${margin.left + 50} ${yScale(0.5) - 20})`}
+        transform={`translate(${margin.left + 50} ${yScale($DecisionBoundary) - 20})`}
       >
         <text
           class="arrow-text"

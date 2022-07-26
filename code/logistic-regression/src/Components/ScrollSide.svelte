@@ -7,7 +7,7 @@
   import { onMount } from "svelte";
   // import { LayerCake, Svg, Html } from "layercake";
   // import DecisionBoundary from "./DecisionBoundary.svelte";
-  import { Temperature } from "../data-store.js";
+  import { Temperature, DecisionBoundary } from "../data-store.js";
 
   let scatterClass;
 
@@ -31,7 +31,6 @@
       scatterClass.hideCurve();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("0");
     },
     1: () => {
       // points appear
@@ -39,7 +38,6 @@
       scatterClass.showPoints();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("1");
     },
 
     2: () => {
@@ -48,7 +46,6 @@
       scatterClass.showPoints();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("2");
     },
     3: () => {
       // decision boundary appears
@@ -56,8 +53,6 @@
       scatterClass.showPoints();
       scatterClass.showBoundary();
       scatterClass.showExample();
-      // $yPoss = 0.5;
-      console.log("3");
     },
   };
 
@@ -79,7 +74,7 @@
 
   // options for intersection observer
   const options = {
-    decisionBoundary: 0.5,
+    DecisionBoundary: {$DecisionBoundary},
   };
 
   let observer = new IntersectionObserver((entries) => {
@@ -166,7 +161,19 @@
               max="100"
               bind:value={$Temperature}
               class="slider"
-              id="myRange"
+              id="tempSlider"
+            />
+          </div>
+          <div id="input-container">
+            <p>Decision Boundary: {$DecisionBoundary}</p>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              bind:value={$DecisionBoundary}
+              class="slider"
+              id="boundarySlider"
             />
           </div>
         </div>
