@@ -43,17 +43,6 @@
   $: lossValueY0 = (d) => logLossY0[d]["LogLoss"];
   $: lossValueY1 = (d) => logLossY1[d]["LogLoss"];
 
-  //   $: console.log($llProbability * 100 - 1)
-  //   $: console.log(logLossY1[$llProbability * 100 - 1]["Probability"]);
-  //   $: console.log(logLossY1[$llProbability * 100 - 1]["LogLoss"]);
-
-  // let data = loadData();
-
-  $: {
-    let selected = document.getElementById("true-select");
-
-    console.log(selected);
-  }
 </script>
 
 <div id="loss-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
@@ -111,18 +100,6 @@
       y2={margin.top}
     />
 
-    <!-- points -->
-    <!-- {#each scatterData.data as item}
-          <circle
-            class="scatter-circle"
-            r="0"
-            cx={xScale(item.Temperature)}
-            cy={yScale(item.Weather)}
-            fill={colorScale(item.Weather)}
-            opacity="1"
-          />
-        {/each} -->
-
     <path
       id="loss-line-0"
       class="loss-line"
@@ -152,16 +129,51 @@
       />
     </g>
 
+    <g
+      class="arrow-holder"
+      transform={`translate(${margin.left + 55} ${margin.top + 7})`}
+    >
+      <g transform={`translate(-40 16)`}>
+        {#each arrows as arrow}
+          <path
+            class="y1-arrow"
+            d={arrow}
+            style={`transform: rotate(-90deg) scale(0.8)`}
+            stroke="#ff9900"
+            fill="#ff9900"
+          />
+        {/each}
+        <text 
+          class="arrow-text" 
+          x="25" 
+          y="0" 
+          dominant-baseline="middle">To Infinity</text>
+      </g>
+    </g>
+
+    <g
+      class="arrow-holder"
+      transform={`translate(${width - 35} ${margin.top + 7})`}
+    >
+      <g transform={`translate(-40 16)`}>
+        {#each arrows as arrow}
+          <path
+            class="y0-arrow"
+            d={arrow}
+            style={`transform: rotate(-90deg) scale(0.8)`}
+            stroke="#003181"
+            fill="#003181"
+          />
+        {/each}
+        <text 
+          class="arrow-text" 
+          x="-70" 
+          y="0" 
+          dominant-baseline="middle">To Infinity</text>
+      </g>
+    </g>
+
     <!-- cy={yScale(lossValueY0(Math.round($llProbability * 100) - 1))} -->
-
-    <!-- <script type="text/javascript">
-      var select = document.getElementById("true-select");
-      var option = select.options[select.selectedIndex];
-
-      document.getElementById("value").value = option.value;
-      document.getElementById("text").value = option.text;
-    </script> -->
-
     <!-- y-axis label -->
     <text
       class="axis-label"
@@ -264,15 +276,14 @@
     paint-order: stroke fill;
     stroke: var(--paper);
     fill: black;
-    font-family: var(--font-heavy);
     stroke-linejoin: round;
     stroke-width: 5px;
     pointer-events: none;
-    font-size: 0;
   }
 
   .arrow-text {
-    font-size: 13;
+    font-family: var(--font-heavy);
+    font-size: 14px;
     text-anchor: start;
   }
 
