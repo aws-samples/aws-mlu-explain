@@ -16,14 +16,14 @@
     <!-- add prop -->
     <meta
         property="og:image"
-        content="https://mlu-explain.github.io/assets/dd1ogimage.png"
+        content="https://mlu-explain.github.io/assets/ogimage-logistic-regression.png"
     />
     <!-- add prop -->
     <meta property="og:title" content="Logistic Regression" />
     <!-- add prop -->
     <meta
         property="og:description"
-        content="An introduction to the Double Descent phenomena in modern machine learning."
+        content="Regression for Classification."
     />
     <meta property="og:image:width" content="1000" />
     <meta property="og:image:height" content="630" />

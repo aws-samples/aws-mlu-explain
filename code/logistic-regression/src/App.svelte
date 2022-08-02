@@ -1,5 +1,5 @@
 <script>
-  import {mobile} from "./data-store"
+  import { mobile } from "./data-store";
   import Meta from "./Meta.svelte";
   import Logo from "./Components/Logo.svelte";
   import Title from "./Components/Title.svelte";
@@ -16,7 +16,7 @@
     $mobile = window.innerWidth <= 700;
   }
 
-  handleResize()
+  handleResize();
 </script>
 
 <svelte:window on:resize={handleResize} />
