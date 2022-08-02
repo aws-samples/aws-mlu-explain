@@ -1,6 +1,5 @@
 <script></script>
 
-<!-- <hr> -->
 <br />
 <br />
 <br />
@@ -20,16 +19,13 @@
   <p class="resource-item">
     <a class="on-end" href="https://www.statlearning.com/"
       >An Introduction to Statistical Learning</a
-    ><br />(Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani, 2021)
+    ><br />(Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani,
+    2021)
   </p>
   <p class="resource-item">
     <a class="on-end" href="https://d3js.org/">D3.js</a><br />(Mike Bostock &
     Philippe Rivière)
   </p>
-  <!-- <p class="resource-item">
-    <a class="on-end" href="https://layercake.graphics/">LayerCake</a><br
-    />(Michael Keller)
-  </p> -->
   <p class="resource-item">
     <a class="on-end" href="https://katex.org/">KaTeX</a> <br />(Emily Eisenberg
     & Sophie Alpert)

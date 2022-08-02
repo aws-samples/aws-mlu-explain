@@ -11,8 +11,8 @@ export const gdError = writable(0);
 export const gdErrors = writable([]);
 export const shuffleIteration = writable(1);
 
-export const llProbability = writable(0.50);
+export const llProbability = writable(0.5);
 
 export const yVal = writable(true);
 
-
+export const mobile = writable(true);

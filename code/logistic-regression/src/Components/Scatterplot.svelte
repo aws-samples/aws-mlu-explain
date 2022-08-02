@@ -13,7 +13,7 @@
   const margin = { top: 50, right: 40, bottom: 50, left: 70 };
 
   const colors = ["#003181", "#ff9900"];
-  const labels = ["Rainy Day", "Rainless Day"];
+  const labels = ["Rainy Day", "Sunny Day"];
   const classSet = new Set(scatterData.map((d) => d.Weather));
 
   const formatter = format(".1f");
@@ -36,9 +36,7 @@
   }
 
   $: xScale = scaleLinear()
-    .domain([
-      20, 100,
-    ])
+    .domain([20, 100])
     .range([margin.left, width - margin.right]);
 
   $: yScale = scaleLinear()
@@ -57,12 +55,13 @@
 
   $: sigmoidValue = (d) => sigmoidCurve[d]["y"];
 
-  $: { if (sigmoidCurve[$Temperature-20]["y"] > $DecisionBoundary) {
-    $Prediction = "Rainless Day"
-  } else {
-    $Prediction = "Rainy Day"
+  $: {
+    if (sigmoidCurve[$Temperature - 20]["y"] > $DecisionBoundary) {
+      $Prediction = "Sunny Day";
+    } else {
+      $Prediction = "Rainy Day";
+    }
   }
-}
 
   let data = loadData();
 
@@ -91,7 +90,10 @@
     selectAll(".arrow-text").transition().delay(1000).attr("font-size", 0);
     selectAll(".bottom-arrow").transition().delay(1000).attr("fill", "none");
     selectAll(".top-arrow").transition().delay(1000).attr("fill", "none");
-    selectAll(".bottom-arrow").transition().delay(1000).attr("stroke-width", "0");
+    selectAll(".bottom-arrow")
+      .transition()
+      .delay(1000)
+      .attr("stroke-width", "0");
     selectAll(".top-arrow").transition().delay(1000).attr("stroke-width", "0");
     selectAll(".bottom-arrow").transition().delay(1000).attr("stroke", "none");
     selectAll(".top-arrow").transition().delay(1000).attr("stroke", "none");
@@ -100,13 +102,24 @@
   export function showBoundary() {
     selectAll(".boundary-line").transition().delay(1000).attr("opacity", 1);
     selectAll(".arrow-text").transition().delay(1000).attr("font-size", 13);
-    selectAll(".bottom-arrow").transition().delay(1000).attr("fill", "var(--anchor)");
-    selectAll(".top-arrow").transition().delay(1000).attr("fill", "var(--smile");
-    selectAll(".bottom-arrow").transition().delay(1000).attr("stroke", "var(--anchor)");
-    selectAll(".top-arrow").transition().delay(1000).attr("stroke", "var(--smile");
+    selectAll(".bottom-arrow")
+      .transition()
+      .delay(1000)
+      .attr("fill", "var(--anchor)");
+    selectAll(".top-arrow")
+      .transition()
+      .delay(1000)
+      .attr("fill", "var(--smile");
+    selectAll(".bottom-arrow")
+      .transition()
+      .delay(1000)
+      .attr("stroke", "var(--anchor)");
+    selectAll(".top-arrow")
+      .transition()
+      .delay(1000)
+      .attr("stroke", "var(--smile");
     selectAll(".bottom-arrow").transition().delay(1000).attr("stroke-width", 3);
     selectAll(".top-arrow").transition().delay(1000).attr("stroke-width", 3);
-
   }
 
   export function hideExample() {
@@ -114,7 +127,7 @@
   }
 
   export function showExample() {
-    selectAll(".example-circle").transition().delay(1000).attr("r", 10);
+    selectAll(".example-circle").transition().delay(1000).attr("r", 13);
   }
 </script>
 
@@ -122,8 +135,8 @@
   {#await data then scatterData}
     <svg {width} height={height + margin.top + margin.bottom}>
       <!-- x ticks -->
-      {#each xScale.ticks() as d}
-        <g transform={`translate(${xScale(d)}, ${height - margin.bottom})`}>
+      {#each xScale.ticks() as tick}
+        <g transform={`translate(${xScale(tick)}, ${height - margin.bottom})`}>
           <!-- svelte-ignore component-name-lowercase -->
           <line
             class="grid-line"
@@ -132,12 +145,14 @@
             y1="0"
             y2={-height + margin.bottom + margin.top}
           />
-          <text class="axis-text" y="15" text-anchor="middle" dy="5">{d} </text>
+          <text class="axis-text" y="15" text-anchor="middle" dy="5"
+            >{tick}
+          </text>
         </g>
       {/each}
       <!-- y ticks -->
-      {#each yScale.ticks() as d}
-        <g transform={`translate(${margin.left}, ${yScale(d)})`}>
+      {#each yScale.ticks() as tick}
+        <g transform={`translate(${margin.left}, ${yScale(tick)})`}>
           <!-- svelte-ignore component-name-lowercase -->
           <line
             class="grid-line"
@@ -151,7 +166,7 @@
             text-anchor="end"
             dx="-5"
             dominant-baseline="middle"
-            >{formatter(d)}
+            >{formatter(tick)}
           </text>
         </g>
       {/each}
@@ -199,12 +214,19 @@
           r="0"
           cx={xScale($Temperature)}
           cy={yScale(sigmoidValue($Temperature - 20))}
-          fill="var(--sky)"
+          fill={colorScale($Prediction)}
+          stroke="var(--paper)"
+          stroke-width="3"
           opacity="1"
         />
       </g>
+
       <!-- decision boundary -->
-      <g transform={`translate(${margin.left}, ${yScale($DecisionBoundary) - 5})`}>
+      <g
+        transform={`translate(${margin.left}, ${
+          yScale($DecisionBoundary) - 5
+        })`}
+      >
         <rect
           class="boundary-line"
           stroke="var(--squidink)"
@@ -219,18 +241,15 @@
       <!-- bottom arrow -->
       <g
         class="arrow-holder"
-        transform={`translate(${margin.left + 50} ${yScale($DecisionBoundary) + 15})`}
+        transform={`translate(${margin.left + 50} ${
+          yScale($DecisionBoundary) + 15
+        })`}
       >
-        <text 
-          class="arrow-text" 
-          x="-14" 
-          y="0" 
-          dominant-baseline="middle">Predict</text>
-        <text
-          class="arrow-text"
-          x="-14"
-          y="13"
-          dominant-baseline="middle">Rainy</text
+        <text class="arrow-text" x="-14" y="0" dominant-baseline="middle"
+          >Predict</text
+        >
+        <text class="arrow-text" x="-14" y="13" dominant-baseline="middle"
+          >Rainy</text
         >
         <g transform="translate(-20 -8)">
           {#each arrows as arrow}
@@ -238,9 +257,9 @@
               class="bottom-arrow"
               d={arrow}
               style={`transform: rotate(90deg) scale(0.8)`}
-              stroke-width=0
-              fill=none
-              stroke=none
+              stroke-width="0"
+              fill="none"
+              stroke="none"
             />
           {/each}
         </g>
@@ -248,19 +267,15 @@
       <!-- top arrow -->
       <g
         class="arrow-holder"
-        transform={`translate(${margin.left + 50} ${yScale($DecisionBoundary) - 25})`}
+        transform={`translate(${margin.left + 50} ${
+          yScale($DecisionBoundary) - 25
+        })`}
       >
-        <text
-          class="arrow-text"
-          x="-14"
-          y="0"
-          dominant-baseline="middle">Predict</text
+        <text class="arrow-text" x="-14" y="0" dominant-baseline="middle"
+          >Predict</text
         >
-        <text
-          class="arrow-text"
-          x="-14"
-          y="13"
-          dominant-baseline="middle">Rainless</text
+        <text class="arrow-text" x="-14" y="10" dominant-baseline="middle"
+          >Sunny</text
         >
         <g transform={`translate(-40 16)`}>
           {#each arrows as arrow}
@@ -268,9 +283,9 @@
               class="top-arrow"
               d={arrow}
               style={`transform: rotate(-90deg) scale(0.8)`}
-              stroke-width=0
-              fill=none
-              stroke=none
+              stroke-width="0"
+              fill="none"
+              stroke="none"
             />
           {/each}
         </g>
@@ -299,11 +314,7 @@
       <g transform={`translate(${margin.left}, ${10})`}>
         {#each labels as Weather, i}
           <g transform={`translate(${i * 120} 0)`}>
-            <circle 
-              class="legend-circle" 
-              r="0" 
-              fill={colorScale(i)}
-              />
+            <circle class="legend-circle" r="0" fill={colorScale(i)} />
             <text
               class="legend-text"
               dominant-baseline="middle"
@@ -321,7 +332,6 @@
 
 <style>
   svg {
-    /* background-color: blue; */
   }
 
   #scatter-chart {
@@ -356,8 +366,6 @@
   .sigmoid-line {
     fill: none;
     stroke: var(--squidink);
-    /* stroke-opacity: 0; */
-    /* stroke-width: 0; */
   }
 
   .arrow-holder {
@@ -376,6 +384,4 @@
     font-size: 13;
     text-anchor: start;
   }
-
-
 </style>

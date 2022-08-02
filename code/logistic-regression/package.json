@@ -42,6 +42,7 @@
     "smoothscroll-polyfill": "^0.4.4",
     "stickyfill": "^1.1.1-strict",
     "svelte-preprocess": "^4.6.9",
-    "svelte-select": "^4.4.7"
+    "svelte-select": "^4.4.7",
+    "sveltestrap": "^5.9.0"
   }
 }

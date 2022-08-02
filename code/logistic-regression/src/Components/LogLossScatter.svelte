@@ -18,7 +18,6 @@
   const formatter = format(".1f");
   const formatter_loss = format(".2f");
 
-  // const logLoss = (y, d) => - (y * Math.log(d) + (1 - y) * Math.log(1 - d));
   const arrows = [
     "M0.200275 13.2782C0.200275 12.4153 0.89983 11.7157 1.76278 11.7157H23.6378C24.5007 11.7157 25.2003 12.4153 25.2003 13.2782C25.2003 14.1411 24.5007 14.8407 23.6378 14.8407H1.76278C0.89983 14.8407 0.200275 14.1411 0.200275 13.2782Z",
     "M11.5954 1.23584C12.2056 0.62565 13.1949 0.62565 13.8051 1.23584L24.7426 12.1733C25.3528 12.7835 25.3528 13.7729 24.7426 14.3831L13.8051 25.3206C13.1949 25.9307 12.2056 25.9307 11.5954 25.3206C10.9852 24.7104 10.9852 23.721 11.5954 23.1108L21.4281 13.2782L11.5954 3.44555C10.9852 2.83536 10.9852 1.84604 11.5954 1.23584Z",
@@ -42,7 +41,6 @@
 
   $: lossValueY0 = (d) => logLossY0[d]["LogLoss"];
   $: lossValueY1 = (d) => logLossY1[d]["LogLoss"];
-
 </script>
 
 <div id="loss-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
@@ -143,11 +141,9 @@
             fill="#ff9900"
           />
         {/each}
-        <text 
-          class="arrow-text" 
-          x="25" 
-          y="0" 
-          dominant-baseline="middle">To Infinity</text>
+        <text class="arrow-text" x="25" y="0" dominant-baseline="middle"
+          >To Infinity</text
+        >
       </g>
     </g>
 
@@ -165,15 +161,12 @@
             fill="#003181"
           />
         {/each}
-        <text 
-          class="arrow-text" 
-          x="-70" 
-          y="0" 
-          dominant-baseline="middle">To Infinity</text>
+        <text class="arrow-text" x="-70" y="0" dominant-baseline="middle"
+          >To Infinity</text
+        >
       </g>
     </g>
 
-    <!-- cy={yScale(lossValueY0(Math.round($llProbability * 100) - 1))} -->
     <!-- y-axis label -->
     <text
       class="axis-label"
@@ -232,7 +225,7 @@
   }
 
   #loss-chart {
-    width: 600px;
+    width: 100%;
     max-height: 98%;
   }
 
@@ -266,9 +259,6 @@
 
   .loss-line {
     fill: none;
-    /* stroke: var(--squidink); */
-    /* stroke-opacity: 0; */
-    /* stroke-width: 0; */
   }
 
   .arrow-holder {

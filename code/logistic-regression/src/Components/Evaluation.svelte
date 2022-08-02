@@ -14,13 +14,11 @@
     { value: false, label: "y = 1" },
   ];
 
-  let chosen = undefined;
+  let chosen = items[0];
 
   function handleSelect(event) {
     chosen = event.detail;
     $yVal = chosen.value;
-    console.log($yVal);
-    // chosen = $yVal;
   }
 
   function handleClear() {
@@ -45,11 +43,9 @@
     binary cross-entropy. This function is as follows, where {@html katexify(
       "n"
     )} is the number of samples,
-    {@html katexify("i")} is the index, xf is the true class for the index {@html katexify(
-      "i"
-    )}, and {@html katexify("p_i")} is the model prediction for the index {@html katexify(
-      "i"
-    )}.
+    {@html katexify("i")} is the index, {@html katexify("y_i")} is the true class
+    for the index {@html katexify("i")}, and {@html katexify("p_i")} is the model
+    prediction for the index {@html katexify("i")}.
 
     {@html katexify(log_loss, true)}
   </p>
@@ -71,31 +67,18 @@
         infinity.
       </p>
       <br /><br />
-
-      <!-- <div class="input-container">
-          <label for="true-select" class="float-left"
-            >Select true value for y:</label
-          >
-          <select
-            name="true-select"
-            id="true-select"
-            class="themed"
-            bind:value={$yVal}
-          >
-            <option value={true}>y = 0</option>
-            <option value={false}>y = 1</option>
-          </select>
-        </div> -->
       <div class="input-container">
         <label for="true-select">Select true value for y:</label>
         <div class="container">
           <Select
             name="true-select"
-            id="true-select"
+            class="true-select"
             {items}
             on:select={handleSelect}
             on:clear={handleClear}
             bind:value={chosen}
+            isSearchable={false}
+            isClearable={false}
           />
         </div>
       </div>
@@ -139,10 +122,7 @@
 
   #equations-container {
     text-align: left;
-    /* display: flex; */
     flex-direction: column;
-    /* border: 1px solid red; */
-    /* justify-content: center; */
   }
 
   #buttons-container {
@@ -157,10 +137,7 @@
     display: flex;
     flex-direction: row;
     margin: 8px auto;
-    /* justify-content: space-around; */
-    /* align-items: center; */
     width: 80%;
-    /* border: 1px solid red; */
   }
 
   button {
@@ -212,7 +189,6 @@
     border-color: var(--squidink);
     vertical-align: middle;
     margin-top: 16px;
-    
   }
 
   .slider::-webkit-slider-thumb {
@@ -228,7 +204,7 @@
   label {
     width: 100%;
     color: var(--squidink);
-    line-height:42px;
+    line-height: 42px;
     vertical-align: middle;
   }
 
@@ -236,18 +212,13 @@
     color: var(--squidink);
   }
 
-  .custom-select {
+  .true-select {
+    width: 100%;
+    vertical-align: middle;
     margin-bottom: 10px;
     margin-top: 10px;
-    font-family: var(--font-main);
-    outline: 0;
-    background: var(--paper);
-    color: var(--squidink);
-    border: 1px var(--squidink);
-    padding: 4px;
-    border-radius: 9px;
-    width: 100%;
-    
+    background-color: var(--paper);
+    text-align: center;
   }
 
   .container {
@@ -262,8 +233,8 @@
       margin: auto;
       max-width: 100%;
       width: 100%;
-      height: 85vh;
-      max-height: 100vh;
+      height: 120vh;
+      max-height: 120vh;
     }
 
     #charts-container {
