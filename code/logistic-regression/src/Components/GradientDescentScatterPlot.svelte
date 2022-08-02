@@ -42,7 +42,6 @@
         };
       })
     );
-    // $dataset.sort((a, b) => b.Temperature - a.Temperature)
   }
 
   const margin = { top: 40, right: 30, bottom: 30, left: 50 };
@@ -51,8 +50,8 @@
   let height = 500;
   let width = 500;
 
-  const colors = ["#ff9900", "#003181"];
-  const labels = ["Rainy Day", "Rainless Day"];
+  const colors = ["#003181", "#ff9900"];
+  const labels = ["Rainy Day", "Sunny Day"];
   const classSet = new Set(scatterData.map((d) => d.Weather));
 
   $: colorScale = scaleOrdinal().domain(classSet).range(colors);
@@ -69,25 +68,16 @@
         -1 *
         (d.Weather * Math.log(sigmoidEq($gdWeight * d.Temperature + $gdBias)) +
           (1 - d.Weather) *
-            Math.log(1 - sigmoidEq($gdWeight * d.Temperature + $gdBias)))
+            Math.log(sigmoidEq(-($gdWeight * d.Temperature + $gdBias))))
       );
     });
 
-    if (errors == "NaN" || errors == "Infinity") {
-      console.log("here");
-      $gdError = 0;
-    }
-
     $gdError = Number(errors.reduce((a, b) => a + b, 0));
-    $gdError = $gdError || 10000;
-
-    console.log($gdError);
 
     $gdErrors = [
       ...$gdErrors,
       {
         iteration: $gdIteration,
-        // error: $gdError !== "NaN" && $gdError !== "Infinity" ? $gdError : max($gdErrors, d => d.error),
         error: $gdError,
       },
     ];
@@ -157,7 +147,7 @@
   <svg {width} height={height + margin.top + margin.bottom}>
     <!-- x-ticks -->
     {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
+      <g transform={`translate(${xScale(tick)} ${height - margin.bottom})`}>
         <!-- svelte-ignore component-name-lowercase -->
         <line
           class="grid-line"
@@ -175,7 +165,7 @@
     {/each}
     <!-- y-ticks -->
     {#each yScale.ticks() as tick}
-      <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
+      <g transform={`translate(${margin.left - 5} ${yScale(tick)})`}>
         <!-- svelte-ignore component-name-lowercase -->
         <line
           class="grid-line"
@@ -249,21 +239,6 @@
       {/each}
     </g>
 
-    <!-- axis labels
-      <text
-        class="axis-label"
-        y={height + margin.bottom}
-        x={(width + margin.left) / 2}
-        text-anchor="middle">Size of House (sqft)</text
-      >
-      <text
-        class="axis-label"
-        y={margin.left / 4.8}
-        x={-(height / 2)}
-        text-anchor="middle"
-        transform="rotate(-90)">Housing Price ($)</text
-      > -->
-
     <!-- chart data mappings -->
 
     <!-- draw circles -->
@@ -321,7 +296,6 @@
   }
 
   .error-text {
-    /* text-transform: uppercase; */
     font-family: var(--font-heavy);
     stroke-linejoin: round;
     paint-order: stroke fill;
@@ -337,7 +311,6 @@
   }
 
   .axis-label {
-    /* text-transform: uppercase; */
     font-size: 0.7rem;
   }
 

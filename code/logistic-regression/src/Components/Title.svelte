@@ -2,7 +2,8 @@
   <h1 id="intro-hed">Logistic Regression</h1>
   <h1 class="intro-sub">Regression for classification.</h1>
   <h3 id="intro__date">
-    <a href="https://erinbugbee.com/">Erin Bugbee</a> & <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, July 2022
+    <a href="https://erinbugbee.com/">Erin Bugbee</a> &
+    <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, July 2022
   </h3>
 </section>
 

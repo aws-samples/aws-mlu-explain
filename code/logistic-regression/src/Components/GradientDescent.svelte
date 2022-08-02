@@ -15,43 +15,6 @@
   let show;
 </script>
 
-<!-- <h1 class="body-header">Gradient Descent</h1> -->
-<!-- <p class="body-text"> -->
-<!-- Let's recap what we've learned so far: Linear regression is all about finding a
-    line (or plane) that fits our data well. And as we just saw, this involves selecting
-    the coefficients of our model that best minimize MSE. But how can we find these
-    values? After all, selecting coefficient values by hand as we just did quickly
-    becomes infeasible for regression models with many coffieicents. There must be
-    a better way!
-    <br /><br />
-    Luckily for us, a very popular algorithm in machine learning does exactly this:
-    gradient descent. Gradient descent is an iterative optimization algorithm that
-    identifies some set of coefficients that yield the minimum of a convex function.
-    Put simply: it will find suitable coefficients for our regression model that minimize
-    prediction error (remember, lower MSE equals better model).
-    <br /><br />
-    A full conversation on gradient descent is outside the course of this article (stay-tuned
-    for our future article on the subject), but we'll give a brief explanation as applied
-    to linear regression. For a given error function (MSE in our case), Gradient descent
-    will repeatedly update our models coefficients to minimize MSE. For each coefficient
-    Bi in our model, it calculates the partial derivative of our error function with
-    respect to that cofficient, (this tells us the magnitude and direction of increase)
-    and stepping in the <i>opposite</i> direction.
-    <br /> -->
-<!-- </p> -->
-<!-- <div class="show-button-container">
-    <button class="show-button" on:click={show}
-      >{shown ? `Hide` : `Show`} Math</button
-    >
-  </div> -->
-
-<!-- <Hidden bind:shown bind:show>
-    <div>Hidden content</div>
-  </Hidden> -->
-
-<!-- {#if shown}
-    <div>Hidden child is shown!</div>
-  {/if} -->
 <p class="body-text">
   <br />
   Because the gradient calculates where the function is increasing, going in the
@@ -63,9 +26,9 @@
 <div id="gd-container">
   <div id="equations-container">
     <p class="body-text">
-      Let's see how Gradient Descent works for our logistic regression model.
+      Let's see how gradient descent works for our logistic regression model.
       We'll use the algorithm to identify which values for our bias and weight
-      we should select. Click the buttons to run 1, 10, 50, or 100 steps of
+      we should select. Click the buttons to run 1, 5, 10, or 25 steps of
       gradient descent, and see the curve update live. The error for each
       iteration is shown in the bottom error chart.
     </p>
@@ -73,14 +36,14 @@
       <button on:click={() => gdScatterClass.runGradientDescent(1)}
         >1 Step</button
       >
+      <button on:click={() => gdScatterClass.runGradientDescent(5)}
+        >5 Steps</button
+      >
       <button on:click={() => gdScatterClass.runGradientDescent(10)}
         >10 Steps</button
       >
-      <button on:click={() => gdScatterClass.runGradientDescent(50)}
-        >50 Steps</button
-      >
-      <button on:click={() => gdScatterClass.runGradientDescent(100)}
-        >100 Steps</button
+      <button on:click={() => gdScatterClass.runGradientDescent(25)}
+        >25 Steps</button
       >
     </div>
     <div id="weight-slider">
@@ -138,20 +101,6 @@
 </div>
 <br /><br />
 
-<!-- <p class="body-text">
-    <span class="bold">Are Our Coefficients Valid?</span><br />
-    In research publications and statistical software, coefficients of regression models
-    are often presented with associated p-values. These p-values from from traditional
-    null hypothesis statistical tests: t-tests are used to measure whether a given
-    cofficient is significantly different than zero (the null hypothesis that a particular
-    coefficient Bj equals zero), while F tests are used to measure whether
-    <i>all</i>
-    the terms in a regression model are significantly different from zero. Different
-    opinions exist on the utility of such tests (e.g. chapter 10.7 of
-    <a href="#resources">[1]</a> argues against them). We don't take a strong stance
-    on this issue, but believe practitioners should always assess the standard error
-    aroud any parameter estimates for themselves and present them in their research.
-  </p> -->
 <style>
   #gd-container {
     display: grid;
@@ -159,16 +108,12 @@
     font-family: var(--font-main);
     margin: auto;
     max-width: 1000px;
-    /* border: 1px solid black; */
-    height: 70vh;
-    max-height: 500px;
+    height: 65vh;
   }
 
   #equations-container {
     text-align: left;
-    /* display: flex; */
     flex-direction: column;
-    /* border: 1px solid red; */
     justify-content: center;
   }
 
@@ -192,11 +137,9 @@
     justify-content: space-around;
     align-items: center;
     width: 70%;
-    /* border: 1px solid red; */
   }
 
   #charts-container {
-    /* border: 1px solid blue; */
   }
 
   button {
@@ -249,7 +192,6 @@
   #charts-container {
     display: grid;
     grid-template-columns: 100%;
-    /* grid-row-gap: 3rem; */
     grid-column-gap: 0rem;
     grid-template-rows: 60% 40%;
     height: 80vh;
@@ -294,12 +236,11 @@
   /* mobile */
   @media screen and (max-width: 950px) {
     #gd-container {
-      display: grid;
       grid-template-columns: 100%;
-      margin: auto;
       max-width: 100%;
       width: 100%;
-      height: 90vh;
+      height: 130vh;
+      max-height: 130vh;
     }
 
     #charts-container {

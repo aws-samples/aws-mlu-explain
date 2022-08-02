@@ -59,7 +59,7 @@ body {
 }
 
 /* Global Reusable Styles For Convenience */
-.body-text {
+.body-text, .tab-text {
   max-width: 45rem;
   margin: 0 auto;
   text-align: left;
@@ -140,5 +140,10 @@ p {
   .body-header {
     max-width: 80%;
     font-size: 30px;
+  }
+
+  .tab-text {
+    max-width: 100%;
+    font-size: 18px;
   }
 }

@@ -103,7 +103,7 @@
     <text
       class="axis-label"
       text-anchor="middle"
-      transform={`translate(${15},${height/2}) rotate(-90)`}
+      transform={`translate(${15},${height / 2}) rotate(-90)`}
     >
       Error (Log-Loss)
     </text>
@@ -126,7 +126,7 @@
     <!-- draw circles -->
     <circle
       class="error-circle"
-      fill=var(--secondary)
+      fill="var(--secondary)"
       stroke-width="1.5"
       r="4.5"
       cx={xScale($gdErrors[$gdErrors.length - 1].iteration)}
@@ -135,11 +135,12 @@
     <text
       class="error-text"
       x={xScale($gdErrors[$gdErrors.length - 1].iteration) + 5}
-      y={$gdError > 100 ? yScale($gdErrors[$gdErrors.length - 1].error) : yScale($gdErrors[$gdErrors.length - 1].error)}
-      >
-      {$gdError == 10000 ? "> 10000" : formatter($gdError)}      
-      </text
+      y={$gdError > 100
+        ? yScale($gdErrors[$gdErrors.length - 1].error)
+        : yScale($gdErrors[$gdErrors.length - 1].error)}
     >
+      {$gdError == 10000 ? "> 10000" : formatter($gdError)}
+    </text>
   </svg>
 </div>
 

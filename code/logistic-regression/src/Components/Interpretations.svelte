@@ -5,10 +5,23 @@
   import TabContinuous from "./TabContinuous.svelte";
   import TabMultivariate from "./TabMultivariate.svelte";
   import Tabs from "./Tabs.svelte";
-  let items = [
-    { label: "A Binary Feature", value: 1, component: TabBinary },
-    { label: "A Continuous Feature", value: 2, component: TabContinuous },
-    { label: "Multivariate Regression", value: 3, component: TabMultivariate },
+  import { mobile } from "../data-store";
+  $: items = [
+    {
+      label: $mobile ? "Binary" : "A Binary Feature",
+      value: 1,
+      component: TabBinary,
+    },
+    {
+      label: $mobile ? "Continuous" : "A Continuous Feature",
+      value: 2,
+      component: TabContinuous,
+    },
+    {
+      label: $mobile ? "Multivariate" : "Multivariate Regression",
+      value: 3,
+      component: TabMultivariate,
+    },
   ];
 </script>
 
@@ -23,12 +36,14 @@
   <br /><br />
   <p class="body-text">
     To understand log-odds, we must first understand odds. Odds are calculated
-    as {@html katexify("\\frac{p}{1-p}")}. This gives the ratio of the probability of a rainless day to
-    that of a rainy day. Say that the probability of a rainless day is 0.75.
-    This implies that the probability of a rainy day is 0.25. The odds would
-    then be {@html katexify("\\frac{0.75}{0.25} = 3")}, which means that the odds of a rainless day are 3 to
-    1. If the probability of rain is 0.5, then the odds would be {@html katexify("\\frac{0.5}{0.5} = 1")},
-    meaning that the odds of a rainless day are 1 to 1, so rain and no rain are
+    as {@html katexify("\\frac{p}{1-p}")}. This gives the ratio of the
+    probability of a sunny day to that of a rainy day. Say that the probability
+    of a sunny day is 0.75. This implies that the probability of a rainy day is
+    0.25. The odds would then be {@html katexify("\\frac{0.75}{0.25} = 3")},
+    which means that the odds of a sunny day are 3 to 1. If the probability of
+    rain is 0.5, then the odds would be {@html katexify(
+      "\\frac{0.5}{0.5} = 1"
+    )}, meaning that the odds of a sunny day are 1 to 1, so rain and no rain are
     equally likely. Taking the log of the odds yield the log-odds, and taking
     ratios of log-odds yields log-odds ratios.
   </p>
@@ -40,25 +55,9 @@
     to interpret.
   </p>
   <br /><br />
-
 </section>
 
-<!-- <h1 class="body-header">Interpreting Regression Models</h1>
-<p class="body-text">
-  One of the most powerful aspects of regression models is their
-  interpretability. However, different forms of regression models require
-  different levels of interpretation. To make this clear, we’ll walk through
-  several forms of our model, and describe how to interpret each in turn. For
-  all aforementioned models, we interpret the error term as irreducible noise
-  not captured by our model.<br /><br /> Select a tab to learn how to interpret
-  the given form of regression model:<br /><br />
-</p> -->
-
 <Tabs {items} />
-<br /><br />
-<p class="body-text">
-  As with linear regression, there are many other forms of logistic regression models. 
-</p>
 
 <style>
 </style>

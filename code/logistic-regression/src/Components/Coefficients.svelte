@@ -38,10 +38,16 @@
     Therefore, the goal is to find the parameter values that maximize the
     following:
     {@html katexify(log_likelihood, true)}
-    We can use a variety of optimization algorithms to do so, including gradient
-    descent.
+    We can do so by differentiating the Log-Likelihood with respect to the parameters,
+    setting the derivatives equal to 0, and solving the equation to find the estimates
+    of the parameters.
   </p>
 </section>
 
 <style>
+  @media screen and (max-width: 950px) {
+    .body-secondary-header {
+      max-width: 80%;
+    }
+  }
 </style>

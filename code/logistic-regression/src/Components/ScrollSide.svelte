@@ -5,25 +5,12 @@
   import Scatterplot from "./Scatterplot.svelte";
   import { scatterData } from "../datasets.js";
   import { onMount } from "svelte";
-  // import { LayerCake, Svg, Html } from "layercake";
-  // import DecisionBoundary from "./DecisionBoundary.svelte";
-  import { Temperature } from "../data-store.js";
+  import { Temperature, DecisionBoundary, Prediction } from "../data-store.js";
 
   let scatterClass;
 
   const seriesNames = new Set();
   const seriesColors = ["#7e93ee", "#ff99ff"];
-
-  // const xKey = "xVal";
-  // const zKey = "yVal";
-  // const dataTransformed = scatterData.map((d) => {
-  //   seriesNames.add(d[zKey]);
-  //   return {
-  //     [zKey]: d[zKey],
-  //     [xKey]: +d[xKey],
-  //     xx: +d[xKey],
-  //   };
-  // });
 
   const target2event = {
     0: () => {
@@ -31,15 +18,13 @@
       scatterClass.hideCurve();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("0");
     },
     1: () => {
       // points appear
-      scatterClass.hideCurve();
       scatterClass.showPoints();
+      scatterClass.hideCurve();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("1");
     },
 
     2: () => {
@@ -48,16 +33,19 @@
       scatterClass.showPoints();
       scatterClass.hideBoundary();
       scatterClass.hideExample();
-      console.log("2");
     },
     3: () => {
       // decision boundary appears
       scatterClass.showCurve();
       scatterClass.showPoints();
       scatterClass.showBoundary();
+    },
+
+    4: () => {
+      scatterClass.showCurve();
+      scatterClass.showPoints();
+      scatterClass.showBoundary();
       scatterClass.showExample();
-      // $yPoss = 0.5;
-      console.log("3");
     },
   };
 
@@ -79,7 +67,7 @@
 
   // options for intersection observer
   const options = {
-    decisionBoundary: 0.5,
+    DecisionBoundary: { $DecisionBoundary },
   };
 
   let observer = new IntersectionObserver((entries) => {
@@ -96,107 +84,114 @@
       }
     });
   }, options);
-
-  // trigger events on scroll typeof lastname !== "undefined"
-  // $: if (typeof value !== "undefined") target2event[value]();
 </script>
 
 <h2 class="body-header">How It Works</h2>
 <p class="body-text">
   Let’s make this a bit more concrete by walking through an example. Suppose
   that you want to go for a hike in Seattle. You want to predict whether it will
-  rain or not, so that you can decide whether to hike or drink coffee indoors at
-  a local cafe. You know that it rains often in Seattle, but you’ve heard the
-  summers have nice weather. The question is: can we predict whether there will
-  be no rain, given factors such as the temperature?
+  be sunny or rainy, so that you can decide whether to hike or drink coffee
+  indoors at a local cafe. You know that it rains often in Seattle, but you’ve
+  heard the summers have nice weather. The question is: can we predict the
+  weather, given factors such as the temperature?
 </p>
 <section>
   <div class="section-container">
     <div class="steps-container">
-      <!-- <div class="step" data-index="0" /> -->
       <div class="step" data-index="1">
         <div class="step-content">
           <p>
-            There are two classes: Rainy Days and Rainless Days. We can assign a
-            numeric value of 0 and 1 to each class, say 0 to a Rainy Day and 1
-            to a Rainless Day. We have one continuous feature: the temperature,
-            in degrees Fahrenheit. For each day, we can plot this value along
-            with the corresponding temperature.
+            Assume there are two classes: Rainy Days and Sunny Days. We can
+            assign a numeric value of 0 and 1 to each class, say 0 to a Rainy
+            Day and 1 to a Sunny Day. We have one continuous feature: the
+            temperature, in degrees Fahrenheit. For each day, we can plot this
+            value along with the corresponding temperature.
           </p>
         </div>
       </div>
       <div class="step" data-index="2">
         <div class="step-content">
           <p>
-            Clearly, we should not fit a linear model to these data. The
-            outcomes of a linear model can take any numerical value, but these
-            data can only take on outcomes of 0 or 1, so the predictions of a
-            linear model may not be meaningful.
+            Clearly, we should not fit a linear regression model to these data.
+            The outcomes of a linear regression model can take any numerical
+            value, but these data can only take on outcomes of 0 or 1, so the
+            predictions of a linear model may not be meaningful.
             <br /><br />
 
             Instead, we can fit a logistic function to the data. The values of
             this function can be interpreted as probabilities, as the values
             range between 0 and 1. We can interpret the line as the probability
-            of a rainless day given a particular temperature.
+            of a sunny day given a particular temperature.
           </p>
         </div>
       </div>
       <div class="step" data-index="3">
         <div class="step-content">
           <p>
-            Finally, now that we have the logistic function to predict the
-            probabilities of each outcome, we can make a prediction of the
-            class. How do we make this prediction? We use a decision boundary,
-            for which we decide on the class based on the probability of that
-            class given the feature values. A typical decision boundary is 0.5,
-            where we predict an outcome will occur if the probability of the
-            outcome for that input is greater than 0.5. This boundary can be
-            adjusted based on the particular situation at hand — for example, if
-            you really really dislike the rain, you may want to set the boundary
-            lower to be more cautious, such that you predict a rainy day at a
-            lower probability.
+            Now that we have the logistic function to predict the probabilities
+            of each outcome, we can predict the class. We use a decision
+            boundary to decide the predicted class based on the probability of
+            each class given the feature values. A typical decision boundary is
+            0.5, where we predict an outcome will occur if the probability of
+            that outcome is greater than 0.5. This boundary can be adjusted —
+            for example, if you really dislike the rain, you may want to set the
+            boundary higher to be more cautious, so that that you predict a
+            sunny day and go hiking only if the probability of a sunny day
+            exceeds that boundary.
+          </p>
+        </div>
+      </div>
+      <div class="step" data-index="4">
+        <div class="step-content">
+          <p>
+            To see how the model works for yourself, drag the values to make a
+            prediction!
           </p>
           <br /><br />
-
           <div id="input-container">
-            <p>Temperature: {$Temperature} Degrees Fahrenheit</p>
+            <p>
+              <span class="bold">Temperature: </span>
+              {$Temperature} Degrees Fahrenheit
+            </p>
             <input
               type="range"
               min="20"
               max="100"
               bind:value={$Temperature}
               class="slider"
-              id="myRange"
+              id="tempSlider"
             />
           </div>
+          <div id="input-container">
+            <p>
+              <span class="bold">Decision Boundary: </span>{$DecisionBoundary}
+            </p>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              bind:value={$DecisionBoundary}
+              class="slider"
+              id="boundarySlider"
+            />
+          </div>
+          <br /><br />
+          <p>
+            The prediction is a <span class="bold">{$Prediction}</span>.
+          </p>
         </div>
       </div>
       <div class="spacer" />
     </div>
     <div class="charts-container">
       <div class="chart-one">
-        <!-- <LayerCake
-          x={xKey}
-          y="50"
-          z={zKey}
-          zScale={scaleOrdinal()}
-          zDomain={Array.from(seriesNames)}
-          zRange={seriesColors}
-          data={dataTransformed}
-          let:width
-        > -->
         <Scatterplot bind:this={scatterClass} />
-        <!-- <Svg>
-            <DecisionBoundary />
-          </Svg>
-        </LayerCake> -->
       </div>
     </div>
   </div>
 
   <br /><br />
-
-  <!-- <p class="body-text">And that's the end of our scrolly.</p> -->
 </section>
 
 <style>
@@ -250,11 +245,6 @@
     border: 5px solid var(--default);
   }
 
-  /* .step.active .step-content {
-    background: var(--bg);
-    color: var(--squidink);
-  } */
-
   .steps-container {
     height: 100%;
   }
@@ -294,7 +284,6 @@
     }
 
     .steps-container {
-      /* pointer-events: none; */
     }
 
     .charts-container {
@@ -304,7 +293,7 @@
     }
 
     .step {
-      height: 130vh;
+      height: 120vh;
       background: transparent;
       color: var(--squidink);
     }
