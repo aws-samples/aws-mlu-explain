@@ -7,12 +7,16 @@
   import { mseData } from "../datasets.js";
   import { max, min } from "d3-array";
   import {
+    absError,
     shuffleIteration,
     mseBias,
     mseWeight,
     mseErrors,
     mseIteration,
     mseError,
+    rSquared,
+    RSS,
+    TSS,
   } from "../store.js";
 
   // set tweened store for line
@@ -55,10 +59,12 @@
   // label formatter
   const formatter = format(".2r");
 
+  // reactively update shuffle iterations and calculate errors
   $: {
     $shuffleIteration;
     $mseIteration += 1;
-    // recalculate error if changes
+
+    // calculate array of squared errors
     let errors = mseData.map((d) => {
       return (
         (d[`price${$shuffleIteration}`] -
@@ -66,7 +72,29 @@
         2
       );
     });
-    $mseError = Number(errors.reduce((a, b) => a + b, 0));
+
+    // calculate mean of y (for TSS in r-squared)
+    let y = mseData.map((d) => d[`price${$shuffleIteration}`]);
+    let yMean = y.reduce((a, b) => a + b) / y.length;
+    console.log("y mean:", yMean);
+    // calculate TSS
+    let tssErrors = mseData.map((d) => {
+      return (d[`price${$shuffleIteration}`] - yMean) ** 2;
+    });
+    $TSS = Number(tssErrors.reduce((a, b) => a + b, 0));
+    console.log("TSS:", $TSS);
+
+    // calculate RSS
+    $RSS = Number(errors.reduce((a, b) => a + b, 0));
+    console.log("RSS:", $RSS);
+    // calculate r-squared
+    $rSquared = 1 - $RSS / $TSS;
+    console.log("R-Squared:", $rSquared);
+
+    // calculate MSE
+    $mseError = $RSS / errors.length;
+
+    // track MSE Errors for gradient plot
     $mseErrors = [
       ...$mseErrors,
       {
@@ -74,6 +102,17 @@
         error: $mseError,
       },
     ];
+
+    // calculate MAE
+    let absErrors = mseData.map((d) => {
+      return Number(
+        Math.abs(
+          d[`price${$shuffleIteration}`] -
+            ($mseWeight * d[`sqft${$shuffleIteration}`] + $mseBias)
+        )
+      );
+    });
+    $absError = Number(absErrors.reduce((a, b) => a + b, 0)) / errors.length;
   }
 
   $: {
@@ -239,9 +278,9 @@
   }
 
   .residual-rect {
-    stroke: var(--cosmos);
+    stroke: none;
     fill: var(--cosmos);
-    fill-opacity: 0.05;
+    fill-opacity: 0.15;
   }
 
   .axis-label {

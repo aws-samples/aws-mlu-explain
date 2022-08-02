@@ -47,7 +47,7 @@
       $showRegressionLine = true;
       $lineType = "regressionLine";
       $coeff = 1.105;
-      $intercept = 0.544;
+       $intercept = 0.544;
     },
     4: () => {
       $showResiduals = false;
@@ -189,7 +189,7 @@
           </p>
         </div>
       </div>
-      <div class="step" data-index="4">
+      <!-- <div class="step" data-index="4">
         <div class="step-content">
           <p>
             And finally, it's worth a quick mention that the <i>linear</i> in linear
@@ -207,7 +207,7 @@
             />
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="spacer" />
     </div>
     <div class="charts-container">

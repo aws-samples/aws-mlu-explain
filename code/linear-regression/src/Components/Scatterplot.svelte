@@ -257,7 +257,8 @@
 
   .residual-line {
     stroke: var(--cosmos);
-    stroke-width: 1.5;
+    stroke-width: 1.8;
+    opacity: 0.5;
   }
 
   .annotation-line {

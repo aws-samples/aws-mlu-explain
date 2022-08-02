@@ -1,6 +1,14 @@
 <script>
   // "katexify" function
-  import { mseBias, mseWeight, mseError } from "../store";
+  import {
+    absError,
+    mseBias,
+    mseWeight,
+    mseError,
+    rSquared,
+    RSS,
+    TSS,
+  } from "../store";
   import { format } from "d3-format";
   import katexify from "../katexify";
   import MSEScatterplot from "./MSEScatterplot.svelte";
@@ -33,10 +41,13 @@
   The name is quite literal: we take the mean of the squared errors. The squaring
   of errors prevents negative and positive terms from canceling out in the sum, and
   gives more weight to points further from the regression line, effectively punishing
-  outliers. The name is quite literal: we take the mean of the squared errors, and
-  so the lower the MSE, the better fit the model. To build intuition for yourself,
-  try changing the weight and bias terms below to see how the MSE grows for poorly
-  fit models:
+  outliers. In practice, we'll fit our regression model to a set training data, and
+  evaluate it's performance using MSE on the test dataset.
+  <br /><br />But while MSE instills an L2 norm on our error (l2 norm), there's
+  nothing stopping us from trying an L1 norm instead: (). This is called
+  <span class="bold">Mean Absolue Error</span> To build intuition for yourself, try
+  changing the weight and bias terms below to see how the MSE grows for poorly fit
+  models:
 </p>
 <br /><br />
 <div id="mse-container">
@@ -92,6 +103,20 @@
         }${$mseBias}))^2 = ${formatter($mseError)} \\end{aligned}`
       )}
     </div>
+    <div id="equation-math">
+      {@html katexify(
+        `\\begin{aligned} MAE = \\frac{1}{n} \\Sigma^{n}_{i=1}\\lvert(y - (${$mseWeight}x${
+          $mseBias < 0 ? "" : "+"
+        }${$mseBias}))\\rvert = ${formatter($absError)} \\end{aligned}`
+      )}
+    </div>
+    <div id="equation-math">
+      {@html katexify(
+        `\\begin{aligned} R^2 = 1 - \\frac{${$RSS}}{${$TSS}}  = ${formatter(
+          $rSquared
+        )} \\end{aligned}`
+      )}
+    </div>
   </div>
   <div id="charts-container">
     <div id="mse-chart-regression">
@@ -103,7 +128,7 @@
 
 <br /><br />
 <p class="body-text">
-  <span class="bold">Alternatives To MSE</span><br />
+  <span class="bold">Selecting An Evaluation Metric</span><br />
   It is not a rule to use MSE for evaluating regression models. The evaluation metric
   should reflect whatever it is you actually care about when making predictions.
   For example, when we use MSE, we are implicitly saying that we think the cost of

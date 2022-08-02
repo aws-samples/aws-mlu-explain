@@ -1,80 +1,99 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
-  import { line, curveStep } from "d3-shape";
+  import { line } from "d3-shape";
   import { scaleLinear } from "d3-scale";
-  import { scatterData } from "../datasets.js";
+  import { interpretationData } from "../datasets.js";
+  import { max } from "d3-array";
+  import { margin } from "../store";
   import { format } from "d3-format";
 
-  const formatter = format(".0%");
+  const formatter = format("$,");
 
   let height = 500;
   let width = 500;
-  const mobile = window.innerWidth <= 700;
-  const margin = {
-    top: mobile ? 40 : 50,
-    bottom: mobile ? 10 : 25,
-    left: mobile ? 0 : 80,
-    right: mobile ? 0 : 10,
-  };
+
+  const maxVal = max(interpretationData, (d) => d.sqft);
 
   $: xScale = scaleLinear()
-    .domain([0, 14.4])
-    .range([margin.left, width - margin.right]);
+    .domain([0, maxVal])
+    .range([$margin.left, width - $margin.right]);
   $: yScale = scaleLinear()
-    .domain([0.0, 1])
-    .range([height - margin.bottom, margin.top]);
+    .domain([0, max(interpretationData, (d) => d.price)])
+    .range([height - $margin.bottom, $margin.top]);
+
+  const intercept = -70296.3;
+  const slopeSqft = 898.5;
+  const slopePool = 217110.5;
+  const slopeInteraction = -347.4;
+
+  const pathDataSqft = [
+    { x: 82, y: 82 * slopeSqft + intercept },
+    { x: maxVal, y: maxVal * slopeSqft + intercept },
+  ];
+
+  const pathDataPool = [
+    { x: 0, y: 0 * slopeSqft + slopePool + intercept },
+    {
+      x: maxVal,
+      y: maxVal * slopeSqft + slopePool + slopeInteraction * maxVal + intercept,
+    },
+  ];
 
   $: pricePath = line()
-    .x((d) => xScale(d.sqft))
-    .y((d) => yScale(d.price))
-    .curve(curveStep);
+    .x((d) => xScale(d.x))
+    .y((d) => yScale(d.y));
 </script>
 
 <p class="body-text">
   <span class="interpretation-header"
-    >Interpreting A Regression Model With Interaction Terms</span
+    >A Regression Model With Interaction Terms</span
   >
 </p>
 <div id="scatter-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + margin.top + margin.bottom}>
+  <svg {width} height={height + $margin.top + $margin.bottom}>
     <!-- x-ticks -->
     {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
+      <g
+        transform={`translate(${xScale(tick) + 0} ${height - $margin.bottom})`}
+      >
         <!-- svelte-ignore component-name-lowercase -->
         <line
           class="grid-line"
           x1="0"
           x2="0"
           y1="0"
-          y2={-height + margin.bottom + margin.top}
+          y2={-height + $margin.bottom + $margin.top}
           stroke="black"
           stroke-dasharray="4"
         />
-        <text class="axis-text" y="15" text-anchor="middle"
-          >{formatter(tick)}</text
-        >
+        <!-- {#if [0, 1].includes(tick)} -->
+        <text class="axis-text" y="15" text-anchor="middle">{tick}</text>
+        <!-- {/if} -->
       </g>
     {/each}
+
     <!-- y-ticks -->
-    {#each yScale.ticks() as tick}
-      <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
+    {#each yScale.ticks() as tick, i}
+      <g transform={`translate(${$margin.left - 5} ${yScale(tick) + 0})`}>
         <!-- svelte-ignore component-name-lowercase -->
         <line
           class="grid-line"
           x1={5}
-          x2={width - margin.right}
+          x2={width - $margin.right}
           y1="0"
           y2="0"
           stroke="black"
           stroke-dasharray="4"
         />
-        <text
-          class="axis-text"
-          y="0"
-          text-anchor="end"
-          dominant-baseline="middle">{formatter(tick)}</text
-        >
+        {#if i % 2 === 0}
+          <text
+            class="axis-text"
+            y="0"
+            text-anchor="end"
+            dominant-baseline="middle">{formatter(tick)}</text
+          >
+        {/if}
       </g>
     {/each}
     <!-- axis lines -->
@@ -82,9 +101,9 @@
     <!-- svelte-ignore component-name-lowercase -->
     <line
       class="axis-line"
-      y1={height - margin.bottom}
-      y2={height - margin.bottom}
-      x1={margin.left}
+      y1={height - $margin.bottom}
+      y2={height - $margin.bottom}
+      x1={$margin.left}
       x2={width}
       stroke="black"
       stroke-width="1"
@@ -93,143 +112,179 @@
     <!-- svelte-ignore component-name-lowercase -->
     <line
       class="axis-line"
-      y1={margin.top}
-      y2={height - margin.bottom}
-      x1={margin.left}
-      x2={margin.left}
+      y1={$margin.top}
+      y2={height - $margin.bottom}
+      x1={$margin.left}
+      x2={$margin.left}
       stroke="black"
       stroke-width="1"
     />
+    <!-- data points -->
+    {#each interpretationData as d}
+      <circle
+        class="interpretation-circle"
+        r="4.5"
+        cx={xScale(d.sqft)}
+        cy={yScale(d.price)}
+        fill={d.pool === 0 ? "#ff9900" : "#003181"}
+      />
+    {/each}
 
-    <!-- <path class="outline-line" d={pricePath(scatterData)} />
-      <path class="path-line" d={pricePath(scatterData)} stroke="#c9208a" /> -->
+    <path class="outline-line" d={pricePath(pathDataSqft)} />
+    <path class="path-line-sqft" d={pricePath(pathDataSqft)} />
+    <path class="outline-line" d={pricePath(pathDataPool)} />
+    <path class="path-line-pool" d={pricePath(pathDataPool)} />
 
     <!-- axis labels -->
     <text
-      class="error-axis-label"
-      y={height + margin.bottom}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">x</text
+      class="interpretation-axis-label"
+      y={height + $margin.bottom / 2}
+      x={(width + $margin.left) / 2}
+      text-anchor="middle">Home Size (sqft)</text
     >
     <text
-      class="error-axis-label"
-      y={margin.left / 3}
+      class="interpretation-axis-label"
+      y={10}
       x={-(height / 2)}
       text-anchor="middle"
-      transform="rotate(-90)">y</text
+      transform="rotate(-90)">House Price ($)</text
+    >
+    <text class="interpretation-title" y={$margin.top / 2} x={$margin.left}
+      >Regression Model With Interaction</text
     >
   </svg>
 </div>
+<!-- <br />
 <p class="body-text">
   <span class="bold">Model Form:</span>
   {@html katexify(
     `\\begin{aligned} y=β0+β1∗x1+β2∗x2+ β3∗(x1:x2) \\end{aligned}`,
     false
   )}
-</p>
-<br /><br />
+</p> -->
+<br />
 <p class="body-text">
-  <span class="bold">Example:</span>
+  <span class="bold">Example:</span><br />
   {@html katexify(
-    `\\begin{aligned} y=4 + 200*sqft + 100*num_floors + 400*(sqft:num_floors) \\end{aligned}`,
+    `\\begin{aligned} \\text{house price}=${Math.round(
+      intercept
+    )} + ${Math.round(slopeSqft)}*sqft + ${Math.round(
+      slopePool
+    )}*pool  ${Math.round(slopeInteraction)}*(sqft:pool) \\end{aligned}`,
     false
   )}
 </p>
 <br />
 <p class="body-text">
-  <span class="bold">Interpretation</span>: When we can assume different slopes
-  exist for different subpopulations of our data, we can use an interaction
-  model. Typically, a regression model will contain more than one features. We
-  call this a
-  <i>multivariate regression model</i>. In our example, we model home prices as
-  a function of both the size of the house ({@html katexify(`sqft`, false)}) and
-  whether or not it has a pool ({@html katexify(`has\\_pool`, false)}).
-  <br /><br />The intercept, 78, represents the predicted housing price for
-  houses with all {@html katexify(`xi = 0`, false)}: it represents the cost of
-  houses with no pools and a square-footage of zero.<span
+  <span class="bold">Interpretation</span>: If we believe that the slope for {@html katexify(
+    `sqft`,
+    false
+  )} should differ between houses that do have pools and houses that do not, we can
+  add an interaction term to our model, {@html katexify(`(sqft:pool) `, false)}.
+  <br /><br />
+  The coefficient of the interaction term {@html katexify(
+    `(sqft:pool)`,
+    false
+  )}, {formatter(Math.round(slopeInteraction))}, represents the difference in
+  the slope for sqft, comparing houses that do and do not have pools. Visually,
+  this represents the difference between the slopes of the two lines,
+  <span class="line-with" />
+  and <span class="line-without" />, above.
+  <br /><br />
+  The intercept, {formatter(Math.round(intercept))}, represents the predicted
+  housing price for houses with no pools and a square-footage of zero.<span
     class="info-tooltip"
-    title="Because this value doesn't make much intuitive sense, it's common for models to be transformed and standardized before carrying out a regression model."
+    title="Because this value doesn't make much intuitive sense, it's common for the features to be centered at zero."
     use:tooltip
   >
     [&#8505;]
   </span>
-  <br /><br /> The coefficient of {@html katexify(`has\\_pool`, false)}, 400,
-  represents the average expected difference in houses of the same size (in
-  sqft) that differed in whether or not they had a pool.<span
-    class="info-tooltip"
-    title="In other words, we expect, on average, houses of the same size to cost 400 more if they have a pool than if they do not."
-    use:tooltip
-  >
-    [&#8505;]
-  </span>
-  <br /><br />The coefficient of {@html katexify(`sqft`, false)}, 12, represents
-  the average expected difference in housing price for houses that have the same
-  value of {@html katexify(`has\\_pool`, false)} but differ in size by one square-foot.
+  <br /><br />
+  The coefficient of {@html katexify(`pool`, false)}, {formatter(
+    Math.round(slopePool)
+  )}, represents the average expected difference in houses of the same size (0
+  sqft) that differed in whether or not they had a pool. (It's not super useful
+  since we don't have houses with 0 square-feet).
+  <br /><br />
+  The coefficient of {@html katexify(`sqft`, false)}, {formatter(
+    Math.round(slopeSqft)
+  )}, represents the average expected difference in housing price for houses
+  that do not have a pool ({@html katexify(`pool= 0`, false)}) but differ in
+  size by one square-foot.
 </p>
 
 <style>
   #scatter-chart {
-    margin: auto;
-    max-height: 35vh;
+    max-height: 30vh;
     width: 500px;
     margin: 1rem auto;
   }
 
-  .regression-circle {
-    fill: var(--primary);
+  .interpretation-circle {
     stroke-width: 0;
   }
 
-  .regression-line {
-    stroke: var(--squidink);
-    stroke-width: 3.5;
-    fill: none;
-  }
-
-  .residual-line {
-    stroke: var(--cosmos);
-    stroke-width: 1.5;
-  }
-
-  .residual-rect {
-    stroke: var(--cosmos);
-    fill: var(--cosmos);
-    fill-opacity: 0.25;
-  }
-
-  .axis-label {
-    font-weight: bold;
+  .interpretation-title,
+  .interpretation-axis-label {
+    font-size: 0.85rem;
   }
 
   .axis-text {
     font-size: 0.7rem;
   }
 
-  .error-text {
-    text-transform: uppercase;
-    font-family: var(--font-heavy);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4.5px;
-    pointer-events: none;
-    stroke: #f1f3f3;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-  }
-
   .grid-line {
     opacity: 0.075;
   }
 
-  .axis-label {
-    text-transform: uppercase;
-    font-size: 0.7rem;
+  .outline-line {
+    stroke-width: 4.5;
+    stroke: white;
   }
 
-  .path-line {
+  .path-line-pool {
     fill: none;
     stroke-linejoin: round;
     stroke-linecap: round;
-    stroke-width: 4;
+    stroke-width: 3;
+    stroke: var(--anchor);
+  }
+
+  .path-line-sqft {
+    fill: none;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-width: 3;
+    stroke: var(--smile);
+  }
+
+  .dot-without {
+    height: 12px;
+    width: 12px;
+    background-color: var(--smile);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot-with {
+    height: 12px;
+    width: 12px;
+    background-color: var(--anchor);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .line-without {
+    height: 3px;
+    width: 14px;
+    background-color: var(--smile);
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .line-with {
+    height: 3px;
+    width: 14px;
+    background-color: var(--anchor);
+    display: inline-block;
+    margin-bottom: 4px;
   }
 </style>

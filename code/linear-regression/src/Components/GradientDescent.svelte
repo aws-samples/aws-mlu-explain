@@ -13,7 +13,6 @@
   let show;
 </script>
 
-<h1 class="body-header">Learning The Coefficients</h1>
 <p class="body-text">
   <span class="bold">Gradient Descent</span>
   <br />
@@ -240,41 +239,6 @@
 </p>
 <br /><br />
 <p class="body-text">
-  <span class="bold">What About Least Squares?</span><br />
-  We'd be remiss not to mention Least Squares, a widely taught (but rarely-used)
-  method for obtaining estimates for our linear regression coefficients.<span
-    class="info-tooltip"
-    title="Least squares is rarely used in the context of machine learning because "
-    use:tooltip
-  >
-    [&#8505;]
-  </span>
-  Least squares is a closed-form solution that allows us to estimate our coefficients
-  directly by minimizing the <i>residual sum of squares</i> (RSS) of our data:
-  {@html katexify(
-    `\\begin{aligned} RSS = \\sum^{n}_{i=1}(y_i - \\hat{y_i})^2 \\end{aligned}`,
-    true
-  )}The RSS should look familiar - it's just mean-squared error without the
-  'mean' (i.e. we take the sum without averaging). The coefficient estimates
-  have somewhat complex forms - you'll often see them presented in matrix form
-  as:
-  {@html katexify(
-    `\\begin{aligned} \\beta = (X^{T}X)^{-1}X^{T}Y \\end{aligned}`,
-    true
-  )}
-  Despite providing a convenient closed-form solution for finding our optimal coefficients,
-  the least squares estimates are often not used in practice, because of the computational
-  complexity required to calculate them. For this reason, we often just use gradient
-  descent.
-</p>
-
-<!-- <p class="body-text">
-  The important takeaway here is to know that although gradient descent is the
-  most popular method for estimating regression coefficients (at least in the
-  context of machine learning) many other methods exist.
-</p> -->
-<br /><br />
-<p class="body-text">
   <span class="bold">Are Our Coefficients Valid?</span><br />
   In research publications and statistical software, coefficients of regression models
   are often presented with associated p-values. These p-values from from traditional
@@ -284,11 +248,21 @@
   <i>all</i>
   the terms in a regression model are significantly different from zero. Different
   opinions exist on the utility of such tests (e.g. chapter 10.7 of
-  <a href="#resources">[1]</a> argues against them). We don't take a strong stance
-  on this issue, but believe practitioners should always assess the standard error
-  aroud any parameter estimates for themselves and present them in their research.
+  <a href="#resources">[1]</a> argues against them). We don't take a strong
+  stance on this issue, but believe practitioners should always assess the
+  standard error aroud any parameter estimates for themselves and present them
+  in their research.
+  <br /><br />
+  This may look pretty confusing, but it' quite simple! To see for yourself, click
+  in the plot below to add circles, and generate the equation updates for youself.
 </p>
+<br /><br />
 
+<!-- <p class="body-text">
+  The important takeaway here is to know that although gradient descent is the
+  most popular method for estimating regression coefficients (at least in the
+  context of machine learning) many other methods exist.
+</p> -->
 <style>
   #gd-container {
     display: grid;

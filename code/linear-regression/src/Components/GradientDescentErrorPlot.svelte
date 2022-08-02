@@ -60,25 +60,27 @@
       </g>
     {/each}
     <!-- y-ticks -->
-    {#each yScale.ticks() as tick}
-      <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="grid-line"
-          x1={5}
-          x2={width - margin.right}
-          y1="0"
-          y2="0"
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text
-          class="axis-text"
-          y="0"
-          text-anchor="end"
-          dominant-baseline="middle">{tick}</text
-        >
-      </g>
+    {#each yScale.ticks() as tick, i}
+      {#if i % 2 === 0}
+        <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
+          <!-- svelte-ignore component-name-lowercase -->
+          <line
+            class="grid-line"
+            x1={5}
+            x2={width - margin.right}
+            y1="0"
+            y2="0"
+            stroke="black"
+            stroke-dasharray="4"
+          />
+          <text
+            class="axis-text"
+            y="0"
+            text-anchor="end"
+            dominant-baseline="middle">{tick}</text
+          >
+        </g>
+      {/if}
     {/each}
     <!-- axis lines -->
     <!-- x -->
