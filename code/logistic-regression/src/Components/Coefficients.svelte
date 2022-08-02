@@ -10,9 +10,11 @@
   <h1 class="body-header">Estimating Coefficients</h1>
 
   <p class="body-text">
-    How do we find the coefficients that minimize the loss function? There are
-    two main approaches for logistic regression: gradient descent and maximum
-    likelihood estimation. We’ll briefly discuss both here.
+    How do we find the coefficients ({@html katexify(
+      "\\hat{\\beta_0}, \\hat{\\beta_1}, ..., \\hat{\\beta_k}"
+    )}) that minimize the loss function? There are two main approaches for
+    logistic regression: gradient descent and maximum likelihood estimation.
+    We’ll briefly discuss both here.
   </p>
   <h2 class="body-secondary-header">Gradient Descent</h2>
   <p class="body-text">
@@ -21,11 +23,12 @@
     all samples. This method involves selecting initial parameter values, and
     then updating them incrementally by moving them in the direction that
     decreases the loss. At each iteration, the parameter value is updated by the
-    step size (otherwise known as the learning rate) and the gradient. The
-    gradient is the direction and rate of the fast increase of a function, which
-    can be calculated using partial derivatives. The parameters are updated in
-    the opposite direction of the gradient by the step size in an attempt to
-    find the parameter values that minimize the Log-Loss.
+    gradient, scaled by the step size (otherwise known as the learning rate).
+    The gradient is the vector encompassing the direction and rate of the fast
+    increase of a function, which can be calculated using partial derivatives.
+    The parameters are updated in the opposite direction of the gradient by the
+    step size in an attempt to find the parameter values that minimize the
+    Log-Loss.
   </p>
 
   <GradientDescent />

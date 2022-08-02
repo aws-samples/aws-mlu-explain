@@ -39,19 +39,15 @@
   </p>
   <br /><br />
   <p class="body-text">
-    A suitable loss function in logistic regression is called the Log Loss, or
-    binary cross-entropy. This function is as follows, where {@html katexify(
-      "n"
-    )} is the number of samples,
-    {@html katexify("i")} is the index, {@html katexify("y_i")} is the true class
-    for the index {@html katexify("i")}, and {@html katexify("p_i")} is the model
-    prediction for the index {@html katexify("i")}.
-
+    A suitable loss function in logistic regression is called the Log-Loss, or
+    binary cross-entropy. This function is:
     {@html katexify(log_loss, true)}
-  </p>
-  <p class="body-text">
-    Minimizing the Log-Loss is equivalent to maximizing the Log-Likelihood,
-    since the Log-Loss is the negative of the Log-Likelihood.
+    where {@html katexify("n")} is the number of samples, indexed by
+    {@html katexify("i")}, {@html katexify("y_i")} is the true class for the index
+    {@html katexify("i")}, and {@html katexify("p_i")} is the model prediction for
+    the index {@html katexify("i")}. Minimizing the Log-Loss is equivalent to
+    maximizing the Log-Likelihood, since the Log-Loss is the negative of the
+    Log-Likelihood.
   </p>
 
   <div id="ll-container">

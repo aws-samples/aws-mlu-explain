@@ -44,7 +44,7 @@
     rain is 0.5, then the odds would be {@html katexify(
       "\\frac{0.5}{0.5} = 1"
     )}, meaning that the odds of a sunny day are 1 to 1, so rain and no rain are
-    equally likely. Taking the log of the odds yield the log-odds, and taking
+    equally likely. Taking the log of the odds yields the log-odds, and taking
     ratios of log-odds yields log-odds ratios.
   </p>
   <br /><br />

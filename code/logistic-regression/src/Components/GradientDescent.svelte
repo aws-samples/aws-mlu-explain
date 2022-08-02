@@ -27,10 +27,15 @@
   <div id="equations-container">
     <p class="body-text">
       Let's see how gradient descent works for our logistic regression model.
-      We'll use the algorithm to identify which values for our bias and weight
-      we should select. Click the buttons to run 1, 5, 10, or 25 steps of
-      gradient descent, and see the curve update live. The error for each
-      iteration is shown in the bottom error chart.
+      We'll use the algorithm to identify which values for our bias ({@html katexify(
+        "\\hat{\\beta_0}",
+        true
+      )}) and weight ({@html katexify(
+        "\\hat{\\beta_1}",
+        true
+      )}) we should select. Click the buttons to run 1, 5, 10, or 25
+      steps of gradient descent, and see the curve update live. The error for
+      each iteration is shown in the bottom error chart.
     </p>
     <div id="buttons-container">
       <button on:click={() => gdScatterClass.runGradientDescent(1)}
@@ -82,10 +87,16 @@
     <div id="equation-math">
       <div class="input-container">
         <label for="equation-math" class="float-left">Our Model: </label>
-        {@html katexify(
+        <!-- {@html katexify(
           `\\begin{aligned} P(Y=1|x) = \\frac{1}{1 + e^{-(${$gdWeight}x${
             $gdBias < 0 ? "" : "+"
           }${$gdBias})}} \\end{aligned}`
+        )} -->
+        {@html katexify(
+          `\\begin{aligned} P(Y=1|x) = \\frac{1}{1 + e^{-(${$gdBias}${
+            $gdWeight < 0 ? "" : "+"
+          }
+            ${$gdWeight}x)}} \\end{aligned}`
         )}
       </div>
     </div>
