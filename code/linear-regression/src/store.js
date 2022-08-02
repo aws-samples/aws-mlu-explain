@@ -3,9 +3,9 @@ import { tweened } from "svelte/motion";
 import { linear } from "svelte/easing";
 
 export const margin = writable({
-  top: 40,
+  top: 25,
   bottom: 20,
-  left: 50,
+  left: 90,
   right: 10,
 });
 export const marginScroll = writable({
@@ -32,3 +32,15 @@ export const mseBias = writable(1);
 export const mseIteration = writable(0);
 export const mseError = writable(0);
 export const mseErrors = writable([]);
+export const absError = writable(0);
+export const rSquared = writable(0);
+export const RSS = writable(0);
+export const TSS = writable(0);
+// closed form vars
+export const cfWeight = writable(1);
+export const cfBias = writable(1);
+export const cfIteration = writable(0);
+export const cfError = writable(0);
+export const cfErrors = writable([]);
+// here
+export const cfCircles = writable([]);
