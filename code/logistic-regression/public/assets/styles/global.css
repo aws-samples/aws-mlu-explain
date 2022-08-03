@@ -1,0 +1,149 @@
+:root {
+  /* Fonts 
+  see: http://typography.aka.amazon.com/
+  */
+  --font-main: "Amazon Ember";
+  --font-mono: "Amazon Ember Mono";
+  --font-heavy: "Amazon Ember Display Heavy";
+  --font-light: "Amazon Ember Display Light";
+
+  /* Colors 
+  see: https://brand.amazon.com/aws/visual-guidelines-ob/colors/
+  */
+  --squidink: #232f3e;
+  /* set 1 */
+  --anchor: #003181;
+  --sky: #2074d5;
+  --smile: #ff9900;
+  --rind: #fbd8bf;
+  /* set 2 */
+  --galaxy: #330066;
+  --cosmos: #df2a5d;
+  --violet: #7c5aed;
+  --cyan: #7ce8f4;
+  /* set 3 */
+  --seablue: #005276;
+  --aqua: #007faa;
+  --lab: #38ef7d;
+  --mist: #9ffcea;
+  /* set 4 */
+  --anchor: #003181;
+  --sky: #2074d5;
+  --magenta: #f46ebb;
+  --peach: #ffad97;
+  /* neutrals */
+  --darksquidink: #161e2d;
+  --stone: #d4dada;
+  --paper: #f1f3f3;
+  --white: #ffffff;
+
+  /* Z-Index */
+  --z-bottom: -100;
+  --z-middle: 0;
+  --z-top: 100;
+  --z-overlay: 1000;
+
+  /* Color Variables */
+
+  --bg: var(--rind);
+  --fg: var(--off-black);
+  --default: var(--squidink);
+  --primary: var(--anchor);
+  --secondary: var(--sky);
+}
+
+body {
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  background-color: var(--bg);
+}
+
+/* Global Reusable Styles For Convenience */
+.body-text, .tab-text {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.5em;
+  font-family: var(--font-main);
+  max-width: 600px;
+}
+
+.body-header {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 30px;
+  line-height: 1.5em;
+  font-family: var(--font-heavy);
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  max-width: 600px;
+}
+
+.body-secondary-header {
+  max-width: 45rem;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 25px;
+  line-height: 1.5em;
+  font-family: var(--font-heavy);
+  color: var(--default);
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  max-width: 600px;
+}
+
+.centered {
+  margin: auto;
+  max-width: 45rem;
+  max-width: 600px;
+}
+
+.bold {
+  font-family: var(--font-heavy);
+}
+
+a {
+  color: var(--primary);
+  font-family: var(--font-heavy);
+}
+
+h1 {
+  color: var(--default);
+  font-family: var(--font-heavy);
+}
+
+h2 {
+  color: var(--default);
+  font-family: var(--font-heavy);
+}
+
+h3 {
+  color: var(--paper);
+  font-family: var(--font-heavy);
+}
+
+p {
+  color: var(--default);
+  font-family: var(--font-main);
+  font-weight: none;
+}
+
+/* mobile */
+@media screen and (max-width: 950px) {
+  .body-text {
+    max-width: 80%;
+    font-size: 18px;
+  }
+
+  .body-header {
+    max-width: 80%;
+    font-size: 30px;
+  }
+
+  .tab-text {
+    max-width: 100%;
+    font-size: 18px;
+  }
+}
