@@ -41,9 +41,10 @@
 
   $: lossValueY0 = (d) => logLossY0[d]["LogLoss"];
   $: lossValueY1 = (d) => logLossY1[d]["LogLoss"];
+
 </script>
 
-<div id="loss-chart" bind:clientWidth={width} bind:offsetHeight={height}>
+<div id="loss-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
   <svg {width} height={height + margin.top + margin.bottom}>
     <!-- x ticks -->
     {#each xScale.ticks() as d}
@@ -141,9 +142,11 @@
             fill="#ff9900"
           />
         {/each}
-        <text class="arrow-text" x="25" y="0" dominant-baseline="middle"
-          >To Infinity</text
-        >
+        <text 
+          class="arrow-text" 
+          x="25" 
+          y="0" 
+          dominant-baseline="middle">To Infinity</text>
       </g>
     </g>
 
@@ -161,9 +164,11 @@
             fill="#003181"
           />
         {/each}
-        <text class="arrow-text" x="-70" y="0" dominant-baseline="middle"
-          >To Infinity</text
-        >
+        <text 
+          class="arrow-text" 
+          x="-70" 
+          y="0" 
+          dominant-baseline="middle">To Infinity</text>
       </g>
     </g>
 

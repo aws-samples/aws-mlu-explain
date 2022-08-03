@@ -243,6 +243,7 @@
     font-family: var(--font-main);
     line-height: 1.3;
     border: 5px solid var(--default);
+    opacity: 0.9;
   }
 
   .steps-container {
