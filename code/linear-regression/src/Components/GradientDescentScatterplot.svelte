@@ -25,7 +25,7 @@
       };
     }),
     {
-      duration: 200,
+      duration: 300,
       easing: linear,
     }
   );
@@ -57,7 +57,6 @@
 
   $: {
     $shuffleIteration;
-    $gdIteration += 1;
     // recalculate error if changes
     let errors = gradientDescentData.map((d) => {
       return (
@@ -66,7 +65,7 @@
         2
       );
     });
-    $gdError = Number(errors.reduce((a, b) => a + b, 0));
+    $gdError = Number(errors.reduce((a, b) => a + b, 0)) / errors.length;
     $gdErrors = [
       ...$gdErrors,
       {
@@ -80,6 +79,7 @@
     $gdBias;
     $gdWeight;
     $gdIteration += 1;
+    console.log($gdIteration);
   }
 
   export function shuffleData() {
@@ -95,16 +95,15 @@
     );
     // reset error plot
     $gdIteration = 0;
-    $gdErrors = [{ iteration: 1, error: $gdError }];
+    $gdErrors = [{ iteration: 0, error: $gdError }];
   }
   export function runGradientDescent(iterations) {
     const N = gradientDescentData.length;
     const learning_rate = 0.001;
-
+    $gdIteration += iterations - 1;
     //   for each iteration
     for (let index = 0; index < iterations; index++) {
       // update error and iterations
-      $gdIteration += 1;
 
       // update the bias term
       let biasDifference = gradientDescentData.map((d) => {
@@ -117,7 +116,7 @@
       let biasSum = Number(
         biasDifference.reduce((a, b) => a + b, 0).toFixed(4)
       );
-      $gdError = biasSum;
+      $gdError = biasSum / N;
       let b_gradient = (-2 / N) * biasSum;
       const bias = $gdBias + learning_rate * b_gradient;
       $gdBias = Number(bias.toFixed(4));
@@ -142,15 +141,19 @@
   // scales
   $: xScale = scaleLinear()
     .domain([
-      min(gradientDescentData, (d) => d[`sqft${$shuffleIteration}`]) - 2,
-      max(gradientDescentData, (d) => d[`sqft${$shuffleIteration}`]) + 2,
+      min($dataset, (d) => d.sqft) - 2,
+      max($dataset, (d) => d.sqft) + 2,
+      // min(gradientDescentData, (d) => d[`sqft${$shuffleIteration}`]) - 2,
+      // max(gradientDescentData, (d) => d[`sqft${$shuffleIteration}`]) + 2,
     ])
     // .domain([0, 11])
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
     .domain([
-      min(gradientDescentData, (d) => d[`price${$shuffleIteration}`]),
-      max(gradientDescentData, (d) => d[`price${$shuffleIteration}`]) + 2,
+      min($dataset, (d) => d.price) - 2,
+      max($dataset, (d) => d.price) + 2,
+      // min(gradientDescentData, (d) => d[`price${$shuffleIteration}`]),
+      // max(gradientDescentData, (d) => d[`price${$shuffleIteration}`]) + 2,
     ])
     // .domain([-1, 16])
     .range([height - margin.bottom, margin.top]);
@@ -241,18 +244,7 @@
     > -->
 
     <!-- chart data mappings -->
-    <!-- Residuals -->
-    {#each $dataset as d}
-      <!-- svelte-ignore component-name-lowercase -->
-      <line
-        class="residual-line"
-        x1={xScale(d.sqft)}
-        x2={xScale(d.sqft)}
-        y1={yScale(d.price)}
-        y2={yScale(d.y)}
-        stroke="black"
-      />
-    {/each}
+
     <!-- draw regression line -->
     <path class="regression-line" d={regressionPath($dataset)} />
 
@@ -286,11 +278,6 @@
     stroke: var(--squidink);
     stroke-width: 3.5;
     fill: none;
-  }
-
-  .residual-line {
-    stroke: var(--cosmos);
-    stroke-width: 1.5;
   }
 
   .axis-label {

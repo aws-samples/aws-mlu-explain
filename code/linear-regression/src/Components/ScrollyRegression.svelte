@@ -2,7 +2,14 @@
   import katexify from "../katexify";
   import { selectAll } from "d3-selection";
   import Scatterplot from "./Scatterplot.svelte";
-  import { sqft, lineType, coeff, intercept } from "../store.js";
+  import {
+    sqft,
+    lineType,
+    coeff,
+    intercept,
+    showRegressionLine,
+    showResiduals,
+  } from "../store.js";
   import { onMount } from "svelte";
 
   let scatterClass;
@@ -10,32 +17,43 @@
   // let sections;
   const target2event = {
     0: () => {
-      scatterClass.hideResidualLines();
       scatterClass.hideAnnotationLines();
       $lineType = "regressionLineFlat";
+      $showRegressionLine = true;
+      $showResiduals = false;
+      $coeff = 1.105;
+      $intercept = 0.544;
     },
     1: () => {
-      scatterClass.showResidualLines();
-      scatterClass.hideAnnotationLines();
+      // scatterClass.showResidualLines();
       $lineType = "regressionLineFlat";
+      $showRegressionLine = true;
+      $showResiduals = true;
+      // $coeff = 1.105;
+      // $intercept = 0.544;
     },
 
     2: () => {
-      // scatterClass.hideResidualLines();
-      // scatterClass.showAnnotationLines();
+      scatterClass.hideAnnotationLines();
       $lineType = "regressionLine";
-      $coeff = 0.5;
-      $intercept = 205.4;
+      $coeff = 1.105;
+      $intercept = 0.544;
+      $showResiduals = true;
+      $showRegressionLine = true;
     },
     3: () => {
-      scatterClass.hideResidualLines();
+      scatterClass.showAnnotationLines();
+      $showResiduals = false;
+      $showRegressionLine = true;
       $lineType = "regressionLine";
-      $coeff = 0.5;
-      $intercept = 205.4;
+      $coeff = 1.105;
+       $intercept = 0.544;
     },
     4: () => {
-      $coeff = 25.65;
-      $intercept = -51.79;
+      $showResiduals = false;
+      $showRegressionLine = true;
+      $coeff = 0.097;
+      $intercept = 2.783;
       $lineType = "regressionLineSqrt";
     },
     5: () => {},
@@ -92,87 +110,104 @@
       <div class="step" data-index="0">
         <div class="step-content">
           <p>
-            Given some data for housing size (sqft) and cost, we’ll see if we
-            can use linear regression to predict the price of a house from its
-            size (in square-feet). We call the value we’re trying to predict
-            (price) our response, or dependent variable (denoted as y), and the
-            values we use for that prediction our predictors, or independent
-            variables (in this case, one feature, the square-footage of a
-            house). Plotting the price of our house versus it’s square-footage,
-            we begin to see a relationship:
+            Let's fit a model to predict housing price ($) from the size of the
+            house (in square-footage):
+            <br /><br />
+            {@html katexify(`house-price = sqft * x`, false)}
+            <br /><br />
+            We'll start with an extremely poor model, because why not. Let's just
+            predict every house to be $4, so our equation becomes:
+            <br /><br />
+            {@html katexify(`house-price = 4`, false)}
           </p>
         </div>
       </div>
       <div class="step" data-index="1">
         <div class="step-content">
           <p>
-            Given some data for housing size (sqft) and cost, we’ll see if we
-            can use linear regression to predict the price of a house from its
-            size (in square-feet). We call the value we’re trying to predict
-            (price) our response, or dependent variable (denoted as y), and the
-            values we use for that prediction our predictors, or independent
-            variables (in this case, one feature, the square-footage of a
-            house). Plotting the price of our house versus it’s square-footage,
-            we begin to see a relationship:
+            Of course we know this model is bad - the data doesn't fit the data
+            well at all. But how can do quanitfy exactly how bad it is?
+            <br /><br />
+            To measure this quantitatively, we plot the error of each observation
+            directly. This error, or <i>residual</i> as it's often called, goes from
+            each observation to it's predicted value on our regression curve. We'll
+            make use of these residuals later when we talk about evaluating regression
+            models, but we can clearly see that our model has a lot of error.
           </p>
         </div>
       </div>
       <div class="step" data-index="2">
         <div class="step-content">
           <p>
-            Because we only have one independent variable, house-size, we say
-            our model is a simple linear regression. Most models use more than
-            one feature (multiple linear regression). The goal of either linear
-            regression model is to find a line that best models the linear
-            relationship between our independent and dependent variable (drawn
-            here). Linear here refers to the relationship between the variables
-            - our line can take shapes other than a straight line (more on that
-            later).
+            The goal of linear regression is reducing this error such that we
+            find a line (or in the case of multiple features, a surface) that
+            'best' fits our data. .
+            <br /><br />
+            For our simple regression problem, that involves finding the slope and
+            intercept of our model, B0 and B1. How much better can we do? Well, given
+            this specific data, the best fit line is shown. In this case, 'best'
+            fit refers to a line that models the data. Our line is shown here. There's
+            still error, sure, but the general pattern is captured well. As a result,
+            we can be reasonably confident that were we to plug in future values
+            of square-footage, our predicted values of price would be fairly accurate.
           </p>
         </div>
       </div>
       <div class="step" data-index="3">
         <div class="step-content">
           <p>
-            Linear regression is a supervised model, meaning it learns to model
-            Y by looking at previous data. It uses this previous data to find a
-            line that minimizes the residuals, or error, in our dataset. The
-            ‘best fit’ line is one that minimizes these residuals the best
+            Once we've fit our model, predicting future values is super easy! We
+            just plug in any xi values into our equation {@html katexify(
+              `house-price = 4`,
+              false
+            )}!
+            <br /><br />For our simple model, that means plugging in a value for
+            SQFT:
           </p>
+          <br />
           <div id="input-container">
-            <p>Value: {$sqft}</p>
+            <p>SQFT Value: {$sqft}</p>
             <input
               type="range"
               min="0"
-              max="2000"
+              max="11"
               bind:value={$sqft}
               class="slider"
               id="myRange"
             />
           </div>
+          <p>
+            <br />
+            So our prediction becomes
+            {@html katexify(
+              `\\hat{y} = ${$coeff} * ${$sqft} = ${Math.round(
+                $sqft * $coeff,
+                3
+              )}`,
+              false
+            )}
+          </p>
         </div>
       </div>
-      <div class="step" data-index="4">
+      <!-- <div class="step" data-index="4">
         <div class="step-content">
           <p>
-            Linear regression is a supervised model, meaning it learns to model
-            Y by looking at previous data. It uses this previous data to find a
-            line that minimizes the residuals, or error, in our dataset. The
-            ‘best fit’ line is one that minimizes these residuals the best
+            And finally, it's worth a quick mention that the <i>linear</i> in linear
+            regression does not mean our predictions are limited to lines!
           </p>
           <div id="input-container">
             <p>Value: {$sqft}</p>
             <input
               type="range"
               min="0"
-              max="2000"
+              max="11"
               bind:value={$sqft}
               class="slider"
               id="myRange"
             />
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="spacer" />
     </div>
     <div class="charts-container">
@@ -186,11 +221,12 @@
 
   <p class="body-text">
     Now that we have a high-level idea of how linear regression works, let's
-    dive a bit deeper. In particular, we'll cover how to evaluate regression
-    models (using mean-squared error), how to find the 'best' model (using
-    gradient descent), how to interpret different forms of regression models,
-    and the different assumptions underpinning correct usage of regression
-    models. Read on to learn more!
+    dive a bit deeper. The remainder of this article will cover: to evaluate
+    regression models (using mean-squared error), how to find the 'best' model
+    (using gradient descent), how to interpret different forms of regression
+    models, and the different assumptions underpinning correct usage of
+    regression models.
+    <br /><br /> Let's dive in!
   </p>
 </section>
 
@@ -229,7 +265,9 @@
   .step-content {
     font-size: var(--size-default);
     background: var(--bg);
-    color: #ccc;
+    /* background: var(--secondary); */
+    /* color: #ccc; */
+    /* color: var(--squidink); */
     border-radius: 1px;
     padding: 0.5rem 1rem;
     display: flex;
@@ -242,12 +280,18 @@
     max-width: 500px;
     font-family: var(--font-main);
     line-height: 1.3;
-    border: 5px solid var(--default);
+    border: 4px solid var(--default);
   }
 
   .step.active .step-content {
-    background: var(--bg);
-    color: var(--squid-ink);
+    /* background: var(--bg); */
+    /* background: var(--white); */
+    /* color: var(--squid-ink); */
+    /* color: var(--squidink); */
+  }
+
+  .step-content p {
+    color: var(--squidink);
   }
 
   .steps-container {

@@ -12,6 +12,7 @@
   import ScrollyRegression from "./Components/ScrollyRegression.svelte";
   import Assumptions from "./Components/Assumptions.svelte";
   import Extensions from "./Components/Extensions.svelte";
+  import ClosedForm from "./Components/ClosedForm.svelte";
 </script>
 
 <Meta />
@@ -21,6 +22,7 @@
 <ScrollyRegression />
 <MeanSquaredError />
 <!-- <EstimatingCoefficients /> -->
+<ClosedForm />
 <GradientDescent />
 <!-- <LeastSquares /> -->
 <Interpretation />

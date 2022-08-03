@@ -1,5 +1,4 @@
 /node_modules/
 /public/build/
-package-lock.json
+
 .DS_Store
-node_modules

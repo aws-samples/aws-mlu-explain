@@ -1,13 +1,10 @@
 <script>
-  // "katexify" function
   import { gdBias, gdWeight } from "../store";
   import katexify from "../katexify";
   import GradientDescentScatterplot from "./GradientDescentScatterplot.svelte";
   import GradientDescentErrorPlot from "./GradientDescentErrorPlot.svelte";
   import Hidden from "./Hidden.svelte";
-
-  // math equations
-  const math1 = "ax^2+bx+c=0";
+  import { tooltip } from "../tooltip";
 
   // instantiate class for gd methods
   let gdScatterClass;
@@ -16,23 +13,14 @@
   let show;
 </script>
 
-<h1 class="body-header">Gradient Descent</h1>
 <p class="body-text">
-  <!-- Linear regression is all about finding a line that fits our data well. As we
-  just learned, lowering the MSE provides us But how can we do this? A very
-  popular approach in machine learning is to use gradient descent. Gradient
-  descent is an iterative optimization algorithm that identifies some set of
-  coefficients that yield the minimum of a convex function. In our case, we just
-  learned that we can use the MSE to measure the error of our model: the lower
-  the error, the more accurate (and better fit) our linear regression model. We
-  can use gradient descent, we can automate -->
-  <!-- <br /><br /> -->
+  <span class="bold">Gradient Descent</span>
+  <br />
   Let's recap what we've learned so far: Linear regression is all about finding a
   line (or plane) that fits our data well. And as we just saw, this involves selecting
   the coefficients of our model that best minimize MSE. But how can we find these
-  values? After all, selecting coefficient values by hand as we just did quickly
-  becomes infeasible for regression models with many coffieicents. There must be
-  a better way!
+  values? In practice, they're unknown, and selecting them by hand quickly becomes
+  infeasible for regression models with many features. There must be a better way!
   <br /><br />
   Luckily for us, a very popular algorithm in machine learning does exactly this:
   gradient descent. Gradient descent is an iterative optimization algorithm that
@@ -40,14 +28,9 @@
   Put simply: it will find suitable coefficients for our regression model that minimize
   prediction error (remember, lower MSE equals better model).
   <br /><br />
-  <!-- define gradient descent -->
   A full conversation on gradient descent is outside the course of this article (stay-tuned
-  for our future article on the subject), but we'll give a brief explanation as applied
-  to linear regression. For a given error function (MSE in our case), Gradient descent
-  will repeatedly update our models coefficients to minimize MSE. For each coefficient
-  Bi in our model, it calculates the partial derivative of our error function with
-  respect to that cofficient, (this tells us the magnitude and direction of increase)
-  and stepping in the <i>opposite</i> direction.
+  for our future article on the subject), but if you'd like to learn more, click
+  the "Show Math" button below. Otherwise, read on!
   <br />
 </p>
 <div class="show-button-container">
@@ -57,19 +40,125 @@
 </div>
 
 <Hidden bind:shown bind:show>
-  <div>Hidden content</div>
+  <section class="gd-math">
+    <p class="body-text">
+      Gradient descent works as follows. We assume that we have some convex
+      function representing the error of our machine learning algorithm (in our
+      case, MSE). Gradient descent will iteratively update our model's
+      coefficients in the direction of our error functions minimum [we can't
+      guarantee global minima].
+      <br /><br />
+      In our case, our model takes the form:
+      {@html katexify(
+        `\\begin{aligned} \\hat{y}=\\hat{\\beta_0} + \\hat{\\beta_1}x_1  \\end{aligned}`,
+        true
+      )}
+      and our error function takes the form:
+      {@html katexify(
+        `\\begin{aligned} MSE(\\hat{\\beta_0}, \\hat{\\beta_1}) = \\frac{1}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i})^2 \\\\
+        = \\frac{1}{n} \\sum^{n}_{i=1}(y_i - (\\hat{\\beta_0} + \\hat{\\beta_1}x_1 ))^2 \\end{aligned}`,
+        true
+      )}
+      <!-- {@html katexify(
+        `\\begin{aligned}  = \\frac{1}{n} \\sum^{n}_{i=1}(y_i - (\\hat{\\beta_0} + \\hat{\\beta_1}x_1 ))^2 \\end{aligned}`,
+        true
+      )} -->
+      Our goal is to find the coefficients, {@html katexify(`\\beta_0`, false)} and
+      {@html katexify(`\\beta_1`, false)}, to minimize the error function. To do
+      this, we'll use the gradient, which represents the direction where that
+      function is increasing, and the rate at which it is increasing. Gradient
+      descent works by taking steps in the direction oppositie of where our
+      error function is increasing, proportional to the rate of change. To find
+      the coefficients that minimize
+      <!-- our error function, we apply gradient descent: -->
+      <!-- To control
+      the rate at which gradient descent learns the optimal model parameters, we
+      introduce a parameter, step_size.  -->
+      First, we calculate the derivatives of our loss function, MSE:
+      {@html katexify(
+        `\\frac{\\delta}{\\delta\\beta_i}MSE = \\begin{cases}
+        -\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i}) \\text{for i = 0} \\\\
+        -\\frac{2}{n} \\sum^{n}_{i=1}x_i(y_i - \\hat{y_i}) \\text{for i = 1}
+        \\end{cases}`,
+        true
+      )}
+      <!-- {@html katexify(
+        `\\begin{aligned} \\frac{\\delta}{\\delta\\beta_i}MSE =  \\end{aligned}`,
+        true
+      )}
+      {@html katexify(
+        `\\begin{aligned} = -\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i}) \\text{for i = 0} \\end{aligned}`,
+        true
+      )}
+      {@html katexify(
+        `\\begin{aligned} = -\\frac{2}{n} \\sum^{n}_{i=1}x_i(y_i - \\hat{y_i}) \\text{for i = 1} \\end{aligned}`,
+        true
+      )}
+      {@html katexify(
+        `f(n) = \\begin{cases}
+          n/2  & n \\text{ is even} \\\\
+          3n+1 & n \\text{ is odd}
+        \\end{cases}`,
+        true
+      )} -->
+      Next, now that we have the gradients for our error function (with respect to
+      each coefficient to be updated), we perform iterative updates as:
+      {@html katexify(
+        `\\text{repeat until converge:} = \\begin{cases}
+         \\beta_0 = \\beta_0 - \\alpha (-\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i}))  \\\\
+         \\beta_1 = \\beta_1 - \\alpha (-\\frac{2}{n} x_i\\sum^{n}_{i=1}(y_i - \\hat{y_i})) 
+        \\end{cases}`,
+        true
+      )}
+      <!-- {@html katexify(
+        `\\begin{aligned} repeat: \\beta_0 = \\beta_0 - \\alpha (-\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i})) \\end{aligned}`,
+        true
+      )}
+      {@html katexify(
+        `\\begin{aligned} repeat: \\beta_1 = \\beta_1 - \\alpha (-\\frac{2}{n} x_i\\sum^{n}_{i=1}(y_i - \\hat{y_i})) \\end{aligned}`,
+        true
+      )} -->
+      <br /><br />
+      <!-- error function. For a given error function (MSE in our case), Gradient descent
+      will iteratively update our models' coefficients to minimize the error of that
+      function. It does this by calculating the gradient of that function. The gradient
+      measures For each coefficient Bi in our model, it calculates the partial derivative
+      of our error function with respect to that cofficient, (this tells us the magnitude -->
+      updating these values iteratively will yield coefficients of our model that
+      minimize error.<span
+        class="info-tooltip"
+        title="Gradient descent won't always yield the best coefficients for our model, because it can sometimes 
+      get stuck in local minima (as opposed to global minima). Many extensions exist to help solve this problem."
+        use:tooltip
+      >
+        [&#8505;]
+      </span>
+      <br />
+    </p>
+    <!-- <p class="body-text">
+      <br />
+      Because the gradient calculates where the function is increasing, going in
+      the opposite direction leads us to the minimum of our function. In this manner,
+      we can repeatedly update our model's cofficients such that we eventually reach
+      the minimum of our error function and obtain a line that fits our data well
+      [i] mention global vs local optima.
+    </p> -->
+    <div class="show-button-container">
+      <button class="show-button" on:click={show}>Hide Math</button>
+    </div>
+  </section>
 </Hidden>
 
-{#if shown}
+<!-- {#if shown}
   <div>Hidden child is shown!</div>
-{/if}
+{/if} -->
 <p class="body-text">
   <br />
-  Because the gradient calculates where the function is increasing, going in the
-  opposite direction leads us to the minimum of our function. In this manner, we
-  can repeatedly update our model's cofficients such that we eventually reach the
-  minimum of our error function and obtain a line that fits our data well [i] mention
-  global vs local optima.
+  Gradient descent will iteratively identify the coefficients our model needs to
+  fit the data. Let's see an example directly. We'll fit data to our equation y =
+  b0 + b1x. So we'll want to learn two coefficients, b0 and b1. To do so, interact
+  witht he plot below. Try dragging the wrights and values to 'poor' fit solutions
+  and run gradient descent to see them iteratively improve.
 </p>
 <br /><br />
 <div id="gd-container">
@@ -79,7 +168,9 @@
       model. We'll use the algorithm to identify which values for our bias and
       weight we should select. Click the buttons to run 1, 10, or 50 steps of
       gradient descent, and see the line update live. The error for each
-      iteration will be shown in the bottom error chart.
+      iteration will be shown in the bottom error chart. With each weight
+      update, we recalculate the error, so you can see how gradient descent
+      improves our model iteratively.
     </p>
     <div id="buttons-container">
       <button on:click={() => gdScatterClass.shuffleData()}>New Data</button>
@@ -89,8 +180,8 @@
       <button on:click={() => gdScatterClass.runGradientDescent(10)}
         >10 Steps</button
       >
-      <button on:click={() => gdScatterClass.runGradientDescent(50)}
-        >50 Steps</button
+      <button on:click={() => gdScatterClass.runGradientDescent(25)}
+        >25 Steps</button
       >
     </div>
     <div id="weight-slider">
@@ -123,7 +214,9 @@
     </div>
     <div id="equation-math">
       Our model: {@html katexify(
-        `y = ${$gdWeight}x${$gdBias < 0 ? "" : "+"}${$gdBias}+c`
+        `\\begin{aligned} y = ${$gdWeight}x${
+          $gdBias < 0 ? "" : "+"
+        }${$gdBias}+c \\end{aligned}`
       )}
     </div>
   </div>
@@ -138,8 +231,11 @@
 </div>
 <br /><br />
 <p class="body-text">
-  Of course, gradient descent isn't the only method to obtain a set of
-  coefficients for our model. Least squares.
+  Although gradient descent is the most popular optimization algorithm in
+  machine learning, it's not perfect! It doesn't work for every loss function,
+  and it may not always find the most optimal set of coefficients for your
+  model. Still, it has many extensions to help solve these issues, and is a
+  great choice for mean-squared error.
 </p>
 <br /><br />
 <p class="body-text">
@@ -152,11 +248,21 @@
   <i>all</i>
   the terms in a regression model are significantly different from zero. Different
   opinions exist on the utility of such tests (e.g. chapter 10.7 of
-  <a href="#resources">[1]</a> argues against them). We don't take a strong stance
-  on this issue, but believe practitioners should always assess the standard error
-  aroud any parameter estimates for themselves and present them in their research.
+  <a href="#resources">[1]</a> argues against them). We don't take a strong
+  stance on this issue, but believe practitioners should always assess the
+  standard error aroud any parameter estimates for themselves and present them
+  in their research.
+  <br /><br />
+  This may look pretty confusing, but it' quite simple! To see for yourself, click
+  in the plot below to add circles, and generate the equation updates for youself.
 </p>
+<br /><br />
 
+<!-- <p class="body-text">
+  The important takeaway here is to know that although gradient descent is the
+  most popular method for estimating regression coefficients (at least in the
+  context of machine learning) many other methods exist.
+</p> -->
 <style>
   #gd-container {
     display: grid;
@@ -175,6 +281,18 @@
     flex-direction: column;
     /* border: 1px solid red; */
     /* justify-content: center; */
+  }
+
+  .gd-math {
+    margin: auto;
+    max-width: 700px;
+    border: 5px solid var(--smile);
+    padding: 2rem;
+    background-color: var(--paper);
+  }
+
+  .gd-math .body-text {
+    /* color: white; */
   }
 
   #buttons-container {

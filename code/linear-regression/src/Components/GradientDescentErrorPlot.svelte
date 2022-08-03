@@ -32,7 +32,7 @@
     ])
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
-    .domain([0, $gdError < 1600 ? 1600 : $gdError + $gdError * 0.3])
+    .domain([0, $gdError < 200 ? 300 : $gdError + $gdError * 0.3])
     .range([height - margin.bottom, margin.top]);
 
   // line generator
@@ -60,25 +60,27 @@
       </g>
     {/each}
     <!-- y-ticks -->
-    {#each yScale.ticks() as tick}
-      <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="grid-line"
-          x1={5}
-          x2={width - margin.right}
-          y1="0"
-          y2="0"
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text
-          class="axis-text"
-          y="0"
-          text-anchor="end"
-          dominant-baseline="middle">{tick}</text
-        >
-      </g>
+    {#each yScale.ticks() as tick, i}
+      {#if i % 2 === 0}
+        <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
+          <!-- svelte-ignore component-name-lowercase -->
+          <line
+            class="grid-line"
+            x1={5}
+            x2={width - margin.right}
+            y1="0"
+            y2="0"
+            stroke="black"
+            stroke-dasharray="4"
+          />
+          <text
+            class="axis-text"
+            y="0"
+            text-anchor="end"
+            dominant-baseline="middle">{tick}</text
+          >
+        </g>
+      {/if}
     {/each}
     <!-- axis lines -->
     <!-- x -->
