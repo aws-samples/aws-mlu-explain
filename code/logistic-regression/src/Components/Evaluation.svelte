@@ -2,7 +2,6 @@
   import katexify from "../katexify";
   import { llProbability, yVal } from "../data-store";
   import Scatterplot from "./LogLossScatter.svelte";
-  // import Select from "svelte-select";
 
   let llScatterClass;
 
@@ -70,16 +69,10 @@
       <div class="input-container">
         <label for="true-select">Select true value for y:</label>
         <div class="container">
-          <!-- <Select
-            name="true-select"
-            class="true-select"
-            {items}
-            on:select={handleSelect}
-            on:clear={handleClear}
-            bind:value={chosen}
-            isSearchable={false}
-            isClearable={false}
-          /> -->
+          <select class="true-select" bind:value={$yVal}>
+            <option value={true}>y = 0</option>
+            <option value={false}>y = 1</option>
+          </select>
         </div>
       </div>
       <div id="probability-slider">
