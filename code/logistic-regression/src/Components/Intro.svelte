@@ -9,7 +9,7 @@
 
 <section>
   <p class="body-text">
-    One major area of interest in machine learning is supervised learning, where the
+    One major area in machine learning is supervised learning, where the
     goal is to predict an output given some inputs. The output value may be a
     numerical or categorical variable. In this article, we will discuss
     <span class="bold">logistic regression</span>: a supervised learning
