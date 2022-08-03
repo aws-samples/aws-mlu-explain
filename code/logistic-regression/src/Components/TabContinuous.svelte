@@ -10,7 +10,7 @@
   <br /><br />
   <span class="bold">Model Form:</span>
   {@html katexify(
-    `\\begin{aligned} P(Y=1|x) = \\frac{1}{1+e^{-(\\hat{\\beta_0} + \\hat{\\beta_1} * x)}} \\end{aligned}`,
+    `\\begin{aligned} P(y=1|x) = \\frac{1}{1+e^{-(\\hat{\\beta_0} + \\hat{\\beta_1} * x)}} \\end{aligned}`,
     false
   )} where {@html katexify(`x \\in \\llbracket \\Reals \\rrbracket`, false)}
 </p>
@@ -32,11 +32,11 @@
   of a sunny day across temperatures (measured in degrees Fahrenheit).
   <br /><br />
   The weight {@html katexify(`\\hat{\\beta_1}`, false)} is the change in the log
-  odds ratio for {@html katexify(`Y`, false)} per unit change in {@html katexify(
+  odds ratio for {@html katexify(`y`, false)} per unit change in {@html katexify(
     `X`,
     false
   )}. When exponentiating the weight, this becomes the change in the odds ratio
-  for {@html katexify(`Y`, false)} per unit change in {@html katexify(
+  for {@html katexify(`y`, false)} per unit change in {@html katexify(
     `X`,
     false
   )}. In other words, the odds are multiplied by {@html katexify(

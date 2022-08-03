@@ -10,7 +10,7 @@
   <br /><br />
   <span class="bold">Model Form:</span>
   {@html katexify(
-    `\\begin{aligned} P(Y=1|x) = \\frac{1}{1+e^{-(\\hat{\\beta_0} + \\hat{\\beta_1} * x_1 + \\hat{\\beta_2} * x_2 + ... + \\hat{\\beta_n} * x_n)}} \\end{aligned}`,
+    `\\begin{aligned} P(y=1|x) = \\frac{1}{1+e^{-(\\hat{\\beta_0} + \\hat{\\beta_1} * x_1 + \\hat{\\beta_2} * x_2 + ... + \\hat{\\beta_n} * x_n)}} \\end{aligned}`,
     false
   )}
 </p>

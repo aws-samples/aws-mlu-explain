@@ -23,7 +23,7 @@
     <!-- add prop -->
     <meta
         property="og:description"
-        content="Regression for Classification."
+        content="A visual, interactive explanation of logistic regression for machine learning."
     />
     <meta property="og:image:width" content="1000" />
     <meta property="og:image:height" content="630" />
