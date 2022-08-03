@@ -33,7 +33,7 @@
   not.
 
   <br /><br /> The weight {@html katexify(`\\hat{\\beta_1}`, false)} is the change
-  in the log odds ratio for a foggy day relative to a non-foggy day. For a coefficient
+  in the log-odds ratio for a foggy day relative to a non-foggy day. For a coefficient
   of -0.7, the exponentiated value is {@html katexify(
     `e^{-0.7} = 0.50`,
     false

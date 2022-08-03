@@ -5,7 +5,7 @@
 
 <p class="tab-text">
   <span class="interpretation-header"
-    >Interpreting A Multivariate Regression Model</span
+    >Interpreting A Multivariate Logistic Regression Model</span
   >
   <br /><br />
   <span class="bold">Model Form:</span>
@@ -28,9 +28,9 @@
 </p>
 <br />
 <p class="tab-text">
-  <span class="bold">Interpretation</span>: Typically, a regression model will
+  <span class="bold">Interpretation</span>: Typically, a logistic regression model will
   contain more than one feature. We call this a
-  <i>multivariate regression model</i>. In this example, we model the
+  <i>multivariate logistic regression model</i>. In this example, we model the
   probability of a sunny day as a function of temperature and whether or not it
   is foggy.
   <br /><br />The intercept represents the predicted probability of a sunny day
@@ -38,8 +38,8 @@
   probability for days without fog and with a temperature of zero degrees
   Fahrenheit.
   <br /><br /> The weight {@html katexify(`\\hat{\\beta_1}`, false)} is the change
-  in the log odds ratio for a sunny day per unit change in temperature, and the weight
-  {@html katexify(`\\hat{\\beta_2}`, false)} is the change in the log odds ratio
+  in the log-odds ratio for a sunny day per unit change in temperature, and the weight
+  {@html katexify(`\\hat{\\beta_2}`, false)} is the change in the log-odds ratio
   for a foggy day relative to a non-foggy day.
 </p>
 

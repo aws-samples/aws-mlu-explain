@@ -43,7 +43,7 @@
     which means that the odds of a sunny day are 3 to 1. If the probability of
     rain is 0.5, then the odds would be {@html katexify(
       "\\frac{0.5}{0.5} = 1"
-    )}, meaning that the odds of a sunny day are 1 to 1, so rain and no rain are
+    )}, meaning that the odds of a sunny day are 1 to 1, so sun and rain are
     equally likely. Taking the log of the odds yields the log-odds, and taking
     ratios of log-odds yields log-odds ratios.
   </p>
