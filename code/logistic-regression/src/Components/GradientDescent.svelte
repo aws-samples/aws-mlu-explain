@@ -52,7 +52,8 @@
     <div id="weight-slider">
       <div class="input-container">
         <label for="slider1" class="float-left">
-          Weight: {$gdWeight}
+          <span class="bold">Weight:</span>
+          {$gdWeight}
         </label>
         <input
           type="range"
@@ -68,7 +69,8 @@
     <div id="bias-slider">
       <div class="input-container">
         <label for="slider2" class="float-left">
-          Bias: {$gdBias}
+          <span class="bold">Bias:</span>
+          {$gdBias}
         </label>
 
         <input
@@ -84,9 +86,11 @@
     </div>
     <div id="equation-math">
       <div class="input-container">
-        <label for="equation-math" class="float-left">Our Model: </label>
+        <label for="equation-math" class="float-left"
+          ><span class="bold">Our Model: </span></label
+        >
         {@html katexify(
-          `\\begin{aligned} P(Y=1|x) = \\frac{1}{1 + e^{-(${$gdBias}${
+          `\\begin{aligned} P(y=1|x) = \\frac{1}{1 + e^{-(${$gdBias}${
             $gdWeight < 0 ? "" : "+"
           }
             ${$gdWeight}x)}} \\end{aligned}`

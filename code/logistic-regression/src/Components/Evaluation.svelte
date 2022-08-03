@@ -63,7 +63,7 @@
       </p>
       <br /><br />
       <div class="input-container">
-        <label for="true-select">Select true value for y:</label>
+        <label for="true-select"><span class="bold">Select true value for {@html katexify("y")}: </span></label>
         <div class="container">
           <select class="true-select" bind:value={$yVal}>
             <option value={true}>y = 0</option>
@@ -74,7 +74,7 @@
       <div id="probability-slider">
         <div class="input-container">
           <label for="slider1" class="float-left">
-            Probability: {$llProbability}
+            <span class="bold">Probability:</span> {$llProbability}
           </label>
           <input
             type="range"
