@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>Logistic Regression</title>
+    <title>MLU-Explain:</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -11,7 +11,7 @@
     <!-- add prop -->
     <meta
         name="description"
-        content="MLU-Explain: Logistic Regression."
+        content="MLU-Explain: Visual Introduction to Double Descent."
     />
     <!-- add prop -->
     <meta
@@ -19,7 +19,7 @@
         content="https://mlu-explain.github.io/assets/dd1ogimage.png"
     />
     <!-- add prop -->
-    <meta property="og:title" content="Logistic Regression" />
+    <meta property="og:title" content="Double Descent" />
     <!-- add prop -->
     <meta
         property="og:description"

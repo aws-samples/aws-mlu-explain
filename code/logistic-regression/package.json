@@ -1,8 +1,6 @@
 {
-  "name": "logistic-regression",
+  "name": "svelte-app",
   "version": "1.0.0",
-  "description": "MLU-Explain article about Logistic Regression.",
-  "author": "Erin Bugbee and Jared Wilber",
   "private": true,
   "scripts": {
     "build": "rollup -c",
@@ -12,7 +10,6 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
-    "layercake": "^6.1.1",
     "rollup": "^2.41.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
@@ -35,14 +32,10 @@
     "d3-svg-annotation": "^2.5.1",
     "d3-transition": "^2.0.0",
     "intersection-observer": "^0.5.0",
-    "katex": "^0.12.0",
-    "live-server": "^1.2.2",
     "rough-notation": "^0.4.0",
-    "sirv-cli": "^1.0.0",
     "smoothscroll-polyfill": "^0.4.4",
     "stickyfill": "^1.1.1-strict",
-    "svelte-preprocess": "^4.6.9",
-    "svelte-select": "^4.4.7",
-    "sveltestrap": "^5.9.0"
+    "katex": "^0.12.0",
+    "sirv-cli": "^1.0.0"
   }
 }
