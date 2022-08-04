@@ -19,7 +19,7 @@
   <br />
   Because the gradient calculates where the function is increasing, going in the
   opposite direction leads us to the minimum of our function. In this manner, we
-  can repeatedly update our model's cofficients such that we eventually reach the
+  can repeatedly update our model's coefficients such that we eventually reach the
   minimum of our error function and obtain a sigmoid curve that fits our data well.
 </p>
 <br /><br />

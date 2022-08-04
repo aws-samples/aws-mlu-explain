@@ -24,8 +24,8 @@
     then updating them incrementally by moving them in the direction that
     decreases the loss. At each iteration, the parameter value is updated by the
     gradient, scaled by the step size (otherwise known as the learning rate).
-    The gradient is the vector encompassing the direction and rate of the fast
-    increase of a function, which can be calculated using partial derivatives.
+    The gradient is the vector encompassing the direction and rate of the
+    fastest increase of a function, which can be calculated using partial derivatives.
     The parameters are updated in the opposite direction of the gradient by the
     step size in an attempt to find the parameter values that minimize the
     Log-Loss.

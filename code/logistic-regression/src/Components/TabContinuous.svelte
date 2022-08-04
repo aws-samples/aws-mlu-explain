@@ -31,8 +31,7 @@
   <span class="bold">Interpretation</span>: This model describes the probability
   of a sunny day across temperatures (measured in degrees Fahrenheit).
   <br /><br />
-  The weight {@html katexify(`\\hat{\\beta_1}`, false)} is the change in the log
-  odds ratio for {@html katexify(`y`, false)} per unit change in {@html katexify(
+  The weight {@html katexify(`\\hat{\\beta_1}`, false)} is the change in the log-odds ratio for {@html katexify(`y`, false)} per unit change in {@html katexify(
     `X`,
     false
   )}. When exponentiating the weight, this becomes the change in the odds ratio
