@@ -2,7 +2,7 @@
   import ScatterGrid from "./ScatterGrid.svelte";
   import SimulationGrid from "./SimulationGrid.svelte";
   import { agent, agentPath, gridQValues, epsilon } from "../data-store.js";
-  import { Env } from "../Env.js"
+  // import { Env } from "../Env.js"
   // import Agent from "../Agent.js"
 
   const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
@@ -83,13 +83,12 @@
     }
   }
 
-<<<<<<< HEAD
   function reset() {
     agent.set({
         x: newX,
         y: newY,
       });
-=======
+
     const newAgentPath = [...$agentPath, { x: randX, y: randY }];
     agentPath.set(newAgentPath);
 
@@ -103,7 +102,6 @@
       };
     });
     $gridQValues = [...newVals];
->>>>>>> 51ffdca46a1965d7c7c40db19b68ece2408f53a4
   }
 
 </script>
