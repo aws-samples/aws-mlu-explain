@@ -115,8 +115,8 @@
 <style>
   svg {
     border: 4px solid black;
-	background-color: white;
-	margin: 20px;
+    background-color: white;
+    margin: 20px;
   }
 
   .agent-rect {

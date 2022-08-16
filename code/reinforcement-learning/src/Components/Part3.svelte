@@ -1,7 +1,7 @@
 <script>
   import ScatterGrid from "./ScatterGrid.svelte";
   import SimulationGrid from "./SimulationGrid.svelte";
-  import { agent, agentPath } from "../data-store.js";
+  import { agent, agentPath, gridQValues } from "../data-store.js";
 
   const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
 
@@ -21,6 +21,17 @@
 
     const newAgentPath = [...$agentPath, { x: randX, y: randY }];
     agentPath.set(newAgentPath);
+
+    // loop through grid values to update
+    // for each value in grid
+    const newVals = $gridQValues.map((row) => {
+      return {
+        x: [...Array(row["redValue"].length + 1).keys()],
+        redValue: [...row["redValue"], randomInt(numX - 1, 0) + 0.5],
+        blueValue: [...row["blueValue"], randomInt(numX - 1, 0) + 2.5],
+      };
+    });
+    $gridQValues = [...newVals];
   }
 </script>
 
@@ -141,7 +152,6 @@
     cursor: pointer;
     opacity: 0.9;
     width: 150px;
-
   }
 
   button:hover {
