@@ -2,34 +2,6 @@
   import Bandit from "./Part1.svelte";
   import LineWorld from "./Part2.svelte";
   import GridWorld from "./Part3.svelte";
-
-  // import P5 from "p5-svelte";
-
-  // const sketch = (p5) => {
-  //   let grid_height = 250;
-  //   let grid_width = 250;
-  //   p5.setup = () => {
-  //     p5.createCanvas(grid_width, grid_height);
-  //   };
-
-  //   p5.draw = () => {
-  //     p5.background(300);
-  //     for (var x = 0; x <= grid_width; x += grid_width / 4) {
-  //       for (var y = 0; y <= grid_height; y += grid_height / 4) {
-  //         p5.stroke(0);
-  //         p5.strokeWeight(2);
-  //         p5.line(x, 0, x, grid_height);
-  //         p5.line(0, y, grid_width, y);
-  //       }
-  //     }
-  //   };
-  // };
-
-  // const scatterChart = new Scatter({
-  //   chartContainer: "static-chart",
-  //   data: scatterData
-  // });
-  // console.log(scatterData, 'hm')
 </script>
 
 <h1 class="body-header">Simulation</h1>
@@ -44,10 +16,6 @@
 <LineWorld />
 
 <GridWorld />
-
-<div id="static-chart">
-  <!-- <P5 {sketch} /> -->
-</div>
 
 <style>
   /* sample css to style reactivity button */

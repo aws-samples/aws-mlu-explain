@@ -34,7 +34,6 @@
         ];
 </script>
 
-<h1 class="body-header">Learning The Coefficients</h1>
 <p class="body-text">
   <span class="bold">A Closed-Form Solution</span><br />
   We'd be remiss not to mention Least Squares, a widely taught (but rarely-used)
@@ -50,10 +49,8 @@
   {@html katexify(
     `\\begin{aligned} RSS = \\sum^{n}_{i=1}(y_i - \\hat{y_i})^2 \\end{aligned}`,
     true
-  )}The RSS should look familiar - it's just mean-squared error without the
-  'mean' (i.e. we take the sum without averaging). The coefficient estimates
-  have somewhat complex forms - you'll often see them presented in matrix form
-  as:
+  )}The RSS should look familiar - it was a key piece in both the MSE and
+  r-squared formulas that represents our model's total squared error:
   {@html katexify(
     `\\begin{aligned} \\hat{\\beta} = (X^{T}X)^{-1}X^{T}Y \\end{aligned}`,
     true
@@ -199,8 +196,7 @@
             1 & ${$cfCircles?.[1] ? formatter($cfBias) : 0} \\\\
             1 &${$cfCircles?.[1] ? formatter($cfWeight) : 0}
             \\end{bmatrix}
-   
-
+            
             
         \\end{aligned}
         
@@ -219,6 +215,25 @@
     <button class="show-button" on:click={resetCircles}>Reset</button>
   </div>
 </div>
+<br /><br />
+<p class="body-text">
+  <span class="bold">Are Our Coefficients Valid?</span><br />
+  In research publications and statistical software, coefficients of regression models
+  are often presented with associated p-values. These p-values from from traditional
+  null hypothesis statistical tests: t-tests are used to measure whether a given
+  cofficient is significantly different than zero (the null hypothesis that a particular
+  coefficient Bj equals zero), while F tests are used to measure whether
+  <i>all</i>
+  the terms in a regression model are significantly different from zero. Different
+  opinions exist on the utility of such tests (e.g. chapter 10.7 of
+  <a href="#resources">[1]</a> argues against them). We don't take a strong
+  stance on this issue, but believe practitioners should always assess the
+  standard error aroud any parameter estimates for themselves and present them
+  in their research.
+  <br /><br />
+  This may look pretty confusing, but it' quite simple! To see for yourself, click
+  in the plot below to add circles, and generate the equation updates for youself.
+</p>
 <br /><br />
 
 <style>
