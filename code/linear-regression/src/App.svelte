@@ -21,10 +21,8 @@
 <Intro />
 <ScrollyRegression />
 <MeanSquaredError />
-<!-- <EstimatingCoefficients /> -->
-<ClosedForm />
 <GradientDescent />
-<!-- <LeastSquares /> -->
+<ClosedForm />
 <Interpretation />
 <Assumptions />
 <Extensions />

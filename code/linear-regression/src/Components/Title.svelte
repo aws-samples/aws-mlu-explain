@@ -4,7 +4,7 @@
     A Visual Introduction To (Almost) Everything You Should Know
   </h1>
   <h3 id="intro__date">
-    <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, July 2022
+    <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, August 2022
   </h3>
 </section>
 

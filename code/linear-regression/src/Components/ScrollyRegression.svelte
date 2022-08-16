@@ -47,7 +47,7 @@
       $showRegressionLine = true;
       $lineType = "regressionLine";
       $coeff = 1.105;
-       $intercept = 0.544;
+      $intercept = 0.544;
     },
     4: () => {
       $showResiduals = false;
@@ -113,12 +113,12 @@
             Let's fit a model to predict housing price ($) from the size of the
             house (in square-footage):
             <br /><br />
-            {@html katexify(`house-price = sqft * x`, false)}
+            {@html katexify(`\\text{house-price} = sqft * x`, false)}
             <br /><br />
             We'll start with an extremely poor model, because why not. Let's just
             predict every house to be $4, so our equation becomes:
             <br /><br />
-            {@html katexify(`house-price = 4`, false)}
+            {@html katexify(`\\text{house-price} = 4`, false)}
           </p>
         </div>
       </div>
@@ -129,10 +129,11 @@
             well at all. But how can do quanitfy exactly how bad it is?
             <br /><br />
             To measure this quantitatively, we plot the error of each observation
-            directly. This error, or <i>residual</i> as it's often called, goes from
-            each observation to it's predicted value on our regression curve. We'll
-            make use of these residuals later when we talk about evaluating regression
-            models, but we can clearly see that our model has a lot of error.
+            directly. These errors, or <span class="bold">residuals</span>,
+            measure the distance between each observation and the predicted
+            value for that observation. We'll make use of these residuals later
+            when we talk about evaluating regression models, but we can clearly
+            see that our model has a lot of error.
           </p>
         </div>
       </div>
@@ -144,12 +145,15 @@
             'best' fits our data. .
             <br /><br />
             For our simple regression problem, that involves finding the slope and
-            intercept of our model, B0 and B1. How much better can we do? Well, given
-            this specific data, the best fit line is shown. In this case, 'best'
-            fit refers to a line that models the data. Our line is shown here. There's
-            still error, sure, but the general pattern is captured well. As a result,
-            we can be reasonably confident that were we to plug in future values
-            of square-footage, our predicted values of price would be fairly accurate.
+            intercept of our model, {@html katexify(`\\beta_0`, false)} and {@html katexify(
+              `\\beta_1`,
+              false
+            )} . How much better can we do? Well, given this specific data, the best
+            fit line is shown. In this case, 'best' fit refers to a line that models
+            the data. Our line is shown here. There's still error, sure, but the
+            general pattern is captured well. As a result, we can be reasonably confident
+            that were we to plug in future values of square-footage, our predicted
+            values of price would be fairly accurate.
           </p>
         </div>
       </div>
@@ -171,6 +175,7 @@
               type="range"
               min="0"
               max="11"
+              step="0.25"
               bind:value={$sqft}
               class="slider"
               id="myRange"
@@ -221,11 +226,10 @@
 
   <p class="body-text">
     Now that we have a high-level idea of how linear regression works, let's
-    dive a bit deeper. The remainder of this article will cover: to evaluate
-    regression models (using mean-squared error), how to find the 'best' model
-    (using gradient descent), how to interpret different forms of regression
-    models, and the different assumptions underpinning correct usage of
-    regression models.
+    dive a bit deeper. The remainder of this article will cover how to evaluate
+    regression models, how to find the 'best' model, how to interpret different
+    forms of regression models, and the assumptions underpinning correct usage
+    of regression models in statistical settings.
     <br /><br /> Let's dive in!
   </p>
 </section>
