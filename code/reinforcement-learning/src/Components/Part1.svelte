@@ -42,7 +42,7 @@
     <td>Robot</td>
     <td>Two Options</td>
     <td>None</td>
-    <td>Tree A and Tree B</td>
+    <td>Tree A, Tree B</td>
     <td>Number of Bananas</td>
   </tr>
 </table>

@@ -1,5 +1,7 @@
 <script>
   import QValuePlot from "./QValuePlotLineWorld.svelte";
+  import { epsilon } from "../data-store.js";
+
 </script>
 
 <h2 class="body-secondary-header">Navigating in a Line World</h2>
@@ -60,7 +62,7 @@
     <td>Robot</td>
     <td>Line World</td>
     <td>X-Position</td>
-    <td>Move Left and Move Right</td>
+    <td>Move Left, Move Right</td>
     <td>Number of Bananas</td>
   </tr>
 </table>
@@ -73,6 +75,22 @@
   <button on:click={() => ""}>Run 1 Episode</button>
   <button on:click={() => ""}>Run 5 Episodes</button>
   <button on:click={() => ""}>Reset</button>
+</div>
+
+<div id="input-container">
+  <p>
+    <span class="bold">Epsilon: </span>
+    {$epsilon}
+  </p>
+  <input
+    type="range"
+    min="0"
+    max="1"
+    step="0.01"
+    bind:value={$epsilon}
+    class="slider"
+    id="epsilonSlider"
+  />
 </div>
 
 <style>
@@ -138,6 +156,36 @@
   button:visited {
     color: var(--white);
   }
+
+  #input-container {
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .slider {
+    -webkit-appearance: none;
+    width: 20%;
+    height: 15px;
+    border-radius: 5px;
+    background: var(--stone);
+    outline: none;
+    opacity: 0.9;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    border-color: var(--squidink);
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--secondary);
+    cursor: pointer;
+  }
+
 
   @media screen and (max-width: 768px) {
     table {
