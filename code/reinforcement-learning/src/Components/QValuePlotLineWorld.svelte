@@ -25,8 +25,6 @@
   let qvalue_line_left = "";
   let qvalue_line_right = "";
 
-  console.log(stateSet);
-
   const formatter = format(".1f");
 
   const arrows = [

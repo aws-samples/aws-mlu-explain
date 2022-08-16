@@ -78,7 +78,9 @@
   {/each}
 
   <!-- make arrows	 -->
-  {#each data as d}
+  <!-- data is gridValueQ -->
+  <!-- rotate degrees based on max direction, dictionary -->
+  {#each data as d, i}
     <g
       transform="translate({xScale(d.x) + cellWidth / 2 - 5}, {yScale(d.y) +
         cellHeight / 2 -

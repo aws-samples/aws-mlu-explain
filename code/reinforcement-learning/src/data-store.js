@@ -16,3 +16,5 @@ export const agent = tweened({x:0.5, y:0.5}, {
 
 export const agentPath = writable([{x:0.5, y:0.5}])
 
+export const epsilon = writable(0.5);
+

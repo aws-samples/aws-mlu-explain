@@ -1,7 +1,7 @@
 <script>
   import ScatterGrid from "./ScatterGrid.svelte";
   import SimulationGrid from "./SimulationGrid.svelte";
-  import { agent, agentPath } from "../data-store.js";
+  import { agent, agentPath, epsilon } from "../data-store.js";
 
   const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
 
@@ -11,17 +11,82 @@
   // 	change for 1 dim
   const numY = 4;
 
-  function moveAgent() {
-    const randX = randomInt(numX - 1, 0) + 0.5;
-    const randY = randomInt(numY - 1, 0) + 0.5;
-    agent.set({
-      x: randX,
-      y: randY,
-    });
+  // Check current x and y, determing where it can move
+  // function moveAgent() {
+  //   const randX = randomInt(numX - 1, 0) + 0.5;
+  //   const randY = randomInt(numY - 1, 0) + 0.5;
+  //   agent.set({
+  //     x: randX,
+  //     y: randY,
+  //   });
 
-    const newAgentPath = [...$agentPath, { x: randX, y: randY }];
-    agentPath.set(newAgentPath);
+  //   const newAgentPath = [...$agentPath, { x: randX, y: randY }];
+  //   agentPath.set(newAgentPath);
+  // }
+
+  // x can be 0.5, 1.5, 2.5, 3.5
+  function moveAgent(numRepeats) {
+    // how to access current x and y
+
+    for (let i = 0; i < numRepeats; i++) {
+
+      let currX = $agentPath[$agentPath.length - 1]["x"];
+      let currY = $agentPath[$agentPath.length - 1]["y"];
+
+      // if x == 0.5, choosing between 0.5 and 1.5
+      // if y == 0.5, choosing between 0.5 and 1.5
+      // if x == 4.5, choosing between 3.5 and 4.5
+      // if y == 4.5, choosing between 3.5 and 4.5
+      // sample x and y
+
+      // let newX;
+      // let newY;
+
+      // const newX = randomInt(currX + 0.5, currX - 0.5) + 0.5;
+      // const newY = randomInt(currY + 0.5, currY - 0.5) + 0.5;
+
+
+      if (currX == numX - 0.5) {
+        var newX = randomInt(currX - 0.5, currX - 1.5) + 0.5;
+      } else if (currX == 0.5) {
+        var newX = randomInt(currX + 0.5, 0) + 0.5;
+      } else {
+        var newX = randomInt(currX + 0.5, currX - 1.5) + 0.5;
+      }
+
+      if (currY == numY - 0.5) {
+        var newY = randomInt(currY - 0.5, currY - 1.5) + 0.5;
+      } else if (currY == 0.5) {
+        var newY = randomInt(currY + 0.5, 0) + 0.5;
+      } else {
+        var newY = randomInt(currY + 0.5, currY - 1.5) + 0.5;
+      }
+
+
+      // if (currY == numY) {
+      //   var newY = randomInt(currY, currY - 0.5) + 0.5;
+      // } else {
+      //   var newY = randomInt(currY + 0.5, currY - 0.5) + 0.5;
+
+      // }
+
+      agent.set({
+        x: newX,
+        y: newY,
+      });
+
+      const newAgentPath = [...$agentPath, { x: newX, y: newY }];
+      agentPath.set(newAgentPath);
+    }
   }
+
+  function reset() {
+    agent.set({
+        x: newX,
+        y: newY,
+      });
+  }
+
 </script>
 
 <h2 class="body-secondary-header">Navigating in a Grid World</h2>
@@ -56,7 +121,7 @@
     <td>Robot</td>
     <td>Grid World</td>
     <td>X,Y-Position</td>
-    <td>Move Left, Move Right, Move Up, and Move Down</td>
+    <td>Move Left, Move Right, Move Up, Move Down</td>
     <td>Number of Bananas</td>
   </tr>
 </table>
@@ -73,12 +138,28 @@
 </p> -->
 
 <div id="buttons-container">
-  <button on:click={() => moveAgent()}>Select 1 Action</button>
-  <button on:click={() => ""}>Select 5 Actions</button>
+  <button on:click={() => moveAgent(1)}>Select 1 Action</button>
+  <button on:click={() => moveAgent(5)}>Select 5 Actions</button>
   <button on:click={() => ""}>Run 1 Episode</button>
   <button on:click={() => ""}>Run 5 Episodes</button>
   <button on:click={() => ""}>Show Optimal Solution</button>
   <button on:click={() => ""}>Reset</button>
+</div>
+
+<div id="input-container">
+  <p>
+    <span class="bold">Epsilon: </span>
+    {$epsilon}
+  </p>
+  <input
+    type="range"
+    min="0"
+    max="1"
+    step="0.01"
+    bind:value={$epsilon}
+    class="slider"
+    id="epsilonSlider"
+  />
 </div>
 
 <style>
@@ -141,7 +222,6 @@
     cursor: pointer;
     opacity: 0.9;
     width: 150px;
-
   }
 
   button:hover {
@@ -154,6 +234,34 @@
 
   button:visited {
     color: var(--white);
+  }
+
+  #input-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .slider {
+    -webkit-appearance: none;
+    width: 20%;
+    height: 15px;
+    border-radius: 5px;
+    background: var(--stone);
+    outline: none;
+    opacity: 0.9;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    border-color: var(--squidink);
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--secondary);
+    cursor: pointer;
   }
 
   @media screen and (max-width: 768px) {
