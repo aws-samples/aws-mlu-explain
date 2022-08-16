@@ -2,6 +2,9 @@
   import ScatterGrid from "./ScatterGrid.svelte";
   import SimulationGrid from "./SimulationGrid.svelte";
   import { agent, agentPath, epsilon } from "../data-store.js";
+  import { Env } from "../Env.js"
+  // import Agent from "../Agent.js"
+
 
   const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
 
@@ -10,6 +13,7 @@
   const numX = numCells;
   // 	change for 1 dim
   const numY = 4;
+  
 
   // Check current x and y, determing where it can move
   // function moveAgent() {
