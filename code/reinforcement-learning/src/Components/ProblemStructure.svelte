@@ -5,10 +5,11 @@
   <h1 class="body-header">Problem Structure</h1>
 
   <p class="body-text">
-    In reinforcement learning problems, there is an *agent* who makes decisions
-    and learns how to achieve a goal. This agent interacts with the <span
-      class="bold">environment</span
+    In reinforcement learning problems, there is an <span class="bold"
+      >agent</span
     >
+    who makes decisions and learns how to achieve a goal. This agent interacts
+    with the <span class="bold">environment</span>
     by taking <span class="bold">actions</span>. The environment produces
     <span class="bold">rewards</span>
     as a result of the actions taken, and these rewards provide insight into the

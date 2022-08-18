@@ -1,9 +1,10 @@
 <script>
   import ScatterGrid from "./ScatterGrid.svelte";
   import SimulationGrid from "./SimulationGrid.svelte";
-  import { agent, agentPath, gridQValues, epsilon } from "../data-store.js";
-  // import { Env } from "../Env.js"
-  // import Agent from "../Agent.js"
+  import { agent, agentPath, gridQValues } from "../data-store.js";
+  import { Env } from "../Env.js"
+  import { Agent } from "../Agent.js"  
+
 
   const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
 
@@ -12,7 +13,38 @@
   const numX = numCells;
   // 	change for 1 dim
   const numY = 4;
-  
+
+  //  Define the environment
+  const env = new Env(
+    [3,0], // start
+    4, // rows
+    4, // columns
+    {[[3, 2]]: 10,
+      [[0, 0]]: 2
+  }, // Map of states and the corresponding reward 
+  {
+    [[2, 2]]: -5
+  }, // Map of states and the corresponding reward 
+    true, // deterministic: Stochastic env not implemented yet
+    true,  // exploring_starts: Initializa agent at a random state in subsequent episodes.
+    0.4 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+  );
+
+  // set lambda to 0 for TD(0) update and lamdba to 1 for MC
+  const grid_agent = new Agent(
+    env.rows, 
+    env.columns, 
+    env.wins,  // for plotting
+    env.losses, // for plotting
+    "q-learning",  // 'q-learning' or 'sarsa'
+    0.5,  // Control exploration
+    0.1,    // Learning rate
+    0.7,  // Discount factor
+    0.5 // Decay parameter for eligibility trace
+  );
+
+  const episodic_values = grid_agent.run_episodes(env, 1500);
+  console.log(episodic_values)
 
   // Check current x and y, determing where it can move
   // function moveAgent() {
@@ -84,10 +116,10 @@
   }
 
   function reset() {
-    agent.set({
-        x: newX,
-        y: newY,
-      });
+    // agent.set({
+    //     x: newX,
+    //     y: newY,
+    //   });
 
     const newAgentPath = [...$agentPath, { x: randX, y: randY }];
     agentPath.set(newAgentPath);
@@ -163,7 +195,7 @@
   <button on:click={() => ""}>Reset</button>
 </div>
 
-<div id="input-container">
+<!-- <div id="input-container">
   <p>
     <span class="bold">Epsilon: </span>
     {$epsilon}
@@ -177,7 +209,7 @@
     class="slider"
     id="epsilonSlider"
   />
-</div>
+</div> -->
 
 <style>
   #graph-container {
