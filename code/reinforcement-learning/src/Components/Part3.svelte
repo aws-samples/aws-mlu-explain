@@ -44,7 +44,6 @@
   );
 
   const episodic_values = grid_agent.run_episodes(env, 1500);
-  console.log(episodic_values)
 
   // Check current x and y, determing where it can move
   // function moveAgent() {

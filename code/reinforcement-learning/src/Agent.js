@@ -1,4 +1,4 @@
-import { multiply, add } from "mathjs";
+import { multiply, add, reshape } from "mathjs";
 
 // Finds the index of the maximum
 function argMax(array) {
@@ -36,18 +36,23 @@ export class Agent {
 
   //   Resets the Q-values to 0
   reset_q_values() {
-    this.q_values = Array(this.rows)
-      .fill(0)
-      .map((x) => Array(this.columns).fill(0))
-      .map((x) => Array(this.actions.length).fill(0));
+    this.q_values = new Array(this.rows).fill(
+      new Array(this.columns).fill(
+      new Array(this.actions.length).fill(0))
+    );
+
+    // Array(this.rows)
+    //   .fill(0)
+    //   .map((x) => Array(this.columns).fill(0))
+    //   .map((x) => Array(this.actions.length).fill(0));
   }
 
   //   Resets the trace matrix to 0
   reset_trace_matrix() {
-    this.trace_matrix = Array(this.rows)
-      .fill(0)
-      .map((x) => Array(this.columns).fill(0))
-      .map((x) => Array(this.actions.length).fill(0));
+    this.trace_matrix = new Array(this.rows).fill(
+      new Array(this.columns).fill(
+      new Array(this.actions.length).fill(0))
+    );
   }
 
   //   Choose actions according to epsilon-greedy action selection
@@ -66,12 +71,12 @@ export class Agent {
   //   Run episodes
   run_episodes(env, episodes = 10, max_steps = 2000) {
     var done, reward, state, td_error;
-    var episodic_values = [];
+    var episodic_values = Array();
 
     for (var ep = 0, episodes = episodes; ep < episodes; ep += 1) {
-      if (episodic_values.length === 0) {
-        episodic_values = this.q_values;
-      } else {
+      if (episodic_values.length == 0) {
+        episodic_values = reshape(this.q_values, [1, 4, 4, 4]);
+    } else {
         episodic_values = [...episodic_values, this.q_values];
       }
 
@@ -79,7 +84,7 @@ export class Agent {
 
       for (var step = 0, steps = max_steps; step < steps; step += 1) {
         const [action, action_index] = this.chooseAction(state);
-        const q_old = this.q_values[(state[0], state[1])][action_index];
+        const q_old = this.q_values[state[0]][state[1]][action_index];
 
         const [next_state, reward, done] = env.step(action);
         const [next_action, next_action_index] = this.chooseAction(next_state);
@@ -91,7 +96,7 @@ export class Agent {
             this.gamma *
               Math.max.apply(
                 null,
-                this.q_values[(next_state[0], next_state[1])]
+                this.q_values[next_state[0]][next_state[1]]
               ) -
             q_old;
         } else if (this.td_update == "sarsa") {
@@ -99,14 +104,14 @@ export class Agent {
           td_error =
             reward +
             this.gamma *
-              this.q_values[(next_state[0], next_state[1])][action_index] -
+              this.q_values[next_state[0]][next_state[1]][action_index] -
             q_old;
         } else {
           print("Please set 'td_update' to either 'sarsa' or 'q-learning'.");
         }
 
         //  Increment the trace matrix
-        this.trace_matrix[(state[0], state[1])][action_index] += 1;
+        this.trace_matrix[state[0]][state[1]][action_index] += 1;
 
         //  TD(lambda) Update
         const multiplier1 = this.alpha * td_error;
