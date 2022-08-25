@@ -12,8 +12,8 @@ export class Env {
     },
     obstacles = {},
     deterministic = true,
-    exploring_starts = false,
-    exploring_starts_prob = 0.4
+    exploringStarts = false,
+    exploringStartsProb = 0.4
   ) {
     this.start = start;
     this.state = start;
@@ -22,14 +22,14 @@ export class Env {
     this.board = Array(this.rows)
       .fill(0)
       .map((x) => Array(this.columns).fill(0));
-    this.exploring_starts = exploring_starts;
-    this.exploring_starts_prob = exploring_starts_prob;
+    this.exploringStarts = exploringStarts;
+    this.exploringStartsProb = exploringStartsProb;
     this.deterministic = deterministic;
     this.wins = wins;
     this.losses = losses;
 
-    if (this.exploring_starts) {
-      this.available_starts = [];
+    if (this.exploringStarts) {
+      this.availableStarts = [];
 
       for (var row = 0, rows = this.rows; row < rows; row += 1) {
         for (
@@ -38,15 +38,15 @@ export class Env {
           col += 1
         ) {
           this.temp = [row, col];
-          this.available_starts.push([row, col]);
+          this.availableStarts.push([row, col]);
         }
       }
     } else {
-      this.available_starts = this.start;
+      this.availableStarts = this.start;
     }
   }
 
-  _giveReward() {
+  giveReward() {
     if (this.state in this.wins) {
       return this.wins[this.state];
     } else {
@@ -58,7 +58,7 @@ export class Env {
     }
   }
 
-  _isEndFunc() {
+  isEndFunc() {
     if (
       this.state in this.wins || this.state in this.losses
     ) {
@@ -69,16 +69,16 @@ export class Env {
   }
 
   reset() {
-    if (this.exploring_starts && Math.random() < this.exploring_starts_prob) {
+    if (this.exploringStarts && Math.random() < this.exploringStartsProb) {
       this.state =
-        this.available_starts[
-          Math.floor(Math.random() * this.available_starts.length)
+        this.availableStarts[
+          Math.floor(Math.random() * this.availableStarts.length)
         ];
     } else {
-      this.available_starts;
+      this.availableStarts;
     }
 
-    return [this.start, this._giveReward(), this._isEndFunc()];
+    return [this.start, this.giveReward(), this.isEndFunc()];
   }
 
   step(action) {
@@ -112,7 +112,7 @@ export class Env {
         }
       }
 
-      return [this.state, this._giveReward(), this._isEndFunc()];
+      return [this.state, this.giveReward(), this.isEndFunc()];
     }
   }
 

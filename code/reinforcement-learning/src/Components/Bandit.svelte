@@ -1,5 +1,5 @@
 <script>
-  import QValuePlot from "./QValuePlotBandit.svelte";
+  import QChartBandit from "./QChartBandit.svelte";
 </script>
 
 <h2 class="body-secondary-header">Choosing Between Two Trees</h2>
@@ -15,8 +15,8 @@
 </p>
 <br /><br />
 <p class="body-text">
-  This type of reinforcement learning problem resembles that of the <text class=bold>multi-armed
-  bandit problem</text>. The multi-armed bandit problem is named after a gambler at a
+  This type of reinforcement learning problem resembles that of the <span class="bold">multi-armed
+  bandit problem</span>. The multi-armed bandit problem is named after a gambler at a
   row of slot machines, and the gambler must decide, given limited resources,
   which slot machine to play (i.e. which arm to pull). Here, the trees are the
   “arms” and the robot must decide how to choose between them.
@@ -47,7 +47,7 @@
   </tr>
 </table>
 
-<QValuePlot />
+<QChartBandit />
 
 <div id="buttons-container">
   <button on:click={() => ""}>Select 1 Action</button>

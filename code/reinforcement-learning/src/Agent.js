@@ -11,7 +11,7 @@ export class Agent {
     columns,
     wins,
     losses,
-    td_update = "sarsa",
+    tdUpdate = "sarsa",
     epsilon = 0.1,
     alpha = 0.1,
     gamma = 0.9,
@@ -24,107 +24,97 @@ export class Agent {
     this.columns = columns;
     this.wins = wins;
     this.losses = losses;
-    this.td_update = td_update;
+    this.tdUpdate = tdUpdate;
     this.alpha = alpha;
     this.gamma = gamma;
-    this.lambda_ = lambda;
-    this.q_values = Array();
-    this.reset_q_values();
-    this.trace_matrix = Array();
-    this.reset_trace_matrix();
+    this.lambda = lambda;
+    this.qValues = Array();
+    this.resetQValues();
+    this.traceMatrix = Array();
+    this.resetTraceMatrix();
   }
 
   //   Resets the Q-values to 0
-  reset_q_values() {
-    this.q_values = new Array(this.rows).fill(
-      new Array(this.columns).fill(
-      new Array(this.actions.length).fill(0))
+  resetQValues() {
+    this.qValues = new Array(this.rows).fill(
+      new Array(this.columns).fill(new Array(this.actions.length).fill(0))
     );
-
-    // Array(this.rows)
-    //   .fill(0)
-    //   .map((x) => Array(this.columns).fill(0))
-    //   .map((x) => Array(this.actions.length).fill(0));
   }
 
   //   Resets the trace matrix to 0
-  reset_trace_matrix() {
-    this.trace_matrix = new Array(this.rows).fill(
-      new Array(this.columns).fill(
-      new Array(this.actions.length).fill(0))
+  resetTraceMatrix() {
+    this.traceMatrix = new Array(this.rows).fill(
+      new Array(this.columns).fill(new Array(this.actions.length).fill(0))
     );
   }
 
   //   Choose actions according to epsilon-greedy action selection
   chooseAction(state) {
-    var action_index;
+    var actionIndex;
     if (Math.random() <= this.epsilon) {
       // Exploratory action
-      action_index = Math.floor(Math.random() * this.actions.length);
+      actionIndex = Math.floor(Math.random() * this.actions.length);
     } else {
       // Greedy action
-      action_index = argMax(this.q_values[(state[0], state[1])]);
+      actionIndex = argMax(this.qValues[state[0]][state[1]]);
     }
-    return [this.actions[action_index], action_index];
+    return [this.actions[actionIndex], actionIndex];
   }
 
   //   Run episodes
-  run_episodes(env, episodes = 10, max_steps = 2000) {
-    var done, reward, state, td_error;
-    var episodic_values = Array();
+  runEpisodes(env, episodes = 10, maxSteps = 2000) {
+    var done, reward, state, tdError;
+    var episodicValues = Array();
 
-    for (var ep = 0, episodes = episodes; ep < episodes; ep += 1) {
-      if (episodic_values.length == 0) {
-        episodic_values = reshape(this.q_values, [1, 4, 4, 4]);
-    } else {
-        episodic_values = [...episodic_values, this.q_values];
+    for (var ep = 0; ep < episodes; ep += 1) {
+      if (episodicValues.length == 0) {
+        episodicValues = reshape(this.qValues, [1, this.rows, this.columns, this.actions.length]);
+      } else {
+        episodicValues = [...episodicValues, this.qValues];
       }
 
       [state, reward, done] = env.reset();
 
-      for (var step = 0, steps = max_steps; step < steps; step += 1) {
-        const [action, action_index] = this.chooseAction(state);
-        const q_old = this.q_values[state[0]][state[1]][action_index];
+      for (var step = 0; step < maxSteps; step += 1) {
+        const [action, actionIndex] = this.chooseAction(state);
+        const qOld = this.qValues[state[0]][state[1]][actionIndex];
 
-        const [next_state, reward, done] = env.step(action);
-        const [next_action, next_action_index] = this.chooseAction(next_state);
+        const [nextState, reward, done] = env.step(action);
+        const [nextAction, nextActionIndex] = this.chooseAction(nextState);
 
-        if (this.td_update == "q-learning") {
+        if (this.tdUpdate == "q-learning") {
           // Q-Learning
-          td_error =
+          tdError =
             reward +
             this.gamma *
-              Math.max.apply(
-                null,
-                this.q_values[next_state[0]][next_state[1]]
-              ) -
-            q_old;
-        } else if (this.td_update == "sarsa") {
+              Math.max.apply(null, this.qValues[nextState[0]][nextState[1]]) -
+            qOld;
+        } else if (this.tdUpdate == "sarsa") {
           // SARSA
-          td_error =
+          tdError =
             reward +
             this.gamma *
-              this.q_values[next_state[0]][next_state[1]][action_index] -
-            q_old;
+              this.qValues[nextState[0]][nextState[1]][actionIndex] -
+            qOld;
         } else {
-          print("Please set 'td_update' to either 'sarsa' or 'q-learning'.");
+          print("Please set 'tdUpdate' to either 'sarsa' or 'q-learning'.");
         }
 
         //  Increment the trace matrix
-        this.trace_matrix[state[0]][state[1]][action_index] += 1;
+        this.traceMatrix[state[0]][state[1]][actionIndex] += 1;
 
         //  TD(lambda) Update
-        const multiplier1 = this.alpha * td_error;
-        this.q_values = add(
-          this.q_values,
-          multiply(multiplier1, this.trace_matrix)
+        const multiplier1 = this.alpha * tdError;
+        this.qValues = add(
+          this.qValues,
+          multiply(multiplier1, this.traceMatrix)
         );
 
         //  Decay the trace matrix values
-        const multiplier2 = this.gamma * this.lambda_;
-        this.trace_matrix = multiply(multiplier2, this.trace_matrix);
+        const multiplier2 = this.gamma * this.lambda;
+        this.traceMatrix = multiply(multiplier2, this.traceMatrix);
 
-        state = next_state;
+        state = nextState;
 
         if (done == true) {
           break;
@@ -132,6 +122,69 @@ export class Agent {
       }
     }
 
-    return episodic_values;
+    return episodicValues;
+  }
+
+  runAdditionalEpisodes(env, episodes = 1, maxSteps = 2000, episodic_values) {
+    var done, reward, state, tdError;
+
+    for (var ep = 0; ep < episodes; ep += 1) {
+      if (episodicValues.length == 0) {
+        episodicValues = reshape(this.qValues, [1, this.rows, this.columns, this.actions.length]);
+      } else {
+        episodicValues = [...episodicValues, this.qValues];
+      }
+
+      [state, reward, done] = env.reset();
+
+      for (var step = 0; step < maxSteps; step += 1) {
+        const [action, actionIndex] = this.chooseAction(state);
+        const qOld = this.qValues[state[0]][state[1]][actionIndex];
+
+        const [nextState, reward, done] = env.step(action);
+        const [nextAction, nextActionIndexndex] =
+          this.chooseAction(nextState);
+
+        if (this.tdUpdate == "q-learning") {
+          // Q-Learning
+          tdError =
+            reward +
+            this.gamma *
+              Math.max.apply(null, this.qValues[nextState[0]][nextState[1]]) -
+            qOld;
+        } else if (this.tdUpdate == "sarsa") {
+          // SARSA
+          tdError =
+            reward +
+            this.gamma *
+              this.qValues[nextState[0]][nextState[1]][actionIndex] -
+            qOld;
+        } else {
+          print("Please set 'tdUpdate' to either 'sarsa' or 'q-learning'.");
+        }
+
+        //  Increment the trace matrix
+        this.traceMatrix[state[0]][state[1]][actionIndex] += 1;
+
+        //  TD(lambda) Update
+        const multiplier1 = this.alpha * tdError;
+        this.qValues = add(
+          this.qValues,
+          multiply(multiplier1, this.traceMatrix)
+        );
+
+        //  Decay the trace matrix values
+        const multiplier2 = this.gamma * this.lambda;
+        this.traceMatrix = multiply(multiplier2, this.traceMatrix);
+
+        state = nextState;
+
+        if (done == true) {
+          break;
+        }
+      }
+    }
+
+    return episodicValues;
   }
 }

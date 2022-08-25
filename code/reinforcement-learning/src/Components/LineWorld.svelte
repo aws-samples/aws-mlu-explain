@@ -1,7 +1,108 @@
 <script>
-  import QValuePlot from "./QValuePlotLineWorld.svelte";
-  import { epsilon } from "../data-store.js";
+  import ScatterLine from "./ScatterLine.svelte";
+  import SimulationLine from "./SimulationLine.svelte";
+  // import QValuePlot from "./QValuePlotLineWorld.svelte";
+  import { lineRobot, lineRobotPath, epsilon, lineQValues } from "../data-store.js";
+  import { Env } from "../Env.js";
+  import { Agent } from "../Agent.js";
 
+  // Finds the index of the maximum
+  function argMax(array) {
+    return array
+      .map((x, i) => [x, i])
+      .reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+  }
+
+  // 	change for 1 dim
+  const numX = 8;
+  const numY = 1;
+
+  const actions = ["left", "right"];
+
+  //  Define the environment
+  const env = new Env(
+    [0, 0], // start
+    numY, // rows
+    numX, // columns
+    { [[0, 0]]: 2, [[0, 7]]: 5 }, // Map of states and the corresponding reward
+    {
+      // [[2, 2]]: -5,
+    }, // Map of states and the corresponding reward
+    true, // deterministic: Stochastic env not implemented yet
+    true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
+    0.4 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+  );
+
+  // set lambda to 0 for TD(0) update and lamdba to 1 for MC
+  const lineAgent = new Agent(
+    env.rows,
+    env.columns,
+    env.wins, // for plotting
+    env.losses, // for plotting
+    "q-learning", // 'q-learning' or 'sarsa'
+    $epsilon, // Control exploration
+    0.1, // Learning rate
+    0.7, // Discount factor
+    0.5 // Decay parameter for eligibility trace
+  );
+
+  // episode, row, column, action
+  const numEpisodes = 10;
+  var episodicValues = lineAgent.runEpisodes(env, numEpisodes);
+  // console.log(episodicValues[ep][r][c][0])
+
+  reset();
+
+  function reset() {
+    const startX = 3.5;
+    const startY = 0.5;
+    lineRobot.set({
+      x: startX,
+      y: startY,
+    });
+
+    lineRobotPath.set([{ x: startX, y: startY }]);
+
+    lineQValues.set([
+      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+    ]);
+
+    for (let ep = 0; ep < numEpisodes; ep++) {
+      const newVals = $lineQValues.map((state, index) => {
+        const r = index % numY;
+        const c = Math.floor(index / numY);
+
+        const leftVal = episodicValues[ep][r][c][0];
+        const rightVal = episodicValues[ep][r][c][1];
+
+        const allVals = [leftVal, rightVal];
+        const maxIndex = argMax(allVals);
+
+        let maxDir;
+
+        if (maxIndex == 0) {
+          maxDir = "left";
+        } else if (maxIndex == 1) {
+          maxDir = "right";
+        }
+
+        return {
+          episodeNumber: [...Array(state["left"].length + 1).keys()],
+          left: [...state["left"], episodicValues[ep][r][c][0]],
+          right: [...state["right"], episodicValues[ep][r][c][1]],
+          maxDirection: [...state["maxDirection"], maxDir],
+        };
+      });
+      $lineQValues = [...newVals];
+    }
+  }
 </script>
 
 <h2 class="body-secondary-header">Navigating in a Line World</h2>
@@ -67,17 +168,26 @@
   </tr>
 </table>
 
-<QValuePlot />
+<!-- <QValuePlot /> -->
+
+<div id="graph-container">
+  <div id="simulation-chart">
+    <SimulationLine {numX} {numY} />
+  </div>
+  <div id="scatter-chart">
+    <ScatterLine />
+  </div>
+</div>
 
 <div id="buttons-container">
   <button on:click={() => ""}>Select 1 Action</button>
   <button on:click={() => ""}>Select 5 Actions</button>
   <button on:click={() => ""}>Run 1 Episode</button>
   <button on:click={() => ""}>Run 5 Episodes</button>
-  <button on:click={() => ""}>Reset</button>
+  <button on:click={() => reset()}>Reset</button>
 </div>
 
-<div id="input-container">
+<!-- <div id="input-container">
   <p>
     <span class="bold">Epsilon: </span>
     {$epsilon}
@@ -91,8 +201,7 @@
     class="slider"
     id="epsilonSlider"
   />
-</div>
-
+</div> -->
 <style>
   table {
     border-collapse: collapse;
@@ -157,10 +266,26 @@
     color: var(--white);
   }
 
+  #graph-container {
+    display: grid;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #simulation-chart {
+    width: 100%;
+    height: 100%;
+  }
+
+  #scatter-chart {
+    width: 100%;
+    height: 100%;
+  }
+
   #input-container {
     display: flex;
     justify-content: center;
-
   }
 
   .slider {
@@ -185,7 +310,6 @@
     background: var(--secondary);
     cursor: pointer;
   }
-
 
   @media screen and (max-width: 768px) {
     table {

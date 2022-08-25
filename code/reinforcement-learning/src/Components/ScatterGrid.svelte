@@ -1,6 +1,6 @@
 <script>
   import { scaleLinear } from "d3-scale";
-  import QChart from "./QChart.svelte";
+  import QChartGrid from "./QChartGrid.svelte";
 
   export let numX = 4;
   export let numY = 4;
@@ -27,7 +27,7 @@
 <svg {width} {height}>
   {#each data as d, i}
     <g transform="translate({xScale(d.x)}, {yScale(d.y)})">
-      <QChart index={i} width={cellWidth - 12} height={cellHeight - 6} />
+      <QChartGrid index={i} width={cellWidth - 12} height={cellHeight - 6} />
     </g>
   {/each}
 </svg>

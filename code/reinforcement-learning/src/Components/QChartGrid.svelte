@@ -20,24 +20,34 @@
   const formatter = format(".2d");
 
   //   get max value for x-axis
-  $: xMax = $gridQValues[0]["redValue"].length;
+  $: xMax = $gridQValues[0]["up"].length;
+
 
   // scales
   $: xScale = scaleLinear()
     .domain([0, xMax + 1])
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
-    .domain([0, 8])
+    .domain([-5, 5])
     .range([height - margin.bottom, margin.top]);
 
-  // susbet data for line charts
-  $: pathAData = $gridQValues[index]["redValue"].map((val, i) => {
+  $: pathUpData = $gridQValues[index]["up"].map((val, i) => {
     return { x: i, y: val };
   });
 
-  $: pathBData = $gridQValues[index]["blueValue"].map((val, i) => {
+  $: pathDownData = $gridQValues[index]["down"].map((val, i) => {
     return { x: i, y: val };
   });
+
+  $: pathLeftData = $gridQValues[index]["left"].map((val, i) => {
+    return { x: i, y: val };
+  });
+
+  $: pathRightData = $gridQValues[index]["right"].map((val, i) => {
+    return { x: i, y: val };
+  });
+
+
 
   //   d3 line generator
   $: pathGenerator = line()
@@ -86,35 +96,63 @@
 {/each}
 
 <!-- reactively draw lines -->
-<path class="pathA-line" d={pathGenerator(pathAData)} />
-<path class="pathB-line" d={pathGenerator(pathBData)} />
+<path class="pathUp-line" d={pathGenerator(pathUpData)} />
+<path class="pathDown-line" d={pathGenerator(pathDownData)} />
+<path class="pathLeft-line" d={pathGenerator(pathLeftData)} />
+<path class="pathRight-line" d={pathGenerator(pathRightData)} />
+
+
 
 <!-- reactively draw circles -->
-{#each pathAData as d}
-  <circle class="pathA-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
+{#each pathUpData as d}
+  <circle class="pathUp-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
 {/each}
-{#each pathBData as d}
-  <circle class="pathB-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
+{#each pathDownData as d}
+  <circle class="pathDown-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
+{/each}
+{#each pathLeftData as d}
+  <circle class="pathLeft-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
+{/each}
+{#each pathRightData as d}
+  <circle class="pathRight-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
 {/each}
 
 <style>
-  .pathA-line {
+  .pathUp-line {
     stroke: coral;
     stroke-width: 1;
     fill: none;
   }
-  .pathB-line {
+  .pathDown-line {
     stroke: skyblue;
     stroke-width: 1;
     fill: none;
   }
+  .pathLeft-line {
+    stroke: green;
+    stroke-width: 1;
+    fill: none;
+  }
+  .pathRight-line {
+    stroke: purple;
+    stroke-width: 1;
+    fill: none;
+  }
 
-  .pathA-circle {
+  .pathUp-circle {
     fill: coral;
   }
 
-  .pathB-circle {
+  .pathDown-circle {
     fill: skyblue;
+  }
+
+  .pathLeft-circle {
+    fill: green;
+  }
+
+  .pathRight-circle {
+    fill: purple;
   }
 
   .axis-text {
