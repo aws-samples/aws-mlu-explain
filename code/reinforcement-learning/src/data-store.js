@@ -9,6 +9,14 @@ export const margin = writable({
   right: 0,
 });
 
+export const banditRobot = tweened(
+  { x: 0.5, y: 0.5 },
+  {
+    duration: 200,
+    easing: cubicInOut,
+  }
+);
+
 export const lineRobot = tweened(
   { x: 3.5, y: 0.5 },
   {
@@ -48,6 +56,10 @@ export const epsilon = writable(0.5);
 //   { x: [0, 1, 2], redValue: [1, 1, 2], blueValue: [2, 1, 1], maxDirection: 3 },
 //   { x: [0, 1, 2], redValue: [1, 1, 2], blueValue: [2, 1, 1], maxDirection: 3 },
 // ])
+
+export const banditQValues = writable([
+  { episodeNumber: [1, 2, 3], left: [2, 4, 6], right: [1, 2, 3], maxDirection: [1, 1, 1] },
+]);
 
 export const lineQValues = writable([
   { episodeNumber: [], left: [], right: [], maxDirection: [] },

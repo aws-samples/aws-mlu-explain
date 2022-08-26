@@ -39,8 +39,6 @@
       return { x: i, y: val };
     });
   
-
-  
     //   d3 line generator
     $: pathGenerator = line()
       .x((d) => xScale(d.x))
@@ -55,6 +53,7 @@
       >
     </g>
   {/each}
+  
   <!-- y-ticks -->
   {#each yScale.ticks() as tick}
     <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>

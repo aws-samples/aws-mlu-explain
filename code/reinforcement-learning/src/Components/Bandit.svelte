@@ -1,5 +1,10 @@
 <script>
-  import QChartBandit from "./QChartBandit.svelte";
+  import ScatterBandit from "./ScatterBandit.svelte";
+  import SimulationBandit from "./SimulationBandit.svelte";
+
+  const numX = 1;
+  const numY = 1;
+
 </script>
 
 <h2 class="body-secondary-header">Choosing Between Two Trees</h2>
@@ -15,11 +20,12 @@
 </p>
 <br /><br />
 <p class="body-text">
-  This type of reinforcement learning problem resembles that of the <span class="bold">multi-armed
-  bandit problem</span>. The multi-armed bandit problem is named after a gambler at a
-  row of slot machines, and the gambler must decide, given limited resources,
-  which slot machine to play (i.e. which arm to pull). Here, the trees are the
-  “arms” and the robot must decide how to choose between them.
+  This type of reinforcement learning problem resembles that of the <span
+    class="bold">multi-armed bandit problem</span
+  >. The multi-armed bandit problem is named after a gambler at a row of slot
+  machines, and the gambler must decide, given limited resources, which slot
+  machine to play (i.e. which arm to pull). Here, the trees are the “arms” and
+  the robot must decide how to choose between them.
 </p>
 <br /><br />
 <p class="body-text">
@@ -47,7 +53,14 @@
   </tr>
 </table>
 
-<QChartBandit />
+<div id="graph-container">
+  <div id="simulation-chart">
+    <SimulationBandit {numX} {numY} />
+  </div>
+  <div id="scatter-chart">
+    <ScatterBandit />
+  </div>
+</div>
 
 <div id="buttons-container">
   <button on:click={() => ""}>Select 1 Action</button>
@@ -56,6 +69,11 @@
 </div>
 
 <style>
+  svg {
+    width: 400px;
+    height: 400px;
+    border: 2px solid black;
+  }
   table {
     border-collapse: collapse;
     /* max-width: 100%; */
@@ -117,6 +135,13 @@
 
   button:visited {
     color: var(--white);
+  }
+
+  #graph-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
   }
 
   /* button.show-button {

@@ -1,8 +1,8 @@
 <script>
     import { scaleLinear } from "d3-scale";
-    import QChartLine from "./QChartLine.svelte";
+    import QChartBandit from "./QChartBandit.svelte";
   
-    export let numX = 8;
+    export let numX = 1;
     export let numY = 1;
   
     let data = [];
@@ -12,8 +12,8 @@
       }
     }
   
-    let width = 800;
-    let height = 100;
+    let width = 400;
+    let height = 400;
   
     let cellWidth = width / numX;
     let cellHeight = height / numY;
@@ -25,11 +25,7 @@
   </script>
   
   <svg {width} {height}>
-    {#each data as d, i}
-      <g transform="translate({xScale(d.x)}, {yScale(d.y)})">
-        <QChartLine index={i} width={cellWidth - 12} height={cellHeight - 6} />
-      </g>
-    {/each}
+    <QChartBandit index={0} width={cellWidth - 12} height={cellHeight - 6} />
   </svg>
   
   <style>

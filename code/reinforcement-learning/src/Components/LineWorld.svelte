@@ -168,8 +168,6 @@
   </tr>
 </table>
 
-<!-- <QValuePlot /> -->
-
 <div id="graph-container">
   <div id="simulation-chart">
     <SimulationLine {numX} {numY} />
