@@ -1,8 +1,8 @@
 <section id="intro">
   <h1 id="intro-hed">Reinforcement Learning</h1>
-  <h1 class="intro-sub">Subtitle of the article.</h1>
+  <h1 class="intro-sub">Learning from Decisions</h1>
   <h3 id="intro__date">
-    <a href="https://erinbugbee.com">Erin Bugbee</a> & <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, August 2022
+    <a href="https://erinbugbee.com">Erin Bugbee</a>, <a href="https://twitter.com/jdwlbr">Jared Wilber</a> & <a>Anand Kamat</a>, August 2022
   </h3>
 </section>
 

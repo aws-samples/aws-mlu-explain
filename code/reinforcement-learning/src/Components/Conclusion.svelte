@@ -5,7 +5,7 @@
   In this article, we introduced some of the major concepts in reinforcement
   learning. We demonstrated how an agent learns from taking actions and
   observing rewards in a multi-armed bandit problem, as well as when
-  navigating in a 1-dimensional and 2-dimensional environment.
+  navigating in multi-dimensional environments.
 </p>
 <br />
 <p class="body-text">

@@ -1,66 +1,56 @@
-var _pj;
-
-function _pj_snippets(container) {
-  function in_es6(left, right) {
-    if (right instanceof Array || typeof right === "string") {
-      return right.indexOf(left) > -1;
-    } else {
-      if (right instanceof Map || right instanceof Set || right instanceof WeakMap || right instanceof WeakSet) {
-        return right.has(left);
-      } else {
-        return left in right;
-      }
-    }
-  }
-
-  container["in_es6"] = in_es6;
-  return container;
-}
-
-_pj = {};
-
-_pj_snippets(_pj);
-
 export class Env {
-  constructor(start = [1, 3], rows = 4, columns = 4, wins = {
-    [[3, 2]]: 2,
-    [[0, 0]]: 3
-  }, losses = {
-    [[2, 2]]: -5
-  }, obstacles = {}, deterministic = true, exploring_starts = false, exploring_starts_prob = 0.4) {
+  constructor(
+    start = [1, 3],
+    rows = 4,
+    columns = 4,
+    wins = {
+      [[3, 2]]: 2,
+      [[0, 0]]: 3,
+    },
+    losses = {
+      [[2, 2]]: -5,
+    },
+    obstacles = {},
+    deterministic = true,
+    exploringStarts = false,
+    exploringStartsProb = 0.4
+  ) {
     this.start = start;
     this.state = start;
     this.rows = rows;
     this.columns = columns;
-    this.board = np.zeros([rows, columns]);
-    this.exploring_starts = exploring_starts;
-    this.exploring_starts_prob = exploring_starts_prob;
+    this.board = Array(this.rows)
+      .fill(0)
+      .map((x) => Array(this.columns).fill(0));
+    this.exploringStarts = exploringStarts;
+    this.exploringStartsProb = exploringStartsProb;
     this.deterministic = deterministic;
     this.wins = wins;
     this.losses = losses;
 
-    if (this.exploring_starts) {
-      this.available_starts = [];
+    if (this.exploringStarts) {
+      this.availableStarts = [];
 
-      for (var row = 0, _pj_a = this.rows; row < _pj_a; row += 1) {
-        for (var column = 0, _pj_b = this.columns; column < _pj_b; column += 1) {
-          if (_pj.in_es6([row, column], this.wins) || _pj.in_es6([row, column], this.losses)) {
-            continue;
-          }
-
-          this.available_starts.append([row, column]);
+      for (var row = 0, rows = this.rows; row < rows; row += 1) {
+        for (
+          var col = 0, columns = this.columns;
+          col < columns;
+          col += 1
+        ) {
+          this.temp = [row, col];
+          this.availableStarts.push([row, col]);
         }
       }
     } else {
-      this.available_starts = this.start;
+      this.availableStarts = this.start;
     }
   }
 
-  _giveReward(state) {
-    if (_pj.in_es6(state, this.wins)) {
+  giveReward() {
+    if (this.state in this.wins) {
       return this.wins[this.state];
     } else {
-      if (_pj.in_es6(state, this.losses)) {
+      if (this.state in this.losses) {
         return this.losses[this.state];
       } else {
         return 0;
@@ -68,20 +58,27 @@ export class Env {
     }
   }
 
-  _isEndFunc(state) {
-    if (_pj.in_es6(state, this.wins) || _pj.in_es6(state, this.losses)) {
+  isEndFunc() {
+    if (
+      this.state in this.wins || this.state in this.losses
+    ) {
       return true;
+    } else {
+      return false;
     }
   }
 
   reset() {
-    if (this.exploring_starts && np.random.random() < this.exploring_starts_prob) {
-      this.state = this.available_starts[np.random.choice(this.available_starts.length)];
+    if (this.exploringStarts && Math.random() < this.exploringStartsProb) {
+      this.state =
+        this.availableStarts[
+          Math.floor(Math.random() * this.availableStarts.length)
+        ];
     } else {
-      this.available_starts;
+      this.availableStarts;
     }
 
-    return [this.start, this._giveReward(), this._isEndFunc()];
+    return [this.start, this.giveReward(), this.isEndFunc()];
   }
 
   step(action) {
@@ -94,7 +91,6 @@ export class Env {
     return next position
     */
     var nxtState;
-
     if (this.deterministic) {
       if (action === "up") {
         nxtState = [this.state[0] - 1, this.state[1]];
@@ -116,7 +112,7 @@ export class Env {
         }
       }
 
-      return [this.state, this._giveReward(), this._isEndFunc()];
+      return [this.state, this.giveReward(), this.isEndFunc()];
     }
   }
 
@@ -124,11 +120,11 @@ export class Env {
     var out, token;
     this.board[this.state] = 1;
 
-    for (var i = 0, _pj_a = this.rows; i < _pj_a; i += 1) {
+    for (var i = 0, rows = this.rows; i < rows; i += 1) {
       console.log("-----------------");
       out = "| ";
 
-      for (var j = 0, _pj_b = this.columns; j < _pj_b; j += 1) {
+      for (var j = 0, cols = this.columns; j < cols; j += 1) {
         if (this.board[[i, j]] === 1) {
           token = "*";
         }
@@ -149,5 +145,4 @@ export class Env {
 
     console.log("-----------------");
   }
-
 }

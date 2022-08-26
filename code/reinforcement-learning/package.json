@@ -33,6 +33,7 @@
     "d3-transition": "^2.0.0",
     "intersection-observer": "^0.5.0",
     "katex": "^0.12.0",
+    "mathjs": "^11.0.1",
     "p5": "^1.4.2",
     "p5-svelte": "^3.1.2",
     "rough-notation": "^0.4.0",
