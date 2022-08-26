@@ -4,7 +4,7 @@
     import { scaleLinear } from "d3-scale";
     import { line, curveBasis } from "d3-shape";
     import { select } from "d3-selection";
-    import { arrows, mluRobot, banana } from "../assets.js";
+    import { arrows, mluRobot, bananas } from "../assets.js";
     import { margin, lineRobot, lineRobotPath, lineQValues } from "../data-store.js";
     import { log } from "mathjs";
   
@@ -13,7 +13,7 @@
     
     $: robotWidth = 20;
     $: robotHeight = 20;
-  
+
     onMount(() => {
       const robotBGSize = select("#agent-g").node().getBBox();
       robotWidth = robotBGSize.width;
@@ -22,15 +22,6 @@
   
     const directionMap = { left: 180, right: 0};
     const colorMap = { left: "green", right: "purple" };
-  
-  
-    // let data = [];
-    // // make dataset of [{x: 0, y: 0}, {x: 0, y: 1}, ..., {x: 3, y: 3}]
-    // for (let xVal = 0; xVal < numX; xVal++) {
-    //   for (let yVal = 0; yVal < numY; yVal++) {
-    //     data.push({ x: xVal, y: yVal });
-    //   }
-    // }
   
     const width = 800;
     const height = 100;

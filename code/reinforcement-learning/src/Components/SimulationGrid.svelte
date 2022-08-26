@@ -4,7 +4,7 @@
   import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
   import { select } from "d3-selection";
-  import { arrows, mluRobot, banana } from "../assets.js";
+  import { arrows, mluRobot, bananas } from "../assets.js";
   import { margin, gridRobot, gridRobotPath, gridQValues } from "../data-store.js";
   import { log } from "mathjs";
 
@@ -19,6 +19,7 @@
     robotWidth = robotBGSize.width;
     robotHeight = robotBGSize.height;
   });
+
 
   const directionMap = { up: 270, down: 90, left: 180, right: 0};
   const colorMap = { up: "coral", down: "skyblue", left: "green", right: "purple" };
