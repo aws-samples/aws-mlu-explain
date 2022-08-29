@@ -1,7 +1,7 @@
 <script>
-  import Bandit from "./Part1.svelte";
-  import LineWorld from "./Part2.svelte";
-  import GridWorld from "./Part3.svelte";
+  import Bandit from "./Bandit.svelte";
+  import LineWorld from "./LineWorld.svelte";
+  import GridWorld from "./GridWorld.svelte";
 </script>
 
 <h1 class="body-header">Simulation</h1>

@@ -6,7 +6,20 @@ This material exists as supplementary educational material for [Machine Learning
 
 # Articles
 
-Currently, there are **7** articles published:
+Currently, there are **8** articles published:
+
+## Logistic Regression
+
+<img src="./assets/logistic-regression.gif" alt="Logistic Regression Article Image" width="400"/>
+
+**Title**: [Logistic Regression](https://mlu-explain.github.io/logistic-regression/)
+
+**Summary**: Learn about how logistic regression can be used for binary classification through an interactive example.
+
+**Code**: [/code/logistic-regression/](/code/logistic-regression)
+
+**Authors**: Erin Bugbee, Jared Wilber
+
 
 ## Train, Test, And Validation Sets
 

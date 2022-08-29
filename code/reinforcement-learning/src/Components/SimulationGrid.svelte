@@ -4,13 +4,12 @@
   import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
   import { select } from "d3-selection";
-  import { arrows, mluRobot } from "../assets.js";
-  import { margin, agent, agentPath } from "../data-store.js";
+  import { arrows, mluRobot, bananas } from "../assets.js";
+  import { margin, gridRobot, gridRobotPath, gridQValues } from "../data-store.js";
+  import { log } from "mathjs";
 
   export let numX = 3;
   export let numY = 3;
-
-  // 	select('#agent-g').node().getBBox().width
 
   $: robotWidth = 20;
   $: robotHeight = 20;
@@ -20,6 +19,11 @@
     robotWidth = robotBGSize.width;
     robotHeight = robotBGSize.height;
   });
+
+
+  const directionMap = { up: 270, down: 90, left: 180, right: 0};
+  const colorMap = { up: "coral", down: "skyblue", left: "green", right: "purple" };
+
 
   let data = [];
   // make dataset of [{x: 0, y: 0}, {x: 0, y: 1}, ..., {x: 3, y: 3}]
@@ -37,7 +41,6 @@
 
   // scales
   $: xScale = scaleLinear().domain([0, numX]).range([0, width]);
-
   $: yScale = scaleLinear().domain([0, numY]).range([0, height]);
 
   // line generator
@@ -78,28 +81,28 @@
   {/each}
 
   <!-- make arrows	 -->
-  {#each data as d}
+  {#each $gridQValues as d, i}
     <g
-      transform="translate({xScale(d.x) + cellWidth / 2 - 5}, {yScale(d.y) +
+      transform="translate({xScale(Math.floor(i / numY)) + cellWidth / 2 - 5}, {yScale(i % numY) +
         cellHeight / 2 -
         5})"
     >
       {#each arrows as arrow}
         <path
           d={arrow}
-          style={`transform: rotate(0deg) scale(0.5)`}
+          style={`transform: rotate(${directionMap[d.maxDirection[d.maxDirection.length - 1]]}deg) scale(0.5)`}
           stroke-width="2"
-          stroke="coral"
-          fill="coral"
+          stroke={colorMap[d.maxDirection[d.maxDirection.length - 1]]}
+          fill={colorMap[d.maxDirection[d.maxDirection.length - 1]]}
         />
       {/each}
     </g>
   {/each}
-  <path class="agent-line" d={agentLine($agentPath)} />
+  <path class="agent-line" d={agentLine($gridRobotPath)} />
 
   <g
     id="agent-g"
-    transform="translate({xScale($agent.x) - 15}, {yScale($agent.y) - 15})"
+    transform="translate({xScale($gridRobot.x) - 15}, {yScale($gridRobot.y) - 15})"
   >
     <rect class="agent-rect" width={robotWidth} height={robotHeight} />
     <path
