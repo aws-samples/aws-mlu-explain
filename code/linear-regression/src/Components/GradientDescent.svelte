@@ -322,5 +322,9 @@
     #charts-container {
       max-width: 100%;
     }
+
+    .gd-math {
+      border: none;
+    }
   }
 </style>
