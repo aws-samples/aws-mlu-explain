@@ -68,6 +68,18 @@ Currently, there are **10** articles published:
 
 **Authors**: Jared Wilber
 
+## Random Forest
+
+<img src="./assets/gifs/random-forest.gif" alt="Random Forest Article Image" width="400"/>
+
+**Title**: [Random Forest](https://mlu-explain.github.io/random-forest/)
+
+**Summary**: Learn how the majority vote and well-placed randomness can extend the decision tree model to one of machine learning's most widely-used algorithms, the Random Forest.
+
+**Code**: [/code/random-forest/](/code/random-forest)
+
+**Authors**: Jenny Yeon, Jared Wilber
+
 ## Decision Trees
 
 <img src="./assets/gifs/decision-tree.gif" alt="Decision Trees Article Image" width="400"/>
