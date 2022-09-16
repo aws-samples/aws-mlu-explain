@@ -78,13 +78,13 @@
 
   a.on-end {
     text-decoration: underline;
-    color: #f1f3f3;
+    color: white;
   }
 
   /* mobile */
   @media screen and (max-width: 950px) {
     .resource-item {
-      max-width: 80%;
+      max-width: 90%;
       font-size: 17px;
     }
   }

@@ -22,7 +22,6 @@
     "d3-axis": "^2.1.0",
     "d3-drag": "^2.0.0",
     "d3-ease": "^2.0.0",
-    "d3-force": "^2.1.1",
     "d3-format": "^2.0.0",
     "d3-hierarchy": "^2.0.0",
     "d3-random": "^2.2.2",
@@ -36,7 +35,6 @@
     "smoothscroll-polyfill": "^0.4.4",
     "stickyfill": "^1.1.1-strict",
     "katex": "^0.12.0",
-    "sirv-cli": "^1.0.0",
-    "svelte-preprocess": "^4.6.9"
+    "sirv-cli": "^1.0.0"
   }
 }

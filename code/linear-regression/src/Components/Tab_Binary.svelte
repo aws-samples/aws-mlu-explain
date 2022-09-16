@@ -5,21 +5,29 @@
   import { scaleLinear } from "d3-scale";
   import { interpretationData } from "../datasets.js";
   import { max } from "d3-array";
-  import { margin } from "../store";
+  import { margin, mobile, tabWidth, tabHeight } from "../store";
   import { format } from "d3-format";
 
-  const formatter = format("$,");
-  const formatter2 = format(",");
+  import { onMount } from "svelte";
 
-  let height = 500;
-  let width = 500;
+  // Fix for safari bug where offsetHeight/offsetWidth don't work half the time:
+  onMount(() => {
+    const desiredDimensions = document
+      .getElementById("scatter-chart-cf")
+      .getBoundingClientRect();
+    $tabWidth = $tabWidth == 0 ? desiredDimensions.width : $tabWidth;
+    $tabHeight = $tabHeight == 0 ? desiredDimensions.height : $tabHeight;
+  });
+
+  const formatter = format("$,");
+  const formatterMobile = format("$.3s");
 
   $: xScale = scaleLinear()
     .domain([-0.5, 1.5])
-    .range([$margin.left, width - $margin.right]);
+    .range([$margin.left, $tabWidth - $margin.right]);
   $: yScale = scaleLinear()
     .domain([0, max(interpretationData, (d) => d.price)])
-    .range([height - $margin.bottom, $margin.top]);
+    .range([$tabHeight - $margin.bottom, $margin.top]);
 
   const intercept = 172892.6;
   const slope = 241582.4;
@@ -34,17 +42,23 @@
     .y((d) => yScale(d.y));
 </script>
 
-<p class="body-text">
+<p class="tab-text">
   <span class="interpretation-header"
     >A Regression Model With One Binary Feature</span
   >
 </p>
-<div id="scatter-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + $margin.top + $margin.bottom}>
+<div
+  id="scatter-chart"
+  bind:offsetWidth={$tabWidth}
+  bind:offsetHeight={$tabHeight}
+>
+  <svg width={$tabWidth} height={$tabHeight + $margin.top + $margin.bottom}>
     <!-- x-ticks -->
     {#each xScale.ticks() as tick}
       <g
-        transform={`translate(${xScale(tick) + 0} ${height - $margin.bottom})`}
+        transform={`translate(${xScale(tick) + 0} ${
+          $tabHeight - $margin.bottom
+        })`}
       >
         <!-- svelte-ignore component-name-lowercase -->
         <line
@@ -52,7 +66,7 @@
           x1="0"
           x2="0"
           y1="0"
-          y2={-height + $margin.bottom + $margin.top}
+          y2={-$tabHeight + $margin.bottom + $margin.top}
           stroke="black"
           stroke-dasharray="4"
         />
@@ -69,7 +83,7 @@
         <line
           class="grid-line"
           x1={5}
-          x2={width - $margin.right}
+          x2={$tabWidth - $margin.right}
           y1="0"
           y2="0"
           stroke="black"
@@ -80,7 +94,8 @@
             class="axis-text"
             y="0"
             text-anchor="end"
-            dominant-baseline="middle">{formatter(tick)}</text
+            dominant-baseline="middle"
+            >{$mobile ? formatterMobile(tick) : formatter(tick)}</text
           >
         {/if}
       </g>
@@ -90,10 +105,10 @@
     <!-- svelte-ignore component-name-lowercase -->
     <line
       class="axis-line"
-      y1={height - $margin.bottom}
-      y2={height - $margin.bottom}
+      y1={$tabHeight - $margin.bottom}
+      y2={$tabHeight - $margin.bottom}
       x1={$margin.left}
-      x2={width}
+      x2={$tabWidth}
       stroke="black"
       stroke-width="1"
     />
@@ -102,7 +117,7 @@
     <line
       class="axis-line"
       y1={$margin.top}
-      y2={height - $margin.bottom}
+      y2={$tabHeight - $margin.bottom}
       x1={$margin.left}
       x2={$margin.left}
       stroke="black"
@@ -125,24 +140,24 @@
     <!-- axis labels -->
     <text
       class="interpretation-axis-label"
-      y={height + $margin.bottom / 2}
-      x={(width + $margin.left) / 2}
+      y={$tabHeight + $margin.bottom / 2}
+      x={($tabWidth + $margin.left) / 2}
       text-anchor="middle">Has Pool?</text
     >
     <text
       class="interpretation-axis-label"
       y={10}
-      x={-(height / 2)}
+      x={-($tabHeight / 2)}
       text-anchor="middle"
       transform="rotate(-90)">House Price (USD)</text
     >
     <text class="interpretation-title" y={$margin.top / 2} x={$margin.left}
-      >Regression Model With One Binary Feature</text
-    >
+      >House Price vs Pool (Binary)
+    </text>
   </svg>
 </div>
 <br />
-<!-- <p class="body-text">
+<!-- <p class="tab-text">
   <span class="bold">Model Form:</span>
   {@html katexify(` y=β0+β1∗x1`, false)} where {@html katexify(
     `β1 \\in \\llbracket0, 1\\rrbracket`,
@@ -150,7 +165,7 @@
   )}
 </p>
 <br /> -->
-<p class="body-text">
+<p class="tab-text">
   <span class="bold">Example:</span><br />
   {@html katexify(
     `\\begin{aligned} \\text{house price} = ${Math.round(
@@ -160,7 +175,7 @@
   )}
 </p>
 <br />
-<p class="body-text">
+<p class="tab-text">
   <span class="bold">Interpretation</span>:This model summarizes the difference
   in average housing prices between houses without swimming pools (<span
     class="dot-without"
@@ -195,6 +210,7 @@
   #scatter-chart {
     max-height: 30vh;
     width: 500px;
+    max-width: 500px;
     margin: 1rem auto;
   }
 
@@ -241,5 +257,21 @@
     background-color: var(--anchor);
     border-radius: 50%;
     display: inline-block;
+  }
+
+  @media screen and (max-width: 950px) {
+    #scatter-chart {
+      width: 100%;
+      max-width: 100%;
+      margin: 1rem auto;
+    }
+
+    .interpretation-title {
+      font-size: 0.8rem;
+    }
+
+    .axis-text {
+      font-size: 0.6rem;
+    }
   }
 </style>

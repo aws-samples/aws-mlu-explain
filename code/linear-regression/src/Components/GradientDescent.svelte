@@ -5,12 +5,15 @@
   import GradientDescentErrorPlot from "./GradientDescentErrorPlot.svelte";
   import Hidden from "./Hidden.svelte";
   import { tooltip } from "../tooltip";
+  import { format } from "d3-format";
 
   // instantiate class for gd methods
   let gdScatterClass;
   let gdErrorClass;
   let shown;
   let show;
+
+  const formatter = format(".3f");
 </script>
 
 <h1 class="body-header">Learning The Coefficients</h1>
@@ -24,9 +27,9 @@
   There must be a better way!
   <br /><br />
   Luckily for us, several algorithms exist to do just this. We'll discuss two: an
-  iterative solution (gradient descent) and a closed-form solution (least squares).
+  iterative solution and a closed-form solution.
   <br /><br />
-  <span class="bold">Gradient Descent</span>
+  <span class="bold">An Iterative Solution</span>
   <br />
   Gradient descent is an iterative optimization algorithm that estimates some set
   of coefficients to yield the minimum of a convex function. Put simply: it will
@@ -136,20 +139,24 @@
       <button on:click={() => gdScatterClass.runGradientDescent(1)}
         >1 Step</button
       >
-      <button on:click={() => gdScatterClass.runGradientDescent(10)}
-        >10 Steps</button
-      >
       <button on:click={() => gdScatterClass.runGradientDescent(25)}
         >25 Steps</button
+      >
+      <button on:click={() => gdScatterClass.runGradientDescent(100)}
+        >100 Steps</button
       >
     </div>
     <div id="bias-slider">
       <div class="input-container">
-        <p>Bias ({@html katexify(`\\beta_0`, false)}): {$gdBias}</p>
+        <p>
+          Bias ({@html katexify(`\\hat{\\beta_0}`, false)}): {formatter(
+            $gdBias
+          )}
+        </p>
         <input
           type="range"
-          min="-1"
-          step="-1"
+          min="-2"
+          step="0.5"
           max="16"
           bind:value={$gdBias}
           class="slider"
@@ -159,7 +166,11 @@
     </div>
     <div id="weight-slider">
       <div class="input-container">
-        <p>Weight ({@html katexify(`\\beta_1`, false)}): {$gdWeight}</p>
+        <p>
+          Weight ({@html katexify(`\\hat{\\beta_1}`, false)}): {formatter(
+            $gdWeight
+          )}
+        </p>
         <input
           type="range"
           min="-1.5"
@@ -174,9 +185,9 @@
 
     <div id="equation-math">
       Our model: {@html katexify(
-        `\\begin{aligned} y = ${$gdWeight}x${
+        `\\begin{aligned} y = ${formatter($gdWeight)}x${
           $gdBias < 0 ? "" : "+"
-        }${$gdBias}+c \\end{aligned}`
+        }${formatter($gdBias)}+c \\end{aligned}`
       )}
     </div>
   </div>
@@ -194,8 +205,8 @@
   Although gradient descent is the most popular optimization algorithm in
   machine learning, it's not perfect! It doesn't work for every loss function,
   and it may not always find the most optimal set of coefficients for your
-  model. Still, it has many extensions to help solve these issues, and is a
-  great choice for mean-squared error.
+  model. Still, it has many extensions to help solve these issues, and is widely
+  used across machine learning.
 </p>
 <br /><br />
 
@@ -207,7 +218,6 @@
     margin: auto;
     max-width: 1000px;
     height: 70vh;
-    max-height: 500px;
   }
 
   #equations-container {
@@ -232,16 +242,13 @@
   }
 
   .input-container {
-    display: flex;
-    flex-direction: row;
     margin: 8px auto;
-    justify-content: space-around;
     align-items: center;
-    width: 70%;
+    width: 80%;
   }
 
   button {
-    background-color: var(--smile); /* Green */
+    background-color: var(--smile);
     border: none;
     color: white;
     padding: 8px 16px;
@@ -266,7 +273,7 @@
   }
 
   button.show-button {
-    background-color: var(--bg); /* Green */
+    background-color: var(--bg);
     border: none;
     color: var(--squidink);
     padding: 8px 16px;
@@ -305,13 +312,11 @@
   /* mobile */
   @media screen and (max-width: 950px) {
     #gd-container {
-      display: grid;
       grid-template-columns: 100%;
-      margin: auto;
       max-width: 100%;
       width: 100%;
-      height: 70vh;
-      max-height: 100vh;
+      height: 100%;
+      max-height: 100%;
     }
 
     #charts-container {

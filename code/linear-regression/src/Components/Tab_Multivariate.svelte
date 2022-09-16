@@ -5,10 +5,11 @@
   import { scaleLinear } from "d3-scale";
   import { interpretationData } from "../datasets.js";
   import { max } from "d3-array";
-  import { margin } from "../store";
+  import { margin, mobile } from "../store";
   import { format } from "d3-format";
 
   const formatter = format("$,");
+  const formatterMobile = format("$.3s");
 
   let height = 500;
   let width = 500;
@@ -41,7 +42,7 @@
     .y((d) => yScale(d.y));
 </script>
 
-<p class="body-text">
+<p class="tab-text">
   <span class="interpretation-header">A Multivariate Regression Model</span>
 </p>
 <div id="scatter-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
@@ -85,7 +86,8 @@
             class="axis-text"
             y="0"
             text-anchor="end"
-            dominant-baseline="middle">{formatter(tick)}</text
+            dominant-baseline="middle"
+            >{$mobile ? formatterMobile(tick) : formatter(tick)}</text
           >
         {/if}
       </g>
@@ -150,7 +152,7 @@
 </div>
 <br />
 
-<p class="body-text">
+<p class="tab-text">
   <span class="bold">Example:</span><br />
   {@html katexify(
     `\\begin{aligned} \\text{house price} = ${Math.round(
@@ -162,7 +164,7 @@
   )}
 </p>
 <br />
-<p class="body-text">
+<p class="tab-text">
   <span class="bold">Interpretation</span>: Typically, a regression model will
   contain more than one features. We call this a
   <i>multivariate regression model</i>. In our example, we model home prices as
@@ -189,13 +191,7 @@
   expect, on average, houses of the same size to cost {formatter(
     Math.round(slopePool)
   )} more if they have a pool than if they do not.
-  <!-- <span
-    class="info-tooltip"
-    title="In other words, we expect, on average, houses of the same size to cost 400 more if they have a pool than if they do not."
-    use:tooltip
-  >
-    [&#8505;]
-  </span> -->
+
   <br /><br />The coefficient of {@html katexify(`sqft`, false)}, {formatter(
     Math.round(slopeSqft)
   )}, represents the average expected difference in housing price for houses
@@ -285,5 +281,21 @@
     background-color: var(--anchor);
     display: inline-block;
     margin-bottom: 4px;
+  }
+
+  @media screen and (max-width: 950px) {
+    #scatter-chart {
+      width: 100%;
+      max-width: 100%;
+      margin: 1rem auto;
+    }
+
+    .interpretation-title {
+      font-size: 0.8rem;
+    }
+
+    .axis-text {
+      font-size: 0.6rem;
+    }
   }
 </style>

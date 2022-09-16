@@ -5,10 +5,11 @@
   import { scaleLinear } from "d3-scale";
   import { interpretationData } from "../datasets.js";
   import { min, max } from "d3-array";
-  import { margin } from "../store";
+  import { margin, mobile } from "../store";
   import { format } from "d3-format";
 
   const formatter = format("$,");
+  const formatterMobile = format("$.3s");
 
   let height = 500;
   let width = 500;
@@ -36,7 +37,7 @@
     .y((d) => yScale(d.y));
 </script>
 
-<p class="body-text">
+<p class="tab-text">
   <span class="interpretation-header"
     >A Regression Model With One Continuous Feature</span
   >
@@ -82,7 +83,8 @@
             class="axis-text"
             y="0"
             text-anchor="end"
-            dominant-baseline="middle">{formatter(tick)}</text
+            dominant-baseline="middle"
+            >{$mobile ? formatterMobile(tick) : formatter(tick)}</text
           >
         {/if}
       </g>
@@ -142,16 +144,9 @@
     >
   </svg>
 </div>
-<!-- <br>
-<p class="body-text">
-  <span class="bold">Model Form:</span>
-  {@html katexify(`y=β0+β1∗x1`, false)} where {@html katexify(
-    `β1 \\in \\llbracket \\Reals \\rrbracket`,
-    false
-  )}
-</p> -->
+
 <br />
-<p class="body-text">
+<p class="tab-text">
   <span class="bold">Example:</span><br />
   {@html katexify(
     `\\begin{aligned} \\text{house price} = ${Math.round(
@@ -162,7 +157,7 @@
 </p>
 
 <br />
-<p class="body-text">
+<p class="tab-text">
   <span class="bold">Interpretation</span>: This model summarizes the average
   house prices across differently sized houses (<span class="dot-without" />) as
   measured in square feet.
@@ -227,5 +222,21 @@
     background-color: var(--smile);
     border-radius: 50%;
     display: inline-block;
+  }
+
+  @media screen and (max-width: 950px) {
+    #scatter-chart {
+      width: 100%;
+      max-width: 100%;
+      margin: 1rem auto;
+    }
+
+    .interpretation-title {
+      font-size: 0.8rem;
+    }
+
+    .axis-text {
+      font-size: 0.6rem;
+    }
   }
 </style>

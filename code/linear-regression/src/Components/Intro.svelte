@@ -6,22 +6,15 @@
 <section>
   <p class="body-text">
     Linear Regression is a simple and powerful model for predicting a numeric
-    response from a set of one or more independent variables. Although
-    regression models may seem overlooked in modern machine learning's
-    ever-increasing world of complex neural network architectures, the algorithm
-    is still widely used across a large number of domains because it is
-    effective, easy to interpret, and easy to extend.
-    <!-- If you've
-    taken a course in statistics, economics, sociology, or basically any field,
-    chances are you've encountered the model either directly as a point of study
-    or indirectly from a research paper.  -->
-    The key ideas in linear regression are recycled all over statistics and machine
-    learning, and understanding the algorithm is a must-have for a strong foundation
-    in machine learning.
-    <!-- We'll discuss the algorithm in this
-    article in the context of how it's commonly used in machine learning. In this
-    article, we'll discuss linear regression in the context of how it's commonly
-    used in machine learning, but touch upon important statistical concerns like interpretation and  -->
+    response from a set of one or more independent variables. This article will
+    focus mostly on how the method is used in machine learning, so we won't
+    cover common use cases like casual inference or experimental design. And
+    although it may seem like linear regression is overlooked in modern machine
+    learning's ever-increasing world of complex neural network architectures,
+    the algorithm is still widely used across a large number of domains because
+    it is effective, easy to interpret, and easy to extend. The key ideas in
+    linear regression are recycled everywhere, so understanding the algorithm is
+    a must-have for a strong foundation in machine learning.
   </p>
   <br />
   <p class="body-text">
@@ -30,32 +23,30 @@
     Linear regression is a supervised algorithm
     <span
       class="info-tooltip"
-      title="Supervised algorithms are those that learn from past examples
-    of historical data."
+      title="supervised algorithms learn to predict a specific value based on historical data."
       use:tooltip
     >
       [&#8505;]
     </span>
     that learns to model a dependent variable, {@html katexify(`y`, false)}, as
-    a function of some features {@html katexify(`x_i`, false)} by finding a line
-    (or surface) that best 'fits' the data. In general, we assume {@html katexify(
-      `y`,
+    a function of some independent variables (aka "features"), {@html katexify(
+      `x_i`,
       false
-    )} to be some number and each
+    )}, by finding a line (or surface) that best 'fits' the data. In general, we
+    assume {@html katexify(`y`, false)} to be some number and each
     {@html katexify(`x_i`, false)} can be basically anything. For example: predicting
     the price of a house using the number of rooms in that house ({@html katexify(
       `y`,
       false
-    )}: price, {@html katexify(`x_1`, false)} = number of rooms) or predicting weight
-    from height and age ({@html katexify(`y`, false)}: weight, {@html katexify(
+    )}: price, {@html katexify(`x_1`, false)}: number of rooms) or predicting
+    weight from height and age ({@html katexify(`y`, false)}: weight, {@html katexify(
       `x_1`,
       false
-    )} = height, {@html katexify(`x_2`, false)} = age).
+    )}: height, {@html katexify(`x_2`, false)}: age).
     <br /><br />
     In general, the equation for linear regression is
   </p>
   <br />
-  <!-- <p class="body-text">y=β0+β1∗x1+β2∗x2+...+βk∗xk+ϵ</p> -->
   <p class="body-text">
     {@html katexify(
       `y=B_0 + B_1x_1  + B_2x_2 + ... + B_px_p + \\epsilon`,
@@ -84,8 +75,8 @@
       {@html katexify(`x_i`, false)}: the independent variables: the features
       our model uses to model y.<span
         class="info-tooltip"
-        title=" E.g., if we are using height and age to predict
-      weight, height and age are the independent variables."
+        title=" E.g., if we are using the number of bathrooms to
+        predict housing price, the number of bathrooms is the independent variables."
         use:tooltip
       >
         [&#8505;]
@@ -107,8 +98,7 @@
     </li>
     <li>
       {@html katexify(`\\epsilon`, false)}: the irreducible error in our model.
-      A statistical artifact representing the stuff we can’t control for in our
-      model.
+      A term that collects together all the unmodeled parts of our data.
     </li>
   </ul>
   <br />
@@ -123,7 +113,6 @@
     )}, we predict future values, {@html katexify(`\\hat{y}`, false)}, as:
   </p>
   <br />
-  <!-- <p class="body-text">y^=β0+β1∗x1+β2∗x2+...+βk∗xk</p> -->
   <p class="body-text">
     {@html katexify(
       `\\hat{y}=\\hat{B_0} + \\hat{B_1}x_1  + \\hat{B_2}x_2 + ... + \\hat{B_p}x_p  `,
@@ -143,7 +132,6 @@
     margin: auto;
     color: var(--squid-ink);
     padding-top: 0.5rem;
-    /* border: 2px solid black; */
   }
   li {
     padding: 0.25rem;

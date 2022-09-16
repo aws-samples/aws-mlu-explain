@@ -11,6 +11,9 @@
     showResiduals,
   } from "../store.js";
   import { onMount } from "svelte";
+  import { format } from "d3-format";
+
+  const formatter = format("$,");
 
   let scatterClass;
 
@@ -21,8 +24,8 @@
       $lineType = "regressionLineFlat";
       $showRegressionLine = true;
       $showResiduals = false;
-      $coeff = 1.105;
-      $intercept = 0.544;
+      $coeff = 0;
+      $intercept = 293683;
     },
     1: () => {
       // scatterClass.showResidualLines();
@@ -36,8 +39,8 @@
     2: () => {
       scatterClass.hideAnnotationLines();
       $lineType = "regressionLine";
-      $coeff = 1.105;
-      $intercept = 0.544;
+      $coeff = 756.9;
+      $intercept = -27153.8;
       $showResiduals = true;
       $showRegressionLine = true;
     },
@@ -46,14 +49,14 @@
       $showResiduals = false;
       $showRegressionLine = true;
       $lineType = "regressionLine";
-      $coeff = 1.105;
-      $intercept = 0.544;
+      $coeff = 756.9;
+      $intercept = -27153.8;
     },
     4: () => {
       $showResiduals = false;
       $showRegressionLine = true;
       $coeff = 0.097;
-      $intercept = 2.783;
+      $intercept = -27153.8;
       $lineType = "regressionLineSqrt";
     },
     5: () => {},
@@ -104,8 +107,8 @@
   thereafter:
 </p>
 <br />
-<section>
-  <div class="section-container">
+<section id="scrolly">
+  <div class="scrolly-container">
     <div class="steps-container">
       <div class="step" data-index="0">
         <div class="step-content">
@@ -113,12 +116,16 @@
             Let's fit a model to predict housing price ($) from the size of the
             house (in square-footage):
             <br /><br />
-            {@html katexify(`\\text{house-price} = sqft * x`, false)}
+            {@html katexify(
+              `\\text{house-price} = \\hat{\\beta_1} * sqft + \\hat{\\beta_0}`,
+              false
+            )}
             <br /><br />
-            We'll start with an extremely poor model, because why not. Let's just
-            predict every house to be $4, so our equation becomes:
+            We'll start with a very simple model, predicting the price of each house
+            to be just the average house price in our dataset, ~$290,000, ignoring
+            the different sizes of each house:
             <br /><br />
-            {@html katexify(`\\text{house-price} = 4`, false)}
+            {@html katexify(`\\text{house-price} = 0 * sqft + 290000`, false)}
           </p>
         </div>
       </div>
@@ -126,14 +133,15 @@
         <div class="step-content">
           <p>
             Of course we know this model is bad - the data doesn't fit the data
-            well at all. But how can do quanitfy exactly how bad it is?
+            well at all. But how can do quantify exactly <i>how</i> bad?
             <br /><br />
-            To measure this quantitatively, we plot the error of each observation
-            directly. These errors, or <span class="bold">residuals</span>,
-            measure the distance between each observation and the predicted
-            value for that observation. We'll make use of these residuals later
-            when we talk about evaluating regression models, but we can clearly
-            see that our model has a lot of error.
+            To evaluate our model's performance quantitatively, we plot the error
+            of each observation directly. These errors, or
+            <span class="bold">residuals</span>, measure the distance between
+            each observation and the predicted value for that observation. We'll
+            make use of these residuals later when we talk about evaluating
+            regression models, but we can clearly see that our model has a lot
+            of error.
           </p>
         </div>
       </div>
@@ -141,19 +149,17 @@
         <div class="step-content">
           <p>
             The goal of linear regression is reducing this error such that we
-            find a line (or in the case of multiple features, a surface) that
-            'best' fits our data. .
-            <br /><br />
-            For our simple regression problem, that involves finding the slope and
-            intercept of our model, {@html katexify(`\\beta_0`, false)} and {@html katexify(
-              `\\beta_1`,
+            find a line/surface that 'best' fits our data. For our simple
+            regression problem, that involves estimating the slope and intercept
+            of our model, {@html katexify(`\\hat{\\beta_1}`, false)} and {@html katexify(
+              `\\hat{\\beta_0}`,
               false
-            )} . How much better can we do? Well, given this specific data, the best
-            fit line is shown. In this case, 'best' fit refers to a line that models
-            the data. Our line is shown here. There's still error, sure, but the
-            general pattern is captured well. As a result, we can be reasonably confident
-            that were we to plug in future values of square-footage, our predicted
-            values of price would be fairly accurate.
+            )}.
+            <br /><br />
+            For our specific problem, the best fit line is shown. There's still error,
+            sure, but the general pattern is captured well. As a result, we can be
+            reasonably confident that were we to plug in future values of square-footage,
+            our predicted values of price would be fairly accurate.
           </p>
         </div>
       </div>
@@ -161,21 +167,18 @@
         <div class="step-content">
           <p>
             Once we've fit our model, predicting future values is super easy! We
-            just plug in any xi values into our equation {@html katexify(
-              `house-price = 4`,
-              false
-            )}!
+            just plug in any {@html katexify(`x_i`, false)} values into our equation!
             <br /><br />For our simple model, that means plugging in a value for
-            SQFT:
+            {@html katexify(`sqft`, false)} into our model:
           </p>
           <br />
           <div id="input-container">
-            <p>SQFT Value: {$sqft}</p>
+            <p>{@html katexify(`sqft`, false)} Value: {$sqft}</p>
             <input
               type="range"
-              min="0"
-              max="11"
-              step="0.25"
+              min="36"
+              max="775"
+              step="1"
               bind:value={$sqft}
               class="slider"
               id="myRange"
@@ -183,14 +186,19 @@
           </div>
           <p>
             <br />
-            So our prediction becomes
             {@html katexify(
-              `\\hat{y} = ${$coeff} * ${$sqft} = ${Math.round(
-                $sqft * $coeff,
-                3
-              )}`,
+              `\\hat{y} = ${$coeff} * ${$sqft} ${$intercept}`,
               false
             )}
+            <br />
+            {@html katexify(
+              `\\hat{y} =  ${Math.round($sqft * $coeff + $intercept, 3)}`,
+              false
+            )}
+            <br />
+            <br />
+            Thus, for our model predicts a house sized {$sqft} square-feet will cost
+            {formatter(Math.round($sqft * $coeff + $intercept, 3))}.
           </p>
         </div>
       </div>
@@ -235,6 +243,10 @@
 </section>
 
 <style>
+  #scrolly {
+    max-width: 1500px;
+    margin: auto;
+  }
   .chart-one {
     width: 100%;
     height: 100%;
@@ -244,6 +256,14 @@
     height: 40vh;
   }
 
+  /* .charts-container {
+    position: sticky;
+    top: 20%;
+    width: 40%;
+    height: 40vh;
+    margin-right: 5%;
+  } */
+
   .charts-container {
     position: sticky;
     top: 20%;
@@ -252,7 +272,7 @@
     margin-right: 5%;
   }
 
-  .section-container {
+  .scrolly-container {
     margin-top: 1em;
     text-align: center;
     transition: background 100ms;
@@ -269,9 +289,6 @@
   .step-content {
     font-size: var(--size-default);
     background: var(--bg);
-    /* background: var(--secondary); */
-    /* color: #ccc; */
-    /* color: var(--squidink); */
     border-radius: 1px;
     padding: 0.5rem 1rem;
     display: flex;
@@ -285,13 +302,6 @@
     font-family: var(--font-main);
     line-height: 1.3;
     border: 4px solid var(--default);
-  }
-
-  .step.active .step-content {
-    /* background: var(--bg); */
-    /* background: var(--white); */
-    /* color: var(--squid-ink); */
-    /* color: var(--squidink); */
   }
 
   .step-content p {
@@ -309,7 +319,7 @@
 
   /* Comment out the following line to always make it 'text-on-top' */
   @media screen and (max-width: 950px) {
-    .section-container {
+    .scrolly-container {
       flex-direction: column-reverse;
     }
 
@@ -318,7 +328,7 @@
     }
 
     .charts-container {
-      top: 7.5%;
+      top: 20.5%;
       width: 95%;
       margin: auto;
     }
@@ -330,8 +340,9 @@
     .step-content {
       width: 95%;
       max-width: 768px;
-      font-size: 17px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.3;
+      background: rgba(241, 243, 243, 0.913);
     }
 
     .spacer {

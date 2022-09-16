@@ -25,9 +25,8 @@
 <style>
   #tab-container {
     width: 95%;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: auto;
-    /* border: 4px solid var(--squidink); */
     border-radius: 4px;
   }
   .box {
@@ -73,5 +72,24 @@
     background-color: #f1f3f3;
     border-color: var(--smile) var(--smile) #f1f3f3;
     background: #f1f3f3;
+  }
+
+  @media screen and (max-width: 950px) {
+    li {
+      margin-bottom: -2px;
+      font-size: 12px;
+    }
+
+    .box {
+      padding: 5px;
+    }
+
+    span {
+      padding: 0.5rem 0.35rem;
+    }
+
+    #tab-container {
+      max-width: 100%;
+    }
   }
 </style>

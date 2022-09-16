@@ -4,7 +4,7 @@
   import { line } from "d3-shape";
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
-  import { gradientDescentData } from "../datasets.js";
+  import { mseData } from "../datasets.js";
   import { max, min } from "d3-array";
   import {
     shuffleIteration,
@@ -13,11 +13,23 @@
     gdErrors,
     gdIteration,
     gdError,
+    gdWidth,
+    gdHeight,
   } from "../store.js";
+  import { onMount } from "svelte";
+
+  // Fix for safari bug where offsetHeight/offsetWidth don't work half the time:
+  onMount(() => {
+    const desiredDimensions = document
+      .getElementById("scatter-chart-gd")
+      .getBoundingClientRect();
+    $gdWidth = $gdWidth == 0 ? desiredDimensions.width : $gdWidth;
+    $gdHeight = $gdHeight == 0 ? desiredDimensions.height : $gdHeight;
+  });
 
   // set tweened store for line
   const dataset = tweened(
-    gradientDescentData.map((d) => {
+    mseData.map((d) => {
       return {
         sqft: d[`sqft${$shuffleIteration}`],
         y: $gdBias + $gdWeight * d[`sqft${$shuffleIteration}`],
@@ -32,7 +44,7 @@
 
   // update line reactively
   $: dataset.set(
-    gradientDescentData.map((d) => {
+    mseData.map((d) => {
       return {
         sqft: d[`sqft${$shuffleIteration}`],
         y: $gdBias + $gdWeight * d[`sqft${$shuffleIteration}`],
@@ -48,17 +60,13 @@
     right: 30,
   };
 
-  // these don't matter, but make the stretching less obvious at load
-  let height = 500;
-  let width = 500;
-
   // label formatter
   const formatter = format(".2r");
 
   $: {
     $shuffleIteration;
     // recalculate error if changes
-    let errors = gradientDescentData.map((d) => {
+    let errors = mseData.map((d) => {
       return (
         (d[`price${$shuffleIteration}`] -
           ($gdWeight * d[`sqft${$shuffleIteration}`] + $gdBias)) **
@@ -73,19 +81,20 @@
         error: $gdError,
       },
     ];
+    // console.log("error", $gdError);
   }
 
   $: {
     $gdBias;
     $gdWeight;
     $gdIteration += 1;
-    console.log($gdIteration);
+    // console.log("bias:", $gdBias, "weight:", $gdWeight, "error:", $gdError);
   }
 
   export function shuffleData() {
     $shuffleIteration = ($shuffleIteration + 1) % 10;
     dataset.set(
-      gradientDescentData.map((d) => {
+      mseData.map((d) => {
         return {
           sqft: d[`sqft${$shuffleIteration}`],
           y: $gdBias + $gdWeight * d[`sqft${$shuffleIteration}`],
@@ -96,46 +105,47 @@
     // reset error plot
     $gdIteration = 0;
     $gdErrors = [{ iteration: 0, error: $gdError }];
+    $gdBias = 1;
+    $gdWeight = 0;
   }
   export function runGradientDescent(iterations) {
-    const N = gradientDescentData.length;
+    const N = mseData.length;
+    console.log("N", N);
     const learning_rate = 0.001;
     $gdIteration += iterations - 1;
+    console.log("shuffleIteration", $shuffleIteration);
     //   for each iteration
     for (let index = 0; index < iterations; index++) {
       // update error and iterations
 
-      // update the bias term
-      let biasDifference = gradientDescentData.map((d) => {
-        return (
-          d[`price${$shuffleIteration}`] -
-          $gdWeight * d[`sqft${$shuffleIteration}`] +
-          $gdBias
-        );
-      });
-      let biasSum = Number(
-        biasDifference.reduce((a, b) => a + b, 0).toFixed(4)
-      );
-      $gdError = biasSum / N;
-      let b_gradient = (-2 / N) * biasSum;
-      const bias = $gdBias + learning_rate * b_gradient;
-      $gdBias = Number(bias.toFixed(4));
-
-      // update the bias term
-      let weightDifference = gradientDescentData.map((d) => {
+      // update the weight term
+      let weightDifference = mseData.map((d) => {
+        let yPred = $gdWeight * d[`sqft${$shuffleIteration}`] + $gdBias;
         return (
           d[`sqft${$shuffleIteration}`] *
-          (d[`price${$shuffleIteration}`] -
-            ($gdWeight * d[`sqft${$shuffleIteration}`] + $gdBias))
+          (d[`price${$shuffleIteration}`] - yPred)
         );
       });
-      let weightSum = Number(
-        weightDifference.reduce((a, b) => a + b, 0).toFixed(4)
-      );
+
+      // update the bias term
+      let biasDifference = mseData.map((d) => {
+        let yPred = $gdWeight * d[`sqft${$shuffleIteration}`] + $gdBias;
+        return d[`price${$shuffleIteration}`] - yPred;
+      });
+
+      let weightSum = weightDifference.reduce((a, b) => a + b, 0);
       let w_gradient = (-2 / N) * weightSum;
       const weight = $gdWeight - learning_rate * w_gradient;
-      $gdWeight = Number(weight.toFixed(4));
+      $gdWeight = weight;
+
+      let biasSum = biasDifference.reduce((a, b) => a + b, 0);
+      let b_gradient = (-2 / N) * biasSum;
+      const bias = $gdBias - learning_rate * b_gradient;
+      $gdBias = bias;
+
+      // $gdError = biasSum / N;
     }
+    console.log("bias:", $gdBias, "weight:", $gdWeight);
   }
 
   // scales
@@ -143,20 +153,14 @@
     .domain([
       min($dataset, (d) => d.sqft) - 2,
       max($dataset, (d) => d.sqft) + 2,
-      // min(gradientDescentData, (d) => d[`sqft${$shuffleIteration}`]) - 2,
-      // max(gradientDescentData, (d) => d[`sqft${$shuffleIteration}`]) + 2,
     ])
-    // .domain([0, 11])
-    .range([margin.left, width - margin.right]);
+    .range([margin.left, $gdWidth - margin.right]);
   $: yScale = scaleLinear()
     .domain([
       min($dataset, (d) => d.price) - 2,
       max($dataset, (d) => d.price) + 2,
-      // min(gradientDescentData, (d) => d[`price${$shuffleIteration}`]),
-      // max(gradientDescentData, (d) => d[`price${$shuffleIteration}`]) + 2,
     ])
-    // .domain([-1, 16])
-    .range([height - margin.bottom, margin.top]);
+    .range([$gdHeight - margin.bottom, margin.top]);
 
   // line generator
   $: regressionPath = line()
@@ -164,18 +168,26 @@
     .y((d) => yScale(d.y));
 </script>
 
-<div id="scatter-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + margin.top + margin.bottom}>
+<div
+  id="scatter-chart-gd"
+  bind:offsetWidth={$gdWidth}
+  bind:offsetHeight={$gdHeight}
+>
+  <svg width={$gdWidth} height={$gdHeight + margin.top + margin.bottom}>
     <!-- x-ticks -->
     {#each xScale.ticks() as tick}
-      <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
+      <g
+        transform={`translate(${xScale(tick) + 0} ${
+          $gdHeight - margin.bottom
+        })`}
+      >
         <!-- svelte-ignore component-name-lowercase -->
         <line
           class="grid-line"
           x1="0"
           x2="0"
           y1="0"
-          y2={-height + margin.bottom + margin.top}
+          y2={-$gdHeight + margin.bottom + margin.top}
           stroke="black"
           stroke-dasharray="4"
         />
@@ -191,7 +203,7 @@
         <line
           class="grid-line"
           x1={5}
-          x2={width - margin.right}
+          x2={$gdWidth - margin.right}
           y1="0"
           y2="0"
           stroke="black"
@@ -210,10 +222,10 @@
     <!-- svelte-ignore component-name-lowercase -->
     <line
       class="axis-line"
-      y1={height - margin.bottom}
-      y2={height - margin.bottom}
+      y1={$gdHeight - margin.bottom}
+      y2={$gdHeight - margin.bottom}
       x1={margin.left}
-      x2={width}
+      x2={$gdWidth}
       stroke="black"
       stroke-width="1"
     />
@@ -222,28 +234,12 @@
     <line
       class="axis-line"
       y1={margin.top}
-      y2={height - margin.bottom}
+      y2={$gdHeight - margin.bottom}
       x1={margin.left}
       x2={margin.left}
       stroke="black"
       stroke-width="1"
     />
-    <!-- axis labels
-    <text
-      class="axis-label"
-      y={height + margin.bottom}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">Size of House (sqft)</text
-    >
-    <text
-      class="axis-label"
-      y={margin.left / 4.8}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">Housing Price ($)</text
-    > -->
-
-    <!-- chart data mappings -->
 
     <!-- draw regression line -->
     <path class="regression-line" d={regressionPath($dataset)} />
@@ -264,7 +260,7 @@
 </div>
 
 <style>
-  #scatter-chart {
+  #scatter-chart-gd {
     width: 100%;
     max-height: 98%;
   }
@@ -280,61 +276,11 @@
     fill: none;
   }
 
-  .axis-label {
-    font-weight: bold;
-  }
-
   .axis-text {
     font-size: 0.7rem;
   }
 
-  .error-text {
-    text-transform: uppercase;
-    font-family: var(--font-heavy);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4.5px;
-    pointer-events: none;
-    stroke: #f1f3f3;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-  }
-
   .grid-line {
     opacity: 0.075;
-  }
-
-  .axis-label {
-    text-transform: uppercase;
-    font-size: 0.7rem;
-  }
-
-  .path-line {
-    fill: none;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    stroke-width: 4;
-  }
-
-  /* ipad */
-  @media screen and (max-width: 950px) {
-    .axis-label {
-      font-size: 0.8rem;
-    }
-    .error-axis-text {
-      font-size: 0.8rem;
-    }
-    .error-text {
-      stroke-width: 3.5px;
-      stroke: #f1f3f3;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-    }
-  }
-  /* mobile */
-  @media screen and (max-width: 750px) {
-    .axis-label {
-      font-size: 0.75rem;
-    }
   }
 </style>

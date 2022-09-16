@@ -5,10 +5,11 @@
   import { scaleLinear } from "d3-scale";
   import { interpretationData } from "../datasets.js";
   import { max } from "d3-array";
-  import { margin } from "../store";
+  import { margin, mobile } from "../store";
   import { format } from "d3-format";
 
   const formatter = format("$,");
+  const formatterMobile = format("$.3s");
 
   let height = 500;
   let width = 500;
@@ -45,7 +46,7 @@
     .y((d) => yScale(d.y));
 </script>
 
-<p class="body-text">
+<p class="tab-text">
   <span class="interpretation-header"
     >A Regression Model With Interaction Terms</span
   >
@@ -91,7 +92,8 @@
             class="axis-text"
             y="0"
             text-anchor="end"
-            dominant-baseline="middle">{formatter(tick)}</text
+            dominant-baseline="middle"
+            >{$mobile ? formatterMobile(tick) : formatter(tick)}</text
           >
         {/if}
       </g>
@@ -154,16 +156,9 @@
     >
   </svg>
 </div>
-<!-- <br />
-<p class="body-text">
-  <span class="bold">Model Form:</span>
-  {@html katexify(
-    `\\begin{aligned} y=β0+β1∗x1+β2∗x2+ β3∗(x1:x2) \\end{aligned}`,
-    false
-  )}
-</p> -->
+
 <br />
-<p class="body-text">
+<p class="tab-text">
   <span class="bold">Example:</span><br />
   {@html katexify(
     `\\begin{aligned} \\text{house price}=${Math.round(
@@ -175,7 +170,7 @@
   )}
 </p>
 <br />
-<p class="body-text">
+<p class="tab-text">
   <span class="bold">Interpretation</span>: If we believe that the slope for {@html katexify(
     `sqft`,
     false
@@ -258,21 +253,6 @@
     stroke: var(--smile);
   }
 
-  .dot-without {
-    height: 12px;
-    width: 12px;
-    background-color: var(--smile);
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .dot-with {
-    height: 12px;
-    width: 12px;
-    background-color: var(--anchor);
-    border-radius: 50%;
-    display: inline-block;
-  }
-
   .line-without {
     height: 3px;
     width: 14px;
@@ -286,5 +266,21 @@
     background-color: var(--anchor);
     display: inline-block;
     margin-bottom: 4px;
+  }
+
+  @media screen and (max-width: 950px) {
+    #scatter-chart {
+      width: 100%;
+      max-width: 100%;
+      margin: 1rem auto;
+    }
+
+    .interpretation-title {
+      font-size: 0.8rem;
+    }
+
+    .axis-text {
+      font-size: 0.6rem;
+    }
   }
 </style>

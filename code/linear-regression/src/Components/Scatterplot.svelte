@@ -2,10 +2,10 @@
   import { tweened } from "svelte/motion";
   import { linear } from "svelte/easing";
   import { line, curveNatural } from "d3-shape";
-  import { select, selectAll } from "d3-selection";
+  import { selectAll } from "d3-selection";
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
-  import { scatterData } from "../datasets.js";
+  import { interpretationData } from "../datasets.js";
   import { max } from "d3-array";
   import {
     showRegressionLine,
@@ -14,34 +14,14 @@
     sqft,
     coeff,
     intercept,
-    lineType,
   } from "../store.js";
-  import { draw } from "svelte/transition";
-
-  // set tweened store for line
-  const dataset = tweened(
-    scatterData.map((d) => {
-      return { sqft: d.sqft, y: d[$lineType], price: d.price };
-    }),
-    {
-      duration: 500,
-      easing: linear,
-    }
-  );
-
-  // update line reactively
-  $: dataset.set(
-    scatterData.map((d) => {
-      return { sqft: d.sqft, y: d[$lineType], price: d.price };
-    })
-  );
 
   // these don't matter, but make the stretching less obvious at load
   let height = 500;
   let width = 500;
 
   // label formatter
-  const formatter = format(".2r");
+  const formatter = format("$,");
 
   export function hideResidualLines() {
     // selectAll(".residual-line").attr("opacity", 0);
@@ -59,17 +39,62 @@
     selectAll(".annotation-line").attr("opacity", 0);
   }
 
-  // scales
+  const maxVal = max(interpretationData, (d) => d.sqft) + 25;
+
+  const dataset = tweened(
+    interpretationData.map((d) => {
+      return {
+        sqft: d.sqft,
+        y: d.sqft * $coeff + $intercept,
+        price: d.price,
+      };
+    }),
+    {
+      duration: 500,
+      easing: linear,
+    }
+  );
+
+  $: dataset.set(
+    interpretationData.map((d) => {
+      return {
+        sqft: d.sqft,
+        y: d.sqft * $coeff + $intercept,
+        price: d.price,
+      };
+    })
+  );
+
+  const regressionLine = tweened(
+    [
+      { x: 0, y: 0 * $coeff + $intercept },
+      { x: 400, y: 400 * $coeff + $intercept },
+      { x: maxVal, y: maxVal * $coeff + $intercept },
+    ],
+    {
+      duration: 500,
+      easing: linear,
+    }
+  );
+
+  $: regressionLine.set([
+    { x: 0, y: 0 * $coeff + $intercept },
+    { x: 400, y: 400 * $coeff + $intercept },
+    { x: maxVal, y: maxVal * $coeff + $intercept },
+  ]);
+
+  $dataset.sort((a, b) => b.y - a.y);
+
   $: xScale = scaleLinear()
-    .domain([0.0, 11])
+    .domain([0, maxVal])
     .range([$marginScroll.left, width - $marginScroll.right]);
   $: yScale = scaleLinear()
-    .domain([0, 16])
+    .domain([0, max(interpretationData, (d) => d.price)])
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
   // line generator
   $: regressionPath = line()
-    .x((d) => xScale(d.sqft))
+    .x((d) => xScale(d.x))
     .y((d) => yScale(d.y))
     .curve(curveNatural);
 </script>
@@ -93,13 +118,14 @@
           stroke="black"
           stroke-dasharray="4"
         />
-        <text class="axis-text" y="15" text-anchor="middle"
-          >{formatter(tick)}</text
-        >
+        <!-- {#if [0, 1].includes(tick)} -->
+        <text class="axis-text" y="15" text-anchor="middle">{tick}</text>
+        <!-- {/if} -->
       </g>
     {/each}
+
     <!-- y-ticks -->
-    {#each yScale.ticks() as tick}
+    {#each yScale.ticks() as tick, i}
       <g transform={`translate(${$marginScroll.left - 5} ${yScale(tick) + 0})`}>
         <!-- svelte-ignore component-name-lowercase -->
         <line
@@ -111,12 +137,14 @@
           stroke="black"
           stroke-dasharray="4"
         />
-        <text
-          class="axis-text"
-          y="0"
-          text-anchor="end"
-          dominant-baseline="middle">{formatter(tick)}</text
-        >
+        {#if i % 2 === 0}
+          <text
+            class="axis-text"
+            y="0"
+            text-anchor="end"
+            dominant-baseline="middle">{formatter(tick)}</text
+          >
+        {/if}
       </g>
     {/each}
     <!-- axis lines -->
@@ -163,7 +191,6 @@
       {#if $showResiduals}
         <!-- svelte-ignore component-name-lowercase -->
         <line
-          transition:draw={{ duration: 1200 }}
           class="residual-line"
           x1={xScale(d.sqft)}
           x2={xScale(d.sqft)}
@@ -175,11 +202,7 @@
 
     {#if $showRegressionLine}
       <!-- draw regression line -->
-      <path
-        transition:draw={{ duration: 1200 }}
-        class="regression-line"
-        d={regressionPath($dataset)}
-      />
+      <path class="regression-line" d={regressionPath($regressionLine)} />
     {/if}
     <!-- draw circles -->
     {#each $dataset as d}
@@ -273,39 +296,8 @@
     font-size: 0.8rem;
   }
 
-  .error-text {
-    text-transform: uppercase;
-    font-family: var(--font-heavy);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4.5px;
-    pointer-events: none;
-    stroke: #f1f3f3;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-  }
-
-  #highlight-text,
-  #highlight-tspan {
-    text-transform: uppercase;
-    font-family: var(--font-heavy);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4.25px;
-    pointer-events: none;
-    stroke: #f1f3f3;
-    font-size: 0.8rem;
-  }
-  .error-axis-text {
-    font-size: 0.9rem;
-  }
-
   .grid-line {
     opacity: 0.075;
-  }
-
-  #error-text-accuracy {
-    fill: #c9208a;
   }
 
   .axis-label {
@@ -313,63 +305,16 @@
     font-size: 0.9rem;
   }
 
-  .path-line {
-    fill: none;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    stroke-width: 4;
-  }
-
-  .outline-line {
-    fill: none;
-    stroke: #f1f3f3;
-    stroke-width: 8;
-  }
-
   /* ipad */
   @media screen and (max-width: 950px) {
     .axis-label {
       font-size: 0.8rem;
-    }
-    .error-axis-text {
-      font-size: 0.8rem;
-    }
-    .error-text {
-      stroke-width: 3.5px;
-      stroke: #f1f3f3;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-    }
-
-    .path-line {
-      stroke-width: 5;
-    }
-    .outline-line {
-      stroke-width: 8;
     }
   }
   /* mobile */
   @media screen and (max-width: 750px) {
     .axis-label {
       font-size: 0.75rem;
-    }
-    .error-axis-text {
-      font-size: 0.7rem;
-    }
-    .error-text,
-    #highlight-text,
-    #highlight-tspan {
-      stroke-width: 3px;
-      stroke: #f1f3f3;
-      font-size: 0.7rem;
-      letter-spacing: 1px;
-    }
-
-    .path-line {
-      stroke-width: 4;
-    }
-    .outline-line {
-      stroke-width: 7;
     }
   }
 </style>
