@@ -6,11 +6,23 @@ This material exists as supplementary educational material for [Machine Learning
 
 # Articles
 
-Currently, there are **8** articles published:
+Currently, there are **10** articles published:
+
+## Linear Regression
+
+<img src="./assets/gifs/linear-regression.gif" alt="Linear Regression Article Image" width="400"/>
+
+**Title**: [Linear Regression](https://mlu-explain.github.io/linear-regression/)
+
+**Summary**: A visual, interactive explanation of linear regression for machine learning.
+
+**Code**: [/code/linear-regression/](/code/linear-regression)
+
+**Authors**: Jared Wilber
 
 ## Logistic Regression
 
-<img src="./assets/logistic-regression.gif" alt="Logistic Regression Article Image" width="400"/>
+<img src="./assets/gifs/logistic-regression.gif" alt="Logistic Regression Article Image" width="400"/>
 
 **Title**: [Logistic Regression](https://mlu-explain.github.io/logistic-regression/)
 
@@ -20,10 +32,21 @@ Currently, there are **8** articles published:
 
 **Authors**: Erin Bugbee, Jared Wilber
 
+## ROC & AUC
+
+<img src="./assets/gifs/roc-auc.gif" alt="ROC & AUC Article Preview" width="400"/>
+
+**Title**: [ROC & AUC](https://mlu-explain.github.io/roc-auc/)
+
+**Summary**: A visual explanation of the Receiver Operating Characteristic Curve (ROC) curve, how it works with a live interactive example, and how it relates to Area Under The Curve (AUC).
+
+**Code**: [/code/roc-auc/](/code/roc-auc)
+
+**Authors**: Jared Wilber
 
 ## Train, Test, And Validation Sets
 
-<img src="./assets/train-test-validation.gif" alt="Train, Test, And Validation Sets Article Image" width="400"/>
+<img src="./assets/gifs/train-test-validation.gif" alt="Train, Test, And Validation Sets Article Image" width="400"/>
 
 **Title**: [Train, Test, and Validation Sets](https://mlu-explain.github.io/train-test-validation/)
 
@@ -35,7 +58,7 @@ Currently, there are **8** articles published:
 
 ## Precision & Recall
 
-<img src="./assets/precision-recall.gif" alt="Precision & Recall Article Preview" width="400"/>
+<img src="./assets/gifs/precision-recall.gif" alt="Precision & Recall Article Preview" width="400"/>
 
 **Title**: [Precision & Recall](https://mlu-explain.github.io/precision-recall/)
 
@@ -47,7 +70,7 @@ Currently, there are **8** articles published:
 
 ## Decision Trees
 
-<img src="./assets/decision-tree.gif" alt="Decision Trees Article Image" width="400"/>
+<img src="./assets/gifs/decision-tree.gif" alt="Decision Trees Article Image" width="400"/>
 
 **Title**: [Decision Trees](https://mlu-explain.github.io/decision-tree/)
 
@@ -59,7 +82,7 @@ Currently, there are **8** articles published:
 
 ## Bias Variance Tradeoff
 
-<img src="./assets/mlu-explain_biasvariance.gif" alt="Bias Variance Tradeoff Article Image" width="400"/>
+<img src="./assets/gifs/mlu-explain_biasvariance.gif" alt="Bias Variance Tradeoff Article Image" width="400"/>
 
 **Title**: [The Bias Variance Tradeoff](https://mlu-explain.github.io/bias-variance/)
 
@@ -71,7 +94,7 @@ Currently, there are **8** articles published:
 
 ## Double Descent: A Visual Introduction
 
-<img src="./assets/double-descent1.gif" alt="Double Descent Article Image" width="400"/>
+<img src="./assets/gifs/double-descent1.gif" alt="Double Descent Article Image" width="400"/>
 
 **Title**: [Double Descent](https://mlu-explain.github.io/double-descent/)
 
@@ -83,7 +106,7 @@ Currently, there are **8** articles published:
 
 ## Double Descent 2: A Mathematical Explanation
 
-<img src="./assets/double-desent2.gif" alt="Double Descent 2 Article Image" width="400"/>
+<img src="./assets/gifs/double-desent2.gif" alt="Double Descent 2 Article Image" width="400"/>
 
 **Title**: [Double Descent 2](https://mlu-explain.github.io/double-descent2/)
 
