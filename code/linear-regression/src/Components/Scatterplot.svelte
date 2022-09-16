@@ -14,6 +14,7 @@
     sqft,
     coeff,
     intercept,
+    showHighlight,
   } from "../store.js";
 
   // these don't matter, but make the stretching less obvious at load
@@ -22,14 +23,6 @@
 
   // label formatter
   const formatter = format("$,");
-
-  export function hideResidualLines() {
-    // selectAll(".residual-line").attr("opacity", 0);
-  }
-
-  export function showResidualLines() {
-    // selectAll(".residual-line").attr("opacity", 1);
-  }
 
   export function showAnnotationLines() {
     selectAll(".annotation-line").attr("opacity", 0.5);
@@ -118,9 +111,7 @@
           stroke="black"
           stroke-dasharray="4"
         />
-        <!-- {#if [0, 1].includes(tick)} -->
         <text class="axis-text" y="15" text-anchor="middle">{tick}</text>
-        <!-- {/if} -->
       </g>
     {/each}
 
@@ -258,6 +249,21 @@
       stroke="black"
       opacity="0"
     />
+    <!-- hihglight text -->
+    {#if $showHighlight}
+      <text
+        class="highlight-text"
+        text-anchor="middle"
+        y={yScale($intercept + $coeff * $sqft) + 16}
+        x={xScale($sqft)}>Size: {$sqft}</text
+      >
+      <text
+        class="highlight-text"
+        text-anchor="middle"
+        y={yScale($intercept + $coeff * $sqft)}
+        x={xScale($sqft)}>Price: {formatter($intercept + $coeff * $sqft)}</text
+      >
+    {/if}
   </svg>
 </div>
 
@@ -286,6 +292,19 @@
 
   .annotation-line {
     stroke-width: 1.5;
+  }
+
+  .highlight-text {
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 4px;
+    pointer-events: none;
+    stroke: var(--smile);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    fill: white;
   }
 
   .axis-label {

@@ -9,6 +9,7 @@
     intercept,
     showRegressionLine,
     showResiduals,
+    showHighlight,
   } from "../store.js";
   import { onMount } from "svelte";
   import { format } from "d3-format";
@@ -28,12 +29,9 @@
       $intercept = 293683;
     },
     1: () => {
-      // scatterClass.showResidualLines();
       $lineType = "regressionLineFlat";
       $showRegressionLine = true;
       $showResiduals = true;
-      // $coeff = 1.105;
-      // $intercept = 0.544;
     },
 
     2: () => {
@@ -43,8 +41,10 @@
       $intercept = -27153.8;
       $showResiduals = true;
       $showRegressionLine = true;
+      $showHighlight = false;
     },
     3: () => {
+      $showHighlight = true;
       scatterClass.showAnnotationLines();
       $showResiduals = false;
       $showRegressionLine = true;

@@ -15,7 +15,7 @@ export const marginScroll = writable({
   right: 30,
 });
 export const mobile = writable(true);
-
+export const showHighlight = writable(false);
 export const showRegressionLine = writable(false);
 export const showResiduals = writable(false);
 export const sqft = writable(350);
