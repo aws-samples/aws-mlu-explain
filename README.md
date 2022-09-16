@@ -6,8 +6,6 @@ This material exists as supplementary educational material for [Machine Learning
 
 # Articles
 
-Currently, there are **10** articles published:
-
 ## Linear Regression
 
 <img src="./assets/gifs/linear-regression.gif" alt="Linear Regression Article Image" width="400"/>
