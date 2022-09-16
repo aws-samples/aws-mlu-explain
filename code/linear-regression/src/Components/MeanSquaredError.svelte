@@ -90,7 +90,11 @@
       </div>
       <div id="bias-slider">
         <div class="input-container">
-          <p>Bias: {formatter($mseBias)}</p>
+          <p>
+            Bias ({@html katexify(`\\hat{\\beta_0}`, false)}): {formatter(
+              $mseBias
+            )}
+          </p>
           <input
             type="range"
             min="-2"
@@ -104,7 +108,11 @@
       </div>
       <div id="weight-slider">
         <div class="input-container">
-          <p>Weight: {formatter($mseWeight)}</p>
+          <p>
+            Weight ({@html katexify(`\\hat{\\beta_1}`, false)}): {formatter(
+              $mseWeight
+            )}
+          </p>
           <input
             type="range"
             min="-1.5"
