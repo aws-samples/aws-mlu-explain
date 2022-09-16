@@ -20,14 +20,14 @@
   <p class="body-text">
     <span class="bold">Let's Be More Specific</span>
     <br />
-    Linear regression is a supervised algorithm
-    <span
-      class="info-tooltip"
-      title="supervised algorithms learn to predict a specific value based on historical data."
-      use:tooltip
+    Linear regression is a supervised algorithm<sup
+      ><span
+        class="info-tooltip"
+        title="Supervised algorithms learn to predict a specific value based on historical data."
+        use:tooltip
+        >[&#8505;]
+      </span></sup
     >
-      [&#8505;]
-    </span>
     that learns to model a dependent variable, {@html katexify(`y`, false)}, as
     a function of some independent variables (aka "features"), {@html katexify(
       `x_i`,
@@ -61,40 +61,43 @@
   <ul class="body-text">
     <li>
       {@html katexify(`y`, false)}: the dependent variable; the thing we are
-      trying to predict.<span
-        class="info-tooltip"
-        title="E.g., if we are using the number of bathrooms to
+      trying to predict.<sup
+        ><span
+          class="info-tooltip"
+          title="E.g., if we are using the number of bathrooms to
       predict housing price, housing price is the dependent variable."
-        use:tooltip
+          use:tooltip
+          >[&#8505;]
+        </span></sup
       >
-        [&#8505;]
-      </span>
     </li>
 
     <li>
       {@html katexify(`x_i`, false)}: the independent variables: the features
-      our model uses to model y.<span
-        class="info-tooltip"
-        title=" E.g., if we are using the number of bathrooms to
+      our model uses to model y.<sup
+        ><span
+          class="info-tooltip"
+          title=" E.g., if we are using the number of bathrooms to
         predict housing price, the number of bathrooms is the independent variables."
-        use:tooltip
+          use:tooltip
+          >[&#8505;]
+        </span></sup
       >
-        [&#8505;]
-      </span>
     </li>
     <li>
       {@html katexify(`\\beta_i`, false)}: the coefficients (aka the weights) of
       our regression model. These are the foundations of our model. They are
-      what our model ‘learns’ during optimization.<span
-        class="info-tooltip"
-        title="The coefficient B0 represents the
+      what our model ‘learns’ during optimization.<sup
+        ><span
+          class="info-tooltip"
+          title="The coefficient B0 represents the
       intercept of our model, and each other coefficient Bi (i > 0) is a slope
       defining how variable xi contributes to the model. We discuss how to
       interpret regression coefficients further on in the article."
-        use:tooltip
+          use:tooltip
+          >[&#8505;]
+        </span></sup
       >
-        [&#8505;]
-      </span>
     </li>
     <li>
       {@html katexify(`\\epsilon`, false)}: the irreducible error in our model.

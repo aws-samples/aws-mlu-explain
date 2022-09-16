@@ -15,24 +15,25 @@
   <br />
   <br />
   <span class="bold"><span class="dot" /> Validity: </span>
-  Does the data we're modeling matches to the problem we're actually trying to solve?<span
-    class="info-tooltip"
-    title="The outcome measure should accurately reflect the phenomenon of interest, the
+  Does the data we're modeling matches to the problem we're actually trying to solve?<sup
+    ><span
+      class="info-tooltip"
+      title="The outcome measure should accurately reflect the phenomenon of interest, the
     model should include all relevant predictors, and the model should generalize to
     the cases to which it will applied. Do the inputs reveal patterns in the outcome that make sense? Is the
     underlying sample representative of that during inference"
-    use:tooltip
+      use:tooltip
+      >[&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
 
   <br />
   <span class="bold"> <span class="dot" /> Representativeness: </span>
   Is the sample data used to train the regression model representative of the population
-  to which it will be applied?
-  <span
-    class="info-tooltip"
-    title="Precisely: is the data representative of the distribution of the outcome, y,
+  to which it will be applied?<sup
+    ><span
+      class="info-tooltip"
+      title="Precisely: is the data representative of the distribution of the outcome, y,
     given the predictors in the model, xi?
   Selection on x does not interfere with inference from the regression
     model, but selection on y does. (For this reason, more predictors are
@@ -42,66 +43,66 @@
     statistical sampling arise, so we need to think about how representative the
     sample is to the implicit/explicit popoulation about which inferences will be
     drawn."
-    use:tooltip
+      use:tooltip
+      >[&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
 
   <br />
   <span class="bold"> <span class="dot" /> Additivity and Linearity: </span>
   The deterministic component of a regression model is a linear function of the separate
-  predictors: {@html katexify(`y=B_0 + B_1x_1  + ... + B_px_p `, false)}
-  <span
-    class="info-tooltip"
-    title="Note that this does not mean our model must create a straight line: we
+  predictors: {@html katexify(`y=B_0 + B_1x_1  + ... + B_px_p `, false)}.<sup
+    ><span
+      class="info-tooltip"
+      title="Note that this does not mean our model must create a straight line: we
     can still include nonlinearities in our model via transformations or more
     complex models (e.g. piecewise linear splines). it can draw an Transformations
     may be applied to make this so: e.g. is y=abc, log(y) = log(a) + log(b) +
     log(c)"
-    use:tooltip
+      use:tooltip
+      >[&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
 
   <br />
   <span class="bold"><span class="dot" /> Independence of Errors: </span>
-  The errors from our model are independent.
-  <span
-    class="info-tooltip"
-    title="In other words, we shouldn't see any pattern
+  The errors from our model are independent.<sup
+    ><span
+      class="info-tooltip"
+      title="In other words, we shouldn't see any pattern
     in the residuals about our prediction line. Note that this assumption is violated in many machine learning tasks,
     most notably time series."
-    use:tooltip
+      use:tooltip
+      >[&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
   <br />
   <span class="bold"><span class="dot" /> Homoscedasticity: </span>
-  The errors from our model have equal variance.
-  <span
-    class="info-tooltip"
-    title="can make it difficult to gauge the true standard deviation of the
+  The errors from our model have equal variance.<sup
+    ><span
+      class="info-tooltip"
+      title="can make it difficult to gauge the true standard deviation of the
     errors, which may yield confidence intervals that are too wide or too narrow.
     It may also have the effect of giving higher weight to the subset of data that
     has the larger error variance when estimating coefficients. Unequal error
     variance heteroscedasticity is a minor issue for most modeling
     tasks (an exception being probabilistic )"
-    use:tooltip
+      use:tooltip
+      >[&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
   <br />
   <span class="bold"><span class="dot" /> Normality of Errors: </span>
-  The errors from our model are normally distributed.
-  <span
-    class="info-tooltip"
-    title="Note that his assumption doesn't
+  The errors from our model are normally distributed.<sup
+    ><span
+      class="info-tooltip"
+      title="Note that his assumption doesn't
   mean that our features xi be normally distributed, nor our response y, just the
   regression errors."
-    use:tooltip
+      use:tooltip
+      >[&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
 </p>
 
 <br />

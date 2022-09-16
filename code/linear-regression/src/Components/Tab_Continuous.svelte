@@ -170,13 +170,15 @@
   predicted housing price for houses with {@html katexify(`sqft = 0`, false)},
   that is, it represents the average price of a zero square-foot house. Because
   this value doesn't make much intuitive sense, it's common for models to be
-  transformed and standardized before carrying out a regression model.<span
-    class="info-tooltip"
-    title="By scaling and standardizing our data beforehand, this intercept will come to represent the average price in our dataset."
-    use:tooltip
+  transformed and standardized before carrying out a regression model.<sup
+    ><span
+      class="info-tooltip"
+      title="By scaling and standardizing our data beforehand, this intercept will come to represent the average price in our dataset."
+      use:tooltip
+    >
+      [&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
 </p>
 
 <style>

@@ -187,13 +187,15 @@
   and <span class="line-without" />, above.
   <br /><br />
   The intercept, {formatter(Math.round(intercept))}, represents the predicted
-  housing price for houses with no pools and a square-footage of zero.<span
-    class="info-tooltip"
-    title="Because this value doesn't make much intuitive sense, it's common for the features to be centered at zero."
-    use:tooltip
+  housing price for houses with no pools and a square-footage of zero.<sup
+    ><span
+      class="info-tooltip"
+      title="Because this value doesn't make much intuitive sense, it's common for the features to be centered at zero."
+      use:tooltip
+    >
+      [&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
   <br /><br />
   The coefficient of {@html katexify(`pool`, false)}, {formatter(
     Math.round(slopePool)

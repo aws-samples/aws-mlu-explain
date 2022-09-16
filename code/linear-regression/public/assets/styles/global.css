@@ -112,6 +112,7 @@ p {
 
 .info-tooltip {
   color: var(--smile);
+  font-size: 0.9rem;
 }
 
 .interpretation-header {

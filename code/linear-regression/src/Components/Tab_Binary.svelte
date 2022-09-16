@@ -157,14 +157,7 @@
   </svg>
 </div>
 <br />
-<!-- <p class="tab-text">
-  <span class="bold">Model Form:</span>
-  {@html katexify(` y=β0+β1∗x1`, false)} where {@html katexify(
-    `β1 \\in \\llbracket0, 1\\rrbracket`,
-    false
-  )}
-</p>
-<br /> -->
+
 <p class="tab-text">
   <span class="bold">Example:</span><br />
   {@html katexify(
@@ -192,18 +185,19 @@
   <br /><br />The difference between these two subpopulation means is equal to
   the coefficient on {@html katexify(`pool`, false)}. It tells us that houses
   with pools cose {formatter(Math.round(slope))} points higher on average than houses
-  that do not have pools.
-  <span
-    class="info-tooltip"
-    title="You may see categorical features in regression models with more than two
+  that do not have pools.<sup
+    ><span
+      class="info-tooltip"
+      title="You may see categorical features in regression models with more than two
     possible outcomes. These multi-level categorical features are often called indicator,
     or dummy, variables. Special attention should be taken when interpreting indicator
     variables as any interpretation is dependent on the baseline category used in the
     model."
-    use:tooltip
+      use:tooltip
+    >
+      [&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
 </p>
 
 <style>

@@ -177,13 +177,15 @@
     `x_i = 0`,
     false
   )}. For our model, it represents the cost of houses with no pools and a
-  square-footage of zero.<span
-    class="info-tooltip"
-    title="Because this value doesn't make much intuitive sense, it's common for models to be transformed and standardized before carrying out a regression model."
-    use:tooltip
+  square-footage of zero.<sup
+    ><span
+      class="info-tooltip"
+      title="Because this value doesn't make much intuitive sense, it's common for models to be transformed and standardized before carrying out a regression model."
+      use:tooltip
+    >
+      [&#8505;]
+    </span></sup
   >
-    [&#8505;]
-  </span>
   <br /><br /> The coefficient of {@html katexify(`pool`, false)}, {formatter(
     Math.round(slopePool)
   )}, represents the average expected difference in houses of the same size (in

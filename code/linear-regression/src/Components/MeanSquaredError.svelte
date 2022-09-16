@@ -17,14 +17,16 @@
     To train an accurate linear regression model, we need a way to quantify how good
     (or bad) our model performs. In machine learning, we call such performance-measuring
     functions <i>loss functions</i>. Several popular loss functions exist for
-    regression problems<span
-      class="info-tooltip"
-      title="You can actually use whatever you want, as long as minimizing it achieves your goal."
-      use:tooltip
+    regression problems.<sup
+      ><span
+        class="info-tooltip"
+        title="You can actually use whatever you want, as long as minimizing it achieves your goal."
+        use:tooltip
+        >[&#8505;]
+      </span></sup
     >
-      [&#8505;]
-    </span>. To measure our model's performance, we'll use one of the most
-    popular: mean-squared error (MSE).
+    To measure our model's performance, we'll use one of the most popular: mean-squared
+    error (MSE).
     <br /><br />
     <span class="bold">Mean-Squared Error (MSE)</span>
     <br />
@@ -37,19 +39,20 @@
       true
     )}
     The name is quite literal: we take the mean of the squared errors. The squaring
-    of errors prevents negative and positive terms from canceling out in the sum
-    <span
-      class="info-tooltip"
-      title=" There is nothing stopping us from using a different norm instead, so as long as the positive 
+    of errors prevents negative and positive terms from canceling out in the sum,<sup
+      ><span
+        class="info-tooltip"
+        title=" There is nothing stopping us from using a different norm instead, so as long as the positive 
     and negative values cancel out. For example,
     if we took the absolute value of our errors instead of the square, we'd have the
     popular loss-function Mean-Absolute Error (MAE)."
-      use:tooltip
-      >[&#8505;]
-    </span>, and gives more weight to points further from the regression line,
-    effectively punishing outliers. In practice, we'll fit our regression model
-    to a set training data, and evaluate it's performance using MSE on the test
-    dataset.
+        use:tooltip
+        >[&#8505;]
+      </span></sup
+    >
+    and gives more weight to points further from the regression line, effectively
+    punishing outliers. In practice, we'll fit our regression model to a set training
+    data, and evaluate it's performance using MSE on the test dataset.
     <!-- new -->
     <br /><br />
     <span class="bold">R-Squared</span>
@@ -58,15 +61,17 @@
     <i>goodness of fit</i>
     measures, which summarize how well a model fits a set of data . The most popular
     goodness of fit measure for linear regression is r-squared, a metric that represents
-    the percentage of the variance in y explained by our features x
-    <span
-      class="info-tooltip"
-      title="Intuitively, an ideal model would explain all of the variation in the data for all inputs."
-      use:tooltip
-      >[&#8505;]
-    </span>. More specifically, r-squared measures the percentage of variance
-    explained normalized against the baseline variance of our model (which is
-    just the variance of the mean):
+    the percentage of the variance in y explained by our features x.<sup
+      ><span
+        class="info-tooltip"
+        title="Intuitively, an ideal model would explain all of the variation in the data for all inputs."
+        use:tooltip
+        >[&#8505;]
+      </span></sup
+    >
+    More specifically, r-squared measures the percentage of variance explained normalized
+    against the baseline variance of our model (which is just the variance of the
+    mean):
     {@html katexify(
       `\\begin{aligned} R^2 = 1 - \\frac{\\Sigma^{n}_{i=1}(y_i - \\hat{y_i})^2 }{\\Sigma^{n}_{i=1}(y_i - \\bar{y_i})^2 }  \\end{aligned}`,
       true
