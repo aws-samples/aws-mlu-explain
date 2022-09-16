@@ -255,7 +255,7 @@
         class="highlight-text"
         text-anchor="middle"
         y={yScale($intercept + $coeff * $sqft) + 16}
-        x={xScale($sqft)}>Size: {$sqft}</text
+        x={xScale($sqft)}>Sqft: {$sqft}</text
       >
       <text
         class="highlight-text"
