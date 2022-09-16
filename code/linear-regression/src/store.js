@@ -29,8 +29,8 @@ export const gdError = writable(0);
 export const gdErrors = writable([]);
 export const shuffleIteration = writable(1);
 // mse vars
-export const mseWeight = writable(1);
-export const mseBias = writable(1);
+export const mseWeight = writable(0);
+export const mseBias = writable(5);
 export const mseIteration = writable(0);
 export const mseError = writable(0);
 export const mseErrors = writable([]);
