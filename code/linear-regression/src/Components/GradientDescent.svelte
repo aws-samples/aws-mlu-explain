@@ -76,12 +76,15 @@
 
       Our goal is to find the coefficients, {@html katexify(`\\beta_0`, false)} and
       {@html katexify(`\\beta_1`, false)}, to minimize the error function. To do
-      this, we'll use the gradient, which represents the direction that the
-      function is increasing, and the rate it is increasing. Since we want to 
-      find the minimum, we will use Gradient descent which works by taking steps 
-      in the direction oppositie of where our error function is increasing, 
-      proportional to the rate of change. To find the coefficients that minimize 
-      first, calculate the derivatives of our loss function, MSE:
+      this, we'll use the gradient, which represents the direction that the function 
+      is increasing, and the rate at which it is increasing. Since we want to find
+      the minimum of this function, we can go in the opposite direction of where it's 
+      increasing. This is exactly what Gradient Descent does, it works by taking steps 
+      in the direction opposite of where our error function is increasing, proportional 
+      to the rate of change. To find the coefficients that minimize the function, we 
+      first calculate the derivatives of our error function is increasing. To find 
+      the coefficients that minimize first, calculate the derivatives of our loss 
+      function, MSE:
       {@html katexify(
         `\\frac{\\delta}{\\delta\\beta_i}MSE = \\begin{cases}
         -\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i}) \\text{for i = 0} \\\\

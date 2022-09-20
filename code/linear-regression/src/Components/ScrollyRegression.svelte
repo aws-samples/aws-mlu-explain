@@ -157,7 +157,7 @@
             )}.
             <br /><br />
             For our specific problem, the best fit line is shown. There's still error,
-            but the general pattern is captured well. As a result, we can be
+            sure, but the general pattern is captured well. As a result, we can be
             reasonably confident that if we plug in new values of square-footage,
             our predicted values of price would be reasonably accurate.
           </p>

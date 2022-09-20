@@ -7,9 +7,9 @@
   <p class="body-text">
     Linear Regression is a simple and powerful model for predicting a numeric
     response from a set of one or more independent variables. This article will
-    focus on how the method is used in machine learning, so we won't
+    focus mostly on how the method is used in machine learning, so we won't
     cover common use cases like casual inference or experimental design.
-    Although it may seem like linear regression is overlooked in modern machine
+    And although it may seem like linear regression is overlooked in modern machine
     learning's ever-increasing world of complex neural network architectures,
     the algorithm is still widely used across a large number of domains because
     it is effective, easy to interpret, and easy to extend. The key ideas in
