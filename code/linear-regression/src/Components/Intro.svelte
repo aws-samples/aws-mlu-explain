@@ -49,7 +49,7 @@
   <br />
   <p class="body-text">
     {@html katexify(
-      `y=B_0 + B_1x_1  + B_2x_2 + ... + B_px_p + \\epsilon`,
+      `y=\\beta_0 + \\beta_1x_1  + \\beta_2x_2 + ... + \\beta_px_p + \\epsilon`,
       true
     )}
   </p>
