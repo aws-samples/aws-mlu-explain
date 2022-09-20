@@ -102,7 +102,7 @@
 <h2 class="body-header">How It Works, Briefly</h2>
 <p class="body-text">
   To make linear regression easier to digest, let's go through a quick,
-  high-level introduction of how it works. We’ll scroll through the core
+  high-level introduction of how it works. We'll scroll through the core
   concepts of the algorithm at a high-level, and then delve into the details
   thereafter:
 </p>
@@ -113,8 +113,8 @@
       <div class="step" data-index="0">
         <div class="step-content">
           <p>
-            Let's fit a model to predict housing price ($) from the size of the
-            house (in square-footage):
+            Let's fit a model to predict housing price ($) in San Diego, USA 
+            using the size of the house (in square-footage):
             <br /><br />
             {@html katexify(
               `\\text{house-price} = \\hat{\\beta_1} * sqft + \\hat{\\beta_0}`,
@@ -150,16 +150,16 @@
           <p>
             The goal of linear regression is reducing this error such that we
             find a line/surface that 'best' fits our data. For our simple
-            regression problem, that involves estimating the slope and intercept
-            of our model, {@html katexify(`\\hat{\\beta_1}`, false)} and {@html katexify(
-              `\\hat{\\beta_0}`,
+            regression problem, that involves estimating the y-intercept and slope
+            of our model, {@html katexify(`\\hat{\\beta_0}`, false)} and {@html katexify(
+              `\\hat{\\beta_1}`,
               false
             )}.
             <br /><br />
             For our specific problem, the best fit line is shown. There's still error,
-            sure, but the general pattern is captured well. As a result, we can be
-            reasonably confident that were we to plug in future values of square-footage,
-            our predicted values of price would be fairly accurate.
+            but the general pattern is captured well. As a result, we can be
+            reasonably confident that if we plug in new values of square-footage,
+            our predicted values of price would be reasonably accurate.
           </p>
         </div>
       </div>
@@ -197,7 +197,7 @@
             )}
             <br />
             <br />
-            Thus, for our model predicts a house sized {$sqft} square-feet will cost
+            Thus, our model predicts a house that is {$sqft} square-feet will cost
             {formatter(Math.round($sqft * $coeff + $intercept, 3))}.
           </p>
         </div>
@@ -235,7 +235,7 @@
   <p class="body-text">
     Now that we have a high-level idea of how linear regression works, let's
     dive a bit deeper. The remainder of this article will cover how to evaluate
-    regression models, how to find the 'best' model, how to interpret different
+    regression models, how to find the "best" model, how to interpret different
     forms of regression models, and the assumptions underpinning correct usage
     of regression models in statistical settings.
     <br /><br /> Let's dive in!

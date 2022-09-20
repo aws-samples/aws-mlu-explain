@@ -301,7 +301,7 @@
     paint-order: stroke fill;
     stroke-width: 4px;
     pointer-events: none;
-    stroke: var(--smile);
+    stroke: var(--squidink);
     font-size: 0.8rem;
     letter-spacing: 2px;
     fill: white;
