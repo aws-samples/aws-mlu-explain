@@ -21,7 +21,7 @@
   <br />
   Let's recap what we've learned so far: Linear regression is all about finding a
   line (or surface) that fits our data well. And as we just saw, this involves selecting
-  the coefficients of our model that minimize our evaluation metric. But how can
+  the coefficients for our model that minimize our evaluation metric. But how can
   we best estimate these coefficients? In practice, they're unknown, and selecting
   them by hand quickly becomes infeasible for regression models with many features.
   There must be a better way!
@@ -76,12 +76,12 @@
 
       Our goal is to find the coefficients, {@html katexify(`\\beta_0`, false)} and
       {@html katexify(`\\beta_1`, false)}, to minimize the error function. To do
-      this, we'll use the gradient, which represents the direction where that
-      function is increasing, and the rate at which it is increasing. Gradient
-      descent works by taking steps in the direction oppositie of where our
-      error function is increasing, proportional to the rate of change. To find
-      the coefficients that minimize First, we calculate the derivatives of our
-      loss function, MSE:
+      this, we'll use the gradient, which represents the direction that the
+      function is increasing, and the rate it is increasing. Since we want to 
+      find the minimum, we will use Gradient descent which works by taking steps 
+      in the direction oppositie of where our error function is increasing, 
+      proportional to the rate of change. To find the coefficients that minimize 
+      first, calculate the derivatives of our loss function, MSE:
       {@html katexify(
         `\\frac{\\delta}{\\delta\\beta_i}MSE = \\begin{cases}
         -\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i}) \\text{for i = 0} \\\\
@@ -90,8 +90,8 @@
         true
       )}
 
-      Next, now that we have the gradients for our error function (with respect
-      to each coefficient to be updated), we perform iterative updates as:
+      Now that we have the gradients for our error function (with respect
+      to each coefficient to be updated), we perform iterative updates:
       {@html katexify(
         `\\text{repeat until converge:} = \\begin{cases}
          \\beta_0 = \\beta_0 - \\alpha (-\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i}))  \\\\
@@ -101,8 +101,7 @@
       )}
 
       <br /><br />
-
-      updating these values iteratively will yield coefficients of our model
+      Updating these values iteratively will yield coefficients of our model
       that minimize error.
       <br />
     </p>
@@ -112,15 +111,17 @@
 <p class="body-text">
   <br />
   Gradient descent will iteratively identify the coefficients our model needs to
-  fit the data. Let's see an example directly. We'll fit data to our equation {@html katexify(
+  fit the data. Let's see an example directly. We'll fit data to our equation 
+  {@html katexify(
     `\\begin{aligned} \\hat{y}=\\hat{\\beta_0} + \\hat{\\beta_1}x_1  \\end{aligned}`,
     false
   )}, so gradient descent will learn two coefficients, {@html katexify(
     `\\beta_0`,
     false
   )} (the intercept) and {@html katexify(`\\beta_1`, false)} (the weight). To do
-  so, interact witht he plot below. Try dragging the wrights and values to 'poor'
-  fit solutions and run gradient descent to see them iteratively improve.
+  so, interact witht he plot below. Try dragging the weights and values to create a 
+  'poorly' fit (large error) solution and run gradient descent to see the error 
+  iteratively improve.
 </p>
 <br /><br />
 <div id="gd-container">
@@ -132,7 +133,7 @@
       gradient descent, and see the line update live. The error for each
       iteration will be shown in the bottom error chart. With each weight
       update, we recalculate the error, so you can see how gradient descent
-      improves our model iteratively.
+      improves our model.
     </p>
     <div id="buttons-container">
       <button on:click={() => gdScatterClass.shuffleData()}>New Data</button>
