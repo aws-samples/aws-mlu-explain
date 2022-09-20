@@ -181,8 +181,9 @@
     `(sqft:pool)`,
     false
   )}, {formatter(Math.round(slopeInteraction))}, represents the difference in
-  the slope for sqft, comparing houses that do and do not have pools. Visually,
-  this represents the difference between the slopes of the two lines,
+  the slope for {@html katexify(`sqft`, false)}, comparing houses that do and 
+  do not have pools. Visually, this represents the difference between the slopes 
+  of the two lines,
   <span class="line-with" />
   and <span class="line-without" />, above.
   <br /><br />
@@ -200,8 +201,8 @@
   The coefficient of {@html katexify(`pool`, false)}, {formatter(
     Math.round(slopePool)
   )}, represents the average expected difference in houses of the same size (0
-  sqft) that differed in whether or not they had a pool. (It's not super useful
-  since we don't have houses with 0 square-feet).
+  {@html katexify(`sqft`, false)}) that differed in whether or not they had a pool.
+  (It's not super useful since we don't have houses with 0 square-feet).
   <br /><br />
   The coefficient of {@html katexify(`sqft`, false)}, {formatter(
     Math.round(slopeSqft)

@@ -119,7 +119,7 @@
     `\\beta_0`,
     false
   )} (the intercept) and {@html katexify(`\\beta_1`, false)} (the weight). To do
-  so, interact witht he plot below. Try dragging the weights and values to create a 
+  so, interact with the plot below. Try dragging the weights and values to create a 
   'poorly' fit (large error) solution and run gradient descent to see the error 
   iteratively improve.
 </p>

@@ -8,7 +8,7 @@
   methods, selection techniques, common regression transformations, bayesian
   formulations of regression, and additional evaluation techniques. For those
   interested in learning more, we recommend diving deep into the aforementioned
-  topics, or reading the resources below. We hope that this article serves as a
+  topics, or reading the resources below. Hopefully this article serves as a
   nice starting point for learning about linear regression.
 </p>
 <hr />

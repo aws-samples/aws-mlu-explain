@@ -43,7 +43,8 @@
     {@html katexify(
       `\\begin{aligned} RSS = \\sum^{n}_{i=1}(y_i - \\hat{y_i})^2 \\end{aligned}`,
       true
-    )}The RSS should look familiar - it was a key piece in both the MSE and
+    )}
+    The RSS should look familiar - it was a key piece in both the MSE and
     r-squared formulas that represents our model's total squared error:
     {@html katexify(
       `\\begin{aligned} \\hat{\\beta} = (X^{T}X)^{-1}X^{T}Y \\end{aligned}`,
@@ -209,7 +210,7 @@
   <p class="body-text">
     Despite providing a convenient closed-form solution for finding our optimal
     coefficients, the Normal Equation estimates are often not used in practice,
-    because of the computational complexity required to invert a matrix with too
+    because of the computational complexity required to invert a matrix with
     many features. While our two feature example above runs fast (we can run it
     in the browser!), most machine learning models are more complicated. For
     this reason, we often just use gradient descent.
@@ -222,11 +223,11 @@
     traditional null hypothesis statistical tests: t-tests are used to measure whether
     a given cofficient is significantly different than zero (the null hypothesis
     that a particular coefficient {@html katexify(`\\beta_i`, false)} equals zero),
-    while F tests are used to measure whether
+    while F-tests are used to measure whether
     <i>all</i>
     the terms in a regression model are significantly different from zero. Different
     opinions exist on the utility of such tests (e.g. chapter 10.7 of
-    <a href="#resources">[1]</a> maintains they're not super important). We don't
+    <a href="#resources">[1]</a> maintains they're not important). We don't
     take a strong stance on this issue, but believe practitioners should always assess
     the standard error aroud any parameter estimates for themselves and present them
     in their research.

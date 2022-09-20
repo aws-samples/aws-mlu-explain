@@ -34,7 +34,7 @@
 <p class="body-text">
   One of the most powerful aspects of regression models is their
   interpretability. However, different forms of regression models require
-  different interpretations. To make this clear, we’ll walk through several
+  different interpretations. To make this clear, we'll walk through several
   typical constructs of a regression model, and describe how to interpret each
   in turn. For all aforementioned models, we interpret the error term as
   irreducible noise not captured by our model.<br /><br /> Select a tab to learn

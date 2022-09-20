@@ -169,14 +169,16 @@
 </p>
 <br />
 <p class="tab-text">
-  <span class="bold">Interpretation</span>:This model summarizes the difference
+  <span class="bold">Interpretation</span>: This model summarizes the difference
   in average housing prices between houses without swimming pools (<span
     class="dot-without"
   />) and houses with swimming pools (<span class="dot-with" />).
   <br /><br /> The intercept, {formatter(Math.round(intercept))}, is the average
   predicted price for houses that do not have swimming pools (to see this,
-  simply set has_pool to 0 and solve the equation). To find the average price
-  predicted price for houses with pools, we simply plug in 1 to obtain {formatter(
+  simply set {@html katexify(`pool`, false)} to 0 and solve the equation). 
+  To find the average price predicted price for houses with pools, we simply plug 
+  in {@html katexify(`pool=1`, false)} to obtain 
+  {formatter(
     Math.round(intercept)
   )} + {formatter(Math.round(slope))} * 1 = {formatter(
     Math.round(slope + intercept)
@@ -184,7 +186,7 @@
 
   <br /><br />The difference between these two subpopulation means is equal to
   the coefficient on {@html katexify(`pool`, false)}. It tells us that houses
-  with pools cose {formatter(Math.round(slope))} points higher on average than houses
+  with pools cost {formatter(Math.round(slope))} more on average than houses
   that do not have pools.<sup
     ><span
       class="info-tooltip"
