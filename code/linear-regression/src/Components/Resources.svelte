@@ -19,7 +19,7 @@
       href="https://link.springer.com/article/10.1007/BF00116251"
       >[1] Regression And Other Stories</a
     ><br />
-    (John Ross Quinlan, 1986).
+    (Gelman, Hill and Vehtari 2020).
   </p>
   <p class="resource-item">
     <a

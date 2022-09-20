@@ -36,10 +36,10 @@
 <section>
   <p class="body-text">
     <span class="bold">A Closed-Form Solution</span><br />
-    We'd be remiss not to mention the Normal Equation, a widely taught (but rarely-used)
-    method for obtaining estimates for our linear regression coefficients. The Normal
-    Equation is a closed-form solution that allows us to estimate our coefficients
-    directly by minimizing the <i>residual sum of squares</i> (RSS) of our data:
+    We'd be remiss not to mention the Normal Equation, a widely taught method for
+    obtaining estimates for our linear regression coefficients. The Normal Equation
+    is a closed-form solution that allows us to estimate our coefficients directly
+    by minimizing the <i>residual sum of squares</i> (RSS) of our data:
     {@html katexify(
       `\\begin{aligned} RSS = \\sum^{n}_{i=1}(y_i - \\hat{y_i})^2 \\end{aligned}`,
       true
