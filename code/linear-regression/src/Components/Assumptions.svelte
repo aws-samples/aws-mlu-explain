@@ -43,13 +43,15 @@
   <br />
   What should we do if the assumptions for our regression model aren't met? Don't
   fret, it's not the end of the world! First, double-check that the assumptions even
-  matter in the first place. One can extend the model. One can change the data or
-  model so the assumptions are more reasonable. And Finally, one can change or restrict
-  the questions to align them closer to the data, making conclusions that are more
-  descriptive and less causal or extrapololative, defining the sample to match the
-  sample, or predicting averages rather than individual cases. In practice, one usually
-  employs some combination of all three choices: applying some mix of model expansion,
-  data processing, and care in extrapolation beyond the data.
+  matter in the first place: if the predictions made from our model generalize well
+  to unseen data, and our task is to create a model that generalizes well, then we're
+  probably fine. If not, figure out which assumption is being violated, and how to
+  address it! This will change depending on the assumption being violated, but in
+  general, one can attempt to extend the model, accompany new data, transform the
+  existing data, or some combination thereof. If a model transformation is unfit,
+  perhaps the application (or research question) can be changed or restricted to
+  better align with the data. In practice, some combination of the above will usually
+  suffice.
 </p>
 
 <style>

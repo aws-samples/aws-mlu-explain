@@ -119,20 +119,18 @@
     `\\beta_0`,
     false
   )} (the intercept) and {@html katexify(`\\beta_1`, false)} (the weight). To do
-  so, interact witht he plot below. Try dragging the wrights and values to 'poor'
+  so, interact with the plot below. Try dragging the weights and values to 'poor'
   fit solutions and run gradient descent to see them iteratively improve.
 </p>
 <br /><br />
 <div id="gd-container">
   <div id="equations-container">
     <p class="body-text">
-      Let's see how Gradient Descent works directly for our linear regression
-      model. We'll use the algorithm to identify which values for our bias and
-      weight we should select. Click the buttons to run 1, 10, or 50 steps of
-      gradient descent, and see the line update live. The error for each
-      iteration will be shown in the bottom error chart. With each weight
-      update, we recalculate the error, so you can see how gradient descent
-      improves our model iteratively.
+      Click the buttons to run 1, 10, or 100 steps of gradient descent, and see
+      the linear regression model update live. The error at each iteration of
+      gradient descent (or manual coefficient update) is shown in the bottom
+      chart. With each weight update, we recalculate the error, so you can see
+      how gradient descent improves our model iteratively.
     </p>
     <div id="buttons-container">
       <button on:click={() => gdScatterClass.shuffleData()}>New Data</button>
