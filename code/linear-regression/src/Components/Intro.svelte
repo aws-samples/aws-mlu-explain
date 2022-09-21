@@ -8,8 +8,8 @@
     Linear Regression is a simple and powerful model for predicting a numeric
     response from a set of one or more independent variables. This article will
     focus mostly on how the method is used in machine learning, so we won't
-    cover common use cases like casual inference or experimental design. And
-    although it may seem like linear regression is overlooked in modern machine
+    cover common use cases like casual inference or experimental design.
+    And although it may seem like linear regression is overlooked in modern machine
     learning's ever-increasing world of complex neural network architectures,
     the algorithm is still widely used across a large number of domains because
     it is effective, easy to interpret, and easy to extend. The key ideas in
@@ -32,7 +32,7 @@
     a function of some independent variables (aka "features"), {@html katexify(
       `x_i`,
       false
-    )}, by finding a line (or surface) that best 'fits' the data. In general, we
+    )}, by finding a line (or surface) that best "fits" the data. In general, we
     assume {@html katexify(`y`, false)} to be some number and each
     {@html katexify(`x_i`, false)} can be basically anything. For example: predicting
     the price of a house using the number of rooms in that house ({@html katexify(
@@ -64,7 +64,7 @@
       trying to predict.<sup
         ><span
           class="info-tooltip"
-          title="E.g., if we are using the number of bathrooms to
+          title="If we are using the number of bathrooms to
       predict housing price, housing price is the dependent variable."
           use:tooltip
           >[&#8505;]
@@ -77,23 +77,24 @@
       our model uses to model y.<sup
         ><span
           class="info-tooltip"
-          title=" E.g., if we are using the number of bathrooms to
-        predict housing price, the number of bathrooms is the independent variables."
+          title=" If we are using the number of bathrooms to
+        predict housing price, the number of bathrooms is the independent variable."
           use:tooltip
           >[&#8505;]
         </span></sup
       >
     </li>
     <li>
-      {@html katexify(`\\beta_i`, false)}: the coefficients (aka the weights) of
+      {@html katexify(`\\beta_i`, false)}: the coefficients (aka "weights") of
       our regression model. These are the foundations of our model. They are
-      what our model ‘learns’ during optimization.<sup
+      what our model "learns" during optimization.<sup
         ><span
           class="info-tooltip"
-          title="The coefficient B0 represents the
-      intercept of our model, and each other coefficient Bi (i > 0) is a slope
-      defining how variable xi contributes to the model. We discuss how to
-      interpret regression coefficients further on in the article."
+          title="The coefficient B<sub>0</sub> represents the
+      intercept of our model, and each other coefficient 
+      B<sub>i</sub> (i > 0) is a slope defining how variable 
+      x<sub>i</sub> contributes to the model. We discuss how to
+      interpret regression coefficients later in the article."
           use:tooltip
           >[&#8505;]
         </span></sup
@@ -108,9 +109,10 @@
 
   <p class="body-text">
     Fitting a linear regression model is all about finding the set of
-    cofficients that best model y as a function of our features. We may never
-    know the true parameters for our model, but we can estimate them (more on
-    this later). Once we've estimated these coefficients, {@html katexify(
+    cofficients that best model {@html katexify(`y`, false)} as a function of 
+    our features. We may never know the true parameters for our model, 
+    but we can estimate them (more on this later). Once we've estimated 
+    these coefficients, {@html katexify(
       `\\hat{\\beta_i}`,
       false
     )}, we predict future values, {@html katexify(`\\hat{y}`, false)}, as:

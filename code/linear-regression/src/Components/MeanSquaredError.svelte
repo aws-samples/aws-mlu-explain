@@ -31,26 +31,26 @@
     <span class="bold">Mean-Squared Error (MSE)</span>
     <br />
     MSE quantifies how close a predicted value is to the true value, so we'll use
-    it to quantify how close a regression line is to a set of points. MSE works by
-    summing up the squared distances from the points to the regression line (the
-    red residuals we saw in the scrolly above) and averaging them across the number
-    of data points:{@html katexify(
+    it to quantify how close a regression line is to a set of points. MSE works by 
+    squaring the distance between each data point and the regression line 
+    (the red residuals in the graphs above), summing the squared values, and 
+    then dividing by the number of data points: {@html katexify(
       `\\begin{aligned} MSE = \\frac{1}{n} \\Sigma^{n}_{i=1}(y_i - \\hat{y_i})^2 \\end{aligned}`,
       true
     )}
-    The name is quite literal: we take the mean of the squared errors. The squaring
+    The name is quite literal: take the mean of the squared errors. The squaring
     of errors prevents negative and positive terms from canceling out in the sum,<sup
       ><span
         class="info-tooltip"
-        title=" There is nothing stopping us from using a different norm instead, so as long as the positive 
-    and negative values cancel out. For example,
-    if we took the absolute value of our errors instead of the square, we'd have the
-    popular loss-function Mean-Absolute Error (MAE)."
+        title="There is nothing stopping us from using a different norm instead, so as 
+        long as the positive and negative values cancel out. For example,
+        if we took the absolute value of our errors instead of the square, we'd have the
+        popular loss-function Mean-Absolute Error (MAE)."
         use:tooltip
         >[&#8505;]
       </span></sup
     >
-    and gives more weight to points further from the regression line, effectively
+    and gives more weight to points further from the regression line,
     punishing outliers. In practice, we'll fit our regression model to a set training
     data, and evaluate it's performance using MSE on the test dataset.
     <!-- new -->
@@ -59,9 +59,10 @@
     <br />
     Regression models may also be evaluated with the so-called
     <i>goodness of fit</i>
-    measures, which summarize how well a model fits a set of data . The most popular
+    measures, which summarize how well a model fits a set of data. The most popular
     goodness of fit measure for linear regression is r-squared, a metric that represents
-    the percentage of the variance in y explained by our features x.<sup
+    the percentage of the variance in {@html katexify(`y`, false)} explained by our 
+    features {@html katexify(`x`, false)}.<sup
       ><span
         class="info-tooltip"
         title="Intuitively, an ideal model would explain all of the variation in the data for all inputs."
@@ -70,16 +71,14 @@
       </span></sup
     >
     More specifically, r-squared measures the percentage of variance explained normalized
-    against the baseline variance of our model (which is just the variance of the
-    mean):
+    against the baseline variance of our model (which is just the variance of the mean):
     {@html katexify(
       `\\begin{aligned} R^2 = 1 - \\frac{\\Sigma^{n}_{i=1}(y_i - \\hat{y_i})^2 }{\\Sigma^{n}_{i=1}(y_i - \\bar{y_i})^2 }  \\end{aligned}`,
       true
     )}
     The highest possible value for r-squared is 1, representing a model that captures
     100% of the variance. A negative r-squared means that our model is doing worse
-    (i.e. capturing less variance) than would by drawing a flat line through mean
-    of our data.
+    (capturing less variance) than a flat line through mean of our data would.
 
     <br /><br />To build intuition for yourself, try changing the weight and
     bias terms below to see how the MSE and r-squared change across different
@@ -132,7 +131,7 @@
 
       <br />
       <div id="equation-math">
-        For Our model: {@html katexify(
+        For our model: {@html katexify(
           `\\hat{y} = ${formatter($mseWeight)}x${
             $mseBias < 0 ? "" : "+"
           }${formatter($mseBias)}`

@@ -166,7 +166,7 @@
 <br />
 <p class="tab-text">
   <span class="bold">Interpretation</span>: Typically, a regression model will
-  contain more than one features. We call this a
+  contain more than one feature. We call this a
   <i>multivariate regression model</i>. In our example, we model home prices as
   a function of both the size of the house ({@html katexify(`sqft`, false)}) and
   whether or not it has a pool ({@html katexify(`pool`, false)}, where
@@ -188,15 +188,15 @@
   >
   <br /><br /> The coefficient of {@html katexify(`pool`, false)}, {formatter(
     Math.round(slopePool)
-  )}, represents the average expected difference in houses of the same size (in
-  sqft) that differed in whether or not they had a pool. In other words, we
-  expect, on average, houses of the same size to cost {formatter(
+  )}, represents the average expected price difference in houses of the same size (in
+  {@html katexify(`sqft`, false)}) if they do or do not have a pool. In other words, we expect, on average, 
+  houses of the same size to cost {formatter(
     Math.round(slopePool)
   )} more if they have a pool than if they do not.
 
   <br /><br />The coefficient of {@html katexify(`sqft`, false)}, {formatter(
     Math.round(slopeSqft)
-  )}, represents the average expected difference in housing price for houses
+  )}, represents the average expected price difference in housing price for houses
   that have the same value of {@html katexify(`pool`, false)} but differ in size
   by one square-foot.
   <br /><br />
@@ -204,10 +204,9 @@
     class="line-with"
   />) or not (<span class="line-without" />), we assume the
   <i>same</i>
-  slope for {@html katexify(`sqft`, false)}. This isn't always a valid
-  assumption to make, and when we think those subpopulations should have
-  different slopes, we can use interaction terms. To visualize this, we show two
-  lines above.
+  slope for {@html katexify(`sqft`, false)}. To visualize this, we show two
+  lines above. This isn't always a valid assumption to make, and when we think 
+  those subpopulations should have different slopes, we can use interaction terms. 
 </p>
 
 <style>
