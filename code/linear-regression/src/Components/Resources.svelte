@@ -16,15 +16,13 @@
   <p class="resource-item">
     <a
       class="on-end"
-      href="https://link.springer.com/article/10.1007/BF00116251"
+      href="https://statmodeling.stat.columbia.edu/2022/01/27/regression-and-other-stories-free-pdf/"
       >[1] Regression And Other Stories</a
     ><br />
     (Gelman, Hill and Vehtari 2020).
   </p>
   <p class="resource-item">
-    <a
-      class="on-end"
-      href="https://link.springer.com/article/10.1007/BF00116251"
+    <a class="on-end" href="https://hastie.su.domains/Papers/ESLII.pdf"
       >[2] Elements of Statistical Learning</a
     ><br />
     (John Ross Quinlan, 1986).
@@ -33,7 +31,7 @@
   <p class="resource-item">
     <a
       class="on-end"
-      href="https://link.springer.com/article/10.1007/BF00116251"
+      href="https://www.amazon.com/Mathematical-Statistics-Analysis-Available-Enhanced/dp/0534399428"
       >[3] Mathematical Statistics and Data Analysis</a
     ><br />
     (John A. Rice, 2010).
