@@ -44,8 +44,8 @@
       `\\begin{aligned} RSS = \\sum^{n}_{i=1}(y_i - \\hat{y_i})^2 \\end{aligned}`,
       true
     )}
-    The RSS should look familiar - it was a key piece in both the MSE and
-    r-squared formulas that represents our model's total squared error:
+    The RSS should look familiar - it was a key piece in both the MSE and r-squared
+    formulas that represents our model's total squared error:
     {@html katexify(
       `\\begin{aligned} \\hat{\\beta} = (X^{T}X)^{-1}X^{T}Y \\end{aligned}`,
       true
@@ -223,7 +223,7 @@
     traditional null hypothesis statistical tests: t-tests are used to measure whether
     a given cofficient is significantly different than zero (the null hypothesis
     that a particular coefficient {@html katexify(`\\beta_i`, false)} equals zero),
-    while F-tests are used to measure whether
+    while F tests are used to measure whether
     <i>all</i>
     the terms in a regression model are significantly different from zero. Different
     opinions exist on the utility of such tests (e.g. chapter 10.7 of
