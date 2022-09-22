@@ -224,8 +224,8 @@
     a given cofficient is significantly different than zero (the null hypothesis
     that a particular coefficient {@html katexify(`\\beta_i`, false)} equals zero),
     while F tests are used to measure whether
-    <i>all</i>
-    the terms in a regression model are significantly different from zero. Different
+    <i>any</i>
+    of the terms in a regression model are significantly different from zero. Different
     opinions exist on the utility of such tests (e.g. chapter 10.7 of
     <a href="#resources">[1]</a> maintains they're not super important). We don't
     take a strong stance on this issue, but believe practitioners should always assess
