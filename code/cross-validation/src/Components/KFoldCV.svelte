@@ -17,22 +17,24 @@
 </h1>
 <p class="body-text">
   Rather than worrying about which split of data to use for training versus
-  validation, we’ll use them all in turn. Our strategy will be to iteratively
-  use different portions of our data to test and train our model. The exact
-  process is actually quite simple: We’ll randomly split our dataset into k
-  sets, or folds, of equal size, reserving one fold for the validation set
-  (often called the holdout set) and the remaining k - 1 folds for the training
+  validation, we’ll use them all in turn. Our strategy will be to iterativelyuse
+  different portions of our data to test and train our model. The exact process
+  is actually quite simple: We’ll randomly split our dataset into k sets, or
+  "folds", of equal size. One fold will be reserved for the validation set (or
+  "holdout set") and the remaining k - 1 folds will be used for the training
   set. The training folds will fit our models parameters, and the validation
   fold will be used for evaluation. This process will be repeated on our data k
-  times, using a different fold for the validation set at each iteration. This
-  process is known as *k-folds cross validation*, and requires re-fitting our
-  data k times (once for each fold).
+  times, using a different fold for the validation set at each iteration. At the
+  end of the procedure, we'll take the average the validation set scores and
+  take that as our as our model's estimated performance. This process is known
+  as <span class="bold">k-folds cross validation</span>, and requires re-fitting
+  our data k times (once for each fold).
 </p>
 <br />
 <p class="body-text">
   Below we show the process for K=4 folds of our data. Note that the test data
-  always remains untouched (after all, it's the final hold out set). However, we
-  continously splice the training data into folds.
+  always remains untouched (after all, it's the final hold out set), but the
+  distribution of training and validation sets differs at every fold:
 </p>
 <br />
 
@@ -110,16 +112,21 @@
 </div>
 <br /><br />
 <p class="body-text">
-  This simple extension to the validation approach is very effective at
-  overcoming the shortcomings of the validation set approach. Because we train
-  our model on multiple instances of our data and take the average of their
-  evaluation scores, our evaluation estimates have lower variance. Additionally,
-  each fold itself uses more data than previously, so test error estimates are
-  more accurate. Even for modest values (e.g. k = 5), our training set comprises
-  80% of our data. Compare that with the validation set approach, where our
-  model is typically trained on around only 50-60 percent of the original
-  dataset. This means that the K-fold approach typically doesn’t overestimate
-  the test error as much as the validation set approach does.
+  If you think this looks familiar, you're on the right track: it's basically
+  the validation set applied k times - just with different splits of
+  training/validation data each time. But this simple extension to the
+  validation approach is very effective at overcoming the shortcomings of the
+  validation set approach. To be clear, it does come with a cost: the need to
+  train our data multiple times (once for each fold). Still, the method is
+  widely used, as the benefits outweight the cost in many scenarios. Because we
+  train our model on multiple instances of our data and take the average of
+  their evaluation scores, our evaluation estimates have lower variance.
+  Additionally, each fold itself uses more data than previously, so test error
+  estimates are more accurate. Even for modest values (e.g. k = 5), our training
+  set comprises 80 percent of our data. (Compare that with the validation set
+  approach, where our model is typically trained on around only 50-60 percent of
+  the original dataset.) This means that the K-fold approach typically doesn’t
+  overestimate the test error as much as the validation set approach does.
 </p>
 
 <style>

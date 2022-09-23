@@ -1,132 +1,153 @@
 <script>
   import { scaleLinear, scaleBand } from "d3-scale";
   import { margin } from "../store.js";
-  import { arrowPath } from "../arrowPath";
   import StackedRects from "./StackedRects.svelte";
+  import Scatterplot from "./Scatterplot.svelte";
 
   let width = 500;
   let height = 500;
-  $: nSplits = 6;
+  $: nSplits = 4;
   $: xScale =
-    nSplits < 10
+    nSplits < 8
       ? scaleLinear()
           .domain([-1, nSplits])
           .range([width * 0.2, width - width * 0.2])
       : scaleLinear().domain([-1, nSplits]).range([0, width]);
-  $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
-  $: xDiff = width / ((nSplits + 1) * 4);
+  // $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
+  $: yScale = scaleBand()
+    .domain([-1, 0, 1, 2, 3, 4])
+    .range([$margin.bottom, height - $margin.top])
+    .padding(0.1);
+  // $: xDiff = width / ((nSplits + 1) * 4);
+  $: xDiff = 20;
   const numRects = 16;
+  const testColor = "#ffad97";
+  const trainColor = "#003181";
+  const validationColor = "#f46ebb";
 
   // fill rule
-  $: numCol = nSplits > 11 + 2 ? 1 : 2;
+  $: numCol = nSplits > 10 + 2 ? 1 : 2;
   $: numTest = 4;
-  $: numValidation = Math.floor((numRects - numTest) / nSplits);
+  $: numValidation = (numRects - numTest) / nSplits;
   $: numTrain = numRects - numTest - numValidation;
 
-  $: fillRule = (d) => {
-    // train colors
-    if (d > numTrain) {
-      return "#ffad97";
-    } else if (d > numValidation) {
-      return "#f46ebb";
-    }
-    // validation colors
-    // if (d === numRects - nSplits - 2) return "#f46ebb";
-    // test colors
-    return "#003181";
-  };
+  // $: console.log("nSplits: ", nSplits);
+  // $: console.log("numtrain: ", numTrain);
+  // $: console.log("numValidation: ", numValidation);
+  // $: console.log("numTest: ", numTest);
+  // $: console.log("sum: ", numTrain + numTest + numValidation);
 </script>
 
 <h1 class="body-header">
   <span class="section-arrow">&gt; </span> Try For Yourself
 </h1>
 <p class="body-text">
-  To k-folds cross-validation more clear, we’ll see how the process works
-  directly. Let’s assume that we’d like to use a one-dimensional linear
-  regression model to predict the price of a house from its square-footage. Drag
-  the value of k for yourself to set the number of folds. Observe that each fold
-  results in a new data split alongside a newly trained model.
+  To make the ideas behind Cross Validation more clear, we’ll see how the
+  process works directly. Let’s assume that we’d like to use a one-dimensional
+  linear regression model to predict the price of a house from its
+  square-footage. Drag the value of k for yourself to set the number of folds.
+  Observe that each fold results in a new data split alongside a newly trained
+  model.
 </p>
 <br /><br />
 <!-- <label> -->
 <div id="input-container">
-  <p id="input-label">K = {nSplits - 2}</p>
-  <input type="range" bind:value={nSplits} min="3" max="18" />
+  <p id="input-label">K = {nSplits}</p>
+  <input
+    type="range"
+    bind:value={nSplits}
+    step="1"
+    min="2"
+    max={numRects - numTest}
+  />
 </div>
 <!-- </label> -->
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
   <svg {width} height={height + $margin.top + $margin.bottom}>
     <!-- legend -->
     <g class="g-tag" transform="translate({width / 2 - 102}, {0})">
-      <rect x={0} y="3" fill="#003181" width="12" height="12" />
+      <rect x={0} y="3" fill={trainColor} width="12" height="12" />
       <text class="legend-text" x={15} y="15">Train</text>
-      <rect x={65} y="3" fill="#f46ebb" width="12" height="12" />
+      <rect x={65} y="3" fill={validationColor} width="12" height="12" />
       <text class="legend-text" x={80} y="15">Validation</text>
-      <rect x={170} y="3" fill="#ffad97" width="12" height="12" />
+      <rect x={170} y="3" fill={testColor} width="12" height="12" />
       <text class="legend-text" x={185} y="15">Test</text>
     </g>
 
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
-      {#if tick === 1}
-        <!-- <text text-anchor="middle" x={xScale(tick)} y={yScale(0)}>hey</text> -->
-        <g transform="translate({xScale(tick) - xDiff}, {height / 6 - xDiff})">
-          <path
-            d={arrowPath}
-            style={`transform: scale(0.07)`}
-            stroke="#232f3e"
-            stroke-width="3"
-            fill="#232f3e"
-          />
-        </g>
-      {:else if tick === 0}
-        <StackedRects
-          height={height / 2.75}
-          {numCol}
-          {numRects}
-          x={xScale(tick) - xDiff}
-          fillRule={() => {
-            return "#232f3e";
-          }}
-        />
-      {:else}
-        <!-- {console.log("tick", (tick - 2)} -->
-        <!-- fillRule={fillRule(d, tick)} -->
-        <!-- fillRule={(d) => {
-          if (d > 59) return "#ffad97";
-          if (d >= 15 * (tick - 2) && d < 15 * (tick - 2) + 15)
-            return "#f46ebb";
-          return "#003181";
-        }} -->
+      <!-- line to scatter plot -->
+      <line
+        class="axis-line"
+        x1={xScale(tick) - 10}
+        x2={xScale(tick) - 10}
+        y1="0"
+        y2={500}
+        stroke="black"
+        stroke-dasharray="4"
+        opacity="0.08"
+      />
 
-        <StackedRects
-          height={height / 2.75}
-          {numCol}
-          {numRects}
-          x={xScale(tick) - xDiff}
-          {fillRule}
-        />
-      {/if}
+      <StackedRects
+        height={height / 4.5}
+        {numCol}
+        {numRects}
+        x={xScale(tick) - xDiff}
+        y={yScale(-1)}
+        fillRule={(d) => {
+          if (d >= numRects - numTest) return testColor;
+          if (
+            d >= numValidation * (nSplits - tick - 1) &&
+            d < numValidation * (nSplits - tick - 1) + numValidation
+          )
+            return validationColor;
+          return trainColor;
+        }}
+      />
+      <!-- width={xScale(1) - xScale(0)} -->
+      <!-- x={xScale(tick) - xDiff - (xScale(1) - xScale(0)) / 2} -->
+
+      <!-- y={height / 3.5} -->
+      <Scatterplot
+        class="scatterplot"
+        width={70}
+        height={70}
+        x={xScale(tick) - xDiff * 2}
+        y={yScale(1)}
+      />
+
+      <!-- Error text -->
+      <text class="fold-error-text" x={xScale(tick) - xDiff * 2} y={yScale(3)}
+        >MAPE: 0.6%</text
+      >
 
       <!-- x-ticks -->
-      {#each xScale.ticks() as tick}
-        <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
-          <line
-            class="axis-line"
-            x1="0"
-            x2="0"
-            y1="0"
-            y2={-height + $margin.bottom + $margin.top}
-            stroke="black"
-            stroke-dasharray="4"
-          />
-        </g>
-      {/each}
+      <!-- {#each xScale.ticks() as tick}
+          <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
+            <line
+              class="axis-line"
+              x1="0"
+              x2="0"
+              y1="0"
+              y2={-height + $margin.bottom + $margin.top}
+              stroke="black"
+              stroke-dasharray="4"
+            />
+          </g>
+        {/each} -->
     {/each}
+    <!-- Final accuracy text -->
+    <text
+      class="fold-error-text"
+      id="average-fold-error-text"
+      x="{width / 2},"
+      y={yScale(4)}
+      text-anchor="middle">Average Score: 0.85</text
+    >
     <!-- title -->
     <!-- <text class="title-text" x="0" y={$margin.top} text-anchor="middle"
-      >Validation Set Approach</text
-    > -->
+        >Validation Set Approach</text
+      > -->
   </svg>
 </div>
 <br />
@@ -141,9 +162,8 @@
 
 <style>
   svg {
-    /* border: 1px solid black; */
+    /* outline: 2px solid black; */
   }
-
   #input-label {
     font-family: var(--font-heavy);
     font-size: 1.2rem;
@@ -167,6 +187,20 @@
     margin: 0 auto;
   }
 
+  .fold-error-text {
+    font-family: var(--font-heavy);
+    font-size: 0.75rem;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke: var(--white);
+    stroke-width: 4px;
+    fill: var(--magenta);
+  }
+
+  #average-fold-error-text {
+    fill: var(--peach);
+  }
+
   /* ipad */
   @media screen and (max-width: 950px) {
     #cv-chart {
@@ -183,7 +217,7 @@
     }
     #cv-chart {
       max-height: 55vh;
-      width: 95%;
+      width: 100%;
       margin: 1rem auto;
     }
   }

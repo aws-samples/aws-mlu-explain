@@ -16,8 +16,8 @@
 <Intro />
 <ValidationSet />
 <KFoldCv />
-<LOOCV />
 <KFoldInteractive />
+<LOOCV />
 <BiasVariance />
 <Conclusion />
 <Resources />

@@ -24,7 +24,7 @@
   <h1 id="intro-hed" class="title-cv">
     <span id="title-cv">Cross Validation</span>
   </h1>
-  <h1 class="intro-sub">More is Less is More is Less</h1>
+  <h1 class="intro-sub">Reduce, Reuse, Resample</h1>
   <h3 id="intro__date">
     <a href="https://twitter.com/jdwlbr">Jared Wilber</a> &
     <a href="https://www.linkedin.com/in/jaspercroome/">Jasper Croome</a>, May

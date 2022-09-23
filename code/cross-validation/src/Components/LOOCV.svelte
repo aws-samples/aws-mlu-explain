@@ -108,17 +108,17 @@
 </div>
 <br /><br />
 <p class="body-text">
-  LOOCV carries all the same benefits mentioned above. But it’s extreme value of
-  k carries some additional costs, most notably those related to resource-use.
-  This is expensive both resource-wise and time-wise, doubly so when the model
-  is large and time-consuming to fit. However, all hope is not lost! [JC - do we
-  want this last sentence? Seems like a leftover fragment.] For linear models,
-  not the case for linear models which have a closed-form solution pg 203).
-  <br /><br />
-  Up to this point, we’ve talked about k-folds cross-validation in the general sense,
-  along with its two most-extreme cases: LOOCV (k-folds with k = n) and the Validation
-  Set Approach (k-folds with k = 2). Given the multitude of options for selecting
-  k, how do we select the best value?
+  LOOCV carries all the same benefits mentioned previously, as well as some more
+  we'll discuss in the Bias Variance tradeoff section below (though these may be
+  contentioius!). However, large value of k used in LOOCV carries some
+  additional costs, namely that it requires re-training our data <span
+    class="bold">many</span
+  >
+  times (once for every data point!). This is expensive both in the amount of resources
+  it requires, as well as the time it takes to wait for your model to train on so
+  many iterations. For this reason, it's rare to see LOOCV employed in the wild,
+  (especially for large-scale models), and a more conservative value of k is often
+  used (e.g. k = 5 or k = 10).
 </p>
 
 <style>
