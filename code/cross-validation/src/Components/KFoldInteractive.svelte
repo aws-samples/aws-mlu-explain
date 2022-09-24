@@ -3,6 +3,7 @@
   import { margin } from "../store.js";
   import StackedRects from "./StackedRects.svelte";
   import Scatterplot from "./Scatterplot.svelte";
+  import { ticks } from "d3-array";
 
   let width = 500;
   let height = 500;
@@ -25,6 +26,25 @@
   const trainColor = "#003181";
   const validationColor = "#f46ebb";
 
+  const dataLinear = [
+    { x: 10, y: 24 },
+    { x: 13, y: 4 },
+    { x: 11, y: 4 },
+    { x: 9, y: 23 },
+    { x: 8, y: 8 },
+    { x: 2, y: 10 },
+    { x: 11, y: 3 },
+    { x: 6, y: 6 },
+    { x: 5, y: 8 },
+    { x: 4, y: 12 },
+    { x: 12, y: 20 },
+    { x: 9, y: 4 },
+    { x: 6, y: 9 },
+    { x: 1, y: 14 },
+    { x: 1, y: 14 },
+    { x: 4, y: 15 },
+  ];
+
   // fill rule
   $: numCol = nSplits > 10 + 2 ? 1 : 2;
   $: numTest = 4;
@@ -36,6 +56,19 @@
   // $: console.log("numValidation: ", numValidation);
   // $: console.log("numTest: ", numTest);
   // $: console.log("sum: ", numTrain + numTest + numValidation);
+
+  $: fillFunction = (d) => {
+    if (d >= numRects - numTest) return testColor;
+    if (
+      d >= numValidation * (nSplits - tick - 1) &&
+      d < numValidation * (nSplits - tick - 1) + numValidation
+    )
+      return validationColor;
+    return trainColor;
+  };
+
+  // instead of iterating over ticks, need to iterate over ticks and create data at higher
+  // level component (here), so state can be passed down.KFoldInteractive
 </script>
 
 <h1 class="body-header">
@@ -77,7 +110,7 @@
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
       <!-- line to scatter plot -->
-      <line
+      <!-- <line
         class="axis-line"
         x1={xScale(tick) - 10}
         x2={xScale(tick) - 10}
@@ -86,7 +119,7 @@
         stroke="black"
         stroke-dasharray="4"
         opacity="0.08"
-      />
+      /> -->
 
       <StackedRects
         height={height / 4.5}
@@ -106,9 +139,19 @@
       />
       <!-- width={xScale(1) - xScale(0)} -->
       <!-- x={xScale(tick) - xDiff - (xScale(1) - xScale(0)) / 2} -->
-
       <!-- y={height / 3.5} -->
       <Scatterplot
+        data={dataLinear.map((data, i) => {
+          // circle color to match train/test/val split
+          const color =
+            i >= numRects - numTest
+              ? testColor
+              : i >= numValidation * (nSplits - tick - 1) &&
+                i < numValidation * (nSplits - tick - 1) + numValidation
+              ? validationColor
+              : trainColor;
+          return { x: data.x, y: data.y, color: color };
+        })}
         class="scatterplot"
         width={70}
         height={70}

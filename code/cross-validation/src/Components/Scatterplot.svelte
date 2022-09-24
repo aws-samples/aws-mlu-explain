@@ -1,8 +1,11 @@
 <script>
   import { scaleLinear } from "d3-scale";
+  import { extent } from "d3-array";
+  import { regressionLinear } from "d3-regression";
   // import { margin } from "../store";
 
   //   props
+  export let data;
   export let height = 500;
   export let width;
   export let x = 0;
@@ -17,11 +20,21 @@
 
   //   scale
   $: xScale = scaleLinear()
-    .domain([-1, 1])
+    .domain(extent(data, (d) => d.x))
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
-    .domain([0, 1])
+    .domain(extent(data, (d) => d.y))
     .range([height - margin.bottom, margin.top]);
+
+  const linearRegression = regressionLinear()
+    .x((d) => d.x)
+    .y((d) => d.y)
+    .domain(extent(data, (d) => d.x));
+
+  // filter training data
+  const trainData = data.filter((d) => d.color === "#003181");
+  const regressionData = linearRegression(trainData);
+  console.log("regression Data", regressionData);
 </script>
 
 <!-- Stacked Rectangles -->
@@ -59,6 +72,19 @@
       > -->
     </g>
   {/each}
+  <!-- circles -->
+  {#each data as d}
+    <circle cx={xScale(d.x)} cy={yScale(d.y)} fill={d.color} r="2.5" />
+  {/each}
+
+  <line
+    class="regression-line"
+    x1={xScale(regressionData[0][0])}
+    x2={xScale(regressionData[1][0])}
+    y1={yScale(regressionData[0][1])}
+    y2={yScale(regressionData[1][1])}
+  />
+
   <!-- axis lines -->
   <!-- x -->
   <line
@@ -81,6 +107,11 @@
 </g>
 
 <style>
+  .regression-line {
+    fill: none;
+    stroke: black;
+    stroke-width: 2;
+  }
   .axis-text {
     font-size: 0.5rem;
   }
