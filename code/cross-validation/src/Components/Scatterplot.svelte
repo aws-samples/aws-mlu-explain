@@ -1,8 +1,6 @@
 <script>
   import { scaleLinear } from "d3-scale";
   import { extent } from "d3-array";
-  // import { regressionLinear } from "d3-regression";
-  // import { margin } from "../store";
 
   //   props
   export let data;
@@ -28,57 +26,23 @@
   $: yScale = scaleLinear()
     .domain(extent(data, (d) => d.y))
     .range([height - margin.bottom, margin.top]);
-
-  // const linearRegression = regressionLinear()
-  //   .x((d) => d.x)
-  //   .y((d) => d.y)
-  //   .domain(extent(data, (d) => d.x));
-
-  // filter training data
-  // old below
-  // const trainData = data.filter((d) => d.color === "#003181");
-  // const regressionData = linearRegression(trainData);
-  // console.log("regression Data", regressionData);
 </script>
 
 <!-- Stacked Rectangles -->
 <g transform="translate({x}, {y})">
-  <!-- x-ticks -->
-  {#each xScale.ticks() as tick}
-    <g transform={`translate(${xScale(tick)} ${height})`}>
-      <!-- <line
-        class="axis-line"
-        x1={0}
-        x2={0}
-        y1="0"
-        y2={10}
-        stroke="black"
-        stroke-dasharray="4"
-      /> -->
-      <!-- <text class="axis-text" y="0" text-anchor="end">{tick}</text> -->
-    </g>
-  {/each}
-  <!-- y-ticks -->
-  {#each [0, 0.2, 0.4, 0.6, 0.8, 1.0] as tick}
-    <g transform={`translate(${0} ${yScale(tick) + 0})`}>
-      <!-- svelte-ignore component-name-lowercase -->
-      <!-- <line
-        class="y-axis-line"
-        x1="0"
-        x2={3}
-        y1="0"
-        y2="0"
-        stroke="black"
-        stroke-dasharray="4"
-      /> -->
-      <!-- <text class="axis-text" y="0" text-anchor="end" dominant-baseline="middle"
-        >{tick}</text
-      > -->
-    </g>
-  {/each}
   <!-- circles -->
   {#each data as d}
-    <!-- <circle cx={xScale(d.x)} cy={yScale(d.y)} fill={d.color} r="2.5" /> -->
+    <!-- add validation error line -->
+    {#if d.color === "#f46ebb"}
+      <line
+        class="error-line"
+        x1={xScale(d.x)}
+        x2={xScale(d.x)}
+        y1={yScale(d.y)}
+        y2={yScale(d.x * regressionData["a"] + regressionData["b"])}
+      />
+    {/if}
+    <!-- draw rects for each data point -->
     <rect
       x={xScale(d.x) - radius / 2}
       y={yScale(d.y) - radius / 2}
@@ -123,7 +87,10 @@
     stroke: black;
     stroke-width: 2;
   }
-  .axis-text {
-    font-size: 0.5rem;
+  .error-line {
+    fill: none;
+    stroke: red;
+    stroke-width: 1;
+    stroke-dasharray: 2, 2;
   }
 </style>
