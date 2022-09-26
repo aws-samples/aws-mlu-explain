@@ -51,12 +51,6 @@
   $: numValidation = (numRects - numTest) / nSplits;
   $: numTrain = numRects - numTest - numValidation;
 
-  // $: console.log("nSplits: ", nSplits);
-  // $: console.log("numtrain: ", numTrain);
-  // $: console.log("numValidation: ", numValidation);
-  // $: console.log("numTest: ", numTest);
-  // $: console.log("sum: ", numTrain + numTest + numValidation);
-
   $: fillFunction = (d) => {
     if (d >= numRects - numTest) return testColor;
     if (
