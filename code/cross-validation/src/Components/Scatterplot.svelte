@@ -1,7 +1,7 @@
 <script>
   import { scaleLinear } from "d3-scale";
   import { extent } from "d3-array";
-  import { regressionLinear } from "d3-regression";
+  // import { regressionLinear } from "d3-regression";
   // import { margin } from "../store";
 
   //   props
@@ -10,6 +10,7 @@
   export let width;
   export let x = 0;
   export let y = 300;
+  export let regressionData;
 
   const margin = {
     top: 10,
@@ -17,6 +18,8 @@
     left: 0,
     right: 0,
   };
+
+  const radius = 6;
 
   //   scale
   $: xScale = scaleLinear()
@@ -26,15 +29,16 @@
     .domain(extent(data, (d) => d.y))
     .range([height - margin.bottom, margin.top]);
 
-  const linearRegression = regressionLinear()
-    .x((d) => d.x)
-    .y((d) => d.y)
-    .domain(extent(data, (d) => d.x));
+  // const linearRegression = regressionLinear()
+  //   .x((d) => d.x)
+  //   .y((d) => d.y)
+  //   .domain(extent(data, (d) => d.x));
 
   // filter training data
-  const trainData = data.filter((d) => d.color === "#003181");
-  const regressionData = linearRegression(trainData);
-  console.log("regression Data", regressionData);
+  // old below
+  // const trainData = data.filter((d) => d.color === "#003181");
+  // const regressionData = linearRegression(trainData);
+  // console.log("regression Data", regressionData);
 </script>
 
 <!-- Stacked Rectangles -->
@@ -42,7 +46,7 @@
   <!-- x-ticks -->
   {#each xScale.ticks() as tick}
     <g transform={`translate(${xScale(tick)} ${height})`}>
-      <line
+      <!-- <line
         class="axis-line"
         x1={0}
         x2={0}
@@ -50,7 +54,7 @@
         y2={10}
         stroke="black"
         stroke-dasharray="4"
-      />
+      /> -->
       <!-- <text class="axis-text" y="0" text-anchor="end">{tick}</text> -->
     </g>
   {/each}
@@ -58,7 +62,7 @@
   {#each [0, 0.2, 0.4, 0.6, 0.8, 1.0] as tick}
     <g transform={`translate(${0} ${yScale(tick) + 0})`}>
       <!-- svelte-ignore component-name-lowercase -->
-      <line
+      <!-- <line
         class="y-axis-line"
         x1="0"
         x2={3}
@@ -66,7 +70,7 @@
         y2="0"
         stroke="black"
         stroke-dasharray="4"
-      />
+      /> -->
       <!-- <text class="axis-text" y="0" text-anchor="end" dominant-baseline="middle"
         >{tick}</text
       > -->
@@ -74,7 +78,14 @@
   {/each}
   <!-- circles -->
   {#each data as d}
-    <circle cx={xScale(d.x)} cy={yScale(d.y)} fill={d.color} r="2.5" />
+    <!-- <circle cx={xScale(d.x)} cy={yScale(d.y)} fill={d.color} r="2.5" /> -->
+    <rect
+      x={xScale(d.x) - radius / 2}
+      y={yScale(d.y) - radius / 2}
+      fill={d.color}
+      width={radius}
+      height={radius}
+    />
   {/each}
 
   <line
