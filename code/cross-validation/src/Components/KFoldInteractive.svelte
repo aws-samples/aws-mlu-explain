@@ -18,7 +18,7 @@
     nSplits < 7
       ? scaleLinear()
           .domain([-1, nSplits])
-          .range([width * 0.2, width - width * 0.2])
+          .range([width * 0.1, width - width * 0.1])
       : scaleLinear().domain([-1, nSplits]).range([0, width]);
   $: yScale = scaleBand()
     .domain([-1, 0, 1, 2, 3, 4])
@@ -161,7 +161,6 @@
 
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
-      <!-- line to scatter plot -->
       <!-- <line
         class="axis-line"
         x1={xScale(tick) - 10}
@@ -193,8 +192,8 @@
       <Scatterplot
         data={dataArray[tick]["scatterData"]}
         regressionData={dataArray[tick]["regressionData"]}
-        width={80}
-        height={80}
+        width={85}
+        height={85}
         x={xScale(tick) - xDiff * 2}
         y={yScale(1)}
       />
