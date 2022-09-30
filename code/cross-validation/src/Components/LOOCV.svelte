@@ -55,7 +55,7 @@
         >
           <path
             d={arrowPath}
-            style={`transform: scale(0.05)`}
+            style={`transform: scale(0.8)`}
             stroke="#232f3e"
             stroke-width="3"
             fill="#232f3e"

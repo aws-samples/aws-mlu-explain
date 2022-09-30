@@ -1,5 +1,5 @@
 <script>
-  import { scaleLinear, scaleBand } from "d3-scale";
+  import { scaleLinear } from "d3-scale";
   import { margin } from "../store.js";
   import { arrowPath } from "../arrowPath";
   import StackedRects from "./StackedRects.svelte";
@@ -58,7 +58,7 @@
         <g transform="translate({xScale(tick) - xDiff}, {yScale(0) - xDiff})">
           <path
             d={arrowPath}
-            style={`transform: scale(0.1)`}
+            style={`transform: scale(0.8)`}
             stroke="#232f3e"
             stroke-width="3"
             fill="#232f3e"

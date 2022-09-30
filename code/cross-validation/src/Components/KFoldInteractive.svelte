@@ -3,27 +3,51 @@
   import { margin } from "../store.js";
   import StackedRects from "./StackedRects.svelte";
   import Scatterplot from "./Scatterplot.svelte";
+  import { extent, mean } from "d3-array";
+  import { regressionLinear } from "d3-regression";
+  import { format } from "d3-format";
 
   let width = 500;
   let height = 500;
+
+  // label formatter
+  const formatter = format(".1f");
+
   $: nSplits = 4;
   $: xScale =
-    nSplits < 8
+    nSplits < 7
       ? scaleLinear()
           .domain([-1, nSplits])
-          .range([width * 0.2, width - width * 0.2])
+          .range([width * 0.1, width - width * 0.1])
       : scaleLinear().domain([-1, nSplits]).range([0, width]);
-  // $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
   $: yScale = scaleBand()
     .domain([-1, 0, 1, 2, 3, 4])
     .range([$margin.bottom, height - $margin.top])
     .padding(0.1);
-  // $: xDiff = width / ((nSplits + 1) * 4);
   $: xDiff = 20;
   const numRects = 16;
   const testColor = "#ffad97";
   const trainColor = "#003181";
   const validationColor = "#f46ebb";
+
+  const dataLinear = [
+    { x: 10, y: 24 },
+    { x: 13, y: 4 },
+    { x: 11, y: 4 },
+    { x: 9, y: 23 },
+    { x: 8, y: 8 },
+    { x: 2, y: 10 },
+    { x: 11, y: 3 },
+    { x: 6, y: 6 },
+    { x: 5, y: 8 },
+    { x: 4, y: 12 },
+    { x: 12, y: 20 },
+    { x: 9, y: 4 },
+    { x: 6, y: 9 },
+    { x: 1, y: 14 },
+    { x: 1, y: 14 },
+    { x: 4, y: 15 },
+  ];
 
   // fill rule
   $: numCol = nSplits > 10 + 2 ? 1 : 2;
@@ -31,11 +55,73 @@
   $: numValidation = (numRects - numTest) / nSplits;
   $: numTrain = numRects - numTest - numValidation;
 
-  // $: console.log("nSplits: ", nSplits);
-  // $: console.log("numtrain: ", numTrain);
-  // $: console.log("numValidation: ", numValidation);
-  // $: console.log("numTest: ", numTest);
-  // $: console.log("sum: ", numTrain + numTest + numValidation);
+  const linearRegression = regressionLinear()
+    .x((d) => d.x)
+    .y((d) => d.y)
+    .domain(extent(dataLinear, (d) => d.x));
+
+  // instead of iterating over ticks, need to iterate over ticks and create data at higher
+  // level component (here), so state can be passed down.KFoldInteractive
+
+  // iterate through [...Array(nSplits).keys()] as tick
+  // for each iteration: create
+  // dataset with labels
+  // regression dataset
+  // end
+  // then:
+  // loop through that data in each block
+  $: console.log("WIDTH", width / 2);
+  $: errorMean = 0;
+  $: dataArray = [];
+  $: splits = [...Array(nSplits).keys()];
+  $: {
+    dataArray = [];
+    for (const tick of splits) {
+      // for each slice of data, calculate regression stuff
+      const splitData = dataLinear.map((data, i) => {
+        // circle color to match train/test/val split
+        const color =
+          i >= numRects - numTest
+            ? testColor
+            : i >= numValidation * (nSplits - tick - 1) &&
+              i < numValidation * (nSplits - tick - 1) + numValidation
+            ? validationColor
+            : trainColor;
+        return { x: data.x, y: data.y, color: color };
+      });
+      const trainData = splitData.filter((d) => d.color === trainColor);
+      const regressionData = linearRegression(trainData);
+
+      // calculate MSE
+      const validationData = splitData.filter(
+        (d) => d.color === validationColor
+      );
+      const slope = regressionData["b"];
+      const intercept = regressionData["a"];
+      const n = validationData.length;
+      // calculate squared errors (validation - predicted validation)
+      const squaredErrors = validationData.map((d, i) => {
+        const yPred = slope * d.x + intercept;
+        const y = d.y;
+        const difference = (y - yPred) ** 2;
+        return difference;
+      });
+      // average over squared errors
+      const meanSquaredError = squaredErrors.reduce((a, b) => a + b) / n;
+      console.log("errors", meanSquaredError);
+
+      const dataSet = {
+        scatterData: splitData,
+        regressionData: regressionData,
+        mse: meanSquaredError,
+      };
+
+      dataArray = [...dataArray, dataSet];
+    }
+
+    // calculate average error across datasets
+    errorMean = mean(dataArray, (d) => d.mse);
+  }
 </script>
 
 <h1 class="body-header">
@@ -76,8 +162,7 @@
 
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
-      <!-- line to scatter plot -->
-      <line
+      <!-- <line
         class="axis-line"
         x1={xScale(tick) - 10}
         x2={xScale(tick) - 10}
@@ -86,7 +171,7 @@
         stroke="black"
         stroke-dasharray="4"
         opacity="0.08"
-      />
+      /> -->
 
       <StackedRects
         height={height / 4.5}
@@ -104,50 +189,29 @@
           return trainColor;
         }}
       />
-      <!-- width={xScale(1) - xScale(0)} -->
-      <!-- x={xScale(tick) - xDiff - (xScale(1) - xScale(0)) / 2} -->
 
-      <!-- y={height / 3.5} -->
       <Scatterplot
-        class="scatterplot"
-        width={70}
-        height={70}
+        data={dataArray[tick]["scatterData"]}
+        regressionData={dataArray[tick]["regressionData"]}
+        width={85}
+        height={85}
         x={xScale(tick) - xDiff * 2}
         y={yScale(1)}
       />
 
       <!-- Error text -->
       <text class="fold-error-text" x={xScale(tick) - xDiff * 2} y={yScale(3)}
-        >MAPE: 0.6%</text
+        >Val MSE: {formatter(dataArray[tick]["mse"])}</text
       >
-
-      <!-- x-ticks -->
-      <!-- {#each xScale.ticks() as tick}
-          <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
-            <line
-              class="axis-line"
-              x1="0"
-              x2="0"
-              y1="0"
-              y2={-height + $margin.bottom + $margin.top}
-              stroke="black"
-              stroke-dasharray="4"
-            />
-          </g>
-        {/each} -->
     {/each}
     <!-- Final accuracy text -->
     <text
       class="fold-error-text"
       id="average-fold-error-text"
-      x="{width / 2},"
+      x={width / 2}
       y={yScale(4)}
-      text-anchor="middle">Average Score: 0.85</text
+      text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
-    <!-- title -->
-    <!-- <text class="title-text" x="0" y={$margin.top} text-anchor="middle"
-        >Validation Set Approach</text
-      > -->
   </svg>
 </div>
 <br />
@@ -161,9 +225,6 @@
 </p>
 
 <style>
-  svg {
-    /* outline: 2px solid black; */
-  }
   #input-label {
     font-family: var(--font-heavy);
     font-size: 1.2rem;
@@ -189,7 +250,7 @@
 
   .fold-error-text {
     font-family: var(--font-heavy);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     stroke-linejoin: round;
     paint-order: stroke fill;
     stroke: var(--white);
@@ -199,6 +260,7 @@
 
   #average-fold-error-text {
     fill: var(--peach);
+    font-size: 0.8rem;
   }
 
   /* ipad */
@@ -211,10 +273,6 @@
   }
   /* mobile */
   @media screen and (max-width: 750px) {
-    ul {
-      font-size: 18px;
-      max-width: 80%;
-    }
     #cv-chart {
       max-height: 55vh;
       width: 100%;

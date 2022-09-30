@@ -1,12 +1,14 @@
 <script>
   import { scaleLinear } from "d3-scale";
-  // import { margin } from "../store";
+  import { extent } from "d3-array";
 
   //   props
+  export let data;
   export let height = 500;
   export let width;
   export let x = 0;
   export let y = 300;
+  export let regressionData;
 
   const margin = {
     top: 10,
@@ -15,50 +17,49 @@
     right: 0,
   };
 
+  const radius = 6;
+
   //   scale
   $: xScale = scaleLinear()
-    .domain([-1, 1])
+    .domain(extent(data, (d) => d.x))
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
-    .domain([0, 1])
+    .domain(extent(data, (d) => d.y))
     .range([height - margin.bottom, margin.top]);
 </script>
 
 <!-- Stacked Rectangles -->
 <g transform="translate({x}, {y})">
-  <!-- x-ticks -->
-  {#each xScale.ticks() as tick}
-    <g transform={`translate(${xScale(tick)} ${height})`}>
+  <!-- circles -->
+  {#each data as d}
+    <!-- add validation error line -->
+    {#if d.color === "#f46ebb"}
       <line
-        class="axis-line"
-        x1={0}
-        x2={0}
-        y1="0"
-        y2={10}
-        stroke="black"
-        stroke-dasharray="4"
+        class="error-line"
+        x1={xScale(d.x)}
+        x2={xScale(d.x)}
+        y1={yScale(d.y)}
+        y2={yScale(d.x * regressionData["a"] + regressionData["b"])}
       />
-      <!-- <text class="axis-text" y="0" text-anchor="end">{tick}</text> -->
-    </g>
+    {/if}
+    <!-- draw rects for each data point -->
+    <rect
+      x={xScale(d.x) - radius / 2}
+      y={yScale(d.y) - radius / 2}
+      fill={d.color}
+      width={radius}
+      height={radius}
+    />
   {/each}
-  <!-- y-ticks -->
-  {#each [0, 0.2, 0.4, 0.6, 0.8, 1.0] as tick}
-    <g transform={`translate(${0} ${yScale(tick) + 0})`}>
-      <!-- svelte-ignore component-name-lowercase -->
-      <line
-        class="y-axis-line"
-        x1="0"
-        x2={3}
-        y1="0"
-        y2="0"
-        stroke="black"
-        stroke-dasharray="4"
-      />
-      <!-- <text class="axis-text" y="0" text-anchor="end" dominant-baseline="middle"
-        >{tick}</text
-      > -->
-    </g>
-  {/each}
+
+  <line
+    class="regression-line"
+    x1={xScale(regressionData[0][0])}
+    x2={xScale(regressionData[1][0])}
+    y1={yScale(regressionData[0][1])}
+    y2={yScale(regressionData[1][1])}
+  />
+
   <!-- axis lines -->
   <!-- x -->
   <line
@@ -81,7 +82,15 @@
 </g>
 
 <style>
-  .axis-text {
-    font-size: 0.5rem;
+  .regression-line {
+    fill: none;
+    stroke: black;
+    stroke-width: 2;
+  }
+  .error-line {
+    fill: none;
+    stroke: red;
+    stroke-width: 1;
+    stroke-dasharray: 2, 2;
   }
 </style>
