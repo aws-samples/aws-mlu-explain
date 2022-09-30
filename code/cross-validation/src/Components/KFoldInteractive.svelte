@@ -70,6 +70,7 @@
   // end
   // then:
   // loop through that data in each block
+  $: console.log("WIDTH", width / 2);
   $: errorMean = 0;
   $: dataArray = [];
   $: splits = [...Array(nSplits).keys()];
@@ -207,7 +208,7 @@
     <text
       class="fold-error-text"
       id="average-fold-error-text"
-      x="{width / 2},"
+      x={width / 2}
       y={yScale(4)}
       text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
