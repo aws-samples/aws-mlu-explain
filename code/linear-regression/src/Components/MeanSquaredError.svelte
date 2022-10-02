@@ -31,10 +31,10 @@
     <span class="bold">Mean-Squared Error (MSE)</span>
     <br />
     MSE quantifies how close a predicted value is to the true value, so we'll use
-    it to quantify how close a regression line is to a set of points. MSE works by 
-    squaring the distance between each data point and the regression line 
-    (the red residuals in the graphs above), summing the squared values, and 
-    then dividing by the number of data points: {@html katexify(
+    it to quantify how close a regression line is to a set of points. MSE works by
+    squaring the distance between each data point and the regression line (the red
+    residuals in the graphs above), summing the squared values, and then dividing
+    by the number of data points: {@html katexify(
       `\\begin{aligned} MSE = \\frac{1}{n} \\Sigma^{n}_{i=1}(y_i - \\hat{y_i})^2 \\end{aligned}`,
       true
     )}
@@ -50,9 +50,9 @@
         >[&#8505;]
       </span></sup
     >
-    and gives more weight to points further from the regression line,
-    punishing outliers. In practice, we'll fit our regression model to a set training
-    data, and evaluate it's performance using MSE on the test dataset.
+    and gives more weight to points further from the regression line, punishing outliers.
+    In practice, we'll fit our regression model to a set training data, and evaluate
+    it's performance using MSE on the test dataset.
     <!-- new -->
     <br /><br />
     <span class="bold">R-Squared</span>
@@ -61,7 +61,7 @@
     <i>goodness of fit</i>
     measures, which summarize how well a model fits a set of data. The most popular
     goodness of fit measure for linear regression is r-squared, a metric that represents
-    the percentage of the variance in {@html katexify(`y`, false)} explained by our 
+    the percentage of the variance in {@html katexify(`y`, false)} explained by our
     features {@html katexify(`x`, false)}.<sup
       ><span
         class="info-tooltip"
@@ -71,9 +71,10 @@
       </span></sup
     >
     More specifically, r-squared measures the percentage of variance explained normalized
-    against the baseline variance of our model (which is just the variance of the mean):
+    against the baseline variance of our model (which is just the variance of the
+    mean):
     {@html katexify(
-      `\\begin{aligned} R^2 = 1 - \\frac{\\Sigma^{n}_{i=1}(y_i - \\hat{y_i})^2 }{\\Sigma^{n}_{i=1}(y_i - \\bar{y_i})^2 }  \\end{aligned}`,
+      `\\begin{aligned} R^2 = 1 - \\frac{\\Sigma^{n}_{i=1}(y_i - \\hat{y_i})^2 }{\\Sigma^{n}_{i=1}(y_i - \\bar{y})^2 }  \\end{aligned}`,
       true
     )}
     The highest possible value for r-squared is 1, representing a model that captures
