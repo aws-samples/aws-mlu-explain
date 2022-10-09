@@ -7,9 +7,11 @@
   let width = 500;
   let height = 500;
   const nSplits = 3;
+  const arrowWidth = 36;
   $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
   $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
   $: xDiff = width / ((nSplits + 1) * 4);
+  
 
   let dataLabel = [{ label: "Data", y: 10, dy: -6.5 }];
   let validationLabels = [
@@ -51,12 +53,12 @@
     {#each [...Array(nSplits).keys()] as tick}
       {#if tick === 1}
         <!-- <text text-anchor="middle" x={xScale(tick)} y={yScale(0)}>hey</text> -->
-        <g transform="translate({xScale(tick) - xDiff}, {yScale(0) - xDiff})">
+        <g transform="translate({xScale(tick)}, {yScale(0)})">
           <path
             d={arrowPath}
-            style={`transform: scale(2.0)`}
+            style={`transform: scale(${xDiff/arrowWidth})`}
             stroke="#232f3e"
-            stroke-width="4"
+            stroke-width="8"
             fill="#232f3e"stroke-linecap="round"
             stroke-linejoin="round"
           />

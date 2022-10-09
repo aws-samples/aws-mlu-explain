@@ -7,6 +7,7 @@
   let width = 500;
   let height = 500;
   const nSplits = 6;
+  const arrowWidth = 36;
   $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
   $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
   $: xDiff = width / ((nSplits + 1) * 4);
@@ -55,12 +56,11 @@
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
       {#if tick === 1}
-        <g transform="translate({xScale(tick) - xDiff}, {yScale(0) - xDiff})">
+        <g transform="translate({xScale(tick)-xDiff}, {yScale(0)})">
           <path
             d={arrowPath}
-            style={`transform: scale(2.0)`}
             stroke="#232f3e"
-            stroke-width="4"
+            stroke-width="8"
             fill="#232f3e"
             stroke-linecap="round"
             stroke-linejoin="round"
