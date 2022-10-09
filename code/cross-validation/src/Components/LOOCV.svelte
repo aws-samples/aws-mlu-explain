@@ -55,10 +55,12 @@
         >
           <path
             d={arrowPath}
-            style={`transform: scale(0.8)`}
+            style={`transform: scale(.7)`}
             stroke="#232f3e"
-            stroke-width="3"
+            stroke-width="8"
             fill="#232f3e"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           />
         </g>
       {:else if tick === 0}

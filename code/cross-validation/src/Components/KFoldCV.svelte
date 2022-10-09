@@ -58,10 +58,12 @@
         <g transform="translate({xScale(tick) - xDiff}, {yScale(0) - xDiff})">
           <path
             d={arrowPath}
-            style={`transform: scale(0.8)`}
+            style={`transform: scale(2.0)`}
             stroke="#232f3e"
-            stroke-width="3"
+            stroke-width="4"
             fill="#232f3e"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           />
         </g>
       {:else if tick === 0}
