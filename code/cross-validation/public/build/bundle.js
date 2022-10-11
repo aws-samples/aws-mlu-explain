@@ -289,6 +289,12 @@ var app = (function () {
             block.o(local);
         }
     }
+
+    const globals = (typeof window !== 'undefined'
+        ? window
+        : typeof globalThis !== 'undefined'
+            ? globalThis
+            : global);
     function create_component(block) {
         block && block.c();
     }
@@ -758,21 +764,21 @@ var app = (function () {
     			attr_dev(span, "id", "title-cv");
     			add_location(span, file$a, 24, 4, 478);
     			attr_dev(h10, "id", "intro-hed");
-    			attr_dev(h10, "class", "title-cv svelte-pehdcn");
+    			attr_dev(h10, "class", "title-cv svelte-1hqcxid");
     			add_location(h10, file$a, 23, 2, 437);
-    			attr_dev(h11, "class", "intro-sub svelte-pehdcn");
+    			attr_dev(h11, "class", "intro-sub svelte-1hqcxid");
     			add_location(h11, file$a, 26, 2, 532);
     			attr_dev(a0, "href", "https://twitter.com/jdwlbr");
-    			attr_dev(a0, "class", "svelte-pehdcn");
+    			attr_dev(a0, "class", "svelte-1hqcxid");
     			add_location(a0, file$a, 28, 4, 611);
     			attr_dev(a1, "href", "https://www.linkedin.com/in/jaspercroome/");
-    			attr_dev(a1, "class", "svelte-pehdcn");
+    			attr_dev(a1, "class", "svelte-1hqcxid");
     			add_location(a1, file$a, 29, 4, 671);
     			attr_dev(h3, "id", "intro__date");
-    			attr_dev(h3, "class", "svelte-pehdcn");
+    			attr_dev(h3, "class", "svelte-1hqcxid");
     			add_location(h3, file$a, 27, 2, 585);
     			attr_dev(section, "id", "intro");
-    			attr_dev(section, "class", "svelte-pehdcn");
+    			attr_dev(section, "class", "svelte-1hqcxid");
     			add_location(section, file$a, 22, 0, 414);
     		},
     		l: function claim(nodes) {
@@ -865,12 +871,20 @@ var app = (function () {
     function create_fragment$a(ctx) {
     	let section;
     	let p;
+    	let t0;
+    	let span;
+    	let t2;
 
     	const block = {
     		c: function create() {
     			section = element("section");
     			p = element("p");
-    			p.textContent = "Often in machine learning we want to compare and evaluate models without\n    having to wait for new data. Of course, we could just evaluate predictions\n    on the same data that we used to fit our model’s parameters, but this will\n    give unreliable assessments of our model's ability to generalize. Thus, we’d\n    like to find a way to assess the generalization capabilities of our model\n    without waiting for new data. This article discusses one of the most common\n    approaches for this task: *cross-validation*. We'll first discuss the\n    approach we previously learned, introduce some new approaches, and discuss\n    what values of k are commonly selected and why.";
+    			t0 = text("Often in machine learning we want to estimate the performance of our models\n    before putting them into production. Of course, we could try evaluating our\n    model's predictions on the same data that we used to fit our model’s\n    parameters, but this will give unreliable assessments of our model's ability\n    to generalize to unseen data. Thus, we’d like to find a way to assess the\n    generalization capabilities of our model without having to wait for new\n    data. This article discusses one of the most common approaches for this\n    task:\n    ");
+    			span = element("span");
+    			span.textContent = "cross-validation";
+    			t2 = text(". We'll first discuss the\n    Validation Set approach we learned in a previous article, describe how Cross\n    Validation extends that approach, and discuss some concerns around using\n    Cross Validation.");
+    			attr_dev(span, "class", "bold");
+    			add_location(span, file$9, 13, 4, 612);
     			attr_dev(p, "class", "body-text");
     			add_location(p, file$9, 4, 2, 32);
     			add_location(section, file$9, 3, 0, 20);
@@ -881,6 +895,9 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, section, anchor);
     			append_dev(section, p);
+    			append_dev(p, t0);
+    			append_dev(p, span);
+    			append_dev(p, t2);
     		},
     		p: noop,
     		i: noop,
@@ -985,6 +1002,36 @@ var app = (function () {
     bisector(number$1).center;
     var bisect = bisectRight;
 
+    function extent(values, valueof) {
+      let min;
+      let max;
+      if (valueof === undefined) {
+        for (const value of values) {
+          if (value != null) {
+            if (min === undefined) {
+              if (value >= value) min = max = value;
+            } else {
+              if (min > value) min = value;
+              if (max < value) max = value;
+            }
+          }
+        }
+      } else {
+        let index = -1;
+        for (let value of values) {
+          if ((value = valueof(value, ++index, values)) != null) {
+            if (min === undefined) {
+              if (value >= value) min = max = value;
+            } else {
+              if (min > value) min = value;
+              if (max < value) max = value;
+            }
+          }
+        }
+      }
+      return [min, max];
+    }
+
     var e10 = Math.sqrt(50),
         e5 = Math.sqrt(10),
         e2 = Math.sqrt(2);
@@ -1038,6 +1085,26 @@ var app = (function () {
       else if (error >= e5) step1 *= 5;
       else if (error >= e2) step1 *= 2;
       return stop < start ? -step1 : step1;
+    }
+
+    function mean(values, valueof) {
+      let count = 0;
+      let sum = 0;
+      if (valueof === undefined) {
+        for (let value of values) {
+          if (value != null && (value = +value) >= value) {
+            ++count, sum += value;
+          }
+        }
+      } else {
+        let index = -1;
+        for (let value of values) {
+          if ((value = valueof(value, ++index, values)) != null && (value = +value) >= value) {
+            ++count, sum += value;
+          }
+        }
+      }
+      if (count) return sum / count;
     }
 
     function sequence(start, stop, step) {
@@ -2374,7 +2441,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    function get_each_context_1$1(ctx, list, i) {
+    function get_each_context_1(ctx, list, i) {
     	const child_ctx = ctx.slice();
     	child_ctx[17] = list[i];
     	child_ctx[19] = i;
@@ -2382,7 +2449,7 @@ var app = (function () {
     }
 
     // (38:2) {#each data as d, i}
-    function create_each_block_1$1(ctx) {
+    function create_each_block_1(ctx) {
     	let rect;
     	let rect_x_value;
     	let rect_y_value;
@@ -2429,7 +2496,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_each_block_1$1.name,
+    		id: create_each_block_1.name,
     		type: "each",
     		source: "(38:2) {#each data as d, i}",
     		ctx
@@ -2439,7 +2506,7 @@ var app = (function () {
     }
 
     // (48:2) {#if labels}
-    function create_if_block$3(ctx) {
+    function create_if_block$4(ctx) {
     	let each_1_anchor;
     	let each_value = /*labels*/ ctx[4];
     	validate_each_argument(each_value);
@@ -2497,7 +2564,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$3.name,
+    		id: create_if_block$4.name,
     		type: "if",
     		source: "(48:2) {#if labels}",
     		ctx
@@ -2571,10 +2638,10 @@ var app = (function () {
     	let each_blocks = [];
 
     	for (let i = 0; i < each_value_1.length; i += 1) {
-    		each_blocks[i] = create_each_block_1$1(get_each_context_1$1(ctx, each_value_1, i));
+    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
     	}
 
-    	let if_block = /*labels*/ ctx[4] && create_if_block$3(ctx);
+    	let if_block = /*labels*/ ctx[4] && create_if_block$4(ctx);
 
     	const block = {
     		c: function create() {
@@ -2609,12 +2676,12 @@ var app = (function () {
     				let i;
 
     				for (i = 0; i < each_value_1.length; i += 1) {
-    					const child_ctx = get_each_context_1$1(ctx, each_value_1, i);
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
 
     					if (each_blocks[i]) {
     						each_blocks[i].p(child_ctx, dirty);
     					} else {
-    						each_blocks[i] = create_each_block_1$1(child_ctx);
+    						each_blocks[i] = create_each_block_1(child_ctx);
     						each_blocks[i].c();
     						each_blocks[i].m(g, each_1_anchor);
     					}
@@ -2631,7 +2698,7 @@ var app = (function () {
     				if (if_block) {
     					if_block.p(ctx, dirty);
     				} else {
-    					if_block = create_if_block$3(ctx);
+    					if_block = create_if_block$4(ctx);
     					if_block.c();
     					if_block.m(g, null);
     				}
@@ -2876,94 +2943,116 @@ var app = (function () {
 
     function get_each_context$4(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[7] = list[i];
+    	child_ctx[9] = list[i];
     	return child_ctx;
     }
 
-    function get_each_context_1(ctx, list, i) {
-    	const child_ctx = ctx.slice();
-    	child_ctx[7] = list[i];
-    	return child_ctx;
-    }
-
-    // (30:2) {#each xScale.ticks() as tick}
-    function create_each_block_1(ctx) {
-    	let g;
+    // (36:4) {#if d.color === "#f46ebb"}
+    function create_if_block$3(ctx) {
     	let line;
-    	let g_transform_value;
+    	let line_x__value;
+    	let line_x__value_1;
+    	let line_y__value;
+    	let line_y__value_1;
 
     	const block = {
     		c: function create() {
-    			g = svg_element("g");
     			line = svg_element("line");
-    			attr_dev(line, "class", "axis-line");
-    			attr_dev(line, "x1", 0);
-    			attr_dev(line, "x2", 0);
-    			attr_dev(line, "y1", "0");
-    			attr_dev(line, "y2", 10);
-    			attr_dev(line, "stroke", "black");
-    			attr_dev(line, "stroke-dasharray", "4");
-    			add_location(line, file$7, 31, 6, 677);
-    			attr_dev(g, "transform", g_transform_value = `translate(${/*xScale*/ ctx[5](/*tick*/ ctx[7])} ${/*height*/ ctx[0]})`);
-    			add_location(g, file$7, 30, 4, 616);
+    			attr_dev(line, "class", "error-line svelte-v9xm4u");
+    			attr_dev(line, "x1", line_x__value = /*xScale*/ ctx[7](/*d*/ ctx[9].x));
+    			attr_dev(line, "x2", line_x__value_1 = /*xScale*/ ctx[7](/*d*/ ctx[9].x));
+    			attr_dev(line, "y1", line_y__value = /*yScale*/ ctx[6](/*d*/ ctx[9].y));
+    			attr_dev(line, "y2", line_y__value_1 = /*yScale*/ ctx[6](/*d*/ ctx[9].x * /*regressionData*/ ctx[5]["a"] + /*regressionData*/ ctx[5]["b"]));
+    			add_location(line, file$7, 36, 6, 777);
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, g, anchor);
-    			append_dev(g, line);
+    			insert_dev(target, line, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*xScale, height*/ 33 && g_transform_value !== (g_transform_value = `translate(${/*xScale*/ ctx[5](/*tick*/ ctx[7])} ${/*height*/ ctx[0]})`)) {
-    				attr_dev(g, "transform", g_transform_value);
+    			if (dirty & /*xScale, data*/ 129 && line_x__value !== (line_x__value = /*xScale*/ ctx[7](/*d*/ ctx[9].x))) {
+    				attr_dev(line, "x1", line_x__value);
+    			}
+
+    			if (dirty & /*xScale, data*/ 129 && line_x__value_1 !== (line_x__value_1 = /*xScale*/ ctx[7](/*d*/ ctx[9].x))) {
+    				attr_dev(line, "x2", line_x__value_1);
+    			}
+
+    			if (dirty & /*yScale, data*/ 65 && line_y__value !== (line_y__value = /*yScale*/ ctx[6](/*d*/ ctx[9].y))) {
+    				attr_dev(line, "y1", line_y__value);
+    			}
+
+    			if (dirty & /*yScale, data, regressionData*/ 97 && line_y__value_1 !== (line_y__value_1 = /*yScale*/ ctx[6](/*d*/ ctx[9].x * /*regressionData*/ ctx[5]["a"] + /*regressionData*/ ctx[5]["b"]))) {
+    				attr_dev(line, "y2", line_y__value_1);
     			}
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(g);
+    			if (detaching) detach_dev(line);
     		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_each_block_1.name,
-    		type: "each",
-    		source: "(30:2) {#each xScale.ticks() as tick}",
+    		id: create_if_block$3.name,
+    		type: "if",
+    		source: "(36:4) {#if d.color === \\\"#f46ebb\\\"}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (45:2) {#each [0, 0.2, 0.4, 0.6, 0.8, 1.0] as tick}
+    // (34:2) {#each data as d}
     function create_each_block$4(ctx) {
-    	let g;
-    	let line;
-    	let g_transform_value;
+    	let rect;
+    	let rect_x_value;
+    	let rect_y_value;
+    	let rect_fill_value;
+    	let if_block = /*d*/ ctx[9].color === "#f46ebb" && create_if_block$3(ctx);
 
     	const block = {
     		c: function create() {
-    			g = svg_element("g");
-    			line = svg_element("line");
-    			attr_dev(line, "class", "y-axis-line");
-    			attr_dev(line, "x1", "0");
-    			attr_dev(line, "x2", 3);
-    			attr_dev(line, "y1", "0");
-    			attr_dev(line, "y2", "0");
-    			attr_dev(line, "stroke", "black");
-    			attr_dev(line, "stroke-dasharray", "4");
-    			add_location(line, file$7, 47, 6, 1111);
-    			attr_dev(g, "transform", g_transform_value = `translate(${0} ${/*yScale*/ ctx[4](/*tick*/ ctx[7]) + 0})`);
-    			add_location(g, file$7, 45, 4, 997);
+    			if (if_block) if_block.c();
+    			rect = svg_element("rect");
+    			attr_dev(rect, "x", rect_x_value = /*xScale*/ ctx[7](/*d*/ ctx[9].x) - radius / 2);
+    			attr_dev(rect, "y", rect_y_value = /*yScale*/ ctx[6](/*d*/ ctx[9].y) - radius / 2);
+    			attr_dev(rect, "fill", rect_fill_value = /*d*/ ctx[9].color);
+    			attr_dev(rect, "width", radius);
+    			attr_dev(rect, "height", radius);
+    			add_location(rect, file$7, 45, 4, 1021);
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, g, anchor);
-    			append_dev(g, line);
+    			if (if_block) if_block.m(target, anchor);
+    			insert_dev(target, rect, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*yScale*/ 16 && g_transform_value !== (g_transform_value = `translate(${0} ${/*yScale*/ ctx[4](/*tick*/ ctx[7]) + 0})`)) {
-    				attr_dev(g, "transform", g_transform_value);
+    			if (/*d*/ ctx[9].color === "#f46ebb") {
+    				if (if_block) {
+    					if_block.p(ctx, dirty);
+    				} else {
+    					if_block = create_if_block$3(ctx);
+    					if_block.c();
+    					if_block.m(rect.parentNode, rect);
+    				}
+    			} else if (if_block) {
+    				if_block.d(1);
+    				if_block = null;
+    			}
+
+    			if (dirty & /*xScale, data*/ 129 && rect_x_value !== (rect_x_value = /*xScale*/ ctx[7](/*d*/ ctx[9].x) - radius / 2)) {
+    				attr_dev(rect, "x", rect_x_value);
+    			}
+
+    			if (dirty & /*yScale, data*/ 65 && rect_y_value !== (rect_y_value = /*yScale*/ ctx[6](/*d*/ ctx[9].y) - radius / 2)) {
+    				attr_dev(rect, "y", rect_y_value);
+    			}
+
+    			if (dirty & /*data*/ 1 && rect_fill_value !== (rect_fill_value = /*d*/ ctx[9].color)) {
+    				attr_dev(rect, "fill", rect_fill_value);
     			}
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(g);
+    			if (if_block) if_block.d(detaching);
+    			if (detaching) detach_dev(rect);
     		}
     	};
 
@@ -2971,7 +3060,7 @@ var app = (function () {
     		block,
     		id: create_each_block$4.name,
     		type: "each",
-    		source: "(45:2) {#each [0, 0.2, 0.4, 0.6, 0.8, 1.0] as tick}",
+    		source: "(34:2) {#each data as d}",
     		ctx
     	});
 
@@ -2980,24 +3069,20 @@ var app = (function () {
 
     function create_fragment$8(ctx) {
     	let g;
-    	let each0_anchor;
     	let line0;
+    	let line0_x__value;
     	let line0_x__value_1;
+    	let line0_y__value;
+    	let line0_y__value_1;
     	let line1;
+    	let line1_x__value_1;
+    	let line2;
     	let g_transform_value;
-    	let each_value_1 = /*xScale*/ ctx[5].ticks();
-    	validate_each_argument(each_value_1);
-    	let each_blocks_1 = [];
-
-    	for (let i = 0; i < each_value_1.length; i += 1) {
-    		each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
-    	}
-
-    	let each_value = [0, 0.2, 0.4, 0.6, 0.8, 1.0];
+    	let each_value = /*data*/ ctx[0];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
-    	for (let i = 0; i < 6; i += 1) {
+    	for (let i = 0; i < each_value.length; i += 1) {
     		each_blocks[i] = create_each_block$4(get_each_context$4(ctx, each_value, i));
     	}
 
@@ -3005,34 +3090,35 @@ var app = (function () {
     		c: function create() {
     			g = svg_element("g");
 
-    			for (let i = 0; i < each_blocks_1.length; i += 1) {
-    				each_blocks_1[i].c();
-    			}
-
-    			each0_anchor = empty();
-
-    			for (let i = 0; i < 6; i += 1) {
+    			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
     			line0 = svg_element("line");
     			line1 = svg_element("line");
-    			attr_dev(line0, "class", "axis-line");
-    			attr_dev(line0, "x1", /*margin*/ ctx[6].left);
-    			attr_dev(line0, "x2", line0_x__value_1 = /*width*/ ctx[1] - /*margin*/ ctx[6].right);
-    			attr_dev(line0, "y1", /*height*/ ctx[0]);
-    			attr_dev(line0, "y2", /*height*/ ctx[0]);
-    			attr_dev(line0, "stroke", "black");
-    			add_location(line0, file$7, 63, 2, 1442);
+    			line2 = svg_element("line");
+    			attr_dev(line0, "class", "regression-line svelte-v9xm4u");
+    			attr_dev(line0, "x1", line0_x__value = /*xScale*/ ctx[7](/*regressionData*/ ctx[5][0][0]));
+    			attr_dev(line0, "x2", line0_x__value_1 = /*xScale*/ ctx[7](/*regressionData*/ ctx[5][1][0]));
+    			attr_dev(line0, "y1", line0_y__value = /*yScale*/ ctx[6](/*regressionData*/ ctx[5][0][1]));
+    			attr_dev(line0, "y2", line0_y__value_1 = /*yScale*/ ctx[6](/*regressionData*/ ctx[5][1][1]));
+    			add_location(line0, file$7, 54, 2, 1181);
     			attr_dev(line1, "class", "axis-line");
-    			attr_dev(line1, "x1", /*margin*/ ctx[6].left);
-    			attr_dev(line1, "x2", /*margin*/ ctx[6].left);
-    			attr_dev(line1, "y1", 0);
-    			attr_dev(line1, "y2", /*height*/ ctx[0]);
+    			attr_dev(line1, "x1", /*margin*/ ctx[8].left);
+    			attr_dev(line1, "x2", line1_x__value_1 = /*width*/ ctx[2] - /*margin*/ ctx[8].right);
+    			attr_dev(line1, "y1", /*height*/ ctx[1]);
+    			attr_dev(line1, "y2", /*height*/ ctx[1]);
     			attr_dev(line1, "stroke", "black");
-    			add_location(line1, file$7, 72, 2, 1592);
-    			attr_dev(g, "transform", g_transform_value = "translate(" + /*x*/ ctx[2] + ", " + /*y*/ ctx[3] + ")");
-    			add_location(g, file$7, 27, 0, 524);
+    			add_location(line1, file$7, 64, 2, 1410);
+    			attr_dev(line2, "class", "axis-line");
+    			attr_dev(line2, "x1", /*margin*/ ctx[8].left);
+    			attr_dev(line2, "x2", /*margin*/ ctx[8].left);
+    			attr_dev(line2, "y1", 0);
+    			attr_dev(line2, "y2", /*height*/ ctx[1]);
+    			attr_dev(line2, "stroke", "black");
+    			add_location(line2, file$7, 73, 2, 1560);
+    			attr_dev(g, "transform", g_transform_value = "translate(" + /*x*/ ctx[3] + ", " + /*y*/ ctx[4] + ")");
+    			add_location(g, file$7, 31, 0, 625);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3040,50 +3126,21 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
 
-    			for (let i = 0; i < each_blocks_1.length; i += 1) {
-    				each_blocks_1[i].m(g, null);
-    			}
-
-    			append_dev(g, each0_anchor);
-
-    			for (let i = 0; i < 6; i += 1) {
+    			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(g, null);
     			}
 
     			append_dev(g, line0);
     			append_dev(g, line1);
+    			append_dev(g, line2);
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*xScale, height*/ 33) {
-    				each_value_1 = /*xScale*/ ctx[5].ticks();
-    				validate_each_argument(each_value_1);
-    				let i;
-
-    				for (i = 0; i < each_value_1.length; i += 1) {
-    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
-
-    					if (each_blocks_1[i]) {
-    						each_blocks_1[i].p(child_ctx, dirty);
-    					} else {
-    						each_blocks_1[i] = create_each_block_1(child_ctx);
-    						each_blocks_1[i].c();
-    						each_blocks_1[i].m(g, each0_anchor);
-    					}
-    				}
-
-    				for (; i < each_blocks_1.length; i += 1) {
-    					each_blocks_1[i].d(1);
-    				}
-
-    				each_blocks_1.length = each_value_1.length;
-    			}
-
-    			if (dirty & /*yScale*/ 16) {
-    				each_value = [0, 0.2, 0.4, 0.6, 0.8, 1.0];
+    			if (dirty & /*xScale, data, radius, yScale, regressionData*/ 225) {
+    				each_value = /*data*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
 
-    				for (i = 0; i < 6; i += 1) {
+    				for (i = 0; i < each_value.length; i += 1) {
     					const child_ctx = get_each_context$4(ctx, each_value, i);
 
     					if (each_blocks[i]) {
@@ -3095,28 +3152,46 @@ var app = (function () {
     					}
     				}
 
-    				for (; i < 6; i += 1) {
+    				for (; i < each_blocks.length; i += 1) {
     					each_blocks[i].d(1);
     				}
+
+    				each_blocks.length = each_value.length;
     			}
 
-    			if (dirty & /*width*/ 2 && line0_x__value_1 !== (line0_x__value_1 = /*width*/ ctx[1] - /*margin*/ ctx[6].right)) {
+    			if (dirty & /*xScale, regressionData*/ 160 && line0_x__value !== (line0_x__value = /*xScale*/ ctx[7](/*regressionData*/ ctx[5][0][0]))) {
+    				attr_dev(line0, "x1", line0_x__value);
+    			}
+
+    			if (dirty & /*xScale, regressionData*/ 160 && line0_x__value_1 !== (line0_x__value_1 = /*xScale*/ ctx[7](/*regressionData*/ ctx[5][1][0]))) {
     				attr_dev(line0, "x2", line0_x__value_1);
     			}
 
-    			if (dirty & /*height*/ 1) {
-    				attr_dev(line0, "y1", /*height*/ ctx[0]);
+    			if (dirty & /*yScale, regressionData*/ 96 && line0_y__value !== (line0_y__value = /*yScale*/ ctx[6](/*regressionData*/ ctx[5][0][1]))) {
+    				attr_dev(line0, "y1", line0_y__value);
     			}
 
-    			if (dirty & /*height*/ 1) {
-    				attr_dev(line0, "y2", /*height*/ ctx[0]);
+    			if (dirty & /*yScale, regressionData*/ 96 && line0_y__value_1 !== (line0_y__value_1 = /*yScale*/ ctx[6](/*regressionData*/ ctx[5][1][1]))) {
+    				attr_dev(line0, "y2", line0_y__value_1);
     			}
 
-    			if (dirty & /*height*/ 1) {
-    				attr_dev(line1, "y2", /*height*/ ctx[0]);
+    			if (dirty & /*width*/ 4 && line1_x__value_1 !== (line1_x__value_1 = /*width*/ ctx[2] - /*margin*/ ctx[8].right)) {
+    				attr_dev(line1, "x2", line1_x__value_1);
     			}
 
-    			if (dirty & /*x, y*/ 12 && g_transform_value !== (g_transform_value = "translate(" + /*x*/ ctx[2] + ", " + /*y*/ ctx[3] + ")")) {
+    			if (dirty & /*height*/ 2) {
+    				attr_dev(line1, "y1", /*height*/ ctx[1]);
+    			}
+
+    			if (dirty & /*height*/ 2) {
+    				attr_dev(line1, "y2", /*height*/ ctx[1]);
+    			}
+
+    			if (dirty & /*height*/ 2) {
+    				attr_dev(line2, "y2", /*height*/ ctx[1]);
+    			}
+
+    			if (dirty & /*x, y*/ 24 && g_transform_value !== (g_transform_value = "translate(" + /*x*/ ctx[3] + ", " + /*y*/ ctx[4] + ")")) {
     				attr_dev(g, "transform", g_transform_value);
     			}
     		},
@@ -3124,7 +3199,6 @@ var app = (function () {
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(g);
-    			destroy_each(each_blocks_1, detaching);
     			destroy_each(each_blocks, detaching);
     		}
     	};
@@ -3140,47 +3214,59 @@ var app = (function () {
     	return block;
     }
 
+    const radius = 6;
+
     function instance$8($$self, $$props, $$invalidate) {
     	let xScale;
     	let yScale;
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Scatterplot', slots, []);
+    	let { data } = $$props;
     	let { height = 500 } = $$props;
     	let { width } = $$props;
     	let { x = 0 } = $$props;
     	let { y = 300 } = $$props;
+    	let { regressionData } = $$props;
     	const margin = { top: 10, bottom: 10, left: 0, right: 0 };
-    	const writable_props = ['height', 'width', 'x', 'y'];
+    	const writable_props = ['data', 'height', 'width', 'x', 'y', 'regressionData'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Scatterplot> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$$set = $$props => {
-    		if ('height' in $$props) $$invalidate(0, height = $$props.height);
-    		if ('width' in $$props) $$invalidate(1, width = $$props.width);
-    		if ('x' in $$props) $$invalidate(2, x = $$props.x);
-    		if ('y' in $$props) $$invalidate(3, y = $$props.y);
+    		if ('data' in $$props) $$invalidate(0, data = $$props.data);
+    		if ('height' in $$props) $$invalidate(1, height = $$props.height);
+    		if ('width' in $$props) $$invalidate(2, width = $$props.width);
+    		if ('x' in $$props) $$invalidate(3, x = $$props.x);
+    		if ('y' in $$props) $$invalidate(4, y = $$props.y);
+    		if ('regressionData' in $$props) $$invalidate(5, regressionData = $$props.regressionData);
     	};
 
     	$$self.$capture_state = () => ({
     		scaleLinear: linear,
+    		extent,
+    		data,
     		height,
     		width,
     		x,
     		y,
+    		regressionData,
     		margin,
+    		radius,
     		yScale,
     		xScale
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('height' in $$props) $$invalidate(0, height = $$props.height);
-    		if ('width' in $$props) $$invalidate(1, width = $$props.width);
-    		if ('x' in $$props) $$invalidate(2, x = $$props.x);
-    		if ('y' in $$props) $$invalidate(3, y = $$props.y);
-    		if ('yScale' in $$props) $$invalidate(4, yScale = $$props.yScale);
-    		if ('xScale' in $$props) $$invalidate(5, xScale = $$props.xScale);
+    		if ('data' in $$props) $$invalidate(0, data = $$props.data);
+    		if ('height' in $$props) $$invalidate(1, height = $$props.height);
+    		if ('width' in $$props) $$invalidate(2, width = $$props.width);
+    		if ('x' in $$props) $$invalidate(3, x = $$props.x);
+    		if ('y' in $$props) $$invalidate(4, y = $$props.y);
+    		if ('regressionData' in $$props) $$invalidate(5, regressionData = $$props.regressionData);
+    		if ('yScale' in $$props) $$invalidate(6, yScale = $$props.yScale);
+    		if ('xScale' in $$props) $$invalidate(7, xScale = $$props.xScale);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -3188,23 +3274,31 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*width*/ 2) {
+    		if ($$self.$$.dirty & /*data, width*/ 5) {
     			//   scale
-    			$$invalidate(5, xScale = linear().domain([-1, 1]).range([margin.left, width - margin.right]));
+    			$$invalidate(7, xScale = linear().domain(extent(data, d => d.x)).range([margin.left, width - margin.right]));
     		}
 
-    		if ($$self.$$.dirty & /*height*/ 1) {
-    			$$invalidate(4, yScale = linear().domain([0, 1]).range([height - margin.bottom, margin.top]));
+    		if ($$self.$$.dirty & /*data, height*/ 3) {
+    			$$invalidate(6, yScale = linear().domain(extent(data, d => d.y)).range([height - margin.bottom, margin.top]));
     		}
     	};
 
-    	return [height, width, x, y, yScale, xScale, margin];
+    	return [data, height, width, x, y, regressionData, yScale, xScale, margin];
     }
 
     class Scatterplot extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$8, create_fragment$8, safe_not_equal, { height: 0, width: 1, x: 2, y: 3 });
+
+    		init(this, options, instance$8, create_fragment$8, safe_not_equal, {
+    			data: 0,
+    			height: 1,
+    			width: 2,
+    			x: 3,
+    			y: 4,
+    			regressionData: 5
+    		});
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -3216,9 +3310,25 @@ var app = (function () {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*width*/ ctx[1] === undefined && !('width' in props)) {
+    		if (/*data*/ ctx[0] === undefined && !('data' in props)) {
+    			console.warn("<Scatterplot> was created without expected prop 'data'");
+    		}
+
+    		if (/*width*/ ctx[2] === undefined && !('width' in props)) {
     			console.warn("<Scatterplot> was created without expected prop 'width'");
     		}
+
+    		if (/*regressionData*/ ctx[5] === undefined && !('regressionData' in props)) {
+    			console.warn("<Scatterplot> was created without expected prop 'regressionData'");
+    		}
+    	}
+
+    	get data() {
+    		throw new Error("<Scatterplot>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set data(value) {
+    		throw new Error("<Scatterplot>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
 
     	get height() {
@@ -3252,41 +3362,942 @@ var app = (function () {
     	set y(value) {
     		throw new Error("<Scatterplot>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
+
+    	get regressionData() {
+    		throw new Error("<Scatterplot>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set regressionData(value) {
+    		throw new Error("<Scatterplot>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
     }
 
+    var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+    function createCommonjsModule(fn) {
+      var module = { exports: {} };
+    	return fn(module, module.exports), module.exports;
+    }
+
+    var d3Regression = createCommonjsModule(function (module, exports) {
+    // https://github.com/HarryStevens/d3-regression#readme Version 1.3.10. Copyright 2022 Harry Stevens.
+    (function (global, factory) {
+      factory(exports) ;
+    }(commonjsGlobal, (function (exports) {
+      function _slicedToArray(arr, i) {
+        return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+      }
+
+      function _arrayWithHoles(arr) {
+        if (Array.isArray(arr)) return arr;
+      }
+
+      function _iterableToArrayLimit(arr, i) {
+        var _arr = [];
+        var _n = true;
+        var _d = false;
+        var _e = undefined;
+
+        try {
+          for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+            _arr.push(_s.value);
+
+            if (i && _arr.length === i) break;
+          }
+        } catch (err) {
+          _d = true;
+          _e = err;
+        } finally {
+          try {
+            if (!_n && _i["return"] != null) _i["return"]();
+          } finally {
+            if (_d) throw _e;
+          }
+        }
+
+        return _arr;
+      }
+
+      function _nonIterableRest() {
+        throw new TypeError("Invalid attempt to destructure non-iterable instance");
+      }
+
+      // Adapted from vega-statistics by Jeffrey Heer
+      // License: https://github.com/vega/vega/blob/f058b099decad9db78301405dd0d2e9d8ba3d51a/LICENSE
+      // Source: https://github.com/vega/vega/blob/f058b099decad9db78301405dd0d2e9d8ba3d51a/packages/vega-statistics/src/regression/points.js
+      function points(data, x, y, sort) {
+        data = data.filter(function (d, i) {
+          var u = x(d, i),
+              v = y(d, i);
+          return u != null && isFinite(u) && v != null && isFinite(v);
+        });
+
+        if (sort) {
+          data.sort(function (a, b) {
+            return x(a) - x(b);
+          });
+        }
+
+        var n = data.length,
+            X = new Float64Array(n),
+            Y = new Float64Array(n); // extract values, calculate means
+
+        var ux = 0,
+            uy = 0,
+            xv,
+            yv,
+            d;
+
+        for (var i = 0; i < n;) {
+          d = data[i];
+          X[i] = xv = +x(d, i, data);
+          Y[i] = yv = +y(d, i, data);
+          ++i;
+          ux += (xv - ux) / i;
+          uy += (yv - uy) / i;
+        } // mean center the data
+
+
+        for (var _i = 0; _i < n; ++_i) {
+          X[_i] -= ux;
+          Y[_i] -= uy;
+        }
+
+        return [X, Y, ux, uy];
+      }
+      function visitPoints(data, x, y, cb) {
+        var iterations = 0;
+
+        for (var i = 0, n = data.length; i < n; i++) {
+          var d = data[i],
+              dx = +x(d, i, data),
+              dy = +y(d, i, data);
+
+          if (dx != null && isFinite(dx) && dy != null && isFinite(dy)) {
+            cb(dx, dy, iterations++);
+          }
+        }
+      }
+
+      // return the coefficient of determination, or R squared.
+
+      function determination(data, x, y, uY, predict) {
+        var SSE = 0,
+            SST = 0;
+        visitPoints(data, x, y, function (dx, dy) {
+          var sse = dy - predict(dx),
+              sst = dy - uY;
+          SSE += sse * sse;
+          SST += sst * sst;
+        });
+        return 1 - SSE / SST;
+      }
+
+      // Returns the angle of a line in degrees.
+      function angle(line) {
+        return Math.atan2(line[1][1] - line[0][1], line[1][0] - line[0][0]) * 180 / Math.PI;
+      } // Returns the midpoint of a line.
+
+      function midpoint(line) {
+        return [(line[0][0] + line[1][0]) / 2, (line[0][1] + line[1][1]) / 2];
+      }
+
+      // returns a smooth line.
+
+      function interpose(xmin, xmax, predict) {
+        var l = Math.log(xmax - xmin) * Math.LOG10E + 1 | 0;
+        var precision = 1 * Math.pow(10, -l / 2 - 1),
+            maxIter = 1e4;
+        var points = [px(xmin), px(xmax)],
+            iter = 0;
+
+        while (find(points) && iter < maxIter) {
+        }
+
+        return points;
+
+        function px(x) {
+          return [x, predict(x)];
+        }
+
+        function find(points) {
+          iter++;
+          var n = points.length;
+          var found = false;
+
+          for (var i = 0; i < n - 1; i++) {
+            var p0 = points[i],
+                p1 = points[i + 1],
+                m = midpoint([p0, p1]),
+                mp = px(m[0]),
+                a0 = angle([p0, m]),
+                a1 = angle([p0, mp]),
+                a = Math.abs(a0 - a1);
+
+            if (a > precision) {
+              points.splice(i + 1, 0, mp);
+              found = true;
+            }
+          }
+
+          return found;
+        }
+      }
+
+      // Ordinary Least Squares from vega-statistics by Jeffrey Heer
+      // License: https://github.com/vega/vega/blob/f058b099decad9db78301405dd0d2e9d8ba3d51a/LICENSE
+      // Source: https://github.com/vega/vega/blob/f058b099decad9db78301405dd0d2e9d8ba3d51a/packages/vega-statistics/src/regression/ols.js
+      function ols(uX, uY, uXY, uX2) {
+        var delta = uX2 - uX * uX,
+            slope = Math.abs(delta) < 1e-24 ? 0 : (uXY - uX * uY) / delta,
+            intercept = uY - slope * uX;
+        return [intercept, slope];
+      }
+
+      function exponential () {
+        var x = function x(d) {
+          return d[0];
+        },
+            y = function y(d) {
+          return d[1];
+        },
+            domain;
+
+        function exponential(data) {
+          var n = 0,
+              Y = 0,
+              YL = 0,
+              XY = 0,
+              XYL = 0,
+              X2Y = 0,
+              xmin = domain ? +domain[0] : Infinity,
+              xmax = domain ? +domain[1] : -Infinity;
+          visitPoints(data, x, y, function (dx, dy) {
+            var ly = Math.log(dy),
+                xy = dx * dy;
+            ++n;
+            Y += (dy - Y) / n;
+            XY += (xy - XY) / n;
+            X2Y += (dx * xy - X2Y) / n;
+            YL += (dy * ly - YL) / n;
+            XYL += (xy * ly - XYL) / n;
+
+            if (!domain) {
+              if (dx < xmin) xmin = dx;
+              if (dx > xmax) xmax = dx;
+            }
+          });
+
+          var _ols = ols(XY / Y, YL / Y, XYL / Y, X2Y / Y),
+              _ols2 = _slicedToArray(_ols, 2),
+              a = _ols2[0],
+              b = _ols2[1];
+
+          a = Math.exp(a);
+
+          var fn = function fn(x) {
+            return a * Math.exp(b * x);
+          },
+              out = interpose(xmin, xmax, fn);
+
+          out.a = a;
+          out.b = b;
+          out.predict = fn;
+          out.rSquared = determination(data, x, y, Y, fn);
+          return out;
+        }
+
+        exponential.domain = function (arr) {
+          return arguments.length ? (domain = arr, exponential) : domain;
+        };
+
+        exponential.x = function (fn) {
+          return arguments.length ? (x = fn, exponential) : x;
+        };
+
+        exponential.y = function (fn) {
+          return arguments.length ? (y = fn, exponential) : y;
+        };
+
+        return exponential;
+      }
+
+      function linear () {
+        var x = function x(d) {
+          return d[0];
+        },
+            y = function y(d) {
+          return d[1];
+        },
+            domain;
+
+        function linear(data) {
+          var n = 0,
+              X = 0,
+              // sum of x
+          Y = 0,
+              // sum of y
+          XY = 0,
+              // sum of x * y
+          X2 = 0,
+              // sum of x * x
+          xmin = domain ? +domain[0] : Infinity,
+              xmax = domain ? +domain[1] : -Infinity;
+          visitPoints(data, x, y, function (dx, dy) {
+            ++n;
+            X += (dx - X) / n;
+            Y += (dy - Y) / n;
+            XY += (dx * dy - XY) / n;
+            X2 += (dx * dx - X2) / n;
+
+            if (!domain) {
+              if (dx < xmin) xmin = dx;
+              if (dx > xmax) xmax = dx;
+            }
+          });
+
+          var _ols = ols(X, Y, XY, X2),
+              _ols2 = _slicedToArray(_ols, 2),
+              intercept = _ols2[0],
+              slope = _ols2[1],
+              fn = function fn(x) {
+            return slope * x + intercept;
+          },
+              out = [[xmin, fn(xmin)], [xmax, fn(xmax)]];
+
+          out.a = slope;
+          out.b = intercept;
+          out.predict = fn;
+          out.rSquared = determination(data, x, y, Y, fn);
+          return out;
+        }
+
+        linear.domain = function (arr) {
+          return arguments.length ? (domain = arr, linear) : domain;
+        };
+
+        linear.x = function (fn) {
+          return arguments.length ? (x = fn, linear) : x;
+        };
+
+        linear.y = function (fn) {
+          return arguments.length ? (y = fn, linear) : y;
+        };
+
+        return linear;
+      }
+
+      // Returns the medium value of an array of numbers.
+      function median(arr) {
+        arr.sort(function (a, b) {
+          return a - b;
+        });
+        var i = arr.length / 2;
+        return i % 1 === 0 ? (arr[i - 1] + arr[i]) / 2 : arr[Math.floor(i)];
+      }
+
+      var maxiters = 2,
+          epsilon = 1e-12;
+      function loess () {
+        var x = function x(d) {
+          return d[0];
+        },
+            y = function y(d) {
+          return d[1];
+        },
+            bandwidth = .3;
+
+        function loess(data) {
+          var _points = points(data, x, y, true),
+              _points2 = _slicedToArray(_points, 4),
+              xv = _points2[0],
+              yv = _points2[1],
+              ux = _points2[2],
+              uy = _points2[3],
+              n = xv.length,
+              bw = Math.max(2, ~~(bandwidth * n)),
+              yhat = new Float64Array(n),
+              residuals = new Float64Array(n),
+              robustWeights = new Float64Array(n).fill(1);
+
+          for (var iter = -1; ++iter <= maxiters;) {
+            var interval = [0, bw - 1];
+
+            for (var i = 0; i < n; ++i) {
+              var dx = xv[i],
+                  i0 = interval[0],
+                  i1 = interval[1],
+                  edge = dx - xv[i0] > xv[i1] - dx ? i0 : i1;
+              var W = 0,
+                  X = 0,
+                  Y = 0,
+                  XY = 0,
+                  X2 = 0,
+                  denom = 1 / Math.abs(xv[edge] - dx || 1); // Avoid singularity
+
+              for (var k = i0; k <= i1; ++k) {
+                var xk = xv[k],
+                    yk = yv[k],
+                    w = tricube(Math.abs(dx - xk) * denom) * robustWeights[k],
+                    xkw = xk * w;
+                W += w;
+                X += xkw;
+                Y += yk * w;
+                XY += yk * xkw;
+                X2 += xk * xkw;
+              } // Linear regression fit
+
+
+              var _ols = ols(X / W, Y / W, XY / W, X2 / W),
+                  _ols2 = _slicedToArray(_ols, 2),
+                  a = _ols2[0],
+                  b = _ols2[1];
+
+              yhat[i] = a + b * dx;
+              residuals[i] = Math.abs(yv[i] - yhat[i]);
+              updateInterval(xv, i + 1, interval);
+            }
+
+            if (iter === maxiters) {
+              break;
+            }
+
+            var medianResidual = median(residuals);
+            if (Math.abs(medianResidual) < epsilon) break;
+
+            for (var _i = 0, arg, _w; _i < n; ++_i) {
+              arg = residuals[_i] / (6 * medianResidual); // Default to epsilon (rather than zero) for large deviations
+              // Keeping weights tiny but non-zero prevents singularites
+
+              robustWeights[_i] = arg >= 1 ? epsilon : (_w = 1 - arg * arg) * _w;
+            }
+          }
+
+          return output(xv, yhat, ux, uy);
+        }
+
+        loess.bandwidth = function (bw) {
+          return arguments.length ? (bandwidth = bw, loess) : bandwidth;
+        };
+
+        loess.x = function (fn) {
+          return arguments.length ? (x = fn, loess) : x;
+        };
+
+        loess.y = function (fn) {
+          return arguments.length ? (y = fn, loess) : y;
+        };
+
+        return loess;
+      } // Weighting kernel for local regression
+
+      function tricube(x) {
+        return (x = 1 - x * x * x) * x * x;
+      } // Advance sliding window interval of nearest neighbors
+
+
+      function updateInterval(xv, i, interval) {
+        var val = xv[i],
+            left = interval[0],
+            right = interval[1] + 1;
+        if (right >= xv.length) return; // Step right if distance to new right edge is <= distance to old left edge
+        // Step when distance is equal to ensure movement over duplicate x values
+
+        while (i > left && xv[right] - val <= val - xv[left]) {
+          interval[0] = ++left;
+          interval[1] = right;
+          ++right;
+        }
+      } // Generate smoothed output points
+      // Average points with repeated x values
+
+
+      function output(xv, yhat, ux, uy) {
+        var n = xv.length,
+            out = [];
+        var i = 0,
+            cnt = 0,
+            prev = [],
+            v;
+
+        for (; i < n; ++i) {
+          v = xv[i] + ux;
+
+          if (prev[0] === v) {
+            // Average output values via online update
+            prev[1] += (yhat[i] - prev[1]) / ++cnt;
+          } else {
+            // Add new output point
+            cnt = 0;
+            prev[1] += uy;
+            prev = [v, yhat[i]];
+            out.push(prev);
+          }
+        }
+
+        prev[1] += uy;
+        return out;
+      }
+
+      function logarithmic () {
+        var x = function x(d) {
+          return d[0];
+        },
+            y = function y(d) {
+          return d[1];
+        },
+            base = Math.E,
+            domain;
+
+        function logarithmic(data) {
+          var n = 0,
+              X = 0,
+              Y = 0,
+              XY = 0,
+              X2 = 0,
+              xmin = domain ? +domain[0] : Infinity,
+              xmax = domain ? +domain[1] : -Infinity,
+              lb = Math.log(base);
+          visitPoints(data, x, y, function (dx, dy) {
+            var lx = Math.log(dx) / lb;
+            ++n;
+            X += (lx - X) / n;
+            Y += (dy - Y) / n;
+            XY += (lx * dy - XY) / n;
+            X2 += (lx * lx - X2) / n;
+
+            if (!domain) {
+              if (dx < xmin) xmin = dx;
+              if (dx > xmax) xmax = dx;
+            }
+          });
+
+          var _ols = ols(X, Y, XY, X2),
+              _ols2 = _slicedToArray(_ols, 2),
+              intercept = _ols2[0],
+              slope = _ols2[1],
+              fn = function fn(x) {
+            return slope * Math.log(x) / lb + intercept;
+          },
+              out = interpose(xmin, xmax, fn);
+
+          out.a = slope;
+          out.b = intercept;
+          out.predict = fn;
+          out.rSquared = determination(data, x, y, Y, fn);
+          return out;
+        }
+
+        logarithmic.domain = function (arr) {
+          return arguments.length ? (domain = arr, logarithmic) : domain;
+        };
+
+        logarithmic.x = function (fn) {
+          return arguments.length ? (x = fn, logarithmic) : x;
+        };
+
+        logarithmic.y = function (fn) {
+          return arguments.length ? (y = fn, logarithmic) : y;
+        };
+
+        logarithmic.base = function (n) {
+          return arguments.length ? (base = n, logarithmic) : base;
+        };
+
+        return logarithmic;
+      }
+
+      function quad () {
+        var x = function x(d) {
+          return d[0];
+        },
+            y = function y(d) {
+          return d[1];
+        },
+            domain;
+
+        function quadratic(data) {
+          var _points = points(data, x, y),
+              _points2 = _slicedToArray(_points, 4),
+              xv = _points2[0],
+              yv = _points2[1],
+              ux = _points2[2],
+              uy = _points2[3],
+              n = xv.length;
+
+          var X2 = 0,
+              X3 = 0,
+              X4 = 0,
+              XY = 0,
+              X2Y = 0,
+              i,
+              dx,
+              dy,
+              x2;
+
+          for (i = 0; i < n;) {
+            dx = xv[i];
+            dy = yv[i++];
+            x2 = dx * dx;
+            X2 += (x2 - X2) / i;
+            X3 += (x2 * dx - X3) / i;
+            X4 += (x2 * x2 - X4) / i;
+            XY += (dx * dy - XY) / i;
+            X2Y += (x2 * dy - X2Y) / i;
+          }
+
+          var Y = 0,
+              n0 = 0,
+              xmin = domain ? +domain[0] : Infinity,
+              xmax = domain ? +domain[1] : -Infinity;
+          visitPoints(data, x, y, function (dx, dy) {
+            n0++;
+            Y += (dy - Y) / n0;
+
+            if (!domain) {
+              if (dx < xmin) xmin = dx;
+              if (dx > xmax) xmax = dx;
+            }
+          });
+
+          var X2X2 = X4 - X2 * X2,
+              d = X2 * X2X2 - X3 * X3,
+              a = (X2Y * X2 - XY * X3) / d,
+              b = (XY * X2X2 - X2Y * X3) / d,
+              c = -a * X2,
+              fn = function fn(x) {
+            x = x - ux;
+            return a * x * x + b * x + c + uy;
+          };
+
+          var out = interpose(xmin, xmax, fn);
+          out.a = a;
+          out.b = b - 2 * a * ux;
+          out.c = c - b * ux + a * ux * ux + uy;
+          out.predict = fn;
+          out.rSquared = determination(data, x, y, Y, fn);
+          return out;
+        }
+
+        quadratic.domain = function (arr) {
+          return arguments.length ? (domain = arr, quadratic) : domain;
+        };
+
+        quadratic.x = function (fn) {
+          return arguments.length ? (x = fn, quadratic) : x;
+        };
+
+        quadratic.y = function (fn) {
+          return arguments.length ? (y = fn, quadratic) : y;
+        };
+
+        return quadratic;
+      }
+
+      // Source: https://github.com/Tom-Alexander/regression-js/blob/master/src/regression.js#L246
+      // License: https://github.com/Tom-Alexander/regression-js/blob/master/LICENSE
+      // ...with ideas from vega-statistics by Jeffrey Heer
+      // Source: https://github.com/vega/vega/blob/f21cb8792b4e0cbe2b1a3fd44b0f5db370dbaadb/packages/vega-statistics/src/regression/poly.js
+      // License: https://github.com/vega/vega/blob/f058b099decad9db78301405dd0d2e9d8ba3d51a/LICENSE
+
+      function polynomial () {
+        var x = function x(d) {
+          return d[0];
+        },
+            y = function y(d) {
+          return d[1];
+        },
+            order = 3,
+            domain;
+
+        function polynomial(data) {
+          // Use more efficient methods for lower orders
+          if (order === 1) {
+            var o = linear().x(x).y(y).domain(domain)(data);
+            o.coefficients = [o.b, o.a];
+            delete o.a;
+            delete o.b;
+            return o;
+          }
+
+          if (order === 2) {
+            var _o = quad().x(x).y(y).domain(domain)(data);
+
+            _o.coefficients = [_o.c, _o.b, _o.a];
+            delete _o.a;
+            delete _o.b;
+            delete _o.c;
+            return _o;
+          }
+
+          var _points = points(data, x, y),
+              _points2 = _slicedToArray(_points, 4),
+              xv = _points2[0],
+              yv = _points2[1],
+              ux = _points2[2],
+              uy = _points2[3],
+              n = xv.length,
+              lhs = [],
+              rhs = [],
+              k = order + 1;
+
+          var Y = 0,
+              n0 = 0,
+              xmin = domain ? +domain[0] : Infinity,
+              xmax = domain ? +domain[1] : -Infinity;
+          visitPoints(data, x, y, function (dx, dy) {
+            ++n0;
+            Y += (dy - Y) / n0;
+
+            if (!domain) {
+              if (dx < xmin) xmin = dx;
+              if (dx > xmax) xmax = dx;
+            }
+          });
+          var i, j, l, v, c;
+
+          for (i = 0; i < k; ++i) {
+            for (l = 0, v = 0; l < n; ++l) {
+              v += Math.pow(xv[l], i) * yv[l];
+            }
+
+            lhs.push(v);
+            c = new Float64Array(k);
+
+            for (j = 0; j < k; ++j) {
+              for (l = 0, v = 0; l < n; ++l) {
+                v += Math.pow(xv[l], i + j);
+              }
+
+              c[j] = v;
+            }
+
+            rhs.push(c);
+          }
+
+          rhs.push(lhs);
+
+          var coef = gaussianElimination(rhs),
+              fn = function fn(x) {
+            x -= ux;
+            var y = uy + coef[0] + coef[1] * x + coef[2] * x * x;
+
+            for (i = 3; i < k; ++i) {
+              y += coef[i] * Math.pow(x, i);
+            }
+
+            return y;
+          },
+              out = interpose(xmin, xmax, fn);
+
+          out.coefficients = uncenter(k, coef, -ux, uy);
+          out.predict = fn;
+          out.rSquared = determination(data, x, y, Y, fn);
+          return out;
+        }
+
+        polynomial.domain = function (arr) {
+          return arguments.length ? (domain = arr, polynomial) : domain;
+        };
+
+        polynomial.x = function (fn) {
+          return arguments.length ? (x = fn, polynomial) : x;
+        };
+
+        polynomial.y = function (fn) {
+          return arguments.length ? (y = fn, polynomial) : y;
+        };
+
+        polynomial.order = function (n) {
+          return arguments.length ? (order = n, polynomial) : order;
+        };
+
+        return polynomial;
+      }
+
+      function uncenter(k, a, x, y) {
+        var z = Array(k);
+        var i, j, v, c; // initialize to zero
+
+        for (i = 0; i < k; ++i) {
+          z[i] = 0;
+        } // polynomial expansion
+
+
+        for (i = k - 1; i >= 0; --i) {
+          v = a[i];
+          c = 1;
+          z[i] += v;
+
+          for (j = 1; j <= i; ++j) {
+            c *= (i + 1 - j) / j; // binomial coefficent
+
+            z[i - j] += v * Math.pow(x, j) * c;
+          }
+        } // bias term
+
+
+        z[0] += y;
+        return z;
+      } // Given an array for a two-dimensional matrix and the polynomial order,
+      // solve A * x = b using Gaussian elimination.
+
+
+      function gaussianElimination(matrix) {
+        var n = matrix.length - 1,
+            coef = [];
+        var i, j, k, r, t;
+
+        for (i = 0; i < n; ++i) {
+          r = i; // max row
+
+          for (j = i + 1; j < n; ++j) {
+            if (Math.abs(matrix[i][j]) > Math.abs(matrix[i][r])) {
+              r = j;
+            }
+          }
+
+          for (k = i; k < n + 1; ++k) {
+            t = matrix[k][i];
+            matrix[k][i] = matrix[k][r];
+            matrix[k][r] = t;
+          }
+
+          for (j = i + 1; j < n; ++j) {
+            for (k = n; k >= i; k--) {
+              matrix[k][j] -= matrix[k][i] * matrix[i][j] / matrix[i][i];
+            }
+          }
+        }
+
+        for (j = n - 1; j >= 0; --j) {
+          t = 0;
+
+          for (k = j + 1; k < n; ++k) {
+            t += matrix[k][j] * coef[k];
+          }
+
+          coef[j] = (matrix[n][j] - t) / matrix[j][j];
+        }
+
+        return coef;
+      }
+
+      function power () {
+        var x = function x(d) {
+          return d[0];
+        },
+            y = function y(d) {
+          return d[1];
+        },
+            domain;
+
+        function power(data) {
+          var n = 0,
+              X = 0,
+              Y = 0,
+              XY = 0,
+              X2 = 0,
+              YS = 0,
+              xmin = domain ? +domain[0] : Infinity,
+              xmax = domain ? +domain[1] : -Infinity;
+          visitPoints(data, x, y, function (dx, dy) {
+            var lx = Math.log(dx),
+                ly = Math.log(dy);
+            ++n;
+            X += (lx - X) / n;
+            Y += (ly - Y) / n;
+            XY += (lx * ly - XY) / n;
+            X2 += (lx * lx - X2) / n;
+            YS += (dy - YS) / n;
+
+            if (!domain) {
+              if (dx < xmin) xmin = dx;
+              if (dx > xmax) xmax = dx;
+            }
+          });
+
+          var _ols = ols(X, Y, XY, X2),
+              _ols2 = _slicedToArray(_ols, 2),
+              a = _ols2[0],
+              b = _ols2[1];
+
+          a = Math.exp(a);
+
+          var fn = function fn(x) {
+            return a * Math.pow(x, b);
+          },
+              out = interpose(xmin, xmax, fn);
+
+          out.a = a;
+          out.b = b;
+          out.predict = fn;
+          out.rSquared = determination(data, x, y, YS, fn);
+          return out;
+        }
+
+        power.domain = function (arr) {
+          return arguments.length ? (domain = arr, power) : domain;
+        };
+
+        power.x = function (fn) {
+          return arguments.length ? (x = fn, power) : x;
+        };
+
+        power.y = function (fn) {
+          return arguments.length ? (y = fn, power) : y;
+        };
+
+        return power;
+      }
+
+      exports.regressionExp = exponential;
+      exports.regressionLinear = linear;
+      exports.regressionLoess = loess;
+      exports.regressionLog = logarithmic;
+      exports.regressionPoly = polynomial;
+      exports.regressionPow = power;
+      exports.regressionQuad = quad;
+
+      Object.defineProperty(exports, '__esModule', { value: true });
+
+    })));
+    });
+
     /* src/Components/KFoldInteractive.svelte generated by Svelte v3.48.0 */
+
+    const { console: console_1 } = globals;
     const file$6 = "src/Components/KFoldInteractive.svelte";
 
     function get_each_context$3(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[14] = list[i];
+    	child_ctx[20] = list[i];
     	return child_ctx;
     }
 
-    // (78:4) {#each [...Array(nSplits).keys()] as tick}
+    // (164:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block$3(ctx) {
-    	let line;
-    	let line_x__value;
-    	let line_x__value_1;
     	let stackedrects;
     	let scatterplot;
     	let text_1;
-    	let t;
+    	let t0;
+    	let t1_value = /*formatter*/ ctx[12](/*dataArray*/ ctx[2][/*tick*/ ctx[20]]["mse"]) + "";
+    	let t1;
     	let text_1_x_value;
     	let text_1_y_value;
     	let current;
 
     	function func(...args) {
-    		return /*func*/ ctx[11](/*tick*/ ctx[14], ...args);
+    		return /*func*/ ctx[15](/*tick*/ ctx[20], ...args);
     	}
 
     	stackedrects = new StackedRects({
     			props: {
     				height: /*height*/ ctx[1] / 4.5,
-    				numCol: /*numCol*/ ctx[6],
+    				numCol: /*numCol*/ ctx[8],
     				numRects: numRects$1,
-    				x: /*xScale*/ ctx[9](/*tick*/ ctx[14]) - /*xDiff*/ ctx[7],
-    				y: /*yScale*/ ctx[8](-1),
+    				x: /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9],
+    				y: /*yScale*/ ctx[10](-1),
     				fillRule: func
     			},
     			$$inline: true
@@ -3294,72 +4305,58 @@ var app = (function () {
 
     	scatterplot = new Scatterplot({
     			props: {
-    				class: "scatterplot",
-    				width: 70,
-    				height: 70,
-    				x: /*xScale*/ ctx[9](/*tick*/ ctx[14]) - /*xDiff*/ ctx[7] * 2,
-    				y: /*yScale*/ ctx[8](1)
+    				data: /*dataArray*/ ctx[2][/*tick*/ ctx[20]]["scatterData"],
+    				regressionData: /*dataArray*/ ctx[2][/*tick*/ ctx[20]]["regressionData"],
+    				width: 85,
+    				height: 85,
+    				x: /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9] * 2,
+    				y: /*yScale*/ ctx[10](1)
     			},
     			$$inline: true
     		});
 
     	const block = {
     		c: function create() {
-    			line = svg_element("line");
     			create_component(stackedrects.$$.fragment);
     			create_component(scatterplot.$$.fragment);
     			text_1 = svg_element("text");
-    			t = text("MAPE: 0.6%");
-    			attr_dev(line, "class", "axis-line");
-    			attr_dev(line, "x1", line_x__value = /*xScale*/ ctx[9](/*tick*/ ctx[14]) - 10);
-    			attr_dev(line, "x2", line_x__value_1 = /*xScale*/ ctx[9](/*tick*/ ctx[14]) - 10);
-    			attr_dev(line, "y1", "0");
-    			attr_dev(line, "y2", 500);
-    			attr_dev(line, "stroke", "black");
-    			attr_dev(line, "stroke-dasharray", "4");
-    			attr_dev(line, "opacity", "0.08");
-    			add_location(line, file$6, 79, 6, 2760);
-    			attr_dev(text_1, "class", "fold-error-text svelte-1qiglte");
-    			attr_dev(text_1, "x", text_1_x_value = /*xScale*/ ctx[9](/*tick*/ ctx[14]) - /*xDiff*/ ctx[7] * 2);
-    			attr_dev(text_1, "y", text_1_y_value = /*yScale*/ ctx[8](3));
-    			add_location(text_1, file$6, 119, 6, 3770);
+    			t0 = text("Val MSE: ");
+    			t1 = text(t1_value);
+    			attr_dev(text_1, "class", "fold-error-text svelte-72n7xr");
+    			attr_dev(text_1, "x", text_1_x_value = /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9] * 2);
+    			attr_dev(text_1, "y", text_1_y_value = /*yScale*/ ctx[10](3));
+    			add_location(text_1, file$6, 202, 6, 6141);
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, line, anchor);
     			mount_component(stackedrects, target, anchor);
     			mount_component(scatterplot, target, anchor);
     			insert_dev(target, text_1, anchor);
-    			append_dev(text_1, t);
+    			append_dev(text_1, t0);
+    			append_dev(text_1, t1);
     			current = true;
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
-
-    			if (!current || dirty & /*xScale, nSplits*/ 528 && line_x__value !== (line_x__value = /*xScale*/ ctx[9](/*tick*/ ctx[14]) - 10)) {
-    				attr_dev(line, "x1", line_x__value);
-    			}
-
-    			if (!current || dirty & /*xScale, nSplits*/ 528 && line_x__value_1 !== (line_x__value_1 = /*xScale*/ ctx[9](/*tick*/ ctx[14]) - 10)) {
-    				attr_dev(line, "x2", line_x__value_1);
-    			}
-
     			const stackedrects_changes = {};
     			if (dirty & /*height*/ 2) stackedrects_changes.height = /*height*/ ctx[1] / 4.5;
-    			if (dirty & /*numCol*/ 64) stackedrects_changes.numCol = /*numCol*/ ctx[6];
-    			if (dirty & /*xScale, nSplits, xDiff*/ 656) stackedrects_changes.x = /*xScale*/ ctx[9](/*tick*/ ctx[14]) - /*xDiff*/ ctx[7];
-    			if (dirty & /*yScale*/ 256) stackedrects_changes.y = /*yScale*/ ctx[8](-1);
-    			if (dirty & /*numTest, numValidation, nSplits*/ 28) stackedrects_changes.fillRule = func;
+    			if (dirty & /*numCol*/ 256) stackedrects_changes.numCol = /*numCol*/ ctx[8];
+    			if (dirty & /*xScale, nSplits, xDiff*/ 2576) stackedrects_changes.x = /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9];
+    			if (dirty & /*yScale*/ 1024) stackedrects_changes.y = /*yScale*/ ctx[10](-1);
+    			if (dirty & /*numTest, numValidation, nSplits*/ 56) stackedrects_changes.fillRule = func;
     			stackedrects.$set(stackedrects_changes);
     			const scatterplot_changes = {};
-    			if (dirty & /*xScale, nSplits, xDiff*/ 656) scatterplot_changes.x = /*xScale*/ ctx[9](/*tick*/ ctx[14]) - /*xDiff*/ ctx[7] * 2;
-    			if (dirty & /*yScale*/ 256) scatterplot_changes.y = /*yScale*/ ctx[8](1);
+    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.data = /*dataArray*/ ctx[2][/*tick*/ ctx[20]]["scatterData"];
+    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.regressionData = /*dataArray*/ ctx[2][/*tick*/ ctx[20]]["regressionData"];
+    			if (dirty & /*xScale, nSplits, xDiff*/ 2576) scatterplot_changes.x = /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9] * 2;
+    			if (dirty & /*yScale*/ 1024) scatterplot_changes.y = /*yScale*/ ctx[10](1);
     			scatterplot.$set(scatterplot_changes);
+    			if ((!current || dirty & /*dataArray, nSplits*/ 20) && t1_value !== (t1_value = /*formatter*/ ctx[12](/*dataArray*/ ctx[2][/*tick*/ ctx[20]]["mse"]) + "")) set_data_dev(t1, t1_value);
 
-    			if (!current || dirty & /*xScale, nSplits, xDiff*/ 656 && text_1_x_value !== (text_1_x_value = /*xScale*/ ctx[9](/*tick*/ ctx[14]) - /*xDiff*/ ctx[7] * 2)) {
+    			if (!current || dirty & /*xScale, nSplits, xDiff*/ 2576 && text_1_x_value !== (text_1_x_value = /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9] * 2)) {
     				attr_dev(text_1, "x", text_1_x_value);
     			}
 
-    			if (!current || dirty & /*yScale*/ 256 && text_1_y_value !== (text_1_y_value = /*yScale*/ ctx[8](3))) {
+    			if (!current || dirty & /*yScale*/ 1024 && text_1_y_value !== (text_1_y_value = /*yScale*/ ctx[10](3))) {
     				attr_dev(text_1, "y", text_1_y_value);
     			}
     		},
@@ -3375,7 +4372,6 @@ var app = (function () {
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(line);
     			destroy_component(stackedrects, detaching);
     			destroy_component(scatterplot, detaching);
     			if (detaching) detach_dev(text_1);
@@ -3386,7 +4382,7 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(78:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(164:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -3426,15 +4422,17 @@ var app = (function () {
     	let g_transform_value;
     	let text3;
     	let t13;
+    	let t14_value = /*formatter*/ ctx[12](/*errorMean*/ ctx[7]) + "";
+    	let t14;
     	let text3_x_value;
     	let text3_y_value;
     	let svg_height_value;
     	let div1_resize_listener;
-    	let t14;
-    	let br2;
     	let t15;
-    	let br3;
+    	let br2;
     	let t16;
+    	let br3;
+    	let t17;
     	let p2;
     	let current;
     	let mounted;
@@ -3489,84 +4487,84 @@ var app = (function () {
     			}
 
     			text3 = svg_element("text");
-    			t13 = text("Average Score: 0.85");
-    			t14 = space();
-    			br2 = element("br");
+    			t13 = text("Estimated Test MSE: ");
+    			t14 = text(t14_value);
     			t15 = space();
-    			br3 = element("br");
+    			br2 = element("br");
     			t16 = space();
+    			br3 = element("br");
+    			t17 = space();
     			p2 = element("p");
     			p2.textContent = "When exploring the fit models above, you may have observed something\n  interesting! The lines of best fit across our folds vary more for lower values\n  of k than for higher values of k. This is a result of our old friend, the bias\n  variance tradeoff (https://mlu-explain.github.io/bias-variance/). Read on to\n  learn more!";
     			attr_dev(span, "class", "section-arrow");
-    			add_location(span, file$6, 41, 2, 1314);
+    			add_location(span, file$6, 127, 2, 3782);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$6, 40, 0, 1287);
+    			add_location(h1, file$6, 126, 0, 3755);
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$6, 43, 0, 1378);
-    			add_location(br0, file$6, 51, 0, 1792);
-    			add_location(br1, file$6, 51, 6, 1798);
+    			add_location(p0, file$6, 129, 0, 3846);
+    			add_location(br0, file$6, 137, 0, 4260);
+    			add_location(br1, file$6, 137, 6, 4266);
     			attr_dev(p1, "id", "input-label");
-    			attr_dev(p1, "class", "svelte-1qiglte");
-    			add_location(p1, file$6, 54, 2, 1851);
+    			attr_dev(p1, "class", "svelte-72n7xr");
+    			add_location(p1, file$6, 140, 2, 4319);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "step", "1");
     			attr_dev(input, "min", "2");
-    			attr_dev(input, "max", input_max_value = numRects$1 - /*numTest*/ ctx[3]);
-    			add_location(input, file$6, 55, 2, 1891);
+    			attr_dev(input, "max", input_max_value = numRects$1 - /*numTest*/ ctx[5]);
+    			add_location(input, file$6, 141, 2, 4359);
     			attr_dev(div0, "id", "input-container");
-    			attr_dev(div0, "class", "svelte-1qiglte");
-    			add_location(div0, file$6, 53, 0, 1822);
+    			attr_dev(div0, "class", "svelte-72n7xr");
+    			add_location(div0, file$6, 139, 0, 4290);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "3");
     			attr_dev(rect0, "fill", trainColor);
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$6, 68, 6, 2253);
-    			attr_dev(text0, "class", "legend-text svelte-1qiglte");
+    			add_location(rect0, file$6, 154, 6, 4721);
+    			attr_dev(text0, "class", "legend-text svelte-72n7xr");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "15");
-    			add_location(text0, file$6, 69, 6, 2321);
+    			add_location(text0, file$6, 155, 6, 4789);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "3");
     			attr_dev(rect1, "fill", validationColor);
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$6, 70, 6, 2380);
-    			attr_dev(text1, "class", "legend-text svelte-1qiglte");
+    			add_location(rect1, file$6, 156, 6, 4848);
+    			attr_dev(text1, "class", "legend-text svelte-72n7xr");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "15");
-    			add_location(text1, file$6, 71, 6, 2454);
+    			add_location(text1, file$6, 157, 6, 4922);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "3");
     			attr_dev(rect2, "fill", testColor);
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$6, 72, 6, 2518);
-    			attr_dev(text2, "class", "legend-text svelte-1qiglte");
+    			add_location(rect2, file$6, 158, 6, 4986);
+    			attr_dev(text2, "class", "legend-text svelte-72n7xr");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "15");
-    			add_location(text2, file$6, 73, 6, 2587);
+    			add_location(text2, file$6, 159, 6, 5055);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$6, 67, 4, 2183);
-    			attr_dev(text3, "class", "fold-error-text svelte-1qiglte");
+    			add_location(g, file$6, 153, 4, 4651);
+    			attr_dev(text3, "class", "fold-error-text svelte-72n7xr");
     			attr_dev(text3, "id", "average-fold-error-text");
-    			attr_dev(text3, "x", text3_x_value = "" + (/*width*/ ctx[0] / 2 + ","));
-    			attr_dev(text3, "y", text3_y_value = /*yScale*/ ctx[8](4));
+    			attr_dev(text3, "x", text3_x_value = /*width*/ ctx[0] / 2);
+    			attr_dev(text3, "y", text3_y_value = /*yScale*/ ctx[10](4));
     			attr_dev(text3, "text-anchor", "middle");
-    			add_location(text3, file$6, 139, 4, 4359);
+    			add_location(text3, file$6, 207, 4, 6331);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
-    			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[5].top + /*$margin*/ ctx[5].bottom);
-    			attr_dev(svg, "class", "svelte-1qiglte");
-    			add_location(svg, file$6, 65, 2, 2098);
+    			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[6].top + /*$margin*/ ctx[6].bottom);
+    			add_location(svg, file$6, 151, 2, 4566);
     			attr_dev(div1, "id", "cv-chart");
-    			attr_dev(div1, "class", "svelte-1qiglte");
-    			add_render_callback(() => /*div1_elementresize_handler*/ ctx[12].call(div1));
-    			add_location(div1, file$6, 64, 0, 2024);
-    			add_location(br2, file$6, 152, 0, 4695);
-    			add_location(br3, file$6, 153, 0, 4702);
+    			attr_dev(div1, "class", "svelte-72n7xr");
+    			add_render_callback(() => /*div1_elementresize_handler*/ ctx[16].call(div1));
+    			add_location(div1, file$6, 150, 0, 4492);
+    			add_location(br2, file$6, 216, 0, 6540);
+    			add_location(br3, file$6, 217, 0, 6547);
     			attr_dev(p2, "class", "body-text");
-    			add_location(p2, file$6, 154, 0, 4709);
+    			add_location(p2, file$6, 218, 0, 6554);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3608,19 +4606,20 @@ var app = (function () {
 
     			append_dev(svg, text3);
     			append_dev(text3, t13);
-    			div1_resize_listener = add_resize_listener(div1, /*div1_elementresize_handler*/ ctx[12].bind(div1));
-    			insert_dev(target, t14, anchor);
-    			insert_dev(target, br2, anchor);
+    			append_dev(text3, t14);
+    			div1_resize_listener = add_resize_listener(div1, /*div1_elementresize_handler*/ ctx[16].bind(div1));
     			insert_dev(target, t15, anchor);
-    			insert_dev(target, br3, anchor);
+    			insert_dev(target, br2, anchor);
     			insert_dev(target, t16, anchor);
+    			insert_dev(target, br3, anchor);
+    			insert_dev(target, t17, anchor);
     			insert_dev(target, p2, anchor);
     			current = true;
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[10]),
-    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[10])
+    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[14]),
+    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[14])
     				];
 
     				mounted = true;
@@ -3629,7 +4628,7 @@ var app = (function () {
     		p: function update(ctx, [dirty]) {
     			if (!current || dirty & /*nSplits*/ 16) set_data_dev(t7, /*nSplits*/ ctx[4]);
 
-    			if (!current || dirty & /*numTest*/ 8 && input_max_value !== (input_max_value = numRects$1 - /*numTest*/ ctx[3])) {
+    			if (!current || dirty & /*numTest*/ 32 && input_max_value !== (input_max_value = numRects$1 - /*numTest*/ ctx[5])) {
     				attr_dev(input, "max", input_max_value);
     			}
 
@@ -3641,7 +4640,7 @@ var app = (function () {
     				attr_dev(g, "transform", g_transform_value);
     			}
 
-    			if (dirty & /*xScale, Array, nSplits, xDiff, yScale, height, numCol, numRects, numTest, testColor, numValidation, validationColor, trainColor*/ 990) {
+    			if (dirty & /*xScale, Array, nSplits, xDiff, yScale, formatter, dataArray, height, numCol, numRects, numTest, testColor, numValidation, validationColor, trainColor*/ 7998) {
     				each_value = [...Array(/*nSplits*/ ctx[4]).keys()];
     				validate_each_argument(each_value);
     				let i;
@@ -3669,11 +4668,13 @@ var app = (function () {
     				check_outros();
     			}
 
-    			if (!current || dirty & /*width*/ 1 && text3_x_value !== (text3_x_value = "" + (/*width*/ ctx[0] / 2 + ","))) {
+    			if ((!current || dirty & /*errorMean*/ 128) && t14_value !== (t14_value = /*formatter*/ ctx[12](/*errorMean*/ ctx[7]) + "")) set_data_dev(t14, t14_value);
+
+    			if (!current || dirty & /*width*/ 1 && text3_x_value !== (text3_x_value = /*width*/ ctx[0] / 2)) {
     				attr_dev(text3, "x", text3_x_value);
     			}
 
-    			if (!current || dirty & /*yScale*/ 256 && text3_y_value !== (text3_y_value = /*yScale*/ ctx[8](4))) {
+    			if (!current || dirty & /*yScale*/ 1024 && text3_y_value !== (text3_y_value = /*yScale*/ ctx[10](4))) {
     				attr_dev(text3, "y", text3_y_value);
     			}
 
@@ -3681,7 +4682,7 @@ var app = (function () {
     				attr_dev(svg, "width", /*width*/ ctx[0]);
     			}
 
-    			if (!current || dirty & /*height, $margin*/ 34 && svg_height_value !== (svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[5].top + /*$margin*/ ctx[5].bottom)) {
+    			if (!current || dirty & /*height, $margin*/ 66 && svg_height_value !== (svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[6].top + /*$margin*/ ctx[6].bottom)) {
     				attr_dev(svg, "height", svg_height_value);
     			}
     		},
@@ -3716,11 +4717,11 @@ var app = (function () {
     			if (detaching) detach_dev(div1);
     			destroy_each(each_blocks, detaching);
     			div1_resize_listener();
-    			if (detaching) detach_dev(t14);
-    			if (detaching) detach_dev(br2);
     			if (detaching) detach_dev(t15);
-    			if (detaching) detach_dev(br3);
+    			if (detaching) detach_dev(br2);
     			if (detaching) detach_dev(t16);
+    			if (detaching) detach_dev(br3);
+    			if (detaching) detach_dev(t17);
     			if (detaching) detach_dev(p2);
     			mounted = false;
     			run_all(dispose);
@@ -3752,17 +4753,44 @@ var app = (function () {
     	let numTest;
     	let numValidation;
     	let numTrain;
+    	let errorMean;
+    	let dataArray;
+    	let splits;
     	let $margin;
     	validate_store(margin, 'margin');
-    	component_subscribe($$self, margin, $$value => $$invalidate(5, $margin = $$value));
+    	component_subscribe($$self, margin, $$value => $$invalidate(6, $margin = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('KFoldInteractive', slots, []);
     	let width = 500;
     	let height = 500;
+
+    	// label formatter
+    	const formatter = format(".1f");
+
+    	const dataLinear = [
+    		{ x: 10, y: 24 },
+    		{ x: 13, y: 4 },
+    		{ x: 11, y: 4 },
+    		{ x: 9, y: 23 },
+    		{ x: 8, y: 8 },
+    		{ x: 2, y: 10 },
+    		{ x: 11, y: 3 },
+    		{ x: 6, y: 6 },
+    		{ x: 5, y: 8 },
+    		{ x: 4, y: 12 },
+    		{ x: 12, y: 20 },
+    		{ x: 9, y: 4 },
+    		{ x: 6, y: 9 },
+    		{ x: 1, y: 14 },
+    		{ x: 1, y: 14 },
+    		{ x: 4, y: 15 }
+    	];
+
+    	const linearRegression = d3Regression.regressionLinear().x(d => d.x).y(d => d.y).domain(extent(dataLinear, d => d.x));
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<KFoldInteractive> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<KFoldInteractive> was created with unknown prop '${key}'`);
     	});
 
     	function input_change_input_handler() {
@@ -3789,16 +4817,26 @@ var app = (function () {
     		margin,
     		StackedRects,
     		Scatterplot,
+    		extent,
+    		mean,
+    		regressionLinear: d3Regression.regressionLinear,
+    		format,
     		width,
     		height,
+    		formatter,
     		numRects: numRects$1,
     		testColor,
     		trainColor,
     		validationColor,
+    		dataLinear,
+    		linearRegression,
+    		dataArray,
+    		errorMean,
     		numValidation,
-    		numTest,
-    		numTrain,
     		nSplits,
+    		numTest,
+    		splits,
+    		numTrain,
     		numCol,
     		xDiff,
     		yScale,
@@ -3809,14 +4847,17 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ('width' in $$props) $$invalidate(0, width = $$props.width);
     		if ('height' in $$props) $$invalidate(1, height = $$props.height);
-    		if ('numValidation' in $$props) $$invalidate(2, numValidation = $$props.numValidation);
-    		if ('numTest' in $$props) $$invalidate(3, numTest = $$props.numTest);
-    		if ('numTrain' in $$props) numTrain = $$props.numTrain;
+    		if ('dataArray' in $$props) $$invalidate(2, dataArray = $$props.dataArray);
+    		if ('errorMean' in $$props) $$invalidate(7, errorMean = $$props.errorMean);
+    		if ('numValidation' in $$props) $$invalidate(3, numValidation = $$props.numValidation);
     		if ('nSplits' in $$props) $$invalidate(4, nSplits = $$props.nSplits);
-    		if ('numCol' in $$props) $$invalidate(6, numCol = $$props.numCol);
-    		if ('xDiff' in $$props) $$invalidate(7, xDiff = $$props.xDiff);
-    		if ('yScale' in $$props) $$invalidate(8, yScale = $$props.yScale);
-    		if ('xScale' in $$props) $$invalidate(9, xScale = $$props.xScale);
+    		if ('numTest' in $$props) $$invalidate(5, numTest = $$props.numTest);
+    		if ('splits' in $$props) $$invalidate(13, splits = $$props.splits);
+    		if ('numTrain' in $$props) numTrain = $$props.numTrain;
+    		if ('numCol' in $$props) $$invalidate(8, numCol = $$props.numCol);
+    		if ('xDiff' in $$props) $$invalidate(9, xDiff = $$props.xDiff);
+    		if ('yScale' in $$props) $$invalidate(10, yScale = $$props.yScale);
+    		if ('xScale' in $$props) $$invalidate(11, xScale = $$props.xScale);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -3825,48 +4866,121 @@ var app = (function () {
 
     	$$self.$$.update = () => {
     		if ($$self.$$.dirty & /*nSplits, width*/ 17) {
-    			$$invalidate(9, xScale = nSplits < 8
-    			? linear().domain([-1, nSplits]).range([width * 0.2, width - width * 0.2])
+    			$$invalidate(11, xScale = nSplits < 7
+    			? linear().domain([-1, nSplits]).range([width * 0.1, width - width * 0.1])
     			: linear().domain([-1, nSplits]).range([0, width]));
     		}
 
-    		if ($$self.$$.dirty & /*$margin, height*/ 34) {
-    			// $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
-    			$$invalidate(8, yScale = band().domain([-1, 0, 1, 2, 3, 4]).range([$margin.bottom, height - $margin.top]).padding(0.1));
+    		if ($$self.$$.dirty & /*$margin, height*/ 66) {
+    			$$invalidate(10, yScale = band().domain([-1, 0, 1, 2, 3, 4]).range([$margin.bottom, height - $margin.top]).padding(0.1));
     		}
 
     		if ($$self.$$.dirty & /*nSplits*/ 16) {
     			// fill rule
-    			$$invalidate(6, numCol = nSplits > 10 + 2 ? 1 : 2);
+    			$$invalidate(8, numCol = nSplits > 10 + 2 ? 1 : 2);
     		}
 
-    		if ($$self.$$.dirty & /*numTest, nSplits*/ 24) {
-    			$$invalidate(2, numValidation = (numRects$1 - numTest) / nSplits);
+    		if ($$self.$$.dirty & /*numTest, nSplits*/ 48) {
+    			$$invalidate(3, numValidation = (numRects$1 - numTest) / nSplits);
     		}
 
-    		if ($$self.$$.dirty & /*numTest, numValidation*/ 12) {
+    		if ($$self.$$.dirty & /*numTest, numValidation*/ 40) {
     			numTrain = numRects$1 - numTest - numValidation;
+    		}
+
+    		if ($$self.$$.dirty & /*width*/ 1) {
+    			// instead of iterating over ticks, need to iterate over ticks and create data at higher
+    			// level component (here), so state can be passed down.KFoldInteractive
+    			// iterate through [...Array(nSplits).keys()] as tick
+    			// for each iteration: create
+    			// dataset with labels
+    			// regression dataset
+    			// end
+    			// then:
+    			// loop through that data in each block
+    			console.log("WIDTH", width / 2);
+    		}
+
+    		if ($$self.$$.dirty & /*nSplits*/ 16) {
+    			$$invalidate(13, splits = [...Array(nSplits).keys()]);
+    		}
+
+    		if ($$self.$$.dirty & /*splits, numTest, numValidation, nSplits, dataArray*/ 8252) {
+    			{
+    				$$invalidate(2, dataArray = []);
+
+    				for (const tick of splits) {
+    					// for each slice of data, calculate regression stuff
+    					const splitData = dataLinear.map((data, i) => {
+    						// circle color to match train/test/val split
+    						const color = i >= numRects$1 - numTest
+    						? testColor
+    						: i >= numValidation * (nSplits - tick - 1) && i < numValidation * (nSplits - tick - 1) + numValidation
+    							? validationColor
+    							: trainColor;
+
+    						return { x: data.x, y: data.y, color };
+    					});
+
+    					const trainData = splitData.filter(d => d.color === trainColor);
+    					const regressionData = linearRegression(trainData);
+
+    					// calculate MSE
+    					const validationData = splitData.filter(d => d.color === validationColor);
+
+    					const slope = regressionData["b"];
+    					const intercept = regressionData["a"];
+    					const n = validationData.length;
+
+    					// calculate squared errors (validation - predicted validation)
+    					const squaredErrors = validationData.map((d, i) => {
+    						const yPred = slope * d.x + intercept;
+    						const y = d.y;
+    						const difference = (y - yPred) ** 2;
+    						return difference;
+    					});
+
+    					// average over squared errors
+    					const meanSquaredError = squaredErrors.reduce((a, b) => a + b) / n;
+
+    					console.log("errors", meanSquaredError);
+
+    					const dataSet = {
+    						scatterData: splitData,
+    						regressionData,
+    						mse: meanSquaredError
+    					};
+
+    					$$invalidate(2, dataArray = [...dataArray, dataSet]);
+    				}
+
+    				// calculate average error across datasets
+    				$$invalidate(7, errorMean = mean(dataArray, d => d.mse));
+    			}
     		}
     	};
 
     	$$invalidate(4, nSplits = 4);
-
-    	// $: xDiff = width / ((nSplits + 1) * 4);
-    	$$invalidate(7, xDiff = 20);
-
-    	$$invalidate(3, numTest = 4);
+    	$$invalidate(9, xDiff = 20);
+    	$$invalidate(5, numTest = 4);
+    	$$invalidate(7, errorMean = 0);
+    	$$invalidate(2, dataArray = []);
 
     	return [
     		width,
     		height,
+    		dataArray,
     		numValidation,
-    		numTest,
     		nSplits,
+    		numTest,
     		$margin,
+    		errorMean,
     		numCol,
     		xDiff,
     		yScale,
     		xScale,
+    		formatter,
+    		splits,
     		input_change_input_handler,
     		func,
     		div1_elementresize_handler
@@ -4190,54 +5304,54 @@ var app = (function () {
     			add_location(br1, file$4, 4, 0, 40);
     			add_location(br2, file$4, 5, 0, 47);
     			add_location(br3, file$4, 7, 2, 81);
-    			attr_dev(span, "class", "section-arrow svelte-pn1n2d");
+    			attr_dev(span, "class", "section-arrow svelte-jhfv2v");
     			add_location(span, file$4, 9, 4, 119);
     			attr_dev(h3, "class", "body-header");
     			add_location(h3, file$4, 8, 2, 90);
-    			attr_dev(p0, "class", "body-text svelte-pn1n2d");
+    			attr_dev(p0, "class", "body-text svelte-jhfv2v");
     			add_location(p0, file$4, 11, 2, 195);
     			add_location(br4, file$4, 15, 2, 344);
-    			attr_dev(a0, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a0, "class", "on-end svelte-jhfv2v");
     			attr_dev(a0, "href", "https://www.researchgate.net/publication/228529307_Evaluation_From_Precision_Recall_and_F-Factor_to_ROC_Informedness_Markedness_Correlation");
     			add_location(a0, file$4, 17, 4, 383);
     			add_location(br5, file$4, 22, 5, 676);
-    			attr_dev(p1, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p1, "class", "resource-item svelte-jhfv2v");
     			add_location(p1, file$4, 16, 2, 353);
-    			attr_dev(a1, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a1, "class", "on-end svelte-jhfv2v");
     			attr_dev(a1, "href", "https://link.springer.com/article/10.1007/BF00116251");
     			add_location(a1, file$4, 26, 4, 760);
     			add_location(br6, file$4, 30, 5, 899);
-    			attr_dev(p2, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p2, "class", "resource-item svelte-jhfv2v");
     			add_location(p2, file$4, 25, 2, 730);
-    			attr_dev(a2, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a2, "class", "on-end svelte-jhfv2v");
     			attr_dev(a2, "href", "https://d3js.org/");
     			add_location(a2, file$4, 34, 4, 976);
     			add_location(br7, file$4, 34, 56, 1028);
-    			attr_dev(p3, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p3, "class", "resource-item svelte-jhfv2v");
     			add_location(p3, file$4, 33, 2, 946);
-    			attr_dev(a3, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a3, "class", "on-end svelte-jhfv2v");
     			attr_dev(a3, "href", "https://layercake.graphics/");
     			add_location(a3, file$4, 38, 4, 1111);
     			add_location(br8, file$4, 38, 70, 1177);
-    			attr_dev(p4, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p4, "class", "resource-item svelte-jhfv2v");
     			add_location(p4, file$4, 37, 2, 1081);
-    			attr_dev(a4, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a4, "class", "on-end svelte-jhfv2v");
     			attr_dev(a4, "href", "https://katex.org/");
     			add_location(a4, file$4, 42, 4, 1243);
     			add_location(br9, file$4, 42, 58, 1297);
-    			attr_dev(p5, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p5, "class", "resource-item svelte-jhfv2v");
     			add_location(p5, file$4, 41, 2, 1213);
-    			attr_dev(a5, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a5, "class", "on-end svelte-jhfv2v");
     			attr_dev(a5, "href", "https://svelte.dev/");
     			add_location(a5, file$4, 46, 4, 1380);
     			add_location(br10, file$4, 46, 59, 1435);
-    			attr_dev(p6, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p6, "class", "resource-item svelte-jhfv2v");
     			add_location(p6, file$4, 45, 2, 1350);
     			add_location(br11, file$4, 48, 2, 1464);
     			add_location(br12, file$4, 49, 2, 1473);
     			add_location(br13, file$4, 50, 2, 1482);
     			attr_dev(section, "id", "resources");
-    			attr_dev(section, "class", "svelte-pn1n2d");
+    			attr_dev(section, "class", "svelte-jhfv2v");
     			add_location(section, file$4, 6, 0, 54);
     		},
     		l: function claim(nodes) {
@@ -4349,8 +5463,7 @@ var app = (function () {
     	}
     }
 
-    const arrowPath =
-      "M11.5954 1.23584C12.2056 0.62565 13.1949 0.62565 13.8051 1.23584L24.7426 12.1733C25.3528 12.7835 25.3528 13.7729 24.7426 14.3831L13.8051 25.3206C13.1949 25.9307 12.2056 25.9307 11.5954 25.3206C10.9852 24.7104 10.9852 23.721 11.5954 23.1108L21.4281 13.2782L11.5954 3.44555C10.9852 2.83536 10.9852 1.84604 11.5954 1.23584Z";
+    const arrowPath = "M2 18H34M34 18L18 2M34 18L18 34";
 
     /* src/Components/ValidationSet.svelte generated by Svelte v3.48.0 */
     const file$3 = "src/Components/ValidationSet.svelte";
@@ -4361,7 +5474,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (72:6) {:else}
+    // (75:6) {:else}
     function create_else_block$2(ctx) {
     	let stackedrects;
     	let current;
@@ -4408,14 +5521,14 @@ var app = (function () {
     		block,
     		id: create_else_block$2.name,
     		type: "else",
-    		source: "(72:6) {:else}",
+    		source: "(75:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (63:27) 
+    // (66:27) 
     function create_if_block_1$2(ctx) {
     	let stackedrects;
     	let current;
@@ -4462,17 +5575,18 @@ var app = (function () {
     		block,
     		id: create_if_block_1$2.name,
     		type: "if",
-    		source: "(63:27) ",
+    		source: "(66:27) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (52:6) {#if tick === 1}
+    // (54:6) {#if tick === 1}
     function create_if_block$2(ctx) {
     	let g;
     	let path;
+    	let path_style_value;
     	let g_transform_value;
 
     	const block = {
@@ -4480,20 +5594,26 @@ var app = (function () {
     			g = svg_element("g");
     			path = svg_element("path");
     			attr_dev(path, "d", arrowPath);
-    			attr_dev(path, "style", `transform: scale(0.1)`);
+    			attr_dev(path, "style", `transform: scale(0.8)`);
     			attr_dev(path, "stroke", "#232f3e");
-    			attr_dev(path, "stroke-width", "3");
+    			attr_dev(path, "stroke-width", "8");
     			attr_dev(path, "fill", "#232f3e");
-    			add_location(path, file$3, 54, 10, 1894);
-    			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")");
-    			add_location(g, file$3, 53, 8, 1813);
+    			attr_dev(path, "stroke-linecap", "round");
+    			attr_dev(path, "stroke-linejoin", "round");
+    			add_location(path, file$3, 56, 10, 1906);
+    			attr_dev(g, "transform", g_transform_value = "translate(" + /*xScale*/ ctx[4](/*tick*/ ctx[9]) + ", " + /*yScale*/ ctx[3](0) + ")");
+    			add_location(g, file$3, 55, 8, 1841);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
     			append_dev(g, path);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")")) {
+    			if (dirty & /*xDiff*/ 4 && path_style_value !== (path_style_value = `transform: scale(${/*xDiff*/ ctx[2] / arrowWidth$2})`)) {
+    				attr_dev(path, "style", path_style_value);
+    			}
+
+    			if (dirty & /*xScale, yScale*/ 24 && g_transform_value !== (g_transform_value = "translate(" + /*xScale*/ ctx[4](/*tick*/ ctx[9]) + ", " + /*yScale*/ ctx[3](0) + ")")) {
     				attr_dev(g, "transform", g_transform_value);
     			}
     		},
@@ -4508,14 +5628,14 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(52:6) {#if tick === 1}",
+    		source: "(54:6) {#if tick === 1}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (51:4) {#each [...Array(nSplits).keys()] as tick}
+    // (53:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block$2(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -4565,7 +5685,7 @@ var app = (function () {
     		block,
     		id: create_each_block$2.name,
     		type: "each",
-    		source: "(51:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(53:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -4673,40 +5793,40 @@ var app = (function () {
     			p1 = element("p");
     			p1.textContent = "The Validation Set Approach is still widely used, especially when resource\n  constraints prohibit alternatives that require resampling (like cross\n  validation). But the approach is perfect! The obvious issues is that our\n  estimate of the test error can be highly variable depending on which\n  particular observations are included in the training set and which are\n  included in the validation set. That is, how do we know that the 30% we\n  selected is the best way to split the data? What if we’d used a different\n  split instead? Another issue is that this approach tends to overestimate the\n  test error for models fit on our entire dataset. This is because more training\n  data usually means better accuracy, but the validation set approach reserves a\n  decent-sized chunk of data for validation and testing (and not training). If\n  only there was a better resampling method for assessing how the results of a\n  statistical analysis will generalize to an independent data set...";
     			attr_dev(span0, "class", "section-arrow");
-    			add_location(span0, file$3, 22, 2, 680);
+    			add_location(span0, file$3, 24, 2, 708);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$3, 21, 0, 653);
+    			add_location(h1, file$3, 23, 0, 681);
     			attr_dev(a, "href", "https://mlu-explain.github.io/train-test-validation");
-    			add_location(a, file$3, 25, 7, 778);
+    			add_location(a, file$3, 27, 7, 806);
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file$3, 28, 2, 932);
+    			add_location(span1, file$3, 30, 2, 960);
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$3, 24, 0, 749);
-    			add_location(br0, file$3, 31, 0, 1079);
+    			add_location(p0, file$3, 26, 0, 777);
+    			add_location(br0, file$3, 33, 0, 1107);
     			attr_dev(span2, "class", "bold");
-    			add_location(span2, file$3, 34, 4, 1120);
-    			add_location(li0, file$3, 33, 2, 1111);
+    			add_location(span2, file$3, 36, 4, 1148);
+    			add_location(li0, file$3, 35, 2, 1139);
     			attr_dev(span3, "class", "bold");
-    			add_location(span3, file$3, 37, 4, 1221);
-    			add_location(li1, file$3, 36, 2, 1212);
+    			add_location(span3, file$3, 39, 4, 1249);
+    			add_location(li1, file$3, 38, 2, 1240);
     			attr_dev(span4, "class", "bold");
-    			add_location(span4, file$3, 42, 4, 1365);
-    			add_location(li2, file$3, 41, 2, 1356);
+    			add_location(span4, file$3, 44, 4, 1393);
+    			add_location(li2, file$3, 43, 2, 1384);
     			attr_dev(ul, "class", "body-text svelte-aoodt6");
-    			add_location(ul, file$3, 32, 0, 1086);
-    			add_location(br1, file$3, 46, 0, 1486);
+    			add_location(ul, file$3, 34, 0, 1114);
+    			add_location(br1, file$3, 48, 0, 1514);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[5].top + /*$margin*/ ctx[5].bottom);
     			attr_dev(svg, "class", "svelte-aoodt6");
-    			add_location(svg, file$3, 48, 2, 1567);
+    			add_location(svg, file$3, 50, 2, 1595);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-aoodt6");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[8].call(div));
-    			add_location(div, file$3, 47, 0, 1493);
-    			add_location(br2, file$3, 103, 0, 3118);
-    			add_location(br3, file$3, 103, 6, 3124);
+    			add_location(div, file$3, 49, 0, 1521);
+    			add_location(br2, file$3, 106, 0, 3204);
+    			add_location(br3, file$3, 106, 6, 3210);
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$3, 104, 0, 3131);
+    			add_location(p1, file$3, 107, 0, 3217);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4756,7 +5876,7 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*xScale, Array, nSplits, xDiff, yScale, arrowPath, height, dataLabel, validationLabels*/ 222) {
+    			if (dirty & /*xScale, Array, nSplits, yScale, arrowPath, xDiff, arrowWidth, height, dataLabel, validationLabels*/ 222) {
     				each_value = [...Array(nSplits$2).keys()];
     				validate_each_argument(each_value);
     				let i;
@@ -4844,6 +5964,7 @@ var app = (function () {
     }
 
     const nSplits$2 = 3;
+    const arrowWidth$2 = 36;
 
     const func$2 = () => {
     	return "#232f3e";
@@ -4892,6 +6013,7 @@ var app = (function () {
     		width,
     		height,
     		nSplits: nSplits$2,
+    		arrowWidth: arrowWidth$2,
     		dataLabel,
     		validationLabels,
     		xDiff,
@@ -4964,7 +6086,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (77:6) {:else}
+    // (79:6) {:else}
     function create_else_block$1(ctx) {
     	let stackedrects;
     	let current;
@@ -5017,14 +6139,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(77:6) {:else}",
+    		source: "(79:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (67:27) 
+    // (69:27) 
     function create_if_block_1$1(ctx) {
     	let stackedrects;
     	let current;
@@ -5072,14 +6194,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(67:27) ",
+    		source: "(69:27) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (57:6) {#if tick === 1}
+    // (58:6) {#if tick === 1}
     function create_if_block$1(ctx) {
     	let g;
     	let path;
@@ -5090,20 +6212,20 @@ var app = (function () {
     			g = svg_element("g");
     			path = svg_element("path");
     			attr_dev(path, "d", arrowPath);
-    			attr_dev(path, "style", `transform: scale(0.1)`);
+    			attr_dev(path, "style", `transform: scale(0.8)`);
     			attr_dev(path, "stroke", "#232f3e");
-    			attr_dev(path, "stroke-width", "3");
+    			attr_dev(path, "stroke-width", "8");
     			attr_dev(path, "fill", "#232f3e");
-    			add_location(path, file$2, 58, 10, 2626);
+    			add_location(path, file$2, 58, 10, 2615);
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")");
-    			add_location(g, file$2, 57, 8, 2545);
+    			add_location(g, file$2, 57, 8, 2534);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
     			append_dev(g, path);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")")) {
+    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")")) {
     				attr_dev(g, "transform", g_transform_value);
     			}
     		},
@@ -5118,14 +6240,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(57:6) {#if tick === 1}",
+    		source: "(58:6) {#if tick === 1}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (56:4) {#each [...Array(nSplits).keys()] as tick}
+    // (57:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block$1(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -5175,7 +6297,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(56:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(57:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -5279,63 +6401,63 @@ var app = (function () {
     			p2 = element("p");
     			p2.textContent = "If you think this looks familiar, you're on the right track: it's basically\n  the validation set applied k times - just with different splits of\n  training/validation data each time. But this simple extension to the\n  validation approach is very effective at overcoming the shortcomings of the\n  validation set approach. To be clear, it does come with a cost: the need to\n  train our data multiple times (once for each fold). Still, the method is\n  widely used, as the benefits outweight the cost in many scenarios. Because we\n  train our model on multiple instances of our data and take the average of\n  their evaluation scores, our evaluation estimates have lower variance.\n  Additionally, each fold itself uses more data than previously, so test error\n  estimates are more accurate. Even for modest values (e.g. k = 5), our training\n  set comprises 80 percent of our data. (Compare that with the validation set\n  approach, where our model is typically trained on around only 50-60 percent of\n  the original dataset.) This means that the K-fold approach typically doesn’t\n  overestimate the test error as much as the validation set approach does.";
     			attr_dev(span0, "class", "section-arrow");
-    			add_location(span0, file$2, 15, 2, 472);
+    			add_location(span0, file$2, 15, 2, 461);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$2, 14, 0, 445);
+    			add_location(h1, file$2, 14, 0, 434);
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file$2, 29, 5, 1435);
+    			add_location(span1, file$2, 29, 5, 1424);
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$2, 17, 0, 544);
-    			add_location(br0, file$2, 32, 0, 1557);
+    			add_location(p0, file$2, 17, 0, 533);
+    			add_location(br0, file$2, 32, 0, 1546);
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$2, 33, 0, 1564);
-    			add_location(br1, file$2, 38, 0, 1817);
-    			add_location(br2, file$2, 40, 0, 1825);
+    			add_location(p1, file$2, 33, 0, 1553);
+    			add_location(br1, file$2, 38, 0, 1806);
+    			add_location(br2, file$2, 40, 0, 1814);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "3");
     			attr_dev(rect0, "fill", "#003181");
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$2, 46, 6, 2062);
+    			add_location(rect0, file$2, 46, 6, 2051);
     			attr_dev(text0, "class", "legend-text svelte-164d2jo");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "15");
-    			add_location(text0, file$2, 47, 6, 2127);
+    			add_location(text0, file$2, 47, 6, 2116);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "3");
     			attr_dev(rect1, "fill", "#f46ebb");
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$2, 48, 6, 2186);
+    			add_location(rect1, file$2, 48, 6, 2175);
     			attr_dev(text1, "class", "legend-text svelte-164d2jo");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "15");
-    			add_location(text1, file$2, 49, 6, 2252);
+    			add_location(text1, file$2, 49, 6, 2241);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "3");
     			attr_dev(rect2, "fill", "#ffad97");
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$2, 50, 6, 2316);
+    			add_location(rect2, file$2, 50, 6, 2305);
     			attr_dev(text2, "class", "legend-text svelte-164d2jo");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "15");
-    			add_location(text2, file$2, 51, 6, 2383);
+    			add_location(text2, file$2, 51, 6, 2372);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$2, 45, 4, 1992);
+    			add_location(g, file$2, 45, 4, 1981);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[5].top + /*$margin*/ ctx[5].bottom);
     			attr_dev(svg, "class", "svelte-164d2jo");
-    			add_location(svg, file$2, 43, 2, 1907);
+    			add_location(svg, file$2, 43, 2, 1896);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-164d2jo");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[7].call(div));
-    			add_location(div, file$2, 42, 0, 1833);
-    			add_location(br3, file$2, 112, 0, 4006);
-    			add_location(br4, file$2, 112, 6, 4012);
+    			add_location(div, file$2, 42, 0, 1822);
+    			add_location(br3, file$2, 112, 0, 3995);
+    			add_location(br4, file$2, 112, 6, 4001);
     			attr_dev(p2, "class", "body-text");
-    			add_location(p2, file$2, 113, 0, 4019);
+    			add_location(p2, file$2, 113, 0, 4008);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -5478,6 +6600,7 @@ var app = (function () {
     }
 
     const nSplits$1 = 6;
+    const arrowWidth$1 = 36;
 
     const func$1 = () => {
     	return "#232f3e";
@@ -5515,13 +6638,13 @@ var app = (function () {
 
     	$$self.$capture_state = () => ({
     		scaleLinear: linear,
-    		scaleBand: band,
     		margin,
     		arrowPath,
     		StackedRects,
     		width,
     		height,
     		nSplits: nSplits$1,
+    		arrowWidth: arrowWidth$1,
     		xDiff,
     		yScale,
     		xScale,
@@ -5581,6 +6704,8 @@ var app = (function () {
     }
 
     /* src/Components/LOOCV.svelte generated by Svelte v3.48.0 */
+
+    const { console: console_1 } = globals;
     const file$1 = "src/Components/LOOCV.svelte";
 
     function get_each_context(ctx, list, i) {
@@ -5589,7 +6714,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (74:6) {:else}
+    // (78:6) {:else}
     function create_else_block(ctx) {
     	let stackedrects;
     	let current;
@@ -5642,14 +6767,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(74:6) {:else}",
+    		source: "(78:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (64:27) 
+    // (68:27) 
     function create_if_block_1(ctx) {
     	let stackedrects;
     	let current;
@@ -5697,14 +6822,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(64:27) ",
+    		source: "(68:27) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (51:6) {#if tick === 1}
+    // (53:6) {#if tick === 1}
     function create_if_block(ctx) {
     	let g;
     	let path;
@@ -5715,20 +6840,22 @@ var app = (function () {
     			g = svg_element("g");
     			path = svg_element("path");
     			attr_dev(path, "d", arrowPath);
-    			attr_dev(path, "style", `transform: scale(0.05)`);
+    			attr_dev(path, "style", `transform: scale(0.8)`);
     			attr_dev(path, "stroke", "#232f3e");
-    			attr_dev(path, "stroke-width", "3");
+    			attr_dev(path, "stroke-width", `${4 / .35}`);
     			attr_dev(path, "fill", "#232f3e");
-    			add_location(path, file$1, 55, 10, 2130);
-    			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2] - 7) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")");
-    			add_location(g, file$1, 52, 8, 2026);
+    			attr_dev(path, "stroke-linecap", "round");
+    			attr_dev(path, "stroke-linejoin", "round");
+    			add_location(path, file$1, 57, 10, 2206);
+    			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")");
+    			add_location(g, file$1, 54, 8, 2113);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
     			append_dev(g, path);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2] - 7) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")")) {
+    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")")) {
     				attr_dev(g, "transform", g_transform_value);
     			}
     		},
@@ -5743,14 +6870,14 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(51:6) {#if tick === 1}",
+    		source: "(53:6) {#if tick === 1}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (50:4) {#each [...Array(nSplits).keys()] as tick}
+    // (52:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -5800,7 +6927,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(50:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(52:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -5891,58 +7018,58 @@ var app = (function () {
     			span1.textContent = "many";
     			t13 = text("\n  times (once for every data point!). This is expensive both in the amount of resources\n  it requires, as well as the time it takes to wait for your model to train on so\n  many iterations. For this reason, it's rare to see LOOCV employed in the wild,\n  (especially for large-scale models), and a more conservative value of k is often\n  used (e.g. k = 5 or k = 10).");
     			attr_dev(span0, "class", "section-arrow");
-    			add_location(span0, file$1, 23, 2, 634);
+    			add_location(span0, file$1, 25, 2, 721);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$1, 22, 0, 607);
+    			add_location(h1, file$1, 24, 0, 694);
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$1, 25, 0, 720);
-    			add_location(br0, file$1, 34, 0, 1220);
+    			add_location(p0, file$1, 27, 0, 807);
+    			add_location(br0, file$1, 36, 0, 1307);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "3");
     			attr_dev(rect0, "fill", "#003181");
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$1, 40, 6, 1457);
+    			add_location(rect0, file$1, 42, 6, 1544);
     			attr_dev(text0, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "15");
-    			add_location(text0, file$1, 41, 6, 1522);
+    			add_location(text0, file$1, 43, 6, 1609);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "3");
     			attr_dev(rect1, "fill", "#f46ebb");
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$1, 42, 6, 1581);
+    			add_location(rect1, file$1, 44, 6, 1668);
     			attr_dev(text1, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "15");
-    			add_location(text1, file$1, 43, 6, 1647);
+    			add_location(text1, file$1, 45, 6, 1734);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "3");
     			attr_dev(rect2, "fill", "#ffad97");
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$1, 44, 6, 1711);
+    			add_location(rect2, file$1, 46, 6, 1798);
     			attr_dev(text2, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "15");
-    			add_location(text2, file$1, 45, 6, 1778);
+    			add_location(text2, file$1, 47, 6, 1865);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$1, 39, 4, 1387);
+    			add_location(g, file$1, 41, 4, 1474);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[5].top + /*$margin*/ ctx[5].bottom);
-    			add_location(svg, file$1, 37, 2, 1302);
+    			add_location(svg, file$1, 39, 2, 1389);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-1fpr9wp");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[7].call(div));
     			add_location(div, file$1, 36, 0, 1228);
-    			add_location(br1, file$1, 108, 0, 3450);
-    			add_location(br2, file$1, 108, 6, 3456);
+    			add_location(br1, file$1, 108, 0, 3449);
+    			add_location(br2, file$1, 108, 6, 3455);
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file$1, 113, 65, 3783);
+    			add_location(span1, file$1, 113, 65, 3782);
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$1, 109, 0, 3463);
+    			add_location(p1, file$1, 109, 0, 3462);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -6075,6 +7202,7 @@ var app = (function () {
     const nSplits = 23;
     const numCol = 1;
     const numRects = 26;
+    const arrowWidth = 36;
 
     const func = () => {
     	return "#232f3e";
@@ -6092,6 +7220,11 @@ var app = (function () {
     	let width = 500;
     	let height = 500;
 
+    	console.log({
+    		xDiff: width / ((nSplits + 1) * 4),
+    		arrowWidth
+    	});
+
     	let validationLabels = [
     		{ label: "Train", y: 5 },
     		{ label: "Validation", y: 13 },
@@ -6101,7 +7234,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<LOOCV> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<LOOCV> was created with unknown prop '${key}'`);
     	});
 
     	const func_1 = (tick, d) => {
@@ -6127,6 +7260,7 @@ var app = (function () {
     		nSplits,
     		numCol,
     		numRects,
+    		arrowWidth,
     		validationLabels,
     		xDiff,
     		yScale,

@@ -219,7 +219,7 @@
   <p class="body-text">
     <span class="bold">Are Our Coefficients Valid?</span><br />
     In research publications and statistical software, coefficients of regression
-    models are often presented with associated p-values. These p-values from from
+    models are often presented with associated p-values. These p-values come from
     traditional null hypothesis statistical tests: t-tests are used to measure whether
     a given cofficient is significantly different than zero (the null hypothesis
     that a particular coefficient {@html katexify(`\\beta_i`, false)} equals zero),
@@ -229,7 +229,7 @@
     opinions exist on the utility of such tests (e.g. chapter 10.7 of
     <a href="#resources">[1]</a> maintains they're not super important). We don't
     take a strong stance on this issue, but believe practitioners should always assess
-    the standard error aroud any parameter estimates for themselves and present them
+    the standard error around any parameter estimates for themselves and present them
     in their research.
   </p>
   <br /><br />

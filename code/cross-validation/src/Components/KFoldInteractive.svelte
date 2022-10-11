@@ -193,23 +193,28 @@
       <Scatterplot
         data={dataArray[tick]["scatterData"]}
         regressionData={dataArray[tick]["regressionData"]}
-        width={85}
-        height={85}
+        width={yScale.bandwidth()}
+        height={yScale.bandwidth()}
         x={xScale(tick) - xDiff * 2}
         y={yScale(1)}
       />
 
       <!-- Error text -->
-      <text class="fold-error-text" x={xScale(tick) - xDiff * 2} y={yScale(3)}
-        >Val MSE: {formatter(dataArray[tick]["mse"])}</text
+      <text
+        class="fold-error-text"
+        x={xScale(tick) - xDiff * 2}
+        y={yScale(3) - yScale.bandwidth()*.85}
       >
+        Val MSE:
+        {formatter(dataArray[tick]["mse"])}
+      </text>
     {/each}
     <!-- Final accuracy text -->
     <text
       class="fold-error-text"
       id="average-fold-error-text"
       x={width / 2}
-      y={yScale(4)}
+      y={yScale(4)-yScale.bandwidth()*.85}
       text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
   </svg>
@@ -250,7 +255,7 @@
 
   .fold-error-text {
     font-family: var(--font-heavy);
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     stroke-linejoin: round;
     paint-order: stroke fill;
     stroke: var(--white);
@@ -260,7 +265,7 @@
 
   #average-fold-error-text {
     fill: var(--peach);
-    font-size: 0.8rem;
+    font-size: 1.1rem;
   }
 
   /* ipad */
