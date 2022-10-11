@@ -764,21 +764,21 @@ var app = (function () {
     			attr_dev(span, "id", "title-cv");
     			add_location(span, file$a, 24, 4, 478);
     			attr_dev(h10, "id", "intro-hed");
-    			attr_dev(h10, "class", "title-cv svelte-pehdcn");
+    			attr_dev(h10, "class", "title-cv svelte-1hqcxid");
     			add_location(h10, file$a, 23, 2, 437);
-    			attr_dev(h11, "class", "intro-sub svelte-pehdcn");
+    			attr_dev(h11, "class", "intro-sub svelte-1hqcxid");
     			add_location(h11, file$a, 26, 2, 532);
     			attr_dev(a0, "href", "https://twitter.com/jdwlbr");
-    			attr_dev(a0, "class", "svelte-pehdcn");
+    			attr_dev(a0, "class", "svelte-1hqcxid");
     			add_location(a0, file$a, 28, 4, 611);
     			attr_dev(a1, "href", "https://www.linkedin.com/in/jaspercroome/");
-    			attr_dev(a1, "class", "svelte-pehdcn");
+    			attr_dev(a1, "class", "svelte-1hqcxid");
     			add_location(a1, file$a, 29, 4, 671);
     			attr_dev(h3, "id", "intro__date");
-    			attr_dev(h3, "class", "svelte-pehdcn");
+    			attr_dev(h3, "class", "svelte-1hqcxid");
     			add_location(h3, file$a, 27, 2, 585);
     			attr_dev(section, "id", "intro");
-    			attr_dev(section, "class", "svelte-pehdcn");
+    			attr_dev(section, "class", "svelte-1hqcxid");
     			add_location(section, file$a, 22, 0, 414);
     		},
     		l: function claim(nodes) {
@@ -5304,54 +5304,54 @@ var app = (function () {
     			add_location(br1, file$4, 4, 0, 40);
     			add_location(br2, file$4, 5, 0, 47);
     			add_location(br3, file$4, 7, 2, 81);
-    			attr_dev(span, "class", "section-arrow svelte-pn1n2d");
+    			attr_dev(span, "class", "section-arrow svelte-jhfv2v");
     			add_location(span, file$4, 9, 4, 119);
     			attr_dev(h3, "class", "body-header");
     			add_location(h3, file$4, 8, 2, 90);
-    			attr_dev(p0, "class", "body-text svelte-pn1n2d");
+    			attr_dev(p0, "class", "body-text svelte-jhfv2v");
     			add_location(p0, file$4, 11, 2, 195);
     			add_location(br4, file$4, 15, 2, 344);
-    			attr_dev(a0, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a0, "class", "on-end svelte-jhfv2v");
     			attr_dev(a0, "href", "https://www.researchgate.net/publication/228529307_Evaluation_From_Precision_Recall_and_F-Factor_to_ROC_Informedness_Markedness_Correlation");
     			add_location(a0, file$4, 17, 4, 383);
     			add_location(br5, file$4, 22, 5, 676);
-    			attr_dev(p1, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p1, "class", "resource-item svelte-jhfv2v");
     			add_location(p1, file$4, 16, 2, 353);
-    			attr_dev(a1, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a1, "class", "on-end svelte-jhfv2v");
     			attr_dev(a1, "href", "https://link.springer.com/article/10.1007/BF00116251");
     			add_location(a1, file$4, 26, 4, 760);
     			add_location(br6, file$4, 30, 5, 899);
-    			attr_dev(p2, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p2, "class", "resource-item svelte-jhfv2v");
     			add_location(p2, file$4, 25, 2, 730);
-    			attr_dev(a2, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a2, "class", "on-end svelte-jhfv2v");
     			attr_dev(a2, "href", "https://d3js.org/");
     			add_location(a2, file$4, 34, 4, 976);
     			add_location(br7, file$4, 34, 56, 1028);
-    			attr_dev(p3, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p3, "class", "resource-item svelte-jhfv2v");
     			add_location(p3, file$4, 33, 2, 946);
-    			attr_dev(a3, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a3, "class", "on-end svelte-jhfv2v");
     			attr_dev(a3, "href", "https://layercake.graphics/");
     			add_location(a3, file$4, 38, 4, 1111);
     			add_location(br8, file$4, 38, 70, 1177);
-    			attr_dev(p4, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p4, "class", "resource-item svelte-jhfv2v");
     			add_location(p4, file$4, 37, 2, 1081);
-    			attr_dev(a4, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a4, "class", "on-end svelte-jhfv2v");
     			attr_dev(a4, "href", "https://katex.org/");
     			add_location(a4, file$4, 42, 4, 1243);
     			add_location(br9, file$4, 42, 58, 1297);
-    			attr_dev(p5, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p5, "class", "resource-item svelte-jhfv2v");
     			add_location(p5, file$4, 41, 2, 1213);
-    			attr_dev(a5, "class", "on-end svelte-pn1n2d");
+    			attr_dev(a5, "class", "on-end svelte-jhfv2v");
     			attr_dev(a5, "href", "https://svelte.dev/");
     			add_location(a5, file$4, 46, 4, 1380);
     			add_location(br10, file$4, 46, 59, 1435);
-    			attr_dev(p6, "class", "resource-item svelte-pn1n2d");
+    			attr_dev(p6, "class", "resource-item svelte-jhfv2v");
     			add_location(p6, file$4, 45, 2, 1350);
     			add_location(br11, file$4, 48, 2, 1464);
     			add_location(br12, file$4, 49, 2, 1473);
     			add_location(br13, file$4, 50, 2, 1482);
     			attr_dev(section, "id", "resources");
-    			attr_dev(section, "class", "svelte-pn1n2d");
+    			attr_dev(section, "class", "svelte-jhfv2v");
     			add_location(section, file$4, 6, 0, 54);
     		},
     		l: function claim(nodes) {
@@ -5463,8 +5463,7 @@ var app = (function () {
     	}
     }
 
-    const arrowPath =
-      "M11.5954 1.23584C12.2056 0.62565 13.1949 0.62565 13.8051 1.23584L24.7426 12.1733C25.3528 12.7835 25.3528 13.7729 24.7426 14.3831L13.8051 25.3206C13.1949 25.9307 12.2056 25.9307 11.5954 25.3206C10.9852 24.7104 10.9852 23.721 11.5954 23.1108L21.4281 13.2782L11.5954 3.44555C10.9852 2.83536 10.9852 1.84604 11.5954 1.23584Z";
+    const arrowPath = "M2 18H34M34 18L18 2M34 18L18 34";
 
     /* src/Components/ValidationSet.svelte generated by Svelte v3.48.0 */
     const file$3 = "src/Components/ValidationSet.svelte";
@@ -5475,7 +5474,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (72:6) {:else}
+    // (75:6) {:else}
     function create_else_block$2(ctx) {
     	let stackedrects;
     	let current;
@@ -5522,14 +5521,14 @@ var app = (function () {
     		block,
     		id: create_else_block$2.name,
     		type: "else",
-    		source: "(72:6) {:else}",
+    		source: "(75:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (63:27) 
+    // (66:27) 
     function create_if_block_1$2(ctx) {
     	let stackedrects;
     	let current;
@@ -5576,17 +5575,18 @@ var app = (function () {
     		block,
     		id: create_if_block_1$2.name,
     		type: "if",
-    		source: "(63:27) ",
+    		source: "(66:27) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (52:6) {#if tick === 1}
+    // (54:6) {#if tick === 1}
     function create_if_block$2(ctx) {
     	let g;
     	let path;
+    	let path_style_value;
     	let g_transform_value;
 
     	const block = {
@@ -5596,18 +5596,24 @@ var app = (function () {
     			attr_dev(path, "d", arrowPath);
     			attr_dev(path, "style", `transform: scale(0.8)`);
     			attr_dev(path, "stroke", "#232f3e");
-    			attr_dev(path, "stroke-width", "3");
+    			attr_dev(path, "stroke-width", "8");
     			attr_dev(path, "fill", "#232f3e");
-    			add_location(path, file$3, 54, 10, 1894);
-    			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")");
-    			add_location(g, file$3, 53, 8, 1813);
+    			attr_dev(path, "stroke-linecap", "round");
+    			attr_dev(path, "stroke-linejoin", "round");
+    			add_location(path, file$3, 56, 10, 1906);
+    			attr_dev(g, "transform", g_transform_value = "translate(" + /*xScale*/ ctx[4](/*tick*/ ctx[9]) + ", " + /*yScale*/ ctx[3](0) + ")");
+    			add_location(g, file$3, 55, 8, 1841);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
     			append_dev(g, path);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")")) {
+    			if (dirty & /*xDiff*/ 4 && path_style_value !== (path_style_value = `transform: scale(${/*xDiff*/ ctx[2] / arrowWidth$2})`)) {
+    				attr_dev(path, "style", path_style_value);
+    			}
+
+    			if (dirty & /*xScale, yScale*/ 24 && g_transform_value !== (g_transform_value = "translate(" + /*xScale*/ ctx[4](/*tick*/ ctx[9]) + ", " + /*yScale*/ ctx[3](0) + ")")) {
     				attr_dev(g, "transform", g_transform_value);
     			}
     		},
@@ -5622,14 +5628,14 @@ var app = (function () {
     		block,
     		id: create_if_block$2.name,
     		type: "if",
-    		source: "(52:6) {#if tick === 1}",
+    		source: "(54:6) {#if tick === 1}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (51:4) {#each [...Array(nSplits).keys()] as tick}
+    // (53:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block$2(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -5679,7 +5685,7 @@ var app = (function () {
     		block,
     		id: create_each_block$2.name,
     		type: "each",
-    		source: "(51:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(53:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -5787,40 +5793,40 @@ var app = (function () {
     			p1 = element("p");
     			p1.textContent = "The Validation Set Approach is still widely used, especially when resource\n  constraints prohibit alternatives that require resampling (like cross\n  validation). But the approach is perfect! The obvious issues is that our\n  estimate of the test error can be highly variable depending on which\n  particular observations are included in the training set and which are\n  included in the validation set. That is, how do we know that the 30% we\n  selected is the best way to split the data? What if we’d used a different\n  split instead? Another issue is that this approach tends to overestimate the\n  test error for models fit on our entire dataset. This is because more training\n  data usually means better accuracy, but the validation set approach reserves a\n  decent-sized chunk of data for validation and testing (and not training). If\n  only there was a better resampling method for assessing how the results of a\n  statistical analysis will generalize to an independent data set...";
     			attr_dev(span0, "class", "section-arrow");
-    			add_location(span0, file$3, 22, 2, 680);
+    			add_location(span0, file$3, 24, 2, 708);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$3, 21, 0, 653);
+    			add_location(h1, file$3, 23, 0, 681);
     			attr_dev(a, "href", "https://mlu-explain.github.io/train-test-validation");
-    			add_location(a, file$3, 25, 7, 778);
+    			add_location(a, file$3, 27, 7, 806);
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file$3, 28, 2, 932);
+    			add_location(span1, file$3, 30, 2, 960);
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$3, 24, 0, 749);
-    			add_location(br0, file$3, 31, 0, 1079);
+    			add_location(p0, file$3, 26, 0, 777);
+    			add_location(br0, file$3, 33, 0, 1107);
     			attr_dev(span2, "class", "bold");
-    			add_location(span2, file$3, 34, 4, 1120);
-    			add_location(li0, file$3, 33, 2, 1111);
+    			add_location(span2, file$3, 36, 4, 1148);
+    			add_location(li0, file$3, 35, 2, 1139);
     			attr_dev(span3, "class", "bold");
-    			add_location(span3, file$3, 37, 4, 1221);
-    			add_location(li1, file$3, 36, 2, 1212);
+    			add_location(span3, file$3, 39, 4, 1249);
+    			add_location(li1, file$3, 38, 2, 1240);
     			attr_dev(span4, "class", "bold");
-    			add_location(span4, file$3, 42, 4, 1365);
-    			add_location(li2, file$3, 41, 2, 1356);
+    			add_location(span4, file$3, 44, 4, 1393);
+    			add_location(li2, file$3, 43, 2, 1384);
     			attr_dev(ul, "class", "body-text svelte-aoodt6");
-    			add_location(ul, file$3, 32, 0, 1086);
-    			add_location(br1, file$3, 46, 0, 1486);
+    			add_location(ul, file$3, 34, 0, 1114);
+    			add_location(br1, file$3, 48, 0, 1514);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[5].top + /*$margin*/ ctx[5].bottom);
     			attr_dev(svg, "class", "svelte-aoodt6");
-    			add_location(svg, file$3, 48, 2, 1567);
+    			add_location(svg, file$3, 50, 2, 1595);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-aoodt6");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[8].call(div));
-    			add_location(div, file$3, 47, 0, 1493);
-    			add_location(br2, file$3, 103, 0, 3118);
-    			add_location(br3, file$3, 103, 6, 3124);
+    			add_location(div, file$3, 49, 0, 1521);
+    			add_location(br2, file$3, 106, 0, 3204);
+    			add_location(br3, file$3, 106, 6, 3210);
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$3, 104, 0, 3131);
+    			add_location(p1, file$3, 107, 0, 3217);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -5870,7 +5876,7 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*xScale, Array, nSplits, xDiff, yScale, arrowPath, height, dataLabel, validationLabels*/ 222) {
+    			if (dirty & /*xScale, Array, nSplits, yScale, arrowPath, xDiff, arrowWidth, height, dataLabel, validationLabels*/ 222) {
     				each_value = [...Array(nSplits$2).keys()];
     				validate_each_argument(each_value);
     				let i;
@@ -5958,6 +5964,7 @@ var app = (function () {
     }
 
     const nSplits$2 = 3;
+    const arrowWidth$2 = 36;
 
     const func$2 = () => {
     	return "#232f3e";
@@ -6006,6 +6013,7 @@ var app = (function () {
     		width,
     		height,
     		nSplits: nSplits$2,
+    		arrowWidth: arrowWidth$2,
     		dataLabel,
     		validationLabels,
     		xDiff,
@@ -6078,7 +6086,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (77:6) {:else}
+    // (79:6) {:else}
     function create_else_block$1(ctx) {
     	let stackedrects;
     	let current;
@@ -6131,14 +6139,14 @@ var app = (function () {
     		block,
     		id: create_else_block$1.name,
     		type: "else",
-    		source: "(77:6) {:else}",
+    		source: "(79:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (67:27) 
+    // (69:27) 
     function create_if_block_1$1(ctx) {
     	let stackedrects;
     	let current;
@@ -6186,14 +6194,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(67:27) ",
+    		source: "(69:27) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (57:6) {#if tick === 1}
+    // (58:6) {#if tick === 1}
     function create_if_block$1(ctx) {
     	let g;
     	let path;
@@ -6206,7 +6214,7 @@ var app = (function () {
     			attr_dev(path, "d", arrowPath);
     			attr_dev(path, "style", `transform: scale(0.8)`);
     			attr_dev(path, "stroke", "#232f3e");
-    			attr_dev(path, "stroke-width", "3");
+    			attr_dev(path, "stroke-width", "8");
     			attr_dev(path, "fill", "#232f3e");
     			add_location(path, file$2, 58, 10, 2615);
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")");
@@ -6217,7 +6225,7 @@ var app = (function () {
     			append_dev(g, path);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")")) {
+    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")")) {
     				attr_dev(g, "transform", g_transform_value);
     			}
     		},
@@ -6232,14 +6240,14 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(57:6) {#if tick === 1}",
+    		source: "(58:6) {#if tick === 1}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (56:4) {#each [...Array(nSplits).keys()] as tick}
+    // (57:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block$1(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -6289,7 +6297,7 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(56:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(57:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -6592,6 +6600,7 @@ var app = (function () {
     }
 
     const nSplits$1 = 6;
+    const arrowWidth$1 = 36;
 
     const func$1 = () => {
     	return "#232f3e";
@@ -6635,6 +6644,7 @@ var app = (function () {
     		width,
     		height,
     		nSplits: nSplits$1,
+    		arrowWidth: arrowWidth$1,
     		xDiff,
     		yScale,
     		xScale,
@@ -6694,6 +6704,8 @@ var app = (function () {
     }
 
     /* src/Components/LOOCV.svelte generated by Svelte v3.48.0 */
+
+    const { console: console_1 } = globals;
     const file$1 = "src/Components/LOOCV.svelte";
 
     function get_each_context(ctx, list, i) {
@@ -6702,7 +6714,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (74:6) {:else}
+    // (78:6) {:else}
     function create_else_block(ctx) {
     	let stackedrects;
     	let current;
@@ -6755,14 +6767,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(74:6) {:else}",
+    		source: "(78:6) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (64:27) 
+    // (68:27) 
     function create_if_block_1(ctx) {
     	let stackedrects;
     	let current;
@@ -6810,14 +6822,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(64:27) ",
+    		source: "(68:27) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (51:6) {#if tick === 1}
+    // (53:6) {#if tick === 1}
     function create_if_block(ctx) {
     	let g;
     	let path;
@@ -6830,18 +6842,20 @@ var app = (function () {
     			attr_dev(path, "d", arrowPath);
     			attr_dev(path, "style", `transform: scale(0.8)`);
     			attr_dev(path, "stroke", "#232f3e");
-    			attr_dev(path, "stroke-width", "3");
+    			attr_dev(path, "stroke-width", `${4 / .35}`);
     			attr_dev(path, "fill", "#232f3e");
-    			add_location(path, file$1, 55, 10, 2130);
-    			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2] - 7) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")");
-    			add_location(g, file$1, 52, 8, 2026);
+    			attr_dev(path, "stroke-linecap", "round");
+    			attr_dev(path, "stroke-linejoin", "round");
+    			add_location(path, file$1, 57, 10, 2206);
+    			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")");
+    			add_location(g, file$1, 54, 8, 2113);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
     			append_dev(g, path);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2] - 7) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")")) {
+    			if (dirty & /*xScale, xDiff, yScale*/ 28 && g_transform_value !== (g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[9]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")")) {
     				attr_dev(g, "transform", g_transform_value);
     			}
     		},
@@ -6856,14 +6870,14 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(51:6) {#if tick === 1}",
+    		source: "(53:6) {#if tick === 1}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (50:4) {#each [...Array(nSplits).keys()] as tick}
+    // (52:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -6913,7 +6927,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(50:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(52:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -7004,48 +7018,48 @@ var app = (function () {
     			span1.textContent = "many";
     			t13 = text("\n  times (once for every data point!). This is expensive both in the amount of resources\n  it requires, as well as the time it takes to wait for your model to train on so\n  many iterations. For this reason, it's rare to see LOOCV employed in the wild,\n  (especially for large-scale models), and a more conservative value of k is often\n  used (e.g. k = 5 or k = 10).");
     			attr_dev(span0, "class", "section-arrow");
-    			add_location(span0, file$1, 23, 2, 634);
+    			add_location(span0, file$1, 25, 2, 721);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$1, 22, 0, 607);
+    			add_location(h1, file$1, 24, 0, 694);
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$1, 25, 0, 720);
-    			add_location(br0, file$1, 34, 0, 1220);
+    			add_location(p0, file$1, 27, 0, 807);
+    			add_location(br0, file$1, 36, 0, 1307);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "3");
     			attr_dev(rect0, "fill", "#003181");
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$1, 40, 6, 1457);
+    			add_location(rect0, file$1, 42, 6, 1544);
     			attr_dev(text0, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "15");
-    			add_location(text0, file$1, 41, 6, 1522);
+    			add_location(text0, file$1, 43, 6, 1609);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "3");
     			attr_dev(rect1, "fill", "#f46ebb");
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$1, 42, 6, 1581);
+    			add_location(rect1, file$1, 44, 6, 1668);
     			attr_dev(text1, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "15");
-    			add_location(text1, file$1, 43, 6, 1647);
+    			add_location(text1, file$1, 45, 6, 1734);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "3");
     			attr_dev(rect2, "fill", "#ffad97");
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$1, 44, 6, 1711);
+    			add_location(rect2, file$1, 46, 6, 1798);
     			attr_dev(text2, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "15");
-    			add_location(text2, file$1, 45, 6, 1778);
+    			add_location(text2, file$1, 47, 6, 1865);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$1, 39, 4, 1387);
+    			add_location(g, file$1, 41, 4, 1474);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[5].top + /*$margin*/ ctx[5].bottom);
-    			add_location(svg, file$1, 37, 2, 1302);
+    			add_location(svg, file$1, 39, 2, 1389);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-1fpr9wp");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[7].call(div));
@@ -7188,6 +7202,7 @@ var app = (function () {
     const nSplits = 23;
     const numCol = 1;
     const numRects = 26;
+    const arrowWidth = 36;
 
     const func = () => {
     	return "#232f3e";
@@ -7205,6 +7220,11 @@ var app = (function () {
     	let width = 500;
     	let height = 500;
 
+    	console.log({
+    		xDiff: width / ((nSplits + 1) * 4),
+    		arrowWidth
+    	});
+
     	let validationLabels = [
     		{ label: "Train", y: 5 },
     		{ label: "Validation", y: 13 },
@@ -7214,7 +7234,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<LOOCV> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<LOOCV> was created with unknown prop '${key}'`);
     	});
 
     	const func_1 = (tick, d) => {
@@ -7240,6 +7260,7 @@ var app = (function () {
     		nSplits,
     		numCol,
     		numRects,
+    		arrowWidth,
     		validationLabels,
     		xDiff,
     		yScale,

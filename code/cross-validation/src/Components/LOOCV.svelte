@@ -9,9 +9,11 @@
   const nSplits = 23;
   const numCol = 1;
   const numRects = 26;
+  const arrowWidth = 36;
   $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
   $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
   $: xDiff = width / ((nSplits + 1) * 4);
+  console.log({xDiff:width / ((nSplits + 1) * 4),arrowWidth})
 
   let validationLabels = [
     { label: "Train", y: 5 },
@@ -51,14 +53,16 @@
       {#if tick === 1}
         <!-- <text text-anchor="middle" x={xScale(tick)} y={yScale(0)}>hey</text> -->
         <g
-          transform="translate({xScale(tick) - xDiff - 7}, {yScale(0) - xDiff})"
+          transform="translate({xScale(tick) - xDiff }, {yScale(0)})"
         >
           <path
             d={arrowPath}
-            style={`transform: scale(0.8)`}
+            style={`transform: scale(.35)`}
             stroke="#232f3e"
-            stroke-width="3"
+            stroke-width={`${4/.35}`}
             fill="#232f3e"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           />
         </g>
       {:else if tick === 0}
