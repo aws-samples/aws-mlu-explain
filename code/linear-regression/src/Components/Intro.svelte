@@ -119,7 +119,7 @@
   <br />
   <p class="body-text">
     {@html katexify(
-      `\\hat{y}=\\hat{B_0} + \\hat{B_1}x_1  + \\hat{B_2}x_2 + ... + \\hat{B_p}x_p  `,
+      `\\hat{y}=\\hat{\\beta_0} + \\hat{\\beta_1}x_1  + \\hat{\\beta_2}x_2 + ... + \\hat{\\beta_p}x_p  `,
       true
     )}
   </p>
