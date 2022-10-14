@@ -132,7 +132,7 @@
       <div class="step" data-index="1">
         <div class="step-content">
           <p>
-            Of course we know this model is bad - the data doesn't fit the data
+            Of course we know this model is bad - the model doesn't fit the data
             well at all. But how can do quantify exactly <i>how</i> bad?
             <br /><br />
             To evaluate our model's performance quantitatively, we plot the error
@@ -202,25 +202,6 @@
           </p>
         </div>
       </div>
-      <!-- <div class="step" data-index="4">
-        <div class="step-content">
-          <p>
-            And finally, it's worth a quick mention that the <i>linear</i> in linear
-            regression does not mean our predictions are limited to lines!
-          </p>
-          <div id="input-container">
-            <p>Value: {$sqft}</p>
-            <input
-              type="range"
-              min="0"
-              max="11"
-              bind:value={$sqft}
-              class="slider"
-              id="myRange"
-            />
-          </div>
-        </div>
-      </div> -->
       <div class="spacer" />
     </div>
     <div class="charts-container">
