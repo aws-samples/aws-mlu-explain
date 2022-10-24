@@ -1,56 +1,82 @@
-class MultiArmBandit:
-    def __init__(
-    self,
-    arms_means = [2, 5],
-    arms_stds = [1.0, 1.0],
-    epsilon=0.2,
-    alpha = 0.1,
-    ):
-        if len(arms_means) != len(arms_stds):
-            print("Array of mean values and array of std values have different dimensions")
-        
-        self.bandits = list(zip(arms_means, arms_stds))
-        self.q_values = np.zeros(len(self.bandits))
-        
-        self.epsilon = epsilon
-        self.alpha = alpha
+import { multiply, add, reshape } from "mathjs";
 
-    def _reset_q_values(self,):
-        self.q_values = np.zeros(len(self.bandits))
+// Finds the index of the maximum
+function argMax(array) {
+    return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+}
 
-    def _update_q_values(self, reward, index):
-        self.q_values[index] +=  self.alpha*(reward - self.q_values[index])
+// Helper function to generate numbers which are normally distributed
+function boxMullerTransform() {
+    const u1 = Math.random();
+    const u2 = Math.random();
     
-    def pull_bandit(self, index):
-        bandit = self.bandits[index]
-        return np.random.normal(loc=bandit[0], scale=bandit[1])
+    const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);    
+    return z0;
+}
 
+// Generate normally distributed random number
+function randomNormal(mean, std){
+    const { z0, _ } = boxMullerTransform();
     
-    def run_trails(self, n=100):
-        episodic_values = np.array([])
-                
-        for _ in range(n):
-            
-            # Store q-values in each run
-            if episodic_values.shape[0] == 0:
-                episodic_values = np.expand_dims(self.q_values, axis=0)
-            else:
-                episodic_values = np.append(episodic_values, [self.q_values], axis=0)
-            
-            # Epsilon greedy action selection
-            if np.random.random() < self.epsilon:
-                bandit_index = np.random.randint(len(self.bandits))
-            else:
-                bandit_index = np.argmax(self.q_values)
-            
-            # Collect reward from the bandit and update Q values
-            reward = self.pull_bandit(bandit_index)
-            self._update_q_values(reward, bandit_index)
+    return z0 * stddev + mean;
+}
+
+
+export class MultiArmBandit{
+    constructor(
+        armsMeans = [2,5],
+        armsStds = [1.0, 1.0],
+        epsilon = 0.2,
+        alpha = 0.1,
+    ){
+        this.armsMeans = armsMeans;
+        this.armsStds = armsStds;
+        this.epsilon = epsilon;
+        this.alpha = alpha;
+        this.qValues = new Array(this.armsMeans).fill(0);
+
+         // Check if the dimensions of armsMean and armsStd are valid
+        if (this.armsMeans.length != this.armsStds.length){
+            throw "armsMeans and armsStd need to have the same length";
+        }
+
+    }
+
+    // Reset the Q-Values to zeros
+    resetQValues(){
+        this.qValues =  new Array(this.armsMeans).fill(0);
+    }
+
+   // Update the Q-Values
+   updateQValues(reward, index){
+        this.qValues[index] += this.alpha* (reward - this.qValues[index]);
+   }
+
+   // Pull an arm and generate the reward
+   pullBanditArm(index){
+        return randomNormal(this.armsMeans[index], this.armsStds[index]);
+   }
         
-        return episodic_values
-    
-    def plot_q_values(self, episodic_values):
-        for i in range(len(self.bandits)):
-            plt.plot(episodic_values[:,i], label="Bandit {}".format(i+1))
-        plt.title("Q-Values")
-        plt.legend()
+   // Run simulaiton over defined time steps
+   runTrials(numTrials=100){
+        episodicValues = new Array(this.armsMeans).fill(
+            new Array(numTrials).fill(0)
+        );
+
+        for (var i=0; i<numTrials; i +=1){
+            // Epsilon greedy action selection
+            if (Math.random() < this.epsilon){
+                bandit_index = Math.floor(Math.random() * this.armsMeans.length);
+            } else{
+                bandit_index = argMax(this.qValues);
+            }
+
+            reward = this.pullBanditArm(bandit_index);
+            this.updateQValues(reward, bandit_index);
+        }
+
+        return episodicValues;
+   }
+
+
+}
