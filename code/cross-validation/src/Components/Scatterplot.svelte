@@ -9,6 +9,7 @@
   export let x = 0;
   export let y = 300;
   export let regressionData;
+  export let label;
 
   const margin = {
     top: 10,
@@ -79,6 +80,12 @@
     y2={height}
     stroke="black"
   />
+  <text
+  class="fold-error-text"
+  x={width / 2}
+  y={height * 1.2}
+>{label}
+</text>
 </g>
 
 <style>
@@ -92,5 +99,15 @@
     stroke: red;
     stroke-width: 1;
     stroke-dasharray: 2, 2;
+  }
+  .fold-error-text {
+    font-family: var(--font-heavy);
+    font-size: 0.9rem;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke: var(--white);
+    stroke-width: 4px;
+    fill: var(--magenta);
+    text-anchor: middle;
   }
 </style>
