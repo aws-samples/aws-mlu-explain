@@ -3,28 +3,53 @@
   import { margin } from "../store.js";
   import StackedRects from "./StackedRects.svelte";
   import Scatterplot from "./Scatterplot.svelte";
-  import { extent, mean } from "d3-array";
+  import { extent, mean, range } from "d3-array";
   import { regressionLinear } from "d3-regression";
   import { format } from "d3-format";
 
-  let width = 500;
+  let width;
   let height = 500;
 
   // label formatter
   const formatter = format(".1f");
 
-  $: nSplits = 4;
-  $: xScale =
-    nSplits < 7
-      ? scaleLinear()
-          .domain([-1, nSplits])
-          .range([width * 0.1, width - width * 0.1])
-      : scaleLinear().domain([-1, nSplits]).range([0, width]);
+  const dimensions = {
+    desktop:{
+    2:{rows:1, cols:2},
+    3:{rows:1, cols:3},
+    4:{rows:2, cols:3},
+    5:{rows:2, cols:3},
+    6:{rows:2, cols:3},
+    7:{rows:3, cols:3},
+    8:{rows:3, cols:3},
+    9:{rows:3, cols:3},
+    10:{rows:4, cols:3},
+    11:{rows:4, cols:3},
+    12:{rows:4, cols:3}},
+    mobile:{
+    2:{rows:1, cols:2},
+    3:{rows:2, cols:2},
+    4:{rows:2, cols:2},
+    5:{rows:3, cols:2},
+    6:{rows:3, cols:2},
+    7:{rows:4, cols:2},
+    8:{rows:4, cols:2},
+    9:{rows:5, cols:2},
+    10:{rows:5, cols:2},
+    11:{rows:6, cols:2},
+    12:{rows:6, cols:2}}
+  }
+  $: window = width <= 400 ? 'mobile':'desktop'
+
+  $: nSplits = 3;
+  $: xScale = scaleBand()
+      .domain(range(0,dimensions[window][nSplits].cols))
+      .range([width * 0.2, width * 0.95])
   $: yScale = scaleBand()
-    .domain([-1, 0, 1, 2, 3, 4])
+    .domain(range(-1, dimensions[window][nSplits].rows))
     .range([$margin.bottom, height - $margin.top])
-    .padding(0.1);
-  $: xDiff = 20;
+    .padding(0.2);
+  $: xDiff = Math.min(width * .04,20);
   const numRects = 16;
   const testColor = "#ffad97";
   const trainColor = "#003181";
@@ -124,6 +149,8 @@
   }
 </script>
 
+<svelte:window bind:innerWidth={width} />
+
 <h1 class="body-header">
   <span class="section-arrow">&gt; </span> Try For Yourself
 </h1>
@@ -162,23 +189,34 @@
 
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
+     <!-- use lines below for debugging -->
       <!-- <line
         class="axis-line"
-        x1={xScale(tick) - 10}
-        x2={xScale(tick) - 10}
-        y1="0"
+        x1={xScale(tick)}
+        x2={xScale(tick)}
+        y1={0}
         y2={500}
         stroke="black"
         stroke-dasharray="4"
-        opacity="0.08"
+        opacity="0.8"
+      />
+      <line
+        class="axis-line"
+        y1={yScale(tick)}
+        y2={yScale(tick)}
+        x1={0}
+        x2={1500}
+        stroke="black"
+        stroke-dasharray="4"
+        opacity="0.8"
       /> -->
 
       <StackedRects
-        height={height / 4.5}
+        height={yScale.bandwidth()}
         {numCol}
         {numRects}
-        x={xScale(tick) - xDiff}
-        y={yScale(-1)}
+        x={xScale(tick % (width <= 400 ? 2 : 3))}
+        y={yScale(Math.floor(tick/(width <= 400 ? 2 : 3))) - yScale.bandwidth() - xDiff*2}
         fillRule={(d) => {
           if (d >= numRects - numTest) return testColor;
           if (
@@ -193,28 +231,22 @@
       <Scatterplot
         data={dataArray[tick]["scatterData"]}
         regressionData={dataArray[tick]["regressionData"]}
+        label={`Val MSE: ${formatter(dataArray[tick]['mse'])}`}
         width={yScale.bandwidth()}
         height={yScale.bandwidth()}
-        x={xScale(tick) - xDiff * 2}
-        y={yScale(1)}
+        x={xScale(tick % (width <= 400 ? 2 : 3) )+ xDiff * 3}
+        y={yScale(Math.floor(tick/(width <= 400 ? 2 : 3))) - yScale.bandwidth()}
       />
 
       <!-- Error text -->
-      <text
-        class="fold-error-text"
-        x={xScale(tick) - xDiff * 2}
-        y={yScale(3) - yScale.bandwidth()*.85}
-      >
-        Val MSE:
-        {formatter(dataArray[tick]["mse"])}
-      </text>
+
     {/each}
     <!-- Final accuracy text -->
     <text
       class="fold-error-text"
       id="average-fold-error-text"
       x={width / 2}
-      y={yScale(4)-yScale.bandwidth()*.85}
+      y={55}
       text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
   </svg>

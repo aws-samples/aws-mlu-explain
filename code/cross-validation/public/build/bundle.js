@@ -1107,7 +1107,7 @@ var app = (function () {
       if (count) return sum / count;
     }
 
-    function sequence(start, stop, step) {
+    function range(start, stop, step) {
       start = +start, stop = +stop, step = (n = arguments.length) < 2 ? (stop = start, start = 0, 1) : n < 3 ? 1 : +step;
 
       var i = -1,
@@ -1200,7 +1200,7 @@ var app = (function () {
         start += (stop - start - step * (n - paddingInner)) * align;
         bandwidth = step * (1 - paddingInner);
         if (round) start = Math.round(start), bandwidth = Math.round(bandwidth);
-        var values = sequence(n).map(function(i) { return start + step * i; });
+        var values = range(n).map(function(i) { return start + step * i; });
         return ordinalRange(reverse ? values.reverse() : values);
       }
 
@@ -2943,11 +2943,11 @@ var app = (function () {
 
     function get_each_context$4(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[9] = list[i];
+    	child_ctx[10] = list[i];
     	return child_ctx;
     }
 
-    // (36:4) {#if d.color === "#f46ebb"}
+    // (37:4) {#if d.color === "#f46ebb"}
     function create_if_block$3(ctx) {
     	let line;
     	let line_x__value;
@@ -2958,30 +2958,30 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			line = svg_element("line");
-    			attr_dev(line, "class", "error-line svelte-v9xm4u");
-    			attr_dev(line, "x1", line_x__value = /*xScale*/ ctx[7](/*d*/ ctx[9].x));
-    			attr_dev(line, "x2", line_x__value_1 = /*xScale*/ ctx[7](/*d*/ ctx[9].x));
-    			attr_dev(line, "y1", line_y__value = /*yScale*/ ctx[6](/*d*/ ctx[9].y));
-    			attr_dev(line, "y2", line_y__value_1 = /*yScale*/ ctx[6](/*d*/ ctx[9].x * /*regressionData*/ ctx[5]["a"] + /*regressionData*/ ctx[5]["b"]));
-    			add_location(line, file$7, 36, 6, 777);
+    			attr_dev(line, "class", "error-line svelte-6a20h6");
+    			attr_dev(line, "x1", line_x__value = /*xScale*/ ctx[8](/*d*/ ctx[10].x));
+    			attr_dev(line, "x2", line_x__value_1 = /*xScale*/ ctx[8](/*d*/ ctx[10].x));
+    			attr_dev(line, "y1", line_y__value = /*yScale*/ ctx[7](/*d*/ ctx[10].y));
+    			attr_dev(line, "y2", line_y__value_1 = /*yScale*/ ctx[7](/*d*/ ctx[10].x * /*regressionData*/ ctx[5]["a"] + /*regressionData*/ ctx[5]["b"]));
+    			add_location(line, file$7, 37, 6, 797);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, line, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*xScale, data*/ 129 && line_x__value !== (line_x__value = /*xScale*/ ctx[7](/*d*/ ctx[9].x))) {
+    			if (dirty & /*xScale, data*/ 257 && line_x__value !== (line_x__value = /*xScale*/ ctx[8](/*d*/ ctx[10].x))) {
     				attr_dev(line, "x1", line_x__value);
     			}
 
-    			if (dirty & /*xScale, data*/ 129 && line_x__value_1 !== (line_x__value_1 = /*xScale*/ ctx[7](/*d*/ ctx[9].x))) {
+    			if (dirty & /*xScale, data*/ 257 && line_x__value_1 !== (line_x__value_1 = /*xScale*/ ctx[8](/*d*/ ctx[10].x))) {
     				attr_dev(line, "x2", line_x__value_1);
     			}
 
-    			if (dirty & /*yScale, data*/ 65 && line_y__value !== (line_y__value = /*yScale*/ ctx[6](/*d*/ ctx[9].y))) {
+    			if (dirty & /*yScale, data*/ 129 && line_y__value !== (line_y__value = /*yScale*/ ctx[7](/*d*/ ctx[10].y))) {
     				attr_dev(line, "y1", line_y__value);
     			}
 
-    			if (dirty & /*yScale, data, regressionData*/ 97 && line_y__value_1 !== (line_y__value_1 = /*yScale*/ ctx[6](/*d*/ ctx[9].x * /*regressionData*/ ctx[5]["a"] + /*regressionData*/ ctx[5]["b"]))) {
+    			if (dirty & /*yScale, data, regressionData*/ 161 && line_y__value_1 !== (line_y__value_1 = /*yScale*/ ctx[7](/*d*/ ctx[10].x * /*regressionData*/ ctx[5]["a"] + /*regressionData*/ ctx[5]["b"]))) {
     				attr_dev(line, "y2", line_y__value_1);
     			}
     		},
@@ -2994,38 +2994,38 @@ var app = (function () {
     		block,
     		id: create_if_block$3.name,
     		type: "if",
-    		source: "(36:4) {#if d.color === \\\"#f46ebb\\\"}",
+    		source: "(37:4) {#if d.color === \\\"#f46ebb\\\"}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (34:2) {#each data as d}
+    // (35:2) {#each data as d}
     function create_each_block$4(ctx) {
     	let rect;
     	let rect_x_value;
     	let rect_y_value;
     	let rect_fill_value;
-    	let if_block = /*d*/ ctx[9].color === "#f46ebb" && create_if_block$3(ctx);
+    	let if_block = /*d*/ ctx[10].color === "#f46ebb" && create_if_block$3(ctx);
 
     	const block = {
     		c: function create() {
     			if (if_block) if_block.c();
     			rect = svg_element("rect");
-    			attr_dev(rect, "x", rect_x_value = /*xScale*/ ctx[7](/*d*/ ctx[9].x) - radius / 2);
-    			attr_dev(rect, "y", rect_y_value = /*yScale*/ ctx[6](/*d*/ ctx[9].y) - radius / 2);
-    			attr_dev(rect, "fill", rect_fill_value = /*d*/ ctx[9].color);
+    			attr_dev(rect, "x", rect_x_value = /*xScale*/ ctx[8](/*d*/ ctx[10].x) - radius / 2);
+    			attr_dev(rect, "y", rect_y_value = /*yScale*/ ctx[7](/*d*/ ctx[10].y) - radius / 2);
+    			attr_dev(rect, "fill", rect_fill_value = /*d*/ ctx[10].color);
     			attr_dev(rect, "width", radius);
     			attr_dev(rect, "height", radius);
-    			add_location(rect, file$7, 45, 4, 1021);
+    			add_location(rect, file$7, 46, 4, 1041);
     		},
     		m: function mount(target, anchor) {
     			if (if_block) if_block.m(target, anchor);
     			insert_dev(target, rect, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (/*d*/ ctx[9].color === "#f46ebb") {
+    			if (/*d*/ ctx[10].color === "#f46ebb") {
     				if (if_block) {
     					if_block.p(ctx, dirty);
     				} else {
@@ -3038,15 +3038,15 @@ var app = (function () {
     				if_block = null;
     			}
 
-    			if (dirty & /*xScale, data*/ 129 && rect_x_value !== (rect_x_value = /*xScale*/ ctx[7](/*d*/ ctx[9].x) - radius / 2)) {
+    			if (dirty & /*xScale, data*/ 257 && rect_x_value !== (rect_x_value = /*xScale*/ ctx[8](/*d*/ ctx[10].x) - radius / 2)) {
     				attr_dev(rect, "x", rect_x_value);
     			}
 
-    			if (dirty & /*yScale, data*/ 65 && rect_y_value !== (rect_y_value = /*yScale*/ ctx[6](/*d*/ ctx[9].y) - radius / 2)) {
+    			if (dirty & /*yScale, data*/ 129 && rect_y_value !== (rect_y_value = /*yScale*/ ctx[7](/*d*/ ctx[10].y) - radius / 2)) {
     				attr_dev(rect, "y", rect_y_value);
     			}
 
-    			if (dirty & /*data*/ 1 && rect_fill_value !== (rect_fill_value = /*d*/ ctx[9].color)) {
+    			if (dirty & /*data*/ 1 && rect_fill_value !== (rect_fill_value = /*d*/ ctx[10].color)) {
     				attr_dev(rect, "fill", rect_fill_value);
     			}
     		},
@@ -3060,7 +3060,7 @@ var app = (function () {
     		block,
     		id: create_each_block$4.name,
     		type: "each",
-    		source: "(34:2) {#each data as d}",
+    		source: "(35:2) {#each data as d}",
     		ctx
     	});
 
@@ -3077,6 +3077,10 @@ var app = (function () {
     	let line1;
     	let line1_x__value_1;
     	let line2;
+    	let text_1;
+    	let t;
+    	let text_1_x_value;
+    	let text_1_y_value;
     	let g_transform_value;
     	let each_value = /*data*/ ctx[0];
     	validate_each_argument(each_value);
@@ -3097,28 +3101,34 @@ var app = (function () {
     			line0 = svg_element("line");
     			line1 = svg_element("line");
     			line2 = svg_element("line");
-    			attr_dev(line0, "class", "regression-line svelte-v9xm4u");
-    			attr_dev(line0, "x1", line0_x__value = /*xScale*/ ctx[7](/*regressionData*/ ctx[5][0][0]));
-    			attr_dev(line0, "x2", line0_x__value_1 = /*xScale*/ ctx[7](/*regressionData*/ ctx[5][1][0]));
-    			attr_dev(line0, "y1", line0_y__value = /*yScale*/ ctx[6](/*regressionData*/ ctx[5][0][1]));
-    			attr_dev(line0, "y2", line0_y__value_1 = /*yScale*/ ctx[6](/*regressionData*/ ctx[5][1][1]));
-    			add_location(line0, file$7, 54, 2, 1181);
+    			text_1 = svg_element("text");
+    			t = text(/*label*/ ctx[6]);
+    			attr_dev(line0, "class", "regression-line svelte-6a20h6");
+    			attr_dev(line0, "x1", line0_x__value = /*xScale*/ ctx[8](/*regressionData*/ ctx[5][0][0]));
+    			attr_dev(line0, "x2", line0_x__value_1 = /*xScale*/ ctx[8](/*regressionData*/ ctx[5][1][0]));
+    			attr_dev(line0, "y1", line0_y__value = /*yScale*/ ctx[7](/*regressionData*/ ctx[5][0][1]));
+    			attr_dev(line0, "y2", line0_y__value_1 = /*yScale*/ ctx[7](/*regressionData*/ ctx[5][1][1]));
+    			add_location(line0, file$7, 55, 2, 1201);
     			attr_dev(line1, "class", "axis-line");
-    			attr_dev(line1, "x1", /*margin*/ ctx[8].left);
-    			attr_dev(line1, "x2", line1_x__value_1 = /*width*/ ctx[2] - /*margin*/ ctx[8].right);
+    			attr_dev(line1, "x1", /*margin*/ ctx[9].left);
+    			attr_dev(line1, "x2", line1_x__value_1 = /*width*/ ctx[2] - /*margin*/ ctx[9].right);
     			attr_dev(line1, "y1", /*height*/ ctx[1]);
     			attr_dev(line1, "y2", /*height*/ ctx[1]);
     			attr_dev(line1, "stroke", "black");
-    			add_location(line1, file$7, 64, 2, 1410);
+    			add_location(line1, file$7, 65, 2, 1430);
     			attr_dev(line2, "class", "axis-line");
-    			attr_dev(line2, "x1", /*margin*/ ctx[8].left);
-    			attr_dev(line2, "x2", /*margin*/ ctx[8].left);
+    			attr_dev(line2, "x1", /*margin*/ ctx[9].left);
+    			attr_dev(line2, "x2", /*margin*/ ctx[9].left);
     			attr_dev(line2, "y1", 0);
     			attr_dev(line2, "y2", /*height*/ ctx[1]);
     			attr_dev(line2, "stroke", "black");
-    			add_location(line2, file$7, 73, 2, 1560);
+    			add_location(line2, file$7, 74, 2, 1580);
+    			attr_dev(text_1, "class", "fold-error-text svelte-6a20h6");
+    			attr_dev(text_1, "x", text_1_x_value = /*width*/ ctx[2] / 2);
+    			attr_dev(text_1, "y", text_1_y_value = /*height*/ ctx[1] * 1.2);
+    			add_location(text_1, file$7, 82, 2, 1703);
     			attr_dev(g, "transform", g_transform_value = "translate(" + /*x*/ ctx[3] + ", " + /*y*/ ctx[4] + ")");
-    			add_location(g, file$7, 31, 0, 625);
+    			add_location(g, file$7, 32, 0, 645);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3133,9 +3143,11 @@ var app = (function () {
     			append_dev(g, line0);
     			append_dev(g, line1);
     			append_dev(g, line2);
+    			append_dev(g, text_1);
+    			append_dev(text_1, t);
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*xScale, data, radius, yScale, regressionData*/ 225) {
+    			if (dirty & /*xScale, data, radius, yScale, regressionData*/ 417) {
     				each_value = /*data*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
@@ -3159,23 +3171,23 @@ var app = (function () {
     				each_blocks.length = each_value.length;
     			}
 
-    			if (dirty & /*xScale, regressionData*/ 160 && line0_x__value !== (line0_x__value = /*xScale*/ ctx[7](/*regressionData*/ ctx[5][0][0]))) {
+    			if (dirty & /*xScale, regressionData*/ 288 && line0_x__value !== (line0_x__value = /*xScale*/ ctx[8](/*regressionData*/ ctx[5][0][0]))) {
     				attr_dev(line0, "x1", line0_x__value);
     			}
 
-    			if (dirty & /*xScale, regressionData*/ 160 && line0_x__value_1 !== (line0_x__value_1 = /*xScale*/ ctx[7](/*regressionData*/ ctx[5][1][0]))) {
+    			if (dirty & /*xScale, regressionData*/ 288 && line0_x__value_1 !== (line0_x__value_1 = /*xScale*/ ctx[8](/*regressionData*/ ctx[5][1][0]))) {
     				attr_dev(line0, "x2", line0_x__value_1);
     			}
 
-    			if (dirty & /*yScale, regressionData*/ 96 && line0_y__value !== (line0_y__value = /*yScale*/ ctx[6](/*regressionData*/ ctx[5][0][1]))) {
+    			if (dirty & /*yScale, regressionData*/ 160 && line0_y__value !== (line0_y__value = /*yScale*/ ctx[7](/*regressionData*/ ctx[5][0][1]))) {
     				attr_dev(line0, "y1", line0_y__value);
     			}
 
-    			if (dirty & /*yScale, regressionData*/ 96 && line0_y__value_1 !== (line0_y__value_1 = /*yScale*/ ctx[6](/*regressionData*/ ctx[5][1][1]))) {
+    			if (dirty & /*yScale, regressionData*/ 160 && line0_y__value_1 !== (line0_y__value_1 = /*yScale*/ ctx[7](/*regressionData*/ ctx[5][1][1]))) {
     				attr_dev(line0, "y2", line0_y__value_1);
     			}
 
-    			if (dirty & /*width*/ 4 && line1_x__value_1 !== (line1_x__value_1 = /*width*/ ctx[2] - /*margin*/ ctx[8].right)) {
+    			if (dirty & /*width*/ 4 && line1_x__value_1 !== (line1_x__value_1 = /*width*/ ctx[2] - /*margin*/ ctx[9].right)) {
     				attr_dev(line1, "x2", line1_x__value_1);
     			}
 
@@ -3189,6 +3201,16 @@ var app = (function () {
 
     			if (dirty & /*height*/ 2) {
     				attr_dev(line2, "y2", /*height*/ ctx[1]);
+    			}
+
+    			if (dirty & /*label*/ 64) set_data_dev(t, /*label*/ ctx[6]);
+
+    			if (dirty & /*width*/ 4 && text_1_x_value !== (text_1_x_value = /*width*/ ctx[2] / 2)) {
+    				attr_dev(text_1, "x", text_1_x_value);
+    			}
+
+    			if (dirty & /*height*/ 2 && text_1_y_value !== (text_1_y_value = /*height*/ ctx[1] * 1.2)) {
+    				attr_dev(text_1, "y", text_1_y_value);
     			}
 
     			if (dirty & /*x, y*/ 24 && g_transform_value !== (g_transform_value = "translate(" + /*x*/ ctx[3] + ", " + /*y*/ ctx[4] + ")")) {
@@ -3227,8 +3249,9 @@ var app = (function () {
     	let { x = 0 } = $$props;
     	let { y = 300 } = $$props;
     	let { regressionData } = $$props;
+    	let { label } = $$props;
     	const margin = { top: 10, bottom: 10, left: 0, right: 0 };
-    	const writable_props = ['data', 'height', 'width', 'x', 'y', 'regressionData'];
+    	const writable_props = ['data', 'height', 'width', 'x', 'y', 'regressionData', 'label'];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Scatterplot> was created with unknown prop '${key}'`);
@@ -3241,6 +3264,7 @@ var app = (function () {
     		if ('x' in $$props) $$invalidate(3, x = $$props.x);
     		if ('y' in $$props) $$invalidate(4, y = $$props.y);
     		if ('regressionData' in $$props) $$invalidate(5, regressionData = $$props.regressionData);
+    		if ('label' in $$props) $$invalidate(6, label = $$props.label);
     	};
 
     	$$self.$capture_state = () => ({
@@ -3252,6 +3276,7 @@ var app = (function () {
     		x,
     		y,
     		regressionData,
+    		label,
     		margin,
     		radius,
     		yScale,
@@ -3265,8 +3290,9 @@ var app = (function () {
     		if ('x' in $$props) $$invalidate(3, x = $$props.x);
     		if ('y' in $$props) $$invalidate(4, y = $$props.y);
     		if ('regressionData' in $$props) $$invalidate(5, regressionData = $$props.regressionData);
-    		if ('yScale' in $$props) $$invalidate(6, yScale = $$props.yScale);
-    		if ('xScale' in $$props) $$invalidate(7, xScale = $$props.xScale);
+    		if ('label' in $$props) $$invalidate(6, label = $$props.label);
+    		if ('yScale' in $$props) $$invalidate(7, yScale = $$props.yScale);
+    		if ('xScale' in $$props) $$invalidate(8, xScale = $$props.xScale);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -3276,15 +3302,15 @@ var app = (function () {
     	$$self.$$.update = () => {
     		if ($$self.$$.dirty & /*data, width*/ 5) {
     			//   scale
-    			$$invalidate(7, xScale = linear().domain(extent(data, d => d.x)).range([margin.left, width - margin.right]));
+    			$$invalidate(8, xScale = linear().domain(extent(data, d => d.x)).range([margin.left, width - margin.right]));
     		}
 
     		if ($$self.$$.dirty & /*data, height*/ 3) {
-    			$$invalidate(6, yScale = linear().domain(extent(data, d => d.y)).range([height - margin.bottom, margin.top]));
+    			$$invalidate(7, yScale = linear().domain(extent(data, d => d.y)).range([height - margin.bottom, margin.top]));
     		}
     	};
 
-    	return [data, height, width, x, y, regressionData, yScale, xScale, margin];
+    	return [data, height, width, x, y, regressionData, label, yScale, xScale, margin];
     }
 
     class Scatterplot extends SvelteComponentDev {
@@ -3297,7 +3323,8 @@ var app = (function () {
     			width: 2,
     			x: 3,
     			y: 4,
-    			regressionData: 5
+    			regressionData: 5,
+    			label: 6
     		});
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -3320,6 +3347,10 @@ var app = (function () {
 
     		if (/*regressionData*/ ctx[5] === undefined && !('regressionData' in props)) {
     			console.warn("<Scatterplot> was created without expected prop 'regressionData'");
+    		}
+
+    		if (/*label*/ ctx[6] === undefined && !('label' in props)) {
+    			console.warn("<Scatterplot> was created without expected prop 'label'");
     		}
     	}
 
@@ -3368,6 +3399,14 @@ var app = (function () {
     	}
 
     	set regressionData(value) {
+    		throw new Error("<Scatterplot>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	get label() {
+    		throw new Error("<Scatterplot>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
+    	}
+
+    	set label(value) {
     		throw new Error("<Scatterplot>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
     	}
     }
@@ -4266,38 +4305,32 @@ var app = (function () {
 
     /* src/Components/KFoldInteractive.svelte generated by Svelte v3.48.0 */
 
-    const { console: console_1 } = globals;
+    const { console: console_1$1, window: window_1 } = globals;
     const file$6 = "src/Components/KFoldInteractive.svelte";
 
     function get_each_context$3(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[20] = list[i];
+    	child_ctx[23] = list[i];
     	return child_ctx;
     }
 
-    // (164:4) {#each [...Array(nSplits).keys()] as tick}
+    // (191:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block$3(ctx) {
     	let stackedrects;
     	let scatterplot;
-    	let text_1;
-    	let t0;
-    	let t1_value = /*formatter*/ ctx[12](/*dataArray*/ ctx[2][/*tick*/ ctx[20]]["mse"]) + "";
-    	let t1;
-    	let text_1_x_value;
-    	let text_1_y_value;
     	let current;
 
     	function func(...args) {
-    		return /*func*/ ctx[15](/*tick*/ ctx[20], ...args);
+    		return /*func*/ ctx[17](/*tick*/ ctx[23], ...args);
     	}
 
     	stackedrects = new StackedRects({
     			props: {
-    				height: /*height*/ ctx[1] / 4.5,
+    				height: /*yScale*/ ctx[10].bandwidth(),
     				numCol: /*numCol*/ ctx[8],
     				numRects: numRects$1,
-    				x: /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9],
-    				y: /*yScale*/ ctx[10](-1),
+    				x: /*xScale*/ ctx[11](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 400 ? 2 : 3)),
+    				y: /*yScale*/ ctx[10](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 400 ? 2 : 3))) - /*yScale*/ ctx[10].bandwidth() - /*xDiff*/ ctx[9] * 2,
     				fillRule: func
     			},
     			$$inline: true
@@ -4305,12 +4338,13 @@ var app = (function () {
 
     	scatterplot = new Scatterplot({
     			props: {
-    				data: /*dataArray*/ ctx[2][/*tick*/ ctx[20]]["scatterData"],
-    				regressionData: /*dataArray*/ ctx[2][/*tick*/ ctx[20]]["regressionData"],
-    				width: 85,
-    				height: 85,
-    				x: /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9] * 2,
-    				y: /*yScale*/ ctx[10](1)
+    				data: /*dataArray*/ ctx[2][/*tick*/ ctx[23]]["scatterData"],
+    				regressionData: /*dataArray*/ ctx[2][/*tick*/ ctx[23]]["regressionData"],
+    				label: `Val MSE: ${/*formatter*/ ctx[12](/*dataArray*/ ctx[2][/*tick*/ ctx[23]]['mse'])}`,
+    				width: /*yScale*/ ctx[10].bandwidth(),
+    				height: /*yScale*/ ctx[10].bandwidth(),
+    				x: /*xScale*/ ctx[11](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 400 ? 2 : 3)) + /*xDiff*/ ctx[9] * 3,
+    				y: /*yScale*/ ctx[10](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 400 ? 2 : 3))) - /*yScale*/ ctx[10].bandwidth()
     			},
     			$$inline: true
     		});
@@ -4319,46 +4353,30 @@ var app = (function () {
     		c: function create() {
     			create_component(stackedrects.$$.fragment);
     			create_component(scatterplot.$$.fragment);
-    			text_1 = svg_element("text");
-    			t0 = text("Val MSE: ");
-    			t1 = text(t1_value);
-    			attr_dev(text_1, "class", "fold-error-text svelte-72n7xr");
-    			attr_dev(text_1, "x", text_1_x_value = /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9] * 2);
-    			attr_dev(text_1, "y", text_1_y_value = /*yScale*/ ctx[10](3));
-    			add_location(text_1, file$6, 202, 6, 6141);
     		},
     		m: function mount(target, anchor) {
     			mount_component(stackedrects, target, anchor);
     			mount_component(scatterplot, target, anchor);
-    			insert_dev(target, text_1, anchor);
-    			append_dev(text_1, t0);
-    			append_dev(text_1, t1);
     			current = true;
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
     			const stackedrects_changes = {};
-    			if (dirty & /*height*/ 2) stackedrects_changes.height = /*height*/ ctx[1] / 4.5;
+    			if (dirty & /*yScale*/ 1024) stackedrects_changes.height = /*yScale*/ ctx[10].bandwidth();
     			if (dirty & /*numCol*/ 256) stackedrects_changes.numCol = /*numCol*/ ctx[8];
-    			if (dirty & /*xScale, nSplits, xDiff*/ 2576) stackedrects_changes.x = /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9];
-    			if (dirty & /*yScale*/ 1024) stackedrects_changes.y = /*yScale*/ ctx[10](-1);
+    			if (dirty & /*xScale, nSplits, width*/ 2065) stackedrects_changes.x = /*xScale*/ ctx[11](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 400 ? 2 : 3));
+    			if (dirty & /*yScale, nSplits, width, xDiff*/ 1553) stackedrects_changes.y = /*yScale*/ ctx[10](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 400 ? 2 : 3))) - /*yScale*/ ctx[10].bandwidth() - /*xDiff*/ ctx[9] * 2;
     			if (dirty & /*numTest, numValidation, nSplits*/ 56) stackedrects_changes.fillRule = func;
     			stackedrects.$set(stackedrects_changes);
     			const scatterplot_changes = {};
-    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.data = /*dataArray*/ ctx[2][/*tick*/ ctx[20]]["scatterData"];
-    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.regressionData = /*dataArray*/ ctx[2][/*tick*/ ctx[20]]["regressionData"];
-    			if (dirty & /*xScale, nSplits, xDiff*/ 2576) scatterplot_changes.x = /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9] * 2;
-    			if (dirty & /*yScale*/ 1024) scatterplot_changes.y = /*yScale*/ ctx[10](1);
+    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.data = /*dataArray*/ ctx[2][/*tick*/ ctx[23]]["scatterData"];
+    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.regressionData = /*dataArray*/ ctx[2][/*tick*/ ctx[23]]["regressionData"];
+    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.label = `Val MSE: ${/*formatter*/ ctx[12](/*dataArray*/ ctx[2][/*tick*/ ctx[23]]['mse'])}`;
+    			if (dirty & /*yScale*/ 1024) scatterplot_changes.width = /*yScale*/ ctx[10].bandwidth();
+    			if (dirty & /*yScale*/ 1024) scatterplot_changes.height = /*yScale*/ ctx[10].bandwidth();
+    			if (dirty & /*xScale, nSplits, width, xDiff*/ 2577) scatterplot_changes.x = /*xScale*/ ctx[11](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 400 ? 2 : 3)) + /*xDiff*/ ctx[9] * 3;
+    			if (dirty & /*yScale, nSplits, width*/ 1041) scatterplot_changes.y = /*yScale*/ ctx[10](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 400 ? 2 : 3))) - /*yScale*/ ctx[10].bandwidth();
     			scatterplot.$set(scatterplot_changes);
-    			if ((!current || dirty & /*dataArray, nSplits*/ 20) && t1_value !== (t1_value = /*formatter*/ ctx[12](/*dataArray*/ ctx[2][/*tick*/ ctx[20]]["mse"]) + "")) set_data_dev(t1, t1_value);
-
-    			if (!current || dirty & /*xScale, nSplits, xDiff*/ 2576 && text_1_x_value !== (text_1_x_value = /*xScale*/ ctx[11](/*tick*/ ctx[20]) - /*xDiff*/ ctx[9] * 2)) {
-    				attr_dev(text_1, "x", text_1_x_value);
-    			}
-
-    			if (!current || dirty & /*yScale*/ 1024 && text_1_y_value !== (text_1_y_value = /*yScale*/ ctx[10](3))) {
-    				attr_dev(text_1, "y", text_1_y_value);
-    			}
     		},
     		i: function intro(local) {
     			if (current) return;
@@ -4374,7 +4392,6 @@ var app = (function () {
     		d: function destroy(detaching) {
     			destroy_component(stackedrects, detaching);
     			destroy_component(scatterplot, detaching);
-    			if (detaching) detach_dev(text_1);
     		}
     	};
 
@@ -4382,7 +4399,7 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(164:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(191:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -4425,7 +4442,6 @@ var app = (function () {
     	let t14_value = /*formatter*/ ctx[12](/*errorMean*/ ctx[7]) + "";
     	let t14;
     	let text3_x_value;
-    	let text3_y_value;
     	let svg_height_value;
     	let div1_resize_listener;
     	let t15;
@@ -4437,6 +4453,7 @@ var app = (function () {
     	let current;
     	let mounted;
     	let dispose;
+    	add_render_callback(/*onwindowresize*/ ctx[15]);
     	let each_value = [...Array(/*nSplits*/ ctx[4]).keys()];
     	validate_each_argument(each_value);
     	let each_blocks = [];
@@ -4497,74 +4514,74 @@ var app = (function () {
     			p2 = element("p");
     			p2.textContent = "When exploring the fit models above, you may have observed something\n  interesting! The lines of best fit across our folds vary more for lower values\n  of k than for higher values of k. This is a result of our old friend, the bias\n  variance tradeoff (https://mlu-explain.github.io/bias-variance/). Read on to\n  learn more!";
     			attr_dev(span, "class", "section-arrow");
-    			add_location(span, file$6, 127, 2, 3782);
+    			add_location(span, file$6, 154, 2, 4434);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$6, 126, 0, 3755);
+    			add_location(h1, file$6, 153, 0, 4407);
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$6, 129, 0, 3846);
-    			add_location(br0, file$6, 137, 0, 4260);
-    			add_location(br1, file$6, 137, 6, 4266);
+    			add_location(p0, file$6, 156, 0, 4498);
+    			add_location(br0, file$6, 164, 0, 4912);
+    			add_location(br1, file$6, 164, 6, 4918);
     			attr_dev(p1, "id", "input-label");
-    			attr_dev(p1, "class", "svelte-72n7xr");
-    			add_location(p1, file$6, 140, 2, 4319);
+    			attr_dev(p1, "class", "svelte-1gr5jd9");
+    			add_location(p1, file$6, 167, 2, 4971);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "step", "1");
     			attr_dev(input, "min", "2");
     			attr_dev(input, "max", input_max_value = numRects$1 - /*numTest*/ ctx[5]);
-    			add_location(input, file$6, 141, 2, 4359);
+    			add_location(input, file$6, 168, 2, 5011);
     			attr_dev(div0, "id", "input-container");
-    			attr_dev(div0, "class", "svelte-72n7xr");
-    			add_location(div0, file$6, 139, 0, 4290);
+    			attr_dev(div0, "class", "svelte-1gr5jd9");
+    			add_location(div0, file$6, 166, 0, 4942);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "3");
     			attr_dev(rect0, "fill", trainColor);
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$6, 154, 6, 4721);
-    			attr_dev(text0, "class", "legend-text svelte-72n7xr");
+    			add_location(rect0, file$6, 181, 6, 5373);
+    			attr_dev(text0, "class", "legend-text svelte-1gr5jd9");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "15");
-    			add_location(text0, file$6, 155, 6, 4789);
+    			add_location(text0, file$6, 182, 6, 5441);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "3");
     			attr_dev(rect1, "fill", validationColor);
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$6, 156, 6, 4848);
-    			attr_dev(text1, "class", "legend-text svelte-72n7xr");
+    			add_location(rect1, file$6, 183, 6, 5500);
+    			attr_dev(text1, "class", "legend-text svelte-1gr5jd9");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "15");
-    			add_location(text1, file$6, 157, 6, 4922);
+    			add_location(text1, file$6, 184, 6, 5574);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "3");
     			attr_dev(rect2, "fill", testColor);
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$6, 158, 6, 4986);
-    			attr_dev(text2, "class", "legend-text svelte-72n7xr");
+    			add_location(rect2, file$6, 185, 6, 5638);
+    			attr_dev(text2, "class", "legend-text svelte-1gr5jd9");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "15");
-    			add_location(text2, file$6, 159, 6, 5055);
+    			add_location(text2, file$6, 186, 6, 5707);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$6, 153, 4, 4651);
-    			attr_dev(text3, "class", "fold-error-text svelte-72n7xr");
+    			add_location(g, file$6, 180, 4, 5303);
+    			attr_dev(text3, "class", "fold-error-text svelte-1gr5jd9");
     			attr_dev(text3, "id", "average-fold-error-text");
     			attr_dev(text3, "x", text3_x_value = /*width*/ ctx[0] / 2);
-    			attr_dev(text3, "y", text3_y_value = /*yScale*/ ctx[10](4));
+    			attr_dev(text3, "y", 55);
     			attr_dev(text3, "text-anchor", "middle");
-    			add_location(text3, file$6, 207, 4, 6331);
+    			add_location(text3, file$6, 244, 4, 7347);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[6].top + /*$margin*/ ctx[6].bottom);
-    			add_location(svg, file$6, 151, 2, 4566);
+    			add_location(svg, file$6, 178, 2, 5218);
     			attr_dev(div1, "id", "cv-chart");
-    			attr_dev(div1, "class", "svelte-72n7xr");
-    			add_render_callback(() => /*div1_elementresize_handler*/ ctx[16].call(div1));
-    			add_location(div1, file$6, 150, 0, 4492);
-    			add_location(br2, file$6, 216, 0, 6540);
-    			add_location(br3, file$6, 217, 0, 6547);
+    			attr_dev(div1, "class", "svelte-1gr5jd9");
+    			add_render_callback(() => /*div1_elementresize_handler*/ ctx[18].call(div1));
+    			add_location(div1, file$6, 177, 0, 5144);
+    			add_location(br2, file$6, 253, 0, 7549);
+    			add_location(br3, file$6, 254, 0, 7556);
     			attr_dev(p2, "class", "body-text");
-    			add_location(p2, file$6, 218, 0, 6554);
+    			add_location(p2, file$6, 255, 0, 7563);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4607,7 +4624,7 @@ var app = (function () {
     			append_dev(svg, text3);
     			append_dev(text3, t13);
     			append_dev(text3, t14);
-    			div1_resize_listener = add_resize_listener(div1, /*div1_elementresize_handler*/ ctx[16].bind(div1));
+    			div1_resize_listener = add_resize_listener(div1, /*div1_elementresize_handler*/ ctx[18].bind(div1));
     			insert_dev(target, t15, anchor);
     			insert_dev(target, br2, anchor);
     			insert_dev(target, t16, anchor);
@@ -4618,8 +4635,9 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[14]),
-    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[14])
+    					listen_dev(window_1, "resize", /*onwindowresize*/ ctx[15]),
+    					listen_dev(input, "change", /*input_change_input_handler*/ ctx[16]),
+    					listen_dev(input, "input", /*input_change_input_handler*/ ctx[16])
     				];
 
     				mounted = true;
@@ -4640,7 +4658,7 @@ var app = (function () {
     				attr_dev(g, "transform", g_transform_value);
     			}
 
-    			if (dirty & /*xScale, Array, nSplits, xDiff, yScale, formatter, dataArray, height, numCol, numRects, numTest, testColor, numValidation, validationColor, trainColor*/ 7998) {
+    			if (dirty & /*dataArray, Array, nSplits, formatter, yScale, xScale, width, xDiff, Math, numCol, numRects, numTest, testColor, numValidation, validationColor, trainColor*/ 7997) {
     				each_value = [...Array(/*nSplits*/ ctx[4]).keys()];
     				validate_each_argument(each_value);
     				let i;
@@ -4672,10 +4690,6 @@ var app = (function () {
 
     			if (!current || dirty & /*width*/ 1 && text3_x_value !== (text3_x_value = /*width*/ ctx[0] / 2)) {
     				attr_dev(text3, "x", text3_x_value);
-    			}
-
-    			if (!current || dirty & /*yScale*/ 1024 && text3_y_value !== (text3_y_value = /*yScale*/ ctx[10](4))) {
-    				attr_dev(text3, "y", text3_y_value);
     			}
 
     			if (!current || dirty & /*width*/ 1) {
@@ -4745,6 +4759,7 @@ var app = (function () {
     const validationColor = "#f46ebb";
 
     function instance$7($$self, $$props, $$invalidate) {
+    	let window;
     	let nSplits;
     	let xScale;
     	let yScale;
@@ -4761,11 +4776,40 @@ var app = (function () {
     	component_subscribe($$self, margin, $$value => $$invalidate(6, $margin = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('KFoldInteractive', slots, []);
-    	let width = 500;
+    	let width;
     	let height = 500;
 
     	// label formatter
     	const formatter = format(".1f");
+
+    	const dimensions = {
+    		desktop: {
+    			2: { rows: 1, cols: 2 },
+    			3: { rows: 1, cols: 3 },
+    			4: { rows: 2, cols: 3 },
+    			5: { rows: 2, cols: 3 },
+    			6: { rows: 2, cols: 3 },
+    			7: { rows: 3, cols: 3 },
+    			8: { rows: 3, cols: 3 },
+    			9: { rows: 3, cols: 3 },
+    			10: { rows: 4, cols: 3 },
+    			11: { rows: 4, cols: 3 },
+    			12: { rows: 4, cols: 3 }
+    		},
+    		mobile: {
+    			2: { rows: 1, cols: 2 },
+    			3: { rows: 2, cols: 2 },
+    			4: { rows: 2, cols: 2 },
+    			5: { rows: 3, cols: 2 },
+    			6: { rows: 3, cols: 2 },
+    			7: { rows: 4, cols: 2 },
+    			8: { rows: 4, cols: 2 },
+    			9: { rows: 5, cols: 2 },
+    			10: { rows: 5, cols: 2 },
+    			11: { rows: 6, cols: 2 },
+    			12: { rows: 6, cols: 2 }
+    		}
+    	};
 
     	const dataLinear = [
     		{ x: 10, y: 24 },
@@ -4790,8 +4834,12 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<KFoldInteractive> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<KFoldInteractive> was created with unknown prop '${key}'`);
     	});
+
+    	function onwindowresize() {
+    		$$invalidate(0, width = window_1.innerWidth);
+    	}
 
     	function input_change_input_handler() {
     		nSplits = to_number(this.value);
@@ -4819,11 +4867,13 @@ var app = (function () {
     		Scatterplot,
     		extent,
     		mean,
+    		range,
     		regressionLinear: d3Regression.regressionLinear,
     		format,
     		width,
     		height,
     		formatter,
+    		dimensions,
     		numRects: numRects$1,
     		testColor,
     		trainColor,
@@ -4839,6 +4889,7 @@ var app = (function () {
     		numTrain,
     		numCol,
     		xDiff,
+    		window,
     		yScale,
     		xScale,
     		$margin
@@ -4856,6 +4907,7 @@ var app = (function () {
     		if ('numTrain' in $$props) numTrain = $$props.numTrain;
     		if ('numCol' in $$props) $$invalidate(8, numCol = $$props.numCol);
     		if ('xDiff' in $$props) $$invalidate(9, xDiff = $$props.xDiff);
+    		if ('window' in $$props) $$invalidate(14, window = $$props.window);
     		if ('yScale' in $$props) $$invalidate(10, yScale = $$props.yScale);
     		if ('xScale' in $$props) $$invalidate(11, xScale = $$props.xScale);
     	};
@@ -4865,14 +4917,20 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*nSplits, width*/ 17) {
-    			$$invalidate(11, xScale = nSplits < 7
-    			? linear().domain([-1, nSplits]).range([width * 0.1, width - width * 0.1])
-    			: linear().domain([-1, nSplits]).range([0, width]));
+    		if ($$self.$$.dirty & /*width*/ 1) {
+    			$$invalidate(14, window = width <= 400 ? 'mobile' : 'desktop');
     		}
 
-    		if ($$self.$$.dirty & /*$margin, height*/ 66) {
-    			$$invalidate(10, yScale = band().domain([-1, 0, 1, 2, 3, 4]).range([$margin.bottom, height - $margin.top]).padding(0.1));
+    		if ($$self.$$.dirty & /*window, nSplits, width*/ 16401) {
+    			$$invalidate(11, xScale = band().domain(range(0, dimensions[window][nSplits].cols)).range([width * 0.2, width * 0.95]));
+    		}
+
+    		if ($$self.$$.dirty & /*window, nSplits, $margin, height*/ 16466) {
+    			$$invalidate(10, yScale = band().domain(range(-1, dimensions[window][nSplits].rows)).range([$margin.bottom, height - $margin.top]).padding(0.2));
+    		}
+
+    		if ($$self.$$.dirty & /*width*/ 1) {
+    			$$invalidate(9, xDiff = Math.min(width * .04, 20));
     		}
 
     		if ($$self.$$.dirty & /*nSplits*/ 16) {
@@ -4960,8 +5018,7 @@ var app = (function () {
     		}
     	};
 
-    	$$invalidate(4, nSplits = 4);
-    	$$invalidate(9, xDiff = 20);
+    	$$invalidate(4, nSplits = 3);
     	$$invalidate(5, numTest = 4);
     	$$invalidate(7, errorMean = 0);
     	$$invalidate(2, dataArray = []);
@@ -4981,6 +5038,8 @@ var app = (function () {
     		xScale,
     		formatter,
     		splits,
+    		window,
+    		onwindowresize,
     		input_change_input_handler,
     		func,
     		div1_elementresize_handler
@@ -5594,7 +5653,7 @@ var app = (function () {
     			g = svg_element("g");
     			path = svg_element("path");
     			attr_dev(path, "d", arrowPath);
-    			attr_dev(path, "style", `transform: scale(0.8)`);
+    			attr_dev(path, "style", path_style_value = `transform: scale(${/*xDiff*/ ctx[2] / arrowWidth$2})`);
     			attr_dev(path, "stroke", "#232f3e");
     			attr_dev(path, "stroke-width", "8");
     			attr_dev(path, "fill", "#232f3e");
@@ -6212,13 +6271,14 @@ var app = (function () {
     			g = svg_element("g");
     			path = svg_element("path");
     			attr_dev(path, "d", arrowPath);
-    			attr_dev(path, "style", `transform: scale(0.8)`);
     			attr_dev(path, "stroke", "#232f3e");
     			attr_dev(path, "stroke-width", "8");
     			attr_dev(path, "fill", "#232f3e");
-    			add_location(path, file$2, 58, 10, 2615);
-    			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + (/*yScale*/ ctx[3](0) - /*xDiff*/ ctx[2]) + ")");
-    			add_location(g, file$2, 57, 8, 2534);
+    			attr_dev(path, "stroke-linecap", "round");
+    			attr_dev(path, "stroke-linejoin", "round");
+    			add_location(path, file$2, 59, 10, 2630);
+    			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")");
+    			add_location(g, file$2, 58, 8, 2559);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
@@ -6401,63 +6461,63 @@ var app = (function () {
     			p2 = element("p");
     			p2.textContent = "If you think this looks familiar, you're on the right track: it's basically\n  the validation set applied k times - just with different splits of\n  training/validation data each time. But this simple extension to the\n  validation approach is very effective at overcoming the shortcomings of the\n  validation set approach. To be clear, it does come with a cost: the need to\n  train our data multiple times (once for each fold). Still, the method is\n  widely used, as the benefits outweight the cost in many scenarios. Because we\n  train our model on multiple instances of our data and take the average of\n  their evaluation scores, our evaluation estimates have lower variance.\n  Additionally, each fold itself uses more data than previously, so test error\n  estimates are more accurate. Even for modest values (e.g. k = 5), our training\n  set comprises 80 percent of our data. (Compare that with the validation set\n  approach, where our model is typically trained on around only 50-60 percent of\n  the original dataset.) This means that the K-fold approach typically doesn’t\n  overestimate the test error as much as the validation set approach does.";
     			attr_dev(span0, "class", "section-arrow");
-    			add_location(span0, file$2, 15, 2, 461);
+    			add_location(span0, file$2, 16, 2, 486);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$2, 14, 0, 434);
+    			add_location(h1, file$2, 15, 0, 459);
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file$2, 29, 5, 1424);
+    			add_location(span1, file$2, 30, 5, 1449);
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$2, 17, 0, 533);
-    			add_location(br0, file$2, 32, 0, 1546);
+    			add_location(p0, file$2, 18, 0, 558);
+    			add_location(br0, file$2, 33, 0, 1571);
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$2, 33, 0, 1553);
-    			add_location(br1, file$2, 38, 0, 1806);
-    			add_location(br2, file$2, 40, 0, 1814);
+    			add_location(p1, file$2, 34, 0, 1578);
+    			add_location(br1, file$2, 39, 0, 1831);
+    			add_location(br2, file$2, 41, 0, 1839);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "3");
     			attr_dev(rect0, "fill", "#003181");
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$2, 46, 6, 2051);
+    			add_location(rect0, file$2, 47, 6, 2076);
     			attr_dev(text0, "class", "legend-text svelte-164d2jo");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "15");
-    			add_location(text0, file$2, 47, 6, 2116);
+    			add_location(text0, file$2, 48, 6, 2141);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "3");
     			attr_dev(rect1, "fill", "#f46ebb");
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$2, 48, 6, 2175);
+    			add_location(rect1, file$2, 49, 6, 2200);
     			attr_dev(text1, "class", "legend-text svelte-164d2jo");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "15");
-    			add_location(text1, file$2, 49, 6, 2241);
+    			add_location(text1, file$2, 50, 6, 2266);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "3");
     			attr_dev(rect2, "fill", "#ffad97");
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$2, 50, 6, 2305);
+    			add_location(rect2, file$2, 51, 6, 2330);
     			attr_dev(text2, "class", "legend-text svelte-164d2jo");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "15");
-    			add_location(text2, file$2, 51, 6, 2372);
+    			add_location(text2, file$2, 52, 6, 2397);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$2, 45, 4, 1981);
+    			add_location(g, file$2, 46, 4, 2006);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$margin*/ ctx[5].top + /*$margin*/ ctx[5].bottom);
     			attr_dev(svg, "class", "svelte-164d2jo");
-    			add_location(svg, file$2, 43, 2, 1896);
+    			add_location(svg, file$2, 44, 2, 1921);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-164d2jo");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[7].call(div));
-    			add_location(div, file$2, 42, 0, 1822);
-    			add_location(br3, file$2, 112, 0, 3995);
-    			add_location(br4, file$2, 112, 6, 4001);
+    			add_location(div, file$2, 43, 0, 1847);
+    			add_location(br3, file$2, 114, 0, 4037);
+    			add_location(br4, file$2, 114, 6, 4043);
     			attr_dev(p2, "class", "body-text");
-    			add_location(p2, file$2, 113, 0, 4008);
+    			add_location(p2, file$2, 115, 0, 4050);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -6840,7 +6900,7 @@ var app = (function () {
     			g = svg_element("g");
     			path = svg_element("path");
     			attr_dev(path, "d", arrowPath);
-    			attr_dev(path, "style", `transform: scale(0.8)`);
+    			attr_dev(path, "style", `transform: scale(.35)`);
     			attr_dev(path, "stroke", "#232f3e");
     			attr_dev(path, "stroke-width", `${4 / .35}`);
     			attr_dev(path, "fill", "#232f3e");
@@ -7063,13 +7123,13 @@ var app = (function () {
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-1fpr9wp");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[7].call(div));
-    			add_location(div, file$1, 36, 0, 1228);
-    			add_location(br1, file$1, 108, 0, 3449);
-    			add_location(br2, file$1, 108, 6, 3455);
+    			add_location(div, file$1, 38, 0, 1315);
+    			add_location(br1, file$1, 112, 0, 3605);
+    			add_location(br2, file$1, 112, 6, 3611);
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file$1, 113, 65, 3782);
+    			add_location(span1, file$1, 117, 65, 3938);
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$1, 109, 0, 3462);
+    			add_location(p1, file$1, 113, 0, 3618);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
