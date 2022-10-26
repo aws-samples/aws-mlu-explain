@@ -101,8 +101,8 @@
       >
     </li>
     <li>
-      {@html katexify(`\\epsilon`, false)}: the irreducible error in our model.
-      A term that collects together all the unmodeled parts of our data.
+      {@html katexify(`\\epsilon`, false)}: the residual (or "error") of our model.
+      Our model will not make perfect predictions, so we compute this term by subtracting the predicted value from the actual value.
     </li>
   </ul>
   <br />
