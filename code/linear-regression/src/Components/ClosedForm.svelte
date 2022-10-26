@@ -221,7 +221,7 @@
     In research publications and statistical software, coefficients of regression
     models are often presented with associated p-values. These p-values come from
     traditional null hypothesis statistical tests: t-tests are used to measure whether
-    a given cofficient is significantly different than zero (the null hypothesis
+    a given coefficient is significantly different than zero (the null hypothesis
     that a particular coefficient {@html katexify(`\\beta_i`, false)} equals zero),
     while F tests are used to measure whether
     <i>any</i>

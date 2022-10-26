@@ -72,7 +72,7 @@
     >
     More specifically, r-squared measures the percentage of variance explained normalized
     against the baseline variance of our model (which is just the variance of the
-    mean):
+    the trivial model that always predicts the mean):
     {@html katexify(
       `\\begin{aligned} R^2 = 1 - \\frac{\\Sigma^{n}_{i=1}(y_i - \\hat{y_i})^2 }{\\Sigma^{n}_{i=1}(y_i - \\bar{y})^2 }  \\end{aligned}`,
       true

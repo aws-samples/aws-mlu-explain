@@ -36,7 +36,7 @@
   find suitable coefficients for our regression model that minimize prediction error
   (remember, lower MSE equals better model).
   <br /><br />
-  A full conversation on gradient descent is outside the course of this article (stay-tuned
+  A full conversation on gradient descent is outside the course of this article (stay tuned
   for our future article on the subject), but if you'd like to learn more, click
   the "Show Math" button below. Otherwise, read on!
   <br />
@@ -53,7 +53,7 @@
       Gradient descent works as follows. We assume that we have some convex
       function representing the error of our machine learning algorithm (in our
       case, MSE). Gradient descent will iteratively update our model's
-      coefficients in the direction of our error functions minimum <span
+      coefficients in a direction that reduces the value our error<span
         class="info-tooltip"
         title="Gradient descent won't always yield the best coefficients for our model, because it can sometimes 
     get stuck in local minima (as opposed to global minima). Many extensions exist to help solve this problem."
@@ -79,7 +79,7 @@
       this, we'll use the gradient, which represents the direction that the function 
       is increasing, and the rate at which it is increasing. Since we want to find
       the minimum of this function, we can go in the opposite direction of where it's 
-      increasing. This is exactly what Gradient Descent does, it works by taking steps 
+      increasing. This is exactly what Gradient Descent does: it works by taking steps 
       in the direction opposite of where our error function is increasing, proportional 
       to the rate of change. To find the coefficients that minimize the function, we 
       first calculate the derivatives of our error function is increasing. To find 
@@ -96,9 +96,9 @@
       Now that we have the gradients for our error function (with respect
       to each coefficient to be updated), we perform iterative updates:
       {@html katexify(
-        `\\text{repeat until converge:} = \\begin{cases}
-         \\beta_0 = \\beta_0 - \\alpha (-\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i}))  \\\\
-         \\beta_1 = \\beta_1 - \\alpha (-\\frac{2}{n} x_i\\sum^{n}_{i=1}(y_i - \\hat{y_i})) 
+        `\\text{repeat until converge:}  \\begin{cases}
+         \\beta_0 \\Larr \\beta_0 - \\alpha (-\\frac{2}{n} \\sum^{n}_{i=1}(y_i - \\hat{y_i}))  \\\\
+         \\beta_1 \\Larr \\beta_1 - \\alpha (-\\frac{2}{n} x_i\\sum^{n}_{i=1}(y_i - \\hat{y_i})) 
         \\end{cases}`,
         true
       )}

@@ -109,7 +109,7 @@
 
   <p class="body-text">
     Fitting a linear regression model is all about finding the set of
-    cofficients that best model {@html katexify(`y`, false)} as a function of our
+    coefficients that best model {@html katexify(`y`, false)} as a function of our
     features. We may never know the true parameters for our model, but we can estimate
     them (more on this later). Once we've estimated these coefficients, {@html katexify(
       `\\hat{\\beta_i}`,

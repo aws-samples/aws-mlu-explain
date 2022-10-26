@@ -191,7 +191,7 @@
   housing price for houses with no pools and a square-footage of zero.<sup
     ><span
       class="info-tooltip"
-      title="Because this value doesn't make much intuitive sense, it's common for the features to be centered at zero."
+      title="Because this value doesn't make much intuitive sense, it's common to preprocess the data so that the features are centered at zero."
       use:tooltip
     >
       [&#8505;]
