@@ -82,8 +82,8 @@
     (capturing less variance) than a flat line through mean of our data would.
 
     <br /><br />To build intuition for yourself, try changing the weight and
-    bias terms below to see how the MSE and r-squared change across different
-    model fits:
+    intercept terms below to see how the MSE and r-squared change across different
+    possible models for a toy dataset (click Shuffle Data to make a new toy dataset):
   </p>
   <br /><br />
   <div id="mse-container">
