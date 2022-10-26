@@ -79,7 +79,8 @@
     )}
     The highest possible value for r-squared is 1, representing a model that captures
     100% of the variance. A negative r-squared means that our model is doing worse
-    (capturing less variance) than a flat line through mean of our data would.
+    (capturing less variance) than a flat line through mean of our data would. (The name
+    "r-<em>squared</em>" falsely implies that it would not have a negative value.)
 
     <br /><br />To build intuition for yourself, try changing the weight and
     intercept terms below to see how the MSE and r-squared change across different
