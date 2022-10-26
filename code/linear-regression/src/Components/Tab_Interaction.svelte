@@ -175,10 +175,10 @@
     `sqft`,
     false
   )} should differ between houses that do have pools and houses that do not, we can
-  add an interaction term to our model, {@html katexify(`(sqft:pool) `, false)}.
+  add an interaction term to our model, {@html katexify(`(sqft*pool) `, false)}.
   <br /><br />
   The coefficient of the interaction term {@html katexify(
-    `(sqft:pool)`,
+    `(sqft*pool)`,
     false
   )}, {formatter(Math.round(slopeInteraction))}, represents the difference in
   the slope for {@html katexify(`sqft`, false)}, comparing houses that do and 
