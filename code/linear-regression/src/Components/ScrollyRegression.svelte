@@ -32,6 +32,8 @@
       $lineType = "regressionLineFlat";
       $showRegressionLine = true;
       $showResiduals = true;
+      $coeff = 0;
+      $intercept = 293683;
     },
 
     2: () => {
