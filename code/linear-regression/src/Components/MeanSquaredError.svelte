@@ -182,7 +182,7 @@
     <a href="https://en.wikipedia.org/wiki/Root-mean-square_deviation">RMSE</a
     >). If instead we wanted our error to reflect the linear distance between
     what we predicted and what is correct, or we wanted our data minimized by
-    the median, we could try something like Mean Abosulte Error (<a
+    the median, we could try something like Mean Absolute Error (<a
       href="https://en.wikipedia.org/wiki/Mean_absolute_error">MAE</a
     >). Whatever the case, you should be thinking of your evaluation metric as
     part of your modeling process, and select the best metric based on the
