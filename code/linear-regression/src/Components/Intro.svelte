@@ -91,7 +91,7 @@
         ><span
           class="info-tooltip"
           title="The coefficient B<sub>0</sub> represents the
-      intercept of our model, and each other coefficient 
+      intercept or bias of our model, and each other coefficient 
       B<sub>i</sub> (i > 0) is a slope defining how variable 
       x<sub>i</sub> contributes to the model. We discuss how to
       interpret regression coefficients later in the article."

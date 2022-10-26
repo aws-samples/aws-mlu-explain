@@ -51,7 +51,7 @@
       true
     )}
     Add circles to the chart below to see how the Normal Equation calculates two
-    featues, the bias and weight, for the corresponding regression model.
+    features, the intercept and weight, for the corresponding regression model.
   </p>
   <div id="cf-container">
     <div id="equations-container">

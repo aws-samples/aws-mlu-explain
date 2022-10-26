@@ -148,10 +148,10 @@
         >100 Steps</button
       >
     </div>
-    <div id="bias-slider">
+    <div id="intercept-slider-2">
       <div class="input-container">
         <p>
-          Bias ({@html katexify(`\\hat{\\beta_0}`, false)}): {formatter(
+          Intercept ({@html katexify(`\\hat{\\beta_0}`, false)}): {formatter(
             $gdBias
           )}
         </p>

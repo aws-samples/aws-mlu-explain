@@ -93,10 +93,10 @@
           >Shuffle Data</button
         >
       </div>
-      <div id="bias-slider">
+      <div id="intercept-slider">
         <div class="input-container">
           <p>
-            Bias ({@html katexify(`\\hat{\\beta_0}`, false)}): {formatter(
+            Intercept ({@html katexify(`\\hat{\\beta_0}`, false)}): {formatter(
               $mseBias
             )}
           </p>
