@@ -80,12 +80,7 @@
     y2={height}
     stroke="black"
   />
-  <text
-  class="fold-error-text"
-  x={width / 2}
-  y={height * 1.2}
->{label}
-</text>
+  <text class="fold-error-text" x={width / 2} y={height * 1.2}>{label} </text>
 </g>
 
 <style>
@@ -102,12 +97,18 @@
   }
   .fold-error-text {
     font-family: var(--font-heavy);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     stroke-linejoin: round;
     paint-order: stroke fill;
     stroke: var(--white);
     stroke-width: 4px;
     fill: var(--magenta);
     text-anchor: middle;
+  }
+
+  @media screen and (max-width: 750px) {
+    .fold-error-text {
+      font-size: 0.5rem;
+    }
   }
 </style>

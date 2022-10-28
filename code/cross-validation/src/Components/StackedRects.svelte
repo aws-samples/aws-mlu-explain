@@ -1,6 +1,6 @@
 <script>
   import { scaleBand } from "d3-scale";
-  import { margin } from "../store";
+  import { marginStatic } from "../store";
 
   //   props
   export let height = 500;
@@ -8,6 +8,7 @@
   export let numCol = 5;
   export let x = 0;
   export let y = 0;
+  export let margin = $marginStatic;
   // rule to color rects (by index)
   export let fillRule = (i) => {
     return "#232f3e";
@@ -26,7 +27,7 @@
 
   $: rectYScale = scaleBand()
     .domain(dataDomain)
-    .range([height - $margin.top, $margin.bottom])
+    .range([height - margin.top, margin.bottom])
     .padding(0.1);
 
   $: radius = rectYScale.bandwidth();

@@ -1,6 +1,6 @@
 <script>
   import { scaleLinear, scaleBand } from "d3-scale";
-  import { margin } from "../store.js";
+  import { marginGrid } from "../store.js";
   import StackedRects from "./StackedRects.svelte";
   import Scatterplot from "./Scatterplot.svelte";
   import { extent, mean, range } from "d3-array";
@@ -10,46 +10,48 @@
   let width;
   let height = 500;
 
-  // label formatter
   const formatter = format(".1f");
 
   const dimensions = {
-    desktop:{
-    2:{rows:1, cols:2},
-    3:{rows:1, cols:3},
-    4:{rows:2, cols:3},
-    5:{rows:2, cols:3},
-    6:{rows:2, cols:3},
-    7:{rows:3, cols:3},
-    8:{rows:3, cols:3},
-    9:{rows:3, cols:3},
-    10:{rows:4, cols:3},
-    11:{rows:4, cols:3},
-    12:{rows:4, cols:3}},
-    mobile:{
-    2:{rows:1, cols:2},
-    3:{rows:2, cols:2},
-    4:{rows:2, cols:2},
-    5:{rows:3, cols:2},
-    6:{rows:3, cols:2},
-    7:{rows:4, cols:2},
-    8:{rows:4, cols:2},
-    9:{rows:5, cols:2},
-    10:{rows:5, cols:2},
-    11:{rows:6, cols:2},
-    12:{rows:6, cols:2}}
-  }
-  $: window = width <= 400 ? 'mobile':'desktop'
+    desktop: {
+      2: { rows: 1, cols: 2 },
+      3: { rows: 1, cols: 3 },
+      4: { rows: 2, cols: 3 },
+      5: { rows: 2, cols: 3 },
+      6: { rows: 2, cols: 3 },
+      7: { rows: 3, cols: 3 },
+      8: { rows: 3, cols: 3 },
+      9: { rows: 3, cols: 3 },
+      10: { rows: 4, cols: 3 },
+      11: { rows: 4, cols: 3 },
+      12: { rows: 4, cols: 3 },
+    },
+    mobile: {
+      2: { rows: 1, cols: 2 },
+      3: { rows: 2, cols: 2 },
+      4: { rows: 2, cols: 2 },
+      5: { rows: 3, cols: 2 },
+      6: { rows: 3, cols: 2 },
+      7: { rows: 4, cols: 2 },
+      8: { rows: 4, cols: 2 },
+      9: { rows: 5, cols: 2 },
+      10: { rows: 5, cols: 2 },
+      11: { rows: 6, cols: 2 },
+      12: { rows: 6, cols: 2 },
+    },
+  };
+  $: window = width <= 400 ? "mobile" : "desktop";
 
   $: nSplits = 3;
   $: xScale = scaleBand()
-      .domain(range(0,dimensions[window][nSplits].cols))
-      .range([width * 0.2, width * 0.95])
+    .domain(range(0, dimensions[window][nSplits].cols))
+    .range([width * 0.2, width * 0.95]);
   $: yScale = scaleBand()
     .domain(range(-1, dimensions[window][nSplits].rows))
-    .range([$margin.bottom, height - $margin.top])
+    .range([$marginGrid.bottom, height - $marginGrid.top])
+    // .range([$marginGrid.bottom, height - $marginGrid.top])
     .padding(0.2);
-  $: xDiff = Math.min(width * .04,20);
+  $: xDiff = Math.min(width * 0.04, 20);
   const numRects = 16;
   const testColor = "#ffad97";
   const trainColor = "#003181";
@@ -85,16 +87,6 @@
     .y((d) => d.y)
     .domain(extent(dataLinear, (d) => d.x));
 
-  // instead of iterating over ticks, need to iterate over ticks and create data at higher
-  // level component (here), so state can be passed down.KFoldInteractive
-
-  // iterate through [...Array(nSplits).keys()] as tick
-  // for each iteration: create
-  // dataset with labels
-  // regression dataset
-  // end
-  // then:
-  // loop through that data in each block
   $: console.log("WIDTH", width / 2);
   $: errorMean = 0;
   $: dataArray = [];
@@ -152,7 +144,7 @@
 <svelte:window bind:innerWidth={width} />
 
 <h1 class="body-header">
-  <span class="section-arrow">&gt; </span> Try For Yourself
+  <span class="section-arrow">&gt; </span> See For Yourself
 </h1>
 <p class="body-text">
   To make the ideas behind Cross Validation more clear, we’ll see how the
@@ -176,7 +168,7 @@
 </div>
 <!-- </label> -->
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + $margin.top + $margin.bottom}>
+  <svg {width} height={height + $marginGrid.top + $marginGrid.bottom}>
     <!-- legend -->
     <g class="g-tag" transform="translate({width / 2 - 102}, {0})">
       <rect x={0} y="3" fill={trainColor} width="12" height="12" />
@@ -189,7 +181,7 @@
 
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
-     <!-- use lines below for debugging -->
+      <!-- use lines below for debugging -->
       <!-- <line
         class="axis-line"
         x1={xScale(tick)}
@@ -213,10 +205,13 @@
 
       <StackedRects
         height={yScale.bandwidth()}
+        margin={$marginGrid}
         {numCol}
         {numRects}
         x={xScale(tick % (width <= 400 ? 2 : 3))}
-        y={yScale(Math.floor(tick/(width <= 400 ? 2 : 3))) - yScale.bandwidth() - xDiff*2}
+        y={yScale(Math.floor(tick / (width <= 400 ? 2 : 3))) -
+          yScale.bandwidth() -
+          xDiff * 0}
         fillRule={(d) => {
           if (d >= numRects - numTest) return testColor;
           if (
@@ -231,28 +226,26 @@
       <Scatterplot
         data={dataArray[tick]["scatterData"]}
         regressionData={dataArray[tick]["regressionData"]}
-        label={`Val MSE: ${formatter(dataArray[tick]['mse'])}`}
+        label={`Val MSE: ${formatter(dataArray[tick]["mse"])}`}
         width={yScale.bandwidth()}
         height={yScale.bandwidth()}
-        x={xScale(tick % (width <= 400 ? 2 : 3) )+ xDiff * 3}
-        y={yScale(Math.floor(tick/(width <= 400 ? 2 : 3))) - yScale.bandwidth()}
+        x={xScale(tick % (width <= 400 ? 2 : 3)) + xDiff * 3}
+        y={yScale(Math.floor(tick / (width <= 400 ? 2 : 3))) -
+          yScale.bandwidth()}
       />
 
       <!-- Error text -->
-
     {/each}
     <!-- Final accuracy text -->
     <text
       class="fold-error-text"
       id="average-fold-error-text"
       x={width / 2}
-      y={55}
+      y={40}
       text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
   </svg>
 </div>
-<br />
-<br />
 <p class="body-text">
   When exploring the fit models above, you may have observed something
   interesting! The lines of best fit across our folds vary more for lower values
@@ -277,7 +270,6 @@
     width: 90%;
     margin: 1rem auto;
     max-width: 1600px;
-    /* border: 2px solid black; */
   }
 
   #input-container {
@@ -297,7 +289,7 @@
 
   #average-fold-error-text {
     fill: var(--peach);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   /* ipad */

@@ -1,4 +1,5 @@
 <script>
+  import katexify from "../katexify";
 </script>
 
 <section>
@@ -23,16 +24,16 @@
     On the other hand,the training set for LOOCV uses almost the entire dataset,
     all n-1 observations, to train our model. Thus, LOOCV gives us approximately
     unbiased estimates of our test error. In general, K-Folds Cross Validation will
-    use a training set with (k - 1) * n observations. Then, as our value of k increases,
-    the bias of our estimates should theoretically decrease, as larger training datasets
-    should better approzimate the test error. Under this framework, common choices
-    of k, like k = 5 or k = 10, will yield intermediate levels of bias, and low values
-    should yield high. Therefore, if we want to reduce the contribution of bias to
-    our evaluation estimates, we can increase k, increasing the data each model sees
-    during training. It's important to not get confused about what we're discussing
-    here: the bias here refers to our estimate of the test error from what we see
-    during training/validation. We're not discussing the bias of the test error itself,
-    E(hatfx) - f(x), which is not affected by the size of our training data.
+    use a training set with (k - 1) * n / k observations. Then, as our value of k
+    increases, the bias of our estimates should theoretically decrease, as larger
+    training datasets should better approximate the test error. Under this framework,
+    common choices of k, like k = 5 or k = 10, will yield intermediate levels of
+    bias, and low values should yield high. Therefore, if we want to reduce the contribution
+    of bias to our evaluation estimates, we can increase k, increasing the data each
+    model sees during training. It's important to not get confused about what we're
+    discussing here: the bias here refers to our estimate of the test error from
+    what we see during training/validation (not the bias of the test error itself,
+    which is not affected by the size of our training data.
     <!-- <br />
     the validation set approach can lead to overestimates of the test error rate,
     since in this approach the training set used to fit the statistical learning

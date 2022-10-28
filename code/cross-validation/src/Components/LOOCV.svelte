@@ -1,6 +1,6 @@
 <script>
   import { scaleLinear } from "d3-scale";
-  import { margin } from "../store.js";
+  import { marginStatic } from "../store.js";
   import { arrowPath } from "../arrowPath";
   import StackedRects from "./StackedRects.svelte";
 
@@ -13,7 +13,7 @@
   $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
   $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
   $: xDiff = width / ((nSplits + 1) * 4);
-  console.log({xDiff:width / ((nSplits + 1) * 4),arrowWidth})
+  console.log({ xDiff: width / ((nSplits + 1) * 4), arrowWidth });
 
   let validationLabels = [
     { label: "Train", y: 5 },
@@ -37,7 +37,7 @@
 <br />
 
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + $margin.top + $margin.bottom}>
+  <svg {width} height={height + $marginStatic.top + $marginStatic.bottom}>
     <!-- legend -->
     <g class="g-tag" transform="translate({width / 2 - 102}, {0})">
       <rect x={0} y="3" fill="#003181" width="12" height="12" />
@@ -52,14 +52,12 @@
     {#each [...Array(nSplits).keys()] as tick}
       {#if tick === 1}
         <!-- <text text-anchor="middle" x={xScale(tick)} y={yScale(0)}>hey</text> -->
-        <g
-          transform="translate({xScale(tick) - xDiff }, {yScale(0)})"
-        >
+        <g transform="translate({xScale(tick) - xDiff}, {yScale(0)})">
           <path
             d={arrowPath}
             style={`transform: scale(.35)`}
             stroke="#232f3e"
-            stroke-width={`${4/.35}`}
+            stroke-width={`${4 / 0.35}`}
             fill="#232f3e"
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -91,13 +89,13 @@
 
       <!-- x-ticks -->
       <!-- {#each xScale.ticks() as tick}
-        <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
+        <g transform={`translate(${xScale(tick)} ${height - $marginStatic.bottom})`}>
           <line
             class="axis-line"
             x1="0"
             x2="0"
             y1="0"
-            y2={-height + $margin.bottom + $margin.top}
+            y2={-height + $marginStatic.bottom + $marginStatic.top}
             stroke="black"
             stroke-dasharray="4"
           />
@@ -105,7 +103,7 @@
       {/each} -->
     {/each}
     <!-- title -->
-    <!-- <text class="title-text" x="0" y={$margin.top} text-anchor="middle"
+    <!-- <text class="title-text" x="0" y={$marginStatic.top} text-anchor="middle"
         >Validation Set Approach</text
       > -->
   </svg>
