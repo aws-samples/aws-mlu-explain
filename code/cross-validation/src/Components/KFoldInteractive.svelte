@@ -206,7 +206,9 @@
         data={dataArray[tick]["scatterData"]}
         regressionData={dataArray[tick]["regressionData"]}
         label={`Val MSE: ${formatter(dataArray[tick]["mse"])}`}
-        width={yScale.bandwidth()}
+        width={window === "mobile"
+          ? yScale.bandwidth() * 0.5
+          : yScale.bandwidth() * 0.9}
         height={yScale.bandwidth()}
         x={xScale(tick % (width <= 400 ? 2 : 3)) + xDiff * 3}
         y={yScale(Math.floor(tick / (width <= 400 ? 2 : 3))) -
@@ -220,7 +222,7 @@
       class="fold-error-text"
       id="average-fold-error-text"
       x={width / 2}
-      y={35}
+      y={30}
       text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
   </svg>
@@ -288,6 +290,14 @@
       max-height: 55vh;
       width: 85%;
       margin: 1rem auto;
+    }
+
+    .fold-error-text {
+      font-size: 0.9rem;
+    }
+
+    #average-fold-error-text {
+      font-size: 0.85rem;
     }
   }
   /* mobile */
