@@ -77,13 +77,3 @@
     to a simple validation set, however it does not completely solve the issue.
   </p>
 </section>
-
-<style>
-  #quote {
-    font-style: italic;
-    margin: 1rem;
-  }
-  /* mobile */
-  @media screen and (max-width: 950px) {
-  }
-</style>
