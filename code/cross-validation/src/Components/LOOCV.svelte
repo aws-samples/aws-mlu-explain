@@ -3,6 +3,7 @@
   import { marginStatic } from "../store.js";
   import { arrowPath } from "../arrowPath";
   import StackedRects from "./StackedRects.svelte";
+  import katexify from "../katexify";
 
   let width = 500;
   let height = 500;
@@ -13,26 +14,24 @@
   $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
   $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
   $: xDiff = width / ((nSplits + 1) * 4);
-  console.log({ xDiff: width / ((nSplits + 1) * 4), arrowWidth });
-
-  let validationLabels = [
-    { label: "Train", y: 5 },
-    { label: "Validation", y: 13 },
-    { label: "Test", y: 18 },
-  ];
 </script>
 
 <h1 class="body-header">
-  <span class="section-arrow">&gt; </span> Leave-One-Out Cross-Validation (LOOCV)
+  <span class="section-arrow">&gt; </span> Leave-One-Out Cross Validation (LOOCV)
 </h1>
 <p class="body-text">
-  A special case of k-fold cross-validation, called *leave one out cv*, occurs
-  when we set k equal to n, the number of observations in our dataset. In
-  leave-one-out cross-validation, our data is repeatedly split into a training
-  set containing all but one observations, and a validation set containing the
-  remaining left out observation. That is, the training set consists of n-1
-  observations, and the validation set consists of just one individual
-  observation:
+  A special case of K-Fold Cross-Validation, <span class="bold"
+    >Leave-One-Out Cross-Validation (LOOCV)</span
+  >, occurs when we set {@html katexify(`k`, false)} equal to {@html katexify(
+    `n`,
+    false
+  )}, the number of observations in our dataset. In Leave-One-Out
+  Cross-Validation, our data is repeatedly split into a training set containing
+  all but one observations, and a validation set containing the remaining left
+  out observation. That is, the training set consists of {@html katexify(
+    `n - 1`,
+    false
+  )} observations, and the validation set consists of just one individual observation:
 </p>
 <br />
 
@@ -51,7 +50,6 @@
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
       {#if tick === 1}
-        <!-- <text text-anchor="middle" x={xScale(tick)} y={yScale(0)}>hey</text> -->
         <g transform="translate({xScale(tick) - xDiff}, {yScale(0)})">
           <path
             d={arrowPath}
@@ -86,41 +84,28 @@
           }}
         />
       {/if}
-
-      <!-- x-ticks -->
-      <!-- {#each xScale.ticks() as tick}
-        <g transform={`translate(${xScale(tick)} ${height - $marginStatic.bottom})`}>
-          <line
-            class="axis-line"
-            x1="0"
-            x2="0"
-            y1="0"
-            y2={-height + $marginStatic.bottom + $marginStatic.top}
-            stroke="black"
-            stroke-dasharray="4"
-          />
-        </g>
-      {/each} -->
     {/each}
-    <!-- title -->
-    <!-- <text class="title-text" x="0" y={$marginStatic.top} text-anchor="middle"
-        >Validation Set Approach</text
-      > -->
   </svg>
 </div>
 <br /><br />
 <p class="body-text">
   LOOCV carries all the same benefits mentioned previously, as well as some more
-  we'll discuss in the Bias Variance tradeoff section below (though these may be
-  contentioius!). However, large value of k used in LOOCV carries some
-  additional costs, namely that it requires re-training our data <span
-    class="bold">many</span
-  >
-  times (once for every data point!). This is expensive both in the amount of resources
-  it requires, as well as the time it takes to wait for your model to train on so
-  many iterations. For this reason, it's rare to see LOOCV employed in the wild,
-  (especially for large-scale models), and a more conservative value of k is often
-  used (e.g. k = 5 or k = 10).
+  we'll discuss in the Bias Variance tradeoff section below. While the large
+  value of {@html katexify(`k`, false)} in LOOCV should minimize the variance in
+  our estimate, it comes with a cost: the need to re-train our model {@html katexify(
+    `n - 1`,
+    false
+  )}
+  times! This is expensive both in the amount of time it takes and the compute resources
+  it requires. For this reason, it's rare to see LOOCV employed in the wild unless
+  there is a specific structure of the model that makes this computation efficient
+  (e.g. ridge regression). A more conservative value of {@html katexify(
+    `k`,
+    false
+  )} is more commonly used instead (e.g. {@html katexify(`k = 5`, false)} or {@html katexify(
+    `k = 10`,
+    false
+  )}).
 </p>
 
 <style>

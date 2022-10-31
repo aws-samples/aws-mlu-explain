@@ -6,8 +6,9 @@
   import { extent, mean, range } from "d3-array";
   import { regressionLinear } from "d3-regression";
   import { format } from "d3-format";
+  import katexify from "../katexify";
 
-  let width;
+  let width = 500;
   let height = 500;
 
   const formatter = format(".1f");
@@ -87,7 +88,6 @@
     .y((d) => d.y)
     .domain(extent(dataLinear, (d) => d.x));
 
-  $: console.log("WIDTH", width / 2);
   $: errorMean = 0;
   $: dataArray = [];
   $: splits = [...Array(nSplits).keys()];
@@ -125,7 +125,6 @@
       });
       // average over squared errors
       const meanSquaredError = squaredErrors.reduce((a, b) => a + b) / n;
-      console.log("errors", meanSquaredError);
 
       const dataSet = {
         scatterData: splitData,
@@ -147,12 +146,15 @@
   <span class="section-arrow">&gt; </span> See For Yourself
 </h1>
 <p class="body-text">
-  To make the ideas behind Cross Validation more clear, we’ll see how the
-  process works directly. Let’s assume that we’d like to use a one-dimensional
-  linear regression model to predict the price of a house from its
-  square-footage. Drag the value of k for yourself to set the number of folds.
-  Observe that each fold results in a new data split alongside a newly trained
-  model.
+  To make K-Folds Cross-Validation more clear, let's see how it works directly.
+  We'll assume that we’d like to use a simple linear regression model to predict
+  some values of y from some data x. Drag the value of {@html katexify(
+    `k`,
+    false
+  )} below to set the number of folds used in K-Folds Cross-Validation. Observe that
+  each value of {@html katexify(`k`, false)} yields a new model trained and evaluated
+  on different splits of the original dataset. (Note that the test data remains unchanged,
+  as we use this only once, at the very end, to estimate our test MSE):
 </p>
 <br /><br />
 <!-- <label> -->
@@ -171,38 +173,15 @@
   <svg {width} height={height + $marginGrid.top + $marginGrid.bottom}>
     <!-- legend -->
     <g class="g-tag" transform="translate({width / 2 - 102}, {0})">
-      <rect x={0} y="3" fill={trainColor} width="12" height="12" />
-      <text class="legend-text" x={15} y="15">Train</text>
-      <rect x={65} y="3" fill={validationColor} width="12" height="12" />
-      <text class="legend-text" x={80} y="15">Validation</text>
-      <rect x={170} y="3" fill={testColor} width="12" height="12" />
-      <text class="legend-text" x={185} y="15">Test</text>
+      <rect x={0} y="0" fill={trainColor} width="12" height="12" />
+      <text class="legend-text" x={15} y="12">Train</text>
+      <rect x={65} y="0" fill={validationColor} width="12" height="12" />
+      <text class="legend-text" x={80} y="12">Validation</text>
+      <rect x={170} y="0" fill={testColor} width="12" height="12" />
+      <text class="legend-text" x={185} y="12">Test</text>
     </g>
 
-    <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
-      <!-- use lines below for debugging -->
-      <!-- <line
-        class="axis-line"
-        x1={xScale(tick)}
-        x2={xScale(tick)}
-        y1={0}
-        y2={500}
-        stroke="black"
-        stroke-dasharray="4"
-        opacity="0.8"
-      />
-      <line
-        class="axis-line"
-        y1={yScale(tick)}
-        y2={yScale(tick)}
-        x1={0}
-        x2={1500}
-        stroke="black"
-        stroke-dasharray="4"
-        opacity="0.8"
-      /> -->
-
       <StackedRects
         height={yScale.bandwidth()}
         margin={$marginGrid}
@@ -241,17 +220,28 @@
       class="fold-error-text"
       id="average-fold-error-text"
       x={width / 2}
-      y={40}
+      y={35}
       text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
   </svg>
 </div>
 <p class="body-text">
-  When exploring the fit models above, you may have observed something
-  interesting! The lines of best fit across our folds vary more for lower values
-  of k than for higher values of k. This is a result of our old friend, the bias
-  variance tradeoff (https://mlu-explain.github.io/bias-variance/). Read on to
-  learn more!
+  Because each fold uses different data points for training and evaluating each
+  model, each fold's model will be slightly different from the other. The final
+  test MSE is evaluated by average performance on the test set across all of the
+  folds in aggregate.
+  <br /><br />
+  In exploring the fit models above, you may have observed something interesting!
+  The lines of best fit (and estimated test MSE) vary more for lower values of {@html katexify(
+    `k`,
+    false
+  )}
+  than for higher values of {@html katexify(`k`, false)}. This is a result of
+  our old friend, the
+  <a href="https://mlu-explain.github.io/bias-variance/"
+    >bias variance tradeoff</a
+  >. Read on to learn how this tradeoff manifests in the context of K-Folds
+  Cross-Validation.
 </p>
 
 <style>
@@ -279,7 +269,7 @@
 
   .fold-error-text {
     font-family: var(--font-heavy);
-    font-size: 0.9rem;
+    font-size: 1rem;
     stroke-linejoin: round;
     paint-order: stroke fill;
     stroke: var(--white);
