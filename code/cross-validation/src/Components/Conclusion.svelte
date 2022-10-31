@@ -1,18 +1,12 @@
 <script></script>
 
 <h1 class="body-header">
-  <span class="section-arrow">&gt; </span> Concluding Text
+  <span class="section-arrow">&gt; </span>
 </h1>
 <p class="body-text">
-  Write a paragraph here detailing that the article is over. Mention stuff that
-  you've learned. Mention stuff that's related that we didn't mention. You only
-  need edit the next two paragraphs slightly.
-</p>
-<br />
-<p class="body-text">
-  Thanks for reading. We hope that the article is insightful no matter where you
-  are along your Machine Learning journey, and that you came away with a better
-  understanding of some of the difficulties of evaluating classification models.
+  Thanks for reading! We hope that the article is insightful no matter where you
+  are along your machine learning journey, and that you came away with a better
+  understanding of cross-validation in the context of machine learning.
   <br /><br />
   To learn more about Machine Learning, check out our
   <a class="on-end" href="https://aws.amazon.com/machine-learning/mlu/"
@@ -33,6 +27,9 @@
   <a class="on-end" href="https://github.com/aws-samples/aws-mlu-explain"
     >here</a
   >.
+  <br /><br />
+  A special thanks goes out to Brent Werness for helping review the content of this
+  article.
 </p>
 
 <style>

@@ -1,12 +1,14 @@
 <script>
   import { scaleLinear } from "d3-scale";
-  import { margin } from "../store.js";
+  import { marginStatic } from "../store.js";
   import { arrowPath } from "../arrowPath";
   import StackedRects from "./StackedRects.svelte";
+  import katexify from "../katexify";
 
   let width = 500;
   let height = 500;
   const nSplits = 6;
+  const arrowWidth = 36;
   $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
   $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
   $: xDiff = width / ((nSplits + 1) * 4);
@@ -17,31 +19,35 @@
 </h1>
 <p class="body-text">
   Rather than worrying about which split of data to use for training versus
-  validation, we’ll use them all in turn. Our strategy will be to iterativelyuse
-  different portions of our data to test and train our model. The exact process
-  is actually quite simple: We’ll randomly split our dataset into k sets, or
-  "folds", of equal size. One fold will be reserved for the validation set (or
-  "holdout set") and the remaining k - 1 folds will be used for the training
-  set. The training folds will fit our models parameters, and the validation
-  fold will be used for evaluation. This process will be repeated on our data k
-  times, using a different fold for the validation set at each iteration. At the
-  end of the procedure, we'll take the average the validation set scores and
-  take that as our as our model's estimated performance. This process is known
-  as <span class="bold">k-folds cross validation</span>, and requires re-fitting
-  our data k times (once for each fold).
+  validation, we’ll use them all in turn. Our strategy will be to iteratively
+  use different portions of our data to test and train our model. The exact
+  process is actually quite simple: We’ll randomly split our dataset into {@html katexify(
+    `k`,
+    false
+  )}
+  sets, or folds, of equal size. One fold will be reserved for the validation set
+  (or "holdout set") and the remaining {@html katexify(`k - 1`, false)} folds will
+  be used for the training set. The training folds will fit our models parameters,
+  and the validation fold will be used for evaluation. This process will be repeated
+  on our data k times, using a different fold for the validation set at each iteration.
+  At the end of the procedure, we'll take the average the validation set scores and
+  take that as our as our model's estimated performance. This process is known as
+  <span class="bold">K-Folds Cross-Validation</span>, and requires re-fitting
+  our model {@html katexify(`k`, false)} times (once for each fold).
 </p>
 <br />
 <p class="body-text">
-  Below we show the process for K=4 folds of our data. Note that the test data
-  always remains untouched (after all, it's the final hold out set), but the
-  distribution of training and validation sets differs at every fold:
+  Below we show the process for {@html katexify(`k = 4`, false)} folds of our data.
+  Note that the test data always remains untouched (after all, it's the final hold
+  out set), but the distribution of training and validation sets differs at every
+  fold:
 </p>
 <br />
 
 <br />
 
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + $margin.top + $margin.bottom}>
+  <svg {width} height={height + $marginStatic.top + $marginStatic.bottom}>
     <!-- legend -->
     <g class="g-tag" transform="translate({width / 2 - 102}, {0})">
       <rect x={0} y="3" fill="#003181" width="12" height="12" />
@@ -55,13 +61,14 @@
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
       {#if tick === 1}
-        <g transform="translate({xScale(tick) - xDiff}, {yScale(0) - xDiff})">
+        <g transform="translate({xScale(tick) - xDiff}, {yScale(0)})">
           <path
             d={arrowPath}
-            style={`transform: scale(0.8)`}
             stroke="#232f3e"
-            stroke-width="3"
+            stroke-width="8"
             fill="#232f3e"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           />
         </g>
       {:else if tick === 0}
@@ -88,52 +95,39 @@
           }}
         />
       {/if}
-
-      <!-- x-ticks -->
-      <!-- {#each xScale.ticks() as tick}
-        <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
-          <line
-            class="axis-line"
-            x1="0"
-            x2="0"
-            y1="0"
-            y2={-height + $margin.bottom + $margin.top}
-            stroke="black"
-            stroke-dasharray="4"
-          />
-        </g>
-      {/each} -->
     {/each}
-    <!-- title -->
-    <!-- <text class="title-text" x="0" y={$margin.top} text-anchor="middle"
-      >Validation Set Approach</text
-    > -->
   </svg>
 </div>
 <br /><br />
 <p class="body-text">
-  If you think this looks familiar, you're on the right track: it's basically
+  If you think this looks familiar, you're on the right track! It's basically
   the validation set applied k times - just with different splits of
   training/validation data each time. But this simple extension to the
   validation approach is very effective at overcoming the shortcomings of the
-  validation set approach. To be clear, it does come with a cost: the need to
-  train our data multiple times (once for each fold). Still, the method is
-  widely used, as the benefits outweight the cost in many scenarios. Because we
-  train our model on multiple instances of our data and take the average of
-  their evaluation scores, our evaluation estimates have lower variance.
-  Additionally, each fold itself uses more data than previously, so test error
-  estimates are more accurate. Even for modest values (e.g. k = 5), our training
-  set comprises 80 percent of our data. (Compare that with the validation set
-  approach, where our model is typically trained on around only 50-60 percent of
-  the original dataset.) This means that the K-fold approach typically doesn’t
-  overestimate the test error as much as the validation set approach does.
+  validation set approach. The main benefit is that, because we train our model
+  on multiple subsets of our data and take the average of the evaluation scores
+  on those subsets, our evaluation estimates from K-Folds Cross-Validation will
+  have lower variance than will the evaluation estimates from the validation set
+  approach. Additionally, K-Folds Cross-Validation looks at more data during
+  training. In the validation set approach, only one sample of the data is used
+  for the training set, and it's possible that some information just wasn't
+  included in that sample. With K-Folds Cross-Validation, the whole ensemble
+  uses all of the data, so every data point will get included in the training of
+  some model, and the evaluation of that model will then be factored into the
+  final evaluation estimate. Finally, it's worth stating the obvious fact that
+  test error estimates are more accurate when more data is used in the training
+  set. Even for modest values of k in K-Folds Cross-Validation (e.g. {@html katexify(
+    `k = 5`,
+    false
+  )}), the training set comprises 80 percent of our data, so the approach
+  typically doesn’t overestimate the test error as much as the validation set
+  approach could for conservative training set sizes.
+  <br /><br />
+  While K-Folds Cross-Validation has a lot of obvious benefits, it does come with
+  a cost: the need to train and evaluate a model multiple times (once for each fold).
 </p>
 
 <style>
-  svg {
-    /* border: 1px solid black; */
-  }
-
   .legend-text {
     font-family: var(--font-heavy);
   }
@@ -142,7 +136,6 @@
     max-height: 50vh;
     width: 40%;
     margin: 1rem auto;
-    /* border: 2px solid black; */
   }
 
   /* ipad */

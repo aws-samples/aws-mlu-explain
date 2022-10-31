@@ -84,8 +84,5 @@
       font-size: 3.5rem;
     }
 
-    #intro-sub {
-      font-size: 1.5rem;
-    }
   }
 </style>

@@ -1,4 +1,5 @@
 <script>
+  import katexify from "../katexify";
 </script>
 
 <section>
@@ -11,10 +12,10 @@
     generalization capabilities of our model without having to wait for new
     data. This article discusses one of the most common approaches for this
     task:
-    <span class="bold">cross-validation</span>. We'll first discuss the
-    Validation Set approach we learned in a previous article, describe how Cross
-    Validation extends that approach, and discuss some concerns around using
-    Cross Validation.
+    <span class="bold">K-Folds Coss-Validation</span>. We'll first discuss the
+    Validation Set approach we learned in a previous article, describe how
+    K-Folds Cross-Validation extends that approach, and discuss some concerns
+    around using selecting values of {@html katexify(`k`, false)}.
   </p>
 </section>
 

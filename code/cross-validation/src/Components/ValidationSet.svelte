@@ -1,12 +1,13 @@
 <script>
   import { scaleLinear, scaleBand } from "d3-scale";
-  import { margin } from "../store.js";
+  import { marginStatic } from "../store.js";
   import { arrowPath } from "../arrowPath";
   import StackedRects from "./StackedRects.svelte";
 
   let width = 500;
   let height = 500;
   const nSplits = 3;
+  const arrowWidth = 36;
   $: xScale = scaleLinear().domain([-1, nSplits]).range([0, width]);
   $: yScale = scaleLinear().domain([-1, 1]).range([height, 0]);
   $: xDiff = width / ((nSplits + 1) * 4);
@@ -46,18 +47,20 @@
 </ul>
 <br />
 <div id="cv-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + $margin.top + $margin.bottom}>
+  <svg {width} height={height + $marginStatic.top + $marginStatic.bottom}>
     <!-- x-ticks -->
     {#each [...Array(nSplits).keys()] as tick}
       {#if tick === 1}
         <!-- <text text-anchor="middle" x={xScale(tick)} y={yScale(0)}>hey</text> -->
-        <g transform="translate({xScale(tick) - xDiff}, {yScale(0) - xDiff})">
+        <g transform="translate({xScale(tick)}, {yScale(0)})">
           <path
             d={arrowPath}
-            style={`transform: scale(0.8)`}
+            style={`transform: scale(${xDiff / arrowWidth})`}
             stroke="#232f3e"
-            stroke-width="3"
+            stroke-width="8"
             fill="#232f3e"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           />
         </g>
       {:else if tick === 0}
@@ -81,13 +84,13 @@
 
       <!-- x-ticks -->
       <!-- {#each xScale.ticks() as tick}
-        <g transform={`translate(${xScale(tick)} ${height - $margin.bottom})`}>
+        <g transform={`translate(${xScale(tick)} ${height - $marginStatic.bottom})`}>
           <line
             class="axis-line"
             x1="0"
             x2="0"
             y1="0"
-            y2={-height + $margin.bottom + $margin.top}
+            y2={-height + $marginStatic.bottom + $marginStatic.top}
             stroke="black"
             stroke-dasharray="4"
           />
@@ -95,7 +98,7 @@
       {/each} -->
     {/each}
     <!-- title -->
-    <!-- <text class="title-text" x="0" y={$margin.top} text-anchor="middle"
+    <!-- <text class="title-text" x="0" y={$marginStatic.top} text-anchor="middle"
       >Validation Set Approach</text
     > -->
   </svg>
@@ -105,17 +108,17 @@
 <p class="body-text">
   The Validation Set Approach is still widely used, especially when resource
   constraints prohibit alternatives that require resampling (like cross
-  validation). But the approach is perfect! The obvious issues is that our
-  estimate of the test error can be highly variable depending on which
-  particular observations are included in the training set and which are
-  included in the validation set. That is, how do we know that the 30% we
-  selected is the best way to split the data? What if we’d used a different
-  split instead? Another issue is that this approach tends to overestimate the
-  test error for models fit on our entire dataset. This is because more training
-  data usually means better accuracy, but the validation set approach reserves a
-  decent-sized chunk of data for validation and testing (and not training). If
-  only there was a better resampling method for assessing how the results of a
-  statistical analysis will generalize to an independent data set...
+  validation). But the approach is not! The obvious issues is that our estimate
+  of the test error can be highly variable depending on which particular
+  observations are included in the training set and which are included in the
+  validation set. That is, how do we know that the 30% we selected is the best
+  way to split the data? What if we’d used a different split instead? Another
+  issue is that this approach tends to overestimate the test error for models
+  fit on our entire dataset. This is because more training data usually means
+  better accuracy, but the validation set approach reserves a decent-sized chunk
+  of data for validation and testing (and not training). If only we could come
+  up with a way to use more of our data for training while also simultaneously
+  evaluating the performance across all the variance in our dataset...
 </p>
 
 <style>
