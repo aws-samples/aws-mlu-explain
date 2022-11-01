@@ -60,7 +60,7 @@
       <p>A big issue with our data (and common amongst many classification tasks) is imbalance: our data has three times more negative examples than positive!
         This is problematic, because if our model were to simply predict <i>every</i> individual as being cancer-free, it would have an accuracy of <br><br>
         ${katexify(
-          `\\begin{aligned} \\frac{\\mathrm{\\# Positive}}{\\mathrm{\\# Samples}} = \\frac{26}{34} = 76\\% \\end{aligned}`
+          `\\begin{aligned} \\frac{\\mathrm{\\# Negative}}{\\mathrm{\\# Samples}} = \\frac{26}{34} = 76\\% \\end{aligned}`
         )}<br><br>
         The more imbalanced the data, the more Severe the issue: imagine a search engine that never gives results because the information you are looking
          for is only 0.01% of the internet!  We need other metrics.
