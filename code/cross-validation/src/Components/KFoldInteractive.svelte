@@ -146,15 +146,18 @@
   <span class="section-arrow">&gt; </span> See For Yourself
 </h1>
 <p class="body-text">
-  To make K-Folds Cross-Validation more clear, let's see how it works directly.
+  To make K-Fold Cross-Validation more clear, let's see how it works directly.
   We'll assume that we’d like to use a simple linear regression model to predict
-  some values of y from some data x. Drag the value of {@html katexify(
+  some values of {@html katexify(`y`, false)} from some data {@html katexify(
+    `x`,
+    false
+  )}. Drag the value of {@html katexify(`k`, false)} below to set the number of folds
+  used in K-Fold Cross-Validation. Observe that each value of {@html katexify(
     `k`,
     false
-  )} below to set the number of folds used in K-Folds Cross-Validation. Observe that
-  each value of {@html katexify(`k`, false)} yields a new model trained and evaluated
-  on different splits of the original dataset. (Note that the test data remains unchanged,
-  as we use this only once, at the very end, to estimate our test MSE):
+  )} yields a new model trained and evaluated on different splits of the original
+  dataset. (Note that the test data remains unchanged, as we use it only once, at
+  the very end, to estimate our test Mean Square Error, or MSE):
 </p>
 <br /><br />
 <!-- <label> -->
@@ -241,8 +244,8 @@
   than for higher values of {@html katexify(`k`, false)}. This is a result of
   our old friend, the
   <a href="https://mlu-explain.github.io/bias-variance/"
-    >bias variance tradeoff</a
-  >. Read on to learn how this tradeoff manifests in the context of K-Folds
+    >Bias-Variance tradeoff</a
+  >. Read on to learn how this tradeoff manifests in the context of K-Fold
   Cross-Validation.
 </p>
 

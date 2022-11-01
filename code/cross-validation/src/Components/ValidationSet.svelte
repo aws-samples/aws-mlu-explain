@@ -108,11 +108,11 @@
 <p class="body-text">
   The Validation Set Approach is still widely used, especially when resource
   constraints prohibit alternatives that require resampling (like cross
-  validation). But the approach is not! The obvious issues is that our estimate
-  of the test error can be highly variable depending on which particular
+  validation). But it is not perfect! The obvious issue is that our estimate of
+  the test error can be highly variable depending on which particular
   observations are included in the training set and which are included in the
   validation set. That is, how do we know that the 30% we selected is the best
-  way to split the data? What if we’d used a different split instead? Another
+  way to split the data? What if we'd used a different split instead? Another
   issue is that this approach tends to overestimate the test error for models
   fit on our entire dataset. This is because more training data usually means
   better accuracy, but the validation set approach reserves a decent-sized chunk

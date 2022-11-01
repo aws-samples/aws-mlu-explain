@@ -8,7 +8,7 @@
   are along your machine learning journey, and that you came away with a better
   understanding of cross-validation in the context of machine learning.
   <br /><br />
-  To learn more about Machine Learning, check out our
+  To learn more about machine learning, check out our
   <a class="on-end" href="https://aws.amazon.com/machine-learning/mlu/"
     >self-paced courses</a
   >, our
@@ -28,8 +28,9 @@
     >here</a
   >.
   <br /><br />
-  A special thanks goes out to Brent Werness for helping review the content of this
-  article.
+  A special thanks goes out to Brent Werness and
+  <a href="https://twitter.com/lusantala">Lucía Santamaría</a> for helping review
+  the content of this article.
 </p>
 
 <style>

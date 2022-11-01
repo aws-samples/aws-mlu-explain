@@ -15,32 +15,32 @@
 </script>
 
 <h1 class="body-header">
-  <span class="section-arrow">&gt; </span> K-Folds Cross-Validation
+  <span class="section-arrow">&gt; </span> K-Fold Cross-Validation
 </h1>
 <p class="body-text">
   Rather than worrying about which split of data to use for training versus
   validation, we’ll use them all in turn. Our strategy will be to iteratively
-  use different portions of our data to test and train our model. The exact
+  use different portions of our data to train and validate our model. The exact
   process is actually quite simple: We’ll randomly split our dataset into {@html katexify(
     `k`,
     false
   )}
   sets, or folds, of equal size. One fold will be reserved for the validation set
-  (or "holdout set") and the remaining {@html katexify(`k - 1`, false)} folds will
-  be used for the training set. The training folds will fit our models parameters,
+  (or "hold-out set") and the remaining {@html katexify(`k - 1`, false)} folds will
+  be used for the training set. The training folds will fit our model's parameters,
   and the validation fold will be used for evaluation. This process will be repeated
-  on our data k times, using a different fold for the validation set at each iteration.
-  At the end of the procedure, we'll take the average the validation set scores and
-  take that as our as our model's estimated performance. This process is known as
-  <span class="bold">K-Folds Cross-Validation</span>, and requires re-fitting
-  our model {@html katexify(`k`, false)} times (once for each fold).
+  on our data {@html katexify(`k`, false)} times, using a different fold for the
+  validation set at each iteration. At the end of the procedure, we'll take the average
+  of the validation sets' scores and take that as our as our model's estimated performance.
+  This process is known as
+  <span class="bold">K-Fold Cross-Validation</span>, and requires re-fitting our
+  model {@html katexify(`k`, false)} times (once for each fold).
 </p>
 <br />
 <p class="body-text">
   Below we show the process for {@html katexify(`k = 4`, false)} folds of our data.
-  Note that the test data always remains untouched (after all, it's the final hold
-  out set), but the distribution of training and validation sets differs at every
-  fold:
+  Note that the test data always remains untouched (after all, it's the final hold-out
+  set), but the distribution of training and validation sets differs at every fold:
 </p>
 <br />
 
@@ -101,29 +101,26 @@
 <br /><br />
 <p class="body-text">
   If you think this looks familiar, you're on the right track! It's basically
-  the validation set applied k times - just with different splits of
-  training/validation data each time. But this simple extension to the
-  validation approach is very effective at overcoming the shortcomings of the
-  validation set approach. The main benefit is that, because we train our model
-  on multiple subsets of our data and take the average of the evaluation scores
-  on those subsets, our evaluation estimates from K-Folds Cross-Validation will
-  have lower variance than will the evaluation estimates from the validation set
-  approach. Additionally, K-Folds Cross-Validation looks at more data during
-  training. In the validation set approach, only one sample of the data is used
-  for the training set, and it's possible that some information just wasn't
-  included in that sample. With K-Folds Cross-Validation, the whole ensemble
+  the validation set applied {@html katexify(`k`, false)} times - just with different
+  splits of training/validation data each time. But this simple extension to the
+  validation approach is very effective at overcoming its shortcomings. The main
+  benefit is that, because we train our model on multiple subsets of our data and
+  take the average of the evaluation scores on those subsets, our evaluation estimates
+  from K-Fold Cross-Validation will have lower variance than will the evaluation
+  estimates from the validation set approach. Additionally, K-Fold Cross-Validation
+  looks at more data during training. In the validation set approach, only one sample
+  of the data is used for the training set, and it's possible that some information
+  just wasn't included in that sample. With K-Fold Cross-Validation, the whole ensemble
   uses all of the data, so every data point will get included in the training of
-  some model, and the evaluation of that model will then be factored into the
-  final evaluation estimate. Finally, it's worth stating the obvious fact that
-  test error estimates are more accurate when more data is used in the training
-  set. Even for modest values of k in K-Folds Cross-Validation (e.g. {@html katexify(
-    `k = 5`,
-    false
-  )}), the training set comprises 80 percent of our data, so the approach
-  typically doesn’t overestimate the test error as much as the validation set
-  approach could for conservative training set sizes.
+  some model, and the evaluation of that model will then be factored into the final
+  evaluation estimate. Finally, it's worth stating the obvious fact that test error
+  estimates are more accurate when more data is used in the training set. Even for
+  modest values of {@html katexify(`k`, false)} in K-Fold Cross-Validation (e.g.
+  {@html katexify(`k = 5`, false)}), the training set comprises 80 percent of
+  our data, so the approach typically doesn’t overestimate the test error as
+  much as the validation set approach could for conservative training set sizes.
   <br /><br />
-  While K-Folds Cross-Validation has a lot of obvious benefits, it does come with
+  While K-Fold Cross-Validation has a lot of obvious benefits, it does come with
   a cost: the need to train and evaluate a model multiple times (once for each fold).
 </p>
 
