@@ -24,8 +24,8 @@
   <span class="section-arrow">&gt; </span> Our Previous Approach
 </h1>
 <p class="body-text">
-  In a <a href="https://mlu-explain.github.io/train-test-validation"
-    >previous article</a
+  In the <a href="https://mlu-explain.github.io/train-test-validation"
+    >Train, Test, and Validation Splits article</a
   >, we described a standard technique for solving this problem:
   <span class="bold">The Validation Set Approach</span>. Recall this involved
   randomly splitting our data into three mutually exclusive sets:
@@ -37,7 +37,7 @@
   </li>
   <li>
     <span class="bold">The Validation Set</span> is used to select which model or
-    set of hyperparameters you’d like to use.
+    set of hyperparameters you'd like to use.
   </li>
 
   <li>
@@ -108,7 +108,7 @@
 <p class="body-text">
   The Validation Set Approach is still widely used, especially when resource
   constraints prohibit alternatives that require resampling (like cross
-  validation). But it is not perfect! The obvious issue is that our estimate of
+  validation). But it's not perfect! The obvious issue is that our estimate of
   the test error can be highly variable depending on which particular
   observations are included in the training set and which are included in the
   validation set. That is, how do we know that the 30% we selected is the best

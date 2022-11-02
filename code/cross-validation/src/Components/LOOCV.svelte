@@ -26,12 +26,12 @@
     `n`,
     false
   )}, the number of observations in our dataset. In Leave-One-Out
-  Cross-Validation, our data is repeatedly split into a training set containing
+  Cross-Validation, our data is split into a training set containing
   all but one observations, and a validation set containing the remaining
   left-out observation. That is, the training set consists of {@html katexify(
     `n - 1`,
     false
-  )} data points, and the validation set consists of just one individual observation:
+  )} data points, and the validation set consists of just one individual data point:
 </p>
 <br />
 
@@ -90,7 +90,7 @@
 <br /><br />
 <p class="body-text">
   LOOCV carries all the same benefits mentioned previously, as well as some more
-  that we'll discuss in the Bias-Variance tradeoff section below.. While the
+  that we'll discuss in the Bias-Variance tradeoff section below. While the
   large value of {@html katexify(`k`, false)} in LOOCV should minimize the variance
   in our estimate, it comes with a cost: the need to train a model {@html katexify(
     `n`,
@@ -99,7 +99,7 @@
   times! This is expensive both in the amount of time it takes and the compute resources
   it requires. For this reason, it's rare to see LOOCV employed in the wild unless
   there is a specific structure of the model that makes this computation efficient
-  (e.g. ridge regression). A more conservative value of {@html katexify(
+  (like ridge regression). A more conservative value of {@html katexify(
     `k`,
     false
   )} is more commonly used instead (e.g. {@html katexify(`k = 5`, false)} or {@html katexify(
