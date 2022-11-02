@@ -13,9 +13,11 @@
     data. This article discusses one of the most common approaches for this
     task:
     <span class="bold">K-Fold Cross-Validation</span>. We'll first discuss the
-    Validation Set approach we learned in a previous article, describe how
-    K-Fold Cross-Validation extends that approach, and discuss some concerns
-    around selecting the values of {@html katexify(`k`, false)}.
+    Validation Set approach we learned in the 
+    <a href="https://mlu-explain.github.io/train-test-validation">Train,
+      Test, and Validation Sets article</a>. Then we will describe how K-Fold 
+    Cross-Validation extends that approach, and discuss some concerns around 
+    selecting the values of {@html katexify(`k`, false)}.
   </p>
 </section>
 

@@ -236,7 +236,7 @@
   test MSE is evaluated by average performance on the test set across all of the
   folds in aggregate.
   <br /><br />
-  In exploring the fit models above, you may have observed something interesting!
+  In exploring the fit in the models above, you may have observed something interesting!
   The lines of best fit (and estimated test MSE) vary more for lower values of {@html katexify(
     `k`,
     false
@@ -277,9 +277,9 @@
     font-size: 1rem;
     stroke-linejoin: round;
     paint-order: stroke fill;
-    stroke: var(--white);
+    stroke: var(--black);
     stroke-width: 4px;
-    fill: var(--magenta);
+    fill: var(--anchor);
   }
 
   #average-fold-error-text {

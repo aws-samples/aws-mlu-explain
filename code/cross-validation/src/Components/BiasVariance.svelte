@@ -7,14 +7,14 @@
     <span class="section-arrow">&gt; </span> Concerns With Selecting K
   </h1>
   <p class="body-text">
-    Up to this point, we’ve talked about K-Fold Cross-Validation in the general
+    Up to this point, we've talked about K-Fold Cross-Validation in the general
     sense, and described the two most-extreme cases: LOOCV ({@html katexify(
       `k = n`,
       false
     )}) and the Validation Set Approach ({@html katexify(`k = 2`, false)}).
     Given the different options for selecting
     {@html katexify(`k`, false)}, how do we select the best value? This question
-    is actually more complex than it may seem! In answering it, we'll revisit
+    is actually more complex than it may seem! In answering it, let's revisit
     our old friend, the
     <a href="https://mlu-explain.github.io/bias-variance/"
       >Bias-Variance Tradeoff</a
@@ -23,10 +23,10 @@
     <br /><br />
     <span class="bold">Bias</span>
     <br />
-    Let's start first with how k affects bias. To qualify our discussion of bias,
-    we'll look at the true test error of a model as a function of the size of the
-    dataset it's trained on. That is, we refer to bias here as the shift in accuracy
-    that a model gets when trained on less data,
+    Let's start first with how {@html katexify(`k`, false)} affects bias. To 
+    qualify our discussion of bias, we'll look at the true test error of a model 
+    as a function of the size of the dataset it's trained on. That is, we refer 
+    to bias here as the shift in accuracy that a model gets when trained on less data,
     {@html katexify(
       `\\\mathbb{E}\\left[\\mathcal{E}(\\hat f)\\right]-\\mathbb{E}\\left[\\mathcal{E}(\\hat f_k)\\right]`,
       false
