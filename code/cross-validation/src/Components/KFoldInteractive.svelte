@@ -3,7 +3,7 @@
   import { marginGrid } from "../store.js";
   import StackedRects from "./StackedRects.svelte";
   import Scatterplot from "./Scatterplot.svelte";
-  import { extent, mean, range } from "d3-array";
+  import { extent, mean, range, max } from "d3-array";
   import { regressionLinear } from "d3-regression";
   import { format } from "d3-format";
   import katexify from "../katexify";
@@ -16,7 +16,7 @@
   const dimensions = {
     desktop: {
       2: { rows: 1, cols: 2 },
-      3: { rows: 1, cols: 3 },
+      3: { rows: 2, cols: 3 },
       4: { rows: 2, cols: 3 },
       5: { rows: 2, cols: 3 },
       6: { rows: 2, cols: 3 },
@@ -41,7 +41,7 @@
       12: { rows: 6, cols: 2 },
     },
   };
-  $: window = width <= 400 ? "mobile" : "desktop";
+  $: window = width <= 700 ? "mobile" : "desktop";
 
   $: nSplits = 3;
   $: xScale = scaleBand()
@@ -190,8 +190,8 @@
         margin={$marginGrid}
         {numCol}
         {numRects}
-        x={xScale(tick % (width <= 400 ? 2 : 3))}
-        y={yScale(Math.floor(tick / (width <= 400 ? 2 : 3))) -
+        x={xScale(tick % (width <= 700 ? 2 : 3))}
+        y={yScale(Math.floor(tick / (width <= 700 ? 2 : 3))) -
           yScale.bandwidth() -
           xDiff * 0}
         fillRule={(d) => {
@@ -213,8 +213,8 @@
           ? yScale.bandwidth() * 0.5
           : yScale.bandwidth() * 0.9}
         height={yScale.bandwidth()}
-        x={xScale(tick % (width <= 400 ? 2 : 3)) + xDiff * 3}
-        y={yScale(Math.floor(tick / (width <= 400 ? 2 : 3))) -
+        x={xScale(tick % (width <= 700 ? 2 : 3)) + xDiff * 3}
+        y={yScale(Math.floor(tick / (width <= 700 ? 2 : 3))) -
           yScale.bandwidth()}
       />
 
@@ -225,7 +225,7 @@
       class="fold-error-text"
       id="average-fold-error-text"
       x={width / 2}
-      y={30}
+      y={yScale.bandwidth() * (max(yScale.domain())+2)+(15*(max(yScale.domain())+2))}
       text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
   </svg>
