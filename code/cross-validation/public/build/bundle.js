@@ -18232,23 +18232,30 @@ var app = (function () {
     	let t0;
     	let span;
     	let t2;
+    	let a;
+    	let t4;
     	let html_tag;
     	let raw_value = katexify(`k`, false) + "";
-    	let t3;
+    	let t5;
 
     	const block = {
     		c: function create() {
     			section = element("section");
     			p = element("p");
-    			t0 = text("Often in machine learning we want to estimate the performance of our models\n    before putting them into production. Of course, we could try evaluating our\n    model's predictions on the same data that we used to fit our model’s\n    parameters, but this will give unreliable assessments of our model's ability\n    to generalize to unseen data. Thus, we’d like to find a way to assess the\n    generalization capabilities of our model without having to wait for new\n    data. This article discusses one of the most common approaches for this\n    task:\n    ");
+    			t0 = text("Often in machine learning we want to estimate the performance of our models\n    before putting them into production. Of course, we could try evaluating our\n    model's predictions on the same data that we used to fit our model's\n    parameters, but this will give unreliable assessments of our model's ability\n    to generalize to unseen data. Thus, we'd like to find a way to assess the\n    generalization capabilities of our model without having to wait for new\n    data. This article discusses one of the most common approaches for this\n    task:\n    ");
     			span = element("span");
-    			span.textContent = "K-Folds Coss-Validation";
-    			t2 = text(". We'll first discuss the\n    Validation Set approach we learned in a previous article, describe how\n    K-Folds Cross-Validation extends that approach, and discuss some concerns\n    around using selecting values of ");
+    			span.textContent = "K-Fold Cross-Validation";
+    			t2 = text(". We'll first discuss the\n    Validation Set approach we learned in the \n    ");
+    			a = element("a");
+    			a.textContent = "Train,\n      Test, and Validation Sets article";
+    			t4 = text(". Then we will describe how K-Fold \n    Cross-Validation extends that approach, and discuss some concerns around \n    selecting the values of ");
     			html_tag = new HtmlTag(false);
-    			t3 = text(".");
+    			t5 = text(".");
     			attr_dev(span, "class", "bold");
     			add_location(span, file$9, 14, 4, 650);
-    			html_tag.a = t3;
+    			attr_dev(a, "href", "https://mlu-explain.github.io/train-test-validation");
+    			add_location(a, file$9, 16, 4, 776);
+    			html_tag.a = t5;
     			attr_dev(p, "class", "body-text");
     			add_location(p, file$9, 5, 2, 70);
     			add_location(section, file$9, 4, 0, 58);
@@ -18262,8 +18269,10 @@ var app = (function () {
     			append_dev(p, t0);
     			append_dev(p, span);
     			append_dev(p, t2);
+    			append_dev(p, a);
+    			append_dev(p, t4);
     			html_tag.m(raw_value, p);
-    			append_dev(p, t3);
+    			append_dev(p, t5);
     		},
     		p: noop,
     		i: noop,
@@ -18452,6 +18461,27 @@ var app = (function () {
       else if (error >= e5) step1 *= 5;
       else if (error >= e2) step1 *= 2;
       return stop < start ? -step1 : step1;
+    }
+
+    function max(values, valueof) {
+      let max;
+      if (valueof === undefined) {
+        for (const value of values) {
+          if (value != null
+              && (max < value || (max === undefined && value >= value))) {
+            max = value;
+          }
+        }
+      } else {
+        let index = -1;
+        for (let value of values) {
+          if ((value = valueof(value, ++index, values)) != null
+              && (max < value || (max === undefined && value >= value))) {
+            max = value;
+          }
+        }
+      }
+      return max;
     }
 
     function mean(values, valueof) {
@@ -21688,7 +21718,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (184:4) {#each [...Array(nSplits).keys()] as tick}
+    // (187:4) {#each [...Array(nSplits).keys()] as tick}
     function create_each_block$3(ctx) {
     	let stackedrects;
     	let scatterplot;
@@ -21700,12 +21730,12 @@ var app = (function () {
 
     	stackedrects = new StackedRects({
     			props: {
-    				height: /*yScale*/ ctx[10].bandwidth(),
-    				margin: /*$marginGrid*/ ctx[6],
-    				numCol: /*numCol*/ ctx[8],
+    				height: /*yScale*/ ctx[11].bandwidth(),
+    				margin: /*$marginGrid*/ ctx[7],
+    				numCol: /*numCol*/ ctx[9],
     				numRects: numRects$1,
-    				x: /*xScale*/ ctx[11](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 400 ? 2 : 3)),
-    				y: /*yScale*/ ctx[10](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 400 ? 2 : 3))) - /*yScale*/ ctx[10].bandwidth() - /*xDiff*/ ctx[9] * 0,
+    				x: /*xScale*/ ctx[12](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 700 ? 2 : 3)),
+    				y: /*yScale*/ ctx[11](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 700 ? 2 : 3))) - /*yScale*/ ctx[11].bandwidth() - /*xDiff*/ ctx[10] * 0,
     				fillRule: func
     			},
     			$$inline: true
@@ -21715,11 +21745,13 @@ var app = (function () {
     			props: {
     				data: /*dataArray*/ ctx[2][/*tick*/ ctx[23]]["scatterData"],
     				regressionData: /*dataArray*/ ctx[2][/*tick*/ ctx[23]]["regressionData"],
-    				label: `Val MSE: ${/*formatter*/ ctx[12](/*dataArray*/ ctx[2][/*tick*/ ctx[23]]["mse"])}`,
-    				width: /*yScale*/ ctx[10].bandwidth(),
-    				height: /*yScale*/ ctx[10].bandwidth(),
-    				x: /*xScale*/ ctx[11](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 400 ? 2 : 3)) + /*xDiff*/ ctx[9] * 3,
-    				y: /*yScale*/ ctx[10](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 400 ? 2 : 3))) - /*yScale*/ ctx[10].bandwidth()
+    				label: `Val MSE: ${/*formatter*/ ctx[13](/*dataArray*/ ctx[2][/*tick*/ ctx[23]]["mse"])}`,
+    				width: /*window*/ ctx[6] === "mobile"
+    				? /*yScale*/ ctx[11].bandwidth() * 0.5
+    				: /*yScale*/ ctx[11].bandwidth() * 0.9,
+    				height: /*yScale*/ ctx[11].bandwidth(),
+    				x: /*xScale*/ ctx[12](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 700 ? 2 : 3)) + /*xDiff*/ ctx[10] * 3,
+    				y: /*yScale*/ ctx[11](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 700 ? 2 : 3))) - /*yScale*/ ctx[11].bandwidth()
     			},
     			$$inline: true
     		});
@@ -21737,21 +21769,25 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
     			const stackedrects_changes = {};
-    			if (dirty & /*yScale*/ 1024) stackedrects_changes.height = /*yScale*/ ctx[10].bandwidth();
-    			if (dirty & /*$marginGrid*/ 64) stackedrects_changes.margin = /*$marginGrid*/ ctx[6];
-    			if (dirty & /*numCol*/ 256) stackedrects_changes.numCol = /*numCol*/ ctx[8];
-    			if (dirty & /*xScale, nSplits, width*/ 2065) stackedrects_changes.x = /*xScale*/ ctx[11](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 400 ? 2 : 3));
-    			if (dirty & /*yScale, nSplits, width, xDiff*/ 1553) stackedrects_changes.y = /*yScale*/ ctx[10](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 400 ? 2 : 3))) - /*yScale*/ ctx[10].bandwidth() - /*xDiff*/ ctx[9] * 0;
+    			if (dirty & /*yScale*/ 2048) stackedrects_changes.height = /*yScale*/ ctx[11].bandwidth();
+    			if (dirty & /*$marginGrid*/ 128) stackedrects_changes.margin = /*$marginGrid*/ ctx[7];
+    			if (dirty & /*numCol*/ 512) stackedrects_changes.numCol = /*numCol*/ ctx[9];
+    			if (dirty & /*xScale, nSplits, width*/ 4113) stackedrects_changes.x = /*xScale*/ ctx[12](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 700 ? 2 : 3));
+    			if (dirty & /*yScale, nSplits, width, xDiff*/ 3089) stackedrects_changes.y = /*yScale*/ ctx[11](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 700 ? 2 : 3))) - /*yScale*/ ctx[11].bandwidth() - /*xDiff*/ ctx[10] * 0;
     			if (dirty & /*numTest, numValidation, nSplits*/ 56) stackedrects_changes.fillRule = func;
     			stackedrects.$set(stackedrects_changes);
     			const scatterplot_changes = {};
     			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.data = /*dataArray*/ ctx[2][/*tick*/ ctx[23]]["scatterData"];
     			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.regressionData = /*dataArray*/ ctx[2][/*tick*/ ctx[23]]["regressionData"];
-    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.label = `Val MSE: ${/*formatter*/ ctx[12](/*dataArray*/ ctx[2][/*tick*/ ctx[23]]["mse"])}`;
-    			if (dirty & /*yScale*/ 1024) scatterplot_changes.width = /*yScale*/ ctx[10].bandwidth();
-    			if (dirty & /*yScale*/ 1024) scatterplot_changes.height = /*yScale*/ ctx[10].bandwidth();
-    			if (dirty & /*xScale, nSplits, width, xDiff*/ 2577) scatterplot_changes.x = /*xScale*/ ctx[11](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 400 ? 2 : 3)) + /*xDiff*/ ctx[9] * 3;
-    			if (dirty & /*yScale, nSplits, width*/ 1041) scatterplot_changes.y = /*yScale*/ ctx[10](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 400 ? 2 : 3))) - /*yScale*/ ctx[10].bandwidth();
+    			if (dirty & /*dataArray, nSplits*/ 20) scatterplot_changes.label = `Val MSE: ${/*formatter*/ ctx[13](/*dataArray*/ ctx[2][/*tick*/ ctx[23]]["mse"])}`;
+
+    			if (dirty & /*window, yScale*/ 2112) scatterplot_changes.width = /*window*/ ctx[6] === "mobile"
+    			? /*yScale*/ ctx[11].bandwidth() * 0.5
+    			: /*yScale*/ ctx[11].bandwidth() * 0.9;
+
+    			if (dirty & /*yScale*/ 2048) scatterplot_changes.height = /*yScale*/ ctx[11].bandwidth();
+    			if (dirty & /*xScale, nSplits, width, xDiff*/ 5137) scatterplot_changes.x = /*xScale*/ ctx[12](/*tick*/ ctx[23] % (/*width*/ ctx[0] <= 700 ? 2 : 3)) + /*xDiff*/ ctx[10] * 3;
+    			if (dirty & /*yScale, nSplits, width*/ 2065) scatterplot_changes.y = /*yScale*/ ctx[11](Math.floor(/*tick*/ ctx[23] / (/*width*/ ctx[0] <= 700 ? 2 : 3))) - /*yScale*/ ctx[11].bandwidth();
     			scatterplot.$set(scatterplot_changes);
     		},
     		i: function intro(local) {
@@ -21775,7 +21811,7 @@ var app = (function () {
     		block,
     		id: create_each_block$3.name,
     		type: "each",
-    		source: "(184:4) {#each [...Array(nSplits).keys()] as tick}",
+    		source: "(187:4) {#each [...Array(nSplits).keys()] as tick}",
     		ctx
     	});
 
@@ -21790,57 +21826,64 @@ var app = (function () {
     	let p0;
     	let t3;
     	let html_tag;
-    	let raw0_value = katexify(`k`, false) + "";
+    	let raw0_value = katexify(`y`, false) + "";
     	let t4;
     	let html_tag_1;
-    	let raw1_value = katexify(`k`, false) + "";
+    	let raw1_value = katexify(`x`, false) + "";
     	let t5;
+    	let html_tag_2;
+    	let raw2_value = katexify(`k`, false) + "";
     	let t6;
+    	let html_tag_3;
+    	let raw3_value = katexify(`k`, false) + "";
+    	let t7;
+    	let t8;
     	let br0;
     	let br1;
-    	let t7;
+    	let t9;
     	let div0;
     	let p1;
-    	let t8;
-    	let t9;
     	let t10;
+    	let t11;
+    	let t12;
     	let input;
     	let input_max_value;
-    	let t11;
+    	let t13;
     	let div1;
     	let svg;
     	let g;
     	let rect0;
     	let text0;
-    	let t12;
+    	let t14;
     	let rect1;
     	let text1;
-    	let t13;
+    	let t15;
     	let rect2;
     	let text2;
-    	let t14;
+    	let t16;
     	let g_transform_value;
     	let text3;
-    	let t15;
-    	let t16_value = /*formatter*/ ctx[12](/*errorMean*/ ctx[7]) + "";
-    	let t16;
+    	let t17;
+    	let t18_value = /*formatter*/ ctx[13](/*errorMean*/ ctx[8]) + "";
+    	let t18;
     	let text3_x_value;
+    	let text3_y_value;
     	let svg_height_value;
     	let div1_resize_listener;
-    	let t17;
+    	let t19;
     	let p2;
-    	let t18;
+    	let t20;
     	let br2;
     	let br3;
-    	let t19;
-    	let html_tag_2;
-    	let raw2_value = katexify(`k`, false) + "";
-    	let t20;
-    	let html_tag_3;
-    	let raw3_value = katexify(`k`, false) + "";
     	let t21;
-    	let a;
+    	let html_tag_4;
+    	let raw4_value = katexify(`k`, false) + "";
+    	let t22;
+    	let html_tag_5;
+    	let raw5_value = katexify(`k`, false) + "";
     	let t23;
+    	let a;
+    	let t25;
     	let current;
     	let mounted;
     	let dispose;
@@ -21865,130 +21908,136 @@ var app = (function () {
     			t1 = text(" See For Yourself");
     			t2 = space();
     			p0 = element("p");
-    			t3 = text("To make K-Folds Cross-Validation more clear, let's see how it works directly.\n  We'll assume that we’d like to use a simple linear regression model to predict\n  some values of y from some data x. Drag the value of ");
+    			t3 = text("To make K-Fold Cross-Validation more clear, let's see how it works directly.\n  We'll assume that we’d like to use a simple linear regression model to predict\n  some values of ");
     			html_tag = new HtmlTag(false);
-    			t4 = text(" below to set the number of folds used in K-Folds Cross-Validation. Observe that\n  each value of ");
+    			t4 = text(" from some data ");
     			html_tag_1 = new HtmlTag(false);
-    			t5 = text(" yields a new model trained and evaluated\n  on different splits of the original dataset. (Note that the test data remains unchanged,\n  as we use this only once, at the very end, to estimate our test MSE):");
-    			t6 = space();
+    			t5 = text(". Drag the value of ");
+    			html_tag_2 = new HtmlTag(false);
+    			t6 = text(" below to set the number of folds\n  used in K-Fold Cross-Validation. Observe that each value of ");
+    			html_tag_3 = new HtmlTag(false);
+    			t7 = text(" yields a new model trained and evaluated on different splits of the original\n  dataset. (Note that the test data remains unchanged, as we use it only once, at\n  the very end, to estimate our test Mean Square Error, or MSE):");
+    			t8 = space();
     			br0 = element("br");
     			br1 = element("br");
-    			t7 = space();
+    			t9 = space();
     			div0 = element("div");
     			p1 = element("p");
-    			t8 = text("K = ");
-    			t9 = text(/*nSplits*/ ctx[4]);
-    			t10 = space();
+    			t10 = text("K = ");
+    			t11 = text(/*nSplits*/ ctx[4]);
+    			t12 = space();
     			input = element("input");
-    			t11 = space();
+    			t13 = space();
     			div1 = element("div");
     			svg = svg_element("svg");
     			g = svg_element("g");
     			rect0 = svg_element("rect");
     			text0 = svg_element("text");
-    			t12 = text("Train");
+    			t14 = text("Train");
     			rect1 = svg_element("rect");
     			text1 = svg_element("text");
-    			t13 = text("Validation");
+    			t15 = text("Validation");
     			rect2 = svg_element("rect");
     			text2 = svg_element("text");
-    			t14 = text("Test");
+    			t16 = text("Test");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
     			text3 = svg_element("text");
-    			t15 = text("Estimated Test MSE: ");
-    			t16 = text(t16_value);
-    			t17 = space();
+    			t17 = text("Estimated Test MSE: ");
+    			t18 = text(t18_value);
+    			t19 = space();
     			p2 = element("p");
-    			t18 = text("Because each fold uses different data points for training and evaluating each\n  model, each fold's model will be slightly different from the other. The final\n  test MSE is evaluated by average performance on the test set across all of the\n  folds in aggregate.\n  ");
+    			t20 = text("Because each fold uses different data points for training and evaluating each\n  model, each fold's model will be slightly different from the other. The final\n  test MSE is evaluated by average performance on the test set across all of the\n  folds in aggregate.\n  ");
     			br2 = element("br");
     			br3 = element("br");
-    			t19 = text("\n  In exploring the fit models above, you may have observed something interesting!\n  The lines of best fit (and estimated test MSE) vary more for lower values of ");
-    			html_tag_2 = new HtmlTag(false);
-    			t20 = text("\n  than for higher values of ");
-    			html_tag_3 = new HtmlTag(false);
-    			t21 = text(". This is a result of\n  our old friend, the\n  ");
+    			t21 = text("\n  In exploring the fit in the models above, you may have observed something interesting!\n  The lines of best fit (and estimated test MSE) vary more for lower values of ");
+    			html_tag_4 = new HtmlTag(false);
+    			t22 = text("\n  than for higher values of ");
+    			html_tag_5 = new HtmlTag(false);
+    			t23 = text(". This is a result of\n  our old friend, the\n  ");
     			a = element("a");
-    			a.textContent = "bias variance tradeoff";
-    			t23 = text(". Read on to learn how this tradeoff manifests in the context of K-Folds\n  Cross-Validation.");
+    			a.textContent = "Bias-Variance tradeoff";
+    			t25 = text(". Read on to learn how this tradeoff manifests in the context of K-Fold\n  Cross-Validation.");
     			attr_dev(span, "class", "section-arrow");
-    			add_location(span, file$6, 145, 2, 4254);
+    			add_location(span, file$6, 145, 2, 4259);
     			attr_dev(h1, "class", "body-header");
-    			add_location(h1, file$6, 144, 0, 4227);
+    			add_location(h1, file$6, 144, 0, 4232);
     			html_tag.a = t4;
     			html_tag_1.a = t5;
+    			html_tag_2.a = t6;
+    			html_tag_3.a = t7;
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$6, 147, 0, 4318);
-    			add_location(br0, file$6, 158, 0, 4931);
-    			add_location(br1, file$6, 158, 6, 4937);
+    			add_location(p0, file$6, 147, 0, 4323);
+    			add_location(br0, file$6, 161, 0, 5020);
+    			add_location(br1, file$6, 161, 6, 5026);
     			attr_dev(p1, "id", "input-label");
-    			attr_dev(p1, "class", "svelte-n0jsi");
-    			add_location(p1, file$6, 161, 2, 4990);
+    			attr_dev(p1, "class", "svelte-1603j7b");
+    			add_location(p1, file$6, 164, 2, 5079);
     			attr_dev(input, "type", "range");
     			attr_dev(input, "step", "1");
     			attr_dev(input, "min", "2");
     			attr_dev(input, "max", input_max_value = numRects$1 - /*numTest*/ ctx[5]);
-    			add_location(input, file$6, 162, 2, 5030);
+    			add_location(input, file$6, 165, 2, 5119);
     			attr_dev(div0, "id", "input-container");
-    			attr_dev(div0, "class", "svelte-n0jsi");
-    			add_location(div0, file$6, 160, 0, 4961);
+    			attr_dev(div0, "class", "svelte-1603j7b");
+    			add_location(div0, file$6, 163, 0, 5050);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "0");
     			attr_dev(rect0, "fill", trainColor);
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$6, 175, 6, 5400);
-    			attr_dev(text0, "class", "legend-text svelte-n0jsi");
+    			add_location(rect0, file$6, 178, 6, 5489);
+    			attr_dev(text0, "class", "legend-text svelte-1603j7b");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "12");
-    			add_location(text0, file$6, 176, 6, 5468);
+    			add_location(text0, file$6, 179, 6, 5557);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "0");
     			attr_dev(rect1, "fill", validationColor);
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$6, 177, 6, 5527);
-    			attr_dev(text1, "class", "legend-text svelte-n0jsi");
+    			add_location(rect1, file$6, 180, 6, 5616);
+    			attr_dev(text1, "class", "legend-text svelte-1603j7b");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "12");
-    			add_location(text1, file$6, 178, 6, 5601);
+    			add_location(text1, file$6, 181, 6, 5690);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "0");
     			attr_dev(rect2, "fill", testColor);
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$6, 179, 6, 5665);
-    			attr_dev(text2, "class", "legend-text svelte-n0jsi");
+    			add_location(rect2, file$6, 182, 6, 5754);
+    			attr_dev(text2, "class", "legend-text svelte-1603j7b");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "12");
-    			add_location(text2, file$6, 180, 6, 5734);
+    			add_location(text2, file$6, 183, 6, 5823);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$6, 174, 4, 5330);
-    			attr_dev(text3, "class", "fold-error-text svelte-n0jsi");
+    			add_location(g, file$6, 177, 4, 5419);
+    			attr_dev(text3, "class", "fold-error-text svelte-1603j7b");
     			attr_dev(text3, "id", "average-fold-error-text");
     			attr_dev(text3, "x", text3_x_value = /*width*/ ctx[0] / 2);
-    			attr_dev(text3, "y", 35);
+    			attr_dev(text3, "y", text3_y_value = /*yScale*/ ctx[11].bandwidth() * (max(/*yScale*/ ctx[11].domain()) + 2) + 15 * (max(/*yScale*/ ctx[11].domain()) + 2));
     			attr_dev(text3, "text-anchor", "middle");
-    			add_location(text3, file$6, 218, 4, 6952);
+    			add_location(text3, file$6, 223, 4, 7116);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
-    			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$marginGrid*/ ctx[6].top + /*$marginGrid*/ ctx[6].bottom);
-    			add_location(svg, file$6, 172, 2, 5237);
+    			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$marginGrid*/ ctx[7].top + /*$marginGrid*/ ctx[7].bottom);
+    			add_location(svg, file$6, 175, 2, 5326);
     			attr_dev(div1, "id", "cv-chart");
-    			attr_dev(div1, "class", "svelte-n0jsi");
+    			attr_dev(div1, "class", "svelte-1603j7b");
     			add_render_callback(() => /*div1_elementresize_handler*/ ctx[18].call(div1));
-    			add_location(div1, file$6, 171, 0, 5163);
-    			add_location(br2, file$6, 232, 2, 7441);
-    			add_location(br3, file$6, 232, 8, 7447);
-    			html_tag_2.a = t20;
-    			html_tag_3.a = t21;
+    			add_location(div1, file$6, 174, 0, 5252);
+    			add_location(br2, file$6, 237, 2, 7678);
+    			add_location(br3, file$6, 237, 8, 7684);
+    			html_tag_4.a = t22;
+    			html_tag_5.a = t23;
     			attr_dev(a, "href", "https://mlu-explain.github.io/bias-variance/");
-    			add_location(a, file$6, 240, 2, 7758);
+    			add_location(a, file$6, 245, 2, 8002);
     			attr_dev(p2, "class", "body-text");
-    			add_location(p2, file$6, 227, 0, 7154);
+    			add_location(p2, file$6, 232, 0, 7391);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -22004,51 +22053,55 @@ var app = (function () {
     			append_dev(p0, t4);
     			html_tag_1.m(raw1_value, p0);
     			append_dev(p0, t5);
-    			insert_dev(target, t6, anchor);
+    			html_tag_2.m(raw2_value, p0);
+    			append_dev(p0, t6);
+    			html_tag_3.m(raw3_value, p0);
+    			append_dev(p0, t7);
+    			insert_dev(target, t8, anchor);
     			insert_dev(target, br0, anchor);
     			insert_dev(target, br1, anchor);
-    			insert_dev(target, t7, anchor);
+    			insert_dev(target, t9, anchor);
     			insert_dev(target, div0, anchor);
     			append_dev(div0, p1);
-    			append_dev(p1, t8);
-    			append_dev(p1, t9);
-    			append_dev(div0, t10);
+    			append_dev(p1, t10);
+    			append_dev(p1, t11);
+    			append_dev(div0, t12);
     			append_dev(div0, input);
     			set_input_value(input, /*nSplits*/ ctx[4]);
-    			insert_dev(target, t11, anchor);
+    			insert_dev(target, t13, anchor);
     			insert_dev(target, div1, anchor);
     			append_dev(div1, svg);
     			append_dev(svg, g);
     			append_dev(g, rect0);
     			append_dev(g, text0);
-    			append_dev(text0, t12);
+    			append_dev(text0, t14);
     			append_dev(g, rect1);
     			append_dev(g, text1);
-    			append_dev(text1, t13);
+    			append_dev(text1, t15);
     			append_dev(g, rect2);
     			append_dev(g, text2);
-    			append_dev(text2, t14);
+    			append_dev(text2, t16);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(svg, null);
     			}
 
     			append_dev(svg, text3);
-    			append_dev(text3, t15);
-    			append_dev(text3, t16);
+    			append_dev(text3, t17);
+    			append_dev(text3, t18);
     			div1_resize_listener = add_resize_listener(div1, /*div1_elementresize_handler*/ ctx[18].bind(div1));
-    			insert_dev(target, t17, anchor);
+    			insert_dev(target, t19, anchor);
     			insert_dev(target, p2, anchor);
-    			append_dev(p2, t18);
+    			append_dev(p2, t20);
     			append_dev(p2, br2);
     			append_dev(p2, br3);
-    			append_dev(p2, t19);
-    			html_tag_2.m(raw2_value, p2);
-    			append_dev(p2, t20);
-    			html_tag_3.m(raw3_value, p2);
     			append_dev(p2, t21);
-    			append_dev(p2, a);
+    			html_tag_4.m(raw4_value, p2);
+    			append_dev(p2, t22);
+    			html_tag_5.m(raw5_value, p2);
     			append_dev(p2, t23);
+    			append_dev(p2, a);
+    			append_dev(p2, t25);
     			current = true;
 
     			if (!mounted) {
@@ -22062,7 +22115,7 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (!current || dirty & /*nSplits*/ 16) set_data_dev(t9, /*nSplits*/ ctx[4]);
+    			if (!current || dirty & /*nSplits*/ 16) set_data_dev(t11, /*nSplits*/ ctx[4]);
 
     			if (!current || dirty & /*numTest*/ 32 && input_max_value !== (input_max_value = numRects$1 - /*numTest*/ ctx[5])) {
     				attr_dev(input, "max", input_max_value);
@@ -22076,7 +22129,7 @@ var app = (function () {
     				attr_dev(g, "transform", g_transform_value);
     			}
 
-    			if (dirty & /*dataArray, Array, nSplits, formatter, yScale, xScale, width, xDiff, Math, $marginGrid, numCol, numRects, numTest, testColor, numValidation, validationColor, trainColor*/ 8061) {
+    			if (dirty & /*dataArray, Array, nSplits, formatter, window, yScale, xScale, width, xDiff, Math, $marginGrid, numCol, numRects, numTest, testColor, numValidation, validationColor, trainColor*/ 16125) {
     				each_value = [...Array(/*nSplits*/ ctx[4]).keys()];
     				validate_each_argument(each_value);
     				let i;
@@ -22104,17 +22157,21 @@ var app = (function () {
     				check_outros();
     			}
 
-    			if ((!current || dirty & /*errorMean*/ 128) && t16_value !== (t16_value = /*formatter*/ ctx[12](/*errorMean*/ ctx[7]) + "")) set_data_dev(t16, t16_value);
+    			if ((!current || dirty & /*errorMean*/ 256) && t18_value !== (t18_value = /*formatter*/ ctx[13](/*errorMean*/ ctx[8]) + "")) set_data_dev(t18, t18_value);
 
     			if (!current || dirty & /*width*/ 1 && text3_x_value !== (text3_x_value = /*width*/ ctx[0] / 2)) {
     				attr_dev(text3, "x", text3_x_value);
+    			}
+
+    			if (!current || dirty & /*yScale*/ 2048 && text3_y_value !== (text3_y_value = /*yScale*/ ctx[11].bandwidth() * (max(/*yScale*/ ctx[11].domain()) + 2) + 15 * (max(/*yScale*/ ctx[11].domain()) + 2))) {
+    				attr_dev(text3, "y", text3_y_value);
     			}
 
     			if (!current || dirty & /*width*/ 1) {
     				attr_dev(svg, "width", /*width*/ ctx[0]);
     			}
 
-    			if (!current || dirty & /*height, $marginGrid*/ 66 && svg_height_value !== (svg_height_value = /*height*/ ctx[1] + /*$marginGrid*/ ctx[6].top + /*$marginGrid*/ ctx[6].bottom)) {
+    			if (!current || dirty & /*height, $marginGrid*/ 130 && svg_height_value !== (svg_height_value = /*height*/ ctx[1] + /*$marginGrid*/ ctx[7].top + /*$marginGrid*/ ctx[7].bottom)) {
     				attr_dev(svg, "height", svg_height_value);
     			}
     		},
@@ -22140,16 +22197,16 @@ var app = (function () {
     			if (detaching) detach_dev(h1);
     			if (detaching) detach_dev(t2);
     			if (detaching) detach_dev(p0);
-    			if (detaching) detach_dev(t6);
+    			if (detaching) detach_dev(t8);
     			if (detaching) detach_dev(br0);
     			if (detaching) detach_dev(br1);
-    			if (detaching) detach_dev(t7);
+    			if (detaching) detach_dev(t9);
     			if (detaching) detach_dev(div0);
-    			if (detaching) detach_dev(t11);
+    			if (detaching) detach_dev(t13);
     			if (detaching) detach_dev(div1);
     			destroy_each(each_blocks, detaching);
     			div1_resize_listener();
-    			if (detaching) detach_dev(t17);
+    			if (detaching) detach_dev(t19);
     			if (detaching) detach_dev(p2);
     			mounted = false;
     			run_all(dispose);
@@ -22187,7 +22244,7 @@ var app = (function () {
     	let splits;
     	let $marginGrid;
     	validate_store(marginGrid, 'marginGrid');
-    	component_subscribe($$self, marginGrid, $$value => $$invalidate(6, $marginGrid = $$value));
+    	component_subscribe($$self, marginGrid, $$value => $$invalidate(7, $marginGrid = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('KFoldInteractive', slots, []);
     	let width = 500;
@@ -22197,7 +22254,7 @@ var app = (function () {
     	const dimensions = {
     		desktop: {
     			2: { rows: 1, cols: 2 },
-    			3: { rows: 1, cols: 3 },
+    			3: { rows: 2, cols: 3 },
     			4: { rows: 2, cols: 3 },
     			5: { rows: 2, cols: 3 },
     			6: { rows: 2, cols: 3 },
@@ -22280,6 +22337,7 @@ var app = (function () {
     		extent,
     		mean,
     		range,
+    		max,
     		regressionLinear: d3Regression.regressionLinear,
     		format,
     		katexify,
@@ -22312,17 +22370,17 @@ var app = (function () {
     		if ('width' in $$props) $$invalidate(0, width = $$props.width);
     		if ('height' in $$props) $$invalidate(1, height = $$props.height);
     		if ('dataArray' in $$props) $$invalidate(2, dataArray = $$props.dataArray);
-    		if ('errorMean' in $$props) $$invalidate(7, errorMean = $$props.errorMean);
+    		if ('errorMean' in $$props) $$invalidate(8, errorMean = $$props.errorMean);
     		if ('numValidation' in $$props) $$invalidate(3, numValidation = $$props.numValidation);
     		if ('nSplits' in $$props) $$invalidate(4, nSplits = $$props.nSplits);
     		if ('numTest' in $$props) $$invalidate(5, numTest = $$props.numTest);
-    		if ('splits' in $$props) $$invalidate(13, splits = $$props.splits);
+    		if ('splits' in $$props) $$invalidate(14, splits = $$props.splits);
     		if ('numTrain' in $$props) numTrain = $$props.numTrain;
-    		if ('numCol' in $$props) $$invalidate(8, numCol = $$props.numCol);
-    		if ('xDiff' in $$props) $$invalidate(9, xDiff = $$props.xDiff);
-    		if ('window' in $$props) $$invalidate(14, window = $$props.window);
-    		if ('yScale' in $$props) $$invalidate(10, yScale = $$props.yScale);
-    		if ('xScale' in $$props) $$invalidate(11, xScale = $$props.xScale);
+    		if ('numCol' in $$props) $$invalidate(9, numCol = $$props.numCol);
+    		if ('xDiff' in $$props) $$invalidate(10, xDiff = $$props.xDiff);
+    		if ('window' in $$props) $$invalidate(6, window = $$props.window);
+    		if ('yScale' in $$props) $$invalidate(11, yScale = $$props.yScale);
+    		if ('xScale' in $$props) $$invalidate(12, xScale = $$props.xScale);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -22331,25 +22389,25 @@ var app = (function () {
 
     	$$self.$$.update = () => {
     		if ($$self.$$.dirty & /*width*/ 1) {
-    			$$invalidate(14, window = width <= 400 ? "mobile" : "desktop");
+    			$$invalidate(6, window = width <= 700 ? "mobile" : "desktop");
     		}
 
-    		if ($$self.$$.dirty & /*window, nSplits, width*/ 16401) {
-    			$$invalidate(11, xScale = band().domain(range(0, dimensions[window][nSplits].cols)).range([width * 0.2, width * 0.95]));
+    		if ($$self.$$.dirty & /*window, nSplits, width*/ 81) {
+    			$$invalidate(12, xScale = band().domain(range(0, dimensions[window][nSplits].cols)).range([width * 0.2, width * 0.95]));
     		}
 
-    		if ($$self.$$.dirty & /*window, nSplits, $marginGrid, height*/ 16466) {
-    			$$invalidate(10, yScale = band().domain(range(-1, dimensions[window][nSplits].rows)).range([$marginGrid.bottom, height - $marginGrid.top]).// .range([$marginGrid.bottom, height - $marginGrid.top])
+    		if ($$self.$$.dirty & /*window, nSplits, $marginGrid, height*/ 210) {
+    			$$invalidate(11, yScale = band().domain(range(-1, dimensions[window][nSplits].rows)).range([$marginGrid.bottom, height - $marginGrid.top]).// .range([$marginGrid.bottom, height - $marginGrid.top])
     			padding(0.2));
     		}
 
     		if ($$self.$$.dirty & /*width*/ 1) {
-    			$$invalidate(9, xDiff = Math.min(width * 0.04, 20));
+    			$$invalidate(10, xDiff = Math.min(width * 0.04, 20));
     		}
 
     		if ($$self.$$.dirty & /*nSplits*/ 16) {
     			// fill rule
-    			$$invalidate(8, numCol = nSplits > 10 + 2 ? 1 : 2);
+    			$$invalidate(9, numCol = nSplits > 10 + 2 ? 1 : 2);
     		}
 
     		if ($$self.$$.dirty & /*numTest, nSplits*/ 48) {
@@ -22361,10 +22419,10 @@ var app = (function () {
     		}
 
     		if ($$self.$$.dirty & /*nSplits*/ 16) {
-    			$$invalidate(13, splits = [...Array(nSplits).keys()]);
+    			$$invalidate(14, splits = [...Array(nSplits).keys()]);
     		}
 
-    		if ($$self.$$.dirty & /*splits, numTest, numValidation, nSplits, dataArray*/ 8252) {
+    		if ($$self.$$.dirty & /*splits, numTest, numValidation, nSplits, dataArray*/ 16444) {
     			{
     				$$invalidate(2, dataArray = []);
 
@@ -22412,14 +22470,14 @@ var app = (function () {
     				}
 
     				// calculate average error across datasets
-    				$$invalidate(7, errorMean = mean(dataArray, d => d.mse));
+    				$$invalidate(8, errorMean = mean(dataArray, d => d.mse));
     			}
     		}
     	};
 
     	$$invalidate(4, nSplits = 3);
     	$$invalidate(5, numTest = 4);
-    	$$invalidate(7, errorMean = 0);
+    	$$invalidate(8, errorMean = 0);
     	$$invalidate(2, dataArray = []);
 
     	return [
@@ -22429,6 +22487,7 @@ var app = (function () {
     		numValidation,
     		nSplits,
     		numTest,
+    		window,
     		$marginGrid,
     		errorMean,
     		numCol,
@@ -22437,7 +22496,6 @@ var app = (function () {
     		xScale,
     		formatter,
     		splits,
-    		window,
     		onwindowresize,
     		input_change_input_handler,
     		func,
@@ -22487,6 +22545,8 @@ var app = (function () {
     	let br2;
     	let br3;
     	let t16;
+    	let a6;
+    	let t18;
 
     	const block = {
     		c: function create() {
@@ -22498,7 +22558,7 @@ var app = (function () {
     			t2 = text("Thanks for reading! We hope that the article is insightful no matter where you\n  are along your machine learning journey, and that you came away with a better\n  understanding of cross-validation in the context of machine learning.\n  ");
     			br0 = element("br");
     			br1 = element("br");
-    			t3 = text("\n  To learn more about Machine Learning, check out our\n  ");
+    			t3 = text("\n  To learn more about machine learning, check out our\n  ");
     			a0 = element("a");
     			a0.textContent = "self-paced courses";
     			t5 = text(", our\n  ");
@@ -22519,7 +22579,10 @@ var app = (function () {
     			t15 = text(".\n  ");
     			br2 = element("br");
     			br3 = element("br");
-    			t16 = text("\n  A special thanks goes out to Brent Werness for helping review the content of this\n  article.");
+    			t16 = text("\n  A special thanks goes out to Brent Werness and\n  ");
+    			a6 = element("a");
+    			a6.textContent = "Lucía Santamaría";
+    			t18 = text(" for helping review\n  the content of this article.");
     			attr_dev(span, "class", "section-arrow");
     			add_location(span, file$5, 3, 2, 46);
     			attr_dev(h1, "class", "body-header");
@@ -22546,6 +22609,8 @@ var app = (function () {
     			add_location(a5, file$5, 26, 2, 1007);
     			add_location(br2, file$5, 29, 2, 1099);
     			add_location(br3, file$5, 29, 8, 1105);
+    			attr_dev(a6, "href", "https://twitter.com/lusantala");
+    			add_location(a6, file$5, 31, 2, 1163);
     			attr_dev(p, "class", "body-text");
     			add_location(p, file$5, 5, 0, 93);
     		},
@@ -22576,6 +22641,8 @@ var app = (function () {
     			append_dev(p, br2);
     			append_dev(p, br3);
     			append_dev(p, t16);
+    			append_dev(p, a6);
+    			append_dev(p, t18);
     		},
     		p: noop,
     		i: noop,
@@ -23112,9 +23179,9 @@ var app = (function () {
     			attr_dev(path, "fill", "#232f3e");
     			attr_dev(path, "stroke-linecap", "round");
     			attr_dev(path, "stroke-linejoin", "round");
-    			add_location(path, file$3, 55, 10, 1921);
+    			add_location(path, file$3, 55, 10, 1949);
     			attr_dev(g, "transform", g_transform_value = "translate(" + /*xScale*/ ctx[4](/*tick*/ ctx[9]) + ", " + /*yScale*/ ctx[3](0) + ")");
-    			add_location(g, file$3, 54, 8, 1856);
+    			add_location(g, file$3, 54, 8, 1884);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
@@ -23263,9 +23330,9 @@ var app = (function () {
     			t1 = text(" Our Previous Approach");
     			t2 = space();
     			p0 = element("p");
-    			t3 = text("In a ");
+    			t3 = text("In the ");
     			a = element("a");
-    			a.textContent = "previous article";
+    			a.textContent = "Train, Test, and Validation Splits article";
     			t5 = text(", we described a standard technique for solving this problem:\n  ");
     			span1 = element("span");
     			span1.textContent = "The Validation Set Approach";
@@ -23282,7 +23349,7 @@ var app = (function () {
     			li1 = element("li");
     			span3 = element("span");
     			span3.textContent = "The Validation Set";
-    			t14 = text(" is used to select which model or\n    set of hyperparameters you’d like to use.");
+    			t14 = text(" is used to select which model or\n    set of hyperparameters you'd like to use.");
     			t15 = space();
     			li2 = element("li");
     			span4 = element("span");
@@ -23303,42 +23370,42 @@ var app = (function () {
     			br3 = element("br");
     			t21 = space();
     			p1 = element("p");
-    			p1.textContent = "The Validation Set Approach is still widely used, especially when resource\n  constraints prohibit alternatives that require resampling (like cross\n  validation). But the approach is not! The obvious issues is that our estimate\n  of the test error can be highly variable depending on which particular\n  observations are included in the training set and which are included in the\n  validation set. That is, how do we know that the 30% we selected is the best\n  way to split the data? What if we’d used a different split instead? Another\n  issue is that this approach tends to overestimate the test error for models\n  fit on our entire dataset. This is because more training data usually means\n  better accuracy, but the validation set approach reserves a decent-sized chunk\n  of data for validation and testing (and not training). If only we could come\n  up with a way to use more of our data for training while also simultaneously\n  evaluating the performance across all the variance in our dataset...";
+    			p1.textContent = "The Validation Set Approach is still widely used, especially when resource\n  constraints prohibit alternatives that require resampling (like cross\n  validation). But it's not perfect! The obvious issue is that our estimate of\n  the test error can be highly variable depending on which particular\n  observations are included in the training set and which are included in the\n  validation set. That is, how do we know that the 30% we selected is the best\n  way to split the data? What if we'd used a different split instead? Another\n  issue is that this approach tends to overestimate the test error for models\n  fit on our entire dataset. This is because more training data usually means\n  better accuracy, but the validation set approach reserves a decent-sized chunk\n  of data for validation and testing (and not training). If only we could come\n  up with a way to use more of our data for training while also simultaneously\n  evaluating the performance across all the variance in our dataset...";
     			attr_dev(span0, "class", "section-arrow");
     			add_location(span0, file$3, 23, 2, 711);
     			attr_dev(h1, "class", "body-header");
     			add_location(h1, file$3, 22, 0, 684);
     			attr_dev(a, "href", "https://mlu-explain.github.io/train-test-validation");
-    			add_location(a, file$3, 26, 7, 809);
+    			add_location(a, file$3, 26, 9, 811);
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file$3, 29, 2, 963);
+    			add_location(span1, file$3, 29, 2, 991);
     			attr_dev(p0, "class", "body-text");
     			add_location(p0, file$3, 25, 0, 780);
-    			add_location(br0, file$3, 32, 0, 1110);
+    			add_location(br0, file$3, 32, 0, 1138);
     			attr_dev(span2, "class", "bold");
-    			add_location(span2, file$3, 35, 4, 1151);
-    			add_location(li0, file$3, 34, 2, 1142);
+    			add_location(span2, file$3, 35, 4, 1179);
+    			add_location(li0, file$3, 34, 2, 1170);
     			attr_dev(span3, "class", "bold");
-    			add_location(span3, file$3, 38, 4, 1252);
-    			add_location(li1, file$3, 37, 2, 1243);
+    			add_location(span3, file$3, 38, 4, 1280);
+    			add_location(li1, file$3, 37, 2, 1271);
     			attr_dev(span4, "class", "bold");
-    			add_location(span4, file$3, 43, 4, 1396);
-    			add_location(li2, file$3, 42, 2, 1387);
+    			add_location(span4, file$3, 43, 4, 1424);
+    			add_location(li2, file$3, 42, 2, 1415);
     			attr_dev(ul, "class", "body-text svelte-aoodt6");
-    			add_location(ul, file$3, 33, 0, 1117);
-    			add_location(br1, file$3, 47, 0, 1517);
+    			add_location(ul, file$3, 33, 0, 1145);
+    			add_location(br1, file$3, 47, 0, 1545);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$marginStatic*/ ctx[5].top + /*$marginStatic*/ ctx[5].bottom);
     			attr_dev(svg, "class", "svelte-aoodt6");
-    			add_location(svg, file$3, 49, 2, 1598);
+    			add_location(svg, file$3, 49, 2, 1626);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-aoodt6");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[8].call(div));
-    			add_location(div, file$3, 48, 0, 1524);
-    			add_location(br2, file$3, 106, 0, 3258);
-    			add_location(br3, file$3, 106, 6, 3264);
+    			add_location(div, file$3, 48, 0, 1552);
+    			add_location(br2, file$3, 106, 0, 3286);
+    			add_location(br3, file$3, 106, 6, 3292);
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$3, 107, 0, 3271);
+    			add_location(p1, file$3, 107, 0, 3299);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -23729,9 +23796,9 @@ var app = (function () {
     			attr_dev(path, "fill", "#232f3e");
     			attr_dev(path, "stroke-linecap", "round");
     			attr_dev(path, "stroke-linejoin", "round");
-    			add_location(path, file$2, 64, 10, 2812);
+    			add_location(path, file$2, 64, 10, 2833);
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")");
-    			add_location(g, file$2, 63, 8, 2739);
+    			add_location(g, file$2, 63, 8, 2760);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
@@ -23830,51 +23897,60 @@ var app = (function () {
     	let html_tag_1;
     	let raw1_value = katexify(`k - 1`, false) + "";
     	let t5;
-    	let span1;
-    	let t7;
     	let html_tag_2;
     	let raw2_value = katexify(`k`, false) + "";
+    	let t6;
+    	let span1;
     	let t8;
-    	let t9;
-    	let br0;
-    	let t10;
-    	let p1;
-    	let t11;
     	let html_tag_3;
-    	let raw3_value = katexify(`k = 4`, false) + "";
+    	let raw3_value = katexify(`k`, false) + "";
+    	let t9;
+    	let t10;
+    	let br0;
+    	let t11;
+    	let p1;
     	let t12;
+    	let html_tag_4;
+    	let raw4_value = katexify(`k = 4`, false) + "";
     	let t13;
-    	let br1;
     	let t14;
-    	let br2;
+    	let br1;
     	let t15;
+    	let br2;
+    	let t16;
     	let div;
     	let svg;
     	let g;
     	let rect0;
     	let text0;
-    	let t16;
+    	let t17;
     	let rect1;
     	let text1;
-    	let t17;
+    	let t18;
     	let rect2;
     	let text2;
-    	let t18;
+    	let t19;
     	let g_transform_value;
     	let svg_height_value;
     	let div_resize_listener;
-    	let t19;
+    	let t20;
     	let br3;
     	let br4;
-    	let t20;
-    	let p2;
     	let t21;
-    	let html_tag_4;
-    	let raw4_value = katexify(`k = 5`, false) + "";
+    	let p2;
     	let t22;
+    	let html_tag_5;
+    	let raw5_value = katexify(`k`, false) + "";
+    	let t23;
+    	let html_tag_6;
+    	let raw6_value = katexify(`k`, false) + "";
+    	let t24;
+    	let html_tag_7;
+    	let raw7_value = katexify(`k = 5`, false) + "";
+    	let t25;
     	let br5;
     	let br6;
-    	let t23;
+    	let t26;
     	let current;
     	let each_value = [...Array(nSplits$1).keys()];
     	validate_each_argument(each_value);
@@ -23893,123 +23969,132 @@ var app = (function () {
     			h1 = element("h1");
     			span0 = element("span");
     			span0.textContent = ">";
-    			t1 = text(" K-Folds Cross-Validation");
+    			t1 = text(" K-Fold Cross-Validation");
     			t2 = space();
     			p0 = element("p");
-    			t3 = text("Rather than worrying about which split of data to use for training versus\n  validation, we’ll use them all in turn. Our strategy will be to iteratively\n  use different portions of our data to test and train our model. The exact\n  process is actually quite simple: We’ll randomly split our dataset into ");
+    			t3 = text("Rather than worrying about which split of data to use for training versus\n  validation, we'll use them all in turn. Our strategy will be to iteratively\n  use different portions of our data to train and validate our model. The exact\n  process is actually quite simple: We'll randomly split our dataset into ");
     			html_tag = new HtmlTag(false);
-    			t4 = text("\n  sets, or folds, of equal size. One fold will be reserved for the validation set\n  (or \"holdout set\") and the remaining ");
+    			t4 = text("\n  sets, or folds, of equal size. One fold will be reserved as the validation set\n  (or \"hold-out set\") and the remaining ");
     			html_tag_1 = new HtmlTag(false);
-    			t5 = text(" folds will\n  be used for the training set. The training folds will fit our models parameters,\n  and the validation fold will be used for evaluation. This process will be repeated\n  on our data k times, using a different fold for the validation set at each iteration.\n  At the end of the procedure, we'll take the average the validation set scores and\n  take that as our as our model's estimated performance. This process is known as\n  ");
-    			span1 = element("span");
-    			span1.textContent = "K-Folds Cross-Validation";
-    			t7 = text(", and requires re-fitting\n  our model ");
+    			t5 = text(" folds will\n  be used as the training set. The training set will fit our model's parameters,\n  and the validation set will be used for evaluation. This process will be repeated\n  on our data ");
     			html_tag_2 = new HtmlTag(false);
-    			t8 = text(" times (once for each fold).");
-    			t9 = space();
-    			br0 = element("br");
-    			t10 = space();
-    			p1 = element("p");
-    			t11 = text("Below we show the process for ");
+    			t6 = text(" times, using a different fold for the\n  validation set at each iteration. At the end of the procedure, we'll take the average\n  of the validation sets' scores and use it as our model's estimated performance.\n  This process is known as\n  ");
+    			span1 = element("span");
+    			span1.textContent = "K-Fold Cross-Validation";
+    			t8 = text(", and requires re-fitting our\n  model ");
     			html_tag_3 = new HtmlTag(false);
-    			t12 = text(" folds of our data.\n  Note that the test data always remains untouched (after all, it's the final hold\n  out set), but the distribution of training and validation sets differs at every\n  fold:");
-    			t13 = space();
-    			br1 = element("br");
+    			t9 = text(" times (once for each fold).");
+    			t10 = space();
+    			br0 = element("br");
+    			t11 = space();
+    			p1 = element("p");
+    			t12 = text("Below we show the process for ");
+    			html_tag_4 = new HtmlTag(false);
+    			t13 = text(" folds of our data.\n  Note that the test data always remains untouched (after all, it's the final hold-out\n  set), but the distribution of training and validation sets differs at every fold:");
     			t14 = space();
-    			br2 = element("br");
+    			br1 = element("br");
     			t15 = space();
+    			br2 = element("br");
+    			t16 = space();
     			div = element("div");
     			svg = svg_element("svg");
     			g = svg_element("g");
     			rect0 = svg_element("rect");
     			text0 = svg_element("text");
-    			t16 = text("Train");
+    			t17 = text("Train");
     			rect1 = svg_element("rect");
     			text1 = svg_element("text");
-    			t17 = text("Validation");
+    			t18 = text("Validation");
     			rect2 = svg_element("rect");
     			text2 = svg_element("text");
-    			t18 = text("Test");
+    			t19 = text("Test");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t19 = space();
+    			t20 = space();
     			br3 = element("br");
     			br4 = element("br");
-    			t20 = space();
+    			t21 = space();
     			p2 = element("p");
-    			t21 = text("If you think this looks familiar, you're on the right track! It's basically\n  the validation set applied k times - just with different splits of\n  training/validation data each time. But this simple extension to the\n  validation approach is very effective at overcoming the shortcomings of the\n  validation set approach. The main benefit is that, because we train our model\n  on multiple subsets of our data and take the average of the evaluation scores\n  on those subsets, our evaluation estimates from K-Folds Cross-Validation will\n  have lower variance than will the evaluation estimates from the validation set\n  approach. Additionally, K-Folds Cross-Validation looks at more data during\n  training. In the validation set approach, only one sample of the data is used\n  for the training set, and it's possible that some information just wasn't\n  included in that sample. With K-Folds Cross-Validation, the whole ensemble\n  uses all of the data, so every data point will get included in the training of\n  some model, and the evaluation of that model will then be factored into the\n  final evaluation estimate. Finally, it's worth stating the obvious fact that\n  test error estimates are more accurate when more data is used in the training\n  set. Even for modest values of k in K-Folds Cross-Validation (e.g. ");
-    			html_tag_4 = new HtmlTag(false);
-    			t22 = text("), the training set comprises 80 percent of our data, so the approach\n  typically doesn’t overestimate the test error as much as the validation set\n  approach could for conservative training set sizes.\n  ");
+    			t22 = text("If you think this looks familiar, you're on the right track! It's just the \n  validation set applied ");
+    			html_tag_5 = new HtmlTag(false);
+    			t23 = text(" times - only using different\n  splits of training/validation data each time. But this simple extension to the\n  validation approach is very effective at overcoming its shortcomings. The main\n  benefit is that, because we train our model on multiple subsets of our data and\n  take the average of the evaluation scores on those subsets, our evaluation estimates\n  from K-Fold Cross-Validation will have lower variance than will the evaluation\n  estimates from the validation set approach. Additionally, K-Fold Cross-Validation\n  looks at more data during training. In the validation set approach, only one sample\n  of the data is used for the training set, and it's possible that some information\n  just wasn't included in that sample. With K-Fold Cross-Validation, the whole ensemble\n  uses all of the data, so every data point will get included in the training of\n  a model, and the evaluation of that model will then be factored into the final\n  evaluation estimate. Finally, it's worth stating the obvious fact that test error\n  estimates are more accurate when more data is used in the training set. Even for\n  modest values of ");
+    			html_tag_6 = new HtmlTag(false);
+    			t24 = text(" in K-Fold Cross-Validation (e.g.\n  ");
+    			html_tag_7 = new HtmlTag(false);
+    			t25 = text("), the training set comprises 80 percent of\n  our data, so the approach typically doesn't overestimate the test error as\n  much as the validation set approach could for small training set sizes.\n  ");
     			br5 = element("br");
     			br6 = element("br");
-    			t23 = text("\n  While K-Folds Cross-Validation has a lot of obvious benefits, it does come with\n  a cost: the need to train and evaluate a model multiple times (once for each fold).");
+    			t26 = text("\n  While K-Fold Cross-Validation has a lot of obvious benefits, it does come with\n  a cost: the need to train and evaluate a model multiple times (once for each fold).");
     			attr_dev(span0, "class", "section-arrow");
     			add_location(span0, file$2, 17, 2, 530);
     			attr_dev(h1, "class", "body-header");
     			add_location(h1, file$2, 16, 0, 503);
     			html_tag.a = t4;
     			html_tag_1.a = t5;
+    			html_tag_2.a = t6;
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file$2, 34, 2, 1558);
-    			html_tag_2.a = t8;
+    			add_location(span1, file$2, 35, 2, 1582);
+    			html_tag_3.a = t9;
     			attr_dev(p0, "class", "body-text");
-    			add_location(p0, file$2, 19, 0, 602);
-    			add_location(br0, file$2, 37, 0, 1708);
-    			html_tag_3.a = t12;
+    			add_location(p0, file$2, 19, 0, 601);
+    			add_location(br0, file$2, 38, 0, 1731);
+    			html_tag_4.a = t13;
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$2, 38, 0, 1715);
-    			add_location(br1, file$2, 44, 0, 1999);
-    			add_location(br2, file$2, 46, 0, 2007);
+    			add_location(p1, file$2, 39, 0, 1738);
+    			add_location(br1, file$2, 44, 0, 2020);
+    			add_location(br2, file$2, 46, 0, 2028);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "3");
     			attr_dev(rect0, "fill", "#003181");
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$2, 52, 6, 2256);
+    			add_location(rect0, file$2, 52, 6, 2277);
     			attr_dev(text0, "class", "legend-text svelte-10j5z2d");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "15");
-    			add_location(text0, file$2, 53, 6, 2321);
+    			add_location(text0, file$2, 53, 6, 2342);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "3");
     			attr_dev(rect1, "fill", "#f46ebb");
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$2, 54, 6, 2380);
+    			add_location(rect1, file$2, 54, 6, 2401);
     			attr_dev(text1, "class", "legend-text svelte-10j5z2d");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "15");
-    			add_location(text1, file$2, 55, 6, 2446);
+    			add_location(text1, file$2, 55, 6, 2467);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "3");
     			attr_dev(rect2, "fill", "#ffad97");
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$2, 56, 6, 2510);
+    			add_location(rect2, file$2, 56, 6, 2531);
     			attr_dev(text2, "class", "legend-text svelte-10j5z2d");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "15");
-    			add_location(text2, file$2, 57, 6, 2577);
+    			add_location(text2, file$2, 57, 6, 2598);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$2, 51, 4, 2186);
+    			add_location(g, file$2, 51, 4, 2207);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$marginStatic*/ ctx[5].top + /*$marginStatic*/ ctx[5].bottom);
-    			add_location(svg, file$2, 49, 2, 2089);
+    			add_location(svg, file$2, 49, 2, 2110);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-10j5z2d");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[7].call(div));
-    			add_location(div, file$2, 48, 0, 2015);
-    			add_location(br3, file$2, 100, 0, 3667);
-    			add_location(br4, file$2, 100, 6, 3673);
-    			html_tag_4.a = t22;
-    			add_location(br5, file$2, 124, 2, 5264);
-    			add_location(br6, file$2, 124, 8, 5270);
+    			add_location(div, file$2, 48, 0, 2036);
+    			add_location(br3, file$2, 100, 0, 3688);
+    			add_location(br4, file$2, 100, 6, 3694);
+    			html_tag_5.a = t23;
+    			html_tag_6.a = t24;
+    			html_tag_7.a = t25;
+    			add_location(br5, file$2, 121, 2, 5279);
+    			add_location(br6, file$2, 121, 8, 5285);
     			attr_dev(p2, "class", "body-text");
-    			add_location(p2, file$2, 101, 0, 3680);
+    			add_location(p2, file$2, 101, 0, 3701);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -24025,51 +24110,57 @@ var app = (function () {
     			append_dev(p0, t4);
     			html_tag_1.m(raw1_value, p0);
     			append_dev(p0, t5);
-    			append_dev(p0, span1);
-    			append_dev(p0, t7);
     			html_tag_2.m(raw2_value, p0);
+    			append_dev(p0, t6);
+    			append_dev(p0, span1);
     			append_dev(p0, t8);
-    			insert_dev(target, t9, anchor);
-    			insert_dev(target, br0, anchor);
+    			html_tag_3.m(raw3_value, p0);
+    			append_dev(p0, t9);
     			insert_dev(target, t10, anchor);
+    			insert_dev(target, br0, anchor);
+    			insert_dev(target, t11, anchor);
     			insert_dev(target, p1, anchor);
-    			append_dev(p1, t11);
-    			html_tag_3.m(raw3_value, p1);
     			append_dev(p1, t12);
-    			insert_dev(target, t13, anchor);
-    			insert_dev(target, br1, anchor);
+    			html_tag_4.m(raw4_value, p1);
+    			append_dev(p1, t13);
     			insert_dev(target, t14, anchor);
-    			insert_dev(target, br2, anchor);
+    			insert_dev(target, br1, anchor);
     			insert_dev(target, t15, anchor);
+    			insert_dev(target, br2, anchor);
+    			insert_dev(target, t16, anchor);
     			insert_dev(target, div, anchor);
     			append_dev(div, svg);
     			append_dev(svg, g);
     			append_dev(g, rect0);
     			append_dev(g, text0);
-    			append_dev(text0, t16);
+    			append_dev(text0, t17);
     			append_dev(g, rect1);
     			append_dev(g, text1);
-    			append_dev(text1, t17);
+    			append_dev(text1, t18);
     			append_dev(g, rect2);
     			append_dev(g, text2);
-    			append_dev(text2, t18);
+    			append_dev(text2, t19);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(svg, null);
     			}
 
     			div_resize_listener = add_resize_listener(div, /*div_elementresize_handler*/ ctx[7].bind(div));
-    			insert_dev(target, t19, anchor);
+    			insert_dev(target, t20, anchor);
     			insert_dev(target, br3, anchor);
     			insert_dev(target, br4, anchor);
-    			insert_dev(target, t20, anchor);
+    			insert_dev(target, t21, anchor);
     			insert_dev(target, p2, anchor);
-    			append_dev(p2, t21);
-    			html_tag_4.m(raw4_value, p2);
     			append_dev(p2, t22);
+    			html_tag_5.m(raw5_value, p2);
+    			append_dev(p2, t23);
+    			html_tag_6.m(raw6_value, p2);
+    			append_dev(p2, t24);
+    			html_tag_7.m(raw7_value, p2);
+    			append_dev(p2, t25);
     			append_dev(p2, br5);
     			append_dev(p2, br6);
-    			append_dev(p2, t23);
+    			append_dev(p2, t26);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
@@ -24135,22 +24226,22 @@ var app = (function () {
     			if (detaching) detach_dev(h1);
     			if (detaching) detach_dev(t2);
     			if (detaching) detach_dev(p0);
-    			if (detaching) detach_dev(t9);
-    			if (detaching) detach_dev(br0);
     			if (detaching) detach_dev(t10);
+    			if (detaching) detach_dev(br0);
+    			if (detaching) detach_dev(t11);
     			if (detaching) detach_dev(p1);
-    			if (detaching) detach_dev(t13);
-    			if (detaching) detach_dev(br1);
     			if (detaching) detach_dev(t14);
-    			if (detaching) detach_dev(br2);
+    			if (detaching) detach_dev(br1);
     			if (detaching) detach_dev(t15);
+    			if (detaching) detach_dev(br2);
+    			if (detaching) detach_dev(t16);
     			if (detaching) detach_dev(div);
     			destroy_each(each_blocks, detaching);
     			div_resize_listener();
-    			if (detaching) detach_dev(t19);
+    			if (detaching) detach_dev(t20);
     			if (detaching) detach_dev(br3);
     			if (detaching) detach_dev(br4);
-    			if (detaching) detach_dev(t20);
+    			if (detaching) detach_dev(t21);
     			if (detaching) detach_dev(p2);
     		}
     	};
@@ -24412,9 +24503,9 @@ var app = (function () {
     			attr_dev(path, "fill", "#232f3e");
     			attr_dev(path, "stroke-linecap", "round");
     			attr_dev(path, "stroke-linejoin", "round");
-    			add_location(path, file$1, 53, 10, 2113);
+    			add_location(path, file$1, 53, 10, 2100);
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*xScale*/ ctx[4](/*tick*/ ctx[8]) - /*xDiff*/ ctx[2]) + ", " + /*yScale*/ ctx[3](0) + ")");
-    			add_location(g, file$1, 52, 8, 2040);
+    			add_location(g, file$1, 52, 8, 2027);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, g, anchor);
@@ -24546,7 +24637,7 @@ var app = (function () {
     	let raw3_value = katexify(`k`, false) + "";
     	let t17;
     	let html_tag_4;
-    	let raw4_value = katexify(`n - 1`, false) + "";
+    	let raw4_value = katexify(`n`, false) + "";
     	let t18;
     	let html_tag_5;
     	let raw5_value = katexify(`k`, false) + "";
@@ -24585,9 +24676,9 @@ var app = (function () {
     			html_tag = new HtmlTag(false);
     			t6 = text(" equal to ");
     			html_tag_1 = new HtmlTag(false);
-    			t7 = text(", the number of observations in our dataset. In Leave-One-Out\n  Cross-Validation, our data is repeatedly split into a training set containing\n  all but one observations, and a validation set containing the remaining left\n  out observation. That is, the training set consists of ");
+    			t7 = text(", the number of observations in our dataset. In Leave-One-Out\n  Cross-Validation, our data is split into a training set containing\n  all but one observations, and a validation set containing the remaining\n  left-out observation. That is, the training set consists of ");
     			html_tag_2 = new HtmlTag(false);
-    			t8 = text(" observations, and the validation set consists of just one individual observation:");
+    			t8 = text(" data points, and the validation set consists of just one individual data point:");
     			t9 = space();
     			br0 = element("br");
     			t10 = space();
@@ -24613,11 +24704,11 @@ var app = (function () {
     			br2 = element("br");
     			t15 = space();
     			p1 = element("p");
-    			t16 = text("LOOCV carries all the same benefits mentioned previously, as well as some more\n  we'll discuss in the Bias Variance tradeoff section below. While the large\n  value of ");
+    			t16 = text("LOOCV carries all the same benefits mentioned previously, as well as some more\n  that we'll discuss in the Bias-Variance tradeoff section below. While the\n  large value of ");
     			html_tag_3 = new HtmlTag(false);
-    			t17 = text(" in LOOCV should minimize the variance in\n  our estimate, it comes with a cost: the need to re-train our model ");
+    			t17 = text(" in LOOCV should minimize the variance\n  in our estimate, it comes with a cost: the need to train a model ");
     			html_tag_4 = new HtmlTag(false);
-    			t18 = text("\n  times! This is expensive both in the amount of time it takes and the compute resources\n  it requires. For this reason, it's rare to see LOOCV employed in the wild unless\n  there is a specific structure of the model that makes this computation efficient\n  (e.g. ridge regression). A more conservative value of ");
+    			t18 = text("\n  times! This is expensive both in the amount of time it takes and the compute resources\n  it requires. For this reason, it's rare to see LOOCV employed in the wild unless\n  there is a specific structure of the model that makes this computation efficient\n  (like ridge regression). A more conservative value of ");
     			html_tag_5 = new HtmlTag(false);
     			t19 = text(" is more commonly used instead (e.g. ");
     			html_tag_6 = new HtmlTag(false);
@@ -24635,56 +24726,56 @@ var app = (function () {
     			html_tag_2.a = t8;
     			attr_dev(p0, "class", "body-text");
     			add_location(p0, file$1, 21, 0, 660);
-    			add_location(br0, file$1, 35, 0, 1308);
+    			add_location(br0, file$1, 35, 0, 1295);
     			attr_dev(rect0, "x", 0);
     			attr_dev(rect0, "y", "3");
     			attr_dev(rect0, "fill", "#003181");
     			attr_dev(rect0, "width", "12");
     			attr_dev(rect0, "height", "12");
-    			add_location(rect0, file$1, 41, 6, 1557);
+    			add_location(rect0, file$1, 41, 6, 1544);
     			attr_dev(text0, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text0, "x", 15);
     			attr_dev(text0, "y", "15");
-    			add_location(text0, file$1, 42, 6, 1622);
+    			add_location(text0, file$1, 42, 6, 1609);
     			attr_dev(rect1, "x", 65);
     			attr_dev(rect1, "y", "3");
     			attr_dev(rect1, "fill", "#f46ebb");
     			attr_dev(rect1, "width", "12");
     			attr_dev(rect1, "height", "12");
-    			add_location(rect1, file$1, 43, 6, 1681);
+    			add_location(rect1, file$1, 43, 6, 1668);
     			attr_dev(text1, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text1, "x", 80);
     			attr_dev(text1, "y", "15");
-    			add_location(text1, file$1, 44, 6, 1747);
+    			add_location(text1, file$1, 44, 6, 1734);
     			attr_dev(rect2, "x", 170);
     			attr_dev(rect2, "y", "3");
     			attr_dev(rect2, "fill", "#ffad97");
     			attr_dev(rect2, "width", "12");
     			attr_dev(rect2, "height", "12");
-    			add_location(rect2, file$1, 45, 6, 1811);
+    			add_location(rect2, file$1, 45, 6, 1798);
     			attr_dev(text2, "class", "legend-text svelte-1fpr9wp");
     			attr_dev(text2, "x", 185);
     			attr_dev(text2, "y", "15");
-    			add_location(text2, file$1, 46, 6, 1878);
+    			add_location(text2, file$1, 46, 6, 1865);
     			attr_dev(g, "class", "g-tag");
     			attr_dev(g, "transform", g_transform_value = "translate(" + (/*width*/ ctx[0] / 2 - 102) + ", " + 0 + ")");
-    			add_location(g, file$1, 40, 4, 1487);
+    			add_location(g, file$1, 40, 4, 1474);
     			attr_dev(svg, "width", /*width*/ ctx[0]);
     			attr_dev(svg, "height", svg_height_value = /*height*/ ctx[1] + /*$marginStatic*/ ctx[5].top + /*$marginStatic*/ ctx[5].bottom);
-    			add_location(svg, file$1, 38, 2, 1390);
+    			add_location(svg, file$1, 38, 2, 1377);
     			attr_dev(div, "id", "cv-chart");
     			attr_dev(div, "class", "svelte-1fpr9wp");
     			add_render_callback(() => /*div_elementresize_handler*/ ctx[7].call(div));
-    			add_location(div, file$1, 37, 0, 1316);
-    			add_location(br1, file$1, 89, 0, 2959);
-    			add_location(br2, file$1, 89, 6, 2965);
+    			add_location(div, file$1, 37, 0, 1303);
+    			add_location(br1, file$1, 89, 0, 2946);
+    			add_location(br2, file$1, 89, 6, 2952);
     			html_tag_3.a = t17;
     			html_tag_4.a = t18;
     			html_tag_5.a = t19;
     			html_tag_6.a = t20;
     			html_tag_7.a = t21;
     			attr_dev(p1, "class", "body-text");
-    			add_location(p1, file$1, 90, 0, 2972);
+    			add_location(p1, file$1, 90, 0, 2959);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -24951,72 +25042,87 @@ var app = (function () {
     	let t2;
     	let p;
     	let t3;
-    	let a;
-    	let t5;
-    	let br0;
-    	let br1;
-    	let t6;
-    	let span1;
-    	let t8;
-    	let br2;
-    	let t9;
     	let html_tag;
-    	let raw0_value = katexify(`\\\mathbb{E}\\left[\\mathcal{E}(\\hat f)\\right]-\\mathbb{E}\\left[\\mathcal{E}(\\hat f_k)\\right]`, false) + "";
-    	let t10;
-    	let br3;
-    	let br4;
-    	let t11;
+    	let raw0_value = katexify(`k = n`, false) + "";
+    	let t4;
     	let html_tag_1;
     	let raw1_value = katexify(`k = 2`, false) + "";
-    	let t12;
+    	let t5;
     	let html_tag_2;
-    	let raw2_value = katexify(`n - 1`, false) + "";
-    	let t13;
+    	let raw2_value = katexify(`k`, false) + "";
+    	let t6;
+    	let a;
+    	let t8;
+    	let br0;
+    	let br1;
+    	let t9;
+    	let span1;
+    	let t11;
+    	let br2;
+    	let t12;
     	let html_tag_3;
-    	let raw3_value = katexify(`(k - 1) * n / k`, false) + "";
-    	let t14;
+    	let raw3_value = katexify(`k`, false) + "";
+    	let t13;
     	let html_tag_4;
-    	let raw4_value = katexify(`k`, false) + "";
+    	let raw4_value = katexify(`\\\mathbb{E}\\left[\\mathcal{E}(\\hat f)\\right]-\\mathbb{E}\\left[\\mathcal{E}(\\hat f_k)\\right]`, false) + "";
+    	let t14;
+    	let br3;
+    	let br4;
     	let t15;
     	let html_tag_5;
-    	let raw5_value = katexify(`k`, false) + "";
+    	let raw5_value = katexify(`k = 2`, false) + "";
     	let t16;
     	let html_tag_6;
-    	let raw6_value = katexify(`k = 5`, false) + "";
+    	let raw6_value = katexify(`n - 1`, false) + "";
     	let t17;
     	let html_tag_7;
-    	let raw7_value = katexify(`k = 10`, false) + "";
+    	let raw7_value = katexify(`(k - 1) * n / k`, false) + "";
     	let t18;
     	let html_tag_8;
     	let raw8_value = katexify(`k`, false) + "";
     	let t19;
-    	let br5;
-    	let br6;
-    	let t20;
-    	let span2;
-    	let t22;
-    	let br7;
-    	let t23;
     	let html_tag_9;
     	let raw9_value = katexify(`k`, false) + "";
-    	let t24;
+    	let t20;
     	let html_tag_10;
-    	let raw10_value = katexify(`k`, false) + "";
-    	let t25;
-    	let sup;
-    	let t27;
+    	let raw10_value = katexify(`k = 5`, false) + "";
+    	let t21;
     	let html_tag_11;
-    	let raw11_value = katexify(`k`, false) + "";
-    	let t28;
+    	let raw11_value = katexify(`k = 10`, false) + "";
+    	let t22;
     	let html_tag_12;
     	let raw12_value = katexify(`k`, false) + "";
-    	let t29;
+    	let t23;
+    	let br5;
+    	let br6;
+    	let t24;
+    	let span2;
+    	let t26;
+    	let br7;
+    	let t27;
     	let html_tag_13;
-    	let raw13_value = katexify(`k=5`, false) + "";
-    	let t30;
+    	let raw13_value = katexify(`k`, false) + "";
+    	let t28;
     	let html_tag_14;
-    	let raw14_value = katexify(`k=10`, false) + "";
+    	let raw14_value = katexify(`k`, false) + "";
+    	let t29;
+    	let sup;
     	let t31;
+    	let html_tag_15;
+    	let raw15_value = katexify(`k`, false) + "";
+    	let t32;
+    	let html_tag_16;
+    	let raw16_value = katexify(`k`, false) + "";
+    	let t33;
+    	let html_tag_17;
+    	let raw17_value = katexify(`k`, false) + "";
+    	let t34;
+    	let html_tag_18;
+    	let raw18_value = katexify(`k = 5`, false) + "";
+    	let t35;
+    	let html_tag_19;
+    	let raw19_value = katexify(`k = 10`, false) + "";
+    	let t36;
 
     	const block = {
     		c: function create() {
@@ -25027,96 +25133,111 @@ var app = (function () {
     			t1 = text(" Concerns With Selecting K");
     			t2 = space();
     			p = element("p");
-    			t3 = text("Up to this point, we’ve talked about K-Folds Cross-Validation in the general\n    sense, and described the two most-extreme cases: LOOCV (k = n) and the\n    Validation Set Approach (k = 2). Given the different options for selecting\n    k, how do we select the best value? This question is actually more complex\n    than it may seem! In answering it, we'll revisit our old friend, the ");
+    			t3 = text("Up to this point, we've talked about K-Fold Cross-Validation in the general\n    sense, and described the two most-extreme cases: LOOCV (");
+    			html_tag = new HtmlTag(false);
+    			t4 = text(") and the Validation Set Approach (");
+    			html_tag_1 = new HtmlTag(false);
+    			t5 = text(").\n    Given the different options for selecting\n    ");
+    			html_tag_2 = new HtmlTag(false);
+    			t6 = text(", how do we select the best value? This question\n    is actually more complex than it may seem! In answering it, let's revisit\n    our old friend, the\n    ");
     			a = element("a");
-    			a.textContent = "Bias Variance Tradeoff";
-    			t5 = text(", to understand how different values of k affect the quality of our\n    evaluation estimates.\n    ");
+    			a.textContent = "Bias-Variance Tradeoff";
+    			t8 = text(", to understand how different values of k affect the quality of our\n    evaluation estimates.\n    ");
     			br0 = element("br");
     			br1 = element("br");
-    			t6 = space();
+    			t9 = space();
     			span1 = element("span");
     			span1.textContent = "Bias";
-    			t8 = space();
+    			t11 = space();
     			br2 = element("br");
-    			t9 = text("\n    Let's start first with how k affects bias. To qualify our discussion of bias,\n    we'll look at the true test error of a model as a function of the size of the\n    dataset it's trained on. That is, we refer to bias here as the shift in accuracy\n    that a model gets when trained on less data,\n    ");
-    			html_tag = new HtmlTag(false);
-    			t10 = text(", and not the systematic bias in the predictions (as the term is normally\n    applied in machine learning).\n    ");
+    			t12 = text("\n    Let's start first with how ");
+    			html_tag_3 = new HtmlTag(false);
+    			t13 = text(" affects bias. To \n    qualify our discussion of bias, we'll look at the true test error of a model \n    as a function of the size of the dataset it's trained on. That is, we refer \n    to bias here as the shift in accuracy that a model gets when trained on less data,\n    ");
+    			html_tag_4 = new HtmlTag(false);
+    			t14 = text(", and not the systematic bias in the predictions (as the term is normally\n    applied in machine learning).\n    ");
     			br3 = element("br");
     			br4 = element("br");
-    			t11 = text("\n    With ");
-    			html_tag_1 = new HtmlTag(false);
-    			t12 = text(", we use only a handful of the\n    available data for model training, usually around 60 percent of the data. On\n    the other hand,the training set for LOOCV uses almost the entire dataset,\n    all ");
-    			html_tag_2 = new HtmlTag(false);
-    			t13 = text(" observations, to train our model. As such,\n    LOOCV gives us approximately unbiased estimates of our test error. In general,\n    K-Folds Cross-Validation will use a training set with ");
-    			html_tag_3 = new HtmlTag(false);
-    			t14 = text(" observations. Then, as our value of ");
-    			html_tag_4 = new HtmlTag(false);
-    			t15 = text(" increases,\n    the bias of our estimates should theoretically decrease, as larger training datasets\n    should better approximate the test error. Under this framework, common choices\n    of ");
+    			t15 = text("\n    With ");
     			html_tag_5 = new HtmlTag(false);
-    			t16 = text(", like ");
+    			t16 = text(", we use only a handful of the\n    available data for model training, usually around 60 percent of the data. On\n    the other hand,the training set for LOOCV uses almost the entire dataset,\n    all ");
     			html_tag_6 = new HtmlTag(false);
-    			t17 = text(" or ");
+    			t17 = text(" observations, to train our model. As such,\n    LOOCV gives us approximately unbiased estimates of our test error. In general,\n    K-Fold Cross-Validation will use a training set with ");
     			html_tag_7 = new HtmlTag(false);
-    			t18 = text(", will yield intermediate levels of bias, and low values should yield\n    high. Therefore, if we want to reduce the contribution of bias to our\n    evaluation estimates, we can increase ");
+    			t18 = text(" observations. Then, as our value of ");
     			html_tag_8 = new HtmlTag(false);
-    			t19 = text(",\n    increasing the data each model sees during training. It's important to not\n    get confused about what we're discussing here: the bias here refers to our\n    estimate of the test error from what we see during training/validation (not\n    the bias of the test error itself, which is not affected by the size of our\n    training data.\n    ");
+    			t19 = text(" increases,\n    the bias of our estimates should theoretically decrease, as larger training datasets\n    should better approximate the test error. Under this framework, common choices\n    of ");
+    			html_tag_9 = new HtmlTag(false);
+    			t20 = text(", like ");
+    			html_tag_10 = new HtmlTag(false);
+    			t21 = text(" or ");
+    			html_tag_11 = new HtmlTag(false);
+    			t22 = text(", will yield intermediate levels of bias, and low values should yield\n    high. Therefore, if we want to reduce the contribution of bias to our\n    evaluation estimates, we can increase ");
+    			html_tag_12 = new HtmlTag(false);
+    			t23 = text(",\n    enlarging the data each model sees during training. It's important to not\n    get confused about what we're discussing here: the bias here refers to our\n    estimate of the test error from what we see during training/validation (not\n    the bias of the test error itself, which is not affected by the size of our\n    training data).\n    ");
     			br5 = element("br");
     			br6 = element("br");
-    			t20 = space();
+    			t24 = space();
     			span2 = element("span");
     			span2.textContent = "Variance";
-    			t22 = space();
+    			t26 = space();
     			br7 = element("br");
-    			t23 = text("\n    The effect the value of ");
-    			html_tag_9 = new HtmlTag(false);
-    			t24 = text(" has on the variance of our\n    estimates is where things get more complex. It's often argued that the larger\n    our value of ");
-    			html_tag_10 = new HtmlTag(false);
-    			t25 = text(", the higher the variance of our\n    estimates, with LOOCV having very high variance.");
+    			t27 = text("\n    The effect the value of ");
+    			html_tag_13 = new HtmlTag(false);
+    			t28 = text(" has on the variance of our\n    estimates is where things get more complex. It's often argued that the larger\n    our value of ");
+    			html_tag_14 = new HtmlTag(false);
+    			t29 = text(", the higher the variance of our\n    estimates, with LOOCV having very high variance.");
     			sup = element("sup");
     			sup.textContent = "[1][2]";
-    			t27 = text(". The\n    oft-cited intuition here is that the variance should be higher for larger ");
-    			html_tag_11 = new HtmlTag(false);
-    			t28 = text(", since each model is trained on nearly identical data, meaning that every\n    model should be essentially the same. However, this intuition isn't always\n    correct and can depend heavily on the type of model and dataset used! For\n    instance, [1] shows that for linear regression LOOCV actually has the\n    smallest asymptotic bias and variance amongst all choices of ");
-    			html_tag_12 = new HtmlTag(false);
-    			t29 = text(" in K-fold Cross-Validation. One thing is certain: higher values of k require\n    training more models, so often ");
-    			html_tag_13 = new HtmlTag(false);
-    			t30 = text("or ");
-    			html_tag_14 = new HtmlTag(false);
-    			t31 = text(" is the largest you might be able to do in practice. K-fold Cross-Validation\n    can be an excellent tool to help improve estimates of test error rates compared\n    to a simple validation set, however it does not completely solve the issue.");
+    			t31 = text(". The\n    oft-cited intuition here is that the variance should be higher for larger ");
+    			html_tag_15 = new HtmlTag(false);
+    			t32 = text(", since each model is trained on nearly identical data, meaning that every\n    model should be essentially the same. However, this intuition isn't always\n    correct and can depend heavily on the type of model and dataset used! For\n    instance, [1] shows that for linear regression LOOCV actually has the\n    smallest asymptotic bias and variance amongst all choices of ");
+    			html_tag_16 = new HtmlTag(false);
+    			t33 = text(" in K-Fold Cross-Validation. One thing is certain: higher values of ");
+    			html_tag_17 = new HtmlTag(false);
+    			t34 = text(" require training more models, so often ");
+    			html_tag_18 = new HtmlTag(false);
+    			t35 = text(" or\n    ");
+    			html_tag_19 = new HtmlTag(false);
+    			t36 = text(" is the largest you might be able to do in practice.\n    K-Fold Cross-Validation can be an excellent tool to help improve estimates of\n    test error rates compared to a simple validation set, however it does not completely\n    solve the issue.");
     			attr_dev(span0, "class", "section-arrow");
     			add_location(span0, file, 6, 4, 99);
     			attr_dev(h1, "class", "body-header");
     			add_location(h1, file, 5, 2, 70);
+    			html_tag.a = t4;
+    			html_tag_1.a = t5;
+    			html_tag_2.a = t6;
     			attr_dev(a, "href", "https://mlu-explain.github.io/bias-variance/");
-    			add_location(a, file, 13, 73, 585);
-    			add_location(br0, file, 18, 4, 782);
-    			add_location(br1, file, 18, 10, 788);
+    			add_location(a, file, 18, 4, 691);
+    			add_location(br0, file, 22, 4, 882);
+    			add_location(br1, file, 22, 10, 888);
     			attr_dev(span1, "class", "bold");
-    			add_location(span1, file, 19, 4, 799);
-    			add_location(br2, file, 20, 4, 834);
-    			html_tag.a = t10;
-    			add_location(br3, file, 30, 4, 1398);
-    			add_location(br4, file, 30, 10, 1404);
-    			html_tag_1.a = t12;
-    			html_tag_2.a = t13;
-    			html_tag_3.a = t14;
-    			html_tag_4.a = t15;
+    			add_location(span1, file, 23, 4, 899);
+    			add_location(br2, file, 24, 4, 934);
+    			html_tag_3.a = t13;
+    			html_tag_4.a = t14;
+    			add_location(br3, file, 34, 4, 1528);
+    			add_location(br4, file, 34, 10, 1534);
     			html_tag_5.a = t16;
     			html_tag_6.a = t17;
     			html_tag_7.a = t18;
     			html_tag_8.a = t19;
-    			add_location(br5, file, 53, 4, 2862);
-    			add_location(br6, file, 53, 10, 2868);
+    			html_tag_9.a = t20;
+    			html_tag_10.a = t21;
+    			html_tag_11.a = t22;
+    			html_tag_12.a = t23;
+    			add_location(br5, file, 57, 4, 2991);
+    			add_location(br6, file, 57, 10, 2997);
     			attr_dev(span2, "class", "bold");
-    			add_location(span2, file, 54, 4, 2879);
-    			add_location(br7, file, 55, 4, 2918);
-    			html_tag_9.a = t24;
-    			html_tag_10.a = t25;
-    			add_location(sup, file, 59, 52, 3221);
-    			html_tag_11.a = t28;
-    			html_tag_12.a = t29;
-    			html_tag_13.a = t30;
-    			html_tag_14.a = t31;
+    			add_location(span2, file, 58, 4, 3008);
+    			add_location(br7, file, 59, 4, 3047);
+    			html_tag_13.a = t28;
+    			html_tag_14.a = t29;
+    			add_location(sup, file, 63, 52, 3350);
+    			html_tag_15.a = t32;
+    			html_tag_16.a = t33;
+    			html_tag_17.a = t34;
+    			html_tag_18.a = t35;
+    			html_tag_19.a = t36;
     			attr_dev(p, "class", "body-text");
     			add_location(p, file, 8, 2, 176);
     			add_location(section, file, 4, 0, 58);
@@ -25132,27 +25253,27 @@ var app = (function () {
     			append_dev(section, t2);
     			append_dev(section, p);
     			append_dev(p, t3);
-    			append_dev(p, a);
+    			html_tag.m(raw0_value, p);
+    			append_dev(p, t4);
+    			html_tag_1.m(raw1_value, p);
     			append_dev(p, t5);
+    			html_tag_2.m(raw2_value, p);
+    			append_dev(p, t6);
+    			append_dev(p, a);
+    			append_dev(p, t8);
     			append_dev(p, br0);
     			append_dev(p, br1);
-    			append_dev(p, t6);
-    			append_dev(p, span1);
-    			append_dev(p, t8);
-    			append_dev(p, br2);
     			append_dev(p, t9);
-    			html_tag.m(raw0_value, p);
-    			append_dev(p, t10);
+    			append_dev(p, span1);
+    			append_dev(p, t11);
+    			append_dev(p, br2);
+    			append_dev(p, t12);
+    			html_tag_3.m(raw3_value, p);
+    			append_dev(p, t13);
+    			html_tag_4.m(raw4_value, p);
+    			append_dev(p, t14);
     			append_dev(p, br3);
     			append_dev(p, br4);
-    			append_dev(p, t11);
-    			html_tag_1.m(raw1_value, p);
-    			append_dev(p, t12);
-    			html_tag_2.m(raw2_value, p);
-    			append_dev(p, t13);
-    			html_tag_3.m(raw3_value, p);
-    			append_dev(p, t14);
-    			html_tag_4.m(raw4_value, p);
     			append_dev(p, t15);
     			html_tag_5.m(raw5_value, p);
     			append_dev(p, t16);
@@ -25162,27 +25283,37 @@ var app = (function () {
     			append_dev(p, t18);
     			html_tag_8.m(raw8_value, p);
     			append_dev(p, t19);
+    			html_tag_9.m(raw9_value, p);
+    			append_dev(p, t20);
+    			html_tag_10.m(raw10_value, p);
+    			append_dev(p, t21);
+    			html_tag_11.m(raw11_value, p);
+    			append_dev(p, t22);
+    			html_tag_12.m(raw12_value, p);
+    			append_dev(p, t23);
     			append_dev(p, br5);
     			append_dev(p, br6);
-    			append_dev(p, t20);
-    			append_dev(p, span2);
-    			append_dev(p, t22);
-    			append_dev(p, br7);
-    			append_dev(p, t23);
-    			html_tag_9.m(raw9_value, p);
     			append_dev(p, t24);
-    			html_tag_10.m(raw10_value, p);
-    			append_dev(p, t25);
-    			append_dev(p, sup);
+    			append_dev(p, span2);
+    			append_dev(p, t26);
+    			append_dev(p, br7);
     			append_dev(p, t27);
-    			html_tag_11.m(raw11_value, p);
-    			append_dev(p, t28);
-    			html_tag_12.m(raw12_value, p);
-    			append_dev(p, t29);
     			html_tag_13.m(raw13_value, p);
-    			append_dev(p, t30);
+    			append_dev(p, t28);
     			html_tag_14.m(raw14_value, p);
+    			append_dev(p, t29);
+    			append_dev(p, sup);
     			append_dev(p, t31);
+    			html_tag_15.m(raw15_value, p);
+    			append_dev(p, t32);
+    			html_tag_16.m(raw16_value, p);
+    			append_dev(p, t33);
+    			html_tag_17.m(raw17_value, p);
+    			append_dev(p, t34);
+    			html_tag_18.m(raw18_value, p);
+    			append_dev(p, t35);
+    			html_tag_19.m(raw19_value, p);
+    			append_dev(p, t36);
     		},
     		p: noop,
     		i: noop,
