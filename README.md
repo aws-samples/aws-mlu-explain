@@ -116,7 +116,7 @@ This material exists as supplementary educational material for [Machine Learning
 
 ## Double Descent 2: A Mathematical Explanation
 
-<img src="./assets/gifs/double-desent2.gif" alt="Double Descent 2 Article Image" width="400"/>
+<img src="./assets/gifs/double-descent2.gif" alt="Double Descent 2 Article Image" width="400"/>
 
 **Title**: [Double Descent 2](https://mlu-explain.github.io/double-descent2/)
 
