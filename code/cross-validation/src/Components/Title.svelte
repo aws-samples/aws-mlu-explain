@@ -81,8 +81,10 @@
   /* mobile */
   @media screen and (max-width: 950px) {
     #intro-hed {
-      font-size: 3.5rem;
+      font-size: 3.3rem;
     }
-
+    #intro-hed {
+      max-width: 97%;
+    }
   }
 </style>

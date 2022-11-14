@@ -23,10 +23,10 @@
     <br /><br />
     <span class="bold">Bias</span>
     <br />
-    Let's start first with how {@html katexify(`k`, false)} affects bias. To 
-    qualify our discussion of bias, we'll look at the true test error of a model 
-    as a function of the size of the dataset it's trained on. That is, we refer 
-    to bias here as the shift in accuracy that a model gets when trained on less data,
+    Let's start first with how {@html katexify(`k`, false)} affects bias. To qualify
+    our discussion of bias, we'll look at the true test error of a model as a function
+    of the size of the dataset it's trained on. That is, we refer to bias here as
+    the shift in accuracy that a model gets when trained on less data,
     {@html katexify(
       `\\\mathbb{E}\\left[\\mathcal{E}(\\hat f)\\right]-\\mathbb{E}\\left[\\mathcal{E}(\\hat f_k)\\right]`,
       false
@@ -77,8 +77,5 @@
       false
     )} require training more models, so often {@html katexify(`k = 5`, false)} or
     {@html katexify(`k = 10`, false)} is the largest you might be able to do in practice.
-    K-Fold Cross-Validation can be an excellent tool to help improve estimates of
-    test error rates compared to a simple validation set, however it does not completely
-    solve the issue.
   </p>
 </section>

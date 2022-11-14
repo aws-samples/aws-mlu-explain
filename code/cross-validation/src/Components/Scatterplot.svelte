@@ -18,7 +18,7 @@
     right: 0,
   };
 
-  const radius = 6;
+  const radius = 5;
 
   //   scale
   $: xScale = scaleLinear()

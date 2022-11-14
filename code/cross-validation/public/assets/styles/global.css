@@ -116,12 +116,12 @@ p {
 /* mobile */
 @media screen and (max-width: 950px) {
   .body-text {
-    max-width: 80%;
+    max-width: 90%;
     font-size: 18px;
   }
 
   .body-header {
-    max-width: 80%;
-    font-size: 30px;
+    max-width: 90%;
+    font-size: 26px;
   }
 }

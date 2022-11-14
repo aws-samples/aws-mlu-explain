@@ -1,5 +1,5 @@
 <script>
-  import { scaleLinear, scaleBand } from "d3-scale";
+  import { scaleBand } from "d3-scale";
   import { marginGrid } from "../store.js";
   import StackedRects from "./StackedRects.svelte";
   import Scatterplot from "./Scatterplot.svelte";
@@ -81,7 +81,6 @@
   $: numCol = nSplits > 10 + 2 ? 1 : 2;
   $: numTest = 4;
   $: numValidation = (numRects - numTest) / nSplits;
-  $: numTrain = numRects - numTest - numValidation;
 
   const linearRegression = regressionLinear()
     .x((d) => d.x)
@@ -225,7 +224,8 @@
       class="fold-error-text"
       id="average-fold-error-text"
       x={width / 2}
-      y={yScale.bandwidth() * (max(yScale.domain())+2)+(15*(max(yScale.domain())+2))}
+      y={yScale.bandwidth() * (max(yScale.domain()) + 2) +
+        15 * (max(yScale.domain()) + 2)}
       text-anchor="middle">Estimated Test MSE: {formatter(errorMean)}</text
     >
   </svg>
@@ -306,7 +306,7 @@
   /* mobile */
   @media screen and (max-width: 750px) {
     #cv-chart {
-      max-height: 55vh;
+      max-height: 80vh;
       width: 100%;
       margin: 1rem auto;
     }

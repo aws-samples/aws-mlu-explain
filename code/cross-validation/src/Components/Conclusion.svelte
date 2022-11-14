@@ -4,9 +4,13 @@
   <span class="section-arrow">&gt; </span>
 </h1>
 <p class="body-text">
+  K-Fold Cross-Validation can be an excellent tool to help improve estimates of
+  test error rates compared to a simple validation set. It is widely used and an
+  important technique to have in your machine learning toolkit.
+  <br /><br />
   Thanks for reading! We hope that the article is insightful no matter where you
-  are along your machine learning journey, and that you came away with a better
-  understanding of cross-validation in the context of machine learning.
+  are along your machine learning journey, and that you came away with a better understanding
+  of K-Fold Cross-Validation in the context of machine learning.
   <br /><br />
   To learn more about machine learning, check out our
   <a class="on-end" href="https://aws.amazon.com/machine-learning/mlu/"

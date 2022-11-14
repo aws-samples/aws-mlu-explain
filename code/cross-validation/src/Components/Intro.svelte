@@ -23,9 +23,3 @@
     )}.
   </p>
 </section>
-
-<style>
-  /* mobile */
-  @media screen and (max-width: 950px) {
-  }
-</style>
