@@ -49,9 +49,9 @@ export class Agent {
   }
 
   //   Choose actions according to epsilon-greedy action selection
-  chooseAction(state) {
+  chooseAction(state, greedy = false) {
     var actionIndex;
-    if (Math.random() <= this.epsilon) {
+    if (Math.random() <= this.epsilon && !greedy) {
       // Exploratory action
       actionIndex = Math.floor(Math.random() * this.actions.length);
     } else {
@@ -120,69 +120,12 @@ export class Agent {
           break;
         }
       }
-    }
 
-    return episodicValues;
-  }
-
-  runAdditionalEpisodes(env, episodes = 1, maxSteps = 2000, episodic_values) {
-    var done, reward, state, tdError;
-
-    for (var ep = 0; ep < episodes; ep += 1) {
-      if (episodicValues.length == 0) {
-        episodicValues = reshape(this.qValues, [1, this.rows, this.columns, this.actions.length]);
-      } else {
-        episodicValues = [...episodicValues, this.qValues];
+      // If simulation ended, set robot's position to start position
+      if (ep == episodes-1){
+        env.reset(true);
       }
 
-      [state, reward, done] = env.reset();
-
-      for (var step = 0; step < maxSteps; step += 1) {
-        const [action, actionIndex] = this.chooseAction(state);
-        const qOld = this.qValues[state[0]][state[1]][actionIndex];
-
-        const [nextState, reward, done] = env.step(action);
-        const [nextAction, nextActionIndexndex] =
-          this.chooseAction(nextState);
-
-        if (this.tdUpdate == "q-learning") {
-          // Q-Learning
-          tdError =
-            reward +
-            this.gamma *
-              Math.max.apply(null, this.qValues[nextState[0]][nextState[1]]) -
-            qOld;
-        } else if (this.tdUpdate == "sarsa") {
-          // SARSA
-          tdError =
-            reward +
-            this.gamma *
-              this.qValues[nextState[0]][nextState[1]][actionIndex] -
-            qOld;
-        } else {
-          print("Please set 'tdUpdate' to either 'sarsa' or 'q-learning'.");
-        }
-
-        //  Increment the trace matrix
-        this.traceMatrix[state[0]][state[1]][actionIndex] += 1;
-
-        //  TD(lambda) Update
-        const multiplier1 = this.alpha * tdError;
-        this.qValues = add(
-          this.qValues,
-          multiply(multiplier1, this.traceMatrix)
-        );
-
-        //  Decay the trace matrix values
-        const multiplier2 = this.gamma * this.lambda;
-        this.traceMatrix = multiply(multiplier2, this.traceMatrix);
-
-        state = nextState;
-
-        if (done == true) {
-          break;
-        }
-      }
     }
 
     return episodicValues;

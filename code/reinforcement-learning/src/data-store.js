@@ -29,7 +29,7 @@ export const lineRobot = tweened(
 );
 
 export const gridRobot = tweened(
-  { x: 0.5, y: 0.5 },
+  { x: 3.5, y: 1.5 },
   {
     duration: 200,
     easing: cubicInOut,
@@ -37,7 +37,7 @@ export const gridRobot = tweened(
 );
 
 export const lineRobotPath = writable([{ x: 3.5, y: 0.5 }]);
-export const gridRobotPath = writable([{ x: 0.5, y: 0.5 }]);
+export const gridRobotPath = writable([{ x: 3.5, y: 1.5 }]);
 
 export const banditQValues = writable([
   { episodeNumber: [1, 2, 3], left: [2, 4, 6], right: [1, 2, 3], maxDirection: [1, 1, 1] },

@@ -31,13 +31,12 @@ export class Env {
     if (this.exploringStarts) {
       this.availableStarts = [];
 
-      for (var row = 0, rows = this.rows; row < rows; row += 1) {
-        for (
-          var col = 0, columns = this.columns;
-          col < columns;
-          col += 1
-        ) {
-          this.temp = [row, col];
+      for (let row =0; row<this.rows; row++) {
+        for (let col=0; col<this.columns; col++) {
+          var temp = [row, col];
+          if (temp in this.wins || temp in this.losses){
+            continue
+          }
           this.availableStarts.push([row, col]);
         }
       }
@@ -68,8 +67,13 @@ export class Env {
     }
   }
 
-  reset() {
-    if (this.exploringStarts && Math.random() < this.exploringStartsProb) {
+  reset(default_position = false) {
+    // Set new position to preset start position. Usually performed at the end of simulation
+    if (default_position){
+      return [this.start, this.giveReward(), this.isEndFunc()];
+    }
+
+    if ((this.exploringStarts && Math.random() < this.exploringStartsProb)){
       this.state =
         this.availableStarts[
           Math.floor(Math.random() * this.availableStarts.length)

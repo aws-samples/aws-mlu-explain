@@ -39,7 +39,7 @@
     }, // Map of states and the corresponding reward
     true, // deterministic: Stochastic env not implemented yet
     true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
-    0.4 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+    0.9 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
   );
 
   // set lambda to 0 for TD(0) update and lamdba to 1 for MC
@@ -55,113 +55,200 @@
     0.5 // Decay parameter for eligibility trace
   );
 
-  // episode, row, column, action
-  const numEpisodes = 10;
-  var episodicValues = gridAgent.runEpisodes(env, numEpisodes);
+  // Agent's starting position
+  const startX = 3.5;
+  const startY = 1.5;
+  
+  // Episodic Q Values retrieved from simulation 
+  var episodicValues = Array();
 
   reset();
 
-  // Check current x and y, determing where it can move
-  function moveAgent(numRepeats, episodicValues) {
-    // how to access current x and y
+  // Run episodic trials and update Q-values
+  function runAgentTrials(numEpisodes, episodicValues){
+    let trial_stats = gridAgent.runEpisodes(env, numEpisodes)
 
-    for (let i = 0; i < numRepeats; i++) {
-
-      let currX = $gridRobotPath[$gridRobotPath.length - 1]["x"] - 0.5;
-      let currY = $gridRobotPath[$gridRobotPath.length - 1]["y"] - 0.5;
-
-      var currState = [currX, currY];
-
-      var chosenAction = gridAgent.chooseAction(currState);
-      var [nextState, reward, done] = env.step(chosenAction);
-
-      console.log(chosenAction)
-      console.log(nextState)
-
-      // gridAgent.run_additional_episodes(env, 1, episodicValues);
-
-      const newX = nextState[0] + 0.5;
-      const newY = nextState[1] + 0.5;
-
-      console.log(newX);
-      console.log(newY);
-
-      gridRobot.set({
-        x: newX,
-        y: newY,
-      });
-
-      const newRobotPath = [...$gridRobotPath, { x: newX, y: newY }];
-      gridRobotPath.set(newRobotPath);
-
-      // TODO: Replace with new Q-values
-      const newVals = $gridQValues.map((state, index) => {
-          const r = index % numY;
-          const c = Math.floor(index / numY);
-          const upVal = episodicValues[ep][r][c][0];
-          const downVal = episodicValues[ep][r][c][1];
-          const leftVal = episodicValues[ep][r][c][2];
-          const rightVal = episodicValues[ep][r][c][3];
-
-          const allVals = [upVal, downVal, leftVal, rightVal];
-          const maxIndex = argMax(allVals);
-
-          let maxDir;
-
-          if (maxIndex == 0) {
-            maxDir = "up";
-          } else if (maxIndex == 1) {
-            maxDir = "down";
-          } else if (maxIndex == 2) {
-            maxDir = "left";
-          } else if (maxIndex == 3) {
-            maxDir = "right";
-          }
-
-        return {
-          episodeNumber: [...Array(row["up"].length + 1).keys()],
-          up: [...row["up"], 1],
-          down: [...row["down"], 1],
-          left: [...row["left"], 1],
-          right: [...row["right"], 1],
-          maxDirection: [...row["maxDirection"], maxDir],
-        };
-      });
-
-      $gridQValues = [...newVals];
-
-      // let currX = $gridRobotPath[$gridRobotPath.length - 1]["x"];
-      // let currY = $gridRobotPath[$gridRobotPath.length - 1]["y"];
-
-      // if (currX == numX - 0.5) {
-      //   var newX = randomInt(currX - 0.5, currX - 1.5) + 0.5;
-      // } else if (currX == 0.5) {
-      //   var newX = randomInt(currX + 0.5, 0) + 0.5;
-      // } else {
-      //   var newX = randomInt(currX + 0.5, currX - 1.5) + 0.5;
-      // }
-
-      // if (currY == numY - 0.5) {
-      //   var newY = randomInt(currY - 0.5, currY - 1.5) + 0.5;
-      // } else if (currY == 0.5) {
-      //   var newY = randomInt(currY + 0.5, 0) + 0.5;
-      // } else {
-      //   var newY = randomInt(currY + 0.5, currY - 1.5) + 0.5;
-      // }
+    for (let ep =0; ep<numEpisodes; ep++){
+      episodicValues.push(trial_stats[ep])
     }
-  }
 
-  function runEpisode(numEpisodes, episodicValues) {
-    var episodicValues = gridAgent.runAdditionalEpisodes();
-  }
+    console.log(episodicValues)
+    
+    // Update gridQValues
+    updateGridQVals()
 
-  function reset() {
-    const startX = 0.5;
-    const startY = 0.5;
+    // Reset robot position to starting position
     gridRobot.set({
       x: startX,
       y: startY,
     });
+
+    gridRobotPath.set([{ x: startX, y: startY }]);
+
+    // Reset episodicValues once gridQValues are updated
+    episodicValues = Array()
+
+  }
+
+  // Check current x and y, determing where it can move
+  // function moveAgent(numRepeats, episodicValues) {
+  //   // how to access current x and y
+
+  //   for (let i = 0; i < numRepeats; i++) {
+
+  //     let currX = $gridRobotPath[$gridRobotPath.length - 1]["x"] - 0.5;
+  //     let currY = $gridRobotPath[$gridRobotPath.length - 1]["y"] - 0.5;
+
+  //     var currState = [currX, currY];
+
+  //     var chosenAction = gridAgent.chooseAction(currState, true);
+  //     var [nextState, reward, done] = env.step(chosenAction);
+
+  //     const newX = nextState[0] + 0.5;
+  //     const newY = nextState[1] + 0.5;
+
+  //     gridRobot.set({
+  //       x: newX,
+  //       y: newY,
+  //     });
+
+  //     const newRobotPath = [...$gridRobotPath, { x: newX, y: newY }];
+  //     gridRobotPath.set(newRobotPath);
+
+  //     // TODO: Replace with new Q-values
+  //     const newVals = $gridQValues.map((state, index) => {
+  //         const r = index % numY;
+  //         const c = Math.floor(index / numY);
+  //         const upVal = episodicValues[ep][r][c][0];
+  //         const downVal = episodicValues[ep][r][c][1];
+  //         const leftVal = episodicValues[ep][r][c][2];
+  //         const rightVal = episodicValues[ep][r][c][3];
+
+  //         const allVals = [upVal, downVal, leftVal, rightVal];
+  //         const maxIndex = argMax(allVals);
+
+  //         let maxDir;
+
+  //         if (maxIndex == 0) {
+  //           maxDir = "up";
+  //         } else if (maxIndex == 1) {
+  //           maxDir = "down";
+  //         } else if (maxIndex == 2) {
+  //           maxDir = "left";
+  //         } else if (maxIndex == 3) {
+  //           maxDir = "right";
+  //         }
+
+  //       return {
+  //         episodeNumber: [...Array(row["up"].length + 1).keys()],
+  //         up: [...row["up"], 1],
+  //         down: [...row["down"], 1],
+  //         left: [...row["left"], 1],
+  //         right: [...row["right"], 1],
+  //         maxDirection: [...row["maxDirection"], maxDir],
+  //       };
+  //     });
+
+  //     $gridQValues = [...newVals];
+
+  //     // let currX = $gridRobotPath[$gridRobotPath.length - 1]["x"];
+  //     // let currY = $gridRobotPath[$gridRobotPath.length - 1]["y"];
+
+  //     // if (currX == numX - 0.5) {
+  //     //   var newX = randomInt(currX - 0.5, currX - 1.5) + 0.5;
+  //     // } else if (currX == 0.5) {
+  //     //   var newX = randomInt(currX + 0.5, 0) + 0.5;
+  //     // } else {
+  //     //   var newX = randomInt(currX + 0.5, currX - 1.5) + 0.5;
+  //     // }
+
+  //     // if (currY == numY - 0.5) {
+  //     //   var newY = randomInt(currY - 0.5, currY - 1.5) + 0.5;
+  //     // } else if (currY == 0.5) {
+  //     //   var newY = randomInt(currY + 0.5, 0) + 0.5;
+  //     // } else {
+  //     //   var newY = randomInt(currY + 0.5, currY - 1.5) + 0.5;
+  //     // }
+  //   }
+  // }
+
+  function simulateEpisode(maxSteps=15) {
+    
+    // Reset the robot to the starting position
+    gridRobot.set({
+      x: startX,
+      y: startY,
+    });
+
+    gridRobotPath.set([{ x: startX, y: startY }]);
+
+    // Variables to keep track of robot
+    let currX = startX-0.5;
+    let currY = startY-0.5;
+
+    let nextX;
+    let nextY;
+
+    for (let i=0; i<maxSteps; i++){
+      if ([currY, currX] in env.wins || [currY, currX] in env.losses){
+        console.log("Done!")
+        break
+      }
+      let index = currY + numX*currX;
+      let state = $gridQValues[index]
+
+      // Set default maxDirection incase Q values aren't learnt
+      var maxDirection = "up"
+      if (state["maxDirection"].length){
+        maxDirection = state["maxDirection"][state["maxDirection"].length -1];
+      }
+      
+      // Take action in direction of highest Q-value
+      if (maxDirection == "up"){
+        nextX = currX;
+        nextY = currY-1;
+      } else{
+        if (maxDirection == "down"){
+          nextX = currX;
+          nextY = currY+1;
+        } else{
+          if (maxDirection == "left"){
+            nextX = currX - 1;
+            nextY = currY;
+          } else{
+            nextX = currX+1;
+            nextY = currY;
+          }
+        }
+      }
+      // Check validity of the transition
+      if (nextX >= 0 && nextX <= env.rows - 1) {
+        if (nextY >= 0 && nextY <= env.columns - 1) {
+          currX = nextX 
+          currY = nextY
+        }
+      }
+
+      gridRobot.set({
+        x: currX+0.5,
+        y: currY+0.5,
+      });
+
+      const newRobotPath = [...$gridRobotPath, { x: currX+0.5, y: currY+0.5 }];
+      gridRobotPath.set(newRobotPath);
+
+    }
+  }
+
+  function reset() {
+    gridRobot.set({
+      x: startX,
+      y: startY,
+    });
+
+    // Reset GridAgent stats
+    gridAgent.resetQValues()
+    gridAgent.resetTraceMatrix()
 
     gridRobotPath.set([{ x: startX, y: startY }]);
 
@@ -183,8 +270,21 @@
       { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
       { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
     ]);
+    
+    // Reset episodicValues
+    episodicValues = Array()
 
-    for (let ep = 0; ep < numEpisodes; ep++) {
+    // Update gridQValues (not needed)
+    updateGridQVals()
+  }
+
+  function updateGridQVals(){
+
+    if (episodicValues.length == 0){
+      return
+    }
+
+    for (let ep = 0; ep < episodicValues.length; ep++) {
       // Mapping combination of row and col onto row of gridQvalues
       // state is row in gridQValues
       // (0,0), (1,0), (2,0), (3,0)
@@ -225,7 +325,16 @@
       });
       $gridQValues = [...newVals];
     }
+
+    console.log(episodicValues.length)
+    console.log($gridQValues)
+
+    // Reset episodicValues
+    episodicValues = Array()
+
   }
+
+
 </script>
 
 <h2 class="body-secondary-header">Navigating in a Grid World</h2>
@@ -271,13 +380,10 @@
 </div>
 
 <div id="buttons-container">
-  <button on:click={() => moveAgent(1, episodicValues)}>Select 1 Action</button
+  <button on:click={() => simulateEpisode()}>Simulate Episode</button
   >
-  <button on:click={() => moveAgent(5, episodicValues)}
-    >Select 5 Actions</button
-  >
-  <button on:click={() => ""}>Run 1 Episode</button>
-  <button on:click={() => ""}>Run 5 Episodes</button>
+  <button on:click={() => runAgentTrials(25, episodicValues)}>Run 25 Episode</button>
+  <button on:click={() => runAgentTrials(150, episodicValues)}>Run 150 Episodes</button>
   <button on:click={() => ""}>Show Optimal Solution</button>
   <button on:click={() => reset()}>Reset</button>
 </div>
