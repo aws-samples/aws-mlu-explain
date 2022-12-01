@@ -109,7 +109,6 @@
 
     for (let i=0; i<maxSteps; i++){
       if ([currY, currX] in env.wins || [currY, currX] in env.losses){
-        console.log("Done!")
         break
       }
       let index = currX;
@@ -220,9 +219,6 @@ for (let ep = 0; ep < episodicValues.length; ep++) {
   });
   $lineQValues = [...newVals];
 }
-
-console.log(episodicValues.length)
-console.log($lineQValues)
 
 // Reset episodicValues
 episodicValues = Array()

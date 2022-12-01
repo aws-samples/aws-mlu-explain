@@ -72,8 +72,6 @@
       episodicValues.push(trial_stats[ep])
     }
 
-    console.log(episodicValues)
-    
     // Update gridQValues
     updateGridQVals()
 
@@ -89,88 +87,6 @@
     episodicValues = Array()
 
   }
-
-  // Check current x and y, determing where it can move
-  // function moveAgent(numRepeats, episodicValues) {
-  //   // how to access current x and y
-
-  //   for (let i = 0; i < numRepeats; i++) {
-
-  //     let currX = $gridRobotPath[$gridRobotPath.length - 1]["x"] - 0.5;
-  //     let currY = $gridRobotPath[$gridRobotPath.length - 1]["y"] - 0.5;
-
-  //     var currState = [currX, currY];
-
-  //     var chosenAction = gridAgent.chooseAction(currState, true);
-  //     var [nextState, reward, done] = env.step(chosenAction);
-
-  //     const newX = nextState[0] + 0.5;
-  //     const newY = nextState[1] + 0.5;
-
-  //     gridRobot.set({
-  //       x: newX,
-  //       y: newY,
-  //     });
-
-  //     const newRobotPath = [...$gridRobotPath, { x: newX, y: newY }];
-  //     gridRobotPath.set(newRobotPath);
-
-  //     // TODO: Replace with new Q-values
-  //     const newVals = $gridQValues.map((state, index) => {
-  //         const r = index % numY;
-  //         const c = Math.floor(index / numY);
-  //         const upVal = episodicValues[ep][r][c][0];
-  //         const downVal = episodicValues[ep][r][c][1];
-  //         const leftVal = episodicValues[ep][r][c][2];
-  //         const rightVal = episodicValues[ep][r][c][3];
-
-  //         const allVals = [upVal, downVal, leftVal, rightVal];
-  //         const maxIndex = argMax(allVals);
-
-  //         let maxDir;
-
-  //         if (maxIndex == 0) {
-  //           maxDir = "up";
-  //         } else if (maxIndex == 1) {
-  //           maxDir = "down";
-  //         } else if (maxIndex == 2) {
-  //           maxDir = "left";
-  //         } else if (maxIndex == 3) {
-  //           maxDir = "right";
-  //         }
-
-  //       return {
-  //         episodeNumber: [...Array(row["up"].length + 1).keys()],
-  //         up: [...row["up"], 1],
-  //         down: [...row["down"], 1],
-  //         left: [...row["left"], 1],
-  //         right: [...row["right"], 1],
-  //         maxDirection: [...row["maxDirection"], maxDir],
-  //       };
-  //     });
-
-  //     $gridQValues = [...newVals];
-
-  //     // let currX = $gridRobotPath[$gridRobotPath.length - 1]["x"];
-  //     // let currY = $gridRobotPath[$gridRobotPath.length - 1]["y"];
-
-  //     // if (currX == numX - 0.5) {
-  //     //   var newX = randomInt(currX - 0.5, currX - 1.5) + 0.5;
-  //     // } else if (currX == 0.5) {
-  //     //   var newX = randomInt(currX + 0.5, 0) + 0.5;
-  //     // } else {
-  //     //   var newX = randomInt(currX + 0.5, currX - 1.5) + 0.5;
-  //     // }
-
-  //     // if (currY == numY - 0.5) {
-  //     //   var newY = randomInt(currY - 0.5, currY - 1.5) + 0.5;
-  //     // } else if (currY == 0.5) {
-  //     //   var newY = randomInt(currY + 0.5, 0) + 0.5;
-  //     // } else {
-  //     //   var newY = randomInt(currY + 0.5, currY - 1.5) + 0.5;
-  //     // }
-  //   }
-  // }
 
   function simulateEpisode(maxSteps=15) {
     
@@ -191,7 +107,6 @@
 
     for (let i=0; i<maxSteps; i++){
       if ([currY, currX] in env.wins || [currY, currX] in env.losses){
-        console.log("Done!")
         break
       }
       let index = currY + numX*currX;
@@ -325,10 +240,6 @@
       });
       $gridQValues = [...newVals];
     }
-
-    console.log(episodicValues.length)
-    console.log($gridQValues)
-
     // Reset episodicValues
     episodicValues = Array()
 
