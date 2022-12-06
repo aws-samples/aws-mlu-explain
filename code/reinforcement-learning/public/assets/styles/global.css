@@ -63,8 +63,8 @@ body {
   max-width: 45rem;
   margin: 0 auto;
   text-align: left;
-  font-size: 18px;
-  line-height: 1.5em;
+  font-size: 1rem;
+  line-height: 1.7;
   font-family: var(--font-main);
   max-width: 600px;
 }
@@ -119,7 +119,6 @@ p {
   font-family: var(--font-main);
   font-weight: none;
 }
-
 
 /* mobile */
 @media screen and (max-width: 950px) {
