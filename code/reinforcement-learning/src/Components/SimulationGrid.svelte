@@ -26,7 +26,6 @@
     robotHeight = robotBGSize.height;
 
     arrowBox = select("path.arrow-up").node().getBoundingClientRect();
-    console.log("se", arrowBox);
   });
 
   const directionMap = { up: 180, down: 0, left: 90, right: 270 };
@@ -67,6 +66,10 @@
   $: agentLine = line()
     .x((d) => xScale(d.x))
     .y((d) => yScale(d.y));
+
+  $: {
+    console.log($gridQValues);
+  }
 </script>
 
 <svg {width} {height}>
@@ -99,7 +102,8 @@
       >
     </g>
   {/each}
-
+  <!-- stroke={colorMap[d.maxDirection[d.maxDirection.length - 1]]}
+              fill={colorMap[d.maxDirection[d.maxDirection.length - 1]]} -->
   {#each $gridQValues as d, i}
     <g
       transform="translate({xScale(Math.floor(i / numY)) +
@@ -116,10 +120,14 @@
             <path
               d={ar}
               class={`arrow-${arrowDirection} arrow`}
-              stroke-width="2"
+              stroke-width={d.maxDirection[d.maxDirection.length - 1] ==
+              arrowDirection
+                ? 30
+                : 0}
               transform={`rotate(${directionMap[arrowDirection]}) scale(0.05)`}
-              stroke={colorMap[d.maxDirection[d.maxDirection.length - 1]]}
-              fill={colorMap[d.maxDirection[d.maxDirection.length - 1]]}
+              stroke={"black"}
+              fill={colorMap[arrowDirection]}
+              opacity={d[`${arrowDirection}Weight`][d.maxDirection.length - 1]}
             />
           {/each}
         </g>

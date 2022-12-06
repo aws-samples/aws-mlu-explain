@@ -1,7 +1,12 @@
 <script>
   import ScatterGrid from "./ScatterGrid.svelte";
   import SimulationGrid from "./SimulationGrid.svelte";
-  import { gridRobot, gridRobotPath, epsilon, gridQValues } from "../data-store.js";
+  import {
+    gridRobot,
+    gridRobotPath,
+    epsilon,
+    gridQValues,
+  } from "../data-store.js";
   import { Env } from "../Env.js";
   import { Agent } from "../Agent.js";
 
@@ -58,22 +63,22 @@
   // Agent's starting position
   const startX = 3.5;
   const startY = 1.5;
-  
-  // Episodic Q Values retrieved from simulation 
+
+  // Episodic Q Values retrieved from simulation
   var episodicValues = Array();
 
   reset();
 
   // Run episodic trials and update Q-values
-  function runAgentTrials(numEpisodes, episodicValues){
-    let trial_stats = gridAgent.runEpisodes(env, numEpisodes)
+  function runAgentTrials(numEpisodes, episodicValues) {
+    let trial_stats = gridAgent.runEpisodes(env, numEpisodes);
 
-    for (let ep =0; ep<numEpisodes; ep++){
-      episodicValues.push(trial_stats[ep])
+    for (let ep = 0; ep < numEpisodes; ep++) {
+      episodicValues.push(trial_stats[ep]);
     }
 
     // Update gridQValues
-    updateGridQVals()
+    updateGridQVals();
 
     // Reset robot position to starting position
     gridRobot.set({
@@ -84,12 +89,10 @@
     gridRobotPath.set([{ x: startX, y: startY }]);
 
     // Reset episodicValues once gridQValues are updated
-    episodicValues = Array()
-
+    episodicValues = Array();
   }
 
-  function simulateEpisode(maxSteps=15) {
-    
+  function simulateEpisode(maxSteps = 15) {
     // Reset the robot to the starting position
     gridRobot.set({
       x: startX,
@@ -99,39 +102,39 @@
     gridRobotPath.set([{ x: startX, y: startY }]);
 
     // Variables to keep track of robot
-    let currX = startX-0.5;
-    let currY = startY-0.5;
+    let currX = startX - 0.5;
+    let currY = startY - 0.5;
 
     let nextX;
     let nextY;
 
-    for (let i=0; i<maxSteps; i++){
-      if ([currY, currX] in env.wins || [currY, currX] in env.losses){
-        break
+    for (let i = 0; i < maxSteps; i++) {
+      if ([currY, currX] in env.wins || [currY, currX] in env.losses) {
+        break;
       }
-      let index = currY + numX*currX;
-      let state = $gridQValues[index]
+      let index = currY + numX * currX;
+      let state = $gridQValues[index];
 
       // Set default maxDirection incase Q values aren't learnt
-      var maxDirection = "up"
-      if (state["maxDirection"].length){
-        maxDirection = state["maxDirection"][state["maxDirection"].length -1];
+      var maxDirection = "up";
+      if (state["maxDirection"].length) {
+        maxDirection = state["maxDirection"][state["maxDirection"].length - 1];
       }
-      
+
       // Take action in direction of highest Q-value
-      if (maxDirection == "up"){
+      if (maxDirection == "up") {
         nextX = currX;
-        nextY = currY-1;
-      } else{
-        if (maxDirection == "down"){
+        nextY = currY - 1;
+      } else {
+        if (maxDirection == "down") {
           nextX = currX;
-          nextY = currY+1;
-        } else{
-          if (maxDirection == "left"){
+          nextY = currY + 1;
+        } else {
+          if (maxDirection == "left") {
             nextX = currX - 1;
             nextY = currY;
-          } else{
-            nextX = currX+1;
+          } else {
+            nextX = currX + 1;
             nextY = currY;
           }
         }
@@ -139,19 +142,21 @@
       // Check validity of the transition
       if (nextX >= 0 && nextX <= env.rows - 1) {
         if (nextY >= 0 && nextY <= env.columns - 1) {
-          currX = nextX 
-          currY = nextY
+          currX = nextX;
+          currY = nextY;
         }
       }
 
       gridRobot.set({
-        x: currX+0.5,
-        y: currY+0.5,
+        x: currX + 0.5,
+        y: currY + 0.5,
       });
 
-      const newRobotPath = [...$gridRobotPath, { x: currX+0.5, y: currY+0.5 }];
+      const newRobotPath = [
+        ...$gridRobotPath,
+        { x: currX + 0.5, y: currY + 0.5 },
+      ];
       gridRobotPath.set(newRobotPath);
-
     }
   }
 
@@ -162,41 +167,216 @@
     });
 
     // Reset GridAgent stats
-    gridAgent.resetQValues()
-    gridAgent.resetTraceMatrix()
+    gridAgent.resetQValues();
+    gridAgent.resetTraceMatrix();
 
     gridRobotPath.set([{ x: startX, y: startY }]);
 
     gridQValues.set([
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        up: [],
+        down: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        upWeight: [],
+        downWeight: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
     ]);
-    
+
     // Reset episodicValues
-    episodicValues = Array()
+    episodicValues = Array();
 
     // Update gridQValues (not needed)
-    updateGridQVals()
+    updateGridQVals();
   }
 
-  function updateGridQVals(){
-
-    if (episodicValues.length == 0){
-      return
+  function updateGridQVals() {
+    if (episodicValues.length == 0) {
+      return;
     }
 
     for (let ep = 0; ep < episodicValues.length; ep++) {
@@ -229,23 +409,32 @@
           maxDir = "right";
         }
 
-        return {
+        const valSum =
+          Math.abs(upVal) +
+          Math.abs(downVal) +
+          Math.abs(leftVal) +
+          Math.abs(rightVal);
+
+        const vals = {
           episodeNumber: [...Array(state["up"].length + 1).keys()],
-          up: [...state["up"], episodicValues[ep][r][c][0]],
-          down: [...state["down"], episodicValues[ep][r][c][1]],
-          left: [...state["left"], episodicValues[ep][r][c][2]],
-          right: [...state["right"], episodicValues[ep][r][c][3]],
+          up: [...state["up"], upVal],
+          down: [...state["down"], downVal],
+          left: [...state["left"], leftVal],
+          right: [...state["right"], rightVal],
           maxDirection: [...state["maxDirection"], maxDir],
+          upWeight: [...state["upWeight"], upVal / valSum || 0],
+          downWeight: [...state["downWeight"], downVal / valSum || 0],
+          leftWeight: [...state["leftWeight"], leftVal / valSum || 0],
+          rightWeight: [...state["rightWeight"], rightVal / valSum || 0],
         };
+
+        return vals;
       });
       $gridQValues = [...newVals];
     }
     // Reset episodicValues
-    episodicValues = Array()
-
+    episodicValues = Array();
   }
-
-
 </script>
 
 <h2 class="body-secondary-header">Navigating in a Grid World</h2>
@@ -291,10 +480,13 @@
 </div>
 
 <div id="buttons-container">
-  <button on:click={() => simulateEpisode()}>Simulate Episode</button
+  <button on:click={() => simulateEpisode()}>Simulate Episode</button>
+  <button on:click={() => runAgentTrials(25, episodicValues)}
+    >Run 25 Episode</button
   >
-  <button on:click={() => runAgentTrials(25, episodicValues)}>Run 25 Episode</button>
-  <button on:click={() => runAgentTrials(150, episodicValues)}>Run 150 Episodes</button>
+  <button on:click={() => runAgentTrials(150, episodicValues)}
+    >Run 150 Episodes</button
+  >
   <button on:click={() => ""}>Show Optimal Solution</button>
   <button on:click={() => reset()}>Reset</button>
 </div>
