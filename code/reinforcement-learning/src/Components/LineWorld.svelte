@@ -164,14 +164,70 @@
     lineRobotPath.set([{ x: startX, y: startY }]);
 
     lineQValues.set([
-      { episodeNumber: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], left: [], right: [], maxDirection: [] },
-      { episodeNumber: [], left: [], right: [], maxDirection: [] },
+      {
+        episodeNumber: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
+      {
+        episodeNumber: [],
+        left: [],
+        right: [],
+        maxDirection: [],
+        leftWeight: [],
+        rightWeight: [],
+      },
     ]);
 
     // Reset episodicValues
@@ -208,14 +264,20 @@
           maxDir = "right";
         }
 
-        return {
+        const valSum = Math.abs(leftVal) + Math.abs(rightVal);
+
+        const vals = {
           episodeNumber: [...Array(state["left"].length + 1).keys()],
           // up: [...state["up"], episodicValues[ep][r][c][0]],
           // down: [...state["down"], episodicValues[ep][r][c][1]],
           left: [...state["left"], episodicValues[ep][0][index][0]],
           right: [...state["right"], episodicValues[ep][0][index][1]],
           maxDirection: [...state["maxDirection"], maxDir],
+          leftWeight: [...state["leftWeight"], leftVal / valSum || 0],
+          rightWeight: [...state["rightWeight"], rightVal / valSum || 0],
         };
+
+        return vals;
       });
       $lineQValues = [...newVals];
     }

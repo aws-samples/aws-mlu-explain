@@ -12,8 +12,8 @@
     }
   }
 
-  let width = 800;
-  let height = 100;
+  const width = 125 * 8;
+  const height = 125;
 
   let cellWidth = width / numX;
   let cellHeight = height / numY;
