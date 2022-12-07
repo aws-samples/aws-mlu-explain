@@ -11,7 +11,6 @@ export const margin = writable({
 
 export const epsilon = writable(0.5);
 
-
 export const banditRobot = tweened(
   { x: 0.5, y: 0.5 },
   {
@@ -40,7 +39,12 @@ export const lineRobotPath = writable([{ x: 3.5, y: 0.5 }]);
 export const gridRobotPath = writable([{ x: 3.5, y: 1.5 }]);
 
 export const banditQValues = writable([
-  { episodeNumber: [1, 2, 3], left: [2, 4, 6], right: [1, 2, 3], maxDirection: [1, 1, 1] },
+  {
+    episodeNumber: [1, 2, 3],
+    left: [2, 4, 6],
+    right: [1, 2, 3],
+    maxDirection: [1, 1, 1],
+  },
 ]);
 
 export const lineQValues = writable([
@@ -55,20 +59,132 @@ export const lineQValues = writable([
 ]);
 
 export const gridQValues = writable([
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], up: [], down: [], left: [], right: [], maxDirection: [] },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
+  {
+    episodeNumber: [],
+    up: [],
+    down: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+  },
 ]);
