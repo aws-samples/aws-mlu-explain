@@ -122,20 +122,6 @@
   />
 {/each}
 
-<!-- reactively draw circles -->
-
-<!-- {#each pathUpData as d}
-  <circle class="pathUp-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
-{/each}
-{#each pathDownData as d}
-  <circle class="pathDown-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
-{/each}
-{#each pathLeftData as d}
-  <circle class="pathLeft-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
-{/each}
-{#each pathRightData as d}
-  <circle class="pathRight-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
-{/each} -->
 <style>
   .q-path {
     stroke-width: 2;
@@ -155,22 +141,6 @@
   .pathRight-line {
     stroke: purple;
     stroke: var(--peach);
-  }
-
-  .pathUp-circle {
-    fill: coral;
-  }
-
-  .pathDown-circle {
-    fill: skyblue;
-  }
-
-  .pathLeft-circle {
-    fill: green;
-  }
-
-  .pathRight-circle {
-    fill: purple;
   }
 
   .axis-text {

@@ -105,15 +105,12 @@
       >
     </g>
   {/each}
-  <!-- stroke={colorMap[d.maxDirection[d.maxDirection.length - 1]]}
-              fill={colorMap[d.maxDirection[d.maxDirection.length - 1]]} -->
 
   <!-- make grid here -->
   {#each $gridQValues as d, i}
     <g
       transform="translate({xScale(Math.floor(i / numY)) +
-        cellWidth / 2 -
-        0}, {yScale(i % numY) + cellHeight / 2})"
+        cellWidth / 2}, {yScale(i % numY) + cellHeight / 2})"
     >
       {#each ["up", "down", "left", "right"] as arrowDirection}
         <g
@@ -138,6 +135,7 @@
       {/each}
     </g>
   {/each}
+
   <path class="agent-line-outline" d={agentLine($gridRobotPath)} />
   <path class="agent-line" d={agentLine($gridRobotPath)} />
 
@@ -174,10 +172,10 @@
     fill: var(--sky);
   }
   .arrow-right {
-    fill: var(--magenta);
+    fill: var(--peach);
   }
   .arrow-left {
-    fill: var(--peach);
+    fill: var(--magenta);
   }
 
   .agent-rect {
