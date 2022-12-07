@@ -21,7 +21,7 @@
   $: arrowBox = { height: 560, width: 490, x: 105, y: 0 };
 
   onMount(() => {
-    const robotBGSize = select("#agent-g").node().getBBox();
+    const robotBGSize = select("#agent-g").node().getBoundingClientRect();
     robotWidth = robotBGSize.width;
     robotHeight = robotBGSize.height;
 
@@ -44,11 +44,14 @@
     }
   }
 
-  const width = 400;
-  const height = 400;
+  const width = 500;
+  const height = 500;
 
   const cellWidth = width / numX;
   const cellHeight = height / numY;
+
+  const startRobotPointX = $gridRobot.x;
+  const startRobotPointY = $gridRobot.y;
 
   // offset directions for rotated arrows
   $: directionOffset = {
@@ -104,6 +107,8 @@
   {/each}
   <!-- stroke={colorMap[d.maxDirection[d.maxDirection.length - 1]]}
               fill={colorMap[d.maxDirection[d.maxDirection.length - 1]]} -->
+
+  <!-- make grid here -->
   {#each $gridQValues as d, i}
     <g
       transform="translate({xScale(Math.floor(i / numY)) +
@@ -126,7 +131,6 @@
                 : 0}
               transform={`rotate(${directionMap[arrowDirection]}) scale(0.05)`}
               stroke={"black"}
-              fill={colorMap[arrowDirection]}
               opacity={d[`${arrowDirection}Weight`][d.maxDirection.length - 1]}
             />
           {/each}
@@ -134,12 +138,15 @@
       {/each}
     </g>
   {/each}
+  <path class="agent-line-outline" d={agentLine($gridRobotPath)} />
   <path class="agent-line" d={agentLine($gridRobotPath)} />
 
   <g
     id="agent-g"
-    transform="translate({xScale($gridRobot.x) - 15}, {yScale($gridRobot.y) -
-      15})"
+    transform="translate({xScale(startRobotPointX) - robotWidth / 2}, {yScale(
+      startRobotPointY
+    ) -
+      robotHeight / 2})"
   >
     <rect class="agent-rect" width={robotWidth} height={robotHeight} />
     <path
@@ -154,22 +161,41 @@
 
 <style>
   svg {
-    /* border: 4px solid black; */
-    background-color: white;
+    border: 4px solid black;
+    /* background-color: white; */
     margin: 20px;
     /* transform-box: fill-box; */
   }
 
+  .arrow-up {
+    fill: var(--anchor);
+  }
+  .arrow-down {
+    fill: var(--sky);
+  }
+  .arrow-right {
+    fill: var(--magenta);
+  }
+  .arrow-left {
+    fill: var(--peach);
+  }
+
   .agent-rect {
-    fill: white;
+    fill: var(--bg);
   }
 
   .grid-line {
     stroke-width: 0.5;
     stroke: black;
   }
+  path.agent-line-outline {
+    fill: none;
+    stroke-width: 9;
+    stroke: var(--darksquidink);
+  }
   path.agent-line {
     fill: none;
-    stroke: coral;
+    stroke-width: 5.5;
+    stroke: yellow;
   }
 </style>
