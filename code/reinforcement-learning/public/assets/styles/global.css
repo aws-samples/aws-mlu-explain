@@ -49,7 +49,9 @@
   --fg: var(--off-black);
   --default: var(--squidink);
   --primary: var(--aqua);
-  --secondary: var(--seablue);
+  --secondary: var(--aqua);
+
+  --max-width: 600px;
 }
 
 body {
@@ -60,17 +62,15 @@ body {
 
 /* Global Reusable Styles For Convenience */
 .body-text {
-  max-width: 45rem;
   margin: 0 auto;
   text-align: left;
   font-size: 1rem;
   line-height: 1.7;
   font-family: var(--font-main);
-  max-width: 600px;
+  max-width: var(--max-width);
 }
 
 .body-header {
-  max-width: 45rem;
   margin: 0 auto;
   text-align: left;
   font-size: 30px;
@@ -78,11 +78,10 @@ body {
   font-family: var(--font-heavy);
   padding-top: 2rem;
   padding-bottom: 0.5rem;
-  max-width: 600px;
+  max-width: var(--max-width);
 }
 
 .body-secondary-header {
-  max-width: 45rem;
   margin: 0 auto;
   text-align: left;
   font-size: 25px;
@@ -91,13 +90,13 @@ body {
   color: var(--default);
   padding-top: 2rem;
   padding-bottom: 0.5rem;
-  max-width: 600px;
+  max-width: var(--max-width);
 }
 
 .centered {
   margin: auto;
-  max-width: 45rem;
-  max-width: 600px;
+
+  max-width: var(--max-width);
 }
 
 .bold {
