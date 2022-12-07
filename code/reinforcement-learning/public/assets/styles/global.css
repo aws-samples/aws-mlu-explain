@@ -48,8 +48,8 @@
   --bg: var(--paper);
   --fg: var(--off-black);
   --default: var(--squidink);
-  --primary: var(--aqua);
-  --secondary: var(--aqua);
+  --primary: var(--anchor);
+  --secondary: var(--sky);
 
   --max-width: 600px;
 }
