@@ -2,7 +2,12 @@
   import ScatterLine from "./ScatterLine.svelte";
   import SimulationLine from "./SimulationLine.svelte";
   // import QValuePlot from "./QValuePlotLineWorld.svelte";
-  import { lineRobot, lineRobotPath, epsilon, lineQValues } from "../data-store.js";
+  import {
+    lineRobot,
+    lineRobotPath,
+    epsilon,
+    lineQValues,
+  } from "../data-store.js";
   import { Env } from "../Env.js";
   import { Agent } from "../Agent.js";
 
@@ -59,22 +64,22 @@
   // Agent's starting position
   const startX = 3.5;
   const startY = 0.5;
-  
-  // Episodic Q Values retrieved from simulation 
+
+  // Episodic Q Values retrieved from simulation
   var episodicValues = Array();
 
   reset();
 
   // Run episodic trials and update Q-values
-  function runAgentTrials(numEpisodes, episodicValues){
-    let trial_stats = lineAgent.runEpisodes(env, numEpisodes)
+  function runAgentTrials(numEpisodes, episodicValues) {
+    let trial_stats = lineAgent.runEpisodes(env, numEpisodes);
 
-    for (let ep =0; ep<numEpisodes; ep++){
-      episodicValues.push(trial_stats[ep])
+    for (let ep = 0; ep < numEpisodes; ep++) {
+      episodicValues.push(trial_stats[ep]);
     }
 
     // Update LineQValues
-    updateLineQVals()
+    updateLineQVals();
 
     // Reset robot position to starting position
     lineRobot.set({
@@ -85,13 +90,10 @@
     lineRobotPath.set([{ x: startX, y: startY }]);
 
     // Reset episodicValues once lineQValues are updated
-    episodicValues = Array()
-
+    episodicValues = Array();
   }
 
-
-  function simulateEpisode(maxSteps=15) {
-    
+  function simulateEpisode(maxSteps = 15) {
     // Reset the robot to the starting position
     lineRobot.set({
       x: startX,
@@ -101,53 +103,53 @@
     lineRobotPath.set([{ x: startX, y: startY }]);
 
     // Variables to keep track of robot
-    let currX = startX-0.5;
-    let currY = startY-0.5;
+    let currX = startX - 0.5;
+    let currY = startY - 0.5;
 
     let nextX;
     let nextY;
 
-    for (let i=0; i<maxSteps; i++){
-      if ([currY, currX] in env.wins || [currY, currX] in env.losses){
-        break
+    for (let i = 0; i < maxSteps; i++) {
+      if ([currY, currX] in env.wins || [currY, currX] in env.losses) {
+        break;
       }
       let index = currX;
-      let state = $lineQValues[index]
+      let state = $lineQValues[index];
 
       // Set default maxDirection incase Q values aren't learnt
-      var maxDirection = "left"
-      if (state["maxDirection"].length){
-        maxDirection = state["maxDirection"][state["maxDirection"].length -1];
+      var maxDirection = "left";
+      if (state["maxDirection"].length) {
+        maxDirection = state["maxDirection"][state["maxDirection"].length - 1];
       }
-      
+
       // Take action in direction of highest Q-value
-      if (maxDirection == "left"){
-        nextX = currX-1;
+      if (maxDirection == "left") {
+        nextX = currX - 1;
         nextY = currY;
-      } else{
-        if (maxDirection == "right"){
+      } else {
+        if (maxDirection == "right") {
           nextX = currX + 1;
           nextY = currY;
         }
       }
       // Check validity of the transition
       if (nextX >= 0 && nextX <= env.columns - 1) {
-        currX = nextX 
-        currY = nextY
-        
+        currX = nextX;
+        currY = nextY;
       }
 
       lineRobot.set({
-        x: currX+0.5,
-        y: currY+0.5,
+        x: currX + 0.5,
+        y: currY + 0.5,
       });
 
-      const newRobotPath = [...$lineRobotPath, { x: currX+0.5, y: currY+0.5 }];
+      const newRobotPath = [
+        ...$lineRobotPath,
+        { x: currX + 0.5, y: currY + 0.5 },
+      ];
       lineRobotPath.set(newRobotPath);
-
     }
   }
-
 
   function reset() {
     lineRobot.set({
@@ -156,8 +158,8 @@
     });
 
     // Reset lineAgent stats
-    lineAgent.resetQValues()
-    lineAgent.resetTraceMatrix()
+    lineAgent.resetQValues();
+    lineAgent.resetTraceMatrix();
 
     lineRobotPath.set([{ x: startX, y: startY }]);
 
@@ -173,60 +175,54 @@
     ]);
 
     // Reset episodicValues
-    episodicValues = Array()
+    episodicValues = Array();
 
     // Update lineQValues (not needed)
-    updateLineQVals()
-
+    updateLineQVals();
   }
 
-  function updateLineQVals(){
+  function updateLineQVals() {
+    if (episodicValues.length == 0) {
+      return;
+    }
 
-if (episodicValues.length == 0){
-  return
-}
+    for (let ep = 0; ep < episodicValues.length; ep++) {
+      // Mapping combination of row and col onto row of gridQvalues
+      // state is row in gridQValues
+      // (0,0), (1,0), (2,0), (3,0)
+      // (0,1), (1,1), (2,1), (3,1)
+      // (0,2), (1,2), (2,2), (3,2)
+      // (0,3), (1,3), (2,3), (3,3)
+      const newVals = $lineQValues.map((state, index) => {
+        const leftVal = episodicValues[ep][0][index][0];
+        const rightVal = episodicValues[ep][0][index][1];
 
-for (let ep = 0; ep < episodicValues.length; ep++) {
-  // Mapping combination of row and col onto row of gridQvalues
-  // state is row in gridQValues
-  // (0,0), (1,0), (2,0), (3,0)
-  // (0,1), (1,1), (2,1), (3,1)
-  // (0,2), (1,2), (2,2), (3,2)
-  // (0,3), (1,3), (2,3), (3,3)
-  const newVals = $lineQValues.map((state, index) => {
-    const leftVal = episodicValues[ep][0][index][0];
-    const rightVal = episodicValues[ep][0][index][1];
+        const allVals = [leftVal, rightVal];
+        const maxIndex = argMax(allVals);
 
-    const allVals = [leftVal, rightVal];
-    const maxIndex = argMax(allVals);
+        let maxDir;
 
-    let maxDir;
+        if (maxIndex == 0) {
+          maxDir = "left";
+        } else if (maxIndex == 1) {
+          maxDir = "right";
+        }
 
-    if (maxIndex == 0) {
-      maxDir = "left";
-    } else if (maxIndex == 1) {
-      maxDir = "right";
-    } 
+        return {
+          episodeNumber: [...Array(state["left"].length + 1).keys()],
+          // up: [...state["up"], episodicValues[ep][r][c][0]],
+          // down: [...state["down"], episodicValues[ep][r][c][1]],
+          left: [...state["left"], episodicValues[ep][0][index][0]],
+          right: [...state["right"], episodicValues[ep][0][index][1]],
+          maxDirection: [...state["maxDirection"], maxDir],
+        };
+      });
+      $lineQValues = [...newVals];
+    }
 
-    return {
-      episodeNumber: [...Array(state["left"].length + 1).keys()],
-      // up: [...state["up"], episodicValues[ep][r][c][0]],
-      // down: [...state["down"], episodicValues[ep][r][c][1]],
-      left: [...state["left"], episodicValues[ep][0][index][0]],
-      right: [...state["right"], episodicValues[ep][0][index][1]],
-      maxDirection: [...state["maxDirection"], maxDir],
-    };
-  });
-  $lineQValues = [...newVals];
-}
-
-// Reset episodicValues
-episodicValues = Array()
-
-}
-
-
-
+    // Reset episodicValues
+    episodicValues = Array();
+  }
 </script>
 
 <h2 class="body-secondary-header">Navigating in a Line World</h2>
@@ -303,9 +299,13 @@ episodicValues = Array()
 
 <div id="buttons-container">
   <button on:click={() => simulateEpisode()}>Simulate Episode</button>
-  <button on:click={() => runAgentTrials(25, episodicValues)}>Run 25 Episodes</button>
-  <button on:click={() => runAgentTrials(50, episodicValues)}>Run 50 Episodes</button>
-  <button on:click={() => ""}>Show Optimal Policy</button>
+  <button on:click={() => runAgentTrials(25, episodicValues)}
+    >Run 25 Episodes</button
+  >
+  <button on:click={() => runAgentTrials(50, episodicValues)}
+    >Run 50 Episodes</button
+  >
+  <button on:click={() => ""}>Optimal Policy</button>
   <button on:click={() => reset()}>Reset</button>
 </div>
 

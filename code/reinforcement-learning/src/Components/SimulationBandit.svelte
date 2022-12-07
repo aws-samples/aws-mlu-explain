@@ -75,30 +75,29 @@
         fill="black"
       />
     {/each}
-</g>
+  </g>
 
-    <g
-      id="agent-g"
-      transform="translate({xScale($banditRobot.x) - robotWidth / 2}, {yScale(
-        $banditRobot.y
-      )})"
-    >
-      <rect class="agent-rect" width={robotWidth} height={robotHeight} />
-      <path
-        d={mluRobot}
-        style="transform: scale(0.1)"
-        stroke="white"
-        stroke-width="1"
-        fill="black"
-      />
-    </g>
- </svg
->
+  <g
+    id="agent-g"
+    transform="translate({xScale($banditRobot.x) - robotWidth / 2}, {yScale(
+      $banditRobot.y
+    )})"
+  >
+    <rect class="agent-rect" width={robotWidth} height={robotHeight} />
+    <path
+      d={mluRobot}
+      style="transform: scale(0.1)"
+      stroke="white"
+      stroke-width="1"
+      fill="black"
+    />
+  </g>
+</svg>
 
 <style>
   svg {
     border: 4px solid black;
-    background-color: white;
+    /* background-color: white; */
     margin: 20px;
   }
 

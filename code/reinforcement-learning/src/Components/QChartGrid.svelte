@@ -1,5 +1,6 @@
 <script>
   import { line } from "d3-shape";
+  import { draw } from "svelte/transition";
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
   import { gridQValues } from "../data-store.js";
@@ -22,13 +23,12 @@
   //   get max value for x-axis
   $: xMax = $gridQValues[0]["up"].length;
 
-
   // scales
   $: xScale = scaleLinear()
     .domain([0, xMax + 1])
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
-    .domain([-5, 5])
+    .domain([-4, 5])
     .range([height - margin.bottom, margin.top]);
 
   $: pathUpData = $gridQValues[index]["up"].map((val, i) => {
@@ -47,19 +47,46 @@
     return { x: i, y: val };
   });
 
-
-
   //   d3 line generator
   $: pathGenerator = line()
     .x((d) => xScale(d.x))
     .y((d) => yScale(d.y));
+
+  $: tickModulo =
+    $gridQValues[index]["up"].length > 400
+      ? 150
+      : $gridQValues[index]["up"].length > 100
+      ? 50
+      : 10;
 </script>
+
+<!-- reactively draw lines -->
+<path
+  transition:draw={{ duration: 2000 }}
+  class="q-path pathUp-line"
+  d={pathGenerator(pathUpData)}
+/>
+<path
+  transition:draw={{ duration: 2000 }}
+  class="q-path pathDown-line"
+  d={pathGenerator(pathDownData)}
+/>
+<path
+  transition:draw={{ duration: 2000 }}
+  class="q-path pathLeft-line"
+  d={pathGenerator(pathLeftData)}
+/>
+<path
+  transition:draw={{ duration: 2000 }}
+  class="q-path pathRight-line"
+  d={pathGenerator(pathRightData)}
+/>
 
 <!-- x-ticks -->
 {#each xScale.ticks() as tick}
   <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
     <text class="axis-text" y="7" text-anchor="middle"
-      >{tick % 2 == 0 ? formatter(tick) : ""}</text
+      >{tick % tickModulo == 0 ? formatter(tick) : ""}</text
     >
   </g>
 {/each}
@@ -95,16 +122,9 @@
   />
 {/each}
 
-<!-- reactively draw lines -->
-<path class="pathUp-line" d={pathGenerator(pathUpData)} />
-<path class="pathDown-line" d={pathGenerator(pathDownData)} />
-<path class="pathLeft-line" d={pathGenerator(pathLeftData)} />
-<path class="pathRight-line" d={pathGenerator(pathRightData)} />
-
-
-
 <!-- reactively draw circles -->
-{#each pathUpData as d}
+
+<!-- {#each pathUpData as d}
   <circle class="pathUp-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
 {/each}
 {#each pathDownData as d}
@@ -115,28 +135,26 @@
 {/each}
 {#each pathRightData as d}
   <circle class="pathRight-circle" r="1.5" cx={xScale(d.x)} cy={yScale(d.y)} />
-{/each}
-
+{/each} -->
 <style>
-  .pathUp-line {
-    stroke: coral;
-    stroke-width: 1;
+  .q-path {
+    stroke-width: 2;
     fill: none;
   }
+  .pathUp-line {
+    stroke: coral;
+    stroke: var(--anchor);
+  }
   .pathDown-line {
-    stroke: skyblue;
-    stroke-width: 1;
-    fill: none;
+    stroke: var(--sky);
   }
   .pathLeft-line {
     stroke: green;
-    stroke-width: 1;
-    fill: none;
+    stroke: var(--magenta);
   }
   .pathRight-line {
     stroke: purple;
-    stroke-width: 1;
-    fill: none;
+    stroke: var(--peach);
   }
 
   .pathUp-circle {
