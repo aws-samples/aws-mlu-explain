@@ -1,8 +1,9 @@
 <section id="intro">
   <h1 id="intro-hed">Reinforcement Learning</h1>
-  <h1 class="intro-sub">Learning from Decisions</h1>
+  <h1 class="intro-sub">A Gentle Introduction To Learning From Decisions</h1>
   <h3 id="intro__date">
-    <a href="https://erinbugbee.com">Erin Bugbee</a>, <a href="https://twitter.com/jdwlbr">Jared Wilber</a> & <a>Anand Kamat</a>, August 2022
+    <a href="https://erinbugbee.com">Erin Bugbee</a>, <a>Anand Kamat</a>, &
+    <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
   </h3>
 </section>
 
@@ -15,7 +16,7 @@
   }
 
   #intro-hed {
-    font-size: 4rem;
+    font-size: 4.5rem;
     margin-top: 5px;
     margin-bottom: 0;
     letter-spacing: 1.5px;
