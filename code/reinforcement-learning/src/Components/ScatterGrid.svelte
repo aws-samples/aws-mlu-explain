@@ -12,8 +12,8 @@
     }
   }
 
-  let width = 400;
-  let height = 400;
+  let width = 500;
+  let height = 500;
 
   let cellWidth = width / numX;
   let cellHeight = height / numY;
@@ -35,6 +35,6 @@
 <style>
   svg {
     border: 4px solid black;
-    background-color: white;
+    /* background-color: white; */
   }
 </style>

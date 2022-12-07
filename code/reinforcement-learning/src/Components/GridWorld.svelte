@@ -480,14 +480,14 @@
 </div>
 
 <div id="buttons-container">
-  <button on:click={() => simulateEpisode()}>Simulate Episode</button>
+  <button on:click={() => simulateEpisode()}>Current Route</button>
   <button on:click={() => runAgentTrials(25, episodicValues)}
-    >Run 25 Episode</button
+    >Run 25 Episodes</button
   >
   <button on:click={() => runAgentTrials(150, episodicValues)}
     >Run 150 Episodes</button
   >
-  <button on:click={() => ""}>Show Optimal Solution</button>
+  <button on:click={() => ""}>Optimal Solution</button>
   <button on:click={() => reset()}>Reset</button>
 </div>
 
