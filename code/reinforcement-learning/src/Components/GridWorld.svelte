@@ -9,6 +9,8 @@
   } from "../data-store.js";
   import { Env } from "../Env.js";
   import { Agent } from "../Agent.js";
+  import { onMount } from "svelte";
+  import { select, selectAll } from "d3-selection";
 
   const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
 
@@ -435,6 +437,55 @@
     // Reset episodicValues
     episodicValues = Array();
   }
+
+  // let sections;
+  const target2event = {
+    0: () => {
+      console.log("step");
+    },
+    1: () => {
+      console.log("step");
+    },
+    2: () => {
+      console.log("step");
+    },
+    3: () => {
+      console.log("step");
+    },
+    4: () => {
+      console.log("step");
+    },
+    5: () => {},
+  };
+  function fireEvent(entryIndex) {
+    if (entryIndex in target2event) {
+      target2event[entryIndex]();
+    }
+  }
+  onMount(() => {
+    // store elements to track
+    let sections = selectAll(".step-gridworld").nodes();
+    // observe elements to track
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  });
+  // options for intersection observer
+  const options = {
+    threshold: 0.7,
+  };
+  let observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      // check if visible or not
+      if (entry.isIntersecting) {
+        // resolve stage in graph
+        const entryIndex = entry.target.getAttribute("data-index");
+        if (entryIndex in target2event) {
+          fireEvent(entryIndex);
+        }
+      }
+    });
+  }, options);
 </script>
 
 <h2 class="body-secondary-header">Navigating in a Grid World</h2>
@@ -457,55 +508,79 @@
   this 2-Dimensional environment.
 </p>
 
-<table>
-  <tr>
-    <th class="table-head">Agent</th>
-    <th class="table-head">Environment</th>
-    <th class="table-head">State</th>
-    <th class="table-head">Actions</th>
-    <th class="table-head">Reward</th>
-  </tr>
-  <tr>
-    <td>Robot</td>
-    <td>Grid World</td>
-    <td>X,Y-Position</td>
-    <td>Move Left, Move Right, Move Up, Move Down</td>
-    <td>Number of Bananas</td>
-  </tr>
-</table>
+<section id="scrolly">
+  <div class="scrolly-container">
+    <div class="steps-container">
+      <div class="step-gridworld" data-index="0">
+        <div class="step-content">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ipsam
+            quam impedit, dicta tempore facere minus labore necessitatibus
+            explicabo, iusto incidunt natus tempora doloremque illum eum
+            repellendus, mollitia suscipit dolor vitae! Velit cupiditate quas
+            assumenda mollitia rerum asperiores ullam nostrum corrupti animi
+            perferendis reprehenderit magnam ad autem eligendi, blanditiis
+            tempora?
+          </p>
+        </div>
+      </div>
+      <div class="step-gridworld" data-index="1">
+        <div class="step-content">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ipsam
+            quam impedit, dicta tempore facere minus labore necessitatibus
+            explicabo, iusto incidunt natus tempora doloremque illum eum
+            repellendus, mollitia suscipit dolor vitae! Velit cupiditate quas
+            assumenda mollitia rerum asperiores ullam nostrum corrupti animi
+            perferendis reprehenderit magnam ad autem eligendi, blanditiis
+            tempora?
+          </p>
+        </div>
+      </div>
+      <div class="spacer" />
+    </div>
+    <div class="charts-container">
+      <div class="chart-one">
+        <div>
+          <table>
+            <tr>
+              <th class="table-head">Agent</th>
+              <th class="table-head">Environment</th>
+              <th class="table-head">State</th>
+              <th class="table-head">Actions</th>
+              <th class="table-head">Reward</th>
+            </tr>
+            <tr>
+              <td>Robot</td>
+              <td>Grid World</td>
+              <td>X,Y-Position</td>
+              <td>Move Left, Move Right, Move Up, Move Down</td>
+              <td>Number of Bananas</td>
+            </tr>
+          </table>
 
-<div id="graph-container">
-  <SimulationGrid {numX} {numY} />
-  <ScatterGrid />
-</div>
+          <div id="graph-container">
+            <SimulationGrid {numX} {numY} />
+            <ScatterGrid />
+          </div>
 
-<div id="buttons-container">
-  <button on:click={() => simulateEpisode()}>Current Route</button>
-  <button on:click={() => runAgentTrials(25, episodicValues)}
-    >Run 25 Episodes</button
-  >
-  <button on:click={() => runAgentTrials(150, episodicValues)}
-    >Run 150 Episodes</button
-  >
-  <button on:click={() => ""}>Optimal Solution</button>
-  <button on:click={() => reset()}>Reset</button>
-</div>
+          <div id="buttons-container">
+            <button on:click={() => simulateEpisode()}>Current Route</button>
+            <button on:click={() => runAgentTrials(25, episodicValues)}
+              >Run 25 Episodes</button
+            >
+            <button on:click={() => runAgentTrials(150, episodicValues)}
+              >Run 150 Episodes</button
+            >
+            <button on:click={() => ""}>Optimal Solution</button>
+            <button on:click={() => reset()}>Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- <div id="input-container">
-  <p>
-    <span class="bold">Epsilon: </span>
-    {$epsilon}
-  </p>
-  <input
-    type="range"
-    min="0"
-    max="1"
-    step="0.01"
-    bind:value={$epsilon}
-    class="slider"
-    id="epsilonSlider"
-  />
-</div> -->
 <style>
   #graph-container {
     display: flex;
@@ -612,5 +687,74 @@
     table {
       max-width: 95%;
     }
+  }
+
+  #scrolly {
+    max-width: 1500px;
+    margin: auto;
+  }
+  .chart-one {
+    width: 100%;
+    height: 100%;
+  }
+  /* space after scroll is finished */
+  .spacer {
+    height: 60vh;
+  }
+
+  .charts-container {
+    position: sticky;
+    margin-right: 5%;
+    top: 5.5%;
+    width: 95%;
+    margin: auto;
+    padding-bottom: 1rem;
+    height: 100%;
+  }
+  .scrolly-container {
+    margin-top: 1em;
+    text-align: center;
+    transition: background 100ms;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .step-gridworld {
+    height: 95vh;
+    display: flex;
+    place-items: center;
+    justify-content: center;
+  }
+  .step-content {
+    font-size: var(--size-default);
+    background: var(--bg);
+    border-radius: 1px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: background 500ms ease;
+    text-align: left;
+    width: 75%;
+    margin: auto;
+    max-width: 500px;
+    font-family: var(--font-main);
+    line-height: 1.3;
+    border: 4px solid var(--default);
+    width: 95%;
+    max-width: 768px;
+    font-size: 15px;
+    line-height: 1.3;
+    background: rgba(241, 243, 243, 0.913);
+  }
+  .step-content p {
+    color: var(--squidink);
+  }
+  .steps-container {
+    height: 100%;
+    pointer-events: none;
+  }
+  .steps-container {
+    flex: 1 1 40%;
+    z-index: 10;
   }
 </style>
