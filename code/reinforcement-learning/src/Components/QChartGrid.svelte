@@ -4,6 +4,7 @@
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
   import { gridQValues } from "../data-store.js";
+  import { max, merge } from "d3-array";
 
   //   props
   export let height = 500;
@@ -22,13 +23,23 @@
 
   //   get max value for x-axis
   $: xMax = $gridQValues[0]["up"].length;
-
+  $: yMax = max(
+    merge([
+      $gridQValues[0]["up"],
+      $gridQValues[0]["down"],
+      $gridQValues[0]["right"],
+      $gridQValues[0]["left"],
+    ])
+  );
+  $: {
+    console.log("ymax", yMax);
+  }
   // scales
   $: xScale = scaleLinear()
     .domain([0, xMax + 1])
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
-    .domain([-4, 5])
+    .domain([-5, 10])
     .range([height - margin.bottom, margin.top]);
 
   $: pathUpData = $gridQValues[index]["up"].map((val, i) => {

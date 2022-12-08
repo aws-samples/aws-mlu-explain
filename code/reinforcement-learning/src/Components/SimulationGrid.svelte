@@ -4,7 +4,7 @@
   import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
   import { select } from "d3-selection";
-  import { arrow, mluRobot, bananas } from "../assets.js";
+  import { arrow, mluRobot, bans } from "../assets.js";
   import {
     margin,
     gridRobot,
@@ -19,6 +19,7 @@
   $: robotHeight = 20;
 
   $: arrowBox = { height: 560, width: 490, x: 105, y: 0 };
+  $: rewardBox = { height: 560, width: 490, x: 105, y: 0 };
 
   onMount(() => {
     const robotBGSize = select("#agent-g").node().getBoundingClientRect();
@@ -26,6 +27,7 @@
     robotHeight = robotBGSize.height;
 
     arrowBox = select("path.arrow-up").node().getBoundingClientRect();
+    rewardBox = select("#reward-1").node().getBoundingClientRect();
   });
 
   const directionMap = { up: 180, down: 0, left: 90, right: 270 };
@@ -118,23 +120,40 @@
             'x'
           ]}, {directionOffset[arrowDirection]['y']})"
         >
+          <!-- arrows -->
           {#each arrow as ar}
             <path
               d={ar}
               class={`arrow-${arrowDirection} arrow`}
-              stroke-width={d.maxDirection[d.maxDirection.length - 1] ==
-              arrowDirection
-                ? 30
-                : 0}
+              stroke-width={0}
               transform={`rotate(${directionMap[arrowDirection]}) scale(0.05)`}
-              stroke={"black"}
-              opacity={d[`${arrowDirection}Weight`][d.maxDirection.length - 1]}
+              opacity={d.maxDirection[d.maxDirection.length - 1] ==
+              arrowDirection
+                ? 1
+                : d[`${arrowDirection}Weight`][d.maxDirection.length - 1]}
             />
           {/each}
         </g>
       {/each}
     </g>
   {/each}
+
+  <!-- bananas rewards-->
+
+  <g
+    transform="translate({xScale(2) - rewardBox.width / 2}, {yScale(3) -
+      rewardBox.height / 2})"
+  >
+    {#each bans as b}
+      <path
+        id="reward-1"
+        d={b}
+        transform={`rotate(0) scale(.04)`}
+        stroke={"black"}
+        fill="black"
+      />
+    {/each}
+  </g>
 
   <path class="agent-line-outline" d={agentLine($gridRobotPath)} />
   <path class="agent-line" d={agentLine($gridRobotPath)} />
