@@ -4,8 +4,8 @@
 <p class="body-text">
   In this article, we introduced some of the major concepts in reinforcement
   learning. We demonstrated how an agent learns from taking actions and
-  observing rewards in a multi-armed bandit problem, as well as when
-  navigating in multi-dimensional environments.
+  observing rewards in a multi-armed bandit problem, as well as when navigating
+  in multi-dimensional environments.
 </p>
 <br />
 <p class="body-text">
@@ -31,6 +31,11 @@
   this article is available
   <a class="on-end" href="https://github.com/aws-samples/aws-mlu-explain"
     >here</a
+  >. Banana icons provided by leo-graph.com from
+  <a
+    href="https://thenounproject.com/browse/icons/term/bananas/"
+    target="_blank"
+    title="Bananas Icons">Noun Project</a
   >.
 </p>
 
