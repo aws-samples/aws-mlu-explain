@@ -705,7 +705,7 @@
   .charts-container {
     position: sticky;
     margin-right: 5%;
-    top: 5.5%;
+    top: 1.5%;
     width: 95%;
     margin: auto;
     padding-bottom: 1rem;

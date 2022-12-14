@@ -139,18 +139,15 @@
     fill: none;
   }
   .pathUp-line {
-    stroke: coral;
-    stroke: var(--anchor);
-  }
-  .pathDown-line {
     stroke: var(--sky);
   }
+  .pathDown-line {
+    stroke: var(--anchor);
+  }
   .pathLeft-line {
-    stroke: green;
     stroke: var(--magenta);
   }
   .pathRight-line {
-    stroke: purple;
     stroke: var(--peach);
   }
 
