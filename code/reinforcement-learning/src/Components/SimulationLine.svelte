@@ -4,7 +4,13 @@
   import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
   import { select } from "d3-selection";
-  import { arrow, arrows, mluRobot, bananas } from "../assets.js";
+  import {
+    arrow,
+    arrows,
+    mluRobot,
+    bananaOne,
+    bananaThree,
+  } from "../assets.js";
   import {
     margin,
     lineRobot,
@@ -18,10 +24,15 @@
   $: robotWidth = 20;
   $: robotHeight = 20;
   $: arrowBox = { height: 560, width: 490, x: 105, y: 0 };
+  $: rewardBox = { height: 0, width: 0, x: 0, y: 0 };
+  $: rewardBox3 = { height: 30, width: 0, x: 0, y: 0 };
+
   onMount(() => {
     const robotBGSize = select("#agent-g").node().getBoundingClientRect();
     robotWidth = robotBGSize.width;
     robotHeight = robotBGSize.height;
+    rewardBox = select("#reward-1").node().getBoundingClientRect();
+    rewardBox3 = select("#reward-3").node().getBoundingClientRect();
     arrowBox = select("path.arrow-up").node().getBoundingClientRect();
   });
 
@@ -34,8 +45,6 @@
   const cellHeight = height / numY;
   // offset directions for rotated arrows
   $: directionOffset = {
-    up: { x: arrowBox.width / 2 + 5, y: -cellWidth / 6 },
-    down: { x: -arrowBox.width / 2 - 5, y: cellWidth / 6 },
     right: { x: cellWidth / 6, y: arrowBox.width / 2 + 5 },
     left: { x: -cellWidth / 6, y: -arrowBox.width / 2 - 5 },
   };
@@ -51,6 +60,10 @@
 
   const startRobotPointX = $lineRobot.x;
   const startRobotPointY = $lineRobot.y;
+  const rewardArray = [
+    [0, 0],
+    [7, 0],
+  ];
 </script>
 
 <svg {width} {height}>
@@ -90,27 +103,60 @@
       transform="translate({xScale(Math.floor(i / numY)) +
         cellWidth / 2}, {yScale(i % numY) + cellHeight / 2})"
     >
-      {#each ["left", "right"] as arrowDirection}
-        <g
-          transform="translate({directionOffset[arrowDirection][
-            'x'
-          ]}, {directionOffset[arrowDirection]['y']})"
-        >
-          {#each arrow as ar}
-            <path
-              d={ar}
-              class={`arrow-${arrowDirection} arrow`}
-              transform={`rotate(${directionMap[arrowDirection]}) scale(0.05)`}
-              stroke={"black"}
-              opacity={d[`${arrowDirection}Weight`][d.maxDirection.length - 1]}
-            />
-          {/each}
-        </g>
-      {/each}
+      {#if rewardArray.some((r) => r.length == [i % numY, Math.floor(i / numY)].length && r.every((value, index) => [Math.floor(i / numY), i % numY][index] == value))}
+        {console.log("found rewards at:", [Math.floor(i / numY), i % numY])}
+      {:else}
+        {console.log("found nothing at:", [Math.floor(i / numY), i % numY])}
+        {#each ["left", "right"] as arrowDirection}
+          <g
+            transform="translate({directionOffset[arrowDirection][
+              'x'
+            ]}, {directionOffset[arrowDirection]['y']})"
+          >
+            {#each arrow as ar}
+              <path
+                d={ar}
+                class={`arrow-${arrowDirection} arrow`}
+                transform={`rotate(${directionMap[arrowDirection]}) scale(0.05)`}
+                stroke={"black"}
+                opacity={d.maxDirection[d.maxDirection.length - 1] ==
+                arrowDirection
+                  ? 1
+                  : d[`${arrowDirection}Weight`][d.maxDirection.length - 1]}
+              />
+            {/each}
+          </g>
+        {/each}
+      {/if}
     </g>
   {/each}
   <path class="agent-line-outline" d={robotLine($lineRobotPath)} />
   <path class="agent-line" d={robotLine($lineRobotPath)} />
+
+  <!-- bananas rewards-->
+  <!-- single banana -->
+  <g
+    id="reward-1"
+    transform="translate({xScale(0)}, {yScale(0) + rewardBox.height / 2 - 7.5})"
+  >
+    <!-- <rect width={rewardBox.width} height={rewardBox.height} fill="red" /> -->
+    {#each bananaOne as b}
+      <path class="bananaPath" d={b} transform="scale(0.13)" />
+    {/each}
+  </g>
+
+  <!-- three bananas -->
+  <g
+    id="reward-3"
+    transform="translate({xScale(7)}, {yScale(0) +
+      rewardBox3.height / 2 -
+      7.5})"
+  >
+    <!-- <rect width={rewardBox3.width} height={rewardBox3.height} fill="red" /> -->
+    {#each bananaThree as b}
+      <path class="bananaPath" d={b} style="transform: scale(0.13)" />
+    {/each}
+  </g>
 
   <g
     id="agent-g"
@@ -170,6 +216,11 @@
   path.agent-line {
     fill: none;
     stroke-width: 5.5;
-    stroke: yellow;
+    stroke: var(--mustardyellow);
+  }
+  .bananaPath {
+    stroke-width: 20;
+    stroke: var(--darksquidink);
+    fill: var(--mustardyellow);
   }
 </style>
