@@ -36,6 +36,9 @@ export const gridRobot = tweened(
   }
 );
 
+export const reward1Grid = writable([0, 0]);
+export const reward3Grid = writable([2, 3]);
+
 export const lineRobotPath = writable([{ x: 3.5, y: 0.5 }]);
 export const gridRobotPath = writable([{ x: 3.5, y: 1.5 }]);
 

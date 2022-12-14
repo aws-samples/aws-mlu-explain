@@ -10,6 +10,8 @@
     gridRobot,
     gridRobotPath,
     gridQValues,
+    reward1Grid,
+    reward3Grid,
   } from "../data-store.js";
 
   export let numX = 3;
@@ -71,10 +73,7 @@
   $: {
   }
 
-  const rewardArray = [
-    [0, 0],
-    [2, 3],
-  ];
+  $: rewardArray = [$reward1Grid, $reward3Grid];
 </script>
 
 <svg {width} {height}>
@@ -151,7 +150,9 @@
   <!-- single banana -->
   <g
     id="reward-1"
-    transform="translate({xScale(0)}, {yScale(0) + rewardBox.height / 2 - 7.5})"
+    transform="translate({xScale($reward1Grid[0])}, {yScale($reward1Grid[1]) +
+      rewardBox.height / 2 -
+      7.5})"
   >
     <!-- <rect width={rewardBox.width} height={rewardBox.height} fill="red" /> -->
     {#each bananaOne as b}
@@ -162,7 +163,7 @@
   <!-- three bananas -->
   <g
     id="reward-3"
-    transform="translate({xScale(2)}, {yScale(3) +
+    transform="translate({xScale($reward3Grid[0])}, {yScale($reward3Grid[1]) +
       rewardBox3.height / 2 -
       7.5})"
   >

@@ -6,6 +6,8 @@
     gridRobotPath,
     gridEpsilon,
     gridQValues,
+    reward1Grid,
+    reward3Grid,
   } from "../data-store.js";
   import { Env } from "../Env.js";
   import { Agent } from "../Agent.js";
@@ -40,7 +42,7 @@
     [3, 0], // start
     numY, // rows
     numX, // columns
-    { [[3, 2]]: 10, [[0, 0]]: 2 }, // Map of states and the corresponding reward
+    { [$reward3Grid]: 10, [$reward1Grid]: 2 }, // Map of states and the corresponding reward
     {
       [[2, 2]]: -5,
     }, // Map of states and the corresponding reward
@@ -441,7 +443,7 @@
   // let sections;
   const target2event = {
     0: () => {
-      runAgentTrials(25, episodicValues)
+      runAgentTrials(25, episodicValues);
       console.log("step");
     },
     1: () => {
