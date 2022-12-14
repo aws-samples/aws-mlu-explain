@@ -5,7 +5,7 @@
   import {
     lineRobot,
     lineRobotPath,
-    epsilon,
+    lineEpsilon,
     lineQValues,
   } from "../data-store.js";
   import { Env } from "../Env.js";
@@ -41,13 +41,13 @@
     [0, 3], // start
     numY, // rows
     numX, // columns
-    { [[0, 0]]: 2, [[0, 7]]: 7 }, // Map of states and the corresponding reward
+    { [[0, 0]]: 1, [[0, 7]]: 7 }, // Map of states and the corresponding reward
     {
       // [[2, 2]]: -5,
     }, // Map of states and the corresponding reward
     true, // deterministic: Stochastic env not implemented yet
     true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
-    0.8 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+    0.7 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
   );
 
   // set lambda to 0 for TD(0) update and lamdba to 1 for MC
@@ -57,7 +57,7 @@
     env.wins, // for plotting
     env.losses, // for plotting
     "q-learning", // 'q-learning' or 'sarsa'
-    $epsilon, // Control exploration
+    $lineEpsilon, // Control exploration
     0.1, // Learning rate
     0.7, // Discount factor
     0.5 // Decay parameter for eligibility trace
@@ -291,13 +291,16 @@
   // let sections;
   const target2event = {
     0: () => {
-      console.log("step");
+      reset()
+      console.log("step 0");
     },
     1: () => {
-      console.log("step");
+      runAgentTrials(10, episodicValues)
+      console.log("step 1");
     },
     2: () => {
-      console.log("step");
+      console.log("step 2");
+      runAgentTrials(500, episodicValues)
     },
     3: () => {
       console.log("step");
@@ -390,26 +393,29 @@
       <div class="step-lineworld" data-index="0">
         <div class="step-content">
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ipsam
-            quam impedit, dicta tempore facere minus labore necessitatibus
-            explicabo, iusto incidunt natus tempora doloremque illum eum
-            repellendus, mollitia suscipit dolor vitae! Velit cupiditate quas
-            assumenda mollitia rerum asperiores ullam nostrum corrupti animi
-            perferendis reprehenderit magnam ad autem eligendi, blanditiis
-            tempora?
+            Let's observe the explore-exploit dilemma in the following simulation. 
+            We assign the agent's initial policy to perpetually suggest going 
+            left towards the tree that has already been discovered. 
           </p>
         </div>
       </div>
       <div class="step-lineworld" data-index="1">
         <div class="step-content">
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ipsam
-            quam impedit, dicta tempore facere minus labore necessitatibus
-            explicabo, iusto incidunt natus tempora doloremque illum eum
-            repellendus, mollitia suscipit dolor vitae! Velit cupiditate quas
-            assumenda mollitia rerum asperiores ullam nostrum corrupti animi
-            perferendis reprehenderit magnam ad autem eligendi, blanditiis
-            tempora?
+            The agent has sampled 10 episodes or trials following the epsilon-greedy policy 
+            discussed before. You can see the agent still prefers stepping towards the 
+            tree on the left for certain states despite the one on the right 
+            producing higher rewards.
+            Let's run some more episodes...
+          </p>
+        </div>
+      </div>
+      <div class="step-lineworld" data-index="2">
+        <div class="step-content">
+          <p>
+            The agent has now sampled 500 episodes following the epsilon-greedy policy.
+            You can observe how the agent has updated its policy to prefer 
+            stepping towards the tree on the right instead. 
           </p>
         </div>
       </div>

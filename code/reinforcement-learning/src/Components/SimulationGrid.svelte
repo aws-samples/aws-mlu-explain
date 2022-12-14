@@ -69,7 +69,6 @@
     .y((d) => yScale(d.y));
 
   $: {
-    console.log($gridQValues);
   }
 
   const rewardArray = [

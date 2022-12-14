@@ -8,8 +8,9 @@ export const margin = writable({
   left: 0,
   right: 0,
 });
-
-export const epsilon = writable(0.5);
+export const banditEpsilon = writable(0.2);
+export const lineEpsilon = writable(0.3);
+export const gridEpsilon = writable(0.5);
 
 export const banditRobot = tweened(
   { x: 0.5, y: 0.5 },

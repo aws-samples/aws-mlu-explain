@@ -1,6 +1,96 @@
 <script>
   import ScatterBandit from "./ScatterBandit.svelte";
   import SimulationBandit from "./SimulationBandit.svelte";
+  import {
+    banditRobot,
+    banditEpsilon,
+    banditQValues
+  } from "../data-store";
+  import {MultiArmBandit} from "../MultiArmBandit";
+  import { onMount } from "svelte";
+  import { select, selectAll } from "d3-selection";
+
+const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
+
+// Finds the index of the maximum
+function argMax(array) {
+  return array
+    .map((x, i) => [x, i])
+    .reduce((r, a) => (a[0] > r[0] ? a : r))[1];
+}
+
+const numX = 1;
+const numY = 1;
+
+// Define the env
+const env = new MultiArmBandit(
+  [2,5], // Mean value of each arm
+  [1.0, 1.0], // STD of each arm
+  $banditEpsilon, // Epsilon (exploration)
+  0.1, // Alpha (Q-value update step)
+);
+
+// Reset simulation
+reset()
+
+
+function runBanditTrials(numEpisodes, episodicValues){
+  for (let ep = 0; ep < numEpisodes; ep++){
+    let maxDir;
+    let q_val = env.runTrial();
+
+    if (q_val[0] > q_val[1]){
+      maxDir = "left"
+    } else {
+      maxDir = "right"
+    }
+
+    const valSum =
+          Math.abs(q_val[0]) +
+          Math.abs(q_val[1]);
+
+
+    
+    $banditQValues[0]["episodeNumber"].push($banditQValues[0]["episodeNumber"].length+1);
+    $banditQValues[0]["left"].push(q_val[0]);
+    $banditQValues[0]["right"].push(q_val[1]);
+    $banditQValues[0]["maxDirection"].push(maxDir);
+    $banditQValues[0]["leftWeight"].push(q_val[0]/valSum);
+    $banditQValues[0]["rightWeight"].push(q_val[1]/valSum);
+  }
+    
+  console.log($banditQValues);
+}
+
+
+// Reset the environment
+function reset(){
+
+  // Reset env
+  env.resetQValues();
+
+  //Reset banditQValues
+  banditQValues.set([
+  {
+    episodeNumber: [],
+    left: [],
+    right: [],
+    maxDirection: [],
+    leftWeight: [],
+    rightWeight: [],
+  },
+]);
+
+banditRobot.set({
+  x: 0.5, 
+  y: 0.5 
+})
+
+}
+
+
+
+
 </script>
 
 <h2 class="body-secondary-header">Choosing Between Two Trees</h2>
@@ -59,9 +149,9 @@
 </div>
 
 <div id="buttons-container">
-  <button on:click={() => ""}>Select 1 Action</button>
-  <button on:click={() => ""}>Select 5 Actions</button>
-  <button on:click={() => ""}>Reset</button>
+  <button on:click={() => runBanditTrials(10)}>Select 10 Action</button>
+  <button on:click={() => runBanditTrials(50)}>Select 50 Actions</button>
+  <button on:click={() => reset()}>Reset</button>
 </div>
 
 <style>

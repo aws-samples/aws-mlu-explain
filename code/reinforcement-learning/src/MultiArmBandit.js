@@ -6,19 +6,12 @@ function argMax(array) {
 }
 
 // Helper function to generate numbers which are normally distributed
-function boxMullerTransform() {
-    const u1 = Math.random();
-    const u2 = Math.random();
-    
-    const z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);    
-    return z0;
-}
-
-// Generate normally distributed random number
-function randomNormal(mean, std){
-    const { z0, _ } = boxMullerTransform();
-    
-    return z0 * stddev + mean;
+function gaussianRandom(mean=0, stdev=1) {
+    let u = 1 - Math.random(); //Converting [0,1) to (0,1)
+    let v = Math.random();
+    let z = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+    // Transform to the desired mean and standard deviation:
+    return z * stdev + mean;
 }
 
 
@@ -33,7 +26,10 @@ export class MultiArmBandit{
         this.armsStds = armsStds;
         this.epsilon = epsilon;
         this.alpha = alpha;
-        this.qValues = new Array(this.armsMeans).fill(0);
+        this.qValues = new Array(this.armsMeans);
+        for (let i=0; i<this.armsMeans.length; i++){
+            this.qValues[i] = 0;
+        }
 
          // Check if the dimensions of armsMean and armsStd are valid
         if (this.armsMeans.length != this.armsStds.length){
@@ -44,7 +40,10 @@ export class MultiArmBandit{
 
     // Reset the Q-Values to zeros
     resetQValues(){
-        this.qValues =  new Array(this.armsMeans).fill(0);
+        this.qValues = new Array(this.armsMeans);
+        for (let i=0; i<this.armsMeans.length; i++){
+            this.qValues[i] = 0;
+        }
     }
 
    // Update the Q-Values
@@ -54,7 +53,21 @@ export class MultiArmBandit{
 
    // Pull an arm and generate the reward
    pullBanditArm(index){
-        return randomNormal(this.armsMeans[index], this.armsStds[index]);
+        return gaussianRandom(this.armsMeans[index], this.armsStds[index]);
+   }
+
+   // Run one trial
+   runTrial(){
+    let bandit_index;
+    if (Math.random() < this.epsilon){
+        bandit_index = Math.floor(Math.random() * this.armsMeans.length);
+    } else{
+        bandit_index = argMax(this.qValues);
+    }
+    let reward = this.pullBanditArm(bandit_index);
+    this.updateQValues(reward, bandit_index);
+    
+    return this.qValues
    }
         
    // Run simulaiton over defined time steps

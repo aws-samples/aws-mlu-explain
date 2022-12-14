@@ -4,7 +4,7 @@
   import {
     gridRobot,
     gridRobotPath,
-    epsilon,
+    gridEpsilon,
     gridQValues,
   } from "../data-store.js";
   import { Env } from "../Env.js";
@@ -56,7 +56,7 @@
     env.wins, // for plotting
     env.losses, // for plotting
     "q-learning", // 'q-learning' or 'sarsa'
-    $epsilon, // Control exploration
+    $gridEpsilon, // Control exploration
     0.1, // Learning rate
     0.7, // Discount factor
     0.5 // Decay parameter for eligibility trace
@@ -441,6 +441,7 @@
   // let sections;
   const target2event = {
     0: () => {
+      runAgentTrials(25, episodicValues)
       console.log("step");
     },
     1: () => {

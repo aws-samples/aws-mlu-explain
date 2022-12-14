@@ -1,6 +1,7 @@
 <script>
   import { line } from "d3-shape";
   import { scaleLinear } from "d3-scale";
+  import { draw } from "svelte/transition";
   import { format } from "d3-format";
   import { banditQValues } from "../data-store.js";
 
@@ -20,7 +21,7 @@
     .range([margin.left, width - margin.right]);
 
   $: yScale = scaleLinear()
-    .domain([-4, 6])
+    .domain([-2, 5])
     .range([height - margin.bottom, margin.top]);
 
   $: pathLeftData = $banditQValues[index]["left"].map((val, i) => {
