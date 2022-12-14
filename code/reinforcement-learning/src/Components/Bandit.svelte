@@ -1,10 +1,6 @@
 <script>
   import ScatterBandit from "./ScatterBandit.svelte";
   import SimulationBandit from "./SimulationBandit.svelte";
-
-  const numX = 1;
-  const numY = 1;
-
 </script>
 
 <h2 class="body-secondary-header">Choosing Between Two Trees</h2>
@@ -55,7 +51,7 @@
 
 <div id="graph-container">
   <div id="simulation-chart">
-    <SimulationBandit {numX} {numY} />
+    <SimulationBandit />
   </div>
   <div id="scatter-chart">
     <ScatterBandit />

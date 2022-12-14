@@ -12,8 +12,8 @@
     }
   }
 
-  let width = 400;
-  let height = 400;
+  let width = 300;
+  let height = 350;
 
   let cellWidth = width / numX;
   let cellHeight = height / numY;
@@ -24,12 +24,12 @@
 </script>
 
 <svg {width} {height}>
-  <QChartBandit index={0} width={cellWidth - 12} height={cellHeight - 6} />
+  <QChartBandit />
 </svg>
 
 <style>
   svg {
-    border: 4px solid black;
+    /* border: 4px solid black; */
     /* background-color: white; */
     margin: 20px;
   }
