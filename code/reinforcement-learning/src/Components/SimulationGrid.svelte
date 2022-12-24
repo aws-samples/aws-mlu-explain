@@ -10,8 +10,9 @@
     gridRobot,
     gridRobotPath,
     gridQValues,
-    reward1Grid,
-    reward3Grid,
+    lowRewardGrid,
+    highRewardGrid,
+    gridStatIndex
   } from "../data-store.js";
 
   export let numX = 3;
@@ -50,8 +51,8 @@
   const cellWidth = width / numX;
   const cellHeight = height / numY;
 
-  const startRobotPointX = $gridRobot.x;
-  const startRobotPointY = $gridRobot.y;
+  // const startRobotPointX = $gridRobot.x;
+  // const startRobotPointY = $gridRobot.y;
 
   // offset directions for rotated arrows
   $: directionOffset = {
@@ -73,7 +74,7 @@
   $: {
   }
 
-  $: rewardArray = [$reward1Grid, $reward3Grid];
+  $: rewardArray = [$lowRewardGrid[$gridStatIndex], $highRewardGrid[$gridStatIndex]];
 </script>
 
 <svg {width} {height}>
@@ -150,7 +151,7 @@
   <!-- single banana -->
   <g
     id="reward-1"
-    transform="translate({xScale($reward1Grid[0])}, {yScale($reward1Grid[1]) +
+    transform="translate({xScale($lowRewardGrid[$gridStatIndex][0])}, {yScale($lowRewardGrid[$gridStatIndex][1]) +
       rewardBox.height / 2 -
       7.5})"
   >
@@ -163,7 +164,7 @@
   <!-- three bananas -->
   <g
     id="reward-3"
-    transform="translate({xScale($reward3Grid[0])}, {yScale($reward3Grid[1]) +
+    transform="translate({xScale($highRewardGrid[$gridStatIndex][0])}, {yScale($highRewardGrid[$gridStatIndex][1]) +
       rewardBox3.height / 2 -
       7.5})"
   >
@@ -175,8 +176,8 @@
 
   <g
     id="agent-g"
-    transform="translate({xScale(startRobotPointX) - robotWidth / 2}, {yScale(
-      startRobotPointY
+    transform="translate({xScale($gridRobot.x) - robotWidth / 2}, {yScale(
+      $gridRobot.y
     ) -
       robotHeight / 2})"
   >

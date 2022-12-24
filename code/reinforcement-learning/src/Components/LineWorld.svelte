@@ -7,6 +7,7 @@
     lineRobotPath,
     lineEpsilon,
     lineQValues,
+    lineRecordInterval,
   } from "../data-store.js";
   import { Env } from "../Env.js";
   import { Agent } from "../Agent.js";
@@ -70,14 +71,28 @@
   // Episodic Q Values retrieved from simulation
   var episodicValues = Array();
 
+  // Keep records at intervals. 
+  var episodeCount = 0;
+  var episodeIntervalArray = [];
+  const maxEpisodes = 2500;
+
   reset();
 
   // Run episodic trials and update Q-values
   function runAgentTrials(numEpisodes, episodicValues) {
-    let trial_stats = lineAgent.runEpisodes(env, numEpisodes);
+    // Reduce the burden 
+    if (episodeCount > maxEpisodes){
+      return
+    }
+    let trialStats = lineAgent.runEpisodes(env, numEpisodes);
 
     for (let ep = 0; ep < numEpisodes; ep++) {
-      episodicValues.push(trial_stats[ep]);
+      episodeCount ++;
+      if(episodeCount % $lineRecordInterval == $lineRecordInterval-1){
+        console.log(episodeCount, ep);
+        episodicValues.push(trialStats[ep]);
+        episodeIntervalArray.push(episodeCount+1);
+      }
     }
 
     // Update LineQValues
@@ -154,6 +169,10 @@
   }
 
   function reset() {
+    // Reset episode count
+    episodeCount = 0;
+    episodeIntervalArray = [];
+
     lineRobot.set({
       x: startX,
       y: startY,
@@ -167,68 +186,68 @@
 
     lineQValues.set([
       {
-        episodeNumber: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        leftWeight: [],
-        rightWeight: [],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        leftWeight: [],
-        rightWeight: [],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        leftWeight: [],
-        rightWeight: [],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        leftWeight: [],
-        rightWeight: [],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        leftWeight: [],
-        rightWeight: [],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        leftWeight: [],
-        rightWeight: [],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        leftWeight: [],
-        rightWeight: [],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        leftWeight: [],
-        rightWeight: [],
+        leftWeight: [0],
+        rightWeight: [0],
       },
     ]);
 
@@ -244,6 +263,8 @@
       return;
     }
 
+    // Maintain index to update the episodic count
+    var episodeIntervalArrayIndex = episodeIntervalArray.length - episodicValues.length;
     for (let ep = 0; ep < episodicValues.length; ep++) {
       // Mapping combination of row and col onto row of gridQvalues
       // state is row in gridQValues
@@ -269,7 +290,7 @@
         const valSum = Math.abs(leftVal) + Math.abs(rightVal);
 
         const vals = {
-          episodeNumber: [...Array(state["left"].length + 1).keys()],
+          episodeNumber: [...state["episodeNumber"], episodeIntervalArray[episodeIntervalArrayIndex+ep]],
           // up: [...state["up"], episodicValues[ep][r][c][0]],
           // down: [...state["down"], episodicValues[ep][r][c][1]],
           left: [...state["left"], episodicValues[ep][0][index][0]],
@@ -286,6 +307,8 @@
 
     // Reset episodicValues
     episodicValues = Array();
+
+    console.log($lineQValues);
   }
   // trigger scroll events
   // let sections;
@@ -453,13 +476,13 @@
 
           <div id="buttons-container">
             <button on:click={() => simulateEpisode()}>Simulate Episode</button>
-            <button on:click={() => runAgentTrials(25, episodicValues)}
-              >Run 25 Episodes</button
+            <button on:click={() => runAgentTrials(15, episodicValues)}
+              >Run 15 Episodes</button
             >
             <button on:click={() => runAgentTrials(50, episodicValues)}
               >Run 50 Episodes</button
             >
-            <button on:click={() => ""}>Optimal Policy</button>
+            <button on:click={() => runAgentTrials(maxEpisodes - episodeCount, episodicValues)}>Optimal Policy</button>
             <button on:click={() => reset()}>Reset</button>
           </div>
         </div>

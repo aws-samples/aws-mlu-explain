@@ -6,8 +6,12 @@
     gridRobotPath,
     gridEpsilon,
     gridQValues,
-    reward1Grid,
-    reward3Grid,
+    lowRewardGrid,
+    highRewardGrid,
+    negRewardGrid,
+    startPosGrid,
+    gridStatIndex,
+    gridRecordInterval,
   } from "../data-store.js";
   import { Env } from "../Env.js";
   import { Agent } from "../Agent.js";
@@ -29,56 +33,54 @@
   const numX = numCells;
   const numY = 4;
 
-  var xVal;
-  var yVal;
+  // var xVal;
+  // var yVal;
 
-  xVal = $gridRobotPath[0]["x"];
-  yVal = $gridRobotPath[0]["y"];
+  // xVal = $gridRobotPath[0]["x"];
+  // yVal = $gridRobotPath[0]["y"];
 
   const actions = ["up", "down", "left", "right"];
-
-  //  Define the environment
-  const env = new Env(
-    [3, 0], // start
-    numY, // rows
-    numX, // columns
-    { [$reward3Grid]: 10, [$reward1Grid]: 2 }, // Map of states and the corresponding reward
-    {
-      [[2, 2]]: -5,
-    }, // Map of states and the corresponding reward
-    true, // deterministic: Stochastic env not implemented yet
-    true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
-    0.9 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
-  );
-
-  // set lambda to 0 for TD(0) update and lamdba to 1 for MC
-  const gridAgent = new Agent(
-    env.rows,
-    env.columns,
-    env.wins, // for plotting
-    env.losses, // for plotting
-    "q-learning", // 'q-learning' or 'sarsa'
-    $gridEpsilon, // Control exploration
-    0.1, // Learning rate
-    0.7, // Discount factor
-    0.5 // Decay parameter for eligibility trace
-  );
-
-  // Agent's starting position
-  const startX = 3.5;
-  const startY = 1.5;
 
   // Episodic Q Values retrieved from simulation
   var episodicValues = Array();
 
+  // Keep records at intervals. 
+  var episodeCount = 0;
+  var episodeIntervalArray = [];
+  const maxEpisodes = 4000; // Limit how many episodes can be run
+
+  // Define the starting position
+  var startX = 0.5;
+  var startY = 0.5;
+
+  //  Define the environment
+  var env = new Env();
+
+  // Define the agent
+  var gridAgent = new Agent(
+    env.rows,
+    env.columns,
+    env.wins, // for plotting
+    env.losses, // for plotting
+  );
+
+    // Start with a reset
   reset();
 
   // Run episodic trials and update Q-values
   function runAgentTrials(numEpisodes, episodicValues) {
-    let trial_stats = gridAgent.runEpisodes(env, numEpisodes);
+    // Reduce the burden 
+    if (episodeCount > maxEpisodes){
+      return
+    }
+    let trialStats = gridAgent.runEpisodes(env, numEpisodes);
 
     for (let ep = 0; ep < numEpisodes; ep++) {
-      episodicValues.push(trial_stats[ep]);
+      if(episodeCount % $gridRecordInterval == $gridRecordInterval-1){
+        episodicValues.push(trialStats[ep]);
+        episodeIntervalArray.push(episodeCount+1);
+      }
+      episodeCount ++;
     }
 
     // Update gridQValues
@@ -165,6 +167,60 @@
   }
 
   function reset() {
+    
+    // Reset episode count
+    episodeCount = 0;
+    episodeIntervalArray = [];
+
+    // Randomly select environment stats
+    var randomIndex = Math.floor(Math.random() * $startPosGrid.length);
+    gridStatIndex.set(randomIndex); 
+
+    // Set starting position
+    startX = $startPosGrid[randomIndex][0] + 0.5;
+    startY = $startPosGrid[randomIndex][1] + 0.5;
+
+    // Set the agent's starting position
+    gridRobot.set({
+        x: startX,
+        y: startY,
+      });
+
+    // Set the wins and losses stats
+    var wins = {};
+    wins[[$highRewardGrid[randomIndex][1], $highRewardGrid[randomIndex][0]]] = 10;
+    wins[[$lowRewardGrid[randomIndex][1], $lowRewardGrid[randomIndex][0]]] = 2;
+    
+    var losses = {};
+    losses[[$negRewardGrid[randomIndex][1], $negRewardGrid[randomIndex][0]]] = -5;
+
+    //  Define the environment
+    env = new Env(
+      [startY-0.5, startX-0.5], // start
+      numY, // rows
+      numX, // columns
+      wins,// Map of states and the corresponding reward
+      losses,  // Map of states and the corresponding reward
+      {},
+      true, // deterministic: Stochastic env not implemented yet
+      true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
+      0.9 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+    );
+
+    // set lambda to 0 for TD(0) update and lamdba to 1 for MC
+    gridAgent = new Agent(
+      env.rows,
+      env.columns,
+      env.wins, // for plotting
+      env.losses, // for plotting
+      "q-learning", // 'q-learning' or 'sarsa'
+      $gridEpsilon, // Control exploration
+      0.1, // Learning rate
+      0.7, // Discount factor
+      0.5 // Decay parameter for eligibility trace
+    );
+  
+
     gridRobot.set({
       x: startX,
       y: startY,
@@ -178,196 +234,196 @@
 
     gridQValues.set([
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
       {
-        episodeNumber: [],
-        up: [],
-        down: [],
-        left: [],
-        right: [],
+        episodeNumber: [0],
+        up: [0],
+        down: [0],
+        left: [0],
+        right: [0],
         maxDirection: [],
-        upWeight: [],
-        downWeight: [],
-        leftWeight: [],
-        rightWeight: [],
+        upWeight: [0],
+        downWeight: [0],
+        leftWeight: [0],
+        rightWeight: [0],
       },
     ]);
 
@@ -383,6 +439,9 @@
       return;
     }
 
+    // Maintain index to update the episodic count
+    var episodeIntervalArrayIndex = episodeIntervalArray.length - episodicValues.length;
+    
     for (let ep = 0; ep < episodicValues.length; ep++) {
       // Mapping combination of row and col onto row of gridQvalues
       // state is row in gridQValues
@@ -420,7 +479,7 @@
           Math.abs(rightVal);
 
         const vals = {
-          episodeNumber: [...Array(state["up"].length + 1).keys()],
+          episodeNumber: [...state["episodeNumber"], episodeIntervalArray[episodeIntervalArrayIndex+ep]],
           up: [...state["up"], upVal],
           down: [...state["down"], downVal],
           left: [...state["left"], leftVal],
@@ -438,6 +497,7 @@
     }
     // Reset episodicValues
     episodicValues = Array();
+    console.log($gridQValues);
   }
 
   // let sections;
@@ -575,7 +635,7 @@
             <button on:click={() => runAgentTrials(150, episodicValues)}
               >Run 150 Episodes</button
             >
-            <button on:click={() => ""}>Optimal Solution</button>
+            <button on:click={() => runAgentTrials(maxEpisodes - episodeCount, episodicValues)}>Optimal Solution</button>
             <button on:click={() => reset()}>Reset</button>
           </div>
         </div>

@@ -117,13 +117,16 @@ export class Agent {
         state = nextState;
 
         if (done == true) {
+          var reset_stats = env.reset();
+          state = reset_stats[0];
           break;
         }
       }
 
       // If simulation ended, set robot's position to start position
       if (ep == episodes-1){
-        env.reset(true);
+        var reset_stats = env.reset(true);
+        state = reset_stats[0];
       }
 
     }

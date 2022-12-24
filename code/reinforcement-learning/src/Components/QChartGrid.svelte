@@ -3,7 +3,7 @@
   import { draw } from "svelte/transition";
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
-  import { gridQValues } from "../data-store.js";
+  import { gridQValues, gridRecordInterval } from "../data-store.js";
   // import { max, merge } from "d3-array";
 
   //   props
@@ -22,7 +22,7 @@
   const formatter = format(".2d");
 
   //   get max value for x-axis
-  $: xMax = $gridQValues[0]["up"].length;
+  $: xMax = $gridQValues[0]["episodeNumber"][$gridQValues[0]["episodeNumber"].length -1];
   // $: yMax = max(
   //   merge([
   //     $gridQValues[0]["up"],
@@ -39,23 +39,23 @@
     .domain([0, xMax + 1])
     .range([margin.left, width - margin.right]);
   $: yScale = scaleLinear()
-    .domain([-5, 10])
+    .domain([-5.1, 8])
     .range([height - margin.bottom, margin.top]);
 
   $: pathUpData = $gridQValues[index]["up"].map((val, i) => {
-    return { x: i, y: val };
+    return { x: $gridRecordInterval*i, y: val };
   });
 
   $: pathDownData = $gridQValues[index]["down"].map((val, i) => {
-    return { x: i, y: val };
+    return { x: $gridRecordInterval*i, y: val };
   });
 
   $: pathLeftData = $gridQValues[index]["left"].map((val, i) => {
-    return { x: i, y: val };
+    return { x: $gridRecordInterval*i, y: val };
   });
 
   $: pathRightData = $gridQValues[index]["right"].map((val, i) => {
-    return { x: i, y: val };
+    return { x: $gridRecordInterval*i, y: val };
   });
 
   //   d3 line generator
@@ -64,9 +64,9 @@
     .y((d) => yScale(d.y));
 
   $: tickModulo =
-    $gridQValues[index]["up"].length > 400
+  $gridQValues[0]["episodeNumber"][$gridQValues[0]["episodeNumber"].length -1] > 400
       ? 150
-      : $gridQValues[index]["up"].length > 100
+      : $gridQValues[0]["episodeNumber"][$gridQValues[0]["episodeNumber"].length -1] > 100
       ? 50
       : 10;
 </script>
@@ -139,15 +139,18 @@
     fill: none;
   }
   .pathUp-line {
+    /* stroke: coral; */
     stroke: var(--sky);
   }
   .pathDown-line {
     stroke: var(--anchor);
   }
   .pathLeft-line {
+    /* stroke: green; */
     stroke: var(--magenta);
   }
   .pathRight-line {
+    /* stroke: purple; */
     stroke: var(--peach);
   }
 

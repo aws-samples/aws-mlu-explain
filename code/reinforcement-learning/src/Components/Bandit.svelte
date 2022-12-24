@@ -49,14 +49,18 @@ function runBanditTrials(numEpisodes, episodicValues){
           Math.abs(q_val[0]) +
           Math.abs(q_val[1]);
 
-
-    
-    $banditQValues[0]["episodeNumber"].push($banditQValues[0]["episodeNumber"].length+1);
-    $banditQValues[0]["left"].push(q_val[0]);
-    $banditQValues[0]["right"].push(q_val[1]);
-    $banditQValues[0]["maxDirection"].push(maxDir);
-    $banditQValues[0]["leftWeight"].push(q_val[0]/valSum);
-    $banditQValues[0]["rightWeight"].push(q_val[1]/valSum);
+    const newVals = $banditQValues.map((state, index) => {
+      const vals = {
+        episodeNumber: [...Array(state["left"].length + 1).keys()],
+        left: [...state["left"], q_val[0]],
+        right: [...state["right"], q_val[1]],
+        maxDirection: [...state["maxDirection"], maxDir],
+        leftWeight: [...state["leftWeight"], q_val[0] / valSum || 0],
+        rightWeight: [...state["rightWeight"], q_val[1] / valSum || 0],
+      };
+      return vals;
+    });
+    $banditQValues = [...newVals];
   }
     
   console.log($banditQValues);

@@ -29,15 +29,49 @@ export const lineRobot = tweened(
 );
 
 export const gridRobot = tweened(
-  { x: 3.5, y: 1.5 },
+  { x: 0.5, y: 1.5 },
   {
     duration: 200,
     easing: cubicInOut,
   }
 );
 
-export const reward1Grid = writable([0, 0]);
-export const reward3Grid = writable([2, 3]);
+export const gridStatIndex = writable(0);
+export const gridRecordInterval = writable(25);
+
+export const lowRewardGrid = writable([
+  [0, 0],
+  [3,3],
+  [3, 1],
+  [3, 0],
+  [1, 2],
+  
+]);
+
+export const highRewardGrid = writable([
+  [2, 3],
+  [0, 1],
+  [0, 0],
+  [0, 2],
+  [0, 1],
+]);
+
+export const negRewardGrid = writable([
+  [2, 2],
+  [1, 1],
+  [2, 1],
+  [1, 2],
+  [1, 1],
+]);
+
+export const startPosGrid =  writable([
+  [0, 1],
+  [3, 1],
+  [2, 3],
+  [2, 2],
+  [3, 1],
+ ]);
+
 
 export const lineRobotPath = writable([{ x: 3.5, y: 0.5 }]);
 export const gridRobotPath = writable([{ x: 3.5, y: 1.5 }]);
@@ -51,15 +85,16 @@ export const banditQValues = writable([
   },
 ]);
 
+export const lineRecordInterval = writable(15);
 export const lineQValues = writable([
-  { episodeNumber: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], left: [], right: [], maxDirection: [] },
-  { episodeNumber: [], left: [], right: [], maxDirection: [] },
+  { episodeNumber: [0], left: [0], right: [0], maxDirection: ['left'] },
+  { episodeNumber: [0], left: [0], right: [0], maxDirection: ['left'] },
+  { episodeNumber: [0], left: [0], right: [0], maxDirection: ['left'] },
+  { episodeNumber: [0], left: [0], right: [0], maxDirection: ['left'] },
+  { episodeNumber: [0], left: [0], right: [0], maxDirection: ['left'] },
+  { episodeNumber: [0], left: [0], right: [0], maxDirection: ['left'] },
+  { episodeNumber: [0], left: [0], right: [0], maxDirection: ['left'] },
+  { episodeNumber: [0], left: [0], right: [0], maxDirection: ['left'] },
 ]);
 
 export const gridQValues = writable([

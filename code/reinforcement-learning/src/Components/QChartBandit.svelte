@@ -16,6 +16,7 @@
   //   get max value for x-axis
   $: xMax = $banditQValues[0]["left"].length;
 
+  // scales
   $: xScale = scaleLinear()
     .domain([0, xMax + 1])
     .range([margin.left, width - margin.right]);
@@ -32,21 +33,38 @@
     return { x: i, y: val };
   });
 
+  // d3 line generator
   $: pathGenerator = line()
     .x((d) => xScale(d.x))
     .y((d) => yScale(d.y));
+
+  $: tickModulo =
+    $banditQValues[index]["left"].length > 400
+      ? 150
+      : $banditQValues[index]["right"].length > 100
+      ? 50
+      : 5;
 </script>
 
 <svg {width} {height}>
   <!-- reactively draw lines -->
-  <path class="pathLeft-line path" d={pathGenerator(pathLeftData)} />
-  <path class="pathRight-line path" d={pathGenerator(pathRightData)} />
+  <path 
+  transition:draw={{ duration: 400 }}
+  class="pathLeft-line path" 
+  d={pathGenerator(pathLeftData)} 
+  />
+
+  <path
+  transition:draw={{ duration: 400 }} 
+  class="pathRight-line path" 
+  d={pathGenerator(pathRightData)} 
+  />
 
   <!-- x-ticks -->
   {#each xScale.ticks() as tick}
     <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
       <text class="axis-text" y="17" text-anchor="middle"
-        >{tick % 2 == 0 ? formatter(tick) : ""}</text
+        >{tick % tickModulo == 0 ? formatter(tick) : ""}</text
       >
     </g>
   {/each}
@@ -114,9 +132,11 @@
   }
 
   .pathLeft-line {
+    fill: none;
     stroke: var(--magenta);
   }
   .pathRight-line {
+    fill: none;
     stroke: var(--peach);
   }
 

@@ -70,7 +70,8 @@ export class Env {
   reset(default_position = false) {
     // Set new position to preset start position. Usually performed at the end of simulation
     if (default_position){
-      return [this.start, this.giveReward(), this.isEndFunc()];
+      this.state = this.start;
+      return [this.state, this.giveReward(), this.isEndFunc()];
     }
 
     if ((this.exploringStarts && Math.random() < this.exploringStartsProb)){
@@ -78,11 +79,11 @@ export class Env {
         this.availableStarts[
           Math.floor(Math.random() * this.availableStarts.length)
         ];
+        return [this.state, this.giveReward(), this.isEndFunc()]
     } else {
-      this.availableStarts;
+      this.state = this.start;
+      return [this.state, this.giveReward(), this.isEndFunc()];
     }
-
-    return [this.start, this.giveReward(), this.isEndFunc()];
   }
 
   step(action) {
