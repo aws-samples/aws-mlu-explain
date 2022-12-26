@@ -3,20 +3,13 @@
   import { draw } from "svelte/transition";
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
-  import { gridQValues } from "../data-store.js";
+  import { gridMargin, gridQValues } from "../data-store.js";
   // import { max, merge } from "d3-array";
 
   //   props
   export let height = 500;
   export let width = 500;
   export let index = 0;
-
-  const margin = {
-    top: 8,
-    bottom: 12,
-    left: 16,
-    right: 0,
-  };
 
   // label formatter
   const formatter = format(".2d");
@@ -37,10 +30,10 @@
   // scales
   $: xScale = scaleLinear()
     .domain([0, xMax + 1])
-    .range([margin.left, width - margin.right]);
+    .range([$gridMargin.left, width - $gridMargin.right]);
   $: yScale = scaleLinear()
     .domain([-5, 10])
-    .range([height - margin.bottom, margin.top]);
+    .range([height - $gridMargin.bottom, $gridMargin.top]);
 
   $: pathUpData = $gridQValues[index]["up"].map((val, i) => {
     return { x: i, y: val };
@@ -57,6 +50,10 @@
   $: pathRightData = $gridQValues[index]["right"].map((val, i) => {
     return { x: i, y: val };
   });
+
+  $: {
+    console.log("gm", $gridMargin.top);
+  }
 
   //   d3 line generator
   $: pathGenerator = line()
@@ -95,7 +92,9 @@
 
 <!-- x-ticks -->
 {#each xScale.ticks() as tick}
-  <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
+  <g
+    transform={`translate(${xScale(tick) + 0} ${height - $gridMargin.bottom})`}
+  >
     <text class="axis-text" y="7" text-anchor="middle"
       >{tick % tickModulo == 0 ? formatter(tick) : ""}</text
     >
@@ -103,7 +102,7 @@
 {/each}
 <!-- y-ticks -->
 {#each yScale.ticks() as tick}
-  <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
+  <g transform={`translate(${$gridMargin.left - 5} ${yScale(tick) + 0})`}>
     <text
       class="axis-text"
       y="0"
@@ -116,19 +115,19 @@
   <!-- svelte-ignore component-name-lowercase -->
   <line
     class="axis-line"
-    x1={margin.left}
-    x2={margin.left}
-    y1={margin.top}
-    y2={height - margin.bottom}
+    x1={$gridMargin.left}
+    x2={$gridMargin.left}
+    y1={$gridMargin.top}
+    y2={height - $gridMargin.bottom}
     stroke="black"
   />
   <!-- svelte-ignore component-name-lowercase -->
   <line
     class="axis-line"
-    x1={margin.left}
-    x2={width - margin.right}
-    y1={height - margin.bottom}
-    y2={height - margin.bottom}
+    x1={$gridMargin.left}
+    x2={width - $gridMargin.right}
+    y1={height - $gridMargin.bottom}
+    y2={height - $gridMargin.bottom}
     stroke="black"
   />
 {/each}

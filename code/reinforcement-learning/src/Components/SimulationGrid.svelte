@@ -7,6 +7,8 @@
   import { arrow, mluRobot, bananaOne, bananaThree } from "../assets.js";
   import {
     margin,
+    gridWidth,
+    gridHeight,
     gridRobot,
     gridRobotPath,
     gridQValues,
@@ -14,8 +16,8 @@
     reward3Grid,
   } from "../data-store.js";
 
-  export let numX = 3;
-  export let numY = 3;
+  let numX = 4;
+  let numY = 4;
 
   $: robotWidth = 20;
   $: robotHeight = 20;
@@ -44,11 +46,8 @@
     }
   }
 
-  const width = 500;
-  const height = 500;
-
-  const cellWidth = width / numX;
-  const cellHeight = height / numY;
+  $: cellWidth = $gridWidth / numX;
+  $: cellHeight = $gridHeight / numY;
 
   const startRobotPointX = $gridRobot.x;
   const startRobotPointY = $gridRobot.y;
@@ -62,8 +61,8 @@
   };
 
   // scales
-  $: xScale = scaleLinear().domain([0, numX]).range([0, width]);
-  $: yScale = scaleLinear().domain([0, numY]).range([0, height]);
+  $: xScale = scaleLinear().domain([0, numX]).range([0, $gridWidth]);
+  $: yScale = scaleLinear().domain([0, numY]).range([0, $gridHeight]);
 
   // line generator
   $: agentLine = line()
@@ -76,16 +75,20 @@
   $: rewardArray = [$reward1Grid, $reward3Grid];
 </script>
 
-<svg {width} {height}>
+<svg width={$gridWidth} height={$gridHeight}>
   {#each [..."".padEnd(numX)].map((_, i) => i + 1) as tick}
-    <g transform={`translate(${xScale(tick) + 0} ${height - $margin.bottom})`}>
+    <g
+      transform={`translate(${xScale(tick) + 0} ${
+        $gridHeight - $margin.bottom
+      })`}
+    >
       <!-- svelte-ignore component-name-lowercase -->
       <line
         class="grid-line"
         x1="0"
         x2="0"
         y1="0"
-        y2={-height + $margin.bottom + $margin.top}
+        y2={-$gridHeight + $margin.bottom + $margin.top}
       />
       <text class="auc-axis-text" y="15" text-anchor="middle">{tick}</text>
     </g>
@@ -94,7 +97,7 @@
       <line
         class="grid-line"
         x1="0"
-        x2={width - $margin.right - $margin.left}
+        x2={$gridWidth - $margin.right - $margin.left}
         y1="0"
         y2="0"
       />
@@ -154,7 +157,6 @@
       rewardBox.height / 2 -
       7.5})"
   >
-    <!-- <rect width={rewardBox.width} height={rewardBox.height} fill="red" /> -->
     {#each bananaOne as b}
       <path class="bananaPath" d={b} transform="scale(0.13)" />
     {/each}
@@ -167,7 +169,6 @@
       rewardBox3.height / 2 -
       7.5})"
   >
-    <!-- <rect width={rewardBox3.width} height={rewardBox3.height} fill="red" /> -->
     {#each bananaThree as b}
       <path class="bananaPath" d={b} style="transform: scale(0.13)" />
     {/each}

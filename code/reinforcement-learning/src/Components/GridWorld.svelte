@@ -14,8 +14,6 @@
   import { onMount } from "svelte";
   import { select, selectAll } from "d3-selection";
 
-  const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
-
   // Finds the index of the maximum
   function argMax(array) {
     return array
@@ -29,13 +27,14 @@
   const numX = numCells;
   const numY = 4;
 
+  let width;
+  let height;
+
   var xVal;
   var yVal;
 
   xVal = $gridRobotPath[0]["x"];
   yVal = $gridRobotPath[0]["y"];
-
-  const actions = ["up", "down", "left", "right"];
 
   //  Define the environment
   const env = new Env(
@@ -563,7 +562,7 @@
           </table>
 
           <div id="graph-container">
-            <SimulationGrid {numX} {numY} />
+            <SimulationGrid />
             <ScatterGrid />
           </div>
 
@@ -656,34 +655,6 @@
 
   button:visited {
     color: var(--white);
-  }
-
-  #input-container {
-    display: flex;
-    justify-content: center;
-  }
-
-  .slider {
-    -webkit-appearance: none;
-    width: 20%;
-    height: 15px;
-    border-radius: 5px;
-    background: var(--stone);
-    outline: none;
-    opacity: 0.9;
-    -webkit-transition: 0.2s;
-    transition: opacity 0.2s;
-    border-color: var(--squidink);
-  }
-
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: var(--secondary);
-    cursor: pointer;
   }
 
   @media screen and (max-width: 768px) {

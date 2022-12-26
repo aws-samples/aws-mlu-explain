@@ -49,13 +49,15 @@
   }
 
   /* mobile */
-  @media screen and (max-width: 950px) {
+  @media screen and (max-width: 768px) {
     #intro-hed {
-      font-size: 3.5rem;
+      font-size: 2.65rem;
     }
 
-    #intro-sub {
+    .intro-sub {
       font-size: 1.5rem;
+      padding: 1.5rem 1rem;
+      margin: 0;
     }
   }
 </style>

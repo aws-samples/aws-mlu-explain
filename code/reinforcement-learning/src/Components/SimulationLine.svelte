@@ -16,6 +16,8 @@
     lineRobot,
     lineRobotPath,
     lineQValues,
+    lineWidth,
+    lineHeight,
   } from "../data-store.js";
 
   export let numX = 7;
@@ -38,11 +40,15 @@
 
   const directionMap = { left: 90, right: 270 };
 
-  const width = 125 * 8;
-  const height = 125;
+  $: width = $lineWidth * 8;
+  $: height = $lineWidth;
 
-  const cellWidth = width / numX;
-  const cellHeight = height / numY;
+  $: {
+    console.log("lw", $lineWidth);
+  }
+
+  $: cellWidth = width / numX;
+  $: cellHeight = height / numY;
   // offset directions for rotated arrows
   $: directionOffset = {
     right: { x: cellWidth / 6, y: arrowBox.width / 2 + 5 },

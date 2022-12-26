@@ -12,6 +12,29 @@ export const banditEpsilon = writable(0.2);
 export const lineEpsilon = writable(0.3);
 export const gridEpsilon = writable(0.5);
 
+export const gridWidth = writable(500);
+export const gridHeight = writable(500);
+export const gridMargin = writable({
+  top: 8,
+  bottom: 12,
+  left: 16,
+  right: 0,
+});
+export const lineWidth = writable(125);
+export const lineHeight = writable(125);
+export const lineMargin = writable({
+  top: 8,
+  bottom: 20,
+  left: 16,
+  right: 0,
+});
+export const banditWidth = writable(430);
+export const banditHeight = writable(200);
+
+export const robotScale = writable(0.22);
+export const bananaScale = writable(0.13);
+export const arrowScale = writable(0.09);
+
 export const banditRobot = tweened(
   { x: 0.5, y: 0.5 },
   {

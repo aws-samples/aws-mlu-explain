@@ -124,12 +124,17 @@ p {
 /* mobile */
 @media screen and (max-width: 950px) {
   .body-text {
-    max-width: 80%;
+    max-width: 95%;
     font-size: 18px;
+    color: red;
   }
 
   .body-header {
-    max-width: 80%;
+    max-width: 95%;
     font-size: 30px;
+  }
+
+  .body-secondary-header {
+    max-width: 95%;
   }
 }

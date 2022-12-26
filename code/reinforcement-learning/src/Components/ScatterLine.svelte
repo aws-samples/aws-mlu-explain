@@ -1,6 +1,7 @@
 <script>
   import { scaleLinear } from "d3-scale";
   import QChartLine from "./QChartLine.svelte";
+  import { lineWidth } from "../data-store";
 
   export let numX = 8;
   export let numY = 1;
@@ -12,11 +13,11 @@
     }
   }
 
-  const width = 125 * 8;
-  const height = 125;
+  $: width = $lineWidth * 8;
+  $: height = $lineWidth;
 
-  let cellWidth = width / numX;
-  let cellHeight = height / numY;
+  $: cellWidth = width / numX;
+  $: cellHeight = height / numY;
 
   // // scales
   $: xScale = scaleLinear().domain([0, numX]).range([0, width]);
@@ -26,7 +27,7 @@
 <svg {width} {height}>
   {#each data as d, i}
     <g transform="translate({xScale(d.x)}, {yScale(d.y)})">
-      <QChartLine index={i} width={cellWidth - 12} height={cellHeight - 6} />
+      <QChartLine index={i} width={cellWidth - 0} height={cellHeight - 0} />
     </g>
   {/each}
 </svg>
