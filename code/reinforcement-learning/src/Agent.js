@@ -5,6 +5,11 @@ function argMax(array) {
   return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
 }
 
+// Finds the index of the minimum
+function argMin(array) {
+  return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] < r[0] ? a : r))[1];
+}
+
 export class Agent {
   constructor(
     rows,
@@ -39,6 +44,14 @@ export class Agent {
     this.qValues = new Array(this.rows).fill(
       new Array(this.columns).fill(new Array(this.actions.length).fill(0))
     );
+
+    // Set the q_values to favor the suboptimal state in lineEnv
+    if(this.rows == 1){
+      for(let i=0; i<this.columns; i++){
+        this.qValues[0][i][0] = 1.5;
+      }
+    }
+    
   }
 
   //   Resets the trace matrix to 0

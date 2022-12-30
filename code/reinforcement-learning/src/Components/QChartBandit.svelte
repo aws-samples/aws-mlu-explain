@@ -21,7 +21,7 @@
     .range([margin.left, width - margin.right]);
 
   $: yScale = scaleLinear()
-    .domain([-2, 5])
+    .domain([-1, 7])
     .range([height - margin.bottom, margin.top]);
 
   $: pathLeftData = $banditQValues[index]["left"].map((val, i) => {
@@ -38,10 +38,10 @@
     .y((d) => yScale(d.y));
 
   $: tickModulo =
-    $banditQValues[index]["left"].length > 400
-      ? 150
-      : $banditQValues[index]["right"].length > 100
+    $banditQValues[index]["left"].length > 100
       ? 50
+      : $banditQValues[index]["right"].length > 40
+      ? 20
       : 5;
 </script>
 

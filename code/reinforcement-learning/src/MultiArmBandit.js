@@ -5,6 +5,11 @@ function argMax(array) {
     return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] > r[0] ? a : r))[1];
 }
 
+// Finds the index of the minimum
+function argMin(array) {
+    return array.map((x, i) => [x, i]).reduce((r, a) => (a[0] < r[0] ? a : r))[1];
+}
+
 // Helper function to generate numbers which are normally distributed
 function gaussianRandom(mean=0, stdev=1) {
     let u = 1 - Math.random(); //Converting [0,1) to (0,1)
@@ -35,7 +40,6 @@ export class MultiArmBandit{
         if (this.armsMeans.length != this.armsStds.length){
             throw "armsMeans and armsStd need to have the same length";
         }
-
     }
 
     // Reset the Q-Values to zeros
@@ -44,6 +48,8 @@ export class MultiArmBandit{
         for (let i=0; i<this.armsMeans.length; i++){
             this.qValues[i] = 0;
         }
+        // Start with agent favoring the suboptimal choice
+        this.qValues[argMin(this.armsMeans)] = Math.max(...this.armsMeans);
     }
 
    // Update the Q-Values

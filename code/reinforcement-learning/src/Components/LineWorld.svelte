@@ -59,7 +59,7 @@
     "q-learning", // 'q-learning' or 'sarsa'
     $lineEpsilon, // Control exploration
     0.1, // Learning rate
-    0.7, // Discount factor
+    0.8, // Discount factor
     0.5 // Decay parameter for eligibility trace
   );
 
@@ -317,7 +317,7 @@
       console.log("step 0");
     },
     1: () => {
-      runAgentTrials(10, episodicValues);
+      runAgentTrials(15, episodicValues);
       console.log("step 1");
     },
     2: () => {
