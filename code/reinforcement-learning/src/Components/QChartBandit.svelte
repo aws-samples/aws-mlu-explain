@@ -1,12 +1,11 @@
 <script>
   import { line } from "d3-shape";
   import { scaleLinear } from "d3-scale";
-  import { draw } from "svelte/transition";
   import { format } from "d3-format";
   import { banditQValues } from "../data-store.js";
 
   //   props
-  let width = 400;
+  let width = 300;
   let height = 260;
   let index = 0;
 

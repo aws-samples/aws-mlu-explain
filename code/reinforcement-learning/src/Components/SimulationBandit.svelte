@@ -3,7 +3,13 @@
   import { scaleLinear } from "d3-scale";
   import { select } from "d3-selection";
   import { mluRobot, arrow, bananaOne, bananaThree } from "../assets.js";
-  import { margin, banditRobot, banditQValues } from "../data-store.js";
+  import {
+    banditWidth,
+    banditHeight,
+    bananaScale,
+    arrowScale,
+    robotScale,
+  } from "../data-store.js";
 
   let numX = 9;
   let numY = 2;
@@ -37,15 +43,12 @@
     arrowBox2 = select("path.arrow-right").node().getBoundingClientRect();
   });
 
-  const width = 430;
-  const height = 200;
-
   // scales
-  $: xScale = scaleLinear().domain([-1, numX]).range([0, width]);
-  $: yScale = scaleLinear().domain([-1, numY]).range([0, height]);
+  $: xScale = scaleLinear().domain([-1, numX]).range([0, $banditWidth]);
+  $: yScale = scaleLinear().domain([-1, numY]).range([0, $banditHeight]);
 </script>
 
-<svg {width} {height}>
+<svg width={$banditWidth} height={$banditHeight}>
   {#each [...Array(numX).keys()] as tick}
     <g transform="translate({xScale(tick)}, {yScale(0)})">
       <!-- <rect x="0" y="0" width="10" height="100" fill="red" /> -->
@@ -60,7 +63,7 @@
       7.5})"
   >
     {#each bananaOne as b}
-      <path class="bananaPath" d={b} style="transform: scale(0.13)" />
+      <path class="bananaPath" d={b} style="transform: scale({$bananaScale})" />
     {/each}
   </g>
   <!-- bananas (3) -->
@@ -72,7 +75,7 @@
   >
     <!-- <rect width={rewardBox3.width} height={rewardBox3.height} fill="red" /> -->
     {#each bananaThree as b}
-      <path class="bananaPath" d={b} style="transform: scale(0.13)" />
+      <path class="bananaPath" d={b} style="transform: scale({$bananaScale})" />
     {/each}
   </g>
 
@@ -87,7 +90,7 @@
         d={ar}
         class={`arrow-${"left"} arrow`}
         stroke-width={0}
-        transform={`rotate(${directionMap["left"]}) scale(0.09)`}
+        transform={`rotate(${directionMap["left"]}) scale(${$arrowScale})`}
       />
     {/each}
   </g>
@@ -101,7 +104,7 @@
         d={ar}
         class={`arrow-${"right"} arrow`}
         stroke-width={0}
-        transform={`rotate(${directionMap["right"]}) scale(0.09)`}
+        transform={`rotate(${directionMap["right"]}) scale(${$arrowScale})`}
       />
     {/each}
   </g>

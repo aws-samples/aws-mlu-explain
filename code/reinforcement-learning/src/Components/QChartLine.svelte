@@ -2,7 +2,11 @@
   import { line } from "d3-shape";
   import { scaleLinear } from "d3-scale";
   import { format } from "d3-format";
-  import { lineQValues, lineRecordInterval } from "../data-store.js";
+  import {
+    lineMargin,
+    lineQValues,
+    lineRecordInterval,
+  } from "../data-store.js";
 
   //   props
   export let height = 500;
@@ -20,22 +24,25 @@
   const formatter = format(".2d");
 
   //   get max value for x-axis
-  $: xMax = $lineQValues[0]["episodeNumber"][$lineQValues[0]["episodeNumber"].length -1];
+  $: xMax =
+    $lineQValues[0]["episodeNumber"][
+      $lineQValues[0]["episodeNumber"].length - 1
+    ];
 
   // scales
   $: xScale = scaleLinear()
     .domain([0, xMax + 1])
-    .range([margin.left, width - margin.right]);
+    .range([$lineMargin.left, width - $lineMargin.right]);
   $: yScale = scaleLinear()
     .domain([-0.5, 8])
     .range([height - margin.bottom, margin.top]);
 
   $: pathLeftData = $lineQValues[index]["left"].map((val, i) => {
-    return { x: $lineRecordInterval*(i), y: val };
+    return { x: $lineRecordInterval * i, y: val };
   });
 
   $: pathRightData = $lineQValues[index]["right"].map((val, i) => {
-    return { x: $lineRecordInterval*(i), y: val };
+    return { x: $lineRecordInterval * i, y: val };
   });
 
   //   d3 line generator
@@ -43,18 +50,23 @@
     .x((d) => xScale(d.x))
     .y((d) => yScale(d.y));
 
-    $: tickModulo =
-  $lineQValues[0]["episodeNumber"][$lineQValues[0]["episodeNumber"].length -1] > 400
+  $: tickModulo =
+    $lineQValues[0]["episodeNumber"][
+      $lineQValues[0]["episodeNumber"].length - 1
+    ] > 400
       ? 150
-      : $lineQValues[0]["episodeNumber"][$lineQValues[0]["episodeNumber"].length -1] > 100
+      : $lineQValues[0]["episodeNumber"][
+          $lineQValues[0]["episodeNumber"].length - 1
+        ] > 100
       ? 50
       : 10;
-
 </script>
 
 <!-- x-ticks -->
 {#each xScale.ticks() as tick}
-  <g transform={`translate(${xScale(tick) + 0} ${height - margin.bottom})`}>
+  <g
+    transform={`translate(${xScale(tick) + 0} ${height - $lineMargin.bottom})`}
+  >
     <text class="axis-text" y="7" text-anchor="middle"
       >{tick % tickModulo == 0 ? formatter(tick) : ""}</text
     >
@@ -63,7 +75,7 @@
 
 <!-- y-ticks -->
 {#each yScale.ticks() as tick}
-  <g transform={`translate(${margin.left - 5} ${yScale(tick) + 0})`}>
+  <g transform={`translate(${$lineMargin.left - 5} ${yScale(tick) + 0})`}>
     <text
       class="axis-text"
       y="0"
@@ -76,19 +88,19 @@
   <!-- svelte-ignore component-name-lowercase -->
   <line
     class="axis-line"
-    x1={margin.left}
-    x2={margin.left}
-    y1={margin.top}
-    y2={height - margin.bottom}
+    x1={$lineMargin.left}
+    x2={$lineMargin.left}
+    y1={$lineMargin.top}
+    y2={height - $lineMargin.bottom}
     stroke="black"
   />
   <!-- svelte-ignore component-name-lowercase -->
   <line
     class="axis-line"
-    x1={margin.left}
-    x2={width - margin.right}
-    y1={height - margin.bottom}
-    y2={height - margin.bottom}
+    x1={$lineMargin.left}
+    x2={width - $lineMargin.right}
+    y1={height - $lineMargin.bottom}
+    y2={height - $lineMargin.bottom}
     stroke="black"
   />
 {/each}
@@ -101,13 +113,6 @@
   .q-path {
     stroke-width: 2;
     fill: none;
-  }
-  .pathUp-line {
-    stroke: coral;
-    stroke: var(--anchor);
-  }
-  .pathDown-line {
-    stroke: var(--sky);
   }
   .pathLeft-line {
     stroke: green;

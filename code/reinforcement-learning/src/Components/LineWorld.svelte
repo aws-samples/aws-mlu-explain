@@ -1,7 +1,6 @@
 <script>
   import ScatterLine from "./ScatterLine.svelte";
   import SimulationLine from "./SimulationLine.svelte";
-  // import QValuePlot from "./QValuePlotLineWorld.svelte";
   import {
     lineRobot,
     lineRobotPath,
@@ -314,16 +313,16 @@
   // let sections;
   const target2event = {
     0: () => {
-      reset()
+      reset();
       console.log("step 0");
     },
     1: () => {
-      runAgentTrials(10, episodicValues)
+      runAgentTrials(10, episodicValues);
       console.log("step 1");
     },
     2: () => {
       console.log("step 2");
-      runAgentTrials(500, episodicValues)
+      runAgentTrials(500, episodicValues);
     },
     3: () => {
       console.log("step");
@@ -416,29 +415,30 @@
       <div class="step-lineworld" data-index="0">
         <div class="step-content">
           <p>
-            Let's observe the explore-exploit dilemma in the following simulation. 
-            We assign the agent's initial policy to perpetually suggest going 
-            left towards the tree that has already been discovered. 
+            Let's observe the explore-exploit dilemma in the following
+            simulation. We assign the agent's initial policy to perpetually
+            suggest going left towards the tree that has already been
+            discovered.
           </p>
         </div>
       </div>
       <div class="step-lineworld" data-index="1">
         <div class="step-content">
           <p>
-            The agent has sampled 10 episodes or trials following the epsilon-greedy policy 
-            discussed before. You can see the agent still prefers stepping towards the 
-            tree on the left for certain states despite the one on the right 
-            producing higher rewards.
-            Let's run some more episodes...
+            The agent has sampled 10 episodes or trials following the
+            epsilon-greedy policy discussed before. You can see the agent still
+            prefers stepping towards the tree on the left for certain states
+            despite the one on the right producing higher rewards. Let's run
+            some more episodes...
           </p>
         </div>
       </div>
       <div class="step-lineworld" data-index="2">
         <div class="step-content">
           <p>
-            The agent has now sampled 500 episodes following the epsilon-greedy policy.
-            You can observe how the agent has updated its policy to prefer 
-            stepping towards the tree on the right instead. 
+            The agent has now sampled 500 episodes following the epsilon-greedy
+            policy. You can observe how the agent has updated its policy to
+            prefer stepping towards the tree on the right instead.
           </p>
         </div>
       </div>

@@ -13,8 +13,9 @@
   </p>
   <br />
   <p class="resource-item">
-    <a class="on-end" href="http://incompleteideas.net/book/the-book.html">Reinforcement Learning: An Introduction</a><br
-    />(Richard Sutton & Andrew Barto, 2018)
+    <a class="on-end" href="http://incompleteideas.net/book/the-book.html"
+      >Reinforcement Learning: An Introduction</a
+    ><br />(Richard Sutton & Andrew Barto, 2018)
   </p>
   <p class="resource-item">
     <a class="on-end" href="https://d3js.org/">D3.js</a><br />(Mike Bostock &
@@ -63,7 +64,7 @@
   /* mobile */
   @media screen and (max-width: 950px) {
     .resource-item {
-      max-width: 80%;
+      max-width: 95%;
       font-size: 17px;
     }
   }

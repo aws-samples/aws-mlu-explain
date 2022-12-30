@@ -18,8 +18,6 @@
   import { onMount } from "svelte";
   import { select, selectAll } from "d3-selection";
 
-  const randomInt = (max, min) => Math.round(Math.random() * (max - min)) + min;
-
   // Finds the index of the maximum
   function argMax(array) {
     return array
@@ -33,8 +31,11 @@
   const numX = numCells;
   const numY = 4;
 
-  // var xVal;
-  // var yVal;
+  let width;
+  let height;
+
+  var xVal;
+  var yVal;
 
   // xVal = $gridRobotPath[0]["x"];
   // yVal = $gridRobotPath[0]["y"];
@@ -44,7 +45,7 @@
   // Episodic Q Values retrieved from simulation
   var episodicValues = Array();
 
-  // Keep records at intervals. 
+  // Keep records at intervals.
   var episodeCount = 0;
   var episodeIntervalArray = [];
   const maxEpisodes = 4000; // Limit how many episodes can be run
@@ -61,26 +62,26 @@
     env.rows,
     env.columns,
     env.wins, // for plotting
-    env.losses, // for plotting
+    env.losses // for plotting
   );
 
-    // Start with a reset
+  // Start with a reset
   reset();
 
   // Run episodic trials and update Q-values
   function runAgentTrials(numEpisodes, episodicValues) {
-    // Reduce the burden 
-    if (episodeCount > maxEpisodes){
-      return
+    // Reduce the burden
+    if (episodeCount > maxEpisodes) {
+      return;
     }
     let trialStats = gridAgent.runEpisodes(env, numEpisodes);
 
     for (let ep = 0; ep < numEpisodes; ep++) {
-      if(episodeCount % $gridRecordInterval == $gridRecordInterval-1){
+      if (episodeCount % $gridRecordInterval == $gridRecordInterval - 1) {
         episodicValues.push(trialStats[ep]);
-        episodeIntervalArray.push(episodeCount+1);
+        episodeIntervalArray.push(episodeCount + 1);
       }
-      episodeCount ++;
+      episodeCount++;
     }
 
     // Update gridQValues
@@ -167,14 +168,13 @@
   }
 
   function reset() {
-    
     // Reset episode count
     episodeCount = 0;
     episodeIntervalArray = [];
 
     // Randomly select environment stats
     var randomIndex = Math.floor(Math.random() * $startPosGrid.length);
-    gridStatIndex.set(randomIndex); 
+    gridStatIndex.set(randomIndex);
 
     // Set starting position
     startX = $startPosGrid[randomIndex][0] + 0.5;
@@ -182,25 +182,28 @@
 
     // Set the agent's starting position
     gridRobot.set({
-        x: startX,
-        y: startY,
-      });
+      x: startX,
+      y: startY,
+    });
 
     // Set the wins and losses stats
     var wins = {};
-    wins[[$highRewardGrid[randomIndex][1], $highRewardGrid[randomIndex][0]]] = 10;
+    wins[
+      [$highRewardGrid[randomIndex][1], $highRewardGrid[randomIndex][0]]
+    ] = 10;
     wins[[$lowRewardGrid[randomIndex][1], $lowRewardGrid[randomIndex][0]]] = 2;
-    
+
     var losses = {};
-    losses[[$negRewardGrid[randomIndex][1], $negRewardGrid[randomIndex][0]]] = -5;
+    losses[[$negRewardGrid[randomIndex][1], $negRewardGrid[randomIndex][0]]] =
+      -5;
 
     //  Define the environment
     env = new Env(
-      [startY-0.5, startX-0.5], // start
+      [startY - 0.5, startX - 0.5], // start
       numY, // rows
       numX, // columns
-      wins,// Map of states and the corresponding reward
-      losses,  // Map of states and the corresponding reward
+      wins, // Map of states and the corresponding reward
+      losses, // Map of states and the corresponding reward
       {},
       true, // deterministic: Stochastic env not implemented yet
       true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
@@ -219,7 +222,6 @@
       0.7, // Discount factor
       0.5 // Decay parameter for eligibility trace
     );
-  
 
     gridRobot.set({
       x: startX,
@@ -440,8 +442,9 @@
     }
 
     // Maintain index to update the episodic count
-    var episodeIntervalArrayIndex = episodeIntervalArray.length - episodicValues.length;
-    
+    var episodeIntervalArrayIndex =
+      episodeIntervalArray.length - episodicValues.length;
+
     for (let ep = 0; ep < episodicValues.length; ep++) {
       // Mapping combination of row and col onto row of gridQvalues
       // state is row in gridQValues
@@ -479,7 +482,10 @@
           Math.abs(rightVal);
 
         const vals = {
-          episodeNumber: [...state["episodeNumber"], episodeIntervalArray[episodeIntervalArrayIndex+ep]],
+          episodeNumber: [
+            ...state["episodeNumber"],
+            episodeIntervalArray[episodeIntervalArrayIndex + ep],
+          ],
           up: [...state["up"], upVal],
           down: [...state["down"], downVal],
           left: [...state["left"], leftVal],
@@ -623,7 +629,7 @@
           </table>
 
           <div id="graph-container">
-            <SimulationGrid {numX} {numY} />
+            <SimulationGrid />
             <ScatterGrid />
           </div>
 
@@ -635,7 +641,11 @@
             <button on:click={() => runAgentTrials(150, episodicValues)}
               >Run 150 Episodes</button
             >
-            <button on:click={() => runAgentTrials(maxEpisodes - episodeCount, episodicValues)}>Optimal Solution</button>
+            <button
+              on:click={() =>
+                runAgentTrials(maxEpisodes - episodeCount, episodicValues)}
+              >Optimal Solution</button
+            >
             <button on:click={() => reset()}>Reset</button>
           </div>
         </div>
@@ -716,34 +726,6 @@
 
   button:visited {
     color: var(--white);
-  }
-
-  #input-container {
-    display: flex;
-    justify-content: center;
-  }
-
-  .slider {
-    -webkit-appearance: none;
-    width: 20%;
-    height: 15px;
-    border-radius: 5px;
-    background: var(--stone);
-    outline: none;
-    opacity: 0.9;
-    -webkit-transition: 0.2s;
-    transition: opacity 0.2s;
-    border-color: var(--squidink);
-  }
-
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: var(--secondary);
-    cursor: pointer;
   }
 
   @media screen and (max-width: 768px) {
