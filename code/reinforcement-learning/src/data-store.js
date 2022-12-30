@@ -9,7 +9,7 @@ export const margin = writable({
   right: 0,
 });
 export const banditEpsilon = writable(0.2);
-export const lineEpsilon = writable(0.3);
+export const lineEpsilon = writable(0.5);
 export const gridEpsilon = writable(0.5);
 
 export const gridWidth = writable(500);

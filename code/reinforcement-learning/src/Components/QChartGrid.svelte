@@ -29,7 +29,7 @@
     .range([$gridMargin.left, width - $gridMargin.right]);
   $: yScale = scaleLinear()
     .domain([-5.1, 8])
-    .range([height - margin.bottom, margin.top]);
+    .range([height - $gridMargin.bottom, $gridMargin.top]);
 
   $: pathUpData = $gridQValues[index]["up"].map((val, i) => {
     return { x: $gridRecordInterval * i, y: val };
