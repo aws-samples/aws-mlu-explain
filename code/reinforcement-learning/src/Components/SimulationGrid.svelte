@@ -4,7 +4,7 @@
   import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
   import { select } from "d3-selection";
-  import { arrow, mluRobot, bananaOne, bananaThree } from "../assets.js";
+  import { arrow, mluRobot, bananaOne, bananaThree, cactus } from "../assets.js";
   import {
     margin,
     gridWidth,
@@ -14,6 +14,7 @@
     gridQValues,
     lowRewardGrid,
     highRewardGrid,
+    negRewardGrid,
     gridStatIndex
   } from "../data-store.js";
 
@@ -26,6 +27,7 @@
   $: arrowBox = { height: 0, width: 0, x: 105, y: 0 };
   $: rewardBox = { height: 0, width: 0, x: 0, y: 0 };
   $: rewardBox3 = { height: 30, width: 0, x: 0, y: 0 };
+  $: cactusBox = { height: 0, width: 0, x: 0, y: 0 };
 
   onMount(() => {
     const robotBGSize = select("#agent-g").node().getBoundingClientRect();
@@ -34,6 +36,7 @@
 
     rewardBox = select("#reward-1").node().getBoundingClientRect();
     rewardBox3 = select("#reward-3").node().getBoundingClientRect();
+    cactusBox = select("#cactus").node().getBoundingClientRect();
     arrowBox = select("path.arrow-up").node().getBoundingClientRect();
   });
 
@@ -73,7 +76,7 @@
   $: {
   }
 
-  $: rewardArray = [$lowRewardGrid[$gridStatIndex], $highRewardGrid[$gridStatIndex]];
+  $: rewardArray = [$lowRewardGrid[$gridStatIndex], $highRewardGrid[$gridStatIndex], $negRewardGrid[$gridStatIndex]];
 </script>
 
 <svg width={$gridWidth} height={$gridHeight}>
@@ -175,6 +178,18 @@
     {/each}
   </g>
 
+  <!-- cactus rewards -->
+  <g
+    id="cactus"
+    transform="translate({xScale($negRewardGrid[$gridStatIndex][0])}, {yScale($negRewardGrid[$gridStatIndex][1]) +
+      cactusBox.height / 2 -
+      7.5})"
+  >
+    {#each cactus as c}
+      <path class="cactusPath" d={c} style="transform: scale(0.13)" />
+    {/each}
+  </g>
+
   <g
     id="agent-g"
     transform="translate({xScale($gridRobot.x) - robotWidth / 2}, {yScale(
@@ -237,5 +252,9 @@
     stroke-width: 20;
     stroke: var(--darksquidink);
     fill: var(--mustardyellow);
+  }
+  .cactusPath {
+    stroke-width: 20;
+    fill: darkgreen;
   }
 </style>

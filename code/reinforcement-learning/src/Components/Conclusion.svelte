@@ -36,6 +36,11 @@
     href="https://thenounproject.com/browse/icons/term/bananas/"
     target="_blank"
     title="Bananas Icons">Noun Project</a
+  >. Cactus icon provided by anam from 
+  <a
+    href="https://thenounproject.com/icon/cactus-1466024/"
+    target="_blank"
+    title="Cactus Icon">Noun Project</a
   >.
 </p>
 
