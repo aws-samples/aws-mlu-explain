@@ -51,7 +51,7 @@
   );
 
   // set lambda to 0 for TD(0) update and lamdba to 1 for MC
-  const lineAgent = new Agent(
+  var lineAgent = new Agent(
     env.rows,
     env.columns,
     env.wins, // for plotting
@@ -167,10 +167,29 @@
     }
   }
 
-  function reset() {
+  // Generate optimal policy regardless of the epsilon value
+  function getOptimalPolicy(){
+    reset(true);
+    runAgentTrials(maxEpisodes - episodeCount, episodicValues)
+  }
+
+  function reset(forOptimal=false) {
     // Reset episode count
     episodeCount = 0;
     episodeIntervalArray = [];
+    var epsilon = forOptimal ? 0.5 : $lineEpsilon // Produce optimal policy even when epsilon is set too low
+    
+    lineAgent = new Agent(
+    env.rows,
+    env.columns,
+    env.wins, // for plotting
+    env.losses, // for plotting
+    "q-learning", // 'q-learning' or 'sarsa'
+    epsilon, // Control exploration
+    0.1, // Learning rate
+    0.8, // Discount factor
+    0.5 // Decay parameter for eligibility trace
+  );
 
     lineRobot.set({
       x: startX,
@@ -473,6 +492,22 @@
               <ScatterLine />
             </div>
           </div>
+          
+          <!-- Epsilon slider -->
+          <div id="input-container">
+            <p>Epsilon: {$lineEpsilon}</p>
+            <input
+              type="range"
+              min="0.0"
+              max="1.0"
+              step="0.1"
+              maxlength="20"
+              bind:value={$lineEpsilon}
+              class="slider"
+              id="epsilonslider"
+              on:input={() => reset()}
+            />
+          </div>
 
           <div id="buttons-container">
             <button on:click={() => simulateEpisode()}>Simulate Episode</button>
@@ -482,7 +517,7 @@
             <button on:click={() => runAgentTrials(50, episodicValues)}
               >Run 50 Episodes</button
             >
-            <button on:click={() => runAgentTrials(maxEpisodes - episodeCount, episodicValues)}>Optimal Policy</button>
+            <button on:click={() => getOptimalPolicy()}>Optimal Policy</button>
             <button on:click={() => reset()}>Reset</button>
           </div>
         </div>
