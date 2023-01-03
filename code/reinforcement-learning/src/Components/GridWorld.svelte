@@ -65,6 +65,9 @@
     env.losses // for plotting
   );
 
+  // Set the env arrangement index
+  var randomIndex = 0;
+
   // Start with a reset
   reset();
 
@@ -167,13 +170,22 @@
     }
   }
 
-  function reset() {
+  // Generate optimal policy regardless of the epsilon value
+  function getOptimalPolicy(){
+    reset(true, false);
+    runAgentTrials(maxEpisodes, episodicValues)
+  }
+
+  function reset(forOptimal=false, resetPosition=true) {
     // Reset episode count
     episodeCount = 0;
     episodeIntervalArray = [];
+    var epsilon = forOptimal ? 0.5 : $gridEpsilon; // Produce optimal policy even when epsilon is too low
 
-    // Randomly select environment stats
-    var randomIndex = Math.floor(Math.random() * $startPosGrid.length);
+    // Randomly select environment stats only when reset button is clicked.
+    if(resetPosition){
+      randomIndex = Math.floor(Math.random() * $startPosGrid.length);
+    }
     gridStatIndex.set(randomIndex);
 
     // Set starting position
@@ -217,7 +229,7 @@
       env.wins, // for plotting
       env.losses, // for plotting
       "q-learning", // 'q-learning' or 'sarsa'
-      $gridEpsilon, // Control exploration
+      epsilon, // Control exploration
       0.1, // Learning rate
       0.7, // Discount factor
       0.5 // Decay parameter for eligibility trace
@@ -633,6 +645,22 @@
             <ScatterGrid />
           </div>
 
+          <!-- Epsilon slider -->
+          <div id="input-container">
+            <p>Epsilon: {$gridEpsilon}</p>
+            <input
+              type="range"
+              min="0.0"
+              max="1.0"
+              step="0.1"
+              maxlength="20"
+              bind:value={$gridEpsilon}
+              class="slider"
+              id="epsilonslider"
+              on:input={() => reset(false, false)}
+            />
+          </div>
+
           <div id="buttons-container">
             <button on:click={() => simulateEpisode()}>Current Route</button>
             <button on:click={() => runAgentTrials(25, episodicValues)}
@@ -643,7 +671,7 @@
             >
             <button
               on:click={() =>
-                runAgentTrials(maxEpisodes - episodeCount, episodicValues)}
+                getOptimalPolicy()}
               >Optimal Solution</button
             >
             <button on:click={() => reset()}>Reset</button>

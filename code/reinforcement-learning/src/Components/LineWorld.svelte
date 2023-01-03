@@ -170,14 +170,14 @@
   // Generate optimal policy regardless of the epsilon value
   function getOptimalPolicy(){
     reset(true);
-    runAgentTrials(maxEpisodes - episodeCount, episodicValues)
+    runAgentTrials(maxEpisodes, episodicValues);
   }
 
   function reset(forOptimal=false) {
     // Reset episode count
     episodeCount = 0;
     episodeIntervalArray = [];
-    var epsilon = forOptimal ? 0.5 : $lineEpsilon // Produce optimal policy even when epsilon is set too low
+    var epsilon = forOptimal ? 0.5 : $lineEpsilon; // Produce optimal policy even when epsilon is too low
     
     lineAgent = new Agent(
     env.rows,
