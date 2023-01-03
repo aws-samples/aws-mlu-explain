@@ -2,7 +2,7 @@
   <h1 id="intro-hed">Reinforcement Learning</h1>
   <h1 class="intro-sub">A Gentle Introduction To Learning From Decisions</h1>
   <h3 id="intro__date">
-    <a href="https://erinbugbee.com">Erin Bugbee</a>, <a>Anand Kamat</a>, &
+    <a href="https://erinbugbee.com">Erin Bugbee</a>, <a href="https://www.linkedin.com/in/anand-kamat/">Anand Kamat</a>, &
     <a href="https://twitter.com/jdwlbr">Jared Wilber</a>
   </h3>
 </section>
