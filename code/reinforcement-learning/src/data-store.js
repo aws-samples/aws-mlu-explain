@@ -74,7 +74,7 @@ export const lowRewardGrid = writable([
 export const highRewardGrid = writable([
   [2, 3],
   [0, 0],
-  [0, 0],
+  [0, 2],
   [0, 2],
   [0, 1],
 ]);
