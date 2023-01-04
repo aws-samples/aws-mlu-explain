@@ -48,7 +48,7 @@
   // Keep records at intervals.
   var episodeCount = 0;
   var episodeIntervalArray = [];
-  const maxEpisodes = 4000; // Limit how many episodes can be run
+  const maxEpisodes = 3000; // Limit how many episodes can be run
 
   // Define the starting position
   var startX = 0.5;
@@ -578,46 +578,22 @@
 </p>
 <br /><br />
 <p class="body-text">
-  There is an obstacle in the gridworld: a lake. If the robot falls into the
-  lake, it will lose all of its bananas and the episode will end. Therefore, the
-  robot should learn to avoid the obstacle. Instead of learning to move left or
-  right as in the line world, now the robot must learn the path to take.
+  There is an obstacle in the gridworld: a <span class="bold">cactus</span>. 
+  If the robot steps onto the cactus, it will receive a 
+  <span class="bold">negative reward</span> and will result in termination of 
+  the episode. Therefore, the robot should learn to avoid the cactus. Instead 
+  of learning to move left or right as in the line world, now the robot must 
+  learn the path to take.
 </p>
 <br /><br />
 <p class="body-text">
-  See for yourself how increasing epsilon can change the agent’s behavior in
+  See for yourself how increasing epsilon can change the robot's behavior in
   this 2-Dimensional environment.
 </p>
 
 <section id="scrolly">
   <div class="scrolly-container">
     <div class="steps-container">
-      <div class="step-gridworld" data-index="0">
-        <div class="step-content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ipsam
-            quam impedit, dicta tempore facere minus labore necessitatibus
-            explicabo, iusto incidunt natus tempora doloremque illum eum
-            repellendus, mollitia suscipit dolor vitae! Velit cupiditate quas
-            assumenda mollitia rerum asperiores ullam nostrum corrupti animi
-            perferendis reprehenderit magnam ad autem eligendi, blanditiis
-            tempora?
-          </p>
-        </div>
-      </div>
-      <div class="step-gridworld" data-index="1">
-        <div class="step-content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ipsam
-            quam impedit, dicta tempore facere minus labore necessitatibus
-            explicabo, iusto incidunt natus tempora doloremque illum eum
-            repellendus, mollitia suscipit dolor vitae! Velit cupiditate quas
-            assumenda mollitia rerum asperiores ullam nostrum corrupti animi
-            perferendis reprehenderit magnam ad autem eligendi, blanditiis
-            tempora?
-          </p>
-        </div>
-      </div>
       <div class="spacer" />
     </div>
     <div class="charts-container">
@@ -636,7 +612,7 @@
               <td>Grid World</td>
               <td>X,Y-Position</td>
               <td>Move Left, Move Right, Move Up, Move Down</td>
-              <td>Number of Bananas</td>
+              <td>Number of Bananas, Cactus</td>
             </tr>
           </table>
 

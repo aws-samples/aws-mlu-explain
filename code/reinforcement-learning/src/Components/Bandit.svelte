@@ -109,10 +109,11 @@
 <p class="body-text">
   This type of reinforcement learning problem resembles that of the <span
     class="bold">multi-armed bandit problem</span
-  >. The multi-armed bandit problem is named after a gambler at a row of slot
-  machines, and the gambler must decide, given limited resources, which slot
-  machine to play (i.e. which arm to pull). Here, the trees are the “arms” and
-  the robot must decide how to choose between them.
+  >. The multi-armed bandit problem is named after the one-armed bandit 
+  slot machine, except it has multiple levers or 'arms'. A player must 
+  decide, given limited resources, which levers to pull to have the greatest 
+  chance of hitting the jackpot. Here, the trees are the “arms” and the 
+  robot must decide how to choose between them.
 </p>
 <br /><br />
 <p class="body-text">
@@ -121,6 +122,14 @@
   reflects the expected reward for each action based on the history of
   experienced rewards. In this case, the robot maintains two Q-values: one for
   Tree A and one for Tree B.
+</p>
+<br /><br />
+<p class="body-text">
+  Initially, the robot prefers to select Tree A, having known it 
+  yields bananas. However, upon occassionally sampling Tree B, it starts 
+  reinforcing its decision to select Tree B more, as it is more fruitful. 
+  This phenomenon is discussed in the next section.
+
 </p>
 
 <table>
