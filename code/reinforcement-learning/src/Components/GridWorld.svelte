@@ -521,7 +521,6 @@
   // let sections;
   const target2event = {
     0: () => {
-      runAgentTrials(25, episodicValues);
       console.log("step");
     },
     1: () => {
