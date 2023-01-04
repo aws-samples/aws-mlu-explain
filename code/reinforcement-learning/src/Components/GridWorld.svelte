@@ -580,7 +580,7 @@
 <p class="body-text">
   There is an obstacle in the gridworld: a <span class="bold">cactus</span>. 
   If the robot steps onto the cactus, it will receive a 
-  <span class="bold">negative reward</span> and will result in termination of 
+  <span class="bold">negative reward</span> and will result in the termination of 
   the episode. Therefore, the robot should learn to avoid the cactus. Instead 
   of learning to move left or right as in the line world, now the robot must 
   learn the path to take.
@@ -588,7 +588,7 @@
 <br /><br />
 <p class="body-text">
   See for yourself how increasing epsilon can change the robot's behavior in
-  this 2-Dimensional environment.
+  this 2-dimensional environment.
 </p>
 
 <section id="scrolly">

@@ -332,14 +332,16 @@
   // let sections;
   const target2event = {
     0: () => {
-      reset();
+      reset(true);
       console.log("step 0");
     },
     1: () => {
+      reset(true);
       runAgentTrials(15, episodicValues);
       console.log("step 1");
     },
     2: () => {
+      reset(true);
       console.log("step 2");
       runAgentTrials(2500, episodicValues);
     },
