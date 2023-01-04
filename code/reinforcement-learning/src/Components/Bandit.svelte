@@ -112,7 +112,7 @@
   >. The multi-armed bandit problem is named after the one-armed bandit 
   slot machine, except it has multiple levers or 'arms'. A player must 
   decide, given limited resources, which levers to pull to have the greatest 
-  chance of hitting the jackpot. Here, the trees are the “arms” and the 
+  chance of hitting the jackpot. Here, the trees are the 'arms' and the 
   robot must decide how to choose between them.
 </p>
 <br /><br />
