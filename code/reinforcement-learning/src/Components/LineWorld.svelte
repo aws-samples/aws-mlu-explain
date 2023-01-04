@@ -47,7 +47,7 @@
     }, // Map of states and the corresponding reward
     true, // deterministic: Stochastic env not implemented yet
     true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
-    0.7 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+    0.0 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
   );
 
   // set lambda to 0 for TD(0) update and lamdba to 1 for MC
@@ -461,7 +461,7 @@
             The robot has now sampled 2500 episodes following the epsilon-greedy
             policy. You can observe how the robot has updated its policy to
             prefer stepping towards the tree on the right instead. The plots
-            indicate moving towards the right is more fruitful for each state.
+            indicate moving towards the right is more fruitful in each state.
           </p>
         </div>
       </div>

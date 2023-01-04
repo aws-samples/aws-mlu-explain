@@ -89,10 +89,10 @@ export const negRewardGrid = writable([
 
 export const startPosGrid =  writable([
   [0, 1],
-  [3, 1],
   [2, 3],
-  [2, 2],
-  [3, 1],
+  [3, 2],
+  [2, 0],
+  [3, 3],
  ]);
 
 

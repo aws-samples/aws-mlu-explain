@@ -180,7 +180,7 @@
     // Reset episode count
     episodeCount = 0;
     episodeIntervalArray = [];
-    var epsilon = forOptimal ? 0.5 : $gridEpsilon; // Produce optimal policy even when epsilon is too low
+    var epsilon = forOptimal ? 0.7 : $gridEpsilon; // Produce optimal policy even when epsilon is too low
 
     // Randomly select environment stats only when reset button is clicked.
     if(resetPosition){
@@ -219,7 +219,7 @@
       {},
       true, // deterministic: Stochastic env not implemented yet
       true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
-      0.9 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+      0.0 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
     );
 
     // set lambda to 0 for TD(0) update and lamdba to 1 for MC
@@ -231,7 +231,7 @@
       "q-learning", // 'q-learning' or 'sarsa'
       epsilon, // Control exploration
       0.1, // Learning rate
-      0.7, // Discount factor
+      0.8, // Discount factor
       0.5 // Decay parameter for eligibility trace
     );
 
