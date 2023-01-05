@@ -198,7 +198,7 @@
     transform="translate({xScale($negRewardGrid[$gridStatIndex][0]) +
       10}, {yScale($negRewardGrid[$gridStatIndex][1]) +
       cactusBox.height / 2 -
-      7.5})"
+      12.5})"
   >
     {#each cactus as c}
       <path class="cactusPath" d={c} style="transform: scale(0.13)" />
