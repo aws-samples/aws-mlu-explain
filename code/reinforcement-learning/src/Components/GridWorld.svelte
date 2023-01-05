@@ -48,7 +48,7 @@
   // Keep records at intervals.
   var episodeCount = 0;
   var episodeIntervalArray = [];
-  const maxEpisodes = 4000; // Limit how many episodes can be run
+  const maxEpisodes = 3000; // Limit how many episodes can be run
 
   // Define the starting position
   var startX = 0.5;
@@ -180,7 +180,7 @@
     // Reset episode count
     episodeCount = 0;
     episodeIntervalArray = [];
-    var epsilon = forOptimal ? 0.5 : $gridEpsilon; // Produce optimal policy even when epsilon is too low
+    var epsilon = forOptimal ? 0.7 : $gridEpsilon; // Produce optimal policy even when epsilon is too low
 
     // Randomly select environment stats only when reset button is clicked.
     if(resetPosition){
@@ -219,7 +219,7 @@
       {},
       true, // deterministic: Stochastic env not implemented yet
       true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
-      0.9 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+      0.0 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
     );
 
     // set lambda to 0 for TD(0) update and lamdba to 1 for MC
@@ -231,7 +231,7 @@
       "q-learning", // 'q-learning' or 'sarsa'
       epsilon, // Control exploration
       0.1, // Learning rate
-      0.7, // Discount factor
+      0.8, // Discount factor
       0.5 // Decay parameter for eligibility trace
     );
 
@@ -521,7 +521,6 @@
   // let sections;
   const target2event = {
     0: () => {
-      runAgentTrials(25, episodicValues);
       console.log("step");
     },
     1: () => {
@@ -578,46 +577,22 @@
 </p>
 <br /><br />
 <p class="body-text">
-  There is an obstacle in the gridworld: a lake. If the robot falls into the
-  lake, it will lose all of its bananas and the episode will end. Therefore, the
-  robot should learn to avoid the obstacle. Instead of learning to move left or
-  right as in the line world, now the robot must learn the path to take.
+  There is an obstacle in the gridworld: a <span class="bold">cactus</span>. 
+  If the robot steps onto the cactus, it will receive a 
+  <span class="bold">negative reward</span> and will result in the termination of 
+  the episode. Therefore, the robot should learn to avoid the cactus. Instead 
+  of learning to move left or right as in the line world, now the robot must 
+  learn the path to take.
 </p>
 <br /><br />
 <p class="body-text">
-  See for yourself how increasing epsilon can change the agent’s behavior in
-  this 2-Dimensional environment.
+  See for yourself how increasing epsilon can change the robot's behavior in
+  this 2-dimensional environment.
 </p>
 
 <section id="scrolly">
   <div class="scrolly-container">
     <div class="steps-container">
-      <div class="step-gridworld" data-index="0">
-        <div class="step-content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ipsam
-            quam impedit, dicta tempore facere minus labore necessitatibus
-            explicabo, iusto incidunt natus tempora doloremque illum eum
-            repellendus, mollitia suscipit dolor vitae! Velit cupiditate quas
-            assumenda mollitia rerum asperiores ullam nostrum corrupti animi
-            perferendis reprehenderit magnam ad autem eligendi, blanditiis
-            tempora?
-          </p>
-        </div>
-      </div>
-      <div class="step-gridworld" data-index="1">
-        <div class="step-content">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic ipsam
-            quam impedit, dicta tempore facere minus labore necessitatibus
-            explicabo, iusto incidunt natus tempora doloremque illum eum
-            repellendus, mollitia suscipit dolor vitae! Velit cupiditate quas
-            assumenda mollitia rerum asperiores ullam nostrum corrupti animi
-            perferendis reprehenderit magnam ad autem eligendi, blanditiis
-            tempora?
-          </p>
-        </div>
-      </div>
       <div class="spacer" />
     </div>
     <div class="charts-container">
@@ -636,7 +611,7 @@
               <td>Grid World</td>
               <td>X,Y-Position</td>
               <td>Move Left, Move Right, Move Up, Move Down</td>
-              <td>Number of Bananas</td>
+              <td>Number of Bananas, Cactus</td>
             </tr>
           </table>
 

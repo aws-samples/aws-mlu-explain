@@ -18,14 +18,14 @@
     <span class="bold">state</span>, which the agent observes. This process
     continues with the agent taking actions and observing the resulting reward.
     The agent uses this information to learn what actions it should take
-    depending on the circumstance. This mapping from states to actions is called
-    a <span class="bold">policy</span>. The agent also learns a
-    <span class="bold">value function</span> which it uses to predict how
-    desirable states are when behaving according to the policy. The learning in
+    depending on the circumstance. This mapping from states to actions governing 
+    the agent's behavior is called a <span class="bold">policy</span>. The agent also learns a
+    <span class="bold">value function</span> which it uses to estimate how
+    desirable the states are when behaving according to the policy. The learning in
     reinforcement learning comes from the agent changing its policy and updating
     its value function as a result of its experiences in the environment.
     <br /><br />
-    Typically, the agent interacts with the environment over time. At each time point,
+    Typically, the agent interacts with the environment over time. At each time step,
     an action is taken based on the agent’s policy, a reward is obtained, and the
     next state is observed. The sequence of transitions experienced by the agent
     starting from the intitial state until the final state is called a trial or an

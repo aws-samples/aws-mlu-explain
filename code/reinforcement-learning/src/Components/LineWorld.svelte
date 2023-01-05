@@ -47,7 +47,7 @@
     }, // Map of states and the corresponding reward
     true, // deterministic: Stochastic env not implemented yet
     true, // exploring_starts: Initializa agent at a random state in subsequent episodes.
-    0.7 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
+    0.0 // exploring_starts_prob: Probability of selecting a random initial state instead of specified one
   );
 
   // set lambda to 0 for TD(0) update and lamdba to 1 for MC
@@ -332,16 +332,18 @@
   // let sections;
   const target2event = {
     0: () => {
-      reset();
+      reset(true);
       console.log("step 0");
     },
     1: () => {
+      reset(true);
       runAgentTrials(15, episodicValues);
       console.log("step 1");
     },
     2: () => {
+      reset(true);
       console.log("step 2");
-      runAgentTrials(500, episodicValues);
+      runAgentTrials(2500, episodicValues);
     },
     3: () => {
       console.log("step");
@@ -387,45 +389,46 @@
 <p class="body-text">
   Let’s progress to a slightly more complex environment. Now, the robot and
   trees are located on a line. The robot has to decide which action to take:
-  move left or move right. The main difference from the previous scenario is
-  that the robot’s actions affect its state in the environment, reflected by its
-  location. The robot must now learn how valuable each action is depending on
-  its state, where the state depends on the previous action. This defines a
-  policy that the robot can follow, by learning which action it should take in
-  each state. This is reflected by the arrow in each state, corresponding to the
-  action with the greater Q-value for that particular state.
+  move left or move right. Each action moves the robot one step in that direction. 
+  The main difference from the previous scenario is that the robot’s actions affect 
+  its state in the environment, reflected by its location. The robot must now learn 
+  how valuable each action is depending on its state. 
+  This defines a policy that the robot can follow, by learning which action 
+  it should take in each state. This is reflected by the arrow in each state, 
+  corresponding to the action with the greater Q-value for that particular state.
 </p>
 <br /><br />
 <p class="body-text">
   The robot currently follows a policy where it moves to the tree on the left,
-  having previously discovered that the tree yields bananas. Though the left
-  tree is closer, the right tree actually has a higher mean value, making it
+  having previously discovered that the tree yields bananas. Though the
+  tree on the left is closer to the robot's initial position, 
+  the right tree actually generates much higher rewards, making it
   more fruitful. If the robot strictly follows its current policy, it will
   always move to the left tree. This is called exploitation, as the robot
   exploits its knowledge when deciding how to pursue rewards. The robot needs to
   explore in order to reduce the uncertainty about the tree on the right, in
   order to learn that it actually yields greater rewards. This introduces an
-  important concept in reinforcement learning: <text class="bold"
-    >the explore-exploit dilemma</text
-  >. Agents must balance exploiting known rewards with exploring the
-  environment, and potentially discovering more rewarding actions.
+  important concept in reinforcement learning:  <span class="bold">
+  the explore-exploit dilemma</span>. Agents must balance exploiting 
+  known rewards with exploring the environment, and potentially 
+  discovering more rewarding actions.
 </p>
 <br /><br />
 <p class="body-text">
-  Constantly performing the action that the agent believes yields the greatest
-  reward is called being greedy. This does not allow the agent to explore at
+  Constantly performing the action that the robot believes yields the greatest
+  reward is called being <span class="bold">greedy</span>. This does not allow the robot to explore at
   all, and the robot will never discover that the other tree yields greater
-  rewards. To allow for some exploration, the agent can select actions according
-  to <text class="bold">epsilon-greedy action selection</text>. This is a simple
-  way to balance exploration and exploitation, by exploring (i.e. choosing
+  rewards. To allow for some exploration, the robot can select actions according
+  to <span class="bold">epsilon-greedy policy</span>. This is a simple
+  way to balance exploration and exploitation, by exploring (i.e. choosing action
   randomly) with probability epsilon and exploiting by greedily following the
   policy with probability 1-epsilon. Increasing epsilon increases exploration.
 </p>
 <br /><br />
 <p class="body-text">
-  The agent is currently choosing greedily, which is equivalent to epsilon=0.
-  See for yourself how increasing epsilon can change the agent’s behavior,
-  leading to updating the Q-values and policy.
+  See for yourself how increasing epsilon can change the robot's behavior,
+  leading to updating the Q-values and policy. Setting epsilon to zero 
+  will result in a greedy polcy.
 </p>
 
 <section id="scrolly">
@@ -435,8 +438,8 @@
         <div class="step-content">
           <p>
             Let's observe the explore-exploit dilemma in the following
-            simulation. We assign the agent's initial policy to perpetually
-            suggest going left towards the tree that has already been
+            simulation. The robot's initial policy suggests perpetually 
+            going left towards the tree that has already been
             discovered.
           </p>
         </div>
@@ -444,20 +447,21 @@
       <div class="step-lineworld" data-index="1">
         <div class="step-content">
           <p>
-            The agent has sampled 10 episodes or trials following the
-            epsilon-greedy policy discussed before. You can see the agent still
-            prefers stepping towards the tree on the left for certain states
-            despite the one on the right producing higher rewards. Let's run
-            some more episodes...
+            The robot has sampled 15 episodes or trials following the
+            epsilon-greedy policy discussed before. You can see the robot still
+            prefers stepping towards the tree on the left for all the states
+            despite the one on the right producing higher rewards. Let's allow 
+            the robot to explore the environment further...
           </p>
         </div>
       </div>
       <div class="step-lineworld" data-index="2">
         <div class="step-content">
           <p>
-            The agent has now sampled 500 episodes following the epsilon-greedy
-            policy. You can observe how the agent has updated its policy to
-            prefer stepping towards the tree on the right instead.
+            The robot has now sampled 2500 episodes following the epsilon-greedy
+            policy. You can observe how the robot has updated its policy to
+            prefer stepping towards the tree on the right instead. The plots
+            indicate moving towards the right is more fruitful in each state.
           </p>
         </div>
       </div>
@@ -528,12 +532,18 @@
   <br /><br />
 
   <p class="body-text">
-    Now that we have a high-level idea of how linear regression works, let's
-    dive a bit deeper. The remainder of this article will cover how to evaluate
-    regression models, how to find the "best" model, how to interpret different
-    forms of regression models, and the assumptions underpinning correct usage
-    of regression models in statistical settings.
-    <br /><br /> Let's dive in!
+    Humans often balance short-term gratification and long-term consequences in their decision-making. 
+    We are predisposed to value rewards received now more than those received in the future. This makes
+    sense as the distant future is more uncertain than the present. 
+    Similarly, the agent needs to find a balance between acquiring immediate rewards and considering 
+    long-term gain. The Q-values for the Line World and the upcoming Grid World environment are estimated to be
+    the expected <span class="bold">discounted</span> cummulative rewards. This simply means rewards 
+    received later are worth less than those recieved immediately. For more information, refer this 
+    <a
+    href="http://incompleteideas.net/book/the-book.html"
+    >book.</a
+  >
+    <!-- <br /><br /> Let's dive in! -->
   </p>
 </section>
 
