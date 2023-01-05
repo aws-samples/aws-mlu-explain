@@ -171,19 +171,19 @@
   }
 
   // Generate optimal policy regardless of the epsilon value
-  function getOptimalPolicy(){
+  function getOptimalPolicy() {
     reset(true, false);
-    runAgentTrials(maxEpisodes, episodicValues)
+    runAgentTrials(maxEpisodes, episodicValues);
   }
 
-  function reset(forOptimal=false, resetPosition=true) {
+  function reset(forOptimal = false, resetPosition = true) {
     // Reset episode count
     episodeCount = 0;
     episodeIntervalArray = [];
     var epsilon = forOptimal ? 0.7 : $gridEpsilon; // Produce optimal policy even when epsilon is too low
 
     // Randomly select environment stats only when reset button is clicked.
-    if(resetPosition){
+    if (resetPosition) {
       randomIndex = Math.floor(Math.random() * $startPosGrid.length);
     }
     gridStatIndex.set(randomIndex);
@@ -577,12 +577,12 @@
 </p>
 <br /><br />
 <p class="body-text">
-  There is an obstacle in the gridworld: a <span class="bold">cactus</span>. 
-  If the robot steps onto the cactus, it will receive a 
-  <span class="bold">negative reward</span> and will result in the termination of 
-  the episode. Therefore, the robot should learn to avoid the cactus. Instead 
-  of learning to move left or right as in the line world, now the robot must 
-  learn the path to take.
+  There is an obstacle in the gridworld: a <span class="bold">cactus</span>. If
+  the robot steps onto the cactus, it will receive a
+  <span class="bold">negative reward</span> and will result in the termination of
+  the episode. Therefore, the robot should learn to avoid the cactus. Instead of
+  learning to move left or right as in the line world, now the robot must learn the
+  path to take.
 </p>
 <br /><br />
 <p class="body-text">
@@ -592,9 +592,6 @@
 
 <section id="scrolly">
   <div class="scrolly-container">
-    <div class="steps-container">
-      <div class="spacer" />
-    </div>
     <div class="charts-container">
       <div class="chart-one">
         <div>
@@ -644,10 +641,7 @@
             <button on:click={() => runAgentTrials(150, episodicValues)}
               >Run 150 Episodes</button
             >
-            <button
-              on:click={() =>
-                getOptimalPolicy()}
-              >Optimal Solution</button
+            <button on:click={() => getOptimalPolicy()}>Optimal Solution</button
             >
             <button on:click={() => reset()}>Reset</button>
           </div>
@@ -751,7 +745,6 @@
   }
 
   .charts-container {
-    position: sticky;
     margin-right: 5%;
     top: 1.5%;
     width: 95%;
