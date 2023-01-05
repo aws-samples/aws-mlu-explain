@@ -4,7 +4,13 @@
   import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
   import { select } from "d3-selection";
-  import { arrow, mluRobot, bananaOne, bananaThree, cactus } from "../assets.js";
+  import {
+    arrow,
+    mluRobot,
+    bananaOne,
+    bananaThree,
+    cactus,
+  } from "../assets.js";
   import {
     margin,
     gridWidth,
@@ -15,7 +21,7 @@
     lowRewardGrid,
     highRewardGrid,
     negRewardGrid,
-    gridStatIndex
+    gridStatIndex,
   } from "../data-store.js";
 
   let numX = 4;
@@ -76,7 +82,11 @@
   $: {
   }
 
-  $: rewardArray = [$lowRewardGrid[$gridStatIndex], $highRewardGrid[$gridStatIndex], $negRewardGrid[$gridStatIndex]];
+  $: rewardArray = [
+    $lowRewardGrid[$gridStatIndex],
+    $highRewardGrid[$gridStatIndex],
+    $negRewardGrid[$gridStatIndex],
+  ];
 </script>
 
 <svg width={$gridWidth} height={$gridHeight}>
@@ -157,7 +167,9 @@
   <!-- single banana -->
   <g
     id="reward-1"
-    transform="translate({xScale($lowRewardGrid[$gridStatIndex][0])}, {yScale($lowRewardGrid[$gridStatIndex][1]) +
+    transform="translate({xScale($lowRewardGrid[$gridStatIndex][0])}, {yScale(
+      $lowRewardGrid[$gridStatIndex][1]
+    ) +
       rewardBox.height / 2 -
       7.5})"
   >
@@ -169,7 +181,9 @@
   <!-- three bananas -->
   <g
     id="reward-3"
-    transform="translate({xScale($highRewardGrid[$gridStatIndex][0])}, {yScale($highRewardGrid[$gridStatIndex][1]) +
+    transform="translate({xScale($highRewardGrid[$gridStatIndex][0])}, {yScale(
+      $highRewardGrid[$gridStatIndex][1]
+    ) +
       rewardBox3.height / 2 -
       7.5})"
   >
@@ -181,7 +195,8 @@
   <!-- cactus rewards -->
   <g
     id="cactus"
-    transform="translate({xScale($negRewardGrid[$gridStatIndex][0])}, {yScale($negRewardGrid[$gridStatIndex][1]) +
+    transform="translate({xScale($negRewardGrid[$gridStatIndex][0]) +
+      10}, {yScale($negRewardGrid[$gridStatIndex][1]) +
       cactusBox.height / 2 -
       7.5})"
   >
@@ -211,9 +226,7 @@
 <style>
   svg {
     border: 4px solid black;
-    /* background-color: white; */
     margin: 20px;
-    /* transform-box: fill-box; */
   }
 
   .arrow-up {
@@ -254,7 +267,8 @@
     fill: var(--mustardyellow);
   }
   .cactusPath {
+    stroke: var(--darksquidink);
     stroke-width: 20;
-    fill: darkgreen;
+    fill: #5fa141;
   }
 </style>
