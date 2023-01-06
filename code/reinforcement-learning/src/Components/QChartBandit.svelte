@@ -73,7 +73,7 @@
     class="bandit-axis-label"
     y={height - 7}
     x={width / 2}
-    text-anchor="middle">Number of Episodes</text
+    text-anchor="middle">Number of Actions</text
   >
   <text
     class="bandit-axis-label"

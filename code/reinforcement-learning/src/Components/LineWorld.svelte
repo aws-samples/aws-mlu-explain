@@ -536,7 +536,7 @@
     We are predisposed to value rewards received now more than those received in the future. This makes
     sense as the distant future is more uncertain than the present. 
     Similarly, the agent needs to find a balance between acquiring immediate rewards and considering 
-    long-term gain. The Q-values for the Line World and the upcoming Grid World environment are estimated to be
+    long-term gain. The Q-values for the Line World and the upcoming Grid World environments are estimated to be
     the expected <span class="bold">discounted</span> cummulative rewards. This simply means rewards 
     received later are worth less than those recieved immediately. For more information, refer this 
     <a
