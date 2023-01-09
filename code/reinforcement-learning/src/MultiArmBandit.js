@@ -49,7 +49,7 @@ export class MultiArmBandit{
             this.qValues[i] = 0;
         }
         // Start with agent favoring the suboptimal choice
-        this.qValues[argMin(this.armsMeans)] = Math.max(...this.armsMeans);
+        this.qValues[argMin(this.armsMeans)] = Math.min(...this.armsMeans);
     }
 
    // Update the Q-Values
