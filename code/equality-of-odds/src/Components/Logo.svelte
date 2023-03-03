@@ -70,8 +70,8 @@
   #intro-icon > a {
     display: flex;
     text-decoration: none;
-    padding-top: 0.5rem;
-    padding-bottom: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 0.25rem;
     justify-content: center;
     align-items: center;
   }

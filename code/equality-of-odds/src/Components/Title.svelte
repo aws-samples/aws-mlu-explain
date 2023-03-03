@@ -19,7 +19,7 @@
   }
 
   #intro-hed {
-    font-size: 6.5rem;
+    font-size: 3rem;
     margin-top: 5px;
     margin-bottom: 0;
     letter-spacing: 1.5px;
@@ -30,17 +30,17 @@
   }
 
   #intro-sub {
-    font-size: 1.2rem;
-    color: var(--squid-nk);
+    font-size: 1rem;
+    color: var(--squidink);
     text-align: center;
     margin: 1rem;
     opacity: 0.55;
-    padding: 2rem;
+    padding: 0.5rem;
     font-family: var(--font-main);
   }
 
   #intro__date {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: var(--squidink);
     margin: 0px;
     margin-top: 15px;
