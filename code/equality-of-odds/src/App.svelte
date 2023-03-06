@@ -2,7 +2,7 @@
   import Logo from "./Components/Logo.svelte";
   import Title from "./Components/Title.svelte";
   import Intro from "./Components/Intro.svelte";
-  import Discussion1 from "./Components/Discussion1.svelte";
+  import EODefinition from "./Components/EODefinition.svelte";
   import FairnessMeasure from "./Components/FairnessMeasure.svelte";
   import AchievingFairness from "./Components/AchievingFairness.svelte";
   import Conclusion from "./Components/Conclusion.svelte";
@@ -12,7 +12,7 @@
 <Logo />
 <Title />
 <Intro />
-<Discussion1 />
+<EODefinition />
 <FairnessMeasure />
 <AchievingFairness />
 <Conclusion />
