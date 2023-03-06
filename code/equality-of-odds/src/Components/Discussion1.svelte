@@ -6,87 +6,52 @@
 </script>
 
 <section>
-  <p class="body-header">The Problem:</p>
+  <p class="body-header">Defining Equalized Odds</p>
   <p class="body-text">
-    <br />
-    Here is a tooltip<sup
+    In this article, we will review a well-known fairness criteria, called
+    "Equalized Odds" (EO). EO aims to equalize the error a model makes based on
+    the merit different groups of people have. In the case of a classification
+    model, the errors to compare are 'wrong rejection' and 'wrong acceptance'.
+    As groups generally differ in size, we don't want to compare absolute values
+    and look at the False Negative Rate (FNR)<sup
       ><span
         class="info-tooltip"
-        title="Supervised algorithms learn to predict a specific value based on historical data."
+        title="Probability of an individual with a true positive outcome to receive a negative outcome."
         use:tooltip
         >[&#8505;]
       </span></sup
     >
-  </p>
-  <br />
-  <p class="body-text">
-    And here is an equation:
+    and False Positive Rate (FPR)<sup
+      ><span
+        class="info-tooltip"
+        title="Probability of falsely assigning a positive outcome."
+        use:tooltip
+        >[&#8505;]
+      </span></sup
+    >instead.
+    <br /><br />
+    According to EO, a model is fair if the predictions it makes have the same FNR
+    and FPR across all groups in the dataset. Formally, this can be written as:
     {@html katexify(
-      `y=\\beta_0 + \\beta_1x_1  + \\beta_2x_2 + ... + \\beta_px_p + \\epsilon`,
+      `P(\\hat{Y}=1| Y=y, A=a) = P(\\hat{Y}=1| Y=y, A=b),  y  \\epsilon \\{0,1\\}`,
       true
     )}
+    where {@html katexify(`\\hat{Y}`)} are the model predictions, {@html katexify(
+      `A`
+    )} denotes the group membership (here: limited to two groups) and {@html katexify(
+      `Y`
+    )} represents the ground truth.
+    <br /><br />
+    To understand why equalizing FNR and FPR can give a fair outcome, let’s assume
+    we are building a model that is supposed to predict whether or not individuals
+    from two different groups of students, circles and squares, will complete their
+    degree. The students identified as promising (= likely to complete), will receive
+    a grant.
+    <br /><br />
+    Let’s have a look at the graphics below to see the difference between a model
+    that treats both groups the same and a model that uses EO and treats the groups
+    according to what they deserve/the merit.
   </p>
-
-  <br />
-  <p class="body-text">
-    where: <br />
-  </p>
-  <ul class="body-text">
-    <li>
-      {@html katexify(`y`, false)}: the dependent variable; the thing we are
-      trying to predict.<sup
-        ><span
-          class="info-tooltip"
-          title="If we are using the number of bathrooms to
-            predict housing price, housing price is the dependent variable."
-          use:tooltip
-          >[&#8505;]
-        </span></sup
-      >
-    </li>
-
-    <li>
-      {@html katexify(`x_i`, false)}: the independent variables: the features
-      our model uses to model y.<sup
-        ><span
-          class="info-tooltip"
-          title=" If we are using the number of bathrooms to
-              predict housing price, the number of bathrooms is the independent variable."
-          use:tooltip
-          >[&#8505;]
-        </span></sup
-      >
-    </li>
-    <li>
-      {@html katexify(`\\beta_i`, false)}: the coefficients (aka "weights") of
-      our regression model. These are the foundations of our model. They are
-      what our model "learns" during optimization.<sup
-        ><span
-          class="info-tooltip"
-          title="The coefficient B<sub>0</sub> represents the
-            intercept of our model, and each other coefficient 
-            B<sub>i</sub> (i > 0) is a slope defining how variable 
-            x<sub>i</sub> contributes to the model. We discuss how to
-            interpret regression coefficients later in the article."
-          use:tooltip
-          >[&#8505;]
-        </span></sup
-      >
-    </li>
-    <li>
-      {@html katexify(`\\epsilon`, false)}: the irreducible error in our model.
-      A term that collects together all the unmodeled parts of our data.
-    </li>
-  </ul>
-  <br />
-  <div id="charts1-container">
-    <div id="scatter1-container">
-      <Scatter1 />
-    </div>
-    <div id="output1-container">
-      <Roc />
-    </div>
-  </div>
 </section>
 
 <style>
