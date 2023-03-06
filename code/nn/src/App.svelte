@@ -17,6 +17,7 @@
   import ActivationFunctions from "./Components/new/ActivationFunctions.svelte";
   import Resources from "./Components/new/Resources.svelte";
   import BackProp from "./Components/new/BackProp.svelte";
+  import VizNet from "./Components/new/VizNet.svelte";
 
   function handleResize() {
     $mobile = window.innerWidth <= 950;
@@ -50,6 +51,7 @@
 <!-- <ActivationFunctions /> -->
 <!-- <Playground /> -->
 <BackProp />
+<VizNet />
 <!-- <BackPropScroll /> -->
 <!-- <CommonArchitectures /> -->
 <Resources />

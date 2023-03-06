@@ -116,16 +116,17 @@
 </script>
 
 <!-- <h1 class='main-title'>Neural Networks</h1> -->
-<section>
-  <div class="scrolly-container-backprop">
-    <div class="charts-container-backprop">
-      <!-- <h2 class="chart-title">{stepTitles[stepIndex]}</h2> -->
-      <div class="chart-holder-backprop">
-        <NetworkBackProp />
+<div id="container">
+  <section>
+    <div class="scrolly-container-backprop">
+      <div class="charts-container-backprop">
+        <!-- <h2 class="chart-title">{stepTitles[stepIndex]}</h2> -->
+        <div class="chart-holder-backprop">
+          <NetworkBackProp />
+        </div>
       </div>
-    </div>
-    <div class="steps-container-backprop">
-      <!-- <div class="step" data-index="0">
+      <div class="steps-container-backprop">
+        <!-- <div class="step" data-index="0">
           <div class="step-content">
             <h2>That Is A Neural Network</h2>
             <hr />
@@ -140,101 +141,124 @@
             <p style="margin:auto; text-align: center;">&#8595</p>
           </div>
         </div> -->
-      <div class="step" data-index="1">
-        <div class="step-content">
-          <h2>Building Blocks: Computational Graphs</h2>
-          <hr />
-          <br />
+        <div class="step" data-index="1">
+          <div class="step-content">
+            <h2>Building Blocks: Computational Graphs</h2>
+            <hr />
+            <br />
 
-          <p>
-            To build intuition, let's first revisit computational graphs.
-            <br /><br />A computational graph has an input node where data is
-            fed into the graph, a function node where the input data is
-            processed, and an output node where the result of the computation is
-            produced.
-          </p>
+            <p>
+              To build intuition, let's first revisit computational graphs.
+              <br /><br />A computational graph has an input node where data is
+              fed into the graph, a function node where the input data is
+              processed, and an output node where the result of the computation
+              is produced.
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="step" data-index="2">
-        <div class="step-content">
-          <h2>Linear Regression</h2>
-          <hr />
-          <br />
+        <div class="step" data-index="2">
+          <div class="step-content">
+            <h2>Linear Regression</h2>
+            <hr />
+            <br />
 
-          <p>
-            We can represent all sorts of algorithms with this framework. For
-            example, let's look at an equation for <a
-              href="https://mlu-explain.github.io/linear-regression/"
-              >Linear Regression</a
-            >:
-            <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> To represent this as a graph, we need only weight each
-            edge connecting our input nodes to our function node, and have our
-            function represent a linear function on a weighted sum:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
-          </p>
+            <p>
+              We can represent all sorts of algorithms with this framework. For
+              example, let's look at an equation for <a
+                href="https://mlu-explain.github.io/linear-regression/"
+                >Linear Regression</a
+              >:
+              <br /><br />
+              {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
+              <br /><br /> To represent this as a graph, we need only weight
+              each edge connecting our input nodes to our function node, and
+              have our function represent a linear function on a weighted sum:<br
+              />
+              linear = {@html katexify(
+                `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
+                false
+              )}
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="step" data-index="3">
-        <div class="step-content">
-          <h2>Logistic Regression</h2>
-          <hr />
-          <br />
-          <p>
-            Extending this representation to <a
-              href="https://mlu-explain.github.io/logistic-regression/"
-              >Logistic Regression</a
-            >
-            is dead simple, we need only swap the linear function with a sigmoid
-            function:
-            <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> In this manner, our computational graph now represents
-            the following:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
-          </p>
+        <div class="step" data-index="3">
+          <div class="step-content">
+            <h2>Logistic Regression</h2>
+            <hr />
+            <br />
+            <p>
+              Extending this representation to <a
+                href="https://mlu-explain.github.io/logistic-regression/"
+                >Logistic Regression</a
+              >
+              is dead simple, we need only swap the linear function with a sigmoid
+              function:
+              <br /><br />
+              {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
+              <br /><br /> In this manner, our computational graph now
+              represents the following:<br />
+              linear = {@html katexify(
+                `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
+                false
+              )}
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="step" data-index="4">
-        <div class="step-content">
-          <h2>Artificial Neurons <br />& Perceptrons</h2>
-          <hr />
-          <br />
+        <div class="step" data-index="4">
+          <div class="step-content">
+            <h2>Artificial Neurons <br />& Perceptrons</h2>
+            <hr />
+            <br />
 
-          <p>
-            Extending this representation to <a
-              href="https://mlu-explain.github.io/logistic-regression/"
-              >Logistic Regression</a
-            >
-            is dead simple, we need only swap out the linear function for the sigmoid
-            function:
-            <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> In this manner, our computational graph now represents
-            the following:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
-          </p>
+            <p>
+              Extending this representation to <a
+                href="https://mlu-explain.github.io/logistic-regression/"
+                >Logistic Regression</a
+              >
+              is dead simple, we need only swap out the linear function for the sigmoid
+              function:
+              <br /><br />
+              {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
+              <br /><br /> In this manner, our computational graph now
+              represents the following:<br />
+              linear = {@html katexify(
+                `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
+                false
+              )}
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  <br />
+  <h3 class="body-header">A Note On Optimization</h3>
+  <hr />
+  <p class="body-text">
+    Thanks for reading! We hope that the article is insightful no matter where
+    you are along your machine learning journey, and that you came away with a
+    better understanding of K-Fold Cross-Validation in the context of machine
+    learning.
+    <br /><br />
+  </p>
+  <br /><br /><br />
+</div>
 
 <style>
+  .body-header,
+  .body-text {
+    color: var(--paper);
+  }
+
+  div#container {
+    background-color: var(--darksquidink);
+  }
   section {
     padding-bottom: 5rem;
     background-color: var(--darksquidink);
     color: var(--white);
+    max-width: 1200px;
+    margin: auto;
   }
 
   .scrolly-container-backprop {
@@ -305,10 +329,14 @@
     color: var(--paper);
   }
 
-  hr {
+  .step-content > hr {
     width: 100%;
     margin: 5px auto;
     border: 1px solid var(--stone);
     opacity: 0.6;
+  }
+
+  hr {
+    border: 1px solid var(--stone);
   }
 </style>

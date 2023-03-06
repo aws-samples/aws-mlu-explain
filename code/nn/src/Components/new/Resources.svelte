@@ -2,7 +2,37 @@
 
 <section id="resources">
   <br />
-  <h1>References + Open Source</h1>
+  <h3 class="body-header">Thanks For Reading</h3>
+  <hr />
+  <p class="body-text">
+    Thanks for reading! We hope that the article is insightful no matter where
+    you are along your machine learning journey, and that you came away with a
+    better understanding of K-Fold Cross-Validation in the context of machine
+    learning.
+    <br /><br />
+    To learn more about machine learning, check out our
+    <a class="on-end" href="https://aws.amazon.com/machine-learning/mlu/"
+      >self-paced courses</a
+    >, our
+    <a
+      class="on-end"
+      href="https://www.youtube.com/channel/UC12LqyqTQYbXatYS9AA7Nuw"
+      >YouTube videos</a
+    >, and the
+    <a class="on-end" href="https://d2l.ai/">Dive into Deep Learning</a>
+    textbook. If you have any comments or ideas related to
+    <a class="on-end" href="https://mlu-explain.github.io/"
+      >MLU-Explain articles</a
+    >, feel free to reach out
+    <a class="on-end" href="https://twitter.com/jdwlbr">directly</a>. The code
+    for this article is available
+    <a class="on-end" href="https://github.com/aws-samples/aws-mlu-explain"
+      >here</a
+    >.
+  </p>
+  <br /><br />
+  <h3 class="body-header">References + Open Source</h3>
+  <hr />
   <p class="body-text">
     This article is a product of the following resources + the awesome people
     who made (and contributed to) them:
@@ -13,14 +43,14 @@
     <a
       class="on-end"
       href="https://statmodeling.stat.columbia.edu/2022/01/27/regression-and-other-stories-free-pdf/"
-      >[1] Regression And Other Stories</a
-    ><br />
+      >Regression And Other Stories</a
+    >
     (Gelman, Hill and Vehtari 2020).
   </p>
   <p class="resource-item">
     <a class="on-end" href="https://hastie.su.domains/Papers/ESLII.pdf"
-      >[2] Elements of Statistical Learning</a
-    ><br />
+      >Elements of Statistical Learning</a
+    >
     (John Ross Quinlan, 1986).
   </p>
 
@@ -28,22 +58,22 @@
     <a
       class="on-end"
       href="https://www.amazon.com/Mathematical-Statistics-Analysis-Available-Enhanced/dp/0534399428"
-      >[3] Mathematical Statistics and Data Analysis</a
-    ><br />
+      >Mathematical Statistics and Data Analysis</a
+    >
     (John A. Rice, 2010).
   </p>
 
   <p class="resource-item">
-    <a class="on-end" href="https://d3js.org/">D3.js</a><br />(Mike Bostock &
-    Philippe Rivière)
+    <a class="on-end" href="https://d3js.org/">D3.js</a> (Mike Bostock & Philippe
+    Rivière)
   </p>
 
   <p class="resource-item">
-    <a class="on-end" href="https://katex.org/">KaTeX</a> <br />(Emily Eisenberg
-    & Sophie Alpert)
+    <a class="on-end" href="https://katex.org/">KaTeX</a> (Emily Eisenberg & Sophie
+    Alpert)
   </p>
   <p class="resource-item">
-    <a class="on-end" href="https://svelte.dev/">Svelte</a><br />(Rich Harris)
+    <a class="on-end" href="https://svelte.dev/">Svelte</a> (Rich Harris)
   </p>
   <br />
   <br />
@@ -51,36 +81,30 @@
 </section>
 
 <style>
-  /* overwrite */
-  h1 {
-    max-width: 600px;
-    margin: auto;
-    font-size: 2.6rem;
-    margin-bottom: 2rem;
-    background-color: var(--squidink);
-    color: white;
-    font-family: var(--font-mono);
-  }
-
   #resources {
-    background-color: var(--stone);
+    background-color: var(--paper);
     color: var(--squidink);
     padding: 5rem;
   }
 
   .resource-item {
-    max-width: 600px;
+    max-width: var(--max-width);
     margin: 0 auto;
     text-align: left;
     font-size: var(--size-default);
     line-height: 1.5em;
-    font-family: "Amazon Ember";
+    font-family: var(--font-light);
     color: var(--squidink);
   }
 
   a.on-end {
     text-decoration: underline;
-    ccolor: var(--darksquidink);
+    color: var(--darksquidink);
+    font-family: var(--font-heavy);
+  }
+  a.on-end:hover {
+    color: var(--paper);
+    text-decoration: none;
   }
 
   /* mobile */

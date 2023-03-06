@@ -80,7 +80,7 @@
 
   a.on-end {
     text-decoration: underline;
-    ccolor: var(--darksquidink);
+    color: var(--darksquidink);
   }
 
   /* mobile */

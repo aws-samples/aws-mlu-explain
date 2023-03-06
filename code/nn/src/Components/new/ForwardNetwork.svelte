@@ -24,15 +24,13 @@
   //   $: numLayers = $numLayers;
   $: maxNumNeurons = max($network) + 1;
 
-  $: console.log("maxNumNeurons", $numLayers);
-
   let height;
   let width;
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  let nodeWidth = 70;
-  let nodeHeight = 40;
+  let nodeWidth = 50;
+  let nodeHeight = 30;
 
   function positionElements(numElements, maxNumNeurons) {
     const interval = (maxNumNeurons - 1 - numElements + 1) / 2;
@@ -110,11 +108,7 @@
     .y((d) => yScale(d));
 </script>
 
-<div
-  id="network-chart-backprop"
-  bind:offsetWidth={width}
-  bind:offsetHeight={height}
->
+<div id="network-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
   <svg {width} height={height + $marginScroll.top + $marginScroll.bottom}>
     {#if visible}
       <!-- edges -->
@@ -308,7 +302,7 @@
     transition: all 0.45s;
   }
   .nn-edge {
-    stroke: var(--stone);
+    stroke: var(--squidink);
     stroke-width: 1.5;
     stroke-dasharray: 5;
     opacity: 0.95;
@@ -334,27 +328,91 @@
     }
   }
   .nn-node {
-    stroke: var(--white);
+    stroke: var(--darksquidink);
     stroke-width: 2.5;
     fill-opacity: 1;
     transition: all 0.45s;
   }
   .activation-rect {
-    stroke: var(--white);
+    stroke: var(--darksquidink);
     stroke-width: 4;
     /* stroke-dasharray: 15; */
     fill: none;
     transition: all 0.45s;
   }
-  #network-chart-backprop {
+  #network-chart {
     width: 100%;
     max-height: 100%;
     height: 100%;
     background: conic-gradient(
         from 90deg at 1px 1px,
         #0000 90deg,
-        rgba(243, 240, 240, 0.05) 0
+        rgba(0, 0, 0, 0.05) 0
       )
       0 0/20px 20px;
+  }
+
+  .regression-circle {
+    fill: var(--primary);
+    stroke-width: 0;
+  }
+
+  .regression-line {
+    stroke: var(--squidink);
+    stroke-width: 3.5;
+    fill: none;
+  }
+
+  .residual-line {
+    stroke: var(--cosmos);
+    stroke-width: 1.8;
+    opacity: 0.5;
+  }
+
+  .annotation-line {
+    stroke-width: 1.5;
+  }
+
+  .highlight-text {
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 4px;
+    pointer-events: none;
+    stroke: var(--squidink);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    fill: white;
+  }
+
+  .axis-label {
+    font-weight: bold;
+  }
+
+  .axis-text {
+    font-size: 0.8rem;
+  }
+
+  .grid-line {
+    opacity: 0.075;
+  }
+
+  .axis-label {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  /* ipad */
+  @media screen and (max-width: 950px) {
+    .axis-label {
+      font-size: 0.8rem;
+    }
+  }
+  /* mobile */
+  @media screen and (max-width: 750px) {
+    .axis-label {
+      font-size: 0.75rem;
+    }
   }
 </style>

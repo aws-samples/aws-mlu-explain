@@ -27,3 +27,9 @@ export const numLayersInteractive = derived(
 export const showLayerLine = writable(false);
 export const showSubScript = writable(false);
 export const drawActivation = writable(false);
+
+// viz
+export const playAnimation = writable(true);
+export const animationDuration = writable(0.5);
+export const ggg = writable();
+export const points = writable([1, 2, 3]);

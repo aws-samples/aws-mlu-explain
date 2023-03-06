@@ -1,5 +1,5 @@
 <script>
-  import NetworkChart from "../NetworkChart.svelte";
+  import ForwardNetwork from "./ForwardNetwork.svelte";
   import { onMount } from "svelte";
   import { select } from "d3-selection";
   import {
@@ -122,7 +122,7 @@
     <div class="charts-container">
       <!-- <h2 class="chart-title">{stepTitles[stepIndex]}</h2> -->
       <div class="chart-holder">
-        <NetworkChart />
+        <ForwardNetwork />
       </div>
     </div>
     <div class="steps-container">

@@ -74,14 +74,14 @@
     margin: auto;
     font-size: var(--size-default);
     font-family: var(--font-light);
-    max-width: 900px;
+    max-width: var(--max-width);
   }
 
   td,
   th {
     border: 3px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 4px;
     color: var(--squid-ink);
   }
 
