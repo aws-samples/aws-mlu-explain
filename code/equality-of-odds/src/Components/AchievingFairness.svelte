@@ -6,7 +6,7 @@
 </script>
 
 <section>
-  <p class="body-header">Equalized Odds to achieve Fairness</p>
+  <p class="body-header">Equalized Odds to achieve fairness</p>
   <p class="body-text">
     Secondly, we can use EO to actually change the predictions a model makes to
     meet the probability equation we reviewed earlier.

@@ -6,7 +6,7 @@
 </script>
 
 <section>
-  <p class="body-header">Equalized Odds as Fairness Measure</p>
+  <p class="body-header">Equalized Odds to measure fairness</p>
   <p class="body-text">
     Using the EO equation, we can derive several different metrics now that can
     be used to measure how fair a model is. For example, we can look at:
