@@ -3,12 +3,11 @@
   <!-- <h1 id="intro-sub">
     A Visual Introduction To (Almost) Everything You Should Know
   </h1> -->
-  <br />
   <h3 id="intro-author">
     <a id="author-link" href="https://twitter.com/jdwlbr">Jared Wilber</a>,
     March 2023
   </h3>
-  <br /><br />
+  <br />
 </section>
 
 <style>

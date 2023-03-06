@@ -31,7 +31,7 @@
     >.
   </p>
   <br /><br />
-  <h3 class="body-header">References + Open Source</h3>
+  <!-- <h3 class="body-header">References + Open Source</h3>
   <hr />
   <p class="body-text">
     This article is a product of the following resources + the awesome people
@@ -77,7 +77,7 @@
   </p>
   <br />
   <br />
-  <br />
+  <br /> -->
 </section>
 
 <style>

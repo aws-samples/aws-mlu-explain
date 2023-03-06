@@ -294,9 +294,9 @@
     border-radius: 5;
     transition: all 0.45s;
     height: 100%;
-    background-color: rgb(255, 164, 209);
-    background-color: var(--bg);
-    border: 1px solid red;
+    /* background-color: rgb(255, 164, 209); */
+    background-color: rgba(0, 0, 0, 0);
+    /* border: 1px solid red; */
   }
   .nn-text {
     font-size: 12px;

@@ -131,12 +131,12 @@
     width: 1000px;
     grid-template-columns: 80% 20%;
     margin: auto;
-    /* background: conic-gradient(
+    background: conic-gradient(
         from 90deg at 1px 1px,
         #0000 90deg,
         rgba(243, 240, 240, 0.05) 0
       )
-      0 0/20px 20px; */
+      0 0/20px 20px;
   }
   .network-plot {
     width: 100%;

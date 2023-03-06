@@ -10,9 +10,14 @@
     numLayers,
     showLayerLine,
     showSubScript,
+    stepIndex,
   } from "../../store";
   import { line } from "d3-shape";
   import { fade, fly, draw } from "svelte/transition";
+  import { drawPath } from "../../animations";
+  //   import OutputNeuron from "../OutputNeuron.svelte";
+  import { positionElements } from "../../utils";
+  import { logistic, perceptron } from "../../outputModelWeights";
 
   onMount(() => {
     // render elements after drawn to canvas
@@ -24,24 +29,15 @@
   //   $: numLayers = $numLayers;
   $: maxNumNeurons = max($network) + 1;
 
+  $: console.log("index", $stepIndex);
+
   let height;
   let width;
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  let nodeWidth = 50;
-  let nodeHeight = 30;
-
-  function positionElements(numElements, maxNumNeurons) {
-    const interval = (maxNumNeurons - 1 - numElements + 1) / 2;
-
-    // Create an array of positions for each element
-    const positions = [];
-    for (let i = 0; i < numElements; i++) {
-      positions.push(interval + i);
-    }
-    return positions;
-  }
+  let nodeWidth = 70;
+  let nodeHeight = 40;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])
@@ -50,62 +46,58 @@
     .domain([-1, maxNumNeurons])
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
-  function setLayer(layer) {
-    layer == 0 ? "input" : layer == $numLayers - 1 ? "output" : "hidden";
-  }
-
-  // {#each Array($numLayers).fill(null) as index, layer}
-  // {#each positionElements($network[layer], maxNumNeurons) as yPosition}
-
-  $: pathData = [];
-
-  $: {
-    console.log("yessir", $numLayers);
-    for (const layer of Array($numLayers).fill(null).entries()) {
-      // store data in pathData object
-      console.log("layer", layer);
-      let neuron = { layer: layer, num: $numLayers };
-      pathData.push(neuron);
-      console.log("update?");
-    }
-    console.log("pd", pathData);
-  }
-
-  $: layersArray = [];
-  $: {
-    for (let i = 0; i < $numLayers; i++) {
-      const layer = i;
-      for (let yPosition of positionElements($network[layer], maxNumNeurons)) {
-        for (let prevYPosition of positionElements(
-          $network[layer - 1],
-          maxNumNeurons
-        )) {
-          layersArray.push({ layer, yPosition, prevYPosition });
-        }
-      }
-    }
-  }
-
-  // $: {
-  //   for (const [index, layer] of Array($numLayers).fill(null).entries()) {
-  //     for (const yPosition of positionElements(
-  //       $network[layer],
-  //       maxNumNeurons
-  //     )) {
-  //       // store data in pathData object
-  //       let neuron = { layer: layer, yPosition: yPosition, num: $numLayers };
-  //       pathData = [...pathData, neuron];
-  //       console.log("update?");
-  //     }
-  //   }
-  // }
-
-  $: console.log("update", layersArray, $numLayers);
-
-  // d3 line stuff
   $: pathLine = line()
-    .x((d) => xScale(d))
-    .y((d) => yScale(d));
+    .x((d) => xScale(d.x))
+    .y((d) => yScale(d.y))
+    .curve();
+
+  let activationOffset = 50;
+
+  let animationBegin = false;
+  $: layerValue = 4;
+
+  $: nnWeights = [
+    [1, 0.2, 1, 1, 1], // layer 1
+    [1, 0.2, 1, 1, 1], // layer 1
+    [0.4, 1, 1, 1, 1], // layer 1
+    [1, 1, 1, 1, 1], // layer 1
+    [1, 1, 1, 1, 1], // layer 1
+    [1, 1, 1, 1, 1], // layer 1
+    [1, 1, 1, 1, 1], // layer 1
+  ];
+
+  let input1 = 2;
+  let input2 = 4;
+  let inputs = [2, 4];
+  let weights = [10, 10];
+  inputs.reverse();
+
+  // define model
+  let currentModel = perceptron;
+
+  function updateNeuron(layer, yPosition) {
+    // return `${layer}\n${yPosition}`;
+    if (layer === 1) {
+      return inputs[yPosition];
+    }
+    if (layer === 2) {
+      let weightedSum = 0;
+      for (let i = 0; i < inputs.length; i++) {
+        const product = inputs[i] * weights[i];
+        weightedSum += product;
+      }
+      return weightedSum;
+    }
+    if (layer === 3) {
+      return currentModel(inputs[0], inputs[1]);
+    }
+    return nnWeights[layer][yPosition];
+    // if layer == 1
+
+    // if .layer == 2
+    // ...
+    // layer is
+  }
 </script>
 
 <div id="network-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
@@ -115,16 +107,35 @@
       {#each Array($numLayers).fill(null) as i, layer}
         {#each positionElements($network[layer], maxNumNeurons) as yPosition}
           {#if layer > 0}
-            {#each positionElements($network[layer - 1], maxNumNeurons) as prevYPosition}
-              <line
+            {#each positionElements($network[layer - 1], maxNumNeurons) as prevYPosition, j}
+              {console.log("layer", layer, "i", i, "yPosition", yPosition)}
+              <path
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}
-                x1={xScale(layer - 1)}
-                y1={yScale(prevYPosition)}
-                x2={xScale(layer)}
-                y2={yScale(yPosition)}
+                d={`
+                    M ${xScale(layer - 1)} ${yScale(prevYPosition)}
+                    L ${xScale(layer)} ${yScale(yPosition)}
+                  `}
                 class="nn-edge"
               />
+              <g>
+                <!-- {#if animationBegin} -->
+                <circle class="moving-circle" />
+                <text class="moving-text" alignment-baseline="middle"
+                  >{updateNeuron(layer, j)}</text
+                >
+                <!-- {/if} -->
+                <animateMotion
+                  begin="{layer}s"
+                  dur="1s"
+                  repeatCount="indefinite"
+                  path={`
+                      M ${xScale(layer - 1)} ${yScale(prevYPosition)}
+                      L ${xScale(layer)} ${yScale(yPosition)}
+                    `}
+                  onbegin="document.querySelector('circle').setAttribute('fill', 'black');"
+                />
+              </g>
             {/each}
           {/if}
         {/each}
@@ -140,72 +151,59 @@
               yScale(yPosition) - nodeHeight / 2
             })`}
           >
-            <rect
-              in:fly|local={{ x: -50, duration: 500 }}
-              out:fade|local={{ duration: 300 }}
-              class="nn-node {layer == 0
-                ? 'input'
-                : layer == $numLayers - 1
-                ? 'output'
-                : 'hidden'}"
-              width={nodeWidth}
-              height={nodeHeight}
-            />
-            <text
-              in:fly|local={{ x: -50, duration: 500 }}
-              out:fade|local={{ duration: 300 }}
-              class="nn-text"
-              text-anchor="middle"
-              alignment-baseline="middle"
-              dx={nodeWidth / 2}
-              dy={nodeHeight / 2}
-              >{layer == 0
-                ? $labels[0]
-                : layer == $numLayers - 1
-                ? $labels[2]
-                : $labels[1]}
-              {#if layer === 0 && $showSubScript}
-                <tspan class="subscript" dy="4"
-                  >{Math.abs(yPosition - 2.5)}</tspan
-                >
-              {/if}</text
-            >
+            {#if layer !== $numLayers - 1}
+              <rect
+                in:fly|local={{ x: -50, duration: 500 }}
+                out:fade|local={{ duration: 300 }}
+                class="nn-node {layer == 0
+                  ? 'input'
+                  : layer == $numLayers - 1
+                  ? 'output'
+                  : 'hidden'}"
+                width={nodeWidth}
+                height={nodeHeight}
+              />
+              <text
+                in:fly|local={{ x: -50, duration: 500 }}
+                out:fade|local={{ duration: 300 }}
+                class="nn-text"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                dx={nodeWidth / 2}
+                dy={nodeHeight / 2}
+                >{$labels[layer]}
+                {#if layer === 0 && $showSubScript}
+                  <tspan class="subscript" dy="4"
+                    >{Math.abs(yPosition - 2.5)}</tspan
+                  >
+                {/if}</text
+              >
+            {/if}
+            {#if $drawActivation && [1, $numLayers - 2].includes(layer)}
+              <rect
+                in:draw={{ duration: 1000 }}
+                out:draw={{ duration: 300 }}
+                class="activation-rect"
+                width={nodeWidth + activationOffset}
+                height={nodeHeight + activationOffset}
+                x={-activationOffset / 2}
+                y={-activationOffset / 2}
+              />
+              <text
+                in:fly|local={{ duration: 500 }}
+                out:fade|local={{ duration: 200 }}
+                class="nn-text"
+                text-anchor="start"
+                alignment-baseline="middle"
+                x={-activationOffset / 2}
+                y={activationOffset + nodeHeight / 2 + 12}
+                >Artifical Neuron</text
+              >
+            {/if}
           </g>
         {/each}
       {/each}
 
-      <!--  <g>
-          <rect
-            in:fly|local={{ x: -50, duration: 500 }}
-            out:fade|local={{ duration: 500 }}
-            class="nn-node {layer == 0
-              ? 'input'
-              : layer == $numLayers - 1
-              ? 'output'
-              : 'hidden'}"
-            width={nodeWidth}
-            height={nodeHeight}
-            x={xScale(layer) - nodeWidth / 2}
-            y={yScale(yPosition) - nodeHeight / 2}
-          />
-          <text
-            in:fly|local={{ x: -50, duration: 500 }}
-            out:fade|local={{ duration: 500 }}
-            class="nn-text"
-            x={xScale(layer)}
-            y={yScale(yPosition)}
-            text-anchor="middle"
-            alignment-baseline="middle"
-            >{layer == 0
-              ? $labels[0]
-              : layer == $numLayers - 1
-              ? $labels[2]
-              : $labels[1]}
-            {#if layer === 0 && $showSubScript}
-              <tspan class="subscript" dy="4">{Math.abs(yPosition - 2.5)}</tspan>
-            {/if}</text
-          >
-          </g> -->
       <!-- layer labels -->
       {#if $showLayerLine}
         {#each [0, 1, $numLayers - 1] as layer, index}
@@ -251,33 +249,49 @@
         {/each}
       {/if}
 
-      {#if $drawActivation}
-        <rect
-          in:draw={{ duration: 1000 }}
-          out:draw={{ duration: 400 }}
-          class="activation-rect"
-          width={nodeWidth * 1.5}
-          height={nodeHeight * 2}
-          x={xScale(1) - (nodeWidth * 1.5) / 2}
-          y={yScale(2) - nodeHeight / 8}
-        />
-        <text
-          in:fly|local={{ duration: 500 }}
-          out:fade|local={{ duration: 200 }}
-          class="nn-text"
-          x={xScale(1) - (nodeWidth * 1.5) / 2}
-          y={yScale(2) - 20}
-          text-anchor="start"
-          alignment-baseline="middle">Artifical Neuron</text
+      <!-- manually draw final layer here, so it updates smoothly -->
+      {#each positionElements($network[$numLayers - 1], maxNumNeurons) as yPosition}
+        <g
+          class="nn-g"
+          transform={`translate(${
+            xScale($numLayers - 1) - nodeWidth / 2
+          } ${yScale(yPosition)})`}
         >
-      {/if}
+          <!-- <OutputNeuron {width} {height} /> -->
+        </g>
+      {/each}
     {/if}
+
+    <!-- animate line -->
 
     <!-- get path of entire network -->
   </svg>
 </div>
 
 <style>
+  .moving-text {
+    font-size: 16px;
+    /* font-weight: bold; */
+    color: black;
+    text-anchor: middle;
+    paint-order: stroke fill;
+    stroke: white;
+    stroke-width: 4;
+    text-anchor: middle;
+    font-family: var(--font-mono);
+  }
+  .moving-circle {
+    stroke: var(--squidink);
+    stroke-width: 2;
+    fill: var(--paper);
+    r: 14;
+  }
+  .pp {
+    stroke: black;
+    stroke-width: 3;
+    fill: none;
+    /* opacity: 0; */
+  }
   svg {
     border: 4px solid var(--stone);
     border-radius: 5;
@@ -306,7 +320,7 @@
     stroke-width: 1.5;
     stroke-dasharray: 5;
     opacity: 0.95;
-    animation: dash 18s infinite linear;
+    animation: dash 30s infinite linear;
     transition: all 0.45s;
   }
   .input {
@@ -330,13 +344,12 @@
   .nn-node {
     stroke: var(--darksquidink);
     stroke-width: 2.5;
-    fill-opacity: 1;
+    fill-opacity: 0.95;
     transition: all 0.45s;
   }
   .activation-rect {
-    stroke: var(--darksquidink);
-    stroke-width: 4;
-    /* stroke-dasharray: 15; */
+    stroke: var(--squidink);
+    stroke-width: 5;
     fill: none;
     transition: all 0.45s;
   }
@@ -350,57 +363,6 @@
         rgba(0, 0, 0, 0.05) 0
       )
       0 0/20px 20px;
-  }
-
-  .regression-circle {
-    fill: var(--primary);
-    stroke-width: 0;
-  }
-
-  .regression-line {
-    stroke: var(--squidink);
-    stroke-width: 3.5;
-    fill: none;
-  }
-
-  .residual-line {
-    stroke: var(--cosmos);
-    stroke-width: 1.8;
-    opacity: 0.5;
-  }
-
-  .annotation-line {
-    stroke-width: 1.5;
-  }
-
-  .highlight-text {
-    text-transform: uppercase;
-    font-family: var(--font-mono);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4px;
-    pointer-events: none;
-    stroke: var(--squidink);
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    fill: white;
-  }
-
-  .axis-label {
-    font-weight: bold;
-  }
-
-  .axis-text {
-    font-size: 0.8rem;
-  }
-
-  .grid-line {
-    opacity: 0.075;
-  }
-
-  .axis-label {
-    text-transform: uppercase;
-    font-size: 0.9rem;
   }
 
   /* ipad */

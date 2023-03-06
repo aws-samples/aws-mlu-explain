@@ -1,3 +1,14 @@
+export function positionElements(numElements, maxNumNeurons) {
+  const interval = (maxNumNeurons - 1 - numElements + 1) / 2;
+
+  // Create an array of positions for each element
+  const positions = [];
+  for (let i = 0; i < numElements; i++) {
+    positions.push(interval + i);
+  }
+  return positions;
+}
+
 // transpose matrix
 export const transpose = (m) => {
   return m[0].map((x, i) => m.map((x) => x[i]));
