@@ -13,7 +13,7 @@
 <style>
   #intro {
     /* max-width: 100%; */
-    text-align: left;
+    /* text-align: left; */
     padding-top: 0rem;
     padding-left: 1rem;
     width: 80%;

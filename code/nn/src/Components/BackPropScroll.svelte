@@ -15,23 +15,23 @@
 
   const target2event = {
     0: () => {
-      select("#network-chart").style("background-color", "teal");
+      // select("#network-chart").style("background-color", "teal");
       stepIndex = 0;
     },
 
     1: () => {
-      select("#network-chart").style("background-color", "skyblue");
+      // select("#network-chart").style("background-color", "skyblue");
       stepIndex = 1;
       console.log("yeah");
     },
     2: () => {
       console.log("yeah");
       stepIndex = 2;
-      select("#network-chart").style("background-color", "coral");
+      // select("#network-chart").style("background-color", "coral");
     },
     3: () => {
       stepIndex = 3;
-      select("#network-chart").style("background-color", "teal");
+      // select("#network-chart").style("background-color", "teal");
 
       console.log("yeah");
     },

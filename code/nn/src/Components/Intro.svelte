@@ -4,8 +4,8 @@
 </script>
 
 <section>
-  <hr />
   <h1>The Power Of Layers</h1>
+  <hr />
   <p class="body-text">
     Linear Regression is a simple and powerful model for predicting a numeric
     response from a set of one or more independent variables. This article will

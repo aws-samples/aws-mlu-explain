@@ -73,7 +73,7 @@
     border-collapse: collapse;
     margin: auto;
     font-size: var(--size-default);
-    font-family: var(--font-main);
+    font-family: var(--font-light);
     max-width: 900px;
   }
 
@@ -83,16 +83,11 @@
     text-align: left;
     padding: 8px;
     color: var(--squid-ink);
-    /* height: 100px; */
   }
 
   td {
     vertical-align: middle;
   }
-
-  /* th:nth-child(1) {
-    border: 0;
-  } */
 
   .table-head {
     font-family: var(--font-heavy);

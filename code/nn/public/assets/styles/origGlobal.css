@@ -4,8 +4,8 @@
   */
   --font-mono: "Amazon Ember Mono";
   --font-heavy: "Amazon Ember Display Heavy";
-  --font-main: "Amazon Ember";
-  --font-light: "Amazon Ember Display Light";
+  --font-main: var(--font-mono);
+  --font-light: var(--font-mono);
 
   /* Colors 
   see: https://brand.amazon.com/aws/visual-guidelines-ob/colors/
@@ -52,23 +52,24 @@
   --primary: var(--darksquidink);
   --secondary: var(--darksquidink);
 
-  --max-width: 800px;
-  --size-default: 17px;
+  --max-width: 600px;
+  --size-default: 16px;
 }
 
 body {
   margin: auto;
   font-family: var(--font-main);
   overflow-x: hidden;
+  background-color: var(--bg);
+  /* background: linear-gradient(90deg, var(--paper) 19px, transparent 1%) center,
+    linear-gradient(var(--paper) 19px, transparent 1%) center, black;
   background-size: 20px 20px;
-  background-color: var(--paper);
-  /* background: conic-gradient(
+  background: conic-gradient(
       from 90deg at 1px 1px,
       #0000 90deg,
-      rgba(0, 0, 0, 0.025) 0
+      rgba(0, 0, 0, 0.05) 0
     )
-    0 0/20px 20px;
-  background-color: var(--paper); */
+    0 0/20px 20px; */
 }
 
 /* Global Reusable Styles For Convenience */
@@ -78,20 +79,19 @@ body {
   text-align: left;
   font-size: var(--size-default);
   line-height: 1.5em;
-  font-family: var(--font-light);
+  font-family: var(--font-main);
 }
 
 .body-header {
   max-width: var(--max-width);
-  margin: auto;
+  margin: 0 auto;
   text-align: left;
-  font-size: var(--size-default);
+  font-size: 35px;
   line-height: 1.5em;
   font-family: var(--font-heavy);
-  /* font-weight: 100; */
-  text-transform: uppercase;
-  /* padding-top: 2rem;
-  padding-bottom: 0.5rem; */
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  text-decoration: underline;
   text-decoration-color: var(--smile);
 }
 
@@ -148,10 +148,10 @@ p {
 }
 
 hr {
-  margin: 5px auto;
-  width: var(--max-width);
-  border: 1px solid var(--squidink);
-  opacity: 0.6;
+  margin: 3rem auto;
+  width: 3%;
+  border: 3px solid var(--smile);
+  opacity: 0;
 }
 
 .slider {

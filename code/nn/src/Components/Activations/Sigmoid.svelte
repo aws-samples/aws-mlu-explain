@@ -39,7 +39,7 @@
     { x: 4.0, y: 0.982 },
   ];
 
-  let width = 100;
+  let width = 80;
   let height = width;
   const padding = 10;
 

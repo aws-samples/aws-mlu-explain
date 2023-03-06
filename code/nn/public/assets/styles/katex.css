@@ -1,5 +1,5 @@
 .katex {
-  font: normal 1.21em KaTeX_Main, Times New Roman, serif;
+  font: normal 16px var(--font-light) KaTeX_Main, Times New Roman, serif;
   line-height: 1.2;
   text-indent: 0;
   text-rendering: auto;
