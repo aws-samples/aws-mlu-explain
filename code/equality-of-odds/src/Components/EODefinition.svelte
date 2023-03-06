@@ -42,13 +42,13 @@
       `Y`
     )} represents the ground truth.
     <br /><br />
-    To understand why equalizing FNR and FPR can give a fair outcome, let’s assume
+    To understand why equalizing FNR and FPR can give a fair outcome, let's assume
     we are building a model that is supposed to predict whether or not individuals
     from two different groups of students, circles and squares, will complete their
     degree. The students identified as promising (= likely to complete), will receive
     a grant.
     <br /><br />
-    Let’s have a look at the graphics below to see the difference between a model
+    Let's have a look at the graphics below to see the difference between a model
     that treats both groups the same and a model that uses EO and treats the groups
     according to what they deserve/the merit.
   </p>

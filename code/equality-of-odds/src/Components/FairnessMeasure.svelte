@@ -3,6 +3,29 @@
   import { tooltip } from "../tooltip";
   import Scatter2 from "./charts/Scatter2.svelte";
   import StackedBar from "./charts/StackedBar.svelte";
+  import Tab_FPRBalance from "./Tab_FPRBalance.svelte";
+  import Tab_EqualOpportunity from "./Tab_EqualOpportunity.svelte";
+  import Tab_ConditionalAccuracyEquality from "./Tab_ConditionalAccuracyEquality.svelte";
+  import Tabs from "./Tabs.svelte";
+  import { mobile } from "../store";
+
+  $: items = [
+    {
+      label: $mobile ? "FPR Balance" : "False Positive Error Rate Balance",
+      value: 1,
+      component: Tab_FPRBalance,
+    },
+    {
+      label: $mobile ? "Equal Opportunity" : "False Negative Error Rate Balance",
+      value: 2,
+      component: Tab_EqualOpportunity,
+    },
+    {
+      label: $mobile ? "Disparate Mistreament" : "Conditional Procedure Accuracy Equality",
+      value: 3,
+      component: Tab_ConditionalAccuracyEquality,
+    },
+  ];
 </script>
 
 <section>
@@ -11,6 +34,7 @@
     Using the EO equation, we can derive several different metrics now that can
     be used to measure how fair a model is. For example, we can look at:
   </p>
+  <Tabs {items} />
   <br />
   <div id="charts2-container">
     <div id="scatter2-container">

@@ -12,3 +12,4 @@ export const marginScroll = writable({
   left: 95,
   right: 30,
 });
+export const mobile = writable(true);
