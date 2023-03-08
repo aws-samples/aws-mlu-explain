@@ -74,7 +74,7 @@
     text-align: left;
     font-size: var(--size-default);
     line-height: 1.5em;
-    font-family: "Amazon Ember";
+    font-family: var(--font-light);
     color: white;
   }
 

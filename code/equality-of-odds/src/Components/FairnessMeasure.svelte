@@ -1,7 +1,7 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
-  import Scatter2 from "./charts/Scatter2.svelte";
+  import Scatter1 from "./charts/Scatter1.svelte";
   import StackedBar from "./charts/StackedBar.svelte";
   import Tab_FPRBalance from "./Tab_FPRBalance.svelte";
   import Tab_EqualOpportunity from "./Tab_EqualOpportunity.svelte";
@@ -16,12 +16,16 @@
       component: Tab_FPRBalance,
     },
     {
-      label: $mobile ? "Equal Opportunity" : "False Negative Error Rate Balance",
+      label: $mobile
+        ? "Equal Opportunity"
+        : "False Negative Error Rate Balance",
       value: 2,
       component: Tab_EqualOpportunity,
     },
     {
-      label: $mobile ? "Disparate Mistreament" : "Conditional Procedure Accuracy Equality",
+      label: $mobile
+        ? "Disparate Mistreament"
+        : "Conditional Procedure Accuracy Equality",
       value: 3,
       component: Tab_ConditionalAccuracyEquality,
     },
@@ -34,34 +38,42 @@
     Using the EO equation, we can derive several different metrics now that can
     be used to measure how fair a model is. For example, we can look at:
   </p>
+  <br />
   <Tabs {items} />
   <br />
-  <div id="charts2-container">
-    <div id="scatter2-container">
-      <Scatter2 />
+  <p class="body-text">
+    Using the EO equation, we can derive several different metrics now that can
+    be used to measure how fair a model is. For example, we Using the EO
+    equation, we can derive several different metrics now that can be used to
+    measure how fair a model is. For example, we can look at:
+  </p>
+  <br /><br />
+  <div id="charts1-container">
+    <div id="scatter1-container">
+      <Scatter1 />
     </div>
-    <div id="output2-container">
+    <div id="output1-container">
       <StackedBar />
     </div>
   </div>
 </section>
 
 <style>
-  #charts2-container {
+  #charts1-container {
     display: grid;
     margin: auto;
-    height: 38vh;
+    height: 45vh;
     width: 70%;
     grid-template-columns: 50% 50%;
     grid-gap: 2%;
     max-width: 1000px;
   }
-  #scatter2-container {
-    max-height: 38vh;
+  #scatter1-container {
+    max-height: 45vh;
   }
-  #output2-container {
+  #output1-container {
     border: var(--sky);
-    max-height: 38vh;
+    max-height: 45vh;
   }
   ul {
     max-width: 600px;

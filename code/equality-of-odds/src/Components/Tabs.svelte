@@ -24,8 +24,7 @@
 
 <style>
   #tab-container {
-    width: 95%;
-    max-width: 1000px;
+    width: var(--max-width);
     margin: auto;
     border-radius: 4px;
   }
@@ -34,7 +33,7 @@
     padding: 40px;
     border: 2px solid var(--smile);
     border-radius: 0 0 0.5rem 0.5rem;
-    background: #f1f3f3;
+    background: var(--bg);
     border-top: 0;
   }
   ul {
@@ -47,7 +46,8 @@
   }
   li {
     margin-bottom: -2px;
-    font-size: 14px;
+    font-size: var(--size-default);
+    font-family: var(--font-light);
   }
 
   span {
@@ -59,19 +59,15 @@
     cursor: pointer;
   }
 
-  span:hover {
-    /* border-color: #e9ecef #e9ecef var(--smile); */
-  }
-
   li:hover {
     color: var(--smile);
   }
 
   li.active > span {
-    color: #495057;
-    background-color: #f1f3f3;
-    border-color: var(--smile) var(--smile) #f1f3f3;
-    background: #f1f3f3;
+    color: var(--darksquidink);
+    background-color: var(--bg);
+    border-color: var(--smile) var(--smile) var(--bg);
+    background: var(--bg);
   }
 
   @media screen and (max-width: 950px) {
