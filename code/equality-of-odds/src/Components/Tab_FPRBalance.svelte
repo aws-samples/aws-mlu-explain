@@ -3,17 +3,21 @@
   import { tooltip } from "../tooltip";
 </script>
 
-<p class="tab-text">
+<p class="body-text">
   <span class="definition-header">False Positive Error Rate Balance</span>
 </p>
 <br />
-<p class="tab-text">
-  <span class="bold">definition</span>: Typically, a regression model will
+<p class="body-text">
+  <span class="bold">Definition</span>: Typically, a regression model will
   contain more than one feature. We call this a
   <i>multivariate regression model</i>. In our example, we model home prices as
-  a function of both the size of the house. </p>
+  a function of both the size of the house.
+</p>
 
 <style>
+  .definition-header {
+    font-family: var(--font-light);
+  }
   #scatter-chart {
     max-height: 30vh;
     width: 500px;

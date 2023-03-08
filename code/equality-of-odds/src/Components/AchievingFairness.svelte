@@ -2,7 +2,7 @@
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
   import Scatter2 from "./charts/Scatter2.svelte";
-  import StackedBar from "./charts/StackedBar.svelte";
+  import ROC from "./charts/ROC.svelte";
 </script>
 
 <section>
@@ -17,7 +17,7 @@
       <Scatter2 />
     </div>
     <div id="output2-container">
-      <StackedBar />
+      <ROC />
     </div>
   </div>
 </section>
@@ -26,18 +26,18 @@
   #charts2-container {
     display: grid;
     margin: auto;
-    height: 38vh;
+    height: 45vh;
     width: 70%;
     grid-template-columns: 50% 50%;
     grid-gap: 2%;
     max-width: 1000px;
   }
   #scatter2-container {
-    max-height: 38vh;
+    max-height: 45vh;
   }
   #output2-container {
     border: var(--sky);
-    max-height: 38vh;
+    max-height: 45vh;
   }
   ul {
     max-width: 600px;
