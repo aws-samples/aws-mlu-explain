@@ -3,6 +3,23 @@
   import { tooltip } from "../tooltip";
   import Scatter2 from "./charts/Scatter2.svelte";
   import ROC from "./charts/ROC.svelte";
+  import Tab_Constraints from "./Tab_Constraints.svelte";
+  import Tab_Postprocessing from "./Tab_Postprocessing.svelte";
+  import Tabs from "./Tabs.svelte";
+  import { mobile } from "../store";
+
+  $: items = [
+    {
+      label: $mobile ? "Training" : "Constrained Optimization during Training",
+      value: 1,
+      component: Tab_Constraints,
+    },
+    {
+      label: $mobile ? "Post Processing" : "Post Processing to achieve EO",
+      value: 2,
+      component: Tab_Postprocessing,
+    },
+  ];
 </script>
 
 <section>
@@ -10,6 +27,14 @@
   <p class="body-text">
     Secondly, we can use EO to actually change the predictions a model makes to
     meet the probability equation we reviewed earlier.
+  </p>
+  <br />
+  <Tabs {items} />
+  <br />
+  <p class="body-text">
+    How can we visualize this search for the ideal combination of TPR and FPR?
+    Very simply, we can plot the so-called ROC curves (have a look at ROC
+    article here) for both groups, circle and square.
   </p>
   <br />
   <div id="charts2-container">

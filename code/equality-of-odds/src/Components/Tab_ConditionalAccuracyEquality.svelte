@@ -8,10 +8,9 @@
 </p>
 <br />
 <p class="body-text">
-  <span class="bold">Definition</span>: Typically, a regression model will
-  contain more than one feature. We call this a
-  <i>multivariate regression model</i>. In our example, we model home prices as
-  a function of both the size of the house.
+  This definition combines the previous two: It requires that the fitted outcome
+  classes (treat/no treat) are independent of protected class membership,
+  conditioning on the actual outcome classes.
 </p>
 
 <style>

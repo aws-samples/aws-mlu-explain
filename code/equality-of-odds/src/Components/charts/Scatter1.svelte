@@ -73,13 +73,13 @@
           stroke="var(--squidink)"
           stroke-dasharray="4"
         />
-        <text
+        <!-- <text
           class="axis-text"
           x="-2"
           y="0"
           text-anchor="end"
           dominant-baseline="middle">{tick}</text
-        >
+        > -->
       </g>
     {/each}
     {#each scatterData as d}
@@ -112,25 +112,27 @@
     <DecisionBoundary1 />
 
     <!-- axis labels -->
-    <text
+    <!-- chart label  and position -->
+    <!-- <text
       class="chart-title"
       y={$margin.top / 2}
       x={(width + $margin.left) / 2}
       text-anchor="middle">Basic Chart Title</text
-    >
+    > -->
     <text
       class="axis-label"
       y={height + $margin.bottom + 10}
       x={(width + $margin.left) / 2}
-      text-anchor="middle">X-Axis Label</text
+      text-anchor="middle">Probability Threshold</text
     >
-    <text
+    <!-- y label and position -->
+    <!-- <text
       class="axis-label"
       y={$margin.left / 2}
       x={-(height / 2)}
       text-anchor="middle"
       transform="rotate(-90)">Y-Axis Label</text
-    >
+    > -->
   </svg>
 </div>
 

@@ -33,7 +33,7 @@
     According to EO, a model is fair if the predictions it makes have the same FNR
     and FPR across all groups in the dataset. Formally, this can be written as:
     {@html katexify(
-      `P(\\hat{Y}=1| Y=y, A=a) = P(\\hat{Y}=1| Y=y, A=b),  y  \\epsilon \\{0,1\\}`,
+      `P(\\hat{Y}=1| Y=y, A=a) = P(\\hat{Y}=1| Y=y, A=b),  \\; y \\: \\epsilon \\: \\{0,1\\}`,
       true
     )}
     where {@html katexify(`\\hat{Y}`)} are the model predictions, {@html katexify(
@@ -46,7 +46,7 @@
     we are building a model that is supposed to predict whether or not individuals
     from two different groups of students, circles and squares, will complete their
     degree. The students identified as promising (= likely to complete), will receive
-    a grant.
+    a treat.
     <br /><br />
     Let's have a look at the graphics below to see the difference between a model
     that treats both groups the same and a model that uses EO and treats the groups

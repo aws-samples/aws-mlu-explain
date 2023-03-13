@@ -19,18 +19,18 @@ export const wronglyRejected = writable(1);
 export const stackedData = tweened([
   {
     xVal: "A",
-    Accepted: 70,
-    Declined: 60,
+    Accepted: 20,
+    Declined: 30,
   },
   {
     xVal: "A Predicted",
-    Accepted: 16,
-    Declined: 14,
+    Accepted: 20,
+    Declined: 30,
   },
-  { xVal: "B", Accepted: 33, Declined: 97 },
+  { xVal: "B", Accepted: 15, Declined: 10 },
   {
     xVal: "B Predicted",
-    Accepted: 32,
-    Declined: 48,
+    Accepted: 15,
+    Declined: 10,
   },
 ]);

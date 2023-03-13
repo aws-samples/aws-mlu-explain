@@ -4,27 +4,29 @@
   import Scatter1 from "./charts/Scatter1.svelte";
   import StackedBar from "./charts/StackedBar.svelte";
   import Tab_FPRBalance from "./Tab_FPRBalance.svelte";
-  import Tab_EqualOpportunity from "./Tab_EqualOpportunity.svelte";
+  import Tab_FNRBalance from "./Tab_FNRBalance.svelte";
   import Tab_ConditionalAccuracyEquality from "./Tab_ConditionalAccuracyEquality.svelte";
   import Tabs from "./Tabs.svelte";
   import { mobile } from "../store";
 
   $: items = [
     {
-      label: $mobile ? "FPR Balance" : "False Positive Error Rate Balance",
+      label: $mobile 
+        ? "FPR" 
+        : "False Positive Error Rate Balance",
       value: 1,
       component: Tab_FPRBalance,
     },
     {
       label: $mobile
-        ? "Equal Opportunity"
+        ? "FNR"
         : "False Negative Error Rate Balance",
       value: 2,
-      component: Tab_EqualOpportunity,
+      component: Tab_FNRBalance,
     },
     {
       label: $mobile
-        ? "Disparate Mistreament"
+        ? "Conditional Procedure Accuracy"
         : "Conditional Procedure Accuracy Equality",
       value: 3,
       component: Tab_ConditionalAccuracyEquality,
@@ -42,10 +44,7 @@
   <Tabs {items} />
   <br />
   <p class="body-text">
-    Using the EO equation, we can derive several different metrics now that can
-    be used to measure how fair a model is. For example, we Using the EO
-    equation, we can derive several different metrics now that can be used to
-    measure how fair a model is. For example, we can look at:
+    See if you can drag the slider in the interactive below to re-create the metrics above.
   </p>
   <br /><br />
   <div id="charts1-container">

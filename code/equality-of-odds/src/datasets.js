@@ -1,134 +1,124 @@
 export const scatterData = [
-  { xPos: 0.795, yPos: -0.1716544635, label: 1, group: "circle" },
-  { xPos: 0.906, yPos: 0.0699930544, label: 1, group: "circle" },
-  { xPos: 0.638, yPos: 0.1232378811, label: 1, group: "circle" },
-  { xPos: 0.857, yPos: -0.0665966863, label: 1, group: "circle" },
-  { xPos: 0.628, yPos: 0.0248813499, label: 1, group: "circle" },
-  { xPos: 0.604, yPos: -0.1192886333, label: 1, group: "circle" },
-  { xPos: 0.661, yPos: 0.2235662976, label: 1, group: "circle" },
-  { xPos: 0.718, yPos: 0.263013378, label: 1, group: "circle" },
-  { xPos: 0.524, yPos: -0.262355448, label: 1, group: "circle" },
-  { xPos: 0.736, yPos: 0.0104150841, label: 1, group: "circle" },
-  { xPos: 0.628, yPos: -0.1357085273, label: 1, group: "circle" },
-  { xPos: 0.535, yPos: 0.1624224374, label: 1, group: "circle" },
-  { xPos: 0.495, yPos: -0.1812933744, label: 1, group: "circle" },
-  { xPos: 0.666, yPos: -0.030164428, label: 1, group: "circle" },
-  { xPos: 0.515, yPos: 0.0042346245, label: 1, group: "circle" },
-  { xPos: 0.679, yPos: -0.2248705112, label: 1, group: "circle" },
-  { xPos: 0.633, yPos: 0.2307656979, label: 1, group: "circle" },
-  { xPos: 0.963, yPos: -0.083391391, label: 1, group: "circle" },
-  { xPos: 0.481, yPos: -0.0699273146, label: 1, group: "circle" },
-  { xPos: 0.826, yPos: 0.0696906893, label: 1, group: "circle" },
-  { xPos: 0.614, yPos: -0.2371905107, label: 1, group: "circle" },
-  { xPos: 0.617, yPos: 0.2395615949, label: 1, group: "circle" },
-  { xPos: 0.777, yPos: 0.1680020337, label: 1, group: "circle" },
-  { xPos: 1.0, yPos: -0.0836752981, label: 1, group: "circle" },
-  { xPos: 0.726, yPos: 0.165772415, label: 1, group: "circle" },
-  { xPos: 0.492, yPos: -0.1009635693, label: 1, group: "circle" },
-  { xPos: 0.64, yPos: 0.0854977911, label: 1, group: "circle" },
-  { xPos: 0.571, yPos: -0.0209354084, label: 1, group: "circle" },
-  { xPos: 0.416, yPos: 0.4055090295, label: 1, group: "circle" },
-  { xPos: 0.672, yPos: -0.2373132301, label: 1, group: "circle" },
-  { xPos: 0.566, yPos: -0.061201069, label: 1, group: "circle" },
-  { xPos: 0.948, yPos: -0.1714608111, label: 1, group: "circle" },
-  { xPos: 0.637, yPos: -0.0140803369, label: 1, group: "circle" },
-  { xPos: 0.561, yPos: 0.1773478946, label: 1, group: "circle" },
-  { xPos: 0.892, yPos: -0.0892099917, label: 1, group: "circle" },
-  { xPos: 0.695, yPos: 0.1696199145, label: 1, group: "circle" },
-  { xPos: 0.534, yPos: -0.4140620557, label: 1, group: "circle" },
-  { xPos: 0.437, yPos: 0.2320063531, label: 1, group: "circle" },
-  { xPos: 0.673, yPos: 0.1696412119, label: 1, group: "circle" },
-  { xPos: 0.746, yPos: 0.2080444264, label: 1, group: "circle" },
-  { xPos: 0.83, yPos: -0.0329210081, label: 1, group: "circle" },
-  { xPos: 0.858, yPos: -0.2272379375, label: 1, group: "circle" },
-  { xPos: 0.756, yPos: -0.061005808, label: 1, group: "circle" },
-  { xPos: 0.665, yPos: -0.0796420962, label: 1, group: "circle" },
-  { xPos: 0.83, yPos: -0.0186797848, label: 1, group: "circle" },
-  { xPos: 0.867, yPos: -0.2759908155, label: 1, group: "circle" },
-  { xPos: 0.609, yPos: 0.2562708544, label: 1, group: "circle" },
-  { xPos: 0.683, yPos: 0.2538373157, label: 1, group: "circle" },
-  { xPos: 0.24, yPos: 0.0481664183, label: 0, group: "circle" },
-  { xPos: 0.253, yPos: 0.0303826299, label: 0, group: "circle" },
-  { xPos: 0.454, yPos: 0.1290836584, label: 0, group: "circle" },
-  { xPos: 0.328, yPos: 0.286975977, label: 0, group: "circle" },
-  { xPos: 0.27, yPos: -0.2417600988, label: 0, group: "circle" },
-  { xPos: 0.459, yPos: -0.1441292439, label: 0, group: "circle" },
-  { xPos: 0.607, yPos: 0.2046112554, label: 0, group: "circle" },
-  { xPos: 0.662, yPos: -0.0243464656, label: 0, group: "circle" },
-  { xPos: 0.274, yPos: 0.0100267185, label: 0, group: "circle" },
-  { xPos: 0.0, yPos: 0.00425373, label: 0, group: "circle" },
-  { xPos: 0.457, yPos: -0.1760075819, label: 0, group: "circle" },
-  { xPos: 0.439, yPos: -0.0877842886, label: 0, group: "circle" },
-  { xPos: 0.377, yPos: 0.3076948573, label: 0, group: "circle" },
-  { xPos: 0.742, yPos: -0.1125678094, label: 0, group: "circle" },
-  { xPos: 0.364, yPos: -0.0546152755, label: 0, group: "circle" },
-  { xPos: 0.412, yPos: 0.0129925591, label: 0, group: "circle" },
-  { xPos: 0.465, yPos: 0.0850022808, label: 0, group: "circle" },
-  { xPos: 0.048, yPos: 0.1055461173, label: 0, group: "circle" },
-  { xPos: 0.32, yPos: -0.1583490149, label: 0, group: "circle" },
-  { xPos: 0.191, yPos: 0.0421522067, label: 0, group: "circle" },
-  { xPos: 0.13, yPos: 0.2292961491, label: 0, group: "circle" },
-  { xPos: 0.318, yPos: -0.2428987014, label: 0, group: "circle" },
-  { xPos: 0.369, yPos: 0.1396197129, label: 0, group: "circle" },
-  { xPos: 0.626, yPos: -0.1038032304, label: 0, group: "circle" },
-  { xPos: 0.342, yPos: -0.1479478784, label: 0, group: "circle" },
-  { xPos: 0.489, yPos: -0.2436518359, label: 0, group: "circle" },
-  { xPos: 0.854, yPos: 0.0993129123, label: 0, group: "circle" },
-  { xPos: 0.584, yPos: 0.4036239994, label: 0, group: "circle" },
-  { xPos: 0.525, yPos: -0.2170291031, label: 0, group: "circle" },
-  { xPos: 0.241, yPos: 0.0814879387, label: 0, group: "circle" },
-  { xPos: 0.31, yPos: 0.0155224716, label: 0, group: "circle" },
-  { xPos: 0.316, yPos: -0.1218628443, label: 0, group: "circle" },
-  { xPos: 0.748, yPos: 0.0592021007, label: 1, group: "square" },
-  { xPos: 0.914, yPos: -0.0366445967, label: 1, group: "square" },
-  { xPos: 0.515, yPos: -0.0811423918, label: 1, group: "square" },
-  { xPos: 0.841, yPos: 0.0623015883, label: 1, group: "square" },
-  { xPos: 0.499, yPos: 0.1752750341, label: 1, group: "square" },
-  { xPos: 0.464, yPos: 0.2171714711, label: 1, group: "square" },
-  { xPos: 0.549, yPos: -0.0775667418, label: 1, group: "square" },
-  { xPos: 0.633, yPos: -0.2860994474, label: 1, group: "square" },
-  { xPos: 0.345, yPos: 0.0614428417, label: 1, group: "square" },
-  { xPos: 0.66, yPos: 0.0477583982, label: 1, group: "square" },
-  { xPos: 0.499, yPos: -0.0000097854, label: 1, group: "square" },
-  { xPos: 0.36, yPos: 0.2776654646, label: 1, group: "square" },
-  { xPos: 0.301, yPos: -0.0094141641, label: 1, group: "square" },
-  { xPos: 0.557, yPos: 0.0265885666, label: 1, group: "square" },
-  { xPos: 0.33, yPos: 0.0671286921, label: 1, group: "square" },
-  { xPos: 0.576, yPos: -0.2494562881, label: 1, group: "square" },
-  { xPos: 0.507, yPos: -0.0431366595, label: 1, group: "square" },
-  { xPos: 1.0, yPos: -0.1413417895, label: 1, group: "square" },
-  { xPos: 0.28, yPos: -0.1874597136, label: 1, group: "square" },
-  { xPos: 0.795, yPos: -0.0442324467, label: 1, group: "square" },
-  { xPos: 0.197, yPos: -0.0053890707, label: 0, group: "square" },
-  { xPos: 0.2, yPos: 0.1899107, label: 0, group: "square" },
-  { xPos: 0.359, yPos: -0.0259849873, label: 0, group: "square" },
-  { xPos: 0.581, yPos: 0.0857706403, label: 0, group: "square" },
-  { xPos: 0.308, yPos: 0.3628425239, label: 0, group: "square" },
-  { xPos: 0.076, yPos: 0.1575761728, label: 0, group: "square" },
-  { xPos: 0.223, yPos: 0.1129181499, label: 0, group: "square" },
-  { xPos: 0.154, yPos: -0.1030537335, label: 0, group: "square" },
-  { xPos: 0.0, yPos: -0.050811776, label: 0, group: "square" },
-  { xPos: 0.255, yPos: -0.0459903459, label: 0, group: "square" },
-  { xPos: 0.149, yPos: -0.1716544635, label: 0, group: "square" },
-  { xPos: 0.529, yPos: 0.0699930544, label: 0, group: "square" },
-  { xPos: 0.22, yPos: 0.1232378811, label: 0, group: "square" },
-  { xPos: 0.144, yPos: -0.0665966863, label: 0, group: "square" },
-  { xPos: 0.473, yPos: 0.0248813499, label: 0, group: "square" },
-  { xPos: 0.277, yPos: -0.1192886333, label: 0, group: "square" },
-  { xPos: 0.117, yPos: 0.2235662976, label: 0, group: "square" },
-  { xPos: 0.02, yPos: 0.263013378, label: 0, group: "square" },
-  { xPos: 0.255, yPos: -0.262355448, label: 0, group: "square" },
-  { xPos: 0.328, yPos: 0.0104150841, label: 0, group: "square" },
-  { xPos: 0.411, yPos: -0.1357085273, label: 0, group: "square" },
-  { xPos: 0.44, yPos: 0.1624224374, label: 0, group: "square" },
-  { xPos: 0.338, yPos: -0.1812933744, label: 0, group: "square" },
-  { xPos: 0.248, yPos: -0.030164428, label: 0, group: "square" },
-  { xPos: 0.412, yPos: 0.0042346245, label: 0, group: "square" },
-  { xPos: 0.448, yPos: -0.2248705112, label: 0, group: "square" },
-  { xPos: 0.192, yPos: 0.2307656979, label: 0, group: "square" },
-  { xPos: 0.265, yPos: -0.083391391, label: 0, group: "square" },
-  { xPos: 0.197, yPos: -0.0699273146, label: 0, group: "square" },
-  { xPos: 0.206, yPos: 0.0696906893, label: 0, group: "square" },
+  {xPos: 0.806,yPos: 0.1415394399,label: 1,group: "circle"
+  },
+  {xPos: 0.911,yPos: 0.1741873759,label: 1,group: "circle"
+  },
+  {xPos: 0.658,yPos: 0.057577026,label: 1,group: "circle"
+  },
+  {xPos: 0.865,yPos: -0.0456901588,label: 1,group: "circle"
+  },
+  {xPos: 0.648,yPos: 0.1421849927,label: 1,group: "circle"
+  },
+  {xPos: 0.626,yPos: 0.1840116143,label: 1,group: "circle"
+  },
+  {xPos: 0.68,yPos: -0.1095906812,label: 1,group: "circle"
+  },
+  {xPos: 0.733,yPos: -0.0258543365,label: 1,group: "circle"
+  },
+  {xPos: 0.55,yPos: -0.1040703613,label: 1,group: "circle"
+  },
+  {xPos: 0.75,yPos: -0.0937418918,label: 1,group: "circle"
+  },
+  {xPos: 0.648,yPos: 0.0592021007,label: 1,group: "circle"
+  },
+  {xPos: 0.56,yPos: -0.0366445967,label: 1,group: "circle"
+  },
+  {xPos: 0.523,yPos: -0.0811423918,label: 1,group: "circle"
+  },
+  {xPos: 0.684,yPos: 0.0623015883,label: 1,group: "circle"
+  },
+  {xPos: 0.541,yPos: 0.1752750341,label: 1,group: "circle"
+  },
+  {xPos: 0.697,yPos: 0.2171714711,label: 1,group: "circle"
+  },
+  {xPos: 0.653,yPos: -0.0775667418,label: 1,group: "circle"
+  },
+  {xPos: 0.965,yPos: -0.2860994474,label: 1,group: "circle"
+  },
+  {xPos: 0.509,yPos: 0.0614428417,label: 1,group: "circle"
+  },
+  {xPos: 0.835,yPos: 0.0477583982,label: 1,group: "circle"
+  },
+  {xPos: 0.635,yPos: -0.0000097854,label: 1,group: "circle"
+  },
+  {xPos: 0.638,yPos: 0.2776654646,label: 1,group: "circle"
+  },
+  {xPos: 0.789,yPos: -0.0094141641,label: 1,group: "circle"
+  },
+  {xPos: 1.0,yPos: 0.0265885666,label: 1,group: "circle"
+  },
+  {xPos: 0.44,yPos: 0.0671286921,label: 0,group: "circle"
+  },
+  {xPos: 0.108,yPos: -0.2494562881,label: 0,group: "circle"
+  },
+  {xPos: 0.318,yPos: -0.0431366595,label: 0,group: "circle"
+  },
+  {xPos: 0.219,yPos: -0.1413417895,label: 0,group: "circle"
+  },
+  {xPos: 0.0,yPos: -0.1874597136,label: 0,group: "circle"
+  },
+  {xPos: 0.363,yPos: -0.0442324467,label: 0,group: "circle"
+  },
+  {xPos: 0.212,yPos: -0.0053890707,label: 0,group: "circle"
+  },
+  {xPos: 0.754,yPos: 0.1899107,label: 0,group: "circle"
+  },
+  {xPos: 0.313,yPos: -0.0259849873,label: 0,group: "circle"
+  },
+  {xPos: 0.206,yPos: 0.0857706403,label: 0,group: "circle"
+  },
+  {xPos: 0.675,yPos: 0.3628425239,label: 0,group: "circle"
+  },
+  {xPos: 0.395,yPos: 0.1575761728,label: 0,group: "circle"
+  },
+  {xPos: 0.167,yPos: 0.1129181499,label: 0,group: "circle"
+  },
+  {xPos: 0.029,yPos: -0.1030537335,label: 0,group: "circle"
+  },
+  {xPos: 0.364,yPos: -0.050811776,label: 0,group: "circle"
+  },
+  {xPos: 0.467,yPos: -0.0459903459,label: 0,group: "circle"
+  },
+  {xPos: 0.805,yPos: -0.1037883332,label: 1,group: "square"
+  },
+  {xPos: 1.0,yPos: -0.1007327221,label: 1,group: "square"
+  },
+  {xPos: 0.53,yPos: 0.0816774931,label: 1,group: "square"
+  },
+  {xPos: 0.914,yPos: 0.3355930279,label: 1,group: "square"
+  },
+  {xPos: 0.512,yPos: 0.0235142549,label: 1,group: "square"
+  },
+  {xPos: 0.47,yPos: -0.2430288992,label: 1,group: "square"
+  },
+  {xPos: 0.571,yPos: -0.0743937585,label: 1,group: "square"
+  },
+  {xPos: 0.67,yPos: -0.1533264448,label: 1,group: "square"
+  },
+  {xPos: 0.05,yPos: -0.3295702316,label: 0,group: "square"
+  },
+  {xPos: 0.298,yPos: -0.03789646,label: 0,group: "square"
+  },
+  {xPos: 0.172,yPos: -0.1593690749,label: 0,group: "square"
+  },
+  {xPos: 0.063,yPos: 0.2764082769,label: 0,group: "square"
+  },
+  {xPos: 0.016,yPos: -0.077817499,label: 0,group: "square"
+  },
+  {xPos: 0.217,yPos: -0.1643071,label: 0,group: "square"
+  },
+  {xPos: 0.039,yPos: 0.2122790628,label: 0,group: "square"
+  },
+  {xPos: 0.232,yPos: -0.01248217,label: 0,group: "square"
+  },
+  {xPos: 0.178,yPos: -0.1954739136,label: 0,group: "square"
+  },
+  {xPos: 0.565,yPos: -0.306344046,label: 0,group: "square"
+  },
+  {xPos: 0.0,yPos: -0.0373243287,label: 0,group: "square"
+  },
+  {xPos: 0.404,yPos: 0.0458675713,label: 0,group: "square"
+  }
 ];
 
 export const rocData = [
