@@ -27,7 +27,11 @@ export const stackedData = tweened([
     Accepted: 20,
     Declined: 30,
   },
-  { xVal: "B", Accepted: 15, Declined: 10 },
+  {
+    xVal: "B",
+    Accepted: 15,
+    Declined: 10
+  },
   {
     xVal: "B Predicted",
     Accepted: 15,

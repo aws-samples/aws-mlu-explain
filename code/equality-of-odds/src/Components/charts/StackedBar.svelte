@@ -37,6 +37,7 @@
     .offset(stackOffsetNone);
 
   $: series = dStack($stackedData);
+  
 </script>
 
 <div

@@ -51,7 +51,7 @@
     const xPos = xScale.invert(event.x);
     // ensure x-position in range
     if (xPos <= 0.0 || xPos >= 0.99) {
-      console.log("out!");
+      console.log("Outside range!");
     } else {
       $rectPos = event.x;
       select("g.decision-boundary-bar1")
@@ -66,67 +66,72 @@
     console.log("end");
   }
 
+  // data.filter(function(d){ return  (d.name == "toto" || d.name == "tutu") })
+
   $: updateStackedRect = function (xPos) {
     let els = selectAll("g.data-point1");
     let accepted = els.filter(function (d) {
-      return select(this).attr("label") == 1;
+      return select(this).attr("x") >= xPos;
     });
     let rejected = els.filter(function (d) {
-      return select(this).attr("label") == 0;
+      return select(this).attr("x") <= xPos;
     });
 
     //   A (right side)
-    //   accepted correct
-    //   accepted wrong
-    const correctAccepted = accepted
-      .filter(function (d) {
-        return select(this).attr("x") >= xPos;
+    //   accepted A
+    //   rejected A
+    const accepted_A = accepted.filter(function (d) {
+        return select(this).attr("group") == "circle";
       })
       .size();
-
-    const wrongAccepted = rejected
-      .filter(function (d) {
-        return select(this).attr("x") >= xPos;
+    
+    const rejected_A = rejected.filter(function (d) {
+        return select(this).attr("group") == "circle";
       })
       .size();
 
     //   B (left side)
-    //   rejected correct
-    //   rejected wrong
-    const correctRejected = rejected
-      .filter(function (d) {
-        return select(this).attr("x") <= xPos;
+    const rejected_B = accepted.filter(function (d) {
+        return select(this).attr("group") == "square";
       })
       .size();
 
-    const wrongRejected = accepted
-      .filter(function (d) {
-        return select(this).attr("x") <= xPos;
+    const accepted_B = rejected.filter(function (d) {
+        return select(this).attr("group") == "square";
       })
       .size();
+    
+    // Print all values in console
+    // console.log("accepted_A:",accepted_A);
+    // console.log("accepted_B:",accepted_B);
+    // console.log("rejected_A:",rejected_A);
+    // console.log("rejected_B:", rejected_B);
+    console.log("accepted:", accepted.size());
+    console.log("total_A:", accepted_A);
+
 
     //  UPDATE REACTIVE STATE:
     // update for labels in scatter
-    $wronglyAccepted = wrongAccepted;
-    $wronglyRejected = wrongRejected;
+    $wronglyAccepted = rejected_A;
+    $wronglyRejected = accepted_B;
 
     // Update the underylying dataset
     stackedData.set([
       {
         xVal: "A",
-        Accepted: 70,
-        Declined: 60,
+        Accepted: 20,
+        Declined: 30,
       },
       {
         xVal: "A Predicted",
-        Accepted: correctAccepted,
-        Declined: wrongAccepted,
+        Accepted: accepted_A,
+        Declined: rejected_A,
       },
-      { xVal: "B", Accepted: 33, Declined: 97 },
+      { xVal: "B", Accepted: 15, Declined: 10 },
       {
         xVal: "B Predicted",
-        Accepted: correctRejected,
-        Declined: wrongRejected,
+        Accepted: rejected_B,
+        Declined: accepted_B,
       },
     ]);
   };
