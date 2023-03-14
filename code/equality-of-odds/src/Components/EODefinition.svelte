@@ -1,19 +1,18 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
-  import Scatter1 from "./charts/Scatter1.svelte";
-  import Roc from "./charts/ROC.svelte";
 </script>
 
 <section>
   <p class="body-header">Defining Equalized Odds</p>
   <p class="body-text">
     In this article, we will review a well-known fairness criteria, called
-    "Equalized Odds" (EO). EO aims to equalize the error a model makes based on
-    the merit different groups of people have. In the case of a classification
-    model, the errors to compare are 'wrong rejection' and 'wrong acceptance'.
-    As groups generally differ in size, we don't want to compare absolute values
-    and look at the False Negative Rate (FNR)<sup
+    'Equalized Odds' (EO), a.k.a. 'separation criteria'. EO aims to equalize the
+    error a model makes based on the merit different groups of people have. In
+    the case of a classification model, the errors to compare are 'wrong
+    rejection' and 'wrong acceptance'. As groups generally differ in size, we
+    don't want to compare absolute values and look at the False Negative Rate
+    (FNR)<sup
       ><span
         class="info-tooltip"
         title="Probability of an individual with a true positive outcome to receive a negative outcome."
@@ -44,13 +43,13 @@
     <br /><br />
     To understand why equalizing FNR and FPR can give a fair outcome, let's assume
     we are building a model that is supposed to predict whether or not individuals
-    from two different groups of students, circles and squares, will complete their
+    from two different groups of students, circles and triangles, will complete their
     degree. The students identified as promising (= likely to complete), will receive
-    a treat.
+    a grant.
     <br /><br />
-    Let's have a look at the graphics below to see the difference between a model
-    that treats both groups the same and a model that uses EO and treats the groups
-    according to what they deserve/the merit.
+    Let's have a look at the charts below to see the difference between a model that
+    grants both groups the same rate of positive outcomes and a model that uses EO
+    and grants the groups according to what they deserve/the merit.
   </p>
 </section>
 

@@ -8,9 +8,11 @@
 </p>
 <br />
 <p class="body-text">
-  This definition combines the previous two: It requires that the fitted outcome
-  classes (treat/no treat) are independent of protected class membership,
-  conditioning on the actual outcome classes.
+  This metric combines the previous two: It measures how far off from equal
+  accuracy the groups in the dataset are. In our example, it measures how
+  similar the probability of students that deserve grants actually gettting
+  grants and the probability of students without merit to not receive a reward
+  are.
 </p>
 
 <style>

@@ -8,11 +8,13 @@
 </p>
 <br />
 <p class="body-text">
-  The first fairness measure we can derive from EO looks at the FPR per group
-  and takes the difference:
-  {@html katexify(`FPR_{sheep} - FPR_{lama}`, true)}
+  The first fairness measure we can derive from EO looks at the False Positive
+  Rate per group and takes the difference:
+  {@html katexify(`FPR_{circles} - FPR_{triangles}`, true)}
   The resulting value will be in the range [-1, 1], the closer to 0 the more predictive
-  equality the model achieves.
+  equality the model achieves. FPR calculates the percentage of false positives compared
+  to all positive predictions. In our example this would translate to: "What is the
+  percentage of students that received a grant even though they did not deserve it?". 
 </p>
 
 <style>

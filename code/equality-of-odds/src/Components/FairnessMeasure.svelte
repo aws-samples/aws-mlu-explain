@@ -11,16 +11,12 @@
 
   $: items = [
     {
-      label: $mobile 
-        ? "FPR" 
-        : "False Positive Error Rate Balance",
+      label: $mobile ? "FPR" : "False Positive Error Rate Balance",
       value: 1,
       component: Tab_FPRBalance,
     },
     {
-      label: $mobile
-        ? "FNR"
-        : "False Negative Error Rate Balance",
+      label: $mobile ? "FNR" : "False Negative Error Rate Balance",
       value: 2,
       component: Tab_FNRBalance,
     },
@@ -37,14 +33,15 @@
 <section>
   <p class="body-header">Equalized Odds to measure fairness</p>
   <p class="body-text">
-    Using the EO equation, we can derive several different metrics now that can
-    be used to measure how fair a model is. For example, we can look at:
+    Using the EO equation, we can derive several different metrics to measure
+    the fairness of a model. For example, we can look at:
   </p>
   <br />
   <Tabs {items} />
   <br />
   <p class="body-text">
-    See if you can drag the slider in the interactive below to re-create the metrics above.
+    See if you can drag the slider in the interactive below to re-create the
+    metrics above.
   </p>
   <br /><br />
   <div id="charts1-container">
