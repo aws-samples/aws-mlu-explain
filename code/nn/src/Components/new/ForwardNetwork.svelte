@@ -36,8 +36,8 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  let nodeWidth = 70;
-  let nodeHeight = 40;
+  let nodeWidth = 12 * 1.33 * 2;
+  let nodeHeight = 12 * 2;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])
@@ -152,6 +152,8 @@
             })`}
           >
             {#if layer !== $numLayers - 1}
+              {@const nodWidth =
+                $labels[layer].length == 1 ? 24 : $labels[layer].length * 11}
               <rect
                 in:fly|local={{ x: -50, duration: 500 }}
                 out:fade|local={{ duration: 300 }}
@@ -160,7 +162,7 @@
                   : layer == $numLayers - 1
                   ? 'output'
                   : 'hidden'}"
-                width={nodeWidth}
+                width={nodWidth}
                 height={nodeHeight}
               />
               <text
@@ -169,7 +171,7 @@
                 class="nn-text"
                 text-anchor="middle"
                 alignment-baseline="middle"
-                dx={nodeWidth / 2}
+                dx={nodWidth / 2}
                 dy={nodeHeight / 2}
                 >{$labels[layer]}
                 {#if layer === 0 && $showSubScript}
@@ -270,7 +272,7 @@
 
 <style>
   .moving-text {
-    font-size: 16px;
+    font-size: 10px;
     /* font-weight: bold; */
     color: black;
     text-anchor: middle;
@@ -284,7 +286,7 @@
     stroke: var(--squidink);
     stroke-width: 2;
     fill: var(--paper);
-    r: 14;
+    r: 10;
   }
   .pp {
     stroke: black;
@@ -305,11 +307,11 @@
   }
 
   .subscript {
-    font-size: 0.6rem;
+    font-size: 8px;
     transition: all 0.45s;
   }
   .nn-text {
-    font-size: 0.8rem;
+    font-size: 12px;
     transition: all 0.45s;
   }
   .nn-g {

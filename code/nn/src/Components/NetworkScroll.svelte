@@ -13,12 +13,12 @@
   import katexify from "../katexify";
 
   $: stepIndex = 0;
-  $network = [3, 2, 3, 2, 1];
+  $network = [3, 1, 1];
 
   const target2event = {
     0: () => {
       $showLayerLine = false;
-      $network = [3, 2, 3, 2, 1];
+      $network = [3, 1, 1];
       stepIndex = 0;
       $showSubScript = false;
       $drawActivation = false;

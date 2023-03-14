@@ -12,15 +12,16 @@
   import katexify from "../../katexify";
 
   $: stepIndex = 0;
-  $network = [3, 2, 3, 2, 1];
+  $network = [3, 1, 1];
 
   const target2event = {
     0: () => {
       $showLayerLine = false;
-      $network = [3, 2, 3, 2, 1];
+      $network = [3, 1, 1];
       stepIndex = 0;
       $showSubScript = false;
       $drawActivation = false;
+      $labels = ["input", "function", "output"];
     },
 
     1: () => {
@@ -57,19 +58,21 @@
       stepIndex = 4;
       $showLayerLine = false;
       $drawActivation = false;
-
+      $labels = ["input", "step", "step", "y"];
       $network = [3, 1, 1, 1];
     },
     6: () => {
       stepIndex = 5;
       $showLayerLine = true;
-      $labels = ["X", "sigmoid", "y"];
+      $labels = ["input", "sigmoid", "sigmoid", "y"];
 
       $network = [3, 2, 2, 1];
       $drawActivation = false;
     },
     7: () => {
       stepIndex = 5;
+      $labels = ["input", "reLu", "reLu", "reLu", "y"];
+
       $showLayerLine = true;
       $network = [3, 4, 2, 3, 1];
       $drawActivation = false;

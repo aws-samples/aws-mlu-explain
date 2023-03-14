@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import {
     drawActivation,
-    network,
+    networkBp,
     showLayerLine,
     labels,
     showSubScript,
@@ -11,12 +11,12 @@
   import katexify from "../../katexify";
 
   $: stepIndex = 0;
-  $network = [3, 2, 3, 2, 1];
+  $networkBp = [3, 1, 1];
 
   const target2event = {
     0: () => {
       $showLayerLine = false;
-      $network = [3, 2, 3, 2, 1];
+      $networkBp = [3, 2, 3, 2, 1];
       stepIndex = 0;
       $showSubScript = false;
       $drawActivation = false;
@@ -24,7 +24,7 @@
 
     1: () => {
       $showLayerLine = false;
-      $network = [3, 1, 1];
+      $networkBp = [3, 1, 1];
       $labels = ["input", "function", "output"];
       stepIndex = 1;
       $showSubScript = false;
@@ -32,7 +32,7 @@
     },
     2: () => {
       $showLayerLine = false;
-      $network = [3, 1, 1];
+      $networkBp = [3, 1, 1];
       $labels = ["X", "linear", "y"];
       $showSubScript = true;
       $drawActivation = false;
@@ -42,14 +42,14 @@
       stepIndex = 2;
       $showLayerLine = false;
       $labels = ["X", "sigmoid", "y"];
-      $network = [3, 1, 1];
+      $networkBp = [3, 1, 1];
       $drawActivation = false;
     },
     4: () => {
       stepIndex = 3;
       $labels = ["X", "step", "y"];
       $showLayerLine = false;
-      $network = [3, 1, 1];
+      $networkBp = [3, 1, 1];
       $drawActivation = true;
     },
     5: () => {
@@ -57,20 +57,20 @@
       $showLayerLine = false;
       $drawActivation = false;
 
-      $network = [3, 1, 1, 1];
+      $networkBp = [3, 1, 1, 1];
     },
     6: () => {
       stepIndex = 5;
       $showLayerLine = true;
       $labels = ["X", "sigmoid", "y"];
 
-      $network = [3, 2, 2, 1];
+      $networkBp = [3, 2, 2, 1];
       $drawActivation = false;
     },
     7: () => {
       stepIndex = 5;
       $showLayerLine = true;
-      $network = [3, 4, 2, 3, 1];
+      $networkBp = [3, 4, 2, 3, 1];
       $drawActivation = false;
     },
   };
