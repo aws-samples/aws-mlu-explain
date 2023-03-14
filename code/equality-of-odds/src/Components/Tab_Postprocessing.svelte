@@ -4,21 +4,19 @@
   </script>
   
   <p class="body-text">
-    <span class="definition-header">False Positive Error Rate Balance</span>
+    <span class="definition-header">Equalized Odds Post-Processing</span>
   </p>
   <br />
   <p class="body-text">
-    The first fairness measure we can derive from EO looks at the FPR per group
-    and takes the difference:
-    {@html katexify(`FPR_{sheep} - FPR_{lama}`, true)}
-    The resulting value will be in the range [-1, 1], the closer to 0 the more predictive
-    equality the model achieves.
+    In practice, one way to achieve equalized odds for model predictions can only be achieved at points where the ROC curves cross
   </p>
   
   <style>
-    .definition-header {
-      font-family: var(--font-bold);
-    }
+  .definition-header {
+    font-size: 0.85rem;
+    font-family: var(--font-bold);
+    text-decoration: underline;
+  }
   
     @media screen and (max-width: 950px) {
       .definition-header {

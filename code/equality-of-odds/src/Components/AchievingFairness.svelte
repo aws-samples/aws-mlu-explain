@@ -15,7 +15,7 @@
       component: Tab_Constraints,
     },
     {
-      label: $mobile ? "Post Processing" : "Post Processing to achieve EO",
+      label: $mobile ? "Post-Processing" : "Post-Processing to achieve EO",
       value: 2,
       component: Tab_Postprocessing,
     },
@@ -34,7 +34,7 @@
   <p class="body-text">
     How can we visualize this search for the ideal combination of TPR and FPR?
     Very simply, we can plot the so-called ROC curves (have a look at ROC
-    article here) for both groups, circle and square.
+    article here) for both groups, circles and triangles.
   </p>
   <br />
   <div id="charts2-container">

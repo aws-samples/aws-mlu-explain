@@ -40,9 +40,11 @@
 </p>
 
 <style>
-    .definition-header {
-        font-family: var(--font-bold);
-    }
+  .definition-header {
+    font-size: 0.85rem;
+    font-family: var(--font-bold);
+    text-decoration: underline;
+  }
 
     @media screen and (max-width: 950px) {
         .definition-header {
