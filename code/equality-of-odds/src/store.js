@@ -13,30 +13,30 @@ export const outerWidth = writable(300);
 export const outerHeight = writable(300);
 export const rectPos = writable(0.5);
 export const rectPos2 = writable(0.5);
-export const wrong_accepted_A = writable(1);
-export const wrong_accepted_B = writable(1);
-export const wrong_rejected_A = writable(1);
-export const wrong_rejected_B = writable(1);
+export const wrongly_accepted_A = writable(1);
+export const wrongly_accepted_B = writable(1);
+export const wrongly_rejected_A = writable(1);
+export const wrongly_rejected_B = writable(1);
 
 export const stackedData = tweened([
   {
     xVal: "A",
-    Accepted: 20,
-    Declined: 30,
+    Accepted: 30,
+    Declined: 20,
   },
   {
     xVal: "A Predicted",
-    Accepted: 20,
-    Declined: 30,
+    Accepted: 30,
+    Declined: 20,
   },
   {
     xVal: "B",
-    Accepted: 15,
-    Declined: 10
+    Accepted: 10,
+    Declined: 15
   },
   {
     xVal: "B Predicted",
-    Accepted: 15,
-    Declined: 10,
+    Accepted: 10,
+    Declined: 15,
   },
 ]);

@@ -2,7 +2,13 @@
   import { max } from "d3-array";
   import { format } from "d3-format";
   import { scaleLinear, scaleOrdinal, scaleBand } from "d3-scale";
-  import { stackedData, wrong_accepted_A, wrong_accepted_B} from "../../store";
+  import {
+    stackedData,
+    wrongly_accepted_A,
+    wrongly_accepted_B,
+    wrongly_rejected_A,
+    wrongly_rejected_B,
+  } from "../../store";
   import { stack, stackOrderNone, stackOffsetNone } from "d3-shape";
 
   let outerHeight = 300;
@@ -37,7 +43,6 @@
     .offset(stackOffsetNone);
 
   $: series = dStack($stackedData);
-  
 </script>
 
 <div
@@ -120,20 +125,28 @@
     <!-- axis labels -->
     <text
       class="chart-title"
-      y={margin.top / 2}
+      y={margin.top / 3}
       x={(width + margin.left) / 2}
       text-anchor="middle"
-      >{formatter($wrong_rejected_A / 130)} Wrongly Accepted And {formatter(
-        $wrong_rejected_B / 130
-      )} Wrongly Rejected In Both Groups;</text
+      >{formatter($wrongly_rejected_A / ($wrongly_rejected_A + 30))} wrongly rejected in group "circles"
+      {formatter($wrongly_rejected_B / ($wrongly_rejected_B + 10))} wrongly rejected in group "squares";
+      <br /></text
     >
     <text
       class="chart-title"
-      y={margin.top / 2 + 15}
+      y={margin.top / 3 + 20}
+      x={(width + margin.left) / 2}
+      text-anchor="middle"
+      >{formatter($wrongly_accepted_A / ($wrongly_accepted_A + 20))} wrongly accepted in group "circles"
+      {formatter($wrongly_accepted_B / ($wrongly_accepted_B+15))} wrongly accepted in group "squares";
+    </text>
+    <text
+      class="chart-title"
+      y={margin.top / 3 + 40}
       x={(width + margin.left) / 2}
       text-anchor="middle"
     >
-      Proportionally More Individuals Accepted From Group B</text
+      Proportionally More individuals in group "cirlces"</text
     >
     <text
       class="axis-label"

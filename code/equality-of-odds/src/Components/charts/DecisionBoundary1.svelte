@@ -11,11 +11,10 @@
     rectPos,
     margin,
     stackedData,
-    wrong_rejected_A,
-    wrong_accepted_A,
-    wrong_accepted_B,
-    wrong_rejected_A,
-    wrong_rejected_B
+    wrongly_accepted_A,
+    wrongly_accepted_B,
+    wrongly_rejected_A,
+    wrongly_rejected_B,
   } from "../../store";
   import { arrows } from "../../assets";
 
@@ -90,11 +89,28 @@
       return select(this).attr("x") <= xPos;
     });
 
+    // Wrong accepted
+    const wrong_accepted = negative_outcome.filter(function (d) {
+      return select(this).attr("x") >= xPos;
+    });
+
+    const wrong_accepted_A = wrong_accepted
+      .filter(function (d) {
+        return select(this).attr("group") == "circle";
+      })
+      .size();
+
+    const wrong_accepted_B = wrong_accepted
+      .filter(function (d) {
+        return select(this).attr("group") == "square";
+      })
+      .size();
+
     // Wrong rejected
     const wrong_rejected = positive_outcome.filter(function (d) {
       return select(this).attr("x") <= xPos;
     });
-
+    
     const wrong_rejected_A = wrong_rejected
       .filter(function (d) {
         return select(this).attr("group") == "circle";
@@ -103,11 +119,9 @@
 
     const wrong_rejected_B = wrong_rejected
       .filter(function (d) {
-        return select(this).attr("group") == "squares";
+        return select(this).attr("group") == "square";
       })
       .size();
-
-    console.log(wrong_rejected_A);
 
     //   A (right side)
     //   accepted A
@@ -140,10 +154,10 @@
     //  UPDATE REACTIVE STATE:
 
     // update for labels in scatter
-    $wrong_rejected_A = wrong_rejected_A;
-    $wrong_rejected_B = wrong_rejected_B;
-    // $wrong_accepted_A = wrong_rejected_A;
-    // $wrong_accepted_B = wrong_rejected_A;
+    $wrongly_rejected_A = wrong_rejected_A;
+    $wrongly_rejected_B = wrong_rejected_B;
+    $wrongly_accepted_A = wrong_accepted_A;
+    $wrongly_accepted_B = wrong_accepted_B;
 
     // Update the underylying dataset
     stackedData.set([
