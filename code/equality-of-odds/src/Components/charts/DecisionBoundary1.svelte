@@ -80,35 +80,30 @@
     //   A (right side)
     //   accepted A
     //   rejected A
-    const accepted_A = accepted.filter(function (d) {
+    const accepted_A = accepted
+      .filter(function (d) {
         return select(this).attr("group") == "circle";
       })
       .size();
-    
-    const rejected_A = rejected.filter(function (d) {
+
+    const rejected_A = rejected
+      .filter(function (d) {
         return select(this).attr("group") == "circle";
       })
       .size();
 
     //   B (left side)
-    const rejected_B = accepted.filter(function (d) {
+    const rejected_B = accepted
+      .filter(function (d) {
         return select(this).attr("group") == "square";
       })
       .size();
 
-    const accepted_B = rejected.filter(function (d) {
+    const accepted_B = rejected
+      .filter(function (d) {
         return select(this).attr("group") == "square";
       })
       .size();
-    
-    // Print all values in console
-    // console.log("accepted_A:",accepted_A);
-    // console.log("accepted_B:",accepted_B);
-    // console.log("rejected_A:",rejected_A);
-    // console.log("rejected_B:", rejected_B);
-    console.log("accepted:", accepted.size());
-    console.log("total_A:", accepted_A);
-
 
     //  UPDATE REACTIVE STATE:
     // update for labels in scatter
@@ -135,6 +130,11 @@
       },
     ]);
   };
+
+  // reactively update state on rectpos change:
+  $: {
+    updateStackedRect(xScale.invert($rectPos));
+  }
 </script>
 
 <!-- left rect -->
