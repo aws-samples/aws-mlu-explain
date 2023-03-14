@@ -19,7 +19,9 @@
 
 <style>
   .definition-header {
+    font-size: 0.85rem;
     font-family: var(--font-bold);
+    text-decoration: underline;
   }
 
   @media screen and (max-width: 950px) {

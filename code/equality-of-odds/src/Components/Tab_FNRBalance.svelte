@@ -11,14 +11,18 @@
 </p>
 <br />
 <p class="body-text">
-  The second fairness measure we can derive from EO looks at the FNR per group
-  and takes the difference:
-  {@html katexify(`FNR_{sheep} - FNR_{lama}`, true)}
+  The second fairness measure we can derive from EO looks at the False Negative
+  Rate per group and takes the difference; this measure is also called equal
+  opportunity:
+  {@html katexify(`FNR_{circles} - FNR_{triangles}`, true)}
   The resulting value will be in the range [-1, 1], the closer to 0 the closer to
-  equal opportunity the groups are.
+  equal opportunity the groups are. FNR calculates the probability that a true positive
+  will be missclassified; in our example this refers to students that should have
+  received a grant but missed out on receiving one.
 </p>
+
 <div class="button-container">
-  <button on:click={() => ($rectPos = 100)}>Move Boundary To 0.3</button>
+  <button on:click={() => ($rectPos = 300)}>Move Boundary To 0.3</button>
 </div>
 
 <style>
@@ -48,7 +52,9 @@
   }
 
   .definition-header {
+    font-size: 0.85rem;
     font-family: var(--font-bold);
+    text-decoration: underline;
   }
 
   @media screen and (max-width: 950px) {

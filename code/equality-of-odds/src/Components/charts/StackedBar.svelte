@@ -2,7 +2,7 @@
   import { max } from "d3-array";
   import { format } from "d3-format";
   import { scaleLinear, scaleOrdinal, scaleBand } from "d3-scale";
-  import { stackedData, wronglyAccepted, wronglyRejected } from "../../store";
+  import { stackedData, wrong_accepted_A, wrong_accepted_B} from "../../store";
   import { stack, stackOrderNone, stackOffsetNone } from "d3-shape";
 
   let outerHeight = 300;
@@ -123,8 +123,8 @@
       y={margin.top / 2}
       x={(width + margin.left) / 2}
       text-anchor="middle"
-      >{formatter($wronglyAccepted / 130)} Wrongly Accepted And {formatter(
-        $wronglyRejected / 130
+      >{formatter($wrong_rejected_A / 130)} Wrongly Accepted And {formatter(
+        $wrong_rejected_B / 130
       )} Wrongly Rejected In Both Groups;</text
     >
     <text
@@ -140,7 +140,7 @@
       y={margin.left / 2}
       x={-(height / 2)}
       text-anchor="middle"
-      transform="rotate(-90)">Y-Axis Label</text
+      transform="rotate(-90)">Count of Outcomes</text
     >
   </svg>
 </div>

@@ -9,16 +9,19 @@
 <br />
 <p class="body-text">
   This metric combines the previous two: It measures how far off from equal
-  accuracy the groups in the dataset are. In our example, it measures how
-  similar the probability of students that deserve grants actually gettting
+  accuracy the groups in the dataset are. In our example, it measures if the
+  values for the probability of students that deserve grants actually gettting
   grants and the probability of students without merit to not receive a reward
-  are.
+  are similar.
 </p>
 
 <style>
   .definition-header {
-    font-family: var(--font-light);
+    font-size: 0.85rem;
+    font-family: var(--font-bold);
+    text-decoration: underline;
   }
+
   #scatter-chart {
     max-height: 30vh;
     width: 500px;

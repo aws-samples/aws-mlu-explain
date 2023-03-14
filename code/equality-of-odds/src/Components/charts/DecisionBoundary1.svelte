@@ -11,8 +11,11 @@
     rectPos,
     margin,
     stackedData,
-    wronglyAccepted,
-    wronglyRejected,
+    wrong_rejected_A,
+    wrong_accepted_A,
+    wrong_accepted_B,
+    wrong_rejected_A,
+    wrong_rejected_B
   } from "../../store";
   import { arrows } from "../../assets";
 
@@ -69,13 +72,42 @@
   // data.filter(function(d){ return  (d.name == "toto" || d.name == "tutu") })
 
   $: updateStackedRect = function (xPos) {
-    let els = selectAll("g.data-point1");
-    let accepted = els.filter(function (d) {
+    let selected_data = selectAll("g.data-point1");
+
+    let positive_outcome = selected_data.filter(function (d) {
+      return select(this).attr("label") == 1;
+    });
+
+    let negative_outcome = selected_data.filter(function (d) {
+      return select(this).attr("label") == 0;
+    });
+
+    let accepted = selected_data.filter(function (d) {
       return select(this).attr("x") >= xPos;
     });
-    let rejected = els.filter(function (d) {
+
+    let rejected = selected_data.filter(function (d) {
       return select(this).attr("x") <= xPos;
     });
+
+    // Wrong rejected
+    const wrong_rejected = positive_outcome.filter(function (d) {
+      return select(this).attr("x") <= xPos;
+    });
+
+    const wrong_rejected_A = wrong_rejected
+      .filter(function (d) {
+        return select(this).attr("group") == "circle";
+      })
+      .size();
+
+    const wrong_rejected_B = wrong_rejected
+      .filter(function (d) {
+        return select(this).attr("group") == "squares";
+      })
+      .size();
+
+    console.log(wrong_rejected_A);
 
     //   A (right side)
     //   accepted A
@@ -106,9 +138,12 @@
       .size();
 
     //  UPDATE REACTIVE STATE:
+
     // update for labels in scatter
-    $wronglyAccepted = rejected_A;
-    $wronglyRejected = accepted_B;
+    $wrong_rejected_A = wrong_rejected_A;
+    $wrong_rejected_B = wrong_rejected_B;
+    // $wrong_accepted_A = wrong_rejected_A;
+    // $wrong_accepted_B = wrong_rejected_A;
 
     // Update the underylying dataset
     stackedData.set([
