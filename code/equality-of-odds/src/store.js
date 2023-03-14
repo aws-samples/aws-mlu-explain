@@ -13,8 +13,10 @@ export const outerWidth = writable(300);
 export const outerHeight = writable(300);
 export const rectPos = writable(0.5);
 export const rectPos2 = writable(0.5);
-export const wronglyAccepted = writable(1);
-export const wronglyRejected = writable(1);
+export const wrong_accepted_A = writable(1);
+export const wrong_accepted_B = writable(1);
+export const wrong_rejected_A = writable(1);
+export const wrong_rejected_B = writable(1);
 
 export const stackedData = tweened([
   {
