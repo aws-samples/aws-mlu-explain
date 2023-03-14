@@ -41,7 +41,9 @@
   <br />
   <p class="body-text">
     See if you can drag the slider in the interactive below to re-create the
-    metrics above.
+    metrics above. Also note that there are so-called lazy solutions where
+    everyone gets rejected or accepted. Those solutions technically meet
+    fairness criteria but make no sense from a business perspective.
   </p>
   <br /><br />
   <div id="charts1-container">

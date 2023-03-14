@@ -110,7 +110,7 @@
     const wrong_rejected = positive_outcome.filter(function (d) {
       return select(this).attr("x") <= xPos;
     });
-    
+
     const wrong_rejected_A = wrong_rejected
       .filter(function (d) {
         return select(this).attr("group") == "circle";

@@ -22,7 +22,7 @@
 </p>
 
 <div class="button-container">
-  <button on:click={() => ($rectPos = 300)}>Move Boundary To 0.3</button>
+  <button on:click={() => ($rectPos = 10)}>Move Boundary To 0.3</button>
 </div>
 
 <style>
