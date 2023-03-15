@@ -3,7 +3,7 @@
   import { scaleLinear } from "d3-scale";
   import { max } from "d3-array";
   import { scatterData } from "../../datasets";
-  //   import Scatterplot from "../Scatterplot.svelte";
+  import Scatterplot from "../Scatterplot.svelte";
   import {
     drawActivation,
     labels,
@@ -13,6 +13,7 @@
     showLayerLine,
     showSubScript,
     stepIndex,
+    show,
   } from "../../store";
   import { line } from "d3-shape";
   import { fade, fly, draw } from "svelte/transition";
@@ -76,8 +77,8 @@
 </text>
 
 <!-- scatterplot -->
+<Scatterplot width={scatterWidth} height={scatterHeight} />
 
-<!-- <Scatterplot width={scatterWidth} height={scatterHeight} /> -->
 <style>
   .nn-node {
     stroke: var(--darksquidink);

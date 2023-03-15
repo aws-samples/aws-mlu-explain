@@ -1,339 +1,145 @@
 <script>
-  import { tweened } from "svelte/motion";
-  import { linear } from "svelte/easing";
-  import { line, curveNatural } from "d3-shape";
-  import { selectAll } from "d3-selection";
-  import { scaleLinear } from "d3-scale";
-  import { format } from "d3-format";
-  import { interpretationData } from "../datasets.js";
-  import { max } from "d3-array";
+  import { scaleLinear, scaleOrdinal } from "d3-scale";
+  import { hexbin } from "d3-hexbin";
+  import { onMount, onDestroy } from "svelte";
+  import { scatterData } from "../datasets";
+
   import {
-    showRegressionLine,
-    showResiduals,
+    labels,
     marginScroll,
-    sqft,
-    coeff,
-    intercept,
-    showHighlight,
-  } from "../store.js";
+    network,
+    numLayers,
+    stepIndex,
+  } from "../store";
+  import { line } from "d3-shape";
+  import { fade, fly, draw } from "svelte/transition";
+  import { logistic, perceptron } from "../outputModelWeights";
 
-  // these don't matter, but make the stretching less obvious at load
-  let height = 500;
-  let width = 500;
+  export let height;
+  export let width;
 
-  // label formatter
-  const formatter = format("$,");
+  const margin = 5;
+  const hexbinRadius = 5;
 
-  export function showAnnotationLines() {
-    selectAll(".annotation-line").attr("opacity", 0.5);
+  // here
+  let x = 0;
+  let y = 0;
+
+  const delay = 4000; // 4 seconds
+  const interval = 1000; // 1 second
+
+  function generateRandomPosition() {
+    x = Math.floor(Math.random() * 17) - 4; // generates a random integer between -4 and 12
+    y = Math.floor(Math.random() * 17) - 4;
   }
 
-  export function hideAnnotationLines() {
-    selectAll(".annotation-line").attr("opacity", 0);
-  }
+  let intervalId;
+  // here
 
-  const maxVal = max(interpretationData, (d) => d.sqft) + 25;
-
-  const dataset = tweened(
-    interpretationData.map((d) => {
-      return {
-        sqft: d.sqft,
-        y: d.sqft * $coeff + $intercept,
-        price: d.price,
-      };
-    }),
-    {
-      duration: 500,
-      easing: linear,
-    }
-  );
-
-  $: dataset.set(
-    interpretationData.map((d) => {
-      return {
-        sqft: d.sqft,
-        y: d.sqft * $coeff + $intercept,
-        price: d.price,
-      };
-    })
-  );
-
-  const regressionLine = tweened(
-    [
-      { x: 0, y: 0 * $coeff + $intercept },
-      { x: 400, y: 400 * $coeff + $intercept },
-      { x: maxVal, y: maxVal * $coeff + $intercept },
-    ],
-    {
-      duration: 500,
-      easing: linear,
-    }
-  );
-
-  $: regressionLine.set([
-    { x: 0, y: 0 * $coeff + $intercept },
-    { x: 400, y: 400 * $coeff + $intercept },
-    { x: maxVal, y: maxVal * $coeff + $intercept },
-  ]);
-
-  $dataset.sort((a, b) => b.y - a.y);
+  // init to false so don't show drawing during rendering
+  $: visible = false;
 
   $: xScale = scaleLinear()
-    .domain([0, maxVal])
-    .range([$marginScroll.left, width - $marginScroll.right]);
+    .domain([-4, 12])
+    .range([margin, width - margin]);
   $: yScale = scaleLinear()
-    .domain([0, max(interpretationData, (d) => d.price)])
-    .range([height - $marginScroll.bottom, $marginScroll.top]);
+    .domain([-4, 12])
+    .range([height / 2 - margin, -height / 2 + margin]);
 
-  // line generator
-  $: regressionPath = line()
-    .x((d) => xScale(d.x))
-    .y((d) => yScale(d.y))
-    .curve(curveNatural);
+  const colorScale = scaleOrdinal()
+    .domain([0, 1])
+    .range(["#f46ebb", "#2074d5"]);
+
+  $: hexbins = hexbin()
+    .radius(hexbinRadius)
+    .extent([
+      [0, 0],
+      [width, height],
+    ]);
+
+  // responsive dimensions for scatter plot
+  $: scatterCondition = ![1, 2, 10].includes($stepIndex);
+
+  $: model = $stepIndex < 5 ? logistic : perceptron;
+
+  // ml models
+
+  console.log(logistic(3, 4));
+  onMount(() => {});
+
+  let delayFinished = false;
+
+  let timeoutId = setTimeout(() => {
+    generateRandomPosition(); // generate initial position
+    delayFinished = true;
+    let intervalId = setInterval(generateRandomPosition, interval);
+    onDestroy(() => {
+      clearInterval(intervalId);
+    });
+  }, delay);
+  onDestroy(() => {
+    clearInterval(intervalId);
+  });
 </script>
 
-<div id="scatter-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
-  <svg {width} height={height + $marginScroll.top + $marginScroll.bottom}>
-    <!-- x-ticks -->
-    {#each xScale.ticks() as tick}
-      <g
-        transform={`translate(${xScale(tick) + 0} ${
-          height - $marginScroll.bottom
-        })`}
-      >
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="grid-line"
-          x1="0"
-          x2="0"
-          y1="0"
-          y2={-height + $marginScroll.bottom + $marginScroll.top}
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        <text class="axis-text" y="15" text-anchor="middle">{tick}</text>
-      </g>
-    {/each}
-
-    <!-- y-ticks -->
-    {#each yScale.ticks() as tick, i}
-      <g transform={`translate(${$marginScroll.left - 5} ${yScale(tick) + 0})`}>
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="grid-line"
-          x1={5}
-          x2={width - $marginScroll.right}
-          y1="0"
-          y2="0"
-          stroke="black"
-          stroke-dasharray="4"
-        />
-        {#if i % 2 === 0}
-          <text
-            class="axis-text"
-            y="0"
-            text-anchor="end"
-            dominant-baseline="middle">{formatter(tick)}</text
-          >
-        {/if}
-      </g>
-    {/each}
-    <!-- axis lines -->
-    <!-- x -->
-    <!-- svelte-ignore component-name-lowercase -->
-    <line
-      class="axis-line"
-      y1={height - $marginScroll.bottom}
-      y2={height - $marginScroll.bottom}
-      x1={$marginScroll.left}
-      x2={width}
-      stroke="black"
-      stroke-width="1"
-    />
-    <!-- y -->
-    <!-- svelte-ignore component-name-lowercase -->
-    <line
-      class="axis-line"
-      y1={$marginScroll.top}
-      y2={height - $marginScroll.bottom}
-      x1={$marginScroll.left}
-      x2={$marginScroll.left}
-      stroke="black"
-      stroke-width="1"
-    />
-    <!-- axis labels -->
-    <text
-      class="axis-label"
-      y={height + $marginScroll.bottom}
-      x={(width + $marginScroll.left) / 2}
-      text-anchor="middle">Size of House (sqft)</text
-    >
-    <text
-      class="axis-label"
-      y={$marginScroll.left / 4.8}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">Housing Price ($)</text
-    >
-
-    <!-- chart data mappings -->
-    <!-- Residuals -->
-    {#each $dataset as d}
-      {#if $showResiduals}
-        <!-- svelte-ignore component-name-lowercase -->
-        <line
-          class="residual-line"
-          x1={xScale(d.sqft)}
-          x2={xScale(d.sqft)}
-          y1={yScale(d.price)}
-          y2={yScale(d.y)}
-        />
-      {/if}
-    {/each}
-
-    {#if $showRegressionLine}
-      <!-- draw regression line -->
-      <path class="regression-line" d={regressionPath($regressionLine)} />
-    {/if}
-    <!-- draw circles -->
-    {#each $dataset as d}
-      <circle
-        class="regression-circle"
-        fill="#c9208a"
-        stroke="black"
-        stroke-width="1.5"
-        r="5.5"
-        cx={xScale(d.sqft)}
-        cy={yScale(d.price)}
+<!-- scatterplot -->
+{#if scatterCondition}
+  <g clip-path="url(#clip)" transform={`translate(0 ${-height / 2})`}>
+    <!-- hexbins -->
+    {#each hexbins(hexbins.centers()) as h}
+      <path
+        in:draw={{ duration: 500 }}
+        out:draw={{ duration: 0 }}
+        class="hex-cell"
+        d={`M${h.x},${h.y}${hexbins.hexagon()}`}
+        fill={colorScale(
+          model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
+        )}
+        stroke={colorScale(
+          model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
+        )}
       />
     {/each}
-
-    <!-- highlight annotations -->
+  </g>
+  <!-- circles -->
+  {#each scatterData as d, i}
     <circle
-      class="highlight-circle"
-      r="7.5"
-      fill="none"
-      stroke="black"
-      opacity="0"
-      cx={xScale($sqft)}
-      cy={$coeff === 0.097
-        ? yScale($intercept + $coeff * Math.sqrt($sqft))
-        : yScale($intercept + $coeff * $sqft)}
+      in:fly={{ x: -50, duration: 500 }}
+      out:fade={{ duration: 200 }}
+      cx={xScale(d.x)}
+      cy={yScale(d.y)}
+      r="4"
+      fill={colorScale(d.label)}
+      stroke={colorScale(d.label)}
     />
-    <!-- svelte-ignore component-name-lowercase -->
-    <!-- vertical annotation line -->
-    <line
-      class="annotation-line"
-      x1={xScale($sqft)}
-      x2={xScale($sqft)}
-      y1={$coeff === 0.097
-        ? yScale($intercept + $coeff * Math.sqrt($sqft))
-        : yScale($intercept + $coeff * $sqft)}
-      y2={yScale(0)}
-      stroke="black"
-      opacity="0"
-    />
-
-    <!-- svelte-ignore component-name-lowercase -->
-    <!-- horizontal annotation line -->
-    <line
-      class="annotation-line"
-      x1={xScale(0)}
-      x2={xScale($sqft)}
-      y1={$coeff === 0.097
-        ? yScale($intercept + $coeff * Math.sqrt($sqft))
-        : yScale($intercept + $coeff * $sqft)}
-      y2={$coeff === 0.097
-        ? yScale($intercept + $coeff * Math.sqrt($sqft))
-        : yScale($intercept + $coeff * $sqft)}
-      stroke="black"
-      opacity="0"
-    />
-    <!-- hihglight text -->
-    {#if $showHighlight}
-      <text
-        class="highlight-text"
-        text-anchor="middle"
-        y={yScale($intercept + $coeff * $sqft) + 16}
-        x={xScale($sqft)}>Sqft: {$sqft}</text
-      >
-      <text
-        class="highlight-text"
-        text-anchor="middle"
-        y={yScale($intercept + $coeff * $sqft)}
-        x={xScale($sqft)}>Price: {formatter($intercept + $coeff * $sqft)}</text
-      >
-    {/if}
-  </svg>
-</div>
+  {/each}
+  {#if delayFinished}
+    <circle class="prediction-circle" cx={xScale(x)} cy={yScale(y)} r="10" />
+  {/if}
+  <!-- {#each yScale.ticks() as tick}
+    <text x="10" y={yScale(tick)}>{tick}</text>
+  {/each}
+  {#each xScale.ticks() as tick}
+    <text y={100} x={xScale(tick)}>{tick}</text>
+  {/each} -->
+{/if}
 
 <style>
-  #scatter-chart {
-    width: 100%;
-    max-height: 98%;
+  .prediction-circle {
+    stroke: var(--squidink);
+    stroke-width: 2;
+    fill: var(--paper);
+    r: 5;
   }
-
-  .regression-circle {
-    fill: var(--primary);
+  .hex-cell {
+    /* fill: none; */
+    /* stroke: rgba(0, 0, 0, 0.0344); */
     stroke-width: 0;
+    opacity: 0.4;
+    transition: all 1s;
   }
 
-  .regression-line {
-    stroke: var(--squidink);
-    stroke-width: 3.5;
-    fill: none;
-  }
-
-  .residual-line {
-    stroke: var(--cosmos);
-    stroke-width: 1.8;
-    opacity: 0.5;
-  }
-
-  .annotation-line {
-    stroke-width: 1.5;
-  }
-
-  .highlight-text {
-    text-transform: uppercase;
-    font-family: var(--font-mono);
-    stroke-linejoin: round;
-    paint-order: stroke fill;
-    stroke-width: 4px;
-    pointer-events: none;
-    stroke: var(--squidink);
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    fill: white;
-  }
-
-  .axis-label {
-    font-weight: bold;
-  }
-
-  .axis-text {
-    font-size: 0.8rem;
-  }
-
-  .grid-line {
-    opacity: 0.075;
-  }
-
-  .axis-label {
-    text-transform: uppercase;
-    font-size: 0.9rem;
-  }
-
-  /* ipad */
-  @media screen and (max-width: 950px) {
-    .axis-label {
-      font-size: 0.8rem;
-    }
-  }
-  /* mobile */
-  @media screen and (max-width: 750px) {
-    .axis-label {
-      font-size: 0.75rem;
-    }
-  }
+  /* .output {
+      fill: var(--bananayellow);
+    } */
 </style>
