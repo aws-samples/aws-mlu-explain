@@ -3,10 +3,9 @@
   import { scaleLinear } from "d3-scale";
   import { max } from "d3-array";
   import {
-    drawActivation,
     labels,
     marginScroll,
-    network,
+    networkBp,
     numLayers,
     showLayerLine,
     showSubScript,
@@ -22,9 +21,7 @@
   // these don't matter, but make the stretching less obvious at load
   //   export let network = [2, 5, 2];
   //   $: numLayers = $numLayers;
-  $: maxNumNeurons = max($network) + 1;
-
-  $: console.log("maxNumNeurons", $numLayers);
+  $: maxNumNeurons = max($networkBp) + 1;
 
   let height;
   let width;
@@ -57,7 +54,7 @@
   }
 
   // {#each Array($numLayers).fill(null) as index, layer}
-  // {#each positionElements($network[layer], maxNumNeurons) as yPosition}
+  // {#each positionElements($networkBp[layer], maxNumNeurons) as yPosition}
 
   $: pathData = [];
 
@@ -77,9 +74,12 @@
   $: {
     for (let i = 0; i < $numLayers; i++) {
       const layer = i;
-      for (let yPosition of positionElements($network[layer], maxNumNeurons)) {
+      for (let yPosition of positionElements(
+        $networkBp[layer],
+        maxNumNeurons
+      )) {
         for (let prevYPosition of positionElements(
-          $network[layer - 1],
+          $networkBp[layer - 1],
           maxNumNeurons
         )) {
           layersArray.push({ layer, yPosition, prevYPosition });
@@ -91,7 +91,7 @@
   // $: {
   //   for (const [index, layer] of Array($numLayers).fill(null).entries()) {
   //     for (const yPosition of positionElements(
-  //       $network[layer],
+  //       $networkBp[layer],
   //       maxNumNeurons
   //     )) {
   //       // store data in pathData object
@@ -119,9 +119,9 @@
     {#if visible}
       <!-- edges -->
       {#each Array($numLayers).fill(null) as i, layer}
-        {#each positionElements($network[layer], maxNumNeurons) as yPosition}
+        {#each positionElements($networkBp[layer], maxNumNeurons) as yPosition}
           {#if layer > 0}
-            {#each positionElements($network[layer - 1], maxNumNeurons) as prevYPosition}
+            {#each positionElements($networkBp[layer - 1], maxNumNeurons) as prevYPosition}
               <line
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}
@@ -139,7 +139,7 @@
 
       <!-- nodes -->
       {#each Array($numLayers).fill(null) as index, layer}
-        {#each positionElements($network[layer], maxNumNeurons) as yPosition}
+        {#each positionElements($networkBp[layer], maxNumNeurons) as yPosition}
           <g
             class="nn-g"
             transform={`translate(${xScale(layer) - nodeWidth / 2} ${
@@ -255,27 +255,6 @@
             />
           {/if}
         {/each}
-      {/if}
-
-      {#if $drawActivation}
-        <rect
-          in:draw={{ duration: 1000 }}
-          out:draw={{ duration: 400 }}
-          class="activation-rect"
-          width={nodeWidth * 1.5}
-          height={nodeHeight * 2}
-          x={xScale(1) - (nodeWidth * 1.5) / 2}
-          y={yScale(2) - nodeHeight / 8}
-        />
-        <text
-          in:fly|local={{ duration: 500 }}
-          out:fade|local={{ duration: 200 }}
-          class="nn-text"
-          x={xScale(1) - (nodeWidth * 1.5) / 2}
-          y={yScale(2) - 20}
-          text-anchor="start"
-          alignment-baseline="middle">Artifical Neuron</text
-        >
       {/if}
     {/if}
 

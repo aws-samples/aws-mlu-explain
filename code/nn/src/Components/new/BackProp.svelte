@@ -1,77 +1,60 @@
 <script>
   import NetworkBackProp from "./NetworkBackProp.svelte";
   import { onMount } from "svelte";
-  import {
-    drawActivation,
-    networkBp,
-    showLayerLine,
-    labels,
-    showSubScript,
-  } from "../../store";
+  import { networkBp, showLayerLine, labels, showSubScript } from "../../store";
   import katexify from "../../katexify";
 
-  $: stepIndex = 0;
-  $networkBp = [3, 1, 1];
+  $: stepIndexBp = 0;
+  $networkBp = [3, 2, 1, 1];
 
   const target2event = {
     0: () => {
       $showLayerLine = false;
-      $networkBp = [3, 2, 3, 2, 1];
-      stepIndex = 0;
+      $networkBp = [3, 2, 1, 1];
+      stepIndexBp = 0;
       $showSubScript = false;
-      $drawActivation = false;
     },
 
     1: () => {
       $showLayerLine = false;
-      $networkBp = [3, 1, 1];
+      $networkBp = [3, 2, 1, 1];
       $labels = ["input", "function", "output"];
-      stepIndex = 1;
+      stepIndexBp = 1;
       $showSubScript = false;
-      $drawActivation = false;
     },
     2: () => {
       $showLayerLine = false;
-      $networkBp = [3, 1, 1];
       $labels = ["X", "linear", "y"];
       $showSubScript = true;
-      $drawActivation = false;
-      stepIndex = 1;
+      stepIndexBp = 1;
     },
     3: () => {
-      stepIndex = 2;
+      stepIndexBp = 2;
       $showLayerLine = false;
       $labels = ["X", "sigmoid", "y"];
-      $networkBp = [3, 1, 1];
-      $drawActivation = false;
     },
     4: () => {
-      stepIndex = 3;
+      stepIndexBp = 3;
       $labels = ["X", "step", "y"];
       $showLayerLine = false;
-      $networkBp = [3, 1, 1];
-      $drawActivation = true;
     },
     5: () => {
-      stepIndex = 4;
+      stepIndexBp = 4;
       $showLayerLine = false;
-      $drawActivation = false;
 
       $networkBp = [3, 1, 1, 1];
     },
     6: () => {
-      stepIndex = 5;
+      stepIndexBp = 5;
       $showLayerLine = true;
       $labels = ["X", "sigmoid", "y"];
 
       $networkBp = [3, 2, 2, 1];
-      $drawActivation = false;
     },
     7: () => {
-      stepIndex = 5;
+      stepIndexBp = 5;
       $showLayerLine = true;
       $networkBp = [3, 4, 2, 3, 1];
-      $drawActivation = false;
     },
   };
 
@@ -83,7 +66,7 @@
 
   onMount(() => {
     // store elements to track
-    const sections = [...document.querySelectorAll(".step")];
+    const sections = [...document.querySelectorAll(".step-bp")];
     console.log("sections", sections);
 
     // observe elements to track
@@ -120,13 +103,13 @@
   <section>
     <div class="scrolly-container-backprop">
       <div class="charts-container-backprop">
-        <!-- <h2 class="chart-title">{stepTitles[stepIndex]}</h2> -->
+        <!-- <h2 class="chart-title">{stepTitles[stepIndexBp]}</h2> -->
         <div class="chart-holder-backprop">
           <NetworkBackProp />
         </div>
       </div>
       <div class="steps-container-backprop">
-        <!-- <div class="step" data-index="0">
+        <!-- <div class="step-bp" data-index="0">
           <div class="step-content">
             <h2>That Is A Neural Network</h2>
             <hr />
@@ -141,9 +124,9 @@
             <p style="margin:auto; text-align: center;">&#8595</p>
           </div>
         </div> -->
-        <div class="step" data-index="1">
+        <div class="step-bp" data-index="1">
           <div class="step-content">
-            <h2>Building Blocks: Computational Graphs</h2>
+            <h2>Forward Pass</h2>
             <hr />
             <br />
 
@@ -156,9 +139,9 @@
             </p>
           </div>
         </div>
-        <div class="step" data-index="2">
+        <div class="step-bp" data-index="2">
           <div class="step-content">
-            <h2>Linear Regression</h2>
+            <h2>Error</h2>
             <hr />
             <br />
 
@@ -181,9 +164,9 @@
             </p>
           </div>
         </div>
-        <div class="step" data-index="3">
+        <div class="step-bp" data-index="3">
           <div class="step-content">
-            <h2>Logistic Regression</h2>
+            <h2>Backward Pass</h2>
             <hr />
             <br />
             <p>
@@ -204,9 +187,9 @@
             </p>
           </div>
         </div>
-        <div class="step" data-index="4">
+        <div class="step-bp" data-index="4">
           <div class="step-content">
-            <h2>Artificial Neurons <br />& Perceptrons</h2>
+            <h2>BackPropagation</h2>
             <hr />
             <br />
 
@@ -290,7 +273,7 @@
     height: 100%;
   }
 
-  .step {
+  .step-bp {
     position: relative;
     scroll-snap-align: center;
     display: flex;
@@ -303,7 +286,7 @@
     padding: 1rem;
     padding-right: 1.4rem;
   }
-  .step {
+  .step-bp {
     height: 100vh;
   }
 

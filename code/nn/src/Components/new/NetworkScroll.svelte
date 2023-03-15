@@ -65,14 +65,12 @@
       stepIndex = 5;
       $showLayerLine = true;
       $labels = ["input", "sigmoid", "sigmoid", "y"];
-
       $network = [3, 2, 2, 1];
       $drawActivation = false;
     },
     7: () => {
       stepIndex = 5;
       $labels = ["input", "reLu", "reLu", "reLu", "y"];
-
       $showLayerLine = true;
       $network = [3, 4, 2, 3, 1];
       $drawActivation = false;
@@ -263,7 +261,7 @@
           </p>
         </div>
       </div>
-      <div class="step" data-index="7">
+      <!-- <div class="step" data-index="7">
         <div class="step-content">
           <h2>No Limits</h2>
           <hr />
@@ -279,7 +277,7 @@
             computational cost to train the model.
           </p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>

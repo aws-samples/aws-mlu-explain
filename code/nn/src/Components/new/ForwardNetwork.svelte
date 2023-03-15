@@ -36,7 +36,7 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  let nodeWidth = 12 * 1.33 * 2;
+  let nodeWidth = 12 * 1.33 * 4;
   let nodeHeight = 12 * 2;
 
   $: xScale = scaleLinear()
@@ -152,8 +152,8 @@
             })`}
           >
             {#if layer !== $numLayers - 1}
-              {@const nodWidth =
-                $labels[layer].length == 1 ? 24 : $labels[layer].length * 11}
+              <!-- {@const nodWidth =
+                $labels[layer].length == 1 ? 24 : $labels[layer].length * 11} -->
               <rect
                 in:fly|local={{ x: -50, duration: 500 }}
                 out:fade|local={{ duration: 300 }}
@@ -162,7 +162,7 @@
                   : layer == $numLayers - 1
                   ? 'output'
                   : 'hidden'}"
-                width={nodWidth}
+                width={nodeWidth}
                 height={nodeHeight}
               />
               <text
@@ -171,7 +171,7 @@
                 class="nn-text"
                 text-anchor="middle"
                 alignment-baseline="middle"
-                dx={nodWidth / 2}
+                dx={nodeWidth / 2}
                 dy={nodeHeight / 2}
                 >{$labels[layer]}
                 {#if layer === 0 && $showSubScript}
