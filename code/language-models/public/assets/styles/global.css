@@ -1,0 +1,197 @@
+:root {
+  /* Fonts 
+  see: http://typography.aka.amazon.com/
+  */
+  --font-mono: "Amazon Ember Mono";
+  --font-heavy: "Amazon Ember Display Heavy";
+  --font-main: "Amazon Ember";
+  --font-light: "Amazon Ember Display Light";
+
+  /* Colors 
+  see: https://brand.amazon.com/aws/visual-guidelines-ob/colors/
+  */
+  --squidink: #232f3e;
+  /* set 1 */
+  --anchor: #003181;
+  --sky: #2074d5;
+  --smile: #ff9900;
+  --rind: #fbd8bf;
+  /* set 2 */
+  --galaxy: #330066;
+  --cosmos: #df2a5d;
+  --violet: #7c5aed;
+  --cyan: #7ce8f4;
+  /* set 3 */
+  --seablue: #005276;
+  --aqua: #007faa;
+  --lab: #38ef7d;
+  --mist: #9ffcea;
+  /* set 4 */
+  --anchor: #003181;
+  --sky: #2074d5;
+  --magenta: #f46ebb;
+  --peach: #ffad97;
+  /* neutrals */
+  --darksquidink: #161e2d;
+  --stone: #d4dada;
+  --paper: #f1f3f3;
+  --white: #ffffff;
+
+  /* Z-Index */
+  --z-bottom: -100;
+  --z-middle: 0;
+  --z-top: 100;
+  --z-overlay: 1000;
+
+  /* Color Variables */
+
+  --bg: var(--peach);
+  --fg: var(--magenta);
+  --default: var(--white);
+  --primary: var(--peach);
+  --secondary: var(--peach);
+
+  --max-width: 600px;
+  --size-default: 16px;
+}
+
+body {
+  margin: auto;
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  background-color: var(--bg);
+}
+
+/* Global Reusable Styles For Convenience */
+.body-text {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: left;
+  font-size: var(--size-default);
+  line-height: 1.5em;
+  font-family: var(--font-main);
+}
+
+.body-header {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: left;
+  font-size: var(--size-default);
+  line-height: 1.5em;
+  font-family: var(--font-heavy);
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  text-decoration: underline;
+  text-decoration-color: var(--primary);
+  text-transform: uppercase;
+}
+
+.centered {
+  margin: auto;
+  max-width: var(--max-width);
+}
+
+.bold {
+  font-family: var(--font-light);
+}
+
+a {
+  color: var(--secondary);
+  font-family: var(--font-heavy);
+}
+
+h1 {
+  color: var(--default);
+  font-family: var(--font-light);
+}
+
+p {
+  color: var(--default);
+  font-family: var(--font-main);
+  font-weight: none;
+}
+
+.info-tooltip {
+  color: var(--primary);
+  font-size: 0.9rem;
+}
+
+.interpretation-header {
+  color: var(--squidink);
+  font-family: var(--font-light);
+  font-size: 1.4rem;
+}
+
+.tooltip-div {
+  padding: 4px;
+  position: absolute;
+  width: 400px;
+  background: var(--squidink);
+  color: var(--white);
+  margin: 10px 4px;
+  font-size: 14px;
+}
+
+hr {
+  margin: 3rem auto;
+  width: 3%;
+  border: 3px solid var(--primary);
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--stone);
+  outline: none;
+  opacity: 0.9;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  border-color: var(--squidink);
+  margin: 8px;
+  max-width: 300px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--primary);
+  cursor: pointer;
+}
+
+/* mobile */
+@media screen and (max-width: 950px) {
+  .body-text {
+    max-width: 90%;
+    font-size: 16px;
+  }
+
+  .body-header {
+    max-width: 90%;
+    font-size: 30px;
+  }
+
+  .tab-text {
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .interpretation-header {
+    font-size: 1rem;
+  }
+
+  .tooltip-div {
+    padding: 3px;
+    width: 200px;
+    margin: 10px 4px;
+    font-size: 12px;
+    display: none;
+  }
+
+  .info-tooltip {
+    display: none;
+  }
+}
