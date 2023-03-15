@@ -1,8 +1,9 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
-  import Scatter1 from "./charts/Scatter1.svelte";
-  import Roc from "./charts/ROC.svelte";
+  import UnigramTable from "./charts/UnigramTable.svelte";
+  import Barchart from "./charts/Barchart.svelte";
+  import UnigramSentence from "./charts/UnigramSentence.svelte";
 </script>
 
 <section>
@@ -16,23 +17,41 @@
     analyze existing text.
   </p>
 </section>
+<div id="unigram-container">
+  <div>
+    <div id="scatter1-container">
+      <Barchart />
+    </div>
+    <div id="output1-container">
+      <UnigramTable />
+    </div>
+  </div>
+  <div id="unigram-model">
+    <UnigramSentence />
+  </div>
+</div>
 
 <style>
-  #charts1-container {
+  #unigram-container {
+    outline: 2px solid black;
     display: grid;
     margin: auto;
-    height: 38vh;
+    height: 100%;
     width: 70%;
-    grid-template-columns: 50% 50%;
-    grid-gap: 2%;
+    grid-template-columns: 60% 40%;
+    grid-gap: 0%;
     max-width: 1000px;
   }
   #scatter1-container {
-    max-height: 38vh;
+    height: 38vh;
   }
   #output1-container {
     border: var(--sky);
     max-height: 38vh;
+  }
+  #unigram-model {
+    display: flex;
+    align-items: center;
   }
   ul {
     max-width: 600px;

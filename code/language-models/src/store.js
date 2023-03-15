@@ -15,26 +15,10 @@ export const rectPos = writable(0.5);
 export const rectPos2 = writable(0.5);
 export const wronglyAccepted = writable(1);
 export const wronglyRejected = writable(1);
-
-export const stackedData = tweened([
-  {
-    xVal: "A",
-    Accepted: 20,
-    Declined: 30,
-  },
-  {
-    xVal: "A Predicted",
-    Accepted: 20,
-    Declined: 30,
-  },
-  {
-    xVal: "B",
-    Accepted: 15,
-    Declined: 10
-  },
-  {
-    xVal: "B Predicted",
-    Accepted: 15,
-    Declined: 10,
-  },
-]);
+export const unigramCounts = writable({
+  i: 0.14285714285714285,
+  love: 0.2857142857142857,
+  dogs: 0.2857142857142857,
+  and: 0.14285714285714285,
+  me: 0.14285714285714285,
+});

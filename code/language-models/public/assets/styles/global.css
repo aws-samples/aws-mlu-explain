@@ -48,8 +48,8 @@
   --bg: var(--peach);
   --fg: var(--magenta);
   --default: var(--white);
-  --primary: var(--peach);
-  --secondary: var(--peach);
+  --primary: var(--white);
+  --secondary: var(--white);
 
   --max-width: 600px;
   --size-default: 16px;

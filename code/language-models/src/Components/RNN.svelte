@@ -1,8 +1,6 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
-  import Scatter1 from "./charts/Scatter1.svelte";
-  import Roc from "./charts/ROC.svelte";
 </script>
 
 <section>
