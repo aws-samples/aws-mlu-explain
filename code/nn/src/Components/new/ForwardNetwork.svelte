@@ -15,7 +15,7 @@
   import { line } from "d3-shape";
   import { fade, fly, draw } from "svelte/transition";
   import { drawPath } from "../../animations";
-  //   import OutputNeuron from "../OutputNeuron.svelte";
+  import OutputNeuron from "./OutputNeuron.svelte";
   import { positionElements } from "../../utils";
   import { logistic, perceptron } from "../../outputModelWeights";
 
@@ -259,7 +259,7 @@
             xScale($numLayers - 1) - nodeWidth / 2
           } ${yScale(yPosition)})`}
         >
-          <!-- <OutputNeuron {width} {height} /> -->
+          <OutputNeuron {width} {height} />
         </g>
       {/each}
     {/if}
