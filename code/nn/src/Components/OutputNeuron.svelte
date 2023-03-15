@@ -36,7 +36,7 @@
     .domain([-1, maxNumNeurons])
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
-  $: scatterCondition = ![1, 2, 10].includes($stepIndex);
+  $: scatterCondition = ![0, 1, 2, 3, 4, 5, 10].includes($stepIndex);
 
   // responsive dimensions for scatter plot
   // $: scatterWidth = scatterCondition ? xScale(1) - xScale(0) : nodeWidth;

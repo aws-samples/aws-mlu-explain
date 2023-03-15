@@ -1,5 +1,5 @@
 <script>
-  import NetworkChart from "./NetworkChart.svelte";
+  import DynamicNetworkChart from "./DynamicNetworkChart.svelte";
   import Logo from "./Logo.svelte";
   import { onMount } from "svelte";
   import { select } from "d3-selection";
@@ -9,70 +9,94 @@
     showLayerLine,
     labels,
     showSubScript,
+    stepIndex,
   } from "../store";
   import katexify from "../katexify";
 
-  $: stepIndex = 0;
-  $network = [3, 1, 1];
+  // $: $stepIndex = 0;
+  $network = [2, 2, 3, 2, 1];
 
   const target2event = {
     0: () => {
       $showLayerLine = false;
-      $network = [3, 1, 1];
-      stepIndex = 0;
+      $network = [2, 2, 2, 1, 1];
+      $labels = ["input", "function", "function", "output"];
+      $stepIndex = 0;
       $showSubScript = false;
       $drawActivation = false;
     },
 
     1: () => {
       $showLayerLine = false;
-      $network = [3, 1, 1];
+      $network = [2, 1, 1, 1];
       $labels = ["input", "function", "output"];
-      stepIndex = 1;
+      $stepIndex = 1;
       $showSubScript = false;
       $drawActivation = false;
     },
     2: () => {
       $showLayerLine = false;
-      $network = [3, 1, 1];
+      $network = [2, 1, 1, 1];
       $labels = ["X", "linear", "y"];
       $showSubScript = true;
       $drawActivation = false;
-      stepIndex = 1;
+      $stepIndex = 2;
     },
     3: () => {
-      stepIndex = 2;
       $showLayerLine = false;
-      $labels = ["X", "sigmoid", "y"];
-      $network = [3, 1, 1];
+      $network = [2, 1, 1, 1];
+      $labels = ["X", "linear", "y"];
+      $showSubScript = true;
       $drawActivation = false;
+      $stepIndex = 3;
     },
     4: () => {
-      stepIndex = 3;
-      $labels = ["X", "step", "y"];
+      $stepIndex = 4;
       $showLayerLine = false;
-      $network = [3, 1, 1];
-      $drawActivation = true;
+      $labels = ["X", "logistic", "y"];
+      $network = [2, 1, 1, 1];
+      $drawActivation = false;
     },
     5: () => {
-      stepIndex = 4;
+      $stepIndex = 5;
+      $labels = ["X", "step", "y"];
       $showLayerLine = false;
+      $network = [2, 1, 1, 1];
       $drawActivation = false;
-
-      $network = [3, 1, 1, 1];
     },
     6: () => {
-      stepIndex = 5;
-      $showLayerLine = true;
-      $labels = ["X", "sigmoid", "y"];
-
-      $network = [3, 2, 2, 1];
-      $drawActivation = false;
+      $stepIndex = 6;
+      $labels = ["X", "step", "y"];
+      $showLayerLine = false;
+      $network = [2, 1, 1, 1];
+      $drawActivation = true;
     },
     7: () => {
-      stepIndex = 5;
+      $stepIndex = 7;
+      $showLayerLine = false;
+      $labels = ["X", "step", "step", "y"];
+      $drawActivation = true;
+      $network = [2, 1, 1, 1];
+    },
+    8: () => {
+      $stepIndex = 8;
+      $showLayerLine = false;
+      $labels = ["X", "tanh", "relu", "y"];
+      $drawActivation = false;
+      $network = [2, 1, 1, 1];
+    },
+    9: () => {
+      $stepIndex = 9;
       $showLayerLine = true;
-      $network = [3, 4, 2, 3, 1];
+      $labels = ["X", "logistic", "relu", "y"];
+      $network = [2, 2, 2, 1];
+      $drawActivation = false;
+    },
+    10: () => {
+      $stepIndex = 10;
+      $showLayerLine = true;
+      $labels = ["X", "logistic", "relu", "logistic", "y"];
+      $network = [2, 3, 2, 2, 2];
       $drawActivation = false;
     },
   };
@@ -86,7 +110,7 @@
   onMount(() => {
     // store elements to track
     const sections = [...document.querySelectorAll(".step")];
-    console.log("sections", sections);
+    // console.log("sections", sections);
 
     // observe elements to track
     sections.forEach((section) => {
@@ -100,7 +124,7 @@
 
   // options for intersection observer
   const options = {
-    threshold: 0.7,
+    threshold: 0.55,
   };
 
   let observer = new IntersectionObserver((entries) => {
@@ -121,16 +145,16 @@
 <section>
   <div class="scrolly-container">
     <div class="charts-container">
-      <!-- <h2 class="chart-title">{stepTitles[stepIndex]}</h2> -->
+      <!-- <h2 class="chart-title">{stepTitles[$stepIndex]}</h2> -->
       <div class="chart-holder">
-        <NetworkChart />
+        <DynamicNetworkChart />
       </div>
     </div>
     <div class="steps-container">
       <div class="step" data-index="0">
         <div class="step-content">
           <!-- <Logo />p -->
-          <h2>That Is A Neural Network</h2>
+          <h2>This Is A Neural Network</h2>
           <br />
           <p>
             By <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, January
@@ -182,18 +206,16 @@
       </div>
       <div class="step" data-index="3">
         <div class="step-content">
-          <h2>Logistic Regression</h2>
+          <h2>Model Outputs</h2>
           <p>
-            Extending this representation to <a
-              href="https://mlu-explain.github.io/logistic-regression/"
-              >Logistic Regression</a
-            >
-            is dead simple, we need only swap the linear function with a sigmoid
-            function:
+            What's our model actually outputting? It depends on the
+            architecture! Let's look at the output for a linear regression
+            model.
             <br /><br />
             {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> In this manner, our computational graph now represents
-            the following:<br />
+            <br /><br /> To represent this as a graph, we need only weight each
+            edge connecting our input nodes to our function node, and have our
+            function represent a linear function on a weighted sum:<br />
             linear = {@html katexify(
               `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
               false
@@ -203,13 +225,36 @@
       </div>
       <div class="step" data-index="4">
         <div class="step-content">
-          <h2>Artificial Neurons <br />& Perceptrons</h2>
+          <h2>Logistic Regression</h2>
           <p>
             Extending this representation to <a
               href="https://mlu-explain.github.io/logistic-regression/"
               >Logistic Regression</a
             >
-            is dead simple, we need only swap out the linear function for the sigmoid
+            is dead simple, we need only swap the linear function with a logistic
+            function:
+            <br /><br />
+            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
+            <br /><br /> In this manner, our computational graph now represents
+            the following:<br />
+            linear = {@html katexify(
+              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
+              false
+            )}
+            <br /><br />
+            Notice how our model's output changed!
+          </p>
+        </div>
+      </div>
+      <div class="step" data-index="5">
+        <div class="step-content">
+          <h2>Perceptrons</h2>
+          <p>
+            Extending this representation to <a
+              href="https://mlu-explain.github.io/logistic-regression/"
+              >Logistic Regression</a
+            >
+            is dead simple, we need only swap out the linear function for the logistic
             function:
             <br /><br />
             {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
@@ -222,7 +267,28 @@
           </p>
         </div>
       </div>
-      <div class="step" data-index="5">
+      <div class="step" data-index="6">
+        <div class="step-content">
+          <h2>Artificial Neurons <br />& Activation Functions</h2>
+          <p>
+            Extending this representation to <a
+              href="https://mlu-explain.github.io/logistic-regression/"
+              >Logistic Regression</a
+            >
+            is dead simple, we need only swap out the linear function for the logistic
+            function:
+            <br /><br />
+            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
+            <br /><br /> In this manner, our computational graph now represents
+            the following:<br />
+            linear = {@html katexify(
+              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
+              false
+            )}
+          </p>
+        </div>
+      </div>
+      <div class="step" data-index="7">
         <div class="step-content">
           <h2>Neural Networks</h2>
           <p>
@@ -236,20 +302,35 @@
           </p>
         </div>
       </div>
-      <div class="step" data-index="6">
+      <div class="step" data-index="8">
         <div class="step-content">
-          <h2>Architecture</h2>
+          <h2>Flexibility</h2>
           <p>
-            In general, a neural network architecture consists of an input
-            layer, a hidden layer full of artificial neurons, and an output
-            layer. The input layer receives the input data and sends it to the
-            hidden layer for processing. The output layer produces the final
-            result based on the input data and the processing done in the hidden
-            layer.
+            We can use any activation functions we want!
+            <br /><br />
+            For example, if we switch from two step functions to one logistic function
+            and one linear, we'd have a regression model that's able to model non-linearities!
           </p>
         </div>
       </div>
-      <div class="step" data-index="7">
+      <div class="step" data-index="9">
+        <div class="step-content">
+          <h2>Architecture</h2>
+          <p>
+            Moreover, we can use <span class="bold"
+              >any number of artificial neurons</span
+            >
+            that we want!
+            <br /><br />
+            In general, a neural network architecture consists of an input layer,
+            a hidden layer full of artificial neurons, and an output layer. The input
+            layer receives the input data and sends it to the hidden layer for processing.
+            The output layer produces the final result based on the input data and
+            the processing done in the hidden layer.
+          </p>
+        </div>
+      </div>
+      <div class="step" data-index="10">
         <div class="step-content">
           <h2>No Limits</h2>
           <p>

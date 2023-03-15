@@ -8,17 +8,18 @@
     showLayerLine,
     labels,
     showSubScript,
+    stepIndex,
   } from "../../store";
   import katexify from "../../katexify";
 
-  $: stepIndex = 0;
+  $stepIndex = 0;
   $network = [3, 1, 1];
 
   const target2event = {
     0: () => {
       $showLayerLine = false;
       $network = [3, 1, 1];
-      stepIndex = 0;
+      $stepIndex = 0;
       $showSubScript = false;
       $drawActivation = false;
       $labels = ["input", "function", "output"];
@@ -28,7 +29,7 @@
       $showLayerLine = false;
       $network = [3, 1, 1];
       $labels = ["input", "function", "output"];
-      stepIndex = 1;
+      $stepIndex = 1;
       $showSubScript = false;
       $drawActivation = false;
     },
@@ -38,38 +39,38 @@
       $labels = ["X", "linear", "y"];
       $showSubScript = true;
       $drawActivation = false;
-      stepIndex = 1;
+      $stepIndex = 1;
     },
     3: () => {
-      stepIndex = 2;
+      $stepIndex = 2;
       $showLayerLine = false;
       $labels = ["X", "sigmoid", "y"];
       $network = [3, 1, 1];
       $drawActivation = false;
     },
     4: () => {
-      stepIndex = 3;
+      $stepIndex = 3;
       $labels = ["X", "step", "y"];
       $showLayerLine = false;
       $network = [3, 1, 1];
       $drawActivation = true;
     },
     5: () => {
-      stepIndex = 4;
+      $stepIndex = 4;
       $showLayerLine = false;
       $drawActivation = false;
       $labels = ["input", "step", "step", "y"];
       $network = [3, 1, 1, 1];
     },
     6: () => {
-      stepIndex = 5;
+      $stepIndex = 5;
       $showLayerLine = true;
       $labels = ["input", "sigmoid", "sigmoid", "y"];
       $network = [3, 2, 2, 1];
       $drawActivation = false;
     },
     7: () => {
-      stepIndex = 5;
+      $stepIndex = 5;
       $labels = ["input", "reLu", "reLu", "reLu", "y"];
       $showLayerLine = true;
       $network = [3, 4, 2, 3, 1];

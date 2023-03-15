@@ -37,6 +37,7 @@
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
   $: scatterCondition = ![1, 2, 10].includes($stepIndex);
+  $: console.log("stepindex,condition", $stepIndex, scatterCondition);
 
   // responsive dimensions for scatter plot
   // $: scatterWidth = scatterCondition ? xScale(1) - xScale(0) : nodeWidth;
@@ -77,6 +78,7 @@
 </text>
 
 <!-- scatterplot -->
+
 <Scatterplot width={scatterWidth} height={scatterHeight} />
 
 <style>

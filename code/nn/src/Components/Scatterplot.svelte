@@ -58,7 +58,7 @@
     ]);
 
   // responsive dimensions for scatter plot
-  $: scatterCondition = ![1, 2, 10].includes($stepIndex);
+  $: scatterCondition = ![1, 10].includes($stepIndex);
 
   $: model = $stepIndex < 5 ? logistic : perceptron;
 
