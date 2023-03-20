@@ -1,7 +1,6 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
-  import Scatter2 from "./charts/Scatter2.svelte";
   import ROC from "./charts/ROC.svelte";
   import Tab_Constraints from "./Tab_Constraints.svelte";
   import Tab_Postprocessing from "./Tab_Postprocessing.svelte";
@@ -38,9 +37,6 @@
   </p>
   <br />
   <div id="charts2-container">
-    <div id="scatter2-container">
-      <Scatter2 />
-    </div>
     <div id="output2-container">
       <ROC />
     </div>
@@ -52,9 +48,7 @@
     display: grid;
     margin: auto;
     height: 45vh;
-    width: 70%;
-    grid-template-columns: 50% 50%;
-    grid-gap: 2%;
+    width: 40%;
     max-width: 1000px;
   }
   #scatter2-container {

@@ -129,7 +129,7 @@
       x={(width + margin.left) / 2}
       text-anchor="middle"
       >{formatter($wrongly_rejected_A / ($wrongly_rejected_A + 30))} wrongly rejected in group "circles"
-      {formatter($wrongly_rejected_B / ($wrongly_rejected_B + 10))} wrongly rejected in group "squares";
+      {formatter($wrongly_rejected_B / ($wrongly_rejected_B + 10))} wrongly rejected in group "squares"
       <br /></text
     >
     <text
@@ -138,16 +138,9 @@
       x={(width + margin.left) / 2}
       text-anchor="middle"
       >{formatter($wrongly_accepted_A / ($wrongly_accepted_A + 20))} wrongly accepted in group "circles"
-      {formatter($wrongly_accepted_B / ($wrongly_accepted_B+15))} wrongly accepted in group "squares";
+      {formatter($wrongly_accepted_B / ($wrongly_accepted_B+15))} wrongly accepted in group "squares"
     </text>
-    <text
-      class="chart-title"
-      y={margin.top / 3 + 40}
-      x={(width + margin.left) / 2}
-      text-anchor="middle"
-    >
-      Proportionally More individuals in group "cirlces"</text
-    >
+
     <text
       class="axis-label"
       y={margin.left / 2}

@@ -1,6 +1,9 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
+  import { rectPos } from "../store";
+
+  console.log("rectois", $rectPos);
 </script>
 
 <p class="body-text">
@@ -15,7 +18,35 @@
   are similar.
 </p>
 
+<div class="button-container">
+  <button on:click={() => ($rectPos = 165)}>Move Boundary To 0.65</button>
+</div>
+
 <style>
+  button {
+    background-color: var(--bg);
+    border: none;
+    color: var(--squidink);
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: var(--size-default);
+    margin: 4px 2px;
+    cursor: pointer;
+    outline: 2px solid var(--squidink);
+  }
+  button:hover {
+    color: var(--bg);
+    background-color: var(--squidink);
+  }
+
+  .button-container {
+    max-width: var(--max-width);
+    display: flex;
+    margin: 1rem auto;
+    justify-content: center;
+  }
   .definition-header {
     font-size: 0.85rem;
     font-family: var(--font-bold);
