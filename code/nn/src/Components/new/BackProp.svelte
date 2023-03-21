@@ -1,60 +1,64 @@
 <script>
   import NetworkBackProp from "./NetworkBackProp.svelte";
   import { onMount } from "svelte";
-  import { networkBp, showLayerLine, labels, showSubScript } from "../../store";
+  import {
+    networkBp,
+    showLayerLine,
+    showSubScript,
+    stepIndexBp,
+    bpStage,
+  } from "../../store";
   import katexify from "../../katexify";
 
-  $: stepIndexBp = 0;
-  $networkBp = [3, 2, 1, 1];
+  $networkBp = [2, 2, 1, 1];
 
   const target2event = {
     0: () => {
       $showLayerLine = false;
-      $networkBp = [3, 2, 1, 1];
-      stepIndexBp = 0;
+      $networkBp = [2, 2, 1, 1];
+      $stepIndexBp = 0;
       $showSubScript = false;
+      $bpStage = 0;
     },
 
     1: () => {
       $showLayerLine = false;
-      $networkBp = [3, 2, 1, 1];
-      $labels = ["input", "function", "output"];
-      stepIndexBp = 1;
+      $networkBp = [2, 2, 1, 1];
+      $stepIndexBp = 1;
       $showSubScript = false;
+      $bpStage = 1;
     },
     2: () => {
       $showLayerLine = false;
-      $labels = ["X", "linear", "y"];
       $showSubScript = true;
-      stepIndexBp = 1;
+      $stepIndexBp = 1;
+      $bpStage = 0;
     },
     3: () => {
-      stepIndexBp = 2;
+      $stepIndexBp = 2;
       $showLayerLine = false;
-      $labels = ["X", "sigmoid", "y"];
+      $bpStage = 1;
     },
     4: () => {
-      stepIndexBp = 3;
-      $labels = ["X", "step", "y"];
+      $stepIndexBp = 3;
       $showLayerLine = false;
     },
     5: () => {
-      stepIndexBp = 4;
+      $stepIndexBp = 4;
       $showLayerLine = false;
 
-      $networkBp = [3, 1, 1, 1];
+      $networkBp = [2, 1, 1, 1];
     },
     6: () => {
-      stepIndexBp = 5;
+      $stepIndexBp = 5;
       $showLayerLine = true;
-      $labels = ["X", "sigmoid", "y"];
 
-      $networkBp = [3, 2, 2, 1];
+      $networkBp = [2, 2, 2, 1];
     },
     7: () => {
-      stepIndexBp = 5;
+      $stepIndexBp = 5;
       $showLayerLine = true;
-      $networkBp = [3, 4, 2, 3, 1];
+      $networkBp = [2, 4, 2, 3, 1];
     },
   };
 
@@ -62,6 +66,10 @@
     if (entryIndex in target2event) {
       target2event[entryIndex]();
     }
+  }
+
+  $: {
+    console.log("bpStage", $bpStage);
   }
 
   onMount(() => {
@@ -103,7 +111,7 @@
   <section>
     <div class="scrolly-container-backprop">
       <div class="charts-container-backprop">
-        <!-- <h2 class="chart-title">{stepTitles[stepIndexBp]}</h2> -->
+        <!-- <h2 class="chart-title">{stepTitles[$stepIndexBp]}</h2> -->
         <div class="chart-holder-backprop">
           <NetworkBackProp />
         </div>
@@ -124,7 +132,7 @@
             <p style="margin:auto; text-align: center;">&#8595</p>
           </div>
         </div> -->
-        <div class="step-bp" data-index="1">
+        <div class="step-bp" data-index="0">
           <div class="step-content">
             <h2>Forward Pass</h2>
             <hr />
@@ -139,7 +147,7 @@
             </p>
           </div>
         </div>
-        <div class="step-bp" data-index="2">
+        <div class="step-bp" data-index="1">
           <div class="step-content">
             <h2>Error</h2>
             <hr />
@@ -164,7 +172,7 @@
             </p>
           </div>
         </div>
-        <div class="step-bp" data-index="3">
+        <div class="step-bp" data-index="2">
           <div class="step-content">
             <h2>Backward Pass</h2>
             <hr />
@@ -187,7 +195,7 @@
             </p>
           </div>
         </div>
-        <div class="step-bp" data-index="4">
+        <div class="step-bp" data-index="3">
           <div class="step-content">
             <h2>BackPropagation</h2>
             <hr />

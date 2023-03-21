@@ -26,8 +26,10 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  let nodeWidth = 70;
-  let nodeHeight = 40;
+  //   let nodeWidth = 70;
+  //   let nodeHeight = 40;
+  let nodeWidth = 12 * 1.33 * 4;
+  let nodeHeight = 12 * 2;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])
@@ -36,17 +38,17 @@
     .domain([-1, maxNumNeurons])
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
-  $: scatterCondition = ![1, 2, 10].includes($stepIndex);
+  $: scatterCondition = ![0, 1, 2].includes($stepIndex);
   $: console.log("stepindex,condition", $stepIndex, scatterCondition);
 
   // responsive dimensions for scatter plot
-  // $: scatterWidth = scatterCondition ? xScale(1) - xScale(0) : nodeWidth;
-  $: scatterWidth = scatterCondition ? 160 : nodeWidth;
+  $: scatterWidth = scatterCondition ? xScale(1) - xScale(0) : nodeWidth;
+  //   $: scatterWidth = scatterCondition ? 160 : nodeWidth;
   $: yVals = positionElements(3, maxNumNeurons);
-  // $: scatterHeight = scatterCondition
-  //   ? yScale(yVals[0]) - yScale(yVals[2])
-  //   : nodeHeight;
-  $: scatterHeight = scatterCondition ? 150 : nodeHeight;
+  $: scatterHeight = scatterCondition
+    ? yScale(yVals[0]) - yScale(yVals[2])
+    : nodeHeight;
+  //   $: scatterHeight = scatterCondition ? 150 : nodeHeight;
 
   $: backgroundColor = scatterCondition ? "#f1f3f3" : "#ffe135";
   $: textYOffset = scatterCondition ? scatterHeight / 2 + 10 : 0;

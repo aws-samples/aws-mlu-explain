@@ -3,6 +3,7 @@
   import { hexbin } from "d3-hexbin";
   import { onMount, onDestroy } from "svelte";
   import { scatterData } from "../datasets";
+  import { min, max } from "d3-array";
 
   import {
     labels,
@@ -20,6 +21,8 @@
 
   const margin = 5;
   const hexbinRadius = 5;
+
+  console.log("sd", scatterData);
 
   // here
   let x = 0;
@@ -40,10 +43,17 @@
   $: visible = false;
 
   $: xScale = scaleLinear()
-    .domain([-4, 12])
+    .domain([
+      1.1 * min(scatterData, (d) => d.x1),
+      1.1 * max(scatterData, (d) => d.x1),
+    ])
     .range([margin, width - margin]);
   $: yScale = scaleLinear()
-    .domain([-4, 12])
+    // .domain([-4, 12])
+    .domain([
+      1.1 * min(scatterData, (d) => d.x2),
+      1.1 * max(scatterData, (d) => d.x2),
+    ])
     .range([height / 2 - margin, -height / 2 + margin]);
 
   const colorScale = scaleOrdinal()
@@ -58,13 +68,14 @@
     ]);
 
   // responsive dimensions for scatter plot
-  $: scatterCondition = ![1, 10].includes($stepIndex);
+  $: scatterCondition = ![0, 1, 2].includes($stepIndex);
 
   $: model = $stepIndex < 5 ? logistic : perceptron;
 
   // ml models
 
   console.log(logistic(3, 4));
+
   onMount(() => {});
 
   let delayFinished = false;
@@ -73,9 +84,6 @@
     generateRandomPosition(); // generate initial position
     delayFinished = true;
     let intervalId = setInterval(generateRandomPosition, interval);
-    onDestroy(() => {
-      clearInterval(intervalId);
-    });
   }, delay);
   onDestroy(() => {
     clearInterval(intervalId);
@@ -106,11 +114,10 @@
     <circle
       in:fly={{ x: -50, duration: 500 }}
       out:fade={{ duration: 200 }}
-      cx={xScale(d.x)}
-      cy={yScale(d.y)}
+      cx={xScale(d.x1)}
+      cy={yScale(d.x2)}
       r="4"
-      fill={colorScale(d.label)}
-      stroke={colorScale(d.label)}
+      fill={colorScale(d.y)}
     />
   {/each}
   {#if delayFinished}
@@ -136,7 +143,10 @@
     /* stroke: rgba(0, 0, 0, 0.0344); */
     stroke-width: 0;
     opacity: 0.4;
-    transition: all 1s;
+    /* transition: all 1s; */
+  }
+  circle {
+    stroke: var(--bg);
   }
 
   /* .output {

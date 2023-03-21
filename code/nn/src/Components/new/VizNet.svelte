@@ -6,54 +6,156 @@
 
   import {
     animationDuration,
-    network,
+    networkInteractive,
     numLayers,
     playAnimation,
     ggg,
     points,
   } from "../../store";
-
-  let iconToArrow;
-  let canvas;
+  import { range } from "../../neuralnetCode/arrayUtils";
+  import { circle_data } from "../../neuralnetCode/data";
+  import { Value, MLP, ensureValue } from "../../neuralnetCode/ann";
 
   function updateNetwork(event) {
-    const newNetwork = event.target.value
+    const hiddenLayerArchitecture = event.target.value
       .split(",")
       .map((x) => parseInt(x.trim()))
-      .filter((x) => !isNaN(x));
-    network.set(newNetwork);
+      .filter((x) => !isNaN(x))
+      .slice(1, -1);
+
+    const newNetwork = [2, ...hiddenLayerArchitecture, 1];
+    // networkInteractive.set(newNetwork);
   }
 
   function toggleAnimation() {
     $playAnimation = !$playAnimation;
     let animationSelections = [];
 
-    let circles = $ggg.querySelectorAll("circle.moving-circle");
-    console.log("all circles", circles);
-    console.log(`# circles: ${circles.length}`);
-
     $points.forEach((p) => {
       const selector = `animateMotion#animatePath1${p}`;
       const selection = $ggg.querySelectorAll(selector);
       const set1 = $ggg.querySelectorAll(`#set1`);
-      // console.log("set1", set1);
       animationSelections.push({ selection: selection, p: p, set1: set1 });
     });
-    console.log("anima", animationSelections);
     animationSelections.forEach((element) => {
       setTimeout(() => {
         element.selection.forEach((selection) => {
           selection.beginElement();
         });
-        // element.set1.forEach((sett) => {
-        //   sett.beginElement();
-        // });
       }, element.p * 100); // Multiply by 1000 to convert seconds to milliseconds
     });
   }
 
   let batchSize = 3;
   $: $points = [...Array(batchSize).keys()];
+
+  var train_interval;
+  var N = 200;
+  //   var [X_data, y_data] = circle_data(N);
+  var epochs = 10;
+  var N_in = 2;
+  var dims = [3, 1];
+  var lr = 0.01;
+  var alpha = 0.0001;
+  var batch_size = 32;
+  var k = 0;
+  const model = new MLP(N_in, dims);
+  console.log("model", model);
+  console.log("num params", model.parameters().length);
+
+  const [X, y] = circle_data(100);
+
+  // run batch gd
+
+  // make sure each input is a Value
+  var inputs = X.map(function (row) {
+    return row.map(function (x) {
+      return ensureValue(x);
+    });
+  });
+
+  function run_batch() {
+    // return setInterval(function () {
+    //   if (k > epochs) {
+    //     clearInterval(train_interval);
+    //     return;
+    //   }
+
+    // for (let k = 0; k < epochs; k++) {
+
+    // --------------------------
+    // TRAIN LOOP
+    // --------------------------
+    // k++;
+
+    //  predictions
+    // loop through input X and call model prediction on it
+    var preds = inputs.map(function (row) {
+      return model.call(row);
+    });
+
+    // svm max margin loss
+    var losses = range(0, preds.length).map(function (i) {
+      return preds[i][0].mul(-y[i]).add(+1.0).relu();
+    });
+
+    var data_loss = losses
+      .reduce(function (sum, current) {
+        return sum.add(current);
+      }, new Value(0))
+      .mul(1 / losses.length);
+
+    var reg_loss = model
+      .parameters()
+      .map(function (e) {
+        return e.mul(e);
+      })
+      .reduce(function (sum, cur) {
+        return sum.add(cur);
+      }, new Value(0))
+      .mul(alpha);
+
+    var total_loss = data_loss.add(reg_loss);
+
+    var accuracies = range(0, preds.length).map(function (i) {
+      return preds[i][0].data > 0.0 === y[i] > 0.0 ? 1.0 : 0.0;
+    });
+
+    var accuracy =
+      accuracies.reduce(function (sum, current) {
+        return sum + current;
+      }, 0.0) / accuracies.length;
+
+    // # backward
+    model.zero_grad();
+    total_loss.backward();
+
+    // sgd
+    var learning_rate = 1.0 - (0.9 * k) / 100;
+
+    for (var _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
+      var p = _b[_i];
+      // p.data -= lr * p.grad;
+      p.data -= learning_rate * p.grad;
+    }
+
+    if (k % 1 === 0) {
+      console.log(
+        "step " +
+          k +
+          " loss " +
+          total_loss.data +
+          ", accuracy " +
+          accuracy * 100 +
+          "%"
+      );
+    }
+
+    k++;
+    // });
+  }
+
+  run_batch();
 </script>
 
 <br /><br /><br />
@@ -77,11 +179,7 @@
     <div id="architecture-input">
       <div>
         <p>Network Architecture</p>
-        <input
-          type="text"
-          on:input={updateNetwork}
-          value={$network.join(", ")}
-        />
+        <input type="text" value={$networkInteractive.join(", ")} />
       </div>
     </div>
     <div id="lol-container">
@@ -100,8 +198,12 @@
 
     <div id="animation-controls">
       <div id="play-button">
-        <button class:active={$playAnimation} on:click={toggleAnimation}
-          >Run Batch</button
+        <button
+          class:active={$playAnimation}
+          on:click={() => {
+            toggleAnimation();
+            run_batch();
+          }}>Run Batch</button
         >
       </div>
       <div id="batch-button">

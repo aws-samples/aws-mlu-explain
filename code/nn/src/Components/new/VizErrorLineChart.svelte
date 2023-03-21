@@ -2,7 +2,7 @@
   import { draw } from "svelte/transition";
   import { extent } from "d3-array";
   import { scaleLinear } from "d3-scale";
-  import { line, curveBasis } from "d3-shape";
+  import { line } from "d3-shape";
 
   // props
   let data = [

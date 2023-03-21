@@ -108,7 +108,6 @@
         {#each positionElements($network[layer], maxNumNeurons) as yPosition}
           {#if layer > 0}
             {#each positionElements($network[layer - 1], maxNumNeurons) as prevYPosition, j}
-              {console.log("layer", layer, "i", i, "yPosition", yPosition)}
               <path
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}
@@ -117,15 +116,47 @@
                     L ${xScale(layer)} ${yScale(yPosition)}
                   `}
                 class="nn-edge"
+                id={`nn-edge-${layer}-${yPosition}-${prevYPosition}-${$stepIndex}`}
               />
+              <!-- weights -->
+              {#if $stepIndex >= 1}
+                {#key $stepIndex}
+                  <text
+                    in:fly|local={{ x: 0, duration: 300 }}
+                    out:fade|local={{ duration: 300 }}
+                    dx={0 * xScale(1)}
+                    dy="0"
+                    class="weight-text"
+                  >
+                    <textPath
+                      href={`#nn-edge-${layer}-${yPosition}-${prevYPosition}-${$stepIndex}`}
+                      startOffset="50%"
+                      text-anchor="middle"
+                      fill="#232F3E"
+                      dominant-baseline="middle">w=0.6</textPath
+                    >
+                  </text>
+                {/key}
+              {/if}
               <g>
                 <!-- {#if animationBegin} -->
-                <circle class="moving-circle" />
-                <text class="moving-text" alignment-baseline="middle"
-                  >{updateNeuron(layer, j)}</text
-                >
+                <circle class="moving-circle" opacity="0">
+                  <set attributeName="opacity" to="1" begin="{layer}s" />
+                  <set attributeName="opacity" to="0" begin="{0}s" />
+                </circle>
+                {#if $stepIndex >= 1}
+                  <text
+                    class="moving-text"
+                    opacity="0"
+                    alignment-baseline="middle"
+                    >{updateNeuron(layer, j)}
+                    <set attributeName="opacity" to="1" begin="{layer}s" />
+                    <set attributeName="opacity" to="0" begin="{0}s" /></text
+                  >
+                {/if}
                 <!-- {/if} -->
                 <animateMotion
+                  id={`animatePathForward${layer}`}
                   begin="{layer}s"
                   dur="1s"
                   repeatCount="indefinite"
@@ -133,7 +164,6 @@
                       M ${xScale(layer - 1)} ${yScale(prevYPosition)}
                       L ${xScale(layer)} ${yScale(yPosition)}
                     `}
-                  onbegin="document.querySelector('circle').setAttribute('fill', 'black');"
                 />
               </g>
             {/each}
@@ -271,6 +301,14 @@
 </div>
 
 <style>
+  .weight-text {
+    font-size: 10px;
+    color: black;
+    stroke: white;
+    stroke-width: 2;
+    paint-order: stroke fill;
+    font-family: var(--font-main);
+  }
   .moving-text {
     font-size: 10px;
     /* font-weight: bold; */

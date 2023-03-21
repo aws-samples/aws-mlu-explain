@@ -3,8 +3,8 @@
   import { scaleLinear } from "d3-scale";
   import { max } from "d3-array";
   import {
-    network,
-    numLayers,
+    networkInteractive,
+    numLayersInteractive,
     playAnimation,
     animationDuration,
     ggg,
@@ -61,7 +61,7 @@
   });
 
   // these don't matter, but make the stretching less obvious at load
-  $: maxNumNeurons = max($network) - 1;
+  $: maxNumNeurons = max($networkInteractive) - 1;
 
   let height;
   let width;
@@ -72,7 +72,7 @@
   let nodeHeight = 40;
 
   $: xScale = scaleLinear()
-    .domain([-1, $numLayers])
+    .domain([-1, $numLayersInteractive])
     .range([marginScroll.left, width - marginScroll.right]);
   $: yScale = scaleLinear()
     .domain([-1, maxNumNeurons])
@@ -92,10 +92,10 @@
   <svg {width} height={height + marginScroll.top + marginScroll.bottom}>
     {#if visible}
       <!-- edges -->
-      {#each Array($numLayers).fill(null) as i, layer}
-        {#each positionElements($network[layer], maxNumNeurons) as yPosition}
+      {#each Array($numLayersInteractive).fill(null) as i, layer}
+        {#each positionElements($networkInteractive[layer], maxNumNeurons) as yPosition}
           {#if layer > 0}
-            {#each positionElements($network[layer - 1], maxNumNeurons) as prevYPosition, j}
+            {#each positionElements($networkInteractive[layer - 1], maxNumNeurons) as prevYPosition, j}
               <path
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}
@@ -193,8 +193,8 @@
                   </text>
                   <animateMotion
                     id={`animatePathBack${layer}${p}`}
-                    begin={layer === $numLayers - 1
-                      ? `animatePath${$numLayers - 1}${p}.end`
+                    begin={layer === $numLayersInteractive - 1
+                      ? `animatePath${$numLayersInteractive - 1}${p}.end`
                       : `animatePathBack${layer + 1}${p}.end`}
                     dur={$animationDuration}
                     restart="whenNotActive"
@@ -213,21 +213,21 @@
       <!-- here is some bs text to add to this -->
 
       <!-- nodes -->
-      {#each Array($numLayers).fill(null) as index, layer}
-        {#each positionElements($network[layer], maxNumNeurons) as yPosition}
+      {#each Array($numLayersInteractive).fill(null) as index, layer}
+        {#each positionElements($networkInteractive[layer], maxNumNeurons) as yPosition}
           <g
             class="nn-g"
             transform={`translate(${xScale(layer) - nodeWidth / 2} ${
               yScale(yPosition) - nodeHeight / 2
             })`}
           >
-            <!-- {#if layer !== $numLayers - 1} -->
+            <!-- {#if layer !== $numLayersInteractive - 1} -->
             <rect
               in:fly|local={{ x: -50, duration: 500 }}
               out:fade|local={{ duration: 300 }}
               class="nn-node {layer == 0
                 ? 'input'
-                : layer == $numLayers - 1
+                : layer == $numLayersInteractive - 1
                 ? 'output'
                 : 'hidden'}"
               width={nodeWidth}
@@ -249,11 +249,11 @@
       {/each}
 
       <!-- manually draw final layer here, so it updates smoothly -->
-      <!-- {#each positionElements($network[$numLayers - 1], maxNumNeurons) as yPosition}
+      <!-- {#each positionElements($networkInteractive[$numLayersInteractive - 1], maxNumNeurons) as yPosition}
             <g
               class="nn-g"
               transform={`translate(${
-                xScale($numLayers - 1) - nodeWidth / 2
+                xScale($numLayersInteractive - 1) - nodeWidth / 2
               } ${yScale(yPosition)})`}
             >
               <OutputNeuron {width} {height} />

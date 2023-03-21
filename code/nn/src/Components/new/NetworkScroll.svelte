@@ -13,68 +13,100 @@
   import katexify from "../../katexify";
 
   $stepIndex = 0;
-  $network = [3, 1, 1];
+  $network = [2, 1, 1];
 
   const target2event = {
+    // 0: () => {
+    //   $showLayerLine = false;
+    //   $network = [3, 1, 1];
+    //   $stepIndex = 0;
+    //   $showSubScript = false;
+    //   $drawActivation = false;
+    //   $labels = ["input", "function", "output"];
+    // },
+
     0: () => {
       $showLayerLine = false;
-      $network = [3, 1, 1];
+      $network = [2, 1, 1];
+      $labels = ["input", "function", "output"];
       $stepIndex = 0;
       $showSubScript = false;
       $drawActivation = false;
-      $labels = ["input", "function", "output"];
     },
-
     1: () => {
       $showLayerLine = false;
-      $network = [3, 1, 1];
-      $labels = ["input", "function", "output"];
-      $stepIndex = 1;
-      $showSubScript = false;
-      $drawActivation = false;
-    },
-    2: () => {
-      $showLayerLine = false;
-      $network = [3, 1, 1];
+      $network = [2, 1, 1];
       $labels = ["X", "linear", "y"];
       $showSubScript = true;
       $drawActivation = false;
       $stepIndex = 1;
     },
-    3: () => {
+    2: () => {
       $stepIndex = 2;
       $showLayerLine = false;
-      $labels = ["X", "sigmoid", "y"];
-      $network = [3, 1, 1];
+      $labels = ["X", "logistic", "y"];
+      $network = [2, 1, 1];
       $drawActivation = false;
+    },
+    3: () => {
+      $stepIndex = 3;
+      $labels = ["X", "logistic", "y"];
+      $showLayerLine = false;
+      $network = [2, 1, 1];
+      $drawActivation = false;
+      // $stepIndex = 3;
+      // $labels = ["X", "step", "y"];
+      // $showLayerLine = false;
+      // $network = [2, 1, 1];
+      // $drawActivation = true;
     },
     4: () => {
-      $stepIndex = 3;
-      $labels = ["X", "step", "y"];
-      $showLayerLine = false;
-      $network = [3, 1, 1];
-      $drawActivation = true;
-    },
-    5: () => {
       $stepIndex = 4;
       $showLayerLine = false;
+      $drawActivation = true;
+      $labels = ["input", "logistic", "y"];
+      $network = [2, 1, 1];
+      // $stepIndex = 4;
+      // $showLayerLine = false;
+      // $drawActivation = false;
+      // $labels = ["input", "step", "step", "y"];
+      // $network = [2, 1, 1, 1];
+    },
+    5: () => {
+      $stepIndex = 5;
+      $showLayerLine = false;
       $drawActivation = false;
-      $labels = ["input", "step", "step", "y"];
-      $network = [3, 1, 1, 1];
+      $labels = ["input", "step", "y"];
+      $network = [2, 1, 1];
+      // $stepIndex = 5;
+      // $showLayerLine = true;
+      // $labels = ["input", "sigmoid", "sigmoid", "y"];
+      // $network = [2, 2, 2, 1];
+      // $drawActivation = false;
     },
     6: () => {
-      $stepIndex = 5;
+      $stepIndex = 6;
       $showLayerLine = true;
-      $labels = ["input", "sigmoid", "sigmoid", "y"];
-      $network = [3, 2, 2, 1];
+      $labels = ["input", "logistic", "logistic", "y"];
+      $network = [2, 1, 1, 1];
       $drawActivation = false;
+      //   $stepIndex = 5;
+      //   $labels = ["input", "reLu", "reLu", "reLu", "y"];
+      //   $showLayerLine = true;
+      //   $network = [2, 4, 2, 3, 1];
+      //   $drawActivation = false;
     },
     7: () => {
-      $stepIndex = 5;
-      $labels = ["input", "reLu", "reLu", "reLu", "y"];
+      $stepIndex = 7;
       $showLayerLine = true;
-      $network = [3, 4, 2, 3, 1];
+      $labels = ["input", "reLu", "logistic", "y"];
+      $network = [2, 3, 2, 1];
       $drawActivation = false;
+      //   $stepIndex = 5;
+      //   $labels = ["input", "reLu", "reLu", "reLu", "y"];
+      //   $showLayerLine = true;
+      //   $network = [2, 4, 2, 3, 1];
+      //   $drawActivation = false;
     },
   };
 
@@ -143,7 +175,7 @@
           <p style="margin:auto; text-align: center;">&#8595</p>
         </div>
       </div> -->
-      <div class="step" data-index="1">
+      <div class="step" data-index="0">
         <div class="step-content">
           <h2>Building Blocks: Computational Graphs</h2>
           <hr />
@@ -158,7 +190,7 @@
           </p>
         </div>
       </div>
-      <div class="step" data-index="2">
+      <div class="step" data-index="1">
         <div class="step-content">
           <h2>Linear Regression</h2>
           <hr />
@@ -182,7 +214,7 @@
           </p>
         </div>
       </div>
-      <div class="step" data-index="3">
+      <div class="step" data-index="2">
         <div class="step-content">
           <h2>Logistic Regression</h2>
           <hr />
@@ -205,9 +237,47 @@
           </p>
         </div>
       </div>
+      <div class="step" data-index="3">
+        <div class="step-content">
+          <h2>Model Outputs</h2>
+          <p>
+            What's our model actually outputting? It depends on the
+            architecture! Let's look at the output for a linear regression
+            model.
+            <br /><br />
+            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
+            <br /><br /> To represent this as a graph, we need only weight each
+            edge connecting our input nodes to our function node, and have our
+            function represent a linear function on a weighted sum:<br />
+            linear = {@html katexify(
+              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
+              false
+            )}
+          </p>
+        </div>
+      </div>
       <div class="step" data-index="4">
         <div class="step-content">
-          <h2>Artificial Neurons <br />& Perceptrons</h2>
+          <h2>Activation Functions & Artificial Neurons</h2>
+          <p>
+            What's our model actually outputting? It depends on the
+            architecture! Let's look at the output for a linear regression
+            model.
+            <br /><br />
+            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
+            <br /><br /> To represent this as a graph, we need only weight each
+            edge connecting our input nodes to our function node, and have our
+            function represent a linear function on a weighted sum:<br />
+            linear = {@html katexify(
+              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
+              false
+            )}
+          </p>
+        </div>
+      </div>
+      <div class="step" data-index="5">
+        <div class="step-content">
+          <h2>Perceptrons</h2>
           <hr />
           <br />
 
@@ -229,7 +299,7 @@
           </p>
         </div>
       </div>
-      <div class="step" data-index="5">
+      <div class="step" data-index="6">
         <div class="step-content">
           <h2>Neural Networks</h2>
           <hr />
@@ -246,7 +316,7 @@
           </p>
         </div>
       </div>
-      <div class="step" data-index="6">
+      <div class="step" data-index="7">
         <div class="step-content">
           <h2>Architecture</h2>
           <hr />
@@ -297,7 +367,7 @@
     padding-top: 0;
     flex-direction: row;
     padding-left: 1rem;
-    width: 80%;
+    width: 85%;
     margin: auto;
   }
 
@@ -305,7 +375,7 @@
     position: sticky;
     top: 25%;
     width: 70%;
-    height: 50vh;
+    height: 45vh;
     margin-right: 2%;
     /* border: 2px solid green; */
     flex: 0 0 60%; /* This item will take up 70% of the container's width */
