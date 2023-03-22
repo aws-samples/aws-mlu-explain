@@ -5,12 +5,14 @@ export const mobile = writable(true);
 export const margin = writable({
   top: 55,
   bottom: 10,
-  left: 60,
+  left: 80,
   right: 10,
 });
 
 export const outerWidth = writable(300);
 export const outerHeight = writable(300);
+export const rocWidth = writable(300);
+export const rocHeight = writable(300);
 export const rectPos = writable(0.5);
 export const rectPos2 = writable(0.5);
 export const wrongly_accepted_A = writable(1);
@@ -32,7 +34,7 @@ export const stackedData = tweened([
   {
     xVal: "B",
     Accepted: 10,
-    Declined: 15
+    Declined: 15,
   },
   {
     xVal: "B Predicted",

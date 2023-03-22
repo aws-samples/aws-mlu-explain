@@ -1,12 +1,12 @@
 <script>
   import { extent } from "d3-array";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
-  import { line, curveBasis } from "d3-shape";
+  import { area, line } from "d3-shape";
   import { rocData } from "../../datasets";
-  import { outerHeight, outerWidth, margin } from "../../store";
+  import { rocHeight, rocWidth, margin } from "../../store";
 
-  $: width = $outerWidth - $margin.left - $margin.right;
-  $: height = $outerHeight - $margin.top - $margin.bottom;
+  $: width = $rocWidth - $margin.left - $margin.right;
+  $: height = $rocHeight - $margin.top - $margin.bottom;
 
   // scales
   const colorScale = scaleOrdinal([0, 1], ["#ff9900", "#2074d5"]);
@@ -26,14 +26,52 @@
   $: pathLine = line()
     .x((d) => xScale(d.fpr))
     .y((d) => yScale(d.tpr));
+
+  //   const circleData = rocData.filter((d) => d.group === "circle");
+  // const triangleData = rocData.filter((d) => d.group === "triangle");
+
+  const circleData = rocData.filter((d) => d.group === "circle");
+  const triangleData = rocData.filter((d) => d.group === "triangle");
+
+  const circleDataReversed = [...circleData].reverse();
+
+  $: fullPath = `${pathLine(triangleData)} L ${xScale(
+    circleDataReversed[0]["fpr"]
+  )},${yScale(circleDataReversed[0]["tpr"])} ${pathLine(circleDataReversed)} Z`;
+
+  // const circleData = rocData
+  //   .filter((d) => d.fpr < 0.1 && d.tpr > 0.1)
+  //   .filter((d) => d.group === "circle");
+  // const triangleData = rocData
+  //   .filter((d) => d.fpr < 0.15 && d.tpr > 0.1)
+  //   .filter((d) => d.group === "triangle");
+
+  // const circleDataReversed = [...circleData].reverse();
+
+  // $: fullPath = `${pathLine(triangleData)} V ${yScale(
+  //   circleDataReversed[0]["tpr"]
+  // )} ${pathLine(circleDataReversed)} V ${yScale(triangleData[0]["tpr"])}`;
+
+  // const circleData1 = rocData
+  //   .filter((d) => d.fpr > 0.05 && d.fpr < 0.18)
+  //   .filter((d) => d.group === "circle");
+  // const triangleData1 = rocData
+  //   .filter((d) => d.fpr > 0.07 && d.fpr < 0.18)
+  //   .filter((d) => d.group === "triangle");
+
+  // const circleData1Reversed = [...circleData1].reverse();
+
+  // $: fullPath1 = `${pathLine(triangleData1)} V ${yScale(
+  //   circleData1Reversed[0]["tpr"]
+  // )} ${pathLine(circleData1Reversed)} V ${yScale(triangleData1[0]["tpr"])}`;
 </script>
 
 <div
-  id="chart-holder"
-  bind:offsetWidth={$outerWidth}
-  bind:offsetHeight={$outerHeight}
+  id="roc-holder"
+  bind:offsetWidth={$rocWidth}
+  bind:offsetHeight={$rocHeight}
 >
-  <svg width={$outerWidth} height={$outerHeight}>
+  <svg width={$rocWidth} height={$rocHeight}>
     <line
       class="axis-line"
       x1={$margin.left}
@@ -86,18 +124,31 @@
         >
       </g>
     {/each}
-    <!-- <path class="outer-path" d={pathLine(rocData)} />
-    <path class="inner-path" d={pathLine(rocData)} /> -->
+    {console.log("FP", fullPath)}
+    <path class="area-between-curves" d={fullPath} />
+    <!-- <path class="area-between-curves1" d={fullPath1} /> -->
+    <path
+      class="triangle-path"
+      d={pathLine(rocData.filter((d) => d.group == "triangle"))}
+    />
+    <path
+      class="circle-path"
+      d={pathLine(rocData.filter((d) => d.group == "circle"))}
+    />
     {#each rocData as d}
-      {#if d.group == "circle"}
-        <circle cx={xScale(d.fpr)} cy={yScale(d.tpr)} r={circleRadius} />
-      {:else}
-        <rect
-          x={xScale(d.fpr) - rectWidth / 2}
-          y={yScale(d.tpr) - rectWidth / 2}
-          width={rectWidth}
-          height={rectWidth}
-        />
+      {#if d.tpr != 1}
+        {#if d.group == "circle"}
+          <circle cx={xScale(d.fpr)} cy={yScale(d.tpr)} r={circleRadius} />
+        {:else}
+          <polygon
+            points={`${xScale(d.fpr)},${yScale(d.tpr) - rectWidth / 2} ${
+              xScale(d.fpr) - rectWidth / 1.5
+            },${yScale(d.tpr) + rectWidth / 1.5} ${
+              xScale(d.fpr) + rectWidth / 1.5
+            },${yScale(d.tpr) + rectWidth / 1.5}`}
+            fill={colorScale(d.label)}
+          />
+        {/if}
       {/if}
     {/each}
 
@@ -125,11 +176,29 @@
 </div>
 
 <style>
+  .area-between-curves {
+    fill: red;
+    opacity: 0.15;
+    stroke: none;
+  }
+  .area-between-curves1 {
+    fill: var(--sky);
+    opacity: 0.5;
+    stroke: none;
+  }
+  .circle-path {
+    fill: none;
+    stroke: var(--smile);
+  }
+  .triangle-path {
+    fill: none;
+    stroke: var(--sky);
+  }
   .axis-label,
   .chart-title {
     font-size: 12px;
   }
-  #chart-holder {
+  #roc-holder {
     height: 100%;
     width: 100%;
   }
@@ -149,11 +218,13 @@
     font-size: 12px;
   }
   circle {
-    fill: var(--sky);
     stroke: var(--bg);
     stroke-width: 1;
-  }
-  rect {
     fill: var(--smile);
+  }
+  polygon {
+    stroke: var(--bg);
+    stroke-width: 0.5;
+    fill: var(--sky);
   }
 </style>

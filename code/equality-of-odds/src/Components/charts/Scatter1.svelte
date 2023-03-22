@@ -1,7 +1,6 @@
 <script>
-  import { extent } from "d3-array";
+  import { min, max } from "d3-array";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
-  import { line, curveBasis } from "d3-shape";
   import { scatterData } from "../../datasets";
   import { outerHeight, outerWidth, margin } from "../../store";
   import DecisionBoundary1 from "./DecisionBoundary1.svelte";
@@ -11,11 +10,14 @@
 
   // scales
   $: xScale = scaleLinear()
-    .domain(extent(scatterData.map((d) => d.xPos)))
+    .domain([0, 1])
     .range([$margin.left, width - $margin.right]);
 
   $: yScale = scaleLinear()
-    .domain(extent(scatterData.map((d) => d.yPos)))
+    .domain([
+      min(scatterData, (d) => d.yPos) * 1.07,
+      max(scatterData, (d) => d.yPos) * 1.04,
+    ])
     .range([height - $margin.bottom, $margin.top]);
 
   const colorScale = scaleOrdinal([0, 1], ["#ff9900", "#2074d5"]);
@@ -25,7 +27,7 @@
 </script>
 
 <div
-  id="chart-holder"
+  id="scatter1-holder"
   bind:offsetWidth={$outerWidth}
   bind:offsetHeight={$outerHeight}
 >
@@ -73,13 +75,6 @@
           stroke="var(--squidink)"
           stroke-dasharray="4"
         />
-        <!-- <text
-          class="axis-text"
-          x="-2"
-          y="0"
-          text-anchor="end"
-          dominant-baseline="middle">{tick}</text
-        > -->
       </g>
     {/each}
     {#each scatterData as d}
@@ -98,11 +93,19 @@
             fill={colorScale(d.label)}
           />
         {:else}
-          <rect
+          <!-- <rect
             x={xScale(d.xPos) - rectWidth / 2}
             y={yScale(d.yPos) - rectWidth / 2}
             width={rectWidth}
             height={rectWidth}
+            fill={colorScale(d.label)}
+          /> -->
+          <polygon
+            points={`${xScale(d.xPos)},${yScale(d.yPos) - rectWidth / 2} ${
+              xScale(d.xPos) - rectWidth / 1.5
+            },${yScale(d.yPos) + rectWidth / 1.5} ${
+              xScale(d.xPos) + rectWidth / 1.5
+            },${yScale(d.yPos) + rectWidth / 1.5}`}
             fill={colorScale(d.label)}
           />
         {/if}
@@ -111,33 +114,17 @@
 
     <DecisionBoundary1 />
 
-    <!-- axis labels -->
-    <!-- chart label  and position -->
-    <!-- <text
-      class="chart-title"
-      y={$margin.top / 2}
-      x={(width + $margin.left) / 2}
-      text-anchor="middle">Basic Chart Title</text
-    > -->
     <text
       class="axis-label"
       y={height + $margin.bottom + 10}
       x={(width + $margin.left) / 2}
       text-anchor="middle">Probability Threshold</text
     >
-    <!-- y label and position -->
-    <!-- <text
-      class="axis-label"
-      y={$margin.left / 2}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">Y-Axis Label</text
-    > -->
   </svg>
 </div>
 
 <style>
-  #chart-holder {
+  #scatter1-holder {
     height: 100%;
     width: 100%;
   }
@@ -166,6 +153,8 @@
     stroke: var(--bg);
     stroke-width: 1;
   }
-  rect {
+  polygon {
+    stroke: var(--bg);
+    stroke-width: 0.5;
   }
 </style>

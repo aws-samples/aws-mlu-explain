@@ -25,7 +25,7 @@
 </script>
 
 <div
-  id="chart-holder2"
+  id="scatter2-holder"
   bind:offsetWidth={$outerWidth}
   bind:offsetHeight={$outerHeight}
 >
@@ -135,7 +135,7 @@
 </div>
 
 <style>
-  #chart-holder2 {
+  #scatter2-holder {
     height: 100%;
     width: 100%;
   }

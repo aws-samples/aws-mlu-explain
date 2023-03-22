@@ -1,16 +1,29 @@
 <script>
   import katexify from "../katexify";
   import { format } from "d3-format";
+  import {
+    rectPos,
+    wrongly_accepted_A,
+    wrongly_accepted_B,
+    outerWidth,
+    margin,
+  } from "../store";
+  import { scaleLinear } from "d3-scale";
+  import { extent } from "d3-array";
+  import { scatterData } from "../datasets";
 
-  import { tooltip } from "../tooltip";
-  import { rectPos, wrongly_accepted_A, wrongly_accepted_B } from "../store";
+  $: width = $outerWidth - $margin.left - $margin.right;
 
-  console.log("rectois", $rectPos);
+  $: xScale = scaleLinear()
+    .domain(extent(scatterData.map((d) => d.xPos)))
+    .range([$margin.left, width - $margin.right]);
+
+  $: updatePos = xScale(0.75);
+
   const formatter = format(".2f");
 
-  $: eq1 = ($wrongly_accepted_A / ($wrongly_accepted_A + 20));
+  $: eq1 = $wrongly_accepted_A / ($wrongly_accepted_A + 20);
   $: eq2 = $wrongly_accepted_B / ($wrongly_accepted_B + 15);
-  $: console.log(eq1, eq2)
 </script>
 
 <p class="body-text">
@@ -34,7 +47,7 @@
 </p>
 
 <div class="button-container">
-  <button on:click={() => ($rectPos = 175)}>Move Boundary To 0.75</button>
+  <button on:click={() => ($rectPos = updatePos)}>Move Boundary To 0.75</button>
 </div>
 
 <style>

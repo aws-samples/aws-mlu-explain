@@ -36,28 +36,22 @@
     article here) for both groups, circles and triangles.
   </p>
   <br />
-  <div id="charts2-container">
-    <div id="output2-container">
-      <ROC />
-    </div>
+  <div id="roc-container">
+    <ROC />
   </div>
 </section>
 
 <style>
-  #charts2-container {
-    display: grid;
+  #roc-container {
     margin: auto;
-    height: 45vh;
-    width: 40%;
+    height: 60vh;
+    width: 45%;
     max-width: 1000px;
   }
   #scatter2-container {
     max-height: 45vh;
   }
-  #output2-container {
-    border: var(--sky);
-    max-height: 45vh;
-  }
+
   ul {
     max-width: 600px;
     margin: auto;

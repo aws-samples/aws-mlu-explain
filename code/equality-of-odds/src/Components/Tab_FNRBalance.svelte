@@ -1,9 +1,17 @@
 <script>
   import katexify from "../katexify";
-  import { tooltip } from "../tooltip";
-  import { rectPos } from "../store";
+  import { rectPos, outerWidth, margin } from "../store";
+  import { scaleLinear } from "d3-scale";
+  import { extent } from "d3-array";
+  import { scatterData } from "../datasets";
 
-  console.log("rectois", $rectPos);
+  $: width = $outerWidth - $margin.left - $margin.right;
+
+  $: xScale = scaleLinear()
+    .domain(extent(scatterData.map((d) => d.xPos)))
+    .range([$margin.left, width - $margin.right]);
+
+  $: updatePos = xScale(0.3);
 </script>
 
 <p class="body-text">
@@ -22,7 +30,7 @@
 </p>
 
 <div class="button-container">
-  <button on:click={() => ($rectPos = 130)}>Move Boundary To 0.30</button>
+  <button on:click={() => ($rectPos = updatePos)}>Move Boundary To 0.30</button>
 </div>
 
 <style>

@@ -26,11 +26,7 @@
     .domain(extent(scatterData.map((d) => d.xPos)))
     .range([$margin.left, width - $margin.right]);
 
-  $: yScale = scaleLinear()
-    .domain(extent(scatterData.map((d) => d.yPos)))
-    .range([height - $margin.bottom, $margin.top]);
-
-  $rectPos = $outerWidth / 2;
+  $: $rectPos = xScale(0.5);
 
   const dbSize = 10;
 
@@ -39,7 +35,6 @@
     select("g.decision-boundary-bar1").call(
       drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
     );
-    $rectPos = xScale(0.45) + $margin.left + $margin.right;
   });
 
   function dragstarted() {
@@ -53,7 +48,6 @@
     const xPos = xScale.invert(event.x);
     // ensure x-position in range
     if (xPos <= 0.0 || xPos >= 0.99) {
-      console.log("Outside range!");
     } else {
       $rectPos = event.x;
       select("g.decision-boundary-bar1")
@@ -64,9 +58,7 @@
     }
   }
 
-  function dragended(event, d) {
-    console.log("end");
-  }
+  function dragended(event, d) {}
 
   // data.filter(function(d){ return  (d.name == "toto" || d.name == "tutu") })
 
@@ -102,7 +94,7 @@
 
     const wrong_accepted_B = wrong_accepted
       .filter(function (d) {
-        return select(this).attr("group") == "square";
+        return select(this).attr("group") == "triangle";
       })
       .size();
 
@@ -119,7 +111,7 @@
 
     const wrong_rejected_B = wrong_rejected
       .filter(function (d) {
-        return select(this).attr("group") == "square";
+        return select(this).attr("group") == "triangle";
       })
       .size();
 
@@ -141,13 +133,13 @@
     //   B (left side)
     const rejected_B = accepted
       .filter(function (d) {
-        return select(this).attr("group") == "square";
+        return select(this).attr("group") == "triangle";
       })
       .size();
 
     const accepted_B = rejected
       .filter(function (d) {
-        return select(this).attr("group") == "square";
+        return select(this).attr("group") == "triangle";
       })
       .size();
 

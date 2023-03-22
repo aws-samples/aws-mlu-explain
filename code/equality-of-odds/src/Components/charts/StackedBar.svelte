@@ -43,6 +43,8 @@
     .offset(stackOffsetNone);
 
   $: series = dStack($stackedData);
+
+  const fontSize = 9;
 </script>
 
 <div
@@ -66,7 +68,7 @@
       y2={height - margin.bottom}
     />
     <!-- x-ticks -->
-    {#each $stackedData.map((d) => d.xVal) as tick}
+    {#each $stackedData.map((d) => d.xVal) as tick, i}
       <g
         transform={`translate(${xScale(tick) + xScale.bandwidth() / 2} ${
           height - margin.bottom
@@ -81,7 +83,38 @@
           stroke="var(--squidink)"
           stroke-dasharray="4"
         />
-        <text class="axis-text" y="15" text-anchor="middle">{tick}</text>
+        <text y="15" text-anchor="middle">
+          {#if i < 2}
+            <tspan font-size="19" dy="1" alignment-baseline="center">
+              &#x25CF;</tspan
+            >
+          {:else}
+            <tspan font-size="11" dy="0" alignment-baseline="center">
+              &#x25B2;</tspan
+            >
+          {/if}
+          {#if i == 1}
+            <tspan
+              class="axis-text"
+              font-size="12"
+              dy="-1"
+              dx="2"
+              alignment-baseline="center"
+            >
+              Prediction</tspan
+            >
+          {:else if i == 3}
+            <tspan
+              class="axis-text"
+              font-size="12"
+              dy=".4"
+              dx="4"
+              alignment-baseline="center"
+            >
+              Prediction</tspan
+            >
+          {/if}
+        </text>
       </g>
     {/each}
 
@@ -122,23 +155,44 @@
       </g>
     {/each}
 
-    <!-- axis labels -->
     <text
       class="chart-title"
       y={margin.top / 3}
       x={(width + margin.left) / 2}
       text-anchor="middle"
-      >{formatter($wrongly_rejected_A / ($wrongly_rejected_A + 30))} wrongly rejected in group "circles"
-      {formatter($wrongly_rejected_B / ($wrongly_rejected_B + 10))} wrongly rejected in group "squares"
-      <br /></text
     >
+      <tspan>
+        {formatter($wrongly_rejected_A / ($wrongly_rejected_A + 30))} wrongly rejected
+        in group
+      </tspan>
+      <tspan class="smile" font-size="25" dy="3" alignment-baseline="center">
+        &#x25CF;</tspan
+      >
+      <tspan dy="-3" dx="2"
+        >{formatter($wrongly_rejected_B / ($wrongly_rejected_B + 10))} wrongly rejected
+        in group
+      </tspan>
+      <tspan class="smile" font-size="13"> &#x25B2; </tspan>
+    </text>
+
     <text
       class="chart-title"
       y={margin.top / 3 + 20}
       x={(width + margin.left) / 2}
       text-anchor="middle"
-      >{formatter($wrongly_accepted_A / ($wrongly_accepted_A + 20))} wrongly accepted in group "circles"
-      {formatter($wrongly_accepted_B / ($wrongly_accepted_B+15))} wrongly accepted in group "squares"
+    >
+      <tspan>
+        {formatter($wrongly_accepted_A / ($wrongly_accepted_A + 20))} wrongly accepted
+        in group
+      </tspan>
+      <tspan class="sky" font-size="25" dy="3" alignment-baseline="center">
+        &#x25CF;</tspan
+      >
+      <tspan dy="-3" dx="2"
+        >{formatter($wrongly_accepted_B / ($wrongly_accepted_B + 15))} wrongly accepted
+        in group
+      </tspan>
+      <tspan class="sky" font-size="13"> &#x25B2; </tspan>
     </text>
 
     <text
@@ -180,5 +234,12 @@
     fill: var(--sky);
     stroke: var(--bg);
     stroke-width: 1;
+  }
+
+  .smile {
+    fill: var(--smile);
+  }
+  .sky {
+    fill: var(--sky);
   }
 </style>
