@@ -1,6 +1,8 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
+  import StackedBarDef1 from "./charts/StackedBarDef1.svelte";
+  import StackedBarDef2 from "./charts/StackedBarDef2.svelte";
 </script>
 
 <section>
@@ -51,10 +53,20 @@
     grants both groups the same rate of positive outcomes and a model that uses EO
     and grants the groups according to what they deserve/the merit.
   </p>
+  <br />
+
+  <div id="stacked-charts-container">
+    <div id="stackeddef1-container">
+      <StackedBarDef1 />
+    </div>
+    <div id="stackeddef2-container">
+      <StackedBarDef2 />
+    </div>
+  </div>
 </section>
 
 <style>
-  #charts1-container {
+  #stacked-charts-container {
     display: grid;
     margin: auto;
     height: 38vh;
@@ -63,11 +75,10 @@
     grid-gap: 2%;
     max-width: 1000px;
   }
-  #scatter1-container {
+  #stackeddef1-container {
     max-height: 38vh;
   }
-  #output1-container {
-    border: var(--sky);
+  #stackeddef2-container {
     max-height: 38vh;
   }
   ul {
