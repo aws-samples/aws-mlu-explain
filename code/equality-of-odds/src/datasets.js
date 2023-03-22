@@ -533,5 +533,4 @@ export const rocData = [
   { threshold: 0.925, fpr: 0.0, tpr: 0.05, group: "triangle" },
   { threshold: 0.95, fpr: 0.0, tpr: 0.05, group: "triangle" },
   { threshold: 0.975, fpr: 0.0, tpr: 0.05, group: "triangle" },
-  { threshold: 1, fpr: 0.0, tpr: 1, group: "triangle" },
 ];

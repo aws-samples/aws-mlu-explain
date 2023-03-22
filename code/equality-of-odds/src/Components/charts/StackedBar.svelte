@@ -148,7 +148,7 @@
             y={yScale(d[1])}
             height={yScale(d[0]) - yScale(d[1])}
             fill={color(serie.key)}
-            fill-opacity="0.55"
+            fill-opacity=".8"
             width={xScale.bandwidth()}
           />
         {/each}

@@ -1,7 +1,7 @@
 <script>
   import { extent } from "d3-array";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
-  import { area, line } from "d3-shape";
+  import { line } from "d3-shape";
   import { rocData } from "../../datasets";
   import { rocHeight, rocWidth, margin } from "../../store";
 
@@ -11,12 +11,28 @@
   // scales
   const colorScale = scaleOrdinal([0, 1], ["#ff9900", "#2074d5"]);
 
+  function removeThresholdAndDuplicates(data) {
+    let seen = new Set();
+    return data
+      .map(({ fpr, tpr, group }) => ({ fpr, tpr, group }))
+      .filter((item) => {
+        const key = JSON.stringify(item);
+        if (seen.has(key)) {
+          return false;
+        }
+        seen.add(key);
+        return true;
+      });
+  }
+
+  const newData = removeThresholdAndDuplicates(rocData);
+
   $: xScale = scaleLinear()
-    .domain(extent(rocData.map((d) => d.fpr)))
+    .domain(extent(newData.map((d) => d.fpr)))
     .range([$margin.left, width - $margin.right]);
 
   $: yScale = scaleLinear()
-    .domain(extent(rocData.map((d) => d.tpr)))
+    .domain(extent(newData.map((d) => d.tpr)))
     .range([height - $margin.bottom, $margin.top]);
 
   let circleRadius = 5;
@@ -27,11 +43,8 @@
     .x((d) => xScale(d.fpr))
     .y((d) => yScale(d.tpr));
 
-  //   const circleData = rocData.filter((d) => d.group === "circle");
-  // const triangleData = rocData.filter((d) => d.group === "triangle");
-
-  const circleData = rocData.filter((d) => d.group === "circle");
-  const triangleData = rocData.filter((d) => d.group === "triangle");
+  const circleData = newData.filter((d) => d.group === "circle");
+  const triangleData = newData.filter((d) => d.group === "triangle");
 
   const circleDataReversed = [...circleData].reverse();
 
@@ -39,31 +52,35 @@
     circleDataReversed[0]["fpr"]
   )},${yScale(circleDataReversed[0]["tpr"])} ${pathLine(circleDataReversed)} Z`;
 
-  // const circleData = rocData
-  //   .filter((d) => d.fpr < 0.1 && d.tpr > 0.1)
-  //   .filter((d) => d.group === "circle");
-  // const triangleData = rocData
-  //   .filter((d) => d.fpr < 0.15 && d.tpr > 0.1)
-  //   .filter((d) => d.group === "triangle");
+  const circleData1 = newData
+    .filter((d) => d.fpr > 0.13)
+    .filter((d) => d.group === "circle");
+  const triangleData1 = newData
+    .filter((d) => d.fpr > 0.13)
+    .filter((d) => d.group === "triangle");
 
-  // const circleDataReversed = [...circleData].reverse();
+  const circleData1Reversed = [...circleData1].reverse();
 
-  // $: fullPath = `${pathLine(triangleData)} V ${yScale(
-  //   circleDataReversed[0]["tpr"]
-  // )} ${pathLine(circleDataReversed)} V ${yScale(triangleData[0]["tpr"])}`;
+  $: fullPath1 = `${pathLine(triangleData1)} L ${xScale(
+    circleData1Reversed[0]["fpr"]
+  )},${yScale(circleData1Reversed[0]["tpr"])} ${pathLine(
+    circleData1Reversed
+  )} `;
 
-  // const circleData1 = rocData
-  //   .filter((d) => d.fpr > 0.05 && d.fpr < 0.18)
-  //   .filter((d) => d.group === "circle");
-  // const triangleData1 = rocData
-  //   .filter((d) => d.fpr > 0.07 && d.fpr < 0.18)
-  //   .filter((d) => d.group === "triangle");
+  const circleData2 = newData
+    .filter((d) => d.fpr > 0.3)
+    .filter((d) => d.group === "circle");
+  const triangleData2 = newData
+    .filter((d) => d.fpr > 0.3)
+    .filter((d) => d.group === "triangle");
 
-  // const circleData1Reversed = [...circleData1].reverse();
+  const circleData2Reversed = [...circleData2].reverse();
 
-  // $: fullPath1 = `${pathLine(triangleData1)} V ${yScale(
-  //   circleData1Reversed[0]["tpr"]
-  // )} ${pathLine(circleData1Reversed)} V ${yScale(triangleData1[0]["tpr"])}`;
+  $: fullPath2 = `${pathLine(triangleData2)} L ${xScale(
+    circleData2Reversed[0]["fpr"]
+  )},${yScale(circleData2Reversed[0]["tpr"])} ${pathLine(
+    circleData2Reversed
+  )} `;
 </script>
 
 <div
@@ -125,17 +142,18 @@
       </g>
     {/each}
     {console.log("FP", fullPath)}
-    <path class="area-between-curves" d={fullPath} />
-    <!-- <path class="area-between-curves1" d={fullPath1} /> -->
+    <path class="sky" d={fullPath} />
+    <path class="smile" d={fullPath1} />
+    <path class="sky" d={fullPath2} />
     <path
       class="triangle-path"
-      d={pathLine(rocData.filter((d) => d.group == "triangle"))}
+      d={pathLine(newData.filter((d) => d.group == "triangle"))}
     />
     <path
       class="circle-path"
-      d={pathLine(rocData.filter((d) => d.group == "circle"))}
+      d={pathLine(newData.filter((d) => d.group == "circle"))}
     />
-    {#each rocData as d}
+    {#each newData as d}
       {#if d.tpr != 1}
         {#if d.group == "circle"}
           <circle cx={xScale(d.fpr)} cy={yScale(d.tpr)} r={circleRadius} />
@@ -176,14 +194,14 @@
 </div>
 
 <style>
-  .area-between-curves {
-    fill: red;
-    opacity: 0.15;
+  .sky {
+    fill: var(--sky);
+    opacity: 1;
     stroke: none;
   }
-  .area-between-curves1 {
-    fill: var(--sky);
-    opacity: 0.5;
+  .smile {
+    fill: var(--smile);
+    opacity: 1;
     stroke: none;
   }
   .circle-path {
