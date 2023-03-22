@@ -188,7 +188,7 @@
       </div>
       <div id="eval-container">
         <div id="scatter-plot">
-          <PredictionScatter />
+          <!-- <PredictionScatter /> -->
         </div>
         <div id="error-plot">
           <ErrorLineChart />
@@ -254,8 +254,9 @@
   #eval-container {
     border: 1px solid black;
     display: grid;
-    grid-template-rows: 55% 45%;
+    grid-template-rows: 48% 48%;
     grid-template-columns: 100%;
+    grid-gap: 5%;
     max-height: 60vh;
   }
   #scatter-plot {

@@ -45,3 +45,4 @@ export const numLayersInteractive = derived(
   networkInteractive,
   ($networkInteractive) => $networkInteractive.length
 );
+export const errorMetrics = [{ epoch: 0, loss: 0, accuracy: 0 }];
