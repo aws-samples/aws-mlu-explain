@@ -1,6 +1,7 @@
 <script>
   import katexify from "../katexify";
   import { format } from "d3-format";
+  import { tooltip } from "../tooltip";
   import {
     rectPos,
     wrongly_accepted_A,
@@ -24,30 +25,40 @@
 
   $: eq1 = $wrongly_accepted_A / ($wrongly_accepted_A + 20);
   $: eq2 = $wrongly_accepted_B / ($wrongly_accepted_B + 15);
+  $: eq3 = eq1 - eq2;
 </script>
 
 <p class="body-text">
-  <span class="definition-header">False Positive Error Rate Balance</span>
+  <span class="definition-header">False Positive Error Rate (FPR) Balance</span>
 </p>
 <br />
 <p class="body-text">
-  The first fairness measure we can derive from EO looks at the False Positive
-  Rate per group and takes the difference:
+  To calculate FPR balance we work out FPR
+  <sup
+    ><span
+      class="info-tooltip"
+      title="Percentage of false positives compared to all positive
+        predictions."
+      use:tooltip
+      >[&#8505;]
+    </span></sup
+  >
+  per group and take the difference:
   {@html katexify(
     `FPR_{circles} - FPR_{triangles} = 
-    ${formatter(eq1)} - ${formatter(eq2)}
+    ${formatter(eq1)} - ${formatter(eq2)} = ${formatter(eq3)}
     `,
     true
   )}
   The resulting value will be in the range [-1, 1], the closer to 0 the more predictive
-  equality the model achieves. FPR calculates the percentage of false positives compared
-  to all positive predictions. In our example this would translate to: "What is the
-  percentage of students that received a grant even though they did not deserve it?".
-  Drag the slider to see the {@html katexify(`FPR`)} difference:
+  equality the model achieves.
+  <br /><br />
+  Move the slider below or use the button to find the best predicitve equality (or
+  approximation) for our data.
 </p>
-
+<!-- To find out what percentage of students that received a grant even though they did not deserve it... -->
 <div class="button-container">
-  <button on:click={() => ($rectPos = updatePos)}>Move Boundary To 0.75</button>
+  <button on:click={() => ($rectPos = updatePos)}>Move Boundary to 0.75</button>
 </div>
 
 <style>

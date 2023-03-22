@@ -1,6 +1,14 @@
 <script>
   import katexify from "../katexify";
-  import { rectPos, outerWidth, margin } from "../store";
+  import { tooltip } from "../tooltip";
+  import { format } from "d3-format";
+  import {
+    rectPos,
+    wrongly_rejected_A,
+    wrongly_rejected_B,
+    outerWidth,
+    margin,
+  } from "../store";
   import { scaleLinear } from "d3-scale";
   import { extent } from "d3-array";
   import { scatterData } from "../datasets";
@@ -12,25 +20,43 @@
     .range([$margin.left, width - $margin.right]);
 
   $: updatePos = xScale(0.3);
+
+  const formatter = format(".2f");
+
+  $: eq1 = $wrongly_rejected_A / ($wrongly_rejected_A + 30);
+  $: eq2 = $wrongly_rejected_B / ($wrongly_rejected_B + 10);
+  $: eq3 = eq1 - eq2;
 </script>
 
 <p class="body-text">
-  <span class="definition-header">False Negative Error Rate Balance</span>
+  <span class="definition-header">False Negative Error Rate (FNR) Balance</span>
 </p>
 <br />
 <p class="body-text">
-  The second fairness measure we can derive from EO looks at the False Negative
-  Rate per group and takes the difference; this measure is also called equal
-  opportunity:
-  {@html katexify(`FNR_{circles} - FNR_{triangles}`, true)}
+  The calculate FNR balance, we work out FNR <sup
+    ><span
+      class="info-tooltip"
+      title="Probability that a true positive will be missclassified as negative."
+      use:tooltip
+      >[&#8505;]
+    </span></sup
+  >
+  per group and take the difference; this measure is also called equal opportunity:
+  {@html katexify(
+    `FNR_{circles} - FNR_{triangles} = 
+    ${formatter(eq1)} - ${formatter(eq2)} = ${formatter(eq3)}
+    `,
+    true
+  )}
   The resulting value will be in the range [-1, 1], the closer to 0 the closer to
-  equal opportunity the groups are. FNR calculates the probability that a true positive
-  will be missclassified; in our example this refers to students that should have
-  received a grant but missed out on receiving one.
+  equal opportunity the groups are.
+  <br /><br />
+  Move the slider below or use the button to find the point of equal opportunity
+  (or approximation) for our data.
 </p>
-
+<!-- To find out what percentage of students that should have received a grant missed out on actually receiving one. -->
 <div class="button-container">
-  <button on:click={() => ($rectPos = updatePos)}>Move Boundary To 0.30</button>
+  <button on:click={() => ($rectPos = updatePos)}>Move Boundary to 0.30</button>
 </div>
 
 <style>
