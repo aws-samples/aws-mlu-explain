@@ -1,7 +1,7 @@
 <section id="intro">
   <h1 id="intro-hed">Equality Of Odds</h1>
   <h1 id="intro-sub">
-    Breaking Bias: A Visual Introduction to Promoting Diversity in Machine
+    A Visual Introduction to Mitigating Bias in Machine
     Learning
   </h1>
   <h3 id="intro__date">
