@@ -45,4 +45,7 @@ export const numLayersInteractive = derived(
   networkInteractive,
   ($networkInteractive) => $networkInteractive.length
 );
-export const errorMetrics = [{ epoch: 0, loss: 0, accuracy: 0 }];
+export const errorMetrics = writable([{ x: 0, loss: 0, y: 0 }]);
+// preds
+export const hexPreds = writable([]);
+export const hexVals = writable([]);

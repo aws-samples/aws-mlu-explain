@@ -209,7 +209,7 @@ export class MLP extends Module {
     return result;
   }
 
-  toString() {
-    return "MLP of"; //TODO
+  save() {
+    return this;
   }
 }

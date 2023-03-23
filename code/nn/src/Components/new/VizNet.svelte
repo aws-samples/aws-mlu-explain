@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import NetworkVisual from "./VizNetworkVisual.svelte";
   import ErrorLineChart from "./VizErrorLineChart.svelte";
-  import PredictionScatter from "./VizPredictionScatter.svelte";
+  import Circles from "./VizCircles.svelte";
 
   import {
     animationDuration,
@@ -11,10 +11,15 @@
     playAnimation,
     ggg,
     points,
+    errorMetrics,
+    hexPreds,
+    hexVals,
   } from "../../store";
   import { range } from "../../neuralnetCode/arrayUtils";
   import { circle_data } from "../../neuralnetCode/data";
   import { Value, MLP, ensureValue } from "../../neuralnetCode/ann";
+  import { circles } from "../../datasets";
+  import { makeJsonArray } from "../../utils";
 
   function updateNetwork(event) {
     const hiddenLayerArchitecture = event.target.value
@@ -54,7 +59,7 @@
   //   var [X_data, y_data] = circle_data(N);
   var epochs = 10;
   var N_in = 2;
-  var dims = [3, 1];
+  var dims = [6, 4, 1];
   var lr = 0.01;
   var alpha = 0.0001;
   var batch_size = 32;
@@ -63,9 +68,10 @@
   console.log("model", model);
   console.log("num params", model.parameters().length);
 
-  const [X, y] = circle_data(100);
+  console.log("circles", circles);
+  const circlesArr = makeJsonArray(circles);
 
-  // run batch gd
+  const [X, y] = circlesArr;
 
   // make sure each input is a Value
   var inputs = X.map(function (row) {
@@ -150,12 +156,30 @@
           "%"
       );
     }
+    // export const errorMetrics = [{ x: 0, loss: 0, accuracy: 0 }];
+    const newError = {
+      x: k + 1,
+      loss: total_loss.data,
+      y: accuracy * 100,
+    };
 
+    // update hex predictions
+    const newPreds = $hexVals.map(function (row) {
+      const pred = model.call(row);
+      return pred[0].data > 0 ? 1 : -1;
+    });
+
+    $hexPreds = [...newPreds];
+
+    // log errors
+    $errorMetrics = [...$errorMetrics, newError];
+
+    // increment epoch count
     k++;
     // });
   }
 
-  run_batch();
+  // run_batch();
 </script>
 
 <br /><br /><br />
@@ -188,7 +212,7 @@
       </div>
       <div id="eval-container">
         <div id="scatter-plot">
-          <!-- <PredictionScatter /> -->
+          <Circles nnModel={model} />
         </div>
         <div id="error-plot">
           <ErrorLineChart />
@@ -231,7 +255,7 @@
     display: grid;
     height: 60vh;
     width: 1000px;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 70% 30%;
     margin: auto;
     background: conic-gradient(
         from 90deg at 1px 1px,

@@ -3,14 +3,20 @@
   import { extent } from "d3-array";
   import { hexbin } from "d3-hexbin";
 
-  import { scaleLinear, scaleOrdinal } from "d3-scale";
+  import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
-  import { circles } from "../../datasets";
 
   // props
-  let data = circles;
-
-  const hexbinRadius = 5;
+  let data = [
+    { age: 0, temp: 30 },
+    { age: 1, temp: 40 },
+    { age: 2, temp: 50 },
+    { age: 3, temp: 65 },
+    { age: 4, temp: 75 },
+    { age: 5, temp: 76 },
+    { age: 6, temp: 77 },
+    { age: 7, temp: 200 },
+  ];
 
   let height;
   let width;
@@ -20,39 +26,23 @@
     bottom: 15,
     right: 15,
   };
-
-  const colorScale = scaleOrdinal()
-    .domain([0, 1])
-    .range(["#f46ebb", "#2074d5"]);
-
-  $: hexbins = hexbin()
-    .radius(hexbinRadius)
-    .extent([
-      [0, 0],
-      [width - margin.right - margin.left, height - margin.top],
-    ]);
-
   // scales
   $: xScale = scaleLinear()
-    .domain(extent(data.map((d) => d.x1)))
+    .domain(extent(data.map((d) => d.age)))
     .range([margin.left, width - margin.right]);
 
   $: yScale = scaleLinear()
-    .domain(extent(data.map((d) => d.x2)))
+    .domain(extent(data.map((d) => d.temp)))
     .range([height - margin.bottom, margin.top]);
+
+  // the path generator
+  $: pathLine = line()
+    .x((d) => xScale(d.age))
+    .y((d) => yScale(d.temp));
 </script>
 
 <div id="chart-holder" bind:offsetWidth={width} bind:offsetHeight={height}>
   <svg {width} height={height + margin.top + margin.bottom}>
-    <clipPath id="clip-nn">
-      <rect
-        stroke="red"
-        stroke-width="5"
-        width={width - margin.left}
-        {height}
-      />
-    </clipPath>
-    <rect stroke="red" stroke-width="5" width={width - margin.left} {height} />
     <line
       class="axis-line"
       x1={margin.left}
@@ -103,25 +93,18 @@
         >
       </g>
     {/each}
-
-    <!-- hex background todo: add clip-path="url(#clip)" -->
-    <g
-      clip-path="url(#clip-nn)"
-      transform={`translate(${margin.left} ${margin.top})`}
-    >
-      <!-- hexbins -->
-      {#each hexbins(hexbins.centers()) as h}
-        <path
-          in:draw={{ duration: 500 }}
-          out:draw={{ duration: 0 }}
-          class="hex-cell"
-          d={`M${h.x},${h.y}${hexbins.hexagon()}`}
-        />
-      {/each}
-    </g>
-
+    <path
+      class="outer-path"
+      transition:draw={{ duration: 2000 }}
+      d={pathLine(data)}
+    />
+    <path
+      class="inner-path"
+      transition:draw={{ duration: 2000 }}
+      d={pathLine(data)}
+    />
     {#each data as d}
-      <circle cx={xScale(d.x1)} cy={yScale(d.x2)} r="5" />
+      <circle cx={xScale(d.age)} cy={yScale(d.temp)} r="10" />
     {/each}
 
     <!-- axis labels -->
@@ -129,7 +112,20 @@
       class="roc-axis-label"
       y={margin.top / 2}
       x={(width + margin.left) / 2}
-      text-anchor="middle">Data</text
+      text-anchor="middle">Basic Chart Title</text
+    >
+    <text
+      class="roc-axis-label"
+      y={height + margin.top}
+      x={(width + margin.left) / 2}
+      text-anchor="middle">X-Axis Title</text
+    >
+    <text
+      class="roc-axis-label"
+      y={margin.right}
+      x={-(height / 2)}
+      text-anchor="middle"
+      transform="rotate(-90)">Y-Axis Title</text
     >
   </svg>
 </div>
@@ -158,5 +154,17 @@
     fill: yellow;
     stroke: black;
     stroke-width: 2;
+  }
+  .inner-path {
+    stroke: black;
+    stroke-width: 1;
+    fill: none;
+    stroke-linecap: round;
+  }
+  .outer-path {
+    stroke: black;
+    stroke-width: 3;
+    fill: none;
+    stroke-linecap: round;
   }
 </style>
