@@ -26,8 +26,8 @@ export const drawActivation = writable(false);
 export const stepIndex = writable(0);
 // backprop
 export const stepIndexBp = writable(0);
-export const labelsBp = writable(["input", "function", "hidden"]);
-export const networkBp = writable([3, 2, 1, 1]);
+export const labelsBp = writable(["X", "reLu", "linear"]);
+export const networkBp = writable([1, 2, 1, 1]);
 export const bpStage = writable(0);
 export const numLayersBp = derived(
   networkBp,

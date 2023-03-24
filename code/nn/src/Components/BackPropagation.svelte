@@ -9,11 +9,14 @@
   <h1 class="body-header">Backpropagation: How Networks Learn</h1>
   <hr />
   <p class="body-text">
-    Neural networks have revolutionized the field of artificial intelligence and
-    are the backbone of popular algorithms today, such as ChatGPT,
-    Stable-Diffusion, and many others. In this visual and interactive article,
-    we will explore the basics of neural networks, their architecture, and how
-    they can be trained to solve a wide range of tasks.
+    We know how Neural Networks work, but how do they learn the correct weight?
+    Backpropagation is an important method that helps neural networks learn to
+    make better predictions. below, we will explore how backpropagation works by
+    looking at a simple example regression example. By focusing on this example,
+    you will learn how backpropagation helps a network adjust its inner parts
+    called weights and biases to improve its predictions. This will give you a
+    better understanding of how backpropagation plays a key role in a network's
+    ability to learn from information.
   </p>
   <br />
   <br />

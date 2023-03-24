@@ -11,8 +11,6 @@
     points,
   } from "../../store";
   import { fade, fly, draw } from "svelte/transition";
-  // import OutputNeuron from "./OutputNeuron.svelte";
-  // import { logistic, perceptron } from "../outputModelWeights";
 
   function positionElements(numElements, maxNumNeurons) {
     const interval = (maxNumNeurons - 1 - numElements + 1) / 2;
@@ -34,25 +32,6 @@
 
   const labels = ["input", "function", "function", "output"];
 
-  const logRegW0 = -1.03096821;
-  const logRegW1 = 0.06139;
-  const logRegW2 = 0.18226;
-
-  const percW0 = -17.0;
-  const percW1 = 9.8093627;
-  const percW2 = 11.37731165;
-
-  function logistic(x, y) {
-    const z = logRegW0 + logRegW1 * x + logRegW2 * y;
-    const p = 1 / (1 + Math.exp(-z));
-    return p >= 0.5 ? 1 : 0;
-  }
-
-  function perceptron(x, y) {
-    const z = percW0 + percW1 * x + percW2 * y;
-    return Math.sign(z) === 1 ? 1 : 0;
-  }
-
   let docEl;
   onMount(() => {
     // render elements after drawn to canvas
@@ -66,10 +45,13 @@
   let height;
   let width;
   // init to false so don't show drawing during rendering
-  $: visible = false;
+  $: visible = true;
 
-  let nodeWidth = 76;
-  let nodeHeight = 40;
+  //   let nodeWidth = 76;
+  //   let nodeHeight = 40;
+
+  let nodeWidth = 12 * 1.33 * 4;
+  let nodeHeight = 12 * 2;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayersInteractive])
@@ -77,10 +59,6 @@
   $: yScale = scaleLinear()
     .domain([-1, maxNumNeurons])
     .range([height - marginScroll.bottom, marginScroll.top]);
-
-  // define model
-  let currentModel = perceptron;
-  let vvv = true;
 </script>
 
 <div
@@ -105,6 +83,23 @@
                       `}
                 class="nn-edge"
               />
+              {#key $networkInteractive}
+                <text
+                  in:fly|local={{ x: 0, duration: 300 }}
+                  out:fade|local={{ duration: 300 }}
+                  dx={0 * xScale(1)}
+                  dy="0"
+                  class="weight-text"
+                >
+                  <textPath
+                    href={`#nn-edgebp-${layer}-${yPosition}-${prevYPosition}-${$networkInteractive}`}
+                    startOffset="50%"
+                    text-anchor="middle"
+                    fill="#232F3E"
+                    dominant-baseline="middle">w</textPath
+                  >
+                </text>
+              {/key}
               <!-- {#if $playAnimation} -->
               <!-- forward-pass -->
               {#each $points as p}
@@ -113,7 +108,6 @@
                     opacity="0"
                     id={`circle${layer}${p}`}
                     class="moving-circle"
-                    r={10 + p * Math.random() * (9 - 4) + 4}
                   >
                     <set
                       attributeName="opacity"
@@ -278,16 +272,16 @@
   .moving-circle {
     stroke: black;
     stroke-width: 4;
-    fill: rgba(138, 255, 80, 1);
+    fill: rgba(138, 255, 80, 0.5);
     transition: r 1s;
-    /* r: 25; */
+    r: 25;
   }
 
   .moving-circle-back {
     stroke: black;
     stroke-width: 4;
-    fill: rgb(255, 80, 83);
-    /* r: 25; */
+    fill: rgba(255, 80, 83, 0.5);
+    r: 25;
   }
 
   svg {

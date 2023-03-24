@@ -3,7 +3,7 @@
   import { scaleLinear } from "d3-scale";
   import { max } from "d3-array";
   import {
-    labels,
+    labelsBp,
     marginScroll,
     networkBp,
     numLayersBp,
@@ -13,7 +13,7 @@
   } from "../../store";
   import { line } from "d3-shape";
   import { fade, fly, draw } from "svelte/transition";
-  import OutputNeuron from "./OutputNeuron.svelte";
+  import BackPropOutput from "./BackPropOutput.svelte";
   import { positionElements } from "../../utils";
   import { logistic, perceptron } from "../../outputModelWeights";
 
@@ -187,7 +187,7 @@
           >
             {#if layer !== $numLayersBp - 1}
               <!-- {@const nodWidth =
-                $labels[layer].length == 1 ? 24 : $labels[layer].length * 11} -->
+                $labelsBp[layer].length == 1 ? 24 : $labelsBp[layer].length * 11} -->
               <rect
                 in:fly|local={{ x: -50, duration: 500 }}
                 out:fade|local={{ duration: 300 }}
@@ -207,7 +207,7 @@
                 alignment-baseline="middle"
                 dx={nodeWidth / 2}
                 dy={nodeHeight / 2}
-                >{$labels[layer]}
+                >{$labelsBp[layer]}
                 {#if layer === 0 && $showSubScript}
                   <tspan class="subscript" dy="4"
                     >{Math.abs(yPosition - 2.5)}</tspan

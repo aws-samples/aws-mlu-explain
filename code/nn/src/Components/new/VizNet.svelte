@@ -51,7 +51,7 @@
     });
   }
 
-  let batchSize = 3;
+  let batchSize = 1;
   $: $points = [...Array(batchSize).keys()];
 
   var train_interval;
@@ -64,11 +64,8 @@
   var alpha = 0.0001;
   var batch_size = 32;
   var k = 0;
-  const model = new MLP(N_in, dims);
-  console.log("model", model);
-  console.log("num params", model.parameters().length);
+  let model = new MLP(N_in, dims);
 
-  console.log("circles", circles);
   const circlesArr = makeJsonArray(circles);
 
   const [X, y] = circlesArr;
@@ -79,6 +76,28 @@
       return ensureValue(x);
     });
   });
+
+  function reset_model() {
+    k = 0;
+    model = new MLP(N_in, dims);
+
+    const newError = {
+      x: k,
+      loss: 0,
+      y: 0,
+    };
+
+    // reset hex predictions
+    const newPreds = $hexVals.map(function (row) {
+      const pred = model.call(row);
+      return -1;
+    });
+
+    $hexPreds = [...newPreds];
+
+    // log errors
+    $errorMetrics = [newError];
+  }
 
   function run_batch() {
     // return setInterval(function () {
@@ -229,11 +248,17 @@
             run_batch();
           }}>Run Batch</button
         >
+        <button
+          class:active={$playAnimation}
+          on:click={() => {
+            reset_model();
+          }}>Restart</button
+        >
       </div>
-      <div id="batch-button">
+      <!-- <div id="batch-button">
         <p>Batch Size:</p>
         <input type="number" bind:value={batchSize} min="1" max="8" />
-      </div>
+      </div> -->
       <div>
         Duration:
         <input
@@ -287,8 +312,10 @@
     /* border: 1px solid black; */
     height: 100%;
   }
-  #error-plot {
-    /* border: 1px solid black; */
+
+  button:hover {
+    color: white;
+    background-color: var(--squidink);
   }
   #animation-controls {
     display: flex;
@@ -313,9 +340,11 @@
     font-size: 21px;
     box-shadow: 4px 4px 0 0 #285555;
     text-transform: lowercase;
+    margin-right: 10px;
   }
   #play-button button:hover {
-    background-color: var(--yellow);
+    background-color: var(--squidink);
+    color: var(--bg);
   }
   #batch-button {
     display: flex;

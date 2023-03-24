@@ -10,12 +10,12 @@
   } from "../../store";
   import katexify from "../../katexify";
 
-  $networkBp = [2, 2, 1, 1];
+  $networkBp = [1, 2, 1, 1];
 
   const target2event = {
     0: () => {
       $showLayerLine = false;
-      $networkBp = [2, 2, 1, 1];
+      $networkBp = [1, 2, 1, 1];
       $stepIndexBp = 0;
       $showSubScript = false;
       $bpStage = 0;
@@ -23,7 +23,7 @@
 
     1: () => {
       $showLayerLine = false;
-      $networkBp = [2, 2, 1, 1];
+      $networkBp = [1, 2, 1, 1];
       $stepIndexBp = 1;
       $showSubScript = false;
       $bpStage = 1;
@@ -139,11 +139,10 @@
             <br />
 
             <p>
-              To build intuition, let's first revisit computational graphs.
-              <br /><br />A computational graph has an input node where data is
-              fed into the graph, a function node where the input data is
-              processed, and an output node where the result of the computation
-              is produced.
+              During the forward pass, input data is fed through a neural
+              network's layers to produce a prediction. This process involves
+              calculating the weighted sums and applying activation functions
+              for each neuron in each layer.
             </p>
           </div>
         </div>
@@ -154,44 +153,24 @@
             <br />
 
             <p>
-              We can represent all sorts of algorithms with this framework. For
-              example, let's look at an equation for <a
-                href="https://mlu-explain.github.io/linear-regression/"
-                >Linear Regression</a
-              >:
-              <br /><br />
-              {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-              <br /><br /> To represent this as a graph, we need only weight
-              each edge connecting our input nodes to our function node, and
-              have our function represent a linear function on a weighted sum:<br
-              />
-              linear = {@html katexify(
-                `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-                false
-              )}
+              The error, also known as loss, measures the difference between the
+              neural network's predicted output and the actual target values. By
+              minimizing this error, the neural network learns to improve its
+              predictions during training.
             </p>
           </div>
         </div>
         <div class="step-bp" data-index="2">
           <div class="step-content">
-            <h2>Backward Pass</h2>
+            <h2>Adjusting Weights</h2>
             <hr />
             <br />
             <p>
-              Extending this representation to <a
-                href="https://mlu-explain.github.io/logistic-regression/"
-                >Logistic Regression</a
-              >
-              is dead simple, we need only swap the linear function with a sigmoid
-              function:
-              <br /><br />
-              {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-              <br /><br /> In this manner, our computational graph now
-              represents the following:<br />
-              linear = {@html katexify(
-                `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-                false
-              )}
+              In the backward pass, the error is propagated back through the
+              network, starting from the output layer, to adjust the weights and
+              biases of each neuron. This weight adjustment process, guided by
+              the gradients of the error with respect to the weights, aims to
+              minimize the overall error of the network.
             </p>
           </div>
         </div>
@@ -202,20 +181,11 @@
             <br />
 
             <p>
-              Extending this representation to <a
-                href="https://mlu-explain.github.io/logistic-regression/"
-                >Logistic Regression</a
-              >
-              is dead simple, we need only swap out the linear function for the sigmoid
-              function:
-              <br /><br />
-              {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-              <br /><br /> In this manner, our computational graph now
-              represents the following:<br />
-              linear = {@html katexify(
-                `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-                false
-              )}
+              Backpropagation is a supervised learning algorithm used in neural
+              networks that optimizes their weights and biases through iterative
+              forward and backward passes. By computing the gradients of the
+              error with respect to the weights, backpropagation enables the
+              network to learn and improve its predictions.
             </p>
           </div>
         </div>
