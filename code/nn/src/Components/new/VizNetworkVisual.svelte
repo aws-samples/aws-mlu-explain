@@ -147,6 +147,7 @@
                           M ${xScale(layer - 1)} ${yScale(prevYPosition)}
                           L ${xScale(layer)} ${yScale(yPosition)}
                         `}
+                    onend={console.log("End!!!", layer)}
                   />
                 </g>
               {/each}
@@ -196,6 +197,7 @@
                             M ${xScale(layer)} ${yScale(yPosition)}
                             L ${xScale(layer - 1)} ${yScale(prevYPosition)}
                           `}
+                    onend={console.log("Bac End!!!", layer)}
                   />
                 </g>
               {/each}

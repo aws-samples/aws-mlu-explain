@@ -16,7 +16,7 @@
   let width;
   let margin = {
     top: 45,
-    left: 55,
+    left: 15,
     bottom: 15,
     right: 15,
   };

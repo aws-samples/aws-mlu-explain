@@ -3,11 +3,12 @@
   import NetworkVisual from "./VizNetworkVisual.svelte";
   import ErrorLineChart from "./VizErrorLineChart.svelte";
   import Circles from "./VizCircles.svelte";
+  import DatasetIcons from "./DatasetIcons.svelte";
 
   import {
     animationDuration,
     networkInteractive,
-    numLayers,
+    numLayersInteractive,
     playAnimation,
     ggg,
     points,
@@ -20,6 +21,8 @@
   import { Value, MLP, ensureValue } from "../../neuralnetCode/ann";
   import { circles } from "../../datasets";
   import { makeJsonArray } from "../../utils";
+
+  let buttonDisabled = false;
 
   function updateNetwork(event) {
     const hiddenLayerArchitecture = event.target.value
@@ -39,9 +42,10 @@
     $points.forEach((p) => {
       const selector = `animateMotion#animatePath1${p}`;
       const selection = $ggg.querySelectorAll(selector);
-      const set1 = $ggg.querySelectorAll(`#set1`);
-      animationSelections.push({ selection: selection, p: p, set1: set1 });
+      // const set1 = $ggg.querySelectorAll(`#set1`);
+      animationSelections.push({ selection: selection, p: p });
     });
+    // trigger animation
     animationSelections.forEach((element) => {
       setTimeout(() => {
         element.selection.forEach((selection) => {
@@ -49,6 +53,19 @@
         });
       }, element.p * 100); // Multiply by 1000 to convert seconds to milliseconds
     });
+  }
+
+  function toggleButton() {
+    buttonDisabled = true;
+    setTimeout(() => {
+      buttonDisabled = false;
+    }, $animationDuration * 1000 * ($numLayersInteractive + 1));
+  }
+
+  function buttonClick() {
+    runBatch();
+    toggleAnimation();
+    toggleButton();
   }
 
   let batchSize = 1;
@@ -99,7 +116,7 @@
     $errorMetrics = [newError];
   }
 
-  function run_batch() {
+  function runBatch() {
     // return setInterval(function () {
     //   if (k > epochs) {
     //     clearInterval(train_interval);
@@ -198,7 +215,7 @@
     // });
   }
 
-  // run_batch();
+  // runBatch();
 </script>
 
 <br /><br /><br />
@@ -219,11 +236,14 @@
   </p>
   <br /><br />
   <section>
-    <div id="architecture-input">
-      <div>
-        <p>Network Architecture</p>
-        <input type="text" value={$networkInteractive.join(", ")} />
+    <div id="top-controls">
+      <div id="architecture-input">
+        <div>
+          <p>Network Architecture</p>
+          <input type="text" value={$networkInteractive.join(", ")} />
+        </div>
       </div>
+      <DatasetIcons />
     </div>
     <div id="lol-container">
       <div class="network-plot">
@@ -244,9 +264,9 @@
         <button
           class:active={$playAnimation}
           on:click={() => {
-            toggleAnimation();
-            run_batch();
-          }}>Run Batch</button
+            buttonClick();
+          }}
+          disabled={buttonDisabled}>Run Batch</button
         >
         <button
           class:active={$playAnimation}
@@ -260,13 +280,14 @@
         <input type="number" bind:value={batchSize} min="1" max="8" />
       </div> -->
       <div>
+        Animation<br />
         Duration:
         <input
           class="input-duration"
           type="range"
-          min="0.5"
+          min="0.05"
           max="2"
-          step="0.25"
+          step="0.05"
           bind:value={$animationDuration}
         />
       </div>
@@ -275,19 +296,19 @@
 </div>
 
 <style>
+  #top-controls {
+    border: 1px solid hotpink;
+    display: flex;
+    width: 1000px;
+    margin: auto;
+  }
   #lol-container {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: grid;
     height: 60vh;
     width: 1000px;
     grid-template-columns: 70% 30%;
     margin: auto;
-    background: conic-gradient(
-        from 90deg at 1px 1px,
-        #0000 90deg,
-        rgba(243, 240, 240, 0.05) 0
-      )
-      0 0/20px 20px;
   }
   .network-plot {
     width: 100%;
@@ -303,19 +324,31 @@
   #eval-container {
     border: 1px solid black;
     display: grid;
-    grid-template-rows: 48% 48%;
+    grid-template-rows: 60% 40%;
     grid-template-columns: 100%;
-    grid-gap: 5%;
+    grid-gap: 0%;
     max-height: 60vh;
+    width: 100%;
   }
-  #scatter-plot {
-    /* border: 1px solid black; */
+
+  #scatter-plot,
+  #error-plot {
     height: 100%;
+    outline: 0px solid hotpink;
   }
 
   button:hover {
     color: white;
     background-color: var(--squidink);
+  }
+  button {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  button[disabled] {
+    opacity: 0.6;
+    pointer-events: none;
   }
   #animation-controls {
     display: flex;
@@ -325,7 +358,7 @@
     max-width: 80%;
     margin: 0px auto;
     padding-top: 5px;
-    font-size: 21px;
+    font-size: var(--size-default);
     font-weight: bold;
     text-transform: uppercase;
   }
@@ -337,8 +370,8 @@
     border: 5px solid black;
     border-radius: 0;
     padding: 8px 24px;
-    font-size: 21px;
-    box-shadow: 4px 4px 0 0 #285555;
+    font-size: var(--size-default);
+    /* box-shadow: 4px 4px 0 0 #285555; */
     text-transform: lowercase;
     margin-right: 10px;
   }
@@ -346,83 +379,13 @@
     background-color: var(--squidink);
     color: var(--bg);
   }
-  #batch-button {
-    display: flex;
-    font-size: 21px;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin-right: 10px;
-  }
-  #batch-button input {
-    font-size: 21px;
-    padding-left: 5px;
-    margin-left: 6px;
-  }
-  .bold {
-    font-weight: bold;
-    background-color: var(--yellow);
-  }
+
   p {
     font-weight: bold;
   }
   section {
     max-width: 1200px;
     margin: auto;
-    /* background-color: rgb(255, 164, 209); */
-  }
-  #lol {
-    padding: 10px 14px;
-    letter-spacing: 5px;
-    /* animation: lol-bg 2.75s infinite alternate; */
-    border: 4px solid black;
-    background-color: var(--yellow);
-  }
-  #net {
-    padding: 9px 17px;
-    letter-spacing: 5px;
-    /* animation: net-bg 2s infinite alternate; */
-    outline: 5px solid rgba(0, 0, 0, 0.45);
-    background: conic-gradient(
-        from 90deg at 1px 1px,
-        #0000 90deg,
-        rgba(0, 0, 0, 0.15) 0
-      )
-      0 0/20px 20px;
-    background-color: white;
-  }
-
-  @keyframes lol-bg {
-    0% {
-      background-color: var(--yellow);
-    }
-    50% {
-      background-color: skyblue;
-    }
-    50% {
-      background-color: rgb(138, 255, 80);
-    }
-    75% {
-      background-color: skyblue;
-    }
-    100% {
-      background-color: var(--yellow);
-    }
-  }
-
-  @keyframes net-bg {
-    0% {
-      background-color: hotpink;
-    }
-    50% {
-      background-color: white;
-    }
-    100% {
-      background-color: skyblue;
-    }
-  }
-
-  .input-duration {
-    /* width: 20%; */
   }
 
   #architecture-input {
@@ -435,12 +398,10 @@
     justify-content: flex-start;
   }
   input {
-    /* width: 50%; */
     margin: auto;
   }
 
   .active {
     opacity: 0.8;
-    /* pointer-events: none; */
   }
 </style>

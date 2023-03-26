@@ -36,7 +36,7 @@ export const numLayersBp = derived(
 
 // viz
 export const playAnimation = writable(true);
-export const animationDuration = writable(0.5);
+export const animationDuration = writable(0.25);
 export const ggg = writable();
 export const points = writable([1, 2, 3]);
 export const show = writable(true);

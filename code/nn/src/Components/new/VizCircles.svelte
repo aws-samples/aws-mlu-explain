@@ -22,7 +22,7 @@
   let margin = {
     top: 25,
     bottom: 5,
-    left: 35,
+    left: 20,
     right: 0,
   };
 
@@ -80,20 +80,6 @@
         height={height - margin.top - margin.bottom}
       />
     </clipPath>
-    <line
-      class="axis-line"
-      x1={margin.left}
-      x2={width - margin.right}
-      y1={height - margin.bottom}
-      y2={height - margin.bottom}
-    />
-    <line
-      class="axis-line"
-      x1={margin.left}
-      x2={margin.left}
-      y1={margin.top}
-      y2={height - margin.bottom}
-    />
 
     <!-- data points -->
     <!-- hex background todo: add clip-path="url(#clip)" -->
