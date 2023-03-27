@@ -40,4 +40,8 @@
     outline: 2px solid var(--squidink);
     opacity: 1;
   }
+  .dataset-icon > p {
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
 </style>
