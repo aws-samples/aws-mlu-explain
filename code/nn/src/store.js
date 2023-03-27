@@ -49,3 +49,4 @@ export const errorMetrics = writable([{ x: 0, loss: 0, y: 0 }]);
 // preds
 export const hexPreds = writable([]);
 export const hexVals = writable([]);
+export const interactiveDataset = writable([]);

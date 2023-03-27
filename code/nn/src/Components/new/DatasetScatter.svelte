@@ -2,10 +2,9 @@
   import { max, min } from "d3-array";
   import { format } from "d3-format";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
-  import { circles } from "../../datasets";
 
   // props
-  let data = circles;
+  export let data;
 
   let outerHeight = 300;
   let outerWidth = 300;

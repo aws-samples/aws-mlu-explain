@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import NetworkVisual from "./VizNetworkVisual.svelte";
   import ErrorLineChart from "./VizErrorLineChart.svelte";
-  import Circles from "./VizCircles.svelte";
+  import VizPredictionScatter from "./VizPredictionScatter.svelte";
   import DatasetIcons from "./DatasetIcons.svelte";
 
   import {
@@ -15,12 +15,16 @@
     errorMetrics,
     hexPreds,
     hexVals,
+    interactiveDataset,
   } from "../../store";
   import { range } from "../../neuralnetCode/arrayUtils";
   import { circle_data } from "../../neuralnetCode/data";
   import { Value, MLP, ensureValue } from "../../neuralnetCode/ann";
-  import { circles } from "../../datasets";
+  import { circles, moons } from "../../datasets";
   import { makeJsonArray } from "../../utils";
+
+  // set default dataset to circles
+  $interactiveDataset = circles;
 
   let buttonDisabled = false;
 
@@ -71,24 +75,19 @@
   let batchSize = 1;
   $: $points = [...Array(batchSize).keys()];
 
-  var train_interval;
-  var N = 200;
-  //   var [X_data, y_data] = circle_data(N);
-  var epochs = 10;
-  var N_in = 2;
-  var dims = [6, 4, 1];
+  $: N_in = 2;
+  $: dims = [6, 4, 1];
   var lr = 0.01;
   var alpha = 0.0001;
-  var batch_size = 32;
   var k = 0;
-  let model = new MLP(N_in, dims);
+  $: model = new MLP(N_in, dims);
 
-  const circlesArr = makeJsonArray(circles);
+  $: dataArr = makeJsonArray($interactiveDataset);
 
-  const [X, y] = circlesArr;
+  $: [X, y] = dataArr;
 
   // make sure each input is a Value
-  var inputs = X.map(function (row) {
+  $: inputs = X.map(function (row) {
     return row.map(function (x) {
       return ensureValue(x);
     });
@@ -132,22 +131,22 @@
 
     //  predictions
     // loop through input X and call model prediction on it
-    var preds = inputs.map(function (row) {
+    let preds = inputs.map(function (row) {
       return model.call(row);
     });
 
     // svm max margin loss
-    var losses = range(0, preds.length).map(function (i) {
+    let losses = range(0, preds.length).map(function (i) {
       return preds[i][0].mul(-y[i]).add(+1.0).relu();
     });
 
-    var data_loss = losses
+    let data_loss = losses
       .reduce(function (sum, current) {
         return sum.add(current);
       }, new Value(0))
       .mul(1 / losses.length);
 
-    var reg_loss = model
+    let reg_loss = model
       .parameters()
       .map(function (e) {
         return e.mul(e);
@@ -157,13 +156,13 @@
       }, new Value(0))
       .mul(alpha);
 
-    var total_loss = data_loss.add(reg_loss);
+    let total_loss = data_loss.add(reg_loss);
 
-    var accuracies = range(0, preds.length).map(function (i) {
+    let accuracies = range(0, preds.length).map(function (i) {
       return preds[i][0].data > 0.0 === y[i] > 0.0 ? 1.0 : 0.0;
     });
 
-    var accuracy =
+    let accuracy =
       accuracies.reduce(function (sum, current) {
         return sum + current;
       }, 0.0) / accuracies.length;
@@ -173,10 +172,10 @@
     total_loss.backward();
 
     // sgd
-    var learning_rate = 1.0 - (0.9 * k) / 100;
+    let learning_rate = 1.0 - (0.9 * k) / 100;
 
-    for (var _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
-      var p = _b[_i];
+    for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
+      let p = _b[_i];
       // p.data -= lr * p.grad;
       p.data -= learning_rate * p.grad;
     }
@@ -215,6 +214,12 @@
     // });
   }
 
+  // anytime dataset changes, reset model
+  $: {
+    $interactiveDataset;
+    reset_model();
+  }
+
   // runBatch();
 </script>
 
@@ -251,7 +256,7 @@
       </div>
       <div id="eval-container">
         <div id="scatter-plot">
-          <Circles nnModel={model} />
+          <VizPredictionScatter data={$interactiveDataset} nnModel={model} />
         </div>
         <div id="error-plot">
           <ErrorLineChart />
@@ -297,7 +302,7 @@
 
 <style>
   #top-controls {
-    border: 1px solid hotpink;
+    /* border: 1px solid hotpink; */
     display: flex;
     width: 1000px;
     margin: auto;
@@ -322,7 +327,7 @@
       0 0/20px 20px;
   }
   #eval-container {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display: grid;
     grid-template-rows: 60% 40%;
     grid-template-columns: 100%;
