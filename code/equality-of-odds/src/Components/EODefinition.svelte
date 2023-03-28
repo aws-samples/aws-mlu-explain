@@ -59,9 +59,9 @@
     </svg>) and {@html katexify(`Y`)} represents the ground truth.
     <br /><br />
     This can be very hard to achieve, so in some cases it makes sense to relax the
-    EO criteria and set {@html katexify(`y=1`)} for equalizing FPR, or {@html katexify(
-      `y=0`
-    )} for equalizing FNR.
+    EO criteria and set {@html katexify(`y=1`)} for equalizing FNR (equal opportunity),
+    or {@html katexify(`y=0`)} for equalizing FPR.
+
     <!-- To understand why equalizing FNR and FPR can give a fair outcome, let's assume
     we are building a model that is supposed to predict whether or not individuals
     from two different groups of students,

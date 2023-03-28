@@ -1,7 +1,7 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
-  import Scatter1 from "./charts/Scatter1.svelte";
+  import Scatter from "./charts/Scatter.svelte";
   import StackedBar from "./charts/StackedBar.svelte";
   import Tab_FPRBalance from "./Tab_FPRBalance.svelte";
   import Tab_FNRBalance from "./Tab_FNRBalance.svelte";
@@ -41,11 +41,11 @@
   <br />
 
 
-  <div id="charts1-container">
-    <div id="scatter1-container">
-      <Scatter1 />
+  <div id="charts-container">
+    <div id="scatter-container">
+      <Scatter />
     </div>
-    <div id="output1-container">
+    <div id="barchart-container">
       <StackedBar />
     </div>
   </div>
@@ -58,7 +58,7 @@
 </section>
 
 <style>
-  #charts1-container {
+  #charts-container {
     display: grid;
     margin: auto;
     height: 45vh;
@@ -67,10 +67,10 @@
     grid-gap: 2%;
     max-width: 1000px;
   }
-  #scatter1-container {
+  #scatter-container {
     max-height: 45vh;
   }
-  #output1-container {
+  #barchart-container {
     border: var(--sky);
     max-height: 45vh;
   }
