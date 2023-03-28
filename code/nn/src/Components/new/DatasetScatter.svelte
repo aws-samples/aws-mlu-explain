@@ -52,7 +52,7 @@
       <circle
         cx={xScale(d.x1)}
         cy={yScale(d.x2)}
-        r="2"
+        r="2.2"
         fill={colorScale(d.y)}
       />
     {/each}

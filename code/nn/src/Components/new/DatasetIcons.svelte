@@ -3,21 +3,25 @@
   import { circles, moons, spirals } from "../../datasets";
   import { interactiveDataset } from "../../store";
 
-  function setData(dataset) {
+  function setData(dataset, i) {
+    clickedOption = i;
     $interactiveDataset = dataset;
   }
+
+  let clickedOption = 1;
 </script>
 
 <div class="dataset-icons">
-  <div class="dataset-icon" on:click={() => setData(circles)}>
-    <DatasetScatter data={circles} />
-  </div>
-  <div class="dataset-icon" on:click={() => setData(moons)}>
-    <DatasetScatter data={moons} />
-  </div>
-  <div class="dataset-icon" on:click={() => setData(spirals)}>
-    <DatasetScatter data={spirals} />
-  </div>
+  {#each [circles, moons, spirals] as data, i}
+    <div
+      class="dataset-icon"
+      class:selected={clickedOption == i}
+      on:click={() => setData(data, i)}
+      on:keydown={() => setData(data, i)}
+    >
+      <DatasetScatter {data} />
+    </div>
+  {/each}
 </div>
 
 <style>
@@ -34,10 +38,14 @@
   .dataset-icon {
     width: 60px;
     height: 60px;
-    opacity: 0.8;
+    opacity: 0.5;
   }
   .dataset-icon:hover {
-    outline: 2px solid var(--squidink);
+    outline: 3px solid var(--squidink);
+    opacity: 1;
+  }
+  .selected {
+    outline: 3px solid var(--squidink);
     opacity: 1;
   }
   .dataset-icon > p {

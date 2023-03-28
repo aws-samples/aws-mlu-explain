@@ -4,6 +4,7 @@
   import ErrorLineChart from "./VizErrorLineChart.svelte";
   import VizPredictionScatter from "./VizPredictionScatter.svelte";
   import DatasetIcons from "./DatasetIcons.svelte";
+  import InteractiveControls from "./InteractiveControls.svelte";
 
   import {
     animationDuration,
@@ -244,8 +245,9 @@
     <div id="top-controls">
       <div id="architecture-input">
         <div>
-          <p>Network Architecture</p>
-          <input type="text" value={$networkInteractive.join(", ")} />
+          <!-- <p>Network Architecture</p>
+          <input type="text" value={$networkInteractive.join(", ")} /> -->
+          <InteractiveControls />
         </div>
       </div>
       <DatasetIcons />
@@ -400,7 +402,7 @@
     flex-direction: row;
     text-transform: uppercase;
     font-weight: bold;
-    justify-content: flex-start;
+    justify-content: center;
   }
   input {
     margin: auto;

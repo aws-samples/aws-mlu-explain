@@ -81,22 +81,24 @@
                         M ${xScale(layer - 1)} ${yScale(prevYPosition)}
                         L ${xScale(layer)} ${yScale(yPosition)}
                       `}
-                class="nn-edge"
+                class="nn-edge-int"
+                id={`nn-edge-int-${layer}-${yPosition}-${prevYPosition}`}
               />
-              {#key $networkInteractive}
+              {#key $numLayersInteractive}
                 <text
                   in:fly|local={{ x: 0, duration: 300 }}
-                  out:fade|local={{ duration: 300 }}
+                  out:fade|local={{ duration: 0 }}
                   dx={0 * xScale(1)}
                   dy="0"
-                  class="weight-text"
+                  class="weight-text-int"
                 >
                   <textPath
-                    href={`#nn-edgebp-${layer}-${yPosition}-${prevYPosition}-${$networkInteractive}`}
+                    href={`#nn-edge-int-${layer}-${yPosition}-${prevYPosition}`}
                     startOffset="50%"
                     text-anchor="middle"
                     fill="#232F3E"
-                    dominant-baseline="middle">w</textPath
+                    dominant-baseline="middle"
+                    >{`${layer}, ${yPosition}, ${prevYPosition}`}</textPath
                   >
                 </text>
               {/key}
@@ -260,6 +262,14 @@
 </div>
 
 <style>
+  .weight-text-int {
+    font-size: 10px;
+    color: black;
+    stroke: white;
+    stroke-width: 2;
+    paint-order: stroke fill;
+    font-family: var(--font-main);
+  }
   .moving-text {
     font-size: 21px;
     /* font-weight: bold; */
@@ -303,7 +313,7 @@
   .nn-g {
     transition: all 0.45s;
   }
-  .nn-edge {
+  .nn-edge-int {
     stroke: black;
     stroke-width: 2.5;
     stroke-dasharray: 5;
