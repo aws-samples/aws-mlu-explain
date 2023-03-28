@@ -10,7 +10,7 @@
 
   let points = [{ x: 0, y: 0 }];
 
-  $: console.log("error", $errorMetrics);
+  // $: console.log("error", $errorMetrics);
 
   // const initialCount = points.length;
   const initialCount = $errorMetrics.length;
@@ -49,7 +49,7 @@
     .map((p) => `L${xScale(p.x)},${yScale(p.y)}`)
     .join(" ")}`;
 
-  $: console.log("path", path);
+  // $: console.log("path", path);
   function addPoint() {
     const randomPoint = {
       x: $errorMetrics.length,
@@ -176,18 +176,15 @@
 </div>
 
 <style>
-  * {
-    /* transition: all 1s; */
-  }
   path {
     fill: none;
-    stroke: black;
+    stroke: var(--squidink);
     stroke-width: 3;
   }
   circle {
-    stroke: #888;
+    stroke: var(--squidink);
     stroke-width: 2px;
-    fill: aliceblue;
+    fill: var(--bg);
     r: 3;
   }
 
@@ -201,14 +198,14 @@
   }
   .axis-line {
     stroke-width: 3;
-    stroke: black;
+    stroke: var(--squidink);
     fill: none;
   }
   .axis-tick {
     stroke-width: 1;
-    stroke: blue;
+    stroke: var(--squidink);
     fill: none;
-    opacity: 0.175;
+    opacity: 0.1;
     font-size: 8px;
   }
   .axis-text {

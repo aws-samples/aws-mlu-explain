@@ -4,15 +4,12 @@
   import { hexbin } from "d3-hexbin";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { draw } from "svelte/transition";
-  import { expoInOut, circOut } from "svelte/easing";
-  import { animationDuration, hexPreds, hexVals } from "../../store";
-  import { circles, moons } from "../../datasets";
+  import { hexPreds, hexVals } from "../../store";
+  import { circles } from "../../datasets";
 
   // props
-  export let nnModel;
+  // export let nnModel;
   export let data = circles;
-
-  console.log("model!", nnModel);
 
   const hexbinRadius = 5;
 
@@ -56,16 +53,13 @@
       [width - margin.left - margin.right, height - margin.top - margin.bottom],
     ]);
 
-  // (xScale.invert(h.x - margin.left), yScale.invert(h.y - margin.top)
-  // $: console.log("centers", hexbins(hexbins.centers()));
-
   $: hexBins = hexbins(hexbins.centers()).map((h) => {
     return [xScale.invert(h.x + margin.left), yScale.invert(h.y + margin.top)];
   });
 
   $: $hexVals = [...hexBins];
 
-  $: console.log("hexPreds", $hexPreds);
+  // $: console.log("hexPreds", $hexPreds);
 </script>
 
 <div
@@ -147,13 +141,11 @@
     height: 100%;
     width: 100%;
   }
-  .axis-line {
-    stroke-width: 3;
-    stroke: black;
-    fill: none;
-  }
+
   .hex-cell {
     /* stroke-width: 1;
     opacity: 0.4; */
+    opacity: 0.5;
+    stroke-width: 0;
   }
 </style>

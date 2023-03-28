@@ -77,11 +77,12 @@
   $: $points = [...Array(batchSize).keys()];
 
   $: N_in = 2;
-  $: dims = [6, 4, 1];
+  // $: dims = [6, 4, 1];
+  $: dims = $networkInteractive.slice(1);
   var lr = 0.01;
   var alpha = 0.0001;
   var k = 0;
-  $: model = new MLP(N_in, dims);
+  $: model = new MLP(N_in, $networkInteractive.slice(1));
 
   $: dataArr = makeJsonArray($interactiveDataset);
 
@@ -182,15 +183,15 @@
     }
 
     if (k % 1 === 0) {
-      console.log(
-        "step " +
-          k +
-          " loss " +
-          total_loss.data +
-          ", accuracy " +
-          accuracy * 100 +
-          "%"
-      );
+      // console.log(
+      //   "step " +
+      //     k +
+      //     " loss " +
+      //     total_loss.data +
+      //     ", accuracy " +
+      //     accuracy * 100 +
+      //     "%"
+      // );
     }
     // export const errorMetrics = [{ x: 0, loss: 0, accuracy: 0 }];
     const newError = {
@@ -215,13 +216,18 @@
     // });
   }
 
-  // anytime dataset changes, reset model
+  // anytime dataset changes or nn changes, reset model
   $: {
     $interactiveDataset;
+    $networkInteractive;
     reset_model();
   }
 
   // runBatch();
+
+  $: {
+    console.log("model!", model);
+  }
 </script>
 
 <br /><br /><br />
@@ -273,7 +279,7 @@
           on:click={() => {
             buttonClick();
           }}
-          disabled={buttonDisabled}>Run Batch</button
+          disabled={buttonDisabled}>Run Epoch</button
         >
         <button
           class:active={$playAnimation}
@@ -310,7 +316,7 @@
     margin: auto;
   }
   #lol-container {
-    /* border: 1px solid black; */
+    /* border: 1px solid var(--squidink); */
     display: grid;
     height: 60vh;
     width: 1000px;
@@ -329,7 +335,7 @@
       0 0/20px 20px;
   }
   #eval-container {
-    /* border: 1px solid black; */
+    /* border: 1px solid var(--squidink); */
     display: grid;
     grid-template-rows: 60% 40%;
     grid-template-columns: 100%;
@@ -374,16 +380,17 @@
     display: flex;
   }
   #play-button button {
-    border: 5px solid black;
+    border: 1px solid var(--squidink);
     border-radius: 0;
     padding: 8px 24px;
     font-size: var(--size-default);
     /* box-shadow: 4px 4px 0 0 #285555; */
-    text-transform: lowercase;
+    /* text-transform: lowercase; */
     margin-right: 10px;
+    opacity: 1;
   }
   #play-button button:hover {
-    background-color: var(--squidink);
+    background-color: var(--darksquidink);
     color: var(--bg);
   }
 

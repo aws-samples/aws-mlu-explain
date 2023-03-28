@@ -8,7 +8,7 @@
     $interactiveDataset = dataset;
   }
 
-  let clickedOption = 1;
+  let clickedOption = 0;
 </script>
 
 <div class="dataset-icons">

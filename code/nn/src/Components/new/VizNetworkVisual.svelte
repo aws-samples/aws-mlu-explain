@@ -30,7 +30,11 @@
     right: 0,
   };
 
-  const labels = ["input", "function", "function", "output"];
+  $: labels = [
+    "input",
+    ...Array($numLayersInteractive - 2).fill("reLu"),
+    "output",
+  ];
 
   let docEl;
   onMount(() => {
@@ -50,8 +54,8 @@
   //   let nodeWidth = 76;
   //   let nodeHeight = 40;
 
-  let nodeWidth = 12 * 1.33 * 4;
-  let nodeHeight = 12 * 2;
+  let nodeWidth = 12 * 1.33 * 4.5;
+  let nodeHeight = 12 * 3;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayersInteractive])
@@ -59,6 +63,29 @@
   $: yScale = scaleLinear()
     .domain([-1, maxNumNeurons])
     .range([height - marginScroll.bottom, marginScroll.top]);
+
+  function add(layer) {
+    if ($networkInteractive[layer] < 3) {
+      let newNN = [...$networkInteractive];
+      newNN[layer] += 1;
+      $networkInteractive = [...newNN];
+    }
+  }
+  function subtract(layer) {
+    if ($networkInteractive[layer] === 1) {
+      if ($numLayersInteractive > 3) {
+        const secondToLastLayerIndex = $numLayersInteractive - 2;
+        let newNN = [...$networkInteractive];
+        newNN.splice(secondToLastLayerIndex, 1);
+        $networkInteractive = [...newNN];
+      }
+    }
+    if ($networkInteractive[layer] > 1) {
+      let newNN = [...$networkInteractive];
+      newNN[layer] -= 1;
+      $networkInteractive = [...newNN];
+    }
+  }
 </script>
 
 <div
@@ -149,7 +176,6 @@
                           M ${xScale(layer - 1)} ${yScale(prevYPosition)}
                           L ${xScale(layer)} ${yScale(yPosition)}
                         `}
-                    onend={console.log("End!!!", layer)}
                   />
                 </g>
               {/each}
@@ -219,49 +245,109 @@
               yScale(yPosition) - nodeHeight / 2
             })`}
           >
-            <!-- {#if layer !== $numLayersInteractive - 1} -->
-            <rect
-              in:fly|local={{ x: -50, duration: 500 }}
-              out:fade|local={{ duration: 300 }}
-              class="nn-node {layer == 0
-                ? 'input'
-                : layer == $numLayersInteractive - 1
-                ? 'output'
-                : 'hidden'}"
-              width={nodeWidth}
-              height={nodeHeight}
-            />
-            <text
-              in:fly|local={{ x: -50, duration: 500 }}
-              out:fade|local={{ duration: 300 }}
-              class="nn-text"
-              text-anchor="middle"
-              alignment-baseline="middle"
-              dx={nodeWidth / 2}
-              dy={nodeHeight / 2}
-              >{labels[layer]}
-            </text>
-            <!-- {/if} -->
+            {#if layer !== $numLayersInteractive - 1}
+              <rect
+                in:fly|local={{ x: -50, duration: 500 }}
+                out:fade|local={{ duration: 300 }}
+                class="nn-node {layer == 0
+                  ? 'input'
+                  : layer == $numLayersInteractive - 1
+                  ? 'output'
+                  : 'hidden'}"
+                width={nodeWidth}
+                height={nodeHeight}
+              />
+              <text
+                in:fly|local={{ x: -50, duration: 500 }}
+                out:fade|local={{ duration: 300 }}
+                class="nn-text"
+                text-anchor="middle"
+                alignment-baseline="middle"
+                dx={nodeWidth / 2}
+                dy={nodeHeight / 2}
+                >{labels[layer]}
+              </text>
+            {/if}
           </g>
         {/each}
       {/each}
 
-      <!-- manually draw final layer here, so it updates smoothly -->
-      <!-- {#each positionElements($networkInteractive[$numLayersInteractive - 1], maxNumNeurons) as yPosition}
+      <!-- buttons -->
+      <!-- nodes -->
+      {#each Array($numLayersInteractive).fill(null) as index, layer}
+        {#each positionElements($networkInteractive[layer], maxNumNeurons) as yPosition}
+          {#if layer !== 0 && layer != $numLayersInteractive - 1}
             <g
-              class="nn-g"
-              transform={`translate(${
-                xScale($numLayersInteractive - 1) - nodeWidth / 2
-              } ${yScale(yPosition)})`}
+              class="nn-button-g"
+              transform={`translate(${xScale(layer) - nodeWidth / 2} ${
+                yScale(maxNumNeurons) - nodeHeight / 2
+              })`}
             >
-              <OutputNeuron {width} {height} />
+              <foreignObject x={0} y={nodeHeight} width={nodeWidth} height="40">
+                <div
+                  xmlns="http://www.w3.org/1999/xhtml"
+                  class="button-container"
+                >
+                  <button on:click={() => add(layer)} class="button-plus"
+                    >+</button
+                  >
+                  <button on:click={() => subtract(layer)} class="button-minus"
+                    >-</button
+                  >
+                </div>
+              </foreignObject>
             </g>
-          {/each} -->
+          {/if}
+        {/each}
+      {/each}
+
+      <!-- manually draw final layer here, so it updates smoothly -->
+      {#each positionElements($networkInteractive[$numLayersInteractive - 1], maxNumNeurons) as yPosition}
+        <g
+          class="nn-g"
+          transform={`translate(${
+            xScale($numLayersInteractive - 1) - nodeWidth / 2
+          } ${yScale(yPosition) - nodeHeight / 2})`}
+        >
+          <rect
+            in:fly|local={{ x: -50, duration: 500 }}
+            out:fade|local={{ duration: 300 }}
+            class="nn-node output"
+            width={nodeWidth}
+            height={nodeHeight}
+          />
+          <text
+            in:fly|local={{ x: -50, duration: 500 }}
+            out:fade|local={{ duration: 300 }}
+            class="nn-text"
+            text-anchor="middle"
+            alignment-baseline="middle"
+            dx={nodeWidth / 2}
+            dy={nodeHeight / 2}
+            >{labels[$numLayersInteractive - 1]}
+          </text>
+        </g>
+      {/each}
     {/if}
   </svg>
 </div>
 
 <style>
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .button-plus,
+  .button-minus {
+    background-color: var(--bb);
+    border: 1px solid var(--squidink);
+    color: var(--squidink);
+    /* border-radius: 3px; */
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
   .weight-text-int {
     font-size: 10px;
     color: black;
@@ -306,7 +392,7 @@
   }
   .nn-text {
     font-size: 12px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     transition: all 0.45s;
     font-weight: bold;
   }
@@ -332,8 +418,8 @@
     stroke: skyblue;
   }
   .hidden {
-    fill: var(--offpink);
-    stroke: var(--offpink);
+    fill: var(--magenta);
+    stroke: var(--magenta);
   }
   .output {
     fill: yellow;
@@ -341,9 +427,9 @@
   }
 
   .nn-node {
-    stroke: black;
-    fill: var(--paper);
-    stroke-width: 4.5;
+    stroke: var(--squidink);
+    /* fill: var(--paper); */
+    stroke-width: 0.5;
     fill-opacity: 0.95;
     transition: all 0.45s;
   }
