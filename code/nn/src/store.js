@@ -39,6 +39,7 @@ export const playAnimation = writable(true);
 export const animationDuration = writable(0.25);
 export const ggg = writable();
 export const points = writable([1, 2, 3]);
+export const modelParams = writable([]);
 export const show = writable(true);
 export const networkInteractive = writable([2, 3, 1]);
 export const numLayersInteractive = derived(

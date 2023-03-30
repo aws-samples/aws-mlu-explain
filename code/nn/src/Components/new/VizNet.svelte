@@ -174,7 +174,7 @@
     total_loss.backward();
 
     // sgd
-    let learning_rate = 1.0 - (0.9 * k) / 100;
+    let learning_rate = k <= 1 ? 0.05 : 1.0 - (0.9 * k) / 100;
 
     for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
       let p = _b[_i];
