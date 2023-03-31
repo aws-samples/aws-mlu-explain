@@ -18,7 +18,9 @@
 </p>
 <br />
 <p class="body-text">
-  This metric combines the previous two: It measures how far off from equal
+  This metric is also known as "Disparate Mistreatment" and can be calculated by combining the FNR and FPR Error Rate Balance.
+  
+  combines the previous two: It measures how far off from equal
   accuracy the groups in the dataset are. In our example, it measures if the
   values for the probability of students that deserve grants actually gettting
   grants and the probability of students without merit to not receive a reward
