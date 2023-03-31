@@ -1,12 +1,11 @@
 <section id="intro">
   <h1 id="intro-hed">Equality Of Odds</h1>
   <h1 id="intro-sub">
-    A Visual Introduction to Measuring and Mitigating Bias in Machine
-    Learning
+    A Visual Introduction to Measuring and Mitigating Bias in Machine Learning
   </h1>
   <h3 id="intro__date">
-    <a href="https://twitter.com/jdwlbr">Jared Wilber</a> &
-    <a href="">Mia Mayer</a>, March 2023
+    <a href="">Mia Mayer</a> &
+    <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, April 2023
   </h3>
 </section>
 

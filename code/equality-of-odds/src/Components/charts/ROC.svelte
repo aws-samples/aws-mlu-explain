@@ -4,6 +4,7 @@
   import { line } from "d3-shape";
   import { rocData } from "../../datasets";
   import { rocHeight, rocWidth, margin } from "../../store";
+  import { swoopAnnotation } from "../../swoopAnnotation.js";
 
   $: width = $rocWidth - $margin.left - $margin.right;
   $: height = $rocHeight - $margin.top - $margin.bottom;
@@ -11,28 +12,12 @@
   // scales
   const colorScale = scaleOrdinal([0, 1], ["#ff9900", "#2074d5"]);
 
-  function removeThresholdAndDuplicates(data) {
-    let seen = new Set();
-    return data
-      .map(({ fpr, tpr, group }) => ({ fpr, tpr, group }))
-      .filter((item) => {
-        const key = JSON.stringify(item);
-        if (seen.has(key)) {
-          return false;
-        }
-        seen.add(key);
-        return true;
-      });
-  }
-
-  const newData = removeThresholdAndDuplicates(rocData);
-
   $: xScale = scaleLinear()
-    .domain(extent(newData.map((d) => d.fpr)))
+    .domain(extent(rocData.map((d) => d.fpr)))
     .range([$margin.left, width - $margin.right]);
 
   $: yScale = scaleLinear()
-    .domain(extent(newData.map((d) => d.tpr)))
+    .domain(extent(rocData.map((d) => d.tpr)))
     .range([height - $margin.bottom, $margin.top]);
 
   let circleRadius = 5;
@@ -43,8 +28,8 @@
     .x((d) => xScale(d.fpr))
     .y((d) => yScale(d.tpr));
 
-  const circleData = newData.filter((d) => d.group === "circle");
-  const triangleData = newData.filter((d) => d.group === "triangle");
+  const circleData = rocData.filter((d) => d.group === "circle");
+  const triangleData = rocData.filter((d) => d.group === "triangle");
 
   const circleDataReversed = [...circleData].reverse();
 
@@ -52,11 +37,11 @@
     circleDataReversed[0]["fpr"]
   )},${yScale(circleDataReversed[0]["tpr"])} ${pathLine(circleDataReversed)} Z`;
 
-  const circleData1 = newData
-    .filter((d) => d.fpr > 0.13)
+  const circleData1 = rocData
+    .filter((d) => d.fpr <= 0.15)
     .filter((d) => d.group === "circle");
-  const triangleData1 = newData
-    .filter((d) => d.fpr > 0.13)
+  const triangleData1 = rocData
+    .filter((d) => d.fpr <= 0.15)
     .filter((d) => d.group === "triangle");
 
   const circleData1Reversed = [...circleData1].reverse();
@@ -66,21 +51,19 @@
   )},${yScale(circleData1Reversed[0]["tpr"])} ${pathLine(
     circleData1Reversed
   )} `;
+  $: annotation1 = [
+    [xScale(0.15), yScale(0.25)],
+    [xScale(0.24), yScale(0.4)],
+    [xScale(0.105), yScale(0.6)],
+  ];
+  $: annotation2 = [
+    [xScale(0.55), yScale(0.8)],
+    [xScale(0.45), yScale(0.75)],
+    [xScale(0.3), yScale(0.85)],
+  ];
 
-  const circleData2 = newData
-    .filter((d) => d.fpr > 0.3)
-    .filter((d) => d.group === "circle");
-  const triangleData2 = newData
-    .filter((d) => d.fpr > 0.3)
-    .filter((d) => d.group === "triangle");
-
-  const circleData2Reversed = [...circleData2].reverse();
-
-  $: fullPath2 = `${pathLine(triangleData2)} L ${xScale(
-    circleData2Reversed[0]["fpr"]
-  )},${yScale(circleData2Reversed[0]["tpr"])} ${pathLine(
-    circleData2Reversed
-  )} `;
+  $: annotationSwoop1 = swoopAnnotation(annotation1);
+  $: annotationSwoop2 = swoopAnnotation(annotation2);
 </script>
 
 <div
@@ -141,19 +124,17 @@
         >
       </g>
     {/each}
-    {console.log("FP", fullPath)}
-    <path class="sky" d={fullPath} />
-    <path class="smile" d={fullPath1} />
-    <path class="sky" d={fullPath2} />
+    <path class="smile" d={fullPath} />
+    <path class="sky" d={fullPath1} />
     <path
       class="triangle-path"
-      d={pathLine(newData.filter((d) => d.group == "triangle"))}
+      d={pathLine(rocData.filter((d) => d.group == "triangle"))}
     />
     <path
       class="circle-path"
-      d={pathLine(newData.filter((d) => d.group == "circle"))}
+      d={pathLine(rocData.filter((d) => d.group == "circle"))}
     />
-    {#each newData as d}
+    {#each rocData as d}
       {#if d.tpr != 1}
         {#if d.group == "circle"}
           <circle cx={xScale(d.fpr)} cy={yScale(d.tpr)} r={circleRadius} />
@@ -190,10 +171,81 @@
       text-anchor="middle"
       transform="rotate(-90)">True Positive Rate</text
     >
+
+    <!-- Add annotations with arrows and text -->
+    <!-- Annotation 1 -->
+    <!-- A rx ry x-axis-rotation large-arc-flag sweep-flag x y -->
+    <path
+      class="annotation-path"
+      d={annotationSwoop1}
+      fill="none"
+      stroke="black"
+      stroke-width="2"
+      marker-end="url(#arrow)"
+    />
+    <text
+      class="annotation-text"
+      x={annotation1[0][0]}
+      y={annotation1[0][1]}
+      dx="-24"
+      text-anchor="start"
+      dominant-baseline="middle"
+    >
+      In this region, the accepted classifiers are more accurate.
+    </text>
+
+    <!-- Annotation 2 -->
+    <path
+      class="annotation-path"
+      d={annotationSwoop2}
+      fill="none"
+      stroke="black"
+      stroke-width="2"
+      marker-end="url(#arrow)"
+    />
+
+    <text
+      class="annotation-text"
+      x={annotation2[0][0]}
+      y={annotation2[0][1]}
+      dx="-24"
+      text-anchor="start"
+      dominant-baseline="middle"
+    >
+      In this region, the rejected classifiers are more accurate.
+    </text>
+
+    <!-- Add arrow marker -->
+    <defs>
+      <marker
+        id="arrow"
+        viewBox="0 0 10 10"
+        refX="5"
+        refY="5"
+        markerWidth="6"
+        markerHeight="6"
+        orient="auto-start-reverse"
+      >
+        <path d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+    </defs>
   </svg>
 </div>
 
 <style>
+  .annotation-path {
+    stroke-dasharray: 4;
+    fill: none;
+    stroke: var(--squidink);
+  }
+  .annotation-text {
+    font-size: 12px;
+    color: var(--squidink);
+    stroke: var(--white);
+    stroke-width: 4;
+    stroke-linecap: round;
+    paint-order: stroke fill;
+  }
   .sky {
     fill: var(--sky);
     opacity: 1;
@@ -207,6 +259,7 @@
   .circle-path {
     fill: none;
     stroke: var(--smile);
+    stroke-width: 2;
   }
   .triangle-path {
     fill: none;

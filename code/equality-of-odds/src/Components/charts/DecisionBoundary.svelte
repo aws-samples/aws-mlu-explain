@@ -229,7 +229,7 @@
         text-anchor="start"
         dominant-baseline="middle">Accepted</text
       >
-      <g transform="translate(52 -3)">
+      <g transform="translate(56 -3)">
         {#each arrows as arrow}
           <path
             d={arrow}
@@ -285,7 +285,8 @@
     paint-order: stroke fill;
     stroke-width: 3px;
     font-size: 12px;
-    stroke: var(--bg);
+    color: var(--squidink);
+    stroke: var(--white);
   }
   .bar,
   .decision-boundary-bar1 {
