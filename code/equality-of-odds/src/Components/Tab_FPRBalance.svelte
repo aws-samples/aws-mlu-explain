@@ -33,7 +33,7 @@
 </p>
 <br />
 <p class="body-text">
-  To calculate FPR balance we work out FPR
+  To calculate FPR balance, we work out FPR
   <sup
     ><span
       class="info-tooltip"
@@ -44,12 +44,47 @@
     </span></sup
   >
   per group and take the difference:
+  <br />
+  <br />
+</p>
+<p class="equation-text">  
   {@html katexify(
-    `FPR_{circles} - FPR_{triangles} = 
-    ${formatter(eq1)} - ${formatter(eq2)} = ${formatter(eq3)}
+    `\\textrm{FPR}
     `,
-    true
+    false
+  )}<sub>
+    <svg height="16" width="16">
+      <circle
+        cx="8"
+        cy="10"
+        r="4"
+        stroke="black"
+        stroke-width="1"
+        fill="black"
+      />
+    </svg>
+  </sub>
+
+  {@html katexify(
+    ` - \\, \\textrm{FPR} 
+    `,
+    false
   )}
+  <sub>
+    <svg height="10" width="10">
+      <polygon points="5,0 0,10 10,10" style="fill:black;stroke-width:1" />
+      Sorry, your browser does not support inline SVG.
+    </svg></sub
+  >
+  {@html katexify(
+    ` = 
+  ${formatter(eq1)} - ${formatter(eq2)} = ${formatter(eq3)}
+  `,
+    false
+  )}
+  </p>
+  <br />
+  <p class="body-text">
   The resulting value will be in the range [-1, 1], the closer to 0 the more predictive
   equality the model achieves.
   <br /><br />
