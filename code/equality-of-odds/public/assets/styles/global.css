@@ -85,6 +85,14 @@ body {
   text-decoration-color: var(--sky);
 }
 
+.equation-text {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: center;
+  font-size: var(--size-default);
+  line-height: 1.5em;
+  font-family: var(--font-main);
+}
 .centered {
   margin: auto;
   max-width: var(--max-width);
