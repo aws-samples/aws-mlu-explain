@@ -16,12 +16,6 @@
     using EO for evaluation or bias mitigation, we should carefully consider the
     context and potential trade-offs between competing objectives.
   </p>
-  <p class="body-header">Goodbye :)</p>
-  <p class="body-text">
-  To learn more about Machine Learning, check out our self-paced courses, our
-  YouTube videos, and the Dive into Deep Learning textbook. If you have any
-  comments or ideas related to MLU-Explain articles, feel free to reach out
-  directly. The code for this article is available here.</p>
 </section>
 
 <style>
