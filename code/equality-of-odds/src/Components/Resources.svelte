@@ -16,10 +16,11 @@
   <p class="resource-item">
     <a
       class="on-end"
-      href="https://statmodeling.stat.columbia.edu/2022/01/27/regression-and-other-stories-free-pdf/"
-      >[1] Regression And Other Stories</a
+      href="https://fairmlbook.org/"
+      >[1] FAIRNESS AND MACHINE LEARNING
+      </a
     ><br />
-    (Gelman, Hill and Vehtari 2020).
+    (Solon Barocas, Moritz Hardt, Arvind Narayanan).
   </p>
   <p class="resource-item">
     <a class="on-end" href="https://hastie.su.domains/Papers/ESLII.pdf"
