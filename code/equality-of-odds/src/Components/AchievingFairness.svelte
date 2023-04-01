@@ -44,8 +44,8 @@
 <style>
   #roc-container {
     margin: auto;
-    height: 60vh;
-    width: 45%;
+    height: 70vh;
+    width: 55%;
     max-width: 1000px;
   }
   #scatter2-container {
@@ -65,6 +65,11 @@
   }
   /* mobile */
   @media screen and (max-width: 950px) {
+    #roc-container {
+      height: 70vh;
+      width: 90%;
+      max-width: 1000px;
+    }
     ul {
       max-width: 80%;
     }

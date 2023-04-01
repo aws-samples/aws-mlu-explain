@@ -40,7 +40,6 @@
   <Tabs {items} />
   <br />
 
-
   <div id="charts-container">
     <div id="scatter-container">
       <Scatter />
@@ -51,9 +50,10 @@
   </div>
   <br /><br />
   <p class="body-text">
-    Note that as you drag the slider, you might find some so-called lazy solutions where
-    everyone gets rejected or accepted. Those solutions technically meet
-    fairness criteria but make no sense from a business perspective.
+    Note that as you drag the slider, you might find some so-called lazy
+    solutions where everyone gets rejected or accepted. Those solutions
+    technically meet fairness criteria but make no sense from a business
+    perspective.
   </p>
 </section>
 
@@ -61,18 +61,18 @@
   #charts-container {
     display: grid;
     margin: auto;
-    height: 45vh;
-    width: 70%;
-    grid-template-columns: 50% 50%;
-    grid-gap: 2%;
+    height: 48vh;
+    width: 80%;
+    grid-template-columns: 55% 45%;
+    grid-gap: 0%;
     max-width: 1000px;
   }
   #scatter-container {
-    max-height: 45vh;
+    max-height: 48vh;
   }
   #barchart-container {
     border: var(--sky);
-    max-height: 45vh;
+    max-height: 48vh;
   }
   ul {
     max-width: 600px;
@@ -86,7 +86,12 @@
     color: var(--squid-ink);
   }
   /* mobile */
-  @media screen and (max-width: 950px) {
+  @media screen and (max-width: 1050px) {
+    #charts-container {
+      height: 48vh;
+      width: 100%;
+      grid-template-columns: 50% 50%;
+    }
     ul {
       max-width: 80%;
     }

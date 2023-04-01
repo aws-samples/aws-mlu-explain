@@ -1,8 +1,6 @@
 <script>
   import katexify from "../katexify";
   import { tooltip } from "../tooltip";
-  import StackedBarDef1 from "./charts/StackedBarDef1.svelte";
-  import StackedBarDef2 from "./charts/StackedBarDef2.svelte";
 </script>
 
 <section>
