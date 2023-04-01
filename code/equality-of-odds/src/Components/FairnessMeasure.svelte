@@ -50,10 +50,9 @@
   </div>
   <br /><br />
   <p class="body-text">
-    Note that as you drag the slider, you might find some so-called lazy
-    solutions where everyone gets rejected or accepted. Those solutions
-    technically meet fairness criteria but make no sense from a business
-    perspective.
+    Note that as you drag the slider, you might find some so-called lazy solutions where
+    everyone gets rejected or accepted. Those solutions technically meet the EO
+    fairness criterion but make no sense from a business perspective.
   </p>
 </section>
 

@@ -27,24 +27,23 @@
     To implement this during model training, a constraint is added when trying to
     find the best possible set of parameters {@html katexify(`\\theta`)} when minimizing
     the Loss function, {@html katexify(`L(\\theta)`)}:
-<br />
-<br />
+    <br />
+    <br />
     {@html katexify(
         `
-        \\min \\; L(\\theta) \\\\
-        \\text{s.t. \\;} 
-        P(\\hat{Y} \\mathrel{\\char\`≠} Y, A=a) - P(\\hat{Y} \\mathrel{\\char\`≠} Y, A=b) \\leq \\epsilon \\\\
-        P(\\hat{Y} \\mathrel{\\char\`≠} Y, A=a) - P(\\hat{Y} \\mathrel{\\char\`≠} Y, A=b) \\geq - \\epsilon
+        \\min \\quad \\qquad \\;\\, L(\\theta) \\\\ 
+            \\textrm{subject to} \\quad \\mathbb{P}(\\hat{Y} \\mathrel{\\char\`≠} Y, A=a) - \\mathbb{P}(\\hat{Y} \\mathrel{\\char\`≠} Y, A=b) \\leq \\epsilon \\\\ 
+    \\qquad \\qquad   \\,\\;\\;\\;\\; \\mathbb{P}(\\hat{Y} \\mathrel{\\char\`≠} Y, A=a) - \\mathbb{P}(\\hat{Y} \\mathrel{\\char\`≠} Y, A=b) \\geq - \\epsilon
         `
     )}
 </p>
 
 <style>
-  .definition-header {
-    font-size: 0.85rem;
-    font-family: var(--font-bold);
-    text-decoration: underline;
-  }
+    .definition-header {
+        font-size: 0.85rem;
+        font-family: var(--font-bold);
+        text-decoration: underline;
+    }
 
     @media screen and (max-width: 950px) {
         .definition-header {
@@ -53,11 +52,10 @@
     }
 
     .gd-math {
-    margin: auto;
-    max-width: 700px;
-    border: 5px solid var(--smile);
-    padding: 2rem;
-    background-color: var(--paper);
-  }
-
+        margin: auto;
+        max-width: 700px;
+        border: 5px solid var(--smile);
+        padding: 2rem;
+        background-color: var(--paper);
+    }
 </style>
