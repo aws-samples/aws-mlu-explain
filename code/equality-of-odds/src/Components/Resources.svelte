@@ -17,7 +17,7 @@
     <a
       class="on-end"
       href="https://fairmlbook.org/"
-      >[1] FAIRNESS AND MACHINE LEARNING
+      >[1] Fairness and Machine Learning
       </a
     ><br />
     (Solon Barocas, Moritz Hardt, Arvind Narayanan).
@@ -37,7 +37,24 @@
     ><br />
     (John A. Rice, 2010).
   </p>
-
+  <p class="resource-item">
+    <a
+      class="on-end"
+      href="https://arxiv.org/abs/1610.08452"
+      >[4] Fairness Beyond Disparate Treatment & Disparate Impact: Learning Classification without Disparate Mistreatment
+      </a
+    ><br />
+    (Muhammad Bilal Zafar, Isabel Valera, Manuel Gomez Rodriguez, Krishna P. Gummadi, 2016).
+  </p>
+  <p class="resource-item">
+    <a
+      class="on-end"
+      href="https://arxiv.org/abs/1610.02413"
+      >[5] Equality of Opportunity in Supervised Learning
+      </a
+    ><br />
+    (Moritz Hardt, Eric Price, Nathan Srebro, 2016).
+  </p>
   <p class="resource-item">
     <a class="on-end" href="https://d3js.org/">D3.js</a><br />(Mike Bostock &
     Philippe Rivière)
