@@ -50,9 +50,10 @@
   </div>
   <br /><br />
   <p class="body-text">
-    Note that as you drag the slider, you might find some so-called lazy solutions where
-    everyone gets rejected or accepted. Those solutions technically meet the EO
-    fairness criterion but make no sense from a business perspective.
+    Note that as you drag the slider, you might find some so-called lazy
+    solutions where everyone gets rejected or accepted. Those solutions
+    technically meet the EO fairness criterion but make no sense from a business
+    perspective.
   </p>
 </section>
 
@@ -87,15 +88,22 @@
   /* mobile */
   @media screen and (max-width: 1050px) {
     #charts-container {
-      height: 48vh;
-      width: 100%;
-      grid-template-columns: 50% 50%;
+      height: 100vh;
+      width: 80%;
+      grid-template-columns: 100%;
+      grid-template-rows: 50% 50%;
     }
     ul {
       max-width: 80%;
     }
     li {
       padding: 0.25rem 0;
+    }
+  }
+
+  @media screen and (max-width: 850px) {
+    #charts-container {
+      width: 100%;
     }
   }
 </style>

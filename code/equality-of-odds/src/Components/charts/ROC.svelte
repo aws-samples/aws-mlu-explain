@@ -298,4 +298,10 @@
     stroke-width: 0.5;
     fill: var(--sky);
   }
+  @media screen and (max-width: 1000px) {
+    .annotation-text {
+      font-size: 9px;
+      stroke-width: 3;
+    }
+  }
 </style>

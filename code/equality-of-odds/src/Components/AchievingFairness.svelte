@@ -64,10 +64,10 @@
     color: var(--squid-ink);
   }
   /* mobile */
-  @media screen and (max-width: 950px) {
+  @media screen and (max-width: 1000px) {
     #roc-container {
       height: 70vh;
-      width: 90%;
+      width: 100%;
       max-width: 1000px;
     }
     ul {
