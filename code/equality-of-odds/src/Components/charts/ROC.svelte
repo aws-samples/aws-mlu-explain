@@ -52,13 +52,13 @@
     circleData1Reversed
   )} `;
   $: annotation1 = [
-    [xScale(0.15), yScale(0.25)],
+    [xScale(0.22), yScale(0.35)],
     [xScale(0.24), yScale(0.4)],
     [xScale(0.105), yScale(0.6)],
   ];
   $: annotation2 = [
-    [xScale(0.55), yScale(0.8)],
-    [xScale(0.45), yScale(0.75)],
+    [xScale(0.38), yScale(0.69)],
+    [xScale(0.4), yScale(0.8)],
     [xScale(0.3), yScale(0.85)],
   ];
 

@@ -1,6 +1,4 @@
 <script>
-  import katexify from "../katexify";
-  import { tooltip } from "../tooltip";
   import Scatter from "./charts/Scatter.svelte";
   import StackedBar from "./charts/StackedBar.svelte";
   import Tab_FPRBalance from "./Tab_FPRBalance.svelte";
@@ -67,7 +65,6 @@
       <StackedBar />
     </div>
   </div>
-  <br /><br />
   <p class="body-text">
     Note that as you drag the slider, you might find some so-called lazy
     solutions where everyone gets rejected or accepted. Those solutions
@@ -80,7 +77,7 @@
   #charts-container {
     display: grid;
     margin: auto;
-    height: 48vh;
+    max-height: 48vh;
     width: 80%;
     grid-template-columns: 55% 45%;
     grid-gap: 0%;
@@ -108,6 +105,7 @@
   @media screen and (max-width: 1050px) {
     #charts-container {
       height: 100vh;
+      max-height: 90vh;
       width: 80%;
       grid-template-columns: 100%;
       grid-template-rows: 50% 50%;
