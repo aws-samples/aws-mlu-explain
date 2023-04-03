@@ -24,16 +24,35 @@
 <section>
   <p class="body-header">Equalized Odds to achieve fairness</p>
   <p class="body-text">
-    Secondly, we can use EO to actually change the predictions a model makes to
-    meet the probability equation we reviewed earlier.
+    Using EO, we can also influence the predictions a model makes. We are going
+    to look at two different ways of achieving this: by constraining the model
+    during training or by updating the probability threshold of a trained model.
   </p>
   <br />
   <Tabs {items} />
   <br />
   <p class="body-text">
-    How can we visualize this search for the ideal combination of TPR and FPR?
-    Very simply, we can plot the so-called ROC curves (have a look at ROC
-    article here) for both groups, circles and triangles.
+    To visualize the search for the probability threshold that meets EO, we can
+    look at the so-called <a href="https://mlu-explain.github.io/roc-auc/"
+      >ROC curves</a
+    >
+    for both groups,<svg height="16" width="16">
+      <circle
+        cx="8"
+        cy="10"
+        r="4"
+        stroke="black"
+        stroke-width="3"
+        fill="black"
+      />
+    </svg>
+    and
+    <svg height="12" width="12">
+      <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
+      Sorry, your browser does not support inline SVG.
+    </svg>. We can see that for most probability thresholds the TPR and FPR
+    values are different per group. There is only one point where TPR and FPR
+    are equal for both groups; this is where the EO criterion is satisfied.
   </p>
   <br />
   <div id="roc-container">

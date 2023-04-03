@@ -1,4 +1,5 @@
 <script>
+    import { create_bidirectional_transition } from "svelte/internal";
     import katexify from "../katexify";
     import { tooltip } from "../tooltip";
 </script>
@@ -10,23 +11,21 @@
 </p>
 <br />
 <p class="body-text">
-    A decision making process is said to suffer from disparate mistreatment with
+    <!-- A decision making process is said to suffer from disparate mistreatment with
     respect to a given sensitive attribute (e.g., race) if the misclassification
     rates differ for groups of people having different values of that sensitive
-    attribute.
-    <!-- <br /> Misclassification rates can be measured as fractions over the class
-    distribution in the ground truth labels - this can be done during model
-    training. -->
-    <br />
-    Generally, when the fraction of users with positive class labels differ between
-    members of different sensitive attribute value groups, it is impossible to construct
-    classifiers that are equally well calibrated and also satisfy the equal false
-    positive and false negative rate criterion. Therefor, it makes sense to say EO
-    is achieved at a certain threshold.
-    <br />
-    To implement this during model training, a constraint is added when trying to
-    find the best possible set of parameters {@html katexify(`\\theta`)} when minimizing
-    the Loss function, {@html katexify(`L(\\theta)`)}:
+    attribute. -->
+    To implement EO during model training, we can constrain the possible set of parameters
+    that the so-called loss function<sup
+        ><span
+            class="info-tooltip"
+            title="A loss function quantifies how well a model performs for a given choice of parameters theta. 
+      The goal of ML is to find the parameters theta, that minimize the loss."
+            use:tooltip
+            >[&#8505;]
+        </span></sup
+    >, {@html katexify(`L(\\theta)`)}, can assume. The constraint can be written
+    as:
     <br />
     <br />
     {@html katexify(
@@ -36,6 +35,12 @@
     \\qquad \\qquad   \\,\\;\\;\\;\\; \\mathbb{P}(\\hat{Y} \\mathrel{\\char\`≠} Y, A=a) - \\mathbb{P}(\\hat{Y} \\mathrel{\\char\`≠} Y, A=b) \\geq - \\epsilon
         `
     )}
+    <br />
+    <br />
+    Compared to the EO equation, the constraint is actually 'relaxed' as we only
+    require the parameters to create a solution where the difference between FPR
+    and FNR respectively is smaller than {@html katexify(`\\epsilon`)} (and not
+    exactly equal).
 </p>
 
 <style>
@@ -49,13 +54,5 @@
         .definition-header {
             font-size: 0.8rem;
         }
-    }
-
-    .gd-math {
-        margin: auto;
-        max-width: 700px;
-        border: 5px solid var(--smile);
-        padding: 2rem;
-        background-color: var(--paper);
     }
 </style>
