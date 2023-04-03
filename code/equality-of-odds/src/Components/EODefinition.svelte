@@ -46,10 +46,11 @@
       </span></sup
     >, or the combination of FPR and FNR instead.
     <br /><br />
+    According to EO, a
     <span class="highlight"
-      >According to EO, a model is fair if the predictions it makes have the
-      same FNR and FPR across all groups in the dataset</span
-    >. Formally, this can be written as:
+      >model is fair if the predictions it makes have the same FNR and FPR
+      across all groups
+    </span>in the dataset. Formally, this can be written as:
     <br />
     <br />
   </p>
@@ -72,7 +73,7 @@
         fill="black"
       />
     </svg>
-    {@html katexify(`),  \\; y \\: \\epsilon \\: \\{0,1\\}`, false)}
+    {@html katexify(`),  \\; y \\: \\in \\: \\{0,1\\}`, false)}
   </p>
   <br />
   <p class="body-text">
@@ -83,7 +84,8 @@
     <br /><br /> Equalized odds enforces that a classifiers' accuracy is equal
     in all groups, punishing models that perform well only for the majority.
     This can be very hard to achieve in practice, so it makes sense to relax the
-    EO criteria and set {@html katexify(`y=1`)} for equalizing FNR (equal opportunity),
+    EO criteria and set {@html katexify(`y=1`)} for equalizing FNR (<span class="highlight"
+    >equal opportunity</span>),
     or {@html katexify(`y=0`)} for equalizing FPR.
   </p>
 </section>

@@ -18,17 +18,50 @@
 </p>
 <br />
 <p class="body-text">
-  This metric is also known as "Disparate Mistreatment" and can be calculated by combining the FNR and FPR Error Rate Balance.
-  
-  combines the previous two: It measures how far off from equal
-  accuracy the groups in the dataset are. In our example, it measures if the
-  values for the probability of students that deserve grants actually gettting
-  grants and the probability of students without merit to not receive a reward
-  are similar.
+  This metric is also known as "Disparate Mistreatment" and can be calculated by
+  combining the FNR and FPR Error Rate Balance.  In our
+  example, it measures if the values for the probability of students that
+  deserve grants actually getting grants and the probability of students without
+  merit to not receive a reward are similar.
+
+  {@html katexify(
+    `\\textrm{FPR}
+    `,
+    false
+  )}<sub>
+    <svg height="16" width="16">
+      <circle
+        cx="8"
+        cy="10"
+        r="4"
+        stroke="black"
+        stroke-width="1"
+        fill="black"
+      />
+    </svg>
+  </sub>
+
+  {@html katexify(
+    ` - \\, \\textrm{FPR} 
+    `,
+    false
+  )}
+  <sub>
+    <svg height="10" width="10">
+      <polygon points="5,0 0,10 10,10" style="fill:black;stroke-width:1" />
+      Sorry, your browser does not support inline SVG.
+    </svg></sub
+  >
+  {@html katexify(
+    ` = 
+  ${formatter(eq1)} - ${formatter(eq2)} = ${formatter(eq3)}
+  `,
+    false
+  )}
 </p>
 
 <div class="button-container">
-  <button on:click={() => ($rectPos = updatePos)}>Move Boundary To 0.65</button>
+  <button on:click={() => ($rectPos = updatePos)}>Move Boundary to 0.65</button>
 </div>
 
 <style>

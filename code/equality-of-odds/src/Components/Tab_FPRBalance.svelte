@@ -76,25 +76,28 @@
       Sorry, your browser does not support inline SVG.
     </svg></sub
   >
-  {@html katexify(
+  <!-- {@html katexify(
     ` = 
   ${formatter(eq1)} - ${formatter(eq2)} = ${formatter(eq3)}
   `,
     false
-  )}
+  )} -->
   </p>
-  <br />
+  <br /> 
   <p class="body-text">
   The resulting value will be in the range [-1, 1], the closer to 0 the more predictive
-  equality the model achieves.
-  <br /><br />
-  Move the slider below or use the button to find the best predicitve equality (or
-  approximation) for our data.
+  equality the model achieves and we satisfy the EO equation where  {@html katexify(
+    ` y=0
+    `,
+    false
+  )}. 
+  <!-- <br /><br />
+  Move the slider below or use the button to find the best predictive equality (or
+  approximation) for our data. -->
 </p>
-<!-- To find out what percentage of students that received a grant even though they did not deserve it... -->
-<div class="button-container">
+<!-- <div class="button-container">
   <button on:click={() => ($rectPos = updatePos)}>Move Boundary to 0.75</button>
-</div>
+</div> -->
 
 <style>
   button {

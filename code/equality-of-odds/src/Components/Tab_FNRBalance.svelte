@@ -74,25 +74,29 @@
       Sorry, your browser does not support inline SVG.
     </svg></sub
   >
+<!-- 
   {@html katexify(
     ` = 
   ${formatter(eq1)} - ${formatter(eq2)} = ${formatter(eq3)}
   `,
     false
-  )}
+  )} -->
   </p>
   <br />
   <p class="body-text">
   The resulting value will be in the range [-1, 1], the closer to 0 the closer to
-  equal opportunity the groups are.
-  <br /><br />
+  equal opportunity the groups are and we satisfy the EO equation where  {@html katexify(
+    ` y=1
+    `,
+    false
+  )}. 
+  <!-- <br /><br />
   Move the slider below or use the button to find the point of equal opportunity
-  (or approximation) for our data.
+  (or approximation) for our data. -->
 </p>
-<!-- To find out what percentage of students that should have received a grant missed out on actually receiving one. -->
-<div class="button-container">
+<!-- <div class="button-container">
   <button on:click={() => ($rectPos = updatePos)}>Move Boundary to 0.30</button>
-</div>
+</div> -->
 
 <style>
   button {

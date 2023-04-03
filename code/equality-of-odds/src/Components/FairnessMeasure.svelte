@@ -3,9 +3,18 @@
   import StackedBar from "./charts/StackedBar.svelte";
   import Tab_FPRBalance from "./Tab_FPRBalance.svelte";
   import Tab_FNRBalance from "./Tab_FNRBalance.svelte";
-  import Tab_ConditionalAccuracyEquality from "./Tab_ConditionalAccuracyEquality.svelte";
+  // import Tab_ConditionalAccuracyEquality from "./Tab_ConditionalAccuracyEquality.svelte";
   import Tabs from "./Tabs.svelte";
-  import { mobile } from "../store";
+  import { format } from "d3-format";
+  import katexify from "../katexify";
+
+  import {
+    mobile,
+    wrongly_rejected_A,
+    wrongly_rejected_B,
+    wrongly_accepted_A,
+    wrongly_accepted_B, 
+  } from "../store";
 
   $: items = [
     {
@@ -18,29 +27,125 @@
       value: 2,
       component: Tab_FNRBalance,
     },
-    {
-      label: $mobile
-        ? "Conditional Procedure Accuracy"
-        : "Conditional Procedure Accuracy Equality",
-      value: 3,
-      component: Tab_ConditionalAccuracyEquality,
-    },
+    // {
+    //   label: $mobile
+    //     ? "Conditional Procedure Accuracy"
+    //     : "Conditional Procedure Accuracy Equality",
+    //   value: 3,
+    //   component: Tab_ConditionalAccuracyEquality,
+    // },
   ];
+
+  const formatter = format(".2f");
+  $: fpr_eq1 = $wrongly_accepted_A / ($wrongly_accepted_A + 20);
+  $: fpr_eq2 = $wrongly_accepted_B / ($wrongly_accepted_B + 15);
+  $: fpr_eq3 = fpr_eq1 - fpr_eq2;
+
+  $: fnr_eq1 = $wrongly_rejected_A / ($wrongly_rejected_A + 30);
+  $: fnr_eq2 = $wrongly_rejected_B / ($wrongly_rejected_B + 10);
+  $: fnr_eq3 = fnr_eq1 - fnr_eq2;
 </script>
 
 <section>
   <p class="body-header">Equalized Odds to measure fairness</p>
   <p class="body-text">
-    Using the EO equation, we can derive several different metrics to measure
-    the fairness of a model. For example, we can look at:
+    Using the EO equation, we can derive different metrics to measure the
+    fairness of a model. For example, we can look at:
   </p>
   <br />
   <Tabs {items} />
   <br />
   <p class="body-text">
-    Have a look at the beeswarm plot and stacked bar chart to understand the
-    relationship between different probability thresholds and the resulting
-    predictions for two groups,
+    The metrics above show how fair/unfair the model is by measuring either FPR
+    or FNR; but according to EO, we need <span class="highlight"
+    > both values to be the same </span> (a.k.a.
+    Conditional Procedure Accuracy Equality) while <span class="highlight"
+    >also achieving a certain
+    predictive performance</span> with the model.
+    <br />
+    <br />
+    Have a look at the beeswarm plot below. It shows how the predictions of a model
+    change when the probability threshold (the slider) is moved. 
+    <br />
+    <br />  
+    Try to find a probability
+    threshold that results in 0 FPR and FNR difference; is it even possible? 
+    <br />
+    <br /> 
+    <p class="equation-text">  
+      {@html katexify(
+        `\\textrm{FNR}
+        `,
+        false
+      )}<sub>
+        <svg height="16" width="16">
+          <circle
+            cx="8"
+            cy="10"
+            r="4"
+            stroke="black"
+            stroke-width="1"
+            fill="black"
+          />
+        </svg>
+      </sub>
+    
+      {@html katexify(
+        ` - \\, \\textrm{FNR} 
+        `,
+        false
+      )}
+      <sub>
+        <svg height="10" width="10">
+          <polygon points="5,0 0,10 10,10" style="fill:black;stroke-width:1" />
+          Sorry, your browser does not support inline SVG.
+        </svg></sub
+      >
+      {@html katexify(
+        ` = 
+      ${formatter(fnr_eq1)} - ${formatter(fnr_eq2)} = ${formatter(fnr_eq3)}
+      `,
+        false
+      )}   
+<p class="equation-text">  
+  {@html katexify(
+    `\\textrm{FPR}
+    `,
+    false
+  )}<sub>
+    <svg height="16" width="16">
+      <circle
+        cx="8"
+        cy="10"
+        r="4"
+        stroke="black"
+        stroke-width="1"
+        fill="black"
+      />
+    </svg>
+  </sub>
+
+  {@html katexify(
+    ` - \\, \\textrm{FPR} 
+    `,
+    false
+  )}
+  <sub>
+    <svg height="10" width="10">
+      <polygon points="5,0 0,10 10,10" style="fill:black;stroke-width:1" />
+      Sorry, your browser does not support inline SVG.
+    </svg></sub
+  >
+  {@html katexify(
+    ` = 
+  ${formatter(fpr_eq1)} - ${formatter(fpr_eq2)} = ${formatter(fpr_eq3)}
+  `,
+    false
+  )} 
+
+    <!-- can you find a probability and stacked bar chart to understand
+    the relationship between different probability thresholds and the resulting predictions
+    for two groups,
     <svg height="16" width="16">
       <circle
         cx="8"
@@ -55,7 +160,7 @@
     <svg height="12" width="12">
       <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
       Sorry, your browser does not support inline SVG.
-    </svg> as well as the ground truth distribution.
+    </svg> as well as the ground truth distribution. -->
   </p>
   <div id="charts-container">
     <div id="scatter-container">
@@ -74,6 +179,12 @@
 </section>
 
 <style>
+  .highlight {
+    display: inline;
+    padding: 0.15em 0;
+    background: #ff990080;
+    box-shadow: 0.5em 0 0 #ff990080, -0.5em 0 0 #ff990080;
+  }
   #charts-container {
     display: grid;
     margin: auto;
