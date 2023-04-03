@@ -36,7 +36,7 @@
   To calculate FNR balance, we work out FNR <sup
     ><span
       class="info-tooltip"
-      title="Probability that a true positive will be missclassified as negative."
+      title="Probability that a true positive will be miss-classified as negative."
       use:tooltip
       >[&#8505;]
     </span></sup

@@ -39,7 +39,26 @@
   <br />
   <Tabs {items} />
   <br />
-
+  <p class="body-text">
+    Have a look at the beeswarm plot and stacked bar chart to understand the
+    relationship between different probability thresholds and the resulting
+    predictions for two groups,
+    <svg height="16" width="16">
+      <circle
+        cx="8"
+        cy="10"
+        r="4"
+        stroke="black"
+        stroke-width="3"
+        fill="black"
+      />
+    </svg>
+    and
+    <svg height="12" width="12">
+      <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
+      Sorry, your browser does not support inline SVG.
+    </svg> as well as the ground truth distribution.
+  </p>
   <div id="charts-container">
     <div id="scatter-container">
       <Scatter />
