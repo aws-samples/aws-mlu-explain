@@ -18,14 +18,16 @@
   <svg height="12" width="12">
     <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
     Sorry, your browser does not support inline SVG.
-  </svg>. The probability thresholds ultimately determine which outcome class
-  the model will produce. The parameters of the model remain unchanged in this
-  case.
+  </svg>.
+  <br />
+  <br />
+  The probability thresholds ultimately determine which outcome class the model will
+  produce. The parameters of the model remain unchanged in this case.
   <br />
   <br />
   To find the thresholds that meets the EO criterion, we try many different probability
-  threshold values (per group) and keep track of what the given FNR (= 1-TPR) and
-  FPR values are.
+  threshold values (per group) and keep track of what the given FNR and FPR values
+  are.
   <br /><br />
   Check out the visualization below for additional details about the ROC curve and
   threshold optimization.
