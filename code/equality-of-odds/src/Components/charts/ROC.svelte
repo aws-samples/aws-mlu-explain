@@ -191,7 +191,13 @@
       text-anchor="start"
       dominant-baseline="middle"
     >
-      In this region, the accepted classifiers are more accurate.
+      In this region, the <svg
+      height="12"
+      width="12"
+    >
+      <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
+      Sorry, your browser does not support inline SVG.
+    </svg> group classifiers are more accurate.
     </text>
 
     <!-- Annotation 2 -->
