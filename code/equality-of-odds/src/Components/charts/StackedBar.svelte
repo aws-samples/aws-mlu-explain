@@ -101,10 +101,10 @@
             class="axis-text"
             font-size="12"
             dy="-1"
-            dx="2"
+            dx="-5"
             alignment-baseline="center"
           >
-          Ground Truth</tspan
+          Truth</tspan
           >
           <!-- Description second bar -->
           {:else if i == 1}
@@ -112,7 +112,7 @@
               class="axis-text"
               font-size="12"
               dy="-1"
-              dx="2"
+              dx="-5"
               alignment-baseline="center"
             >
               Prediction</tspan
@@ -123,10 +123,10 @@
                 class="axis-text"
                 font-size="12"
                 dy=".4"
-                dx="4"
+                dx="0.5"
                 alignment-baseline="center"
               >
-                Ground Truth</tspan
+                Truth</tspan
               >
             <!-- Description fourth bar -->
             {:else if i == 3}
@@ -134,7 +134,7 @@
               class="axis-text"
               font-size="12"
               dy=".4"
-              dx="4"
+              dx="0.5"
               alignment-baseline="center"
             >
               Prediction</tspan
@@ -170,6 +170,7 @@
     {#each series as serie}
       <g class="series">
         {#each serie as d}
+        {#if d.data.xVal == "A"}
           <rect
             x={xScale(d.data.xVal)}
             y={yScale(d[1])}
@@ -178,6 +179,34 @@
             fill-opacity=".8"
             width={xScale.bandwidth()}
           />
+          {:else if d.data.xVal=="A Predicted"}
+          <rect
+            x={xScale(d.data.xVal)}
+            y={yScale(d[1])}
+            height={yScale(d[0]) - yScale(d[1])}
+            fill={color(serie.key)}
+            fill-opacity="0.35"
+            width={xScale.bandwidth()}
+          />   
+          {:else if d.data.xVal=="B"}
+          <rect
+            x={xScale(d.data.xVal)}
+            y={yScale(d[1])}
+            height={yScale(d[0]) - yScale(d[1])}
+            fill={color(serie.key)}
+            fill-opacity=".8"
+            width={xScale.bandwidth()}
+          />     
+          {:else if d.data.xVal=="B Predicted"}
+          <rect
+            x={xScale(d.data.xVal)}
+            y={yScale(d[1])}
+            height={yScale(d[0]) - yScale(d[1])}
+            fill={color(serie.key)}
+            fill-opacity="0.35"
+            width={xScale.bandwidth()}
+          />       
+          {/if}  
         {/each}
       </g>
     {/each}
