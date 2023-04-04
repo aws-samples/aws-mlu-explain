@@ -84,16 +84,30 @@
           stroke-dasharray="4"
         />
         <text y="15" text-anchor="middle">
+          <!-- Circles -->
           {#if i < 2}
             <tspan font-size="19" dy="1" alignment-baseline="center">
               &#x25CF;</tspan
             >
+          <!-- Triangles -->
           {:else}
             <tspan font-size="11" dy="0" alignment-baseline="center">
               &#x25B2;</tspan
-            >
+            > 
           {/if}
-          {#if i == 1}
+          <!-- Description first bar -->
+          {#if i == 0}
+          <tspan
+            class="axis-text"
+            font-size="12"
+            dy="-1"
+            dx="2"
+            alignment-baseline="center"
+          >
+          Ground Truth</tspan
+          >
+          <!-- Description second bar -->
+          {:else if i == 1}
             <tspan
               class="axis-text"
               font-size="12"
@@ -102,8 +116,20 @@
               alignment-baseline="center"
             >
               Prediction</tspan
-            >
-          {:else if i == 3}
+              >
+            <!-- Description third bar -->
+            {:else if i == 2}
+              <tspan
+                class="axis-text"
+                font-size="12"
+                dy=".4"
+                dx="4"
+                alignment-baseline="center"
+              >
+                Ground Truth</tspan
+              >
+            <!-- Description fourth bar -->
+            {:else if i == 3}
             <tspan
               class="axis-text"
               font-size="12"
@@ -139,6 +165,7 @@
         >
       </g>
     {/each}
+    
     <!-- stacked rects -->
     {#each series as serie}
       <g class="series">
