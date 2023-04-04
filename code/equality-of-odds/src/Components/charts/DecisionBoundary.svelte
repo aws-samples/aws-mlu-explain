@@ -223,6 +223,7 @@
       >
       <text
         class="decision-boundary-text"
+        id="fpr"
         x="0"
         y="13"
         font-size="13"
@@ -253,6 +254,7 @@
       >
       <text
         class="decision-boundary-text"
+        id="fnr"
         x="-14"
         y="13"
         font-size="13"
@@ -287,6 +289,14 @@
     font-size: 12px;
     color: var(--squidink);
     stroke: var(--white);
+  }
+  #fnr {
+    stroke: var(--accept);
+    fill: var(--white);
+  }
+  #fpr {
+    stroke: var(--reject);
+    fill: var(--white);
   }
   .bar,
   .decision-boundary-bar1 {
