@@ -64,7 +64,7 @@
 <style>
   #roc-container {
     margin: auto;
-    height: 48vh;
+    height: 55vh;
     width: 55%;
     max-width: 1000px;
   }

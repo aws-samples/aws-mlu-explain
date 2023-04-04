@@ -3,7 +3,7 @@ import { tweened } from "svelte/motion";
 
 export const mobile = writable(true);
 export const margin = writable({
-  top: 55,
+  top: 60,
   bottom: 10,
   left: 80,
   right: 10,

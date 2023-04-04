@@ -184,7 +184,7 @@
   height={height - $margin.bottom - $margin.top}
   width={$rectPos - $margin.left - $margin.right + dbSize}
   x={$margin.left}
-  fill="#ff9900"
+  fill="var(--accept)"
   fill-opacity="0.15"
   y={$margin.top}
 />
@@ -194,7 +194,7 @@
   height={height - $margin.bottom - $margin.top}
   width={$outerWidth - $rectPos - $margin.right - $margin.left - dbSize}
   x={$rectPos}
-  fill="#2074d5"
+  fill="var(--reject)"
   fill-opacity="0.15"
   y={$margin.top}
 />
@@ -209,7 +209,7 @@
     <rect
       height={height - $margin.bottom - $margin.top}
       width={dbSize}
-      fill="#232F3E"
+      fill="#var(--squidink)"
     />
     <!-- right arrow -->
     <g class="arrow-holder" transform={`translate(14 ${10})`}>
@@ -223,6 +223,7 @@
       >
       <text
         class="decision-boundary-text"
+        id="fpr"
         x="0"
         y="13"
         font-size="13"
@@ -234,9 +235,9 @@
           <path
             d={arrow}
             style={`transform: rotate(0deg) scale(0.5)`}
-            stroke="#2074d5"
+            stroke="var(--reject)"
             stroke-width="2"
-            fill="#2074d5"
+            fill="var(--reject)"
           />
         {/each}
       </g>
@@ -253,6 +254,7 @@
       >
       <text
         class="decision-boundary-text"
+        id="fnr"
         x="-14"
         y="13"
         font-size="13"
@@ -264,9 +266,9 @@
           <path
             d={arrow}
             style={`transform: rotate(-180deg) scale(0.5)`}
-            stroke="#ff9900"
+            stroke="var(--accept)"
             stroke-width="2"
-            fill="#ff9900"
+            fill="var(--accept)"
           />
         {/each}
       </g>
@@ -287,6 +289,14 @@
     font-size: 12px;
     color: var(--squidink);
     stroke: var(--white);
+  }
+  #fnr {
+    stroke: var(--accept);
+    fill: var(--white);
+  }
+  #fpr {
+    stroke: var(--reject);
+    fill: var(--white);
   }
   .bar,
   .decision-boundary-bar1 {

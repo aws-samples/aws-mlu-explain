@@ -20,7 +20,7 @@
     ])
     .range([height - $margin.bottom, $margin.top]);
 
-  const colorScale = scaleOrdinal([0, 1], ["#ff9900", "#2074d5"]);
+  const colorScale = scaleOrdinal([0, 1], ["var(--accept)", "var(--reject)"]);
 
   let circleRadius = 5;
   let rectWidth = 8;

@@ -82,99 +82,111 @@
   </p>
 
   <!-- List of equations -->
-  <div class="equation-container"> 
-  <ul class="equation-list" style="list-style-type: none">
-    <p class="equation-text">
-    <!-- FNR difference -->
-    <li> 
-      {@html katexify(`\\textrm{FNR}`, false)}<sub>
-        <svg height="16" width="16">
-          <circle
-            cx="8"
-            cy="10"
-            r="4"
-            stroke="black"
-            stroke-width="1"
-            fill="black"
-          />
-        </svg>
-      </sub>
-      {@html katexify(` - \\, \\textrm{FNR} `, false)}
-      <sub>
-        <svg height="10" width="10">
-          <polygon points="5,0 0,10 10,10" style="fill:black;stroke-width:1" />
-          Sorry, your browser does not support inline SVG.
-        </svg></sub
-      >
-      {@html katexify(
-        ` =  ${formatter(fnr_eq1)} - ${formatter(fnr_eq2)} = ${formatter(
-          fnr_eq3
-        )}`,
-        false
-      )}
-    </li>
-    <!-- FPR difference -->
-    <li> 
-      {@html katexify(`\\textrm{FPR}`, false)}<sub>
-        <svg height="16" width="16">
-          <circle
-            cx="8"
-            cy="10"
-            r="4"
-            stroke="black"
-            stroke-width="1"
-            fill="black"
-          />
-        </svg>
-      </sub>
-      {@html katexify(` - \\, \\textrm{FPR}`, false)}
-      <sub>
-        <svg height="10" width="10">
-          <polygon points="5,0 0,10 10,10" style="fill:black;stroke-width:1" />
-          Sorry, your browser does not support inline SVG.
-        </svg></sub>
-      {@html katexify(
-        ` = ${formatter(fpr_eq1)} - ${formatter(fpr_eq2)} = ${formatter(
-          fpr_eq3
-        )}`,
-        false
-      )}
-    </li>
-    <!-- Accuracy circles -->
-    <li>
-      {@html katexify(`\\textrm{Accuracy}`, false)}<sub>
-        <svg height="16" width="16">
-          <circle
-            cx="8"
-            cy="10"
-            r="4"
-            stroke="black"
-            stroke-width="1"
-            fill="black"
-          />
-        </svg>
-      </sub>
-      {@html katexify(
-        `= \\frac{TP+TN}{TP+FP+TN+FN} = ${formatter(acc_A)}`,
-        false
-      )}
-    </li>
-    <!-- Accuracy triangles -->
-    <li> 
-      {@html katexify(`\\textrm{Accuracy}`, false)}<sub>
-        <svg height="10" width="10">
-          <polygon points="5,0 0,10 10,10" style="fill:black;stroke-width:1" />
-          Sorry, your browser does not support inline SVG.
-        </svg></sub>
-      {@html katexify(
-        `= \\frac{TP+TN}{TP+FP+TN+FN} = ${formatter(acc_B)}`,
-        false)}
-    </li>
-    </p>
-  </ul>
+  <div class="equation-container">
+    <ul class="equation-list" style="list-style-type: none">
+      <p class="equation-text">
+        <!-- FNR difference -->
+        <li>
+          {@html katexify(`\\textrm{FNR}`, false)}<sub>
+            <svg height="16" width="16">
+              <circle
+                cx="8"
+                cy="10"
+                r="4"
+                stroke="black"
+                stroke-width="1"
+                fill="black"
+              />
+            </svg>
+          </sub>
+          {@html katexify(` - \\, \\textrm{FNR} `, false)}
+          <sub>
+            <svg height="10" width="10">
+              <polygon
+                points="5,0 0,10 10,10"
+                style="fill:black;stroke-width:1"
+              />
+              Sorry, your browser does not support inline SVG.
+            </svg></sub
+          >
+          {@html katexify(
+            ` =  ${formatter(fnr_eq1)} - ${formatter(fnr_eq2)} = ${formatter(
+              fnr_eq3
+            )}`,
+            false
+          )}
+        </li>
+        <!-- FPR difference -->
+        <li>
+          {@html katexify(`\\textrm{FPR}`, false)}<sub>
+            <svg height="16" width="16">
+              <circle
+                cx="8"
+                cy="10"
+                r="4"
+                stroke="black"
+                stroke-width="1"
+                fill="black"
+              />
+            </svg>
+          </sub>
+          {@html katexify(` - \\, \\textrm{FPR}`, false)}
+          <sub>
+            <svg height="10" width="10">
+              <polygon
+                points="5,0 0,10 10,10"
+                style="fill:black;stroke-width:1"
+              />
+              Sorry, your browser does not support inline SVG.
+            </svg></sub
+          >
+          {@html katexify(
+            ` = ${formatter(fpr_eq1)} - ${formatter(fpr_eq2)} = ${formatter(
+              fpr_eq3
+            )}`,
+            false
+          )}
+        </li>
+        <!-- Accuracy circles -->
+        <li>
+          {@html katexify(`\\textrm{Accuracy}`, false)}<sub>
+            <svg height="16" width="16">
+              <circle
+                cx="8"
+                cy="10"
+                r="4"
+                stroke="black"
+                stroke-width="1"
+                fill="black"
+              />
+            </svg>
+          </sub>
+          {@html katexify(
+            `= \\frac{TP+TN}{TP+FP+TN+FN} = ${formatter(acc_A)}`,
+            false
+          )}
+        </li>
+        <!-- Accuracy triangles -->
+        <li>
+          {@html katexify(`\\textrm{Accuracy}`, false)}<sub>
+            <svg height="10" width="10">
+              <polygon
+                points="5,0 0,10 10,10"
+                style="fill:black;stroke-width:1"
+              />
+              Sorry, your browser does not support inline SVG.
+            </svg></sub
+          >
+          {@html katexify(
+            `= \\frac{TP+TN}{TP+FP+TN+FN} = ${formatter(acc_B)}`,
+            false
+          )}
+        </li>
+      </p>
+    </ul>
   </div>
-  
- <!-- Charts -->
+
+  <!-- Charts -->
   <div id="charts-container">
     <div id="scatter-container">
       <Scatter />
@@ -211,7 +223,7 @@
   ul.equation-list {
     display: inline-block;
     text-align: left;
-  } 
+  }
 
   .highlight {
     display: inline;
@@ -239,17 +251,17 @@
 
   #compare-container {
     margin: auto;
-    height: 42vh;
+    height: 55vh;
     width: 55%;
     max-width: 1000px;
   }
   ul {
-      max-width: 80%;
-      line-height:1.4;
-    }
+    max-width: 80%;
+    line-height: 1.4;
+  }
   li {
-      padding: 0.25rem 0.25rem;
-    }
+    padding: 0.25rem 0.25rem;
+  }
 
   /* mobile */
   @media screen and (max-width: 1050px) {
@@ -260,17 +272,22 @@
       grid-template-columns: 100%;
       grid-template-rows: 50% 50%;
     }
+    #compare-container {
+      height: 70vh;
+      width: 100%;
+      max-width: 1000px;
+    }
     ul {
-    max-width: 600px;
-    margin: auto;
-    color: var(--squid-ink);
-    padding-top: 0.5rem;
-  }
-  li {
-    padding: 0.25rem;
-    list-style: none;
-    color: var(--squid-ink);
-  }
+      max-width: 600px;
+      margin: auto;
+      color: var(--squid-ink);
+      padding-top: 0.5rem;
+    }
+    li {
+      padding: 0.25rem;
+      list-style: none;
+      color: var(--squid-ink);
+    }
   }
 
   @media screen and (max-width: 850px) {

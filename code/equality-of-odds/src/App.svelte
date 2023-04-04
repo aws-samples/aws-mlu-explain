@@ -12,7 +12,7 @@
   function resizeMarginOnResize() {
     const mobile = window.innerWidth <= 1000;
     $margin = {
-      top: mobile ? 40 : 55,
+      top: mobile ? 60 : 60,
       bottom: mobile ? 20 : 10,
       left: mobile ? 50 : 80,
       right: 10,
