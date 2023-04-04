@@ -184,7 +184,7 @@
   height={height - $margin.bottom - $margin.top}
   width={$rectPos - $margin.left - $margin.right + dbSize}
   x={$margin.left}
-  fill="var(--accept)"
+  fill="var(--reject)"
   fill-opacity="0.15"
   y={$margin.top}
 />
@@ -194,7 +194,7 @@
   height={height - $margin.bottom - $margin.top}
   width={$outerWidth - $rectPos - $margin.right - $margin.left - dbSize}
   x={$rectPos}
-  fill="var(--reject)"
+  fill="var(--accept)"
   fill-opacity="0.15"
   y={$margin.top}
 />
@@ -206,11 +206,14 @@
     data-id="decision-boundary-bar1"
     transform="translate({$rectPos},{$margin.top})"
   >
+
+  <!-- boundary line -->
     <rect
       height={height - $margin.bottom - $margin.top}
       width={dbSize}
       fill="#var(--squidink)"
     />
+
     <!-- right arrow -->
     <g class="arrow-holder" transform={`translate(14 ${10})`}>
       <text
@@ -223,7 +226,8 @@
       >
       <text
         class="decision-boundary-text"
-        id="fpr"
+        stroke="var(--white)"
+        fill="var(--accept)"
         x="0"
         y="13"
         font-size="13"
@@ -234,10 +238,10 @@
         {#each arrows as arrow}
           <path
             d={arrow}
-            style={`transform: rotate(0deg) scale(0.5)`}
-            stroke="var(--reject)"
+            style={`transform: rotate(00deg) scale(0.5)`}
+            stroke="var(--accept)"
             stroke-width="2"
-            fill="var(--reject)"
+            fill="var(--accept)"
           />
         {/each}
       </g>
@@ -254,7 +258,8 @@
       >
       <text
         class="decision-boundary-text"
-        id="fnr"
+        stroke="var(--white)"
+        fill="var(--reject)"
         x="-14"
         y="13"
         font-size="13"
@@ -266,9 +271,9 @@
           <path
             d={arrow}
             style={`transform: rotate(-180deg) scale(0.5)`}
-            stroke="var(--accept)"
+            stroke="var(--reject)"
             stroke-width="2"
-            fill="var(--accept)"
+            fill="var(--reject)"
           />
         {/each}
       </g>
@@ -290,14 +295,7 @@
     color: var(--squidink);
     stroke: var(--white);
   }
-  #fnr {
-    stroke: var(--accept);
-    fill: var(--white);
-  }
-  #fpr {
-    stroke: var(--reject);
-    fill: var(--white);
-  }
+
   .bar,
   .decision-boundary-bar1 {
     cursor: pointer;
