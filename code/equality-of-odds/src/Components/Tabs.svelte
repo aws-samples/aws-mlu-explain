@@ -31,7 +31,7 @@
   .box {
     margin-bottom: 10px;
     padding: 40px;
-    border: 2px solid var(--smile);
+    border: 2px solid var(--markings);
     border-radius: 0 0 0.5rem 0.5rem;
     background: var(--bg);
     border-top: 0;
@@ -42,7 +42,7 @@
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
-    border-bottom: 2px solid var(--smile);
+    border-bottom: 2px solid var(--markings);
   }
   li {
     margin-bottom: -2px;
@@ -60,13 +60,13 @@
   }
 
   li:hover {
-    color: var(--smile);
+    color: var(--markings);
   }
 
   li.active > span {
     color: var(--darksquidink);
     background-color: var(--bg);
-    border-color: var(--smile) var(--smile) var(--bg);
+    border-color: var(--markings) var(--markings) var(--bg);
     background: var(--bg);
   }
 

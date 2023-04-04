@@ -15,14 +15,14 @@
         cx="8"
         cy="10"
         r="4"
-        stroke="var(--cosmos)"
+        stroke="var(--group_circles)"
         stroke-width="3"
-        fill="var(--cosmos)"
+        fill="var(--group_circles)"
       />
     </svg>
     and
     <svg height="12" width="12">
-      <polygon points="6,0 0,12 12,12" style="fill:var(--seablue);stroke-width:1" />
+      <polygon points="6,0 0,12 12,12" style="fill:var(--group_triangles);stroke-width:1" />
       Sorry, your browser does not support inline SVG.
     </svg>.
     <br /><br />EO takes the merit different groups of people have into account
@@ -66,7 +66,7 @@
       height="12"
       width="12"
     >
-      <polygon points="6,0 0,12 12,12" style="fill:var(--seablue);stroke-width:1" />
+      <polygon points="6,0 0,12 12,12" style="fill:var(--group_triangles);stroke-width:1" />
       Sorry, your browser does not support inline SVG.
     </svg>
     {@html katexify(`) = \\mathbb{P}(\\hat{Y}=1| Y=y, A=`, false)}
@@ -75,9 +75,9 @@
         cx="8"
         cy="10"
         r="4"
-        stroke="var(--cosmos)"
+        stroke="var(--group_circles)"
         stroke-width="3"
-        fill="var(--cosmos)"
+        fill="var(--group_circles)"
       />
     </svg>
     {@html katexify(`),  \\; y \\: \\in \\: \\{0,1\\}`, false)}
@@ -96,12 +96,3 @@
     >), or {@html katexify(`y=0`)} for equalizing FPR.
   </p>
 </section>
-
-<style>
-  .highlight {
-    display: inline;
-    padding: 0.15em 0;
-    background: #ff990080;
-    box-shadow: 0.5em 0 0 #ff990080, -0.5em 0 0 #ff990080;
-  }
-</style>

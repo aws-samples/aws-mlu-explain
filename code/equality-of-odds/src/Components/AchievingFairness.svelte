@@ -41,14 +41,14 @@
         cx="8"
         cy="10"
         r="4"
-        stroke="black"
+        stroke="var(--group_circles)"
         stroke-width="3"
-        fill="black"
+        fill="var(--group_circles)"
       />
     </svg>
     and
     <svg height="12" width="12">
-      <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
+      <polygon points="6,0 0,12 12,12" style="fill:var(--group_triangles);stroke-width:1" />
       Sorry, your browser does not support inline SVG.
     </svg>. We can see that for most probability thresholds the TPR and FPR
     values are different per group. For this dataset, there is only one point

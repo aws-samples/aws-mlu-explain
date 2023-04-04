@@ -56,9 +56,9 @@
         cx="8"
         cy="10"
         r="4"
-        stroke="black"
+        stroke="var(--group_circles)"
         stroke-width="1"
-        fill="black"
+        fill="var(--group_circles)"
       />
     </svg>
   </sub>
@@ -70,7 +70,7 @@
   )}
   <sub>
     <svg height="10" width="10">
-      <polygon points="5,0 0,10 10,10" style="fill:black;stroke-width:1" />
+      <polygon points="5,0 0,10 10,10" style="fill:var(--group_triangles);stroke-width:1" />
       Sorry, your browser does not support inline SVG.
     </svg></sub
   >

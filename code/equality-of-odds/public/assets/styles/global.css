@@ -45,13 +45,17 @@
 
   /* Color Variables */
 
-  --bg: var(--rind);
-  --fg: var(--off-black);
-  --default: var(--darksquidink);
-  --accept: var(--magenta);
-  --reject: var(--seablue);
+  --bg: var(--paper);
+  --fg: var(--anchor);
+  --default: var(--darksquidink);  /* text color */
+  --accept: var(--peach);
+  --reject: var(--cosmos);
   --primary: var(--accept);
   --secondary: var(--accept);
+  --markings: var(--sky);
+  --highl: #2074d53F;
+  --group_circles: var(--default);
+  --group_triangles: var(--default);
 
   --max-width: 600px;
   --size-default: 16px;
@@ -84,7 +88,14 @@ body {
   padding-top: 2rem;
   padding-bottom: 0.5rem;
   text-decoration: underline;
-  text-decoration-color: var(--secondary);
+  text-decoration-color: var(--markings);
+}
+
+.highlight {
+  display: inline;
+  padding: 0.15em 0;
+  background: var(--highl); 
+  box-shadow: 0.2em 0 0 var(--highl), -0.2em 0 0 var(--highl);
 }
 
 .equation-text {
@@ -105,7 +116,7 @@ body {
 }
 
 a {
-  color: var(--secondary);
+  color: var(--markings);
   font-family: var(--font-heavy);
 }
 
@@ -121,8 +132,8 @@ p {
 }
 
 .info-tooltip {
-  color: var(--primary);
-  font-size: 0.9rem;
+  color: var(--markings);
+  font-size: 0.7rem;
 }
 
 .interpretation-header {

@@ -4,7 +4,7 @@
     A Visual Introduction to Measuring and Mitigating Bias in Machine Learning
   </h1>
   <h3 id="intro__date">
-    <a href="">Mia Mayer</a> &
+    <a href="https://www.linkedin.com/in/miacarinamayer">Mia Mayer</a> &
     <a href="https://twitter.com/jdwlbr">Jared Wilber</a>, April 2023
   </h3>
 </section>

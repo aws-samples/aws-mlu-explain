@@ -12,11 +12,11 @@
 <p class="body-text">
   To implement EO on a trained model, we can find probability thresholds for
   both groups,<svg height="16" width="16">
-    <circle cx="8" cy="10" r="4" stroke="black" stroke-width="3" fill="black" />
+    <circle cx="8" cy="10" r="4" stroke="var(--group_circles)" stroke-width="3" fill="var(--group_circles)" />
   </svg>
   and
   <svg height="12" width="12">
-    <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
+    <polygon points="6,0 0,12 12,12" style="fill:var(--group_triangles);stroke-width:1" />
     Sorry, your browser does not support inline SVG.
   </svg>.
   <br />
