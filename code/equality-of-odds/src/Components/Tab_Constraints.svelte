@@ -26,6 +26,7 @@
         </span></sup
     >, {@html katexify(`L(\\theta)`)}, can assume.
     <br />
+    <br />
     The constraint can be written as:
     <br />
     <br />

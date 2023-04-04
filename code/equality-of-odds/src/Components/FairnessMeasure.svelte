@@ -75,7 +75,7 @@
     <br />
     <br />
     Try to find a probability threshold that results in 0 FPR and FNR difference
-    at the same time; is it even possible? Also observe what the model performance
+    at the same time; is it even possible? Also observe what the <a href="https://mlu-explain.github.io/precision-recall/"> model performance</a>
     is doing as you move the slider.
     <br />
     <br />
@@ -162,23 +162,23 @@
             </svg>
           </sub>
           {@html katexify(
-            `= \\frac{TP+TN}{TP+FP+TN+FN} = ${formatter(acc_A)}`,
+            `= ${formatter(acc_A)}`, //= \\frac{TP+TN}{TP+FP+TN+FN} 
             false
           )}
         </li>
         <!-- Accuracy triangles -->
         <li>
           {@html katexify(`\\textrm{Accuracy}`, false)}<sub>
-            <svg height="10" width="10">
+            <svg height="10" width="16">
               <polygon
-                points="5,0 0,10 10,10"
+                points="8,0 0,16 16,16"
                 style="fill:var(--group_triangles);stroke-width:1"
               />
               Sorry, your browser does not support inline SVG.
             </svg></sub
           >
           {@html katexify(
-            `= \\frac{TP+TN}{TP+FP+TN+FN} = ${formatter(acc_B)}`,
+            `= ${formatter(acc_B)}`, //= \\frac{TP+TN}{TP+FP+TN+FN}
             false
           )}
         </li>

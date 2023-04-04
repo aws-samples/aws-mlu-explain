@@ -157,10 +157,10 @@
 
     <text y={$margin.top / 2} x={$margin.left} text-anchor="start">
       <tspan>Comparing </tspan>
-      <tspan class="title-rate fnr">FNR </tspan>
+      <tspan class="title-rate fnr">TPR </tspan>
       <tspan>and </tspan>
       <tspan class="title-rate fpr">FPR </tspan>
-      <tspan>ROC Curves</tspan>
+      <tspan>per group</tspan>
     </text>
     <!-- y axis labels -->
 
