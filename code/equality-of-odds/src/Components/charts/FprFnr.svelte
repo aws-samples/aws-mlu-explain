@@ -17,11 +17,6 @@
     .domain([0.0, 1.0])
     .range([height - $margin.bottom, $margin.top]);
 
-  const colorScale = scaleOrdinal([0, 1], ["#ff9900", "#2074d5"]);
-
-  let circleRadius = 5;
-  let rectWidth = 8;
-
   const circleData = fnrfprData.filter((d) => d.group === "circle");
   const triangleData = fnrfprData.filter((d) => d.group === "triangle");
 
@@ -43,6 +38,24 @@
   bind:offsetHeight={$fnrfprHeight}
 >
   <svg width={$fnrfprWidth} height={$fnrfprHeight}>
+    <!-- legend -->
+    <g transform={`translate(${$margin.left}, ${$margin.top / 2 + 7})`}>
+      <!-- circle -->
+      <circle cx="0" r="6" fill="var(--squidink)" />
+      <text x="12" y="5.5">Group</text>
+      <text x="59" y="5.5">:</text>
+      <path
+        d="M70 1L105 1"
+        stroke-dasharray="9, 3"
+        stroke="var(--squidink)"
+        stroke-width="4"
+      />
+      <!-- triangle -->
+      <polygon points="122 5, 134 5, 128 -6" fill="var(--squidink)" />
+      <text x="138" y="5.5">Group</text>
+      <text x="185" y="5.5">:</text>
+      <path d="M195 1L232 1" stroke="var(--squidink)" stroke-width="4" />
+    </g>
     <!-- x axis line -->
     <line
       class="axis-line"
@@ -91,7 +104,7 @@
         <!-- numbers next to ticks -->
         <text
           class="axis-text"
-          x="-2"
+          x="-4"
           y="0"
           text-anchor="end"
           dominant-baseline="middle">{tick}</text
@@ -100,67 +113,25 @@
     {/each}
 
     <!-- plotting data -->
-    <path
-      id="fnr-line"
-      class="path-line"
-      d={fnrlinePath(circleData)}
-      stroke="var(--seablue)"
-    />
-    <path
-      id="fnr-line"
-      class="path-line"
-      d={fnrlinePath(triangleData)}
-      stroke="var(--cosmos)"
-    />
-    <path
-      id="fpr-line"
-      class="path-line"
-      d={fprlinePath(circleData)}
-      stroke="var(--seablue)"
-      stroke-dasharray="10,10"
-    />
-    <path
-      id="fpr-line"
-      class="path-line"
-      d={fprlinePath(triangleData)}
-      stroke="var(--cosmos)"
-      stroke-dasharray="10,10"
-    />
+    <path class="path-line-outer" d={fnrlinePath(circleData)} />
+    <path class="path-line-outer" d={fnrlinePath(triangleData)} />
+    <path class="path-line-outer" d={fprlinePath(circleData)} />
+    <path class="path-line-outer" d={fprlinePath(triangleData)} />
 
-    <!-- {#each fnrfprData as d}
-      <g
-        class="data-point2"
-        group={d.group}
-        x={d.threshold}
-        y={d.fpr}
-      >
-        {#if d.group == "circle"}
-          <circle
-            cx={xScale(d.threshold)}
-            cy={yScale(d.fpr)}
-            r={circleRadius}
-            fill="var(--sky)"
-          />
-        {:else}
-          <polygon
-            points={`${xScale(d.threshold)},${yScale(d.fpr) - rectWidth / 2} ${
-              xScale(d.threshold) - rectWidth / 1.5
-            },${yScale(d.fpr) + rectWidth / 1.5} ${
-              xScale(d.threshold) + rectWidth / 1.5
-            },${yScale(d.fpr) + rectWidth / 1.5}`}
-          />
-        {/if}
-      </g>
-    {/each} -->
+    <path class="fnr circle path-line" d={fnrlinePath(circleData)} />
+    <path class="fnr triangle path-line" d={fnrlinePath(triangleData)} />
+    <path class="fpr circle path-line" d={fprlinePath(circleData)} />
+    <path class="fpr triangle path-line" d={fprlinePath(triangleData)} />
 
-    <!-- y axis label -->
-    <text
-      class="axis-label"
-      y={$margin.left / 2}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">False Negative Rate</text
-    >
+    <!-- Title -->
+    <text y={$margin.top / 2 - 15} x={$margin.left} text-anchor="start">
+      <tspan>Comparing </tspan>
+      <tspan class="title-rate fnr">FNR </tspan>
+      <tspan>and </tspan>
+      <tspan class="title-rate fpr">FPR </tspan>
+      <tspan>by Probability Threshold</tspan>
+    </text>
+
     <!-- x axis label -->
     <text
       class="axis-label"
@@ -172,6 +143,24 @@
 </div>
 
 <style>
+  .title-rate {
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 6.4px;
+    pointer-events: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    fill: var(--white);
+  }
+  .circle {
+    stroke-dasharray: 10, 10;
+  }
+  .fnr {
+    stroke: var(--accept);
+  }
+  .fpr {
+    stroke: var(--reject);
+  }
   #chart-holder {
     height: 100%;
     width: 100%;
@@ -181,6 +170,12 @@
     stroke-linejoin: round;
     stroke-linecap: round;
     stroke-width: 4;
+  }
+  .path-line-outer {
+    fill: none;
+
+    stroke-width: 8;
+    stroke: var(--bg);
   }
   .axis-label {
     font-size: 12px;
@@ -192,7 +187,7 @@
   }
   .axis-tick {
     stroke-width: 1;
-    stroke: var(--sky);
+    stroke: var(--reject);
     fill: none;
     opacity: 0.175;
     font-size: 12px;

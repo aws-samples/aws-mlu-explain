@@ -26,7 +26,7 @@
   $: width = outerWidth - margin.left - margin.right;
   $: height = outerHeight - margin.top - margin.bottom;
 
-  const color = scaleOrdinal().range(["#2074d5", "#ff9900"]);
+  const color = scaleOrdinal().range(["var(--reject)", "var(--accept)"]);
 
   $: xScale = scaleBand()
     .rangeRound([margin.left, width - margin.right])
@@ -154,7 +154,7 @@
         {/each}
       </g>
     {/each}
-<!-- 
+    <!-- 
     <text
       class="chart-title"
       y={margin.top / 3}
@@ -165,14 +165,14 @@
         {formatter($wrongly_rejected_A / ($wrongly_rejected_A + 30))} wrongly rejected
         in group
       </tspan>
-      <tspan class="smile" font-size="25" dy="3" alignment-baseline="center">
+      <tspan class="accept" font-size="25" dy="3" alignment-baseline="center">
         &#x25CF;</tspan
       >
       <tspan dy="-3" dx="2"
         >{formatter($wrongly_rejected_B / ($wrongly_rejected_B + 10))} wrongly rejected
         in group
       </tspan>
-      <tspan class="smile" font-size="13"> &#x25B2; </tspan>
+      <tspan class="accept" font-size="13"> &#x25B2; </tspan>
     </text>
 
     <text
@@ -185,14 +185,14 @@
         {formatter($wrongly_accepted_A / ($wrongly_accepted_A + 20))} wrongly accepted
         in group
       </tspan>
-      <tspan class="sky" font-size="25" dy="3" alignment-baseline="center">
+      <tspan class="reject" font-size="25" dy="3" alignment-baseline="center">
         &#x25CF;</tspan
       >
       <tspan dy="-3" dx="2"
         >{formatter($wrongly_accepted_B / ($wrongly_accepted_B + 15))} wrongly accepted
         in group
       </tspan>
-      <tspan class="sky" font-size="13"> &#x25B2; </tspan>
+      <tspan class="reject" font-size="13"> &#x25B2; </tspan>
     </text> 
   -->
 
@@ -222,7 +222,7 @@
   }
   .axis-tick {
     stroke-width: 1;
-    stroke: var(--sky);
+    stroke: var(--reject);
     fill: none;
     opacity: 0.175;
     font-size: 9px;
@@ -232,15 +232,15 @@
     font-size: 12px;
   }
   circle {
-    fill: var(--sky);
+    fill: var(--reject);
     stroke: var(--bg);
     stroke-width: 1;
   }
 
-  .smile {
-    fill: var(--smile);
+  .accept {
+    fill: var(--accept);
   }
-  .sky {
-    fill: var(--sky);
+  .reject {
+    fill: var(--reject);
   }
 </style>

@@ -119,15 +119,15 @@
         />
         <text
           class="axis-text"
-          x="-2"
+          x="-4"
           y="0"
           text-anchor="end"
           dominant-baseline="middle">{tick}</text
         >
       </g>
     {/each}
-    <path class="cosmos" d={fullPath} />
-    <path class="seablue" d={fullPath1} />
+    <path class="accept" d={fullPath} />
+    <path class="reject" d={fullPath1} />
     <path
       class="triangle-path"
       d={pathLine(rocData.filter((d) => d.group == "triangle"))}
@@ -154,12 +154,14 @@
     {/each}
 
     <!-- Title -->
-    <text
-      class="chart-title"
-      y={$margin.top / 2}
-      x={(width + $margin.left) / 2}
-      text-anchor="middle">Comparing ROC Curves</text
-    >
+
+    <text y={$margin.top / 2} x={$margin.left} text-anchor="start">
+      <tspan>Comparing </tspan>
+      <tspan class="title-rate fnr">FNR </tspan>
+      <tspan>and </tspan>
+      <tspan class="title-rate fpr">FPR </tspan>
+      <tspan>ROC Curves</tspan>
+    </text>
     <!-- y axis labels -->
 
     <text
@@ -196,13 +198,9 @@
       text-anchor="start"
       dominant-baseline="middle"
     >
-      In this region, the <svg
-      height="12"
-      width="12"
-    >
-      <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
-      Sorry, your browser does not support inline SVG.
-    </svg> group classifiers are more accurate.
+      <tspan>In this region, </tspan>
+      <tspan class="title-rate fpr"> FPR </tspan>
+      <tspan>dominates </tspan>
     </text>
 
     <!-- Annotation 2 -->
@@ -223,7 +221,9 @@
       text-anchor="start"
       dominant-baseline="middle"
     >
-      In this region, the rejected classifiers are more accurate.
+      <tspan>In this region, </tspan>
+      <tspan class="title-rate fnr"> FNR </tspan>
+      <tspan>dominates </tspan>
     </text>
 
     <!-- Add arrow marker -->
@@ -244,6 +244,22 @@
 </div>
 
 <style>
+  .title-rate {
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 6.4px;
+    pointer-events: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    fill: var(--white);
+  }
+
+  .fnr {
+    stroke: var(--accept);
+  }
+  .fpr {
+    stroke: var(--reject);
+  }
   .annotation-path {
     stroke-dasharray: 4;
     fill: none;
@@ -257,26 +273,25 @@
     stroke-linecap: round;
     paint-order: stroke fill;
   }
-  .seablue {
-    fill: var(--seablue);
+  .reject {
+    fill: var(--reject);
     opacity: 1;
     stroke: none;
   }
-  .cosmos {
-    fill: var(--cosmos);
+  .accept {
+    fill: var(--accept);
     opacity: 1;
     stroke: none;
   }
   .circle-path {
     fill: none;
-    stroke: var(--cosmos);
+    stroke: var(--accept);
     stroke-width: 4;
   }
   .triangle-path {
     fill: none;
-    stroke: var(--seablue);
+    stroke: var(--reject);
     stroke-width: 4;
-
   }
   .axis-label,
   .chart-title {
@@ -293,7 +308,7 @@
   }
   .axis-tick {
     stroke-width: 1;
-    stroke: var(--seablue);
+    stroke: var(--reject);
     fill: none;
     opacity: 0.175;
   }
@@ -304,12 +319,12 @@
   circle {
     stroke: var(--bg);
     stroke-width: 1;
-    fill: var(--cosmos);
+    fill: var(--accept);
   }
   polygon {
     stroke: var(--bg);
     stroke-width: 0.5;
-    fill: var(--seablue);
+    fill: var(--reject);
   }
   @media screen and (max-width: 1000px) {
     .annotation-text {

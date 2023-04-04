@@ -47,9 +47,11 @@
 
   --bg: var(--rind);
   --fg: var(--off-black);
-  --default: var(--squidink);
-  --primary: var(--sky);
-  --secondary: var(--sky);
+  --default: var(--darksquidink);
+  --accept: var(--magenta);
+  --reject: var(--seablue);
+  --primary: var(--accept);
+  --secondary: var(--accept);
 
   --max-width: 600px;
   --size-default: 16px;
@@ -82,7 +84,7 @@ body {
   padding-top: 2rem;
   padding-bottom: 0.5rem;
   text-decoration: underline;
-  text-decoration-color: var(--sky);
+  text-decoration-color: var(--secondary);
 }
 
 .equation-text {
