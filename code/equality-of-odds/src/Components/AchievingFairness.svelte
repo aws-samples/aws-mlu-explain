@@ -51,8 +51,9 @@
       <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
       Sorry, your browser does not support inline SVG.
     </svg>. We can see that for most probability thresholds the TPR and FPR
-    values are different per group. There is only one point where TPR and FPR
-    are equal for both groups; this is where the EO criterion is satisfied.
+    values are different per group. For this dataset, there is only one point
+    where TPR and FPR are equal for both groups; this is where the EO criterion
+    is satisfied.
   </p>
   <br />
   <div id="roc-container">
