@@ -6,7 +6,7 @@
   import Tabs from "./Tabs.svelte";
   import { format } from "d3-format";
   import katexify from "../katexify";
-  import FPR_FNR from "./charts/FPR_FNR.svelte";
+  import FprFnr from "./charts/FprFnr.svelte";
 
   import {
     mobile,
@@ -185,17 +185,19 @@
     the relaxed version of the EO fairness criterion but make no sense from a
     general ML performance perspective as can be seen in the accuracy of the
     model.
+    <br /><br />
+    You can verify that there is no probability threshold where FPR and FPR are the
+    same for both groups by comparing the values in the chart below:
   </p>
   <br />
   <br />
 
   <div id="compare-container">
-    <FPR_FNR />
+    <FprFnr />
   </div>
 </section>
 
 <style>
-
   .highlight {
     display: inline;
     padding: 0.15em 0;
@@ -222,8 +224,8 @@
 
   #compare-container {
     margin: auto;
-    height: 48vh;
-    width: 80%;
+    height: 42vh;
+    width: 55%;
     max-width: 1000px;
   }
   /* mobile */

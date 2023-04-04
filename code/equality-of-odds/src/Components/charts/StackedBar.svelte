@@ -154,7 +154,7 @@
         {/each}
       </g>
     {/each}
-
+<!-- 
     <text
       class="chart-title"
       y={margin.top / 3}
@@ -193,7 +193,8 @@
         in group
       </tspan>
       <tspan class="sky" font-size="13"> &#x25B2; </tspan>
-    </text>
+    </text> 
+  -->
 
     <text
       class="axis-label"

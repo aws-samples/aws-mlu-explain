@@ -15,14 +15,14 @@
         cx="8"
         cy="10"
         r="4"
-        stroke="black"
+        stroke="var(--cosmos)"
         stroke-width="3"
-        fill="black"
+        fill="var(--cosmos)"
       />
     </svg>
     and
     <svg height="12" width="12">
-      <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
+      <polygon points="6,0 0,12 12,12" style="fill:var(--seablue);stroke-width:1" />
       Sorry, your browser does not support inline SVG.
     </svg>.
     <br /><br />EO takes the merit different groups of people have into account
@@ -35,7 +35,7 @@
     rejection' and 'wrong acceptance'. We could simply count the number of wrong
     rejections and acceptances but as groups generally differ in size, we should
     use
-    <span class="highlight">error rates</span>.This means we need to look at the
+    <span class="highlight">error rates</span>. This means we need to look at the
     False Negative Rate (FNR)<sup
       ><span
         class="info-tooltip"
@@ -66,7 +66,7 @@
       height="12"
       width="12"
     >
-      <polygon points="6,0 0,12 12,12" style="fill:black;stroke-width:1" />
+      <polygon points="6,0 0,12 12,12" style="fill:var(--seablue);stroke-width:1" />
       Sorry, your browser does not support inline SVG.
     </svg>
     {@html katexify(`) = \\mathbb{P}(\\hat{Y}=1| Y=y, A=`, false)}
@@ -75,9 +75,9 @@
         cx="8"
         cy="10"
         r="4"
-        stroke="black"
+        stroke="var(--cosmos)"
         stroke-width="3"
-        fill="black"
+        fill="var(--cosmos)"
       />
     </svg>
     {@html katexify(`),  \\; y \\: \\in \\: \\{0,1\\}`, false)}

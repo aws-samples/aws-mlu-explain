@@ -11,6 +11,8 @@ export const margin = writable({
 
 export const outerWidth = writable(300);
 export const outerHeight = writable(300);
+export const fnrfprWidth = writable(300);
+export const fnrfprHeight = writable(300);
 export const rocWidth = writable(300);
 export const rocHeight = writable(300);
 export const rectPos = writable(0.5);

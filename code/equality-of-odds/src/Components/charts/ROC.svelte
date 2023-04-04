@@ -10,7 +10,7 @@
   $: height = $rocHeight - $margin.top - $margin.bottom;
 
   // scales
-  const colorScale = scaleOrdinal([0, 1], ["#ff9900", "#2074d5"]);
+  const colorScale = scaleOrdinal([0, 1]);
 
   $: xScale = scaleLinear()
     .domain(extent(rocData.map((d) => d.fpr)))
@@ -72,6 +72,7 @@
   bind:offsetHeight={$rocHeight}
 >
   <svg width={$rocWidth} height={$rocHeight}>
+    <!-- x axis line -->
     <line
       class="axis-line"
       x1={$margin.left}
@@ -79,6 +80,7 @@
       y1={height - $margin.bottom}
       y2={height - $margin.bottom}
     />
+    <!-- y axis line -->
     <line
       class="axis-line"
       x1={$margin.left}
@@ -124,8 +126,8 @@
         >
       </g>
     {/each}
-    <path class="smile" d={fullPath} />
-    <path class="sky" d={fullPath1} />
+    <path class="cosmos" d={fullPath} />
+    <path class="seablue" d={fullPath1} />
     <path
       class="triangle-path"
       d={pathLine(rocData.filter((d) => d.group == "triangle"))}
@@ -151,19 +153,22 @@
       {/if}
     {/each}
 
-    <!-- axis labels -->
+    <!-- Title -->
     <text
       class="chart-title"
       y={$margin.top / 2}
       x={(width + $margin.left) / 2}
       text-anchor="middle">Comparing ROC Curves</text
     >
+    <!-- y axis labels -->
+
     <text
       class="axis-label"
       y={height + $margin.bottom + 10}
       x={(width + $margin.left) / 2}
       text-anchor="middle">False Positive Rate</text
     >
+    <!-- x axis labels -->
     <text
       class="axis-label"
       y={$margin.left / 2}
@@ -252,24 +257,26 @@
     stroke-linecap: round;
     paint-order: stroke fill;
   }
-  .sky {
-    fill: var(--sky);
+  .seablue {
+    fill: var(--seablue);
     opacity: 1;
     stroke: none;
   }
-  .smile {
-    fill: var(--smile);
+  .cosmos {
+    fill: var(--cosmos);
     opacity: 1;
     stroke: none;
   }
   .circle-path {
     fill: none;
-    stroke: var(--smile);
-    stroke-width: 2;
+    stroke: var(--cosmos);
+    stroke-width: 4;
   }
   .triangle-path {
     fill: none;
-    stroke: var(--sky);
+    stroke: var(--seablue);
+    stroke-width: 4;
+
   }
   .axis-label,
   .chart-title {
@@ -286,7 +293,7 @@
   }
   .axis-tick {
     stroke-width: 1;
-    stroke: var(--sky);
+    stroke: var(--seablue);
     fill: none;
     opacity: 0.175;
   }
@@ -297,12 +304,12 @@
   circle {
     stroke: var(--bg);
     stroke-width: 1;
-    fill: var(--smile);
+    fill: var(--cosmos);
   }
   polygon {
     stroke: var(--bg);
     stroke-width: 0.5;
-    fill: var(--sky);
+    fill: var(--seablue);
   }
   @media screen and (max-width: 1000px) {
     .annotation-text {
