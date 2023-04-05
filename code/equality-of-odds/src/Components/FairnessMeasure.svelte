@@ -30,6 +30,7 @@
   ];
 
   const formatter = format(".2f");
+  
   // wrong accepted = FP
   $: fpr_eq1 = $wrongly_accepted_A / ($wrongly_accepted_A + 20);
   $: fpr_eq2 = $wrongly_accepted_B / ($wrongly_accepted_B + 15);

@@ -13,11 +13,11 @@
   const colorScale = scaleOrdinal([0, 1]);
 
   $: xScale = scaleLinear()
-    .domain(extent(rocData.map((d) => d.fpr)))
+    .domain([0,1])
     .range([$margin.left, width - $margin.right]);
 
   $: yScale = scaleLinear()
-    .domain(extent(rocData.map((d) => d.tpr)))
+    .domain([0,1])
     .range([height - $margin.bottom, $margin.top]);
 
   let circleRadius = 5;
@@ -54,16 +54,16 @@
   $: annotation1 = [
     [xScale(0.22), yScale(0.35)],
     [xScale(0.24), yScale(0.4)],
-    [xScale(0.105), yScale(0.6)],
+    [xScale(0.1625), yScale(0.745)],
   ];
-  $: annotation2 = [
-    [xScale(0.38), yScale(0.69)],
-    [xScale(0.4), yScale(0.8)],
-    [xScale(0.3), yScale(0.85)],
-  ];
+  // $: annotation2 = [
+  //   [xScale(0.38), yScale(0.69)],
+  //   [xScale(0.4), yScale(0.8)],
+  //   [xScale(0.3), yScale(0.85)],
+  // ];
 
   $: annotationSwoop1 = swoopAnnotation(annotation1);
-  $: annotationSwoop2 = swoopAnnotation(annotation2);
+  // $: annotationSwoop2 = swoopAnnotation(annotation2);
 </script>
 
 <div
@@ -198,13 +198,15 @@
       text-anchor="start"
       dominant-baseline="middle"
     >
-      <tspan>In this region, </tspan>
-      <tspan class="title-rate fpr"> FPR </tspan>
-      <tspan>dominates </tspan>
+      <tspan>At this point, </tspan>
+      <tspan class="title-rate fpr"> TPR </tspan>
+      <tspan>and</tspan>
+      <tspan class="title-rate fnr"> FNR </tspan>
+      <tspan>of both groups match and EO is satisfied. </tspan>
     </text>
 
     <!-- Annotation 2 -->
-    <path
+    <!-- <path
       class="annotation-path"
       d={annotationSwoop2}
       fill="none"
@@ -224,7 +226,7 @@
       <tspan>In this region, </tspan>
       <tspan class="title-rate fnr"> FNR </tspan>
       <tspan>dominates </tspan>
-    </text>
+    </text> -->
 
     <!-- Add arrow marker -->
     <defs>

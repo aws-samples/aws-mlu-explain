@@ -26,7 +26,7 @@
     .domain(extent(scatterData.map((d) => d.xPos)))
     .range([$margin.left, width - $margin.right]);
 
-  $: $rectPos = xScale(0.5);
+  $: $rectPos = xScale(0.65);
 
   const dbSize = 10;
 
@@ -92,6 +92,7 @@
       })
       .size();
 
+
     const wrong_accepted_B = wrong_accepted
       .filter(function (d) {
         return select(this).attr("group") == "triangle";
@@ -142,6 +143,11 @@
         return select(this).attr("group") == "triangle";
       })
       .size();
+      
+    // console.log(accepted_A)
+    // console.log(wrong_accepted_A)
+    // console.log(rejected_B)
+    // console.log(wrong_rejected_B)
 
     //  UPDATE REACTIVE STATE:
 
@@ -151,7 +157,7 @@
     $wrongly_accepted_A = wrong_accepted_A;
     $wrongly_accepted_B = wrong_accepted_B;
 
-    // Update the underylying dataset
+    // Update the underlying dataset
     stackedData.set([
       {
         xVal: "A",
