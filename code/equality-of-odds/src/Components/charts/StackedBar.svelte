@@ -27,6 +27,7 @@
   $: height = outerHeight - margin.top - margin.bottom;
 
   const color = scaleOrdinal().range(["var(--reject)", "var(--accept)"]);
+  const color_pred = scaleOrdinal().range(["var(--accept)", "var(--reject)"]);
 
   $: xScale = scaleBand()
     .rangeRound([margin.left, width - margin.right])
@@ -184,7 +185,7 @@
             x={xScale(d.data.xVal)}
             y={yScale(d[1])}
             height={yScale(d[0]) - yScale(d[1])}
-            fill={color(serie.key)}
+            fill={color_pred(serie.key)}
             fill-opacity="0.35"
             width={xScale.bandwidth()}
           />   
@@ -202,7 +203,7 @@
             x={xScale(d.data.xVal)}
             y={yScale(d[1])}
             height={yScale(d[0]) - yScale(d[1])}
-            fill={color(serie.key)}
+            fill={color_pred(serie.key)}
             fill-opacity="0.35"
             width={xScale.bandwidth()}
           />       
