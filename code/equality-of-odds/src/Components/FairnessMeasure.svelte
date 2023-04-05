@@ -30,7 +30,7 @@
   ];
 
   const formatter = format(".2f");
-  
+
   // wrong accepted = FP
   $: fpr_eq1 = $wrongly_accepted_A / ($wrongly_accepted_A + 20);
   $: fpr_eq2 = $wrongly_accepted_B / ($wrongly_accepted_B + 15);
@@ -76,8 +76,11 @@
     <br />
     <br />
     Try to find a probability threshold that results in 0 FPR and FNR difference
-    at the same time; is it even possible? Also observe what the <a href="https://mlu-explain.github.io/precision-recall/"> model performance</a>
-    is doing as you move the slider.
+    at the same time; is it even possible? Also observe what the
+    <a href="https://mlu-explain.github.io/precision-recall/">
+      model performance</a
+    >
+    (here: group-wise accuracy) is doing as you move the slider.
     <br />
     <br />
   </p>
@@ -163,7 +166,7 @@
             </svg>
           </sub>
           {@html katexify(
-            `= ${formatter(acc_A)}`, //= \\frac{TP+TN}{TP+FP+TN+FN} 
+            `= ${formatter(acc_A)}`, //= \\frac{TP+TN}{TP+FP+TN+FN}
             false
           )}
         </li>
@@ -200,13 +203,13 @@
     Note that as you drag the slider, you might find some so-called <span
       class="highlight"
       >lazy solutions where everyone gets rejected or accepted</span
-    >; where the FPR or FNR difference is 0. Those solutions technically meet
-    the relaxed version of the EO fairness criterion but make no sense from a
-    general ML performance perspective as can be seen in the accuracy of the
-    model.
+    >. These are solutions where the FPR or FNR difference is indeed 0. However,
+    while these solutions technically meet the relaxed version of EO, they make
+    little sense from a general ML performance perspective (check out the
+    accuracy values of the model).
     <br /><br />
-    You can verify that there is no probability threshold where FPR and FPR are the
-    same for both groups by comparing the values in the chart below:
+    You can also verify that there is no probability threshold where FPR and FPR
+    are the same for both groups by comparing the values in the chart below:
   </p>
   <br />
   <br />

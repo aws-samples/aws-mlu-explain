@@ -15,8 +15,8 @@
     respect to a given sensitive attribute (e.g., race) if the misclassification
     rates differ for groups of people having different values of that sensitive
     attribute. -->
-    To implement EO during model training, we can constrain the possible set of parameters
-    that the so-called loss function<sup
+    To implement EO during model training, we can constrain the possible set of parameters,
+    {@html katexify(`\\theta`)}, that the so-called loss function<sup
         ><span
             class="info-tooltip"
             title="A loss function quantifies how well a model performs for a given choice of parameters theta. 
@@ -24,10 +24,8 @@
             use:tooltip
             >[&#8505;]
         </span></sup
-    >, {@html katexify(`L(\\theta)`)}, can assume.
-    <br />
-    <br />
-    The constraint can be written as:
+    >, {@html katexify(`L(\\theta)`)}, can assume. The constraint can be written
+    as:
     <br />
     <br />
     {@html katexify(
@@ -47,7 +45,10 @@
     {@html katexify(
         `) - \\mathbb{P}(\\hat{Y} \\mathrel{\\char\`≠} Y, A= \\:`
     )}<svg height="10" width="10">
-        <polygon points="5,0 0,10 10,10" style="fill:var(--group_triangles);stroke-width:1" />
+        <polygon
+            points="5,0 0,10 10,10"
+            style="fill:var(--group_triangles);stroke-width:1"
+        />
         Sorry, your browser does not support inline SVG.
     </svg>
     {@html katexify(
@@ -66,16 +67,22 @@
     {@html katexify(
         `) - \\mathbb{P}(\\hat{Y} \\mathrel{\\char\`≠} Y, A= \\:`
     )}<svg height="10" width="10">
-        <polygon points="5,0 0,10 10,10" style="fill:var(--group_triangles);stroke-width:1" />
+        <polygon
+            points="5,0 0,10 10,10"
+            style="fill:var(--group_triangles);stroke-width:1"
+        />
         Sorry, your browser does not support inline SVG.
     </svg>
     {@html katexify(`) \\geq - \\epsilon`)}
     <br />
+    <br />where {@html katexify(`\\epsilon \\in \\R^{+}`)}. The smaller {@html katexify(
+        `\\epsilon`
+    )}, the fairer the decision boundary.
     <br />
-    Compared to the EO equation, the constraint is actually 'relaxed' as we only
-    require the parameters to create a solution where the difference between FPR
-    and FNR respectively is smaller than {@html katexify(`\\epsilon`)}. The
-    smaller {@html katexify(`\\epsilon`)}, the fairer the decision boundary.
+    <br />
+    Notice that compared to the EO equation, the constraint is actually 'relaxed'
+    as we only require the parameters to create a solution where the difference between
+    FPR and FNR respectively is smaller than {@html katexify(`\\epsilon`)}.
 </p>
 
 <style>

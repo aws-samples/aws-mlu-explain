@@ -24,15 +24,15 @@
 <section>
   <p class="body-header">Equalized Odds to achieve fairness</p>
   <p class="body-text">
-    Using EO, we can also influence the predictions a model makes. We are going
-    to look at two different ways of achieving this: by constraining the model
-    during training or by updating the probability threshold of a trained model.
+    Using EO, we can also influence the predictions a model makes to achieve a more fair outcome. We are going
+    to look at two different ways of performing this: by constraining the model
+    during training and by introducing group-wise probability thresholds for a trained model.
   </p>
   <br />
   <Tabs {items} />
   <br />
   <p class="body-text">
-    To visualize the search for the probability threshold that meets EO, we can
+    To visualize the search for the probability thresholds that meets EO, we can
     look at the so-called <a href="https://mlu-explain.github.io/roc-auc/"
       >ROC curves</a
     >
@@ -51,7 +51,7 @@
       <polygon points="6,0 0,12 12,12" style="fill:var(--group_triangles);stroke-width:1" />
       Sorry, your browser does not support inline SVG.
     </svg>. We can see that for most probability thresholds the TPR and FPR
-    values are different per group. For this dataset, there is only one point
+    values are different per group. For the dataset shown below, there is only one point
     where TPR and FPR are equal for both groups; this is where the EO criterion
     is satisfied.
   </p>
