@@ -23,25 +23,10 @@
     (Solon Barocas, Moritz Hardt, Arvind Narayanan).
   </p>
   <p class="resource-item">
-    <a class="on-end" href="https://hastie.su.domains/Papers/ESLII.pdf"
-      >[2] Elements of Statistical Learning</a
-    ><br />
-    (John Ross Quinlan, 1986).
-  </p>
-
-  <p class="resource-item">
-    <a
-      class="on-end"
-      href="https://www.amazon.com/Mathematical-Statistics-Analysis-Available-Enhanced/dp/0534399428"
-      >[3] Mathematical Statistics and Data Analysis</a
-    ><br />
-    (John A. Rice, 2010).
-  </p>
-  <p class="resource-item">
     <a
       class="on-end"
       href="https://arxiv.org/abs/1610.08452"
-      >[4] Fairness Beyond Disparate Treatment & Disparate Impact: Learning Classification without Disparate Mistreatment
+      >[2] Fairness Beyond Disparate Treatment & Disparate Impact: Learning Classification without Disparate Mistreatment
       </a
     ><br />
     (Muhammad Bilal Zafar, Isabel Valera, Manuel Gomez Rodriguez, Krishna P. Gummadi, 2016).
@@ -50,7 +35,7 @@
     <a
       class="on-end"
       href="https://arxiv.org/abs/1610.02413"
-      >[5] Equality of Opportunity in Supervised Learning
+      >[3] Equality of Opportunity in Supervised Learning
       </a
     ><br />
     (Moritz Hardt, Eric Price, Nathan Srebro, 2016).
