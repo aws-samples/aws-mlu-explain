@@ -92,7 +92,6 @@
       })
       .size();
 
-
     const wrong_accepted_B = wrong_accepted
       .filter(function (d) {
         return select(this).attr("group") == "triangle";
@@ -143,7 +142,7 @@
         return select(this).attr("group") == "triangle";
       })
       .size();
-      
+
     // console.log(accepted_A)
     // console.log(wrong_accepted_A)
     // console.log(rejected_B)
@@ -212,8 +211,7 @@
     data-id="decision-boundary-bar1"
     transform="translate({$rectPos},{$margin.top})"
   >
-
-  <!-- boundary line -->
+    <!-- boundary line -->
     <rect
       height={height - $margin.bottom - $margin.top}
       width={dbSize}
@@ -302,7 +300,6 @@
     stroke: var(--white);
   }
 
-  .bar,
   .decision-boundary-bar1 {
     cursor: pointer;
   }

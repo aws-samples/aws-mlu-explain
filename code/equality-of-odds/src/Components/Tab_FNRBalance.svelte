@@ -3,7 +3,6 @@
   import { tooltip } from "../tooltip";
   import { format } from "d3-format";
   import {
-    rectPos,
     wrongly_rejected_A,
     wrongly_rejected_B,
     outerWidth,
@@ -25,7 +24,6 @@
 
   $: eq1 = $wrongly_rejected_A / ($wrongly_rejected_A + 30);
   $: eq2 = $wrongly_rejected_B / ($wrongly_rejected_B + 10);
-  $: eq3 = eq1 - eq2;
 </script>
 
 <p class="body-text">
@@ -45,7 +43,7 @@
   <br />
   <br />
 </p>
-<p class="equation-text">  
+<p class="equation-text">
   {@html katexify(
     `\\textrm{FNR}
     `,
@@ -70,60 +68,25 @@
   )}
   <sub>
     <svg height="10" width="10">
-      <polygon points="5,0 0,10 10,10" style="fill:var(--group_triangles);stroke-width:1" />
+      <polygon
+        points="5,0 0,10 10,10"
+        style="fill:var(--group_triangles);stroke-width:1"
+      />
       Sorry, your browser does not support inline SVG.
     </svg></sub
   >
-<!-- 
-  {@html katexify(
-    ` = 
-  ${formatter(eq1)} - ${formatter(eq2)} = ${formatter(eq3)}
-  `,
-    false
-  )} -->
-  </p>
-  <br />
-  <p class="body-text">
-  The resulting value will be in the range [-1, 1], the closer to 0 the closer to
-  equal opportunity the groups are and we satisfy the EO equation where  {@html katexify(
+</p>
+<br />
+<p class="body-text">
+  The resulting value will be in the range [-1, 1], the closer to 0 the closer
+  to equal opportunity the groups are and we satisfy the EO equation where {@html katexify(
     ` y=1
     `,
     false
-  )}. 
-  <!-- <br /><br />
-  Move the slider below or use the button to find the point of equal opportunity
-  (or approximation) for our data. -->
+  )}.
 </p>
-<!-- <div class="button-container">
-  <button on:click={() => ($rectPos = updatePos)}>Move Boundary to 0.30</button>
-</div> -->
 
 <style>
-  button {
-    background-color: var(--bg);
-    border: none;
-    color: var(--squidink);
-    padding: 12px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: var(--size-default);
-    margin: 4px 2px;
-    cursor: pointer;
-    outline: 2px solid var(--squidink);
-  }
-  button:hover {
-    color: var(--bg);
-    background-color: var(--squidink);
-  }
-
-  .button-container {
-    max-width: var(--max-width);
-    display: flex;
-    margin: 1rem auto;
-    justify-content: center;
-  }
-
   .definition-header {
     font-size: 0.85rem;
     font-family: var(--font-bold);

@@ -13,11 +13,11 @@
   const colorScale = scaleOrdinal([0, 1]);
 
   $: xScale = scaleLinear()
-    .domain([0,1])
+    .domain([0, 1])
     .range([$margin.left, width - $margin.right]);
 
   $: yScale = scaleLinear()
-    .domain([0,1])
+    .domain([0, 1])
     .range([height - $margin.bottom, $margin.top]);
 
   let circleRadius = 5;
@@ -295,8 +295,7 @@
     stroke: var(--reject);
     stroke-width: 4;
   }
-  .axis-label,
-  .chart-title {
+  .axis-label {
     font-size: 12px;
   }
   #roc-holder {

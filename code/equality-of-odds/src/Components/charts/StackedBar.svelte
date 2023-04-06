@@ -2,13 +2,7 @@
   import { max } from "d3-array";
   import { format } from "d3-format";
   import { scaleLinear, scaleOrdinal, scaleBand } from "d3-scale";
-  import {
-    stackedData,
-    wrongly_accepted_A,
-    wrongly_accepted_B,
-    wrongly_rejected_A,
-    wrongly_rejected_B,
-  } from "../../store";
+  import { stackedData } from "../../store";
   import { stack, stackOrderNone, stackOffsetNone } from "d3-shape";
 
   let outerHeight = 300;
@@ -90,24 +84,24 @@
             <tspan font-size="19" dy="1" alignment-baseline="center">
               &#x25CF;</tspan
             >
-          <!-- Triangles -->
+            <!-- Triangles -->
           {:else}
             <tspan font-size="11" dy="0" alignment-baseline="center">
               &#x25B2;</tspan
-            > 
+            >
           {/if}
           <!-- Description first bar -->
           {#if i == 0}
-          <tspan
-            class="axis-text"
-            font-size="12"
-            dy="-1"
-            dx="-5"
-            alignment-baseline="center"
-          >
-          Truth</tspan
-          >
-          <!-- Description second bar -->
+            <tspan
+              class="axis-text"
+              font-size="12"
+              dy="-1"
+              dx="-5"
+              alignment-baseline="center"
+            >
+              Truth</tspan
+            >
+            <!-- Description second bar -->
           {:else if i == 1}
             <tspan
               class="axis-text"
@@ -117,20 +111,20 @@
               alignment-baseline="center"
             >
               Prediction</tspan
-              >
+            >
             <!-- Description third bar -->
-            {:else if i == 2}
-              <tspan
-                class="axis-text"
-                font-size="12"
-                dy=".4"
-                dx="0.5"
-                alignment-baseline="center"
-              >
-                Truth</tspan
-              >
+          {:else if i == 2}
+            <tspan
+              class="axis-text"
+              font-size="12"
+              dy=".4"
+              dx="0.5"
+              alignment-baseline="center"
+            >
+              Truth</tspan
+            >
             <!-- Description fourth bar -->
-            {:else if i == 3}
+          {:else if i == 3}
             <tspan
               class="axis-text"
               font-size="12"
@@ -166,92 +160,51 @@
         >
       </g>
     {/each}
-    
+
     <!-- stacked rects -->
     {#each series as serie}
       <g class="series">
         {#each serie as d}
-        {#if d.data.xVal == "A"}
-          <rect
-            x={xScale(d.data.xVal)}
-            y={yScale(d[1])}
-            height={yScale(d[0]) - yScale(d[1])}
-            fill={color(serie.key)}
-            fill-opacity=".8"
-            width={xScale.bandwidth()}
-          />
-          {:else if d.data.xVal=="A Predicted"}
-          <rect
-            x={xScale(d.data.xVal)}
-            y={yScale(d[1])}
-            height={yScale(d[0]) - yScale(d[1])}
-            fill={color_pred(serie.key)}
-            fill-opacity="0.35"
-            width={xScale.bandwidth()}
-          />   
-          {:else if d.data.xVal=="B"}
-          <rect
-            x={xScale(d.data.xVal)}
-            y={yScale(d[1])}
-            height={yScale(d[0]) - yScale(d[1])}
-            fill={color(serie.key)}
-            fill-opacity=".8"
-            width={xScale.bandwidth()}
-          />     
-          {:else if d.data.xVal=="B Predicted"}
-          <rect
-            x={xScale(d.data.xVal)}
-            y={yScale(d[1])}
-            height={yScale(d[0]) - yScale(d[1])}
-            fill={color_pred(serie.key)}
-            fill-opacity="0.35"
-            width={xScale.bandwidth()}
-          />       
-          {/if}  
+          {#if d.data.xVal == "A"}
+            <rect
+              x={xScale(d.data.xVal)}
+              y={yScale(d[1])}
+              height={yScale(d[0]) - yScale(d[1])}
+              fill={color(serie.key)}
+              fill-opacity=".8"
+              width={xScale.bandwidth()}
+            />
+          {:else if d.data.xVal == "A Predicted"}
+            <rect
+              x={xScale(d.data.xVal)}
+              y={yScale(d[1])}
+              height={yScale(d[0]) - yScale(d[1])}
+              fill={color_pred(serie.key)}
+              fill-opacity="0.35"
+              width={xScale.bandwidth()}
+            />
+          {:else if d.data.xVal == "B"}
+            <rect
+              x={xScale(d.data.xVal)}
+              y={yScale(d[1])}
+              height={yScale(d[0]) - yScale(d[1])}
+              fill={color(serie.key)}
+              fill-opacity=".8"
+              width={xScale.bandwidth()}
+            />
+          {:else if d.data.xVal == "B Predicted"}
+            <rect
+              x={xScale(d.data.xVal)}
+              y={yScale(d[1])}
+              height={yScale(d[0]) - yScale(d[1])}
+              fill={color_pred(serie.key)}
+              fill-opacity="0.35"
+              width={xScale.bandwidth()}
+            />
+          {/if}
         {/each}
       </g>
     {/each}
-    <!-- 
-    <text
-      class="chart-title"
-      y={margin.top / 3}
-      x={(width + margin.left) / 2}
-      text-anchor="middle"
-    >
-      <tspan>
-        {formatter($wrongly_rejected_A / ($wrongly_rejected_A + 30))} wrongly rejected
-        in group
-      </tspan>
-      <tspan class="accept" font-size="25" dy="3" alignment-baseline="center">
-        &#x25CF;</tspan
-      >
-      <tspan dy="-3" dx="2"
-        >{formatter($wrongly_rejected_B / ($wrongly_rejected_B + 10))} wrongly rejected
-        in group
-      </tspan>
-      <tspan class="accept" font-size="13"> &#x25B2; </tspan>
-    </text>
-
-    <text
-      class="chart-title"
-      y={margin.top / 3 + 20}
-      x={(width + margin.left) / 2}
-      text-anchor="middle"
-    >
-      <tspan>
-        {formatter($wrongly_accepted_A / ($wrongly_accepted_A + 20))} wrongly accepted
-        in group
-      </tspan>
-      <tspan class="reject" font-size="25" dy="3" alignment-baseline="center">
-        &#x25CF;</tspan
-      >
-      <tspan dy="-3" dx="2"
-        >{formatter($wrongly_accepted_B / ($wrongly_accepted_B + 15))} wrongly accepted
-        in group
-      </tspan>
-      <tspan class="reject" font-size="13"> &#x25B2; </tspan>
-    </text> 
-  -->
 
     <text
       class="axis-label"
@@ -264,8 +217,7 @@
 </div>
 
 <style>
-  .axis-label,
-  .chart-title {
+  .axis-label {
     font-size: 12px;
   }
   #stackedrect-holder {
@@ -287,17 +239,5 @@
   .axis-text {
     font-family: Arial;
     font-size: 12px;
-  }
-  circle {
-    fill: var(--reject);
-    stroke: var(--bg);
-    stroke-width: 1;
-  }
-
-  .accept {
-    fill: var(--accept);
-  }
-  .reject {
-    fill: var(--reject);
   }
 </style>

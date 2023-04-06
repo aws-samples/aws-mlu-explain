@@ -40,14 +40,7 @@
       y1={height - $margin.bottom}
       y2={height - $margin.bottom}
     />
-    <!-- y axis line -->
-    <!-- <line
-      class="axis-line"
-      x1={$margin.left}
-      x2={$margin.left}
-      y1={$margin.top}
-      y2={height - $margin.bottom}
-    /> -->
+
     <!-- x-ticks for grid -->
     {#each xScale.ticks() as tick}
       <g
@@ -95,13 +88,6 @@
             fill={colorScale(d.label)}
           />
         {:else}
-          <!-- <rect
-            x={xScale(d.xPos) - rectWidth / 2}
-            y={yScale(d.yPos) - rectWidth / 2}
-            width={rectWidth}
-            height={rectWidth}
-            fill={colorScale(d.label)}
-          /> -->
           <polygon
             points={`${xScale(d.xPos)},${yScale(d.yPos) - rectWidth / 2} ${
               xScale(d.xPos) - rectWidth / 1.5
@@ -131,8 +117,7 @@
     width: 100%;
   }
 
-  .axis-label,
-  .chart-title {
+  .axis-label {
     font-size: 12px;
   }
   .axis-line {

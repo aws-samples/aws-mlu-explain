@@ -24,9 +24,10 @@
 <section>
   <p class="body-header">Equalized Odds to achieve fairness</p>
   <p class="body-text">
-    Using EO, we can also influence the predictions a model makes to achieve a more fair outcome. We are going
-    to look at two different ways of performing this: by constraining the model
-    during training and by introducing group-wise probability thresholds for a trained model.
+    Using EO, we can also influence the predictions a model makes to achieve a
+    more fair outcome. We are going to look at two different ways of performing
+    this: by constraining the model during training and by introducing
+    group-wise probability thresholds for a trained model.
   </p>
   <br />
   <Tabs {items} />
@@ -48,12 +49,15 @@
     </svg>
     and
     <svg height="12" width="12">
-      <polygon points="6,0 0,12 12,12" style="fill:var(--group_triangles);stroke-width:1" />
+      <polygon
+        points="6,0 0,12 12,12"
+        style="fill:var(--group_triangles);stroke-width:1"
+      />
       Sorry, your browser does not support inline SVG.
     </svg>. We can see that for most probability thresholds the TPR and FPR
-    values are different per group. For the dataset shown below, there is only one point
-    where TPR and FPR are equal for both groups; this is where the EO criterion
-    is satisfied.
+    values are different per group. For the dataset shown below, there is only
+    one point where TPR and FPR are equal for both groups; this is where the EO
+    criterion is satisfied.
   </p>
   <br />
   <div id="roc-container">
@@ -68,33 +72,13 @@
     width: 55%;
     max-width: 1000px;
   }
-  #scatter2-container {
-    max-height: 45vh;
-  }
 
-  ul {
-    max-width: 600px;
-    margin: auto;
-    color: var(--squid-ink);
-    padding-top: 0.5rem;
-  }
-  li {
-    padding: 0.25rem;
-    list-style: none;
-    color: var(--squid-ink);
-  }
   /* mobile */
   @media screen and (max-width: 1000px) {
     #roc-container {
       height: 70vh;
       width: 100%;
       max-width: 1000px;
-    }
-    ul {
-      max-width: 80%;
-    }
-    li {
-      padding: 0.25rem 0;
     }
   }
 </style>
