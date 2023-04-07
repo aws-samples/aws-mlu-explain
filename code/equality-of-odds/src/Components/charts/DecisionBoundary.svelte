@@ -60,8 +60,6 @@
 
   function dragended(event, d) {}
 
-  // data.filter(function(d){ return  (d.name == "toto" || d.name == "tutu") })
-
   $: updateStackedRect = function (xPos) {
     let selected_data = selectAll("g.data-point1");
 
@@ -78,7 +76,7 @@
     });
 
     let rejected = selected_data.filter(function (d) {
-      return select(this).attr("x") <= xPos;
+      return select(this).attr("x") < xPos;
     });
 
     // Wrong accepted
@@ -116,8 +114,6 @@
       .size();
 
     //   A (right side)
-    //   accepted A
-    //   rejected A
     const accepted_A = accepted
       .filter(function (d) {
         return select(this).attr("group") == "circle";
@@ -131,22 +127,20 @@
       .size();
 
     //   B (left side)
-    const rejected_B = accepted
+    const rejected_B = rejected
       .filter(function (d) {
         return select(this).attr("group") == "triangle";
       })
       .size();
 
-    const accepted_B = rejected
+    const accepted_B = accepted
       .filter(function (d) {
         return select(this).attr("group") == "triangle";
       })
       .size();
 
-    // console.log(accepted_A)
-    // console.log(wrong_accepted_A)
-    // console.log(rejected_B)
-    // console.log(wrong_rejected_B)
+    // console.log("accepted circle", accepted_A)
+    // console.log("rejected circle", rejected_A)
 
     //  UPDATE REACTIVE STATE:
 
@@ -160,19 +154,19 @@
     stackedData.set([
       {
         xVal: "A",
-        Accepted: 20,
-        Declined: 30,
+        Accepted: 30,
+        Declined: 20,
       },
       {
         xVal: "A Predicted",
-        Accepted: accepted_A,
-        Declined: rejected_A,
+        Accepted: rejected_A, //rect is drawn as diff, so need inverted here
+        Declined: accepted_A, //rect is drawn as diff, so need inverted here
       },
-      { xVal: "B", Accepted: 15, Declined: 10 },
+      { xVal: "B", Accepted: 10, Declined: 15 },
       {
         xVal: "B Predicted",
-        Accepted: rejected_B,
-        Declined: accepted_B,
+        Accepted: rejected_B, //rect is drawn as diff, so need inverted here
+        Declined: accepted_B, //rect is drawn as diff, so need inverted here
       },
     ]);
   };
