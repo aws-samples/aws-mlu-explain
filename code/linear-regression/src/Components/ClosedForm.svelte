@@ -1,14 +1,15 @@
 <script>
   import { format } from "d3-format";
   import katexify from "../katexify";
+  import { scaleLinear } from "d3-scale";
   import ClosedFormScatterplot from "./ClosedFormScatterplot.svelte";
   import { matrixDot, transpose } from "../utils";
-  import { cfBias, cfWeight, cfCircles } from "../store.js";
-  import { tooltip } from "../tooltip";
+  import { cfBias, cfWeight, cfCircles, cfWidth, cfHeight } from "../store.js";
   let closedFormScatterClass;
 
   // label formatter
   const formatter = format(".2f");
+  const matForm = format(".1f");
 
   function resetCircles() {
     $cfCircles = [];
@@ -31,6 +32,28 @@
 
   let width = 500;
   let height = 500;
+
+  const margin = {
+    top: 50,
+    bottom: 3,
+    left: 30,
+    right: 30,
+  };
+
+  // scales
+  $: xScale = scaleLinear()
+    .domain([0, 100])
+    .range([margin.left, $cfWidth - margin.right]);
+  $: yScale = scaleLinear()
+    .domain([0, 100])
+    .range([$cfHeight - margin.bottom, margin.top]);
+
+  $: newcfCircles = $cfCircles.map((d) => {
+    return {
+      cx: matForm(xScale.invert(d.cx)),
+      cy: matForm(yScale.invert(d.cy)),
+    };
+  });
 </script>
 
 <section>
@@ -63,75 +86,75 @@
         \\hat{\\beta} = (X^{T}X)^{-1}X^{T}Y \\\\
          = \\begin{pmatrix} 
          \\begin{bmatrix}
-            1 & ${$cfCircles?.[0] ? $cfCircles[0].cx : 0} \\\\
-            ${$cfCircles?.[1] ? `1 & ${$cfCircles[1].cx} \\\\` : ""} 
+            1 & ${newcfCircles?.[0] ? newcfCircles[0].cx : 0} \\\\
+            ${newcfCircles?.[1] ? `1 & ${newcfCircles[1].cx} \\\\` : ""} 
             ${
-              $cfCircles.length > 3
+              newcfCircles.length > 3
                 ? `\\vdots & \\vdots \\\\`
-                : $cfCircles?.[2]
-                ? `1 & ${$cfCircles[2].cx} \\\\`
+                : newcfCircles?.[2]
+                ? `1 & ${newcfCircles[2].cx} \\\\`
                 : ""
             } 
             ${
-              $cfCircles.length > 3
-                ? `1 & ${$cfCircles.at(-1).cx}`
-                : $cfCircles?.[3]
-                ? `1 & ${$cfCircles[3].cx}`
+              newcfCircles.length > 3
+                ? `1 & ${newcfCircles.at(-1).cx}`
+                : newcfCircles?.[3]
+                ? `1 & ${newcfCircles[3].cx}`
                 : ""
             } 
             \\end{bmatrix}^T 
             \\begin{bmatrix}
-            1 & ${$cfCircles?.[0] ? $cfCircles[0].cx : 0} \\\\
-            ${$cfCircles?.[1] ? `1 & ${$cfCircles[1].cx} \\\\` : ""} 
+            1 & ${newcfCircles?.[0] ? newcfCircles[0].cx : 0} \\\\
+            ${newcfCircles?.[1] ? `1 & ${newcfCircles[1].cx} \\\\` : ""} 
             ${
-              $cfCircles.length > 3
+              newcfCircles.length > 3
                 ? `\\vdots & \\vdots \\\\`
-                : $cfCircles?.[2]
-                ? `1 & ${$cfCircles[2].cx} \\\\`
+                : newcfCircles?.[2]
+                ? `1 & ${newcfCircles[2].cx} \\\\`
                 : ""
             } 
             ${
-              $cfCircles.length > 3
-                ? `1 & ${$cfCircles.at(-1).cx}`
-                : $cfCircles?.[3]
-                ? `1 & ${$cfCircles[3].cx}`
+              newcfCircles.length > 3
+                ? `1 & ${newcfCircles.at(-1).cx}`
+                : newcfCircles?.[3]
+                ? `1 & ${newcfCircles[3].cx}`
                 : ""
             } 
             \\end{bmatrix}
             \\end{pmatrix}^{-1} 
             \\begin{bmatrix}
-            1 & ${$cfCircles?.[0] ? $cfCircles[0].cx : 0} \\\\
-            ${$cfCircles?.[1] ? `1 & ${$cfCircles[1].cx} \\\\` : ""} 
+            1 & ${newcfCircles?.[0] ? newcfCircles[0].cx : 0} \\\\
+            ${newcfCircles?.[1] ? `1 & ${newcfCircles[1].cx} \\\\` : ""} 
             ${
-              $cfCircles.length > 3
+              newcfCircles.length > 3
                 ? `\\vdots & \\vdots \\\\`
-                : $cfCircles?.[2]
-                ? `1 & ${$cfCircles[2].cx} \\\\`
+                : newcfCircles?.[2]
+                ? `1 & ${newcfCircles[2].cx} \\\\`
                 : ""
             } 
             ${
-              $cfCircles.length > 3
-                ? `1 & ${$cfCircles.at(-1).cx}`
-                : $cfCircles?.[3]
-                ? `1 & ${$cfCircles[3].cx}`
+              newcfCircles.length > 3
+                ? `1 & ${newcfCircles.at(-1).cx}`
+                : newcfCircles?.[3]
+                ? `1 & ${newcfCircles[3].cx}`
                 : ""
             } 
             \\end{bmatrix}^T 
             \\begin{bmatrix}
-            ${$cfCircles?.[0] ? $cfCircles[0].cy : 0} \\\\
-            ${$cfCircles?.[1] ? `${$cfCircles[1].cy} \\\\` : ""} 
+            ${newcfCircles?.[0] ? newcfCircles[0].cy : 0} \\\\
+            ${newcfCircles?.[1] ? `${newcfCircles[1].cy} \\\\` : ""} 
             ${
-              $cfCircles.length > 3
+              newcfCircles.length > 3
                 ? `\\vdots \\\\`
-                : $cfCircles?.[2]
-                ? `${$cfCircles[2].cy} \\\\`
+                : newcfCircles?.[2]
+                ? `${newcfCircles[2].cy} \\\\`
                 : ""
             } 
             ${
-              $cfCircles.length > 3
-                ? `${$cfCircles.at(-1).cy}`
-                : $cfCircles?.[3]
-                ? `${$cfCircles[3].cy}`
+              newcfCircles.length > 3
+                ? `${newcfCircles.at(-1).cy}`
+                : newcfCircles?.[3]
+                ? `${newcfCircles[3].cy}`
                 : ""
             } 
             \\end{bmatrix}
@@ -147,38 +170,38 @@
             \\end{bmatrix}
             \\end{pmatrix}^{-1}
             \\begin{bmatrix}
-            1 & ${$cfCircles?.[0] ? $cfCircles[0].cx : 0} \\\\
-            ${$cfCircles?.[1] ? `1 & ${$cfCircles[1].cx} \\\\` : ""} 
+            1 & ${newcfCircles?.[0] ? newcfCircles[0].cx : 0} \\\\
+            ${newcfCircles?.[1] ? `1 & ${newcfCircles[1].cx} \\\\` : ""} 
             ${
-              $cfCircles.length > 3
+              newcfCircles.length > 3
                 ? `\\vdots & \\vdots \\\\`
-                : $cfCircles?.[2]
-                ? `1 & ${$cfCircles[2].cx} \\\\`
+                : newcfCircles?.[2]
+                ? `1 & ${newcfCircles[2].cx} \\\\`
                 : ""
             } 
             ${
-              $cfCircles.length > 3
-                ? `1 & ${$cfCircles.at(-1).cx}`
-                : $cfCircles?.[3]
-                ? `1 & ${$cfCircles[3].cx}`
+              newcfCircles.length > 3
+                ? `1 & ${newcfCircles.at(-1).cx}`
+                : newcfCircles?.[3]
+                ? `1 & ${newcfCircles[3].cx}`
                 : ""
             } 
             \\end{bmatrix}^T 
             \\begin{bmatrix}
-            ${$cfCircles?.[0] ? $cfCircles[0].cy : 0} \\\\
-            ${$cfCircles?.[1] ? `${$cfCircles[1].cy} \\\\` : ""} 
+            ${newcfCircles?.[0] ? newcfCircles[0].cy : 0} \\\\
+            ${newcfCircles?.[1] ? `${newcfCircles[1].cy} \\\\` : ""} 
             ${
-              $cfCircles.length > 3
+              newcfCircles.length > 3
                 ? `\\vdots \\\\`
-                : $cfCircles?.[2]
-                ? `${$cfCircles[2].cy} \\\\`
+                : newcfCircles?.[2]
+                ? `${newcfCircles[2].cy} \\\\`
                 : ""
             } 
             ${
-              $cfCircles.length > 3
-                ? `${$cfCircles.at(-1).cy}`
-                : $cfCircles?.[3]
-                ? `${$cfCircles[3].cy}`
+              newcfCircles.length > 3
+                ? `${newcfCircles.at(-1).cy}`
+                : newcfCircles?.[3]
+                ? `${newcfCircles[3].cy}`
                 : ""
             } 
             \\end{bmatrix}
@@ -186,8 +209,8 @@
             \\\\
             =  
          \\begin{bmatrix}
-            1 & ${$cfCircles?.[1] ? formatter($cfBias) : 0} \\\\
-            1 &${$cfCircles?.[1] ? formatter($cfWeight) : 0}
+            1 & ${newcfCircles?.[1] ? formatter($cfBias) : 0} \\\\
+            1 &${newcfCircles?.[1] ? formatter($cfWeight) : 0}
             \\end{bmatrix}
             
             
@@ -229,8 +252,8 @@
     opinions exist on the utility of such tests (e.g. chapter 10.7 of
     <a href="#resources">[1]</a> maintains they're not super important). We don't
     take a strong stance on this issue, but believe practitioners should always assess
-    the standard error around any parameter estimates for themselves and present them
-    in their research.
+    the standard error around any parameter estimates for themselves and present
+    them in their research.
   </p>
   <br /><br />
 </section>
