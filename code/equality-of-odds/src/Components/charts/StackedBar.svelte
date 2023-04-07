@@ -21,7 +21,6 @@
   $: height = outerHeight - margin.top - margin.bottom;
 
   const color = scaleOrdinal().range(["var(--reject)", "var(--accept)"]);
-  const color_pred = scaleOrdinal().range(["var(--accept)", "var(--reject)"]);
 
   $: xScale = scaleBand()
     .rangeRound([margin.left, width - margin.right])
@@ -165,43 +164,14 @@
     {#each series as serie}
       <g class="series">
         {#each serie as d}
-          {#if d.data.xVal == "A"}
-            <rect
-              x={xScale(d.data.xVal)}
-              y={yScale(d[1])}
-              height={yScale(d[0]) - yScale(d[1])}
-              fill={color(serie.key)}
-              fill-opacity=".8"
-              width={xScale.bandwidth()}
-            />
-          {:else if d.data.xVal == "A Predicted"}
-            <rect
-              x={xScale(d.data.xVal)}
-              y={yScale(d[1])}
-              height={yScale(d[0]) - yScale(d[1])}
-              fill={color_pred(serie.key)}
-              fill-opacity="0.35"
-              width={xScale.bandwidth()}
-            />
-          {:else if d.data.xVal == "B"}
-            <rect
-              x={xScale(d.data.xVal)}
-              y={yScale(d[1])}
-              height={yScale(d[0]) - yScale(d[1])}
-              fill={color(serie.key)}
-              fill-opacity=".8"
-              width={xScale.bandwidth()}
-            />
-          {:else if d.data.xVal == "B Predicted"}
-            <rect
-              x={xScale(d.data.xVal)}
-              y={yScale(d[1])}
-              height={yScale(d[0]) - yScale(d[1])}
-              fill={color_pred(serie.key)}
-              fill-opacity="0.35"
-              width={xScale.bandwidth()}
-            />
-          {/if}
+          <rect
+            x={xScale(d.data.xVal)}
+            y={yScale(d[1])}
+            height={yScale(d[0]) - yScale(d[1])}
+            fill={color(serie.key)}
+            fill-opacity={d.data.xVal.includes("Predict") ? "0.35" : "0.8"}
+            width={xScale.bandwidth()}
+          />
         {/each}
       </g>
     {/each}
