@@ -21,7 +21,7 @@
   let margin = {
     top: 25,
     bottom: 5,
-    left: 35,
+    left: 55,
     right: 0,
   };
 

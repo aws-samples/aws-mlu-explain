@@ -38,16 +38,26 @@ export const numLayersBp = derived(
 export const playAnimation = writable(true);
 export const animationDuration = writable(0.25);
 export const ggg = writable();
-export const points = writable([1, 2, 3]);
+export const points = writable([1]);
 export const modelParams = writable([]);
 export const show = writable(true);
-export const networkInteractive = writable([2, 3, 1]);
+export const networkInteractive = writable([2, 2, 1, 1]);
 export const numLayersInteractive = derived(
   networkInteractive,
   ($networkInteractive) => $networkInteractive.length
 );
 export const errorMetrics = writable([{ x: 0, loss: 0, y: 0 }]);
+export const networkInteractiveWeights = writable([
+  { data: -0.38845597192856474, grad: 0 },
+  { data: -0.7351119989217048, grad: 0 },
+  { data: -0.5571893834895465, grad: 0 },
+  { data: -0.8310789942374086, grad: 0 },
+  { data: -0.839566415437043, grad: 0 },
+  { data: -0.19699325424587988, grad: 0 },
+  { data: 0.9259721085236738, grad: 0 },
+]);
 // preds
 export const hexPreds = writable([]);
 export const hexVals = writable([]);
 export const interactiveDataset = writable([]);
+export const loopCount = writable(0);

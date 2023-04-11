@@ -9,6 +9,8 @@
     animationDuration,
     ggg,
     points,
+    networkInteractiveWeights,
+    loopCount,
   } from "../../store";
   import { fade, fly, draw } from "svelte/transition";
 
@@ -86,14 +88,32 @@
       $networkInteractive = [...newNN];
     }
   }
+
+  function getWeightIndex(layer, prevIndex, currIndex, networkInteractive) {
+    let index = 0;
+    for (let i = 0; i < layer - 1; i++) {
+      index += networkInteractive[i] * networkInteractive[i + 1];
+    }
+    index += prevIndex * networkInteractive[layer - 1] + currIndex;
+    console.log("index", Math.abs(Math.ceil(index)));
+    return Math.abs(Math.ceil(index));
+  }
+
+  let counter = 0;
+
+  function incrementCounter() {
+    counter++;
+    console.log("counter", counter);
+  }
 </script>
 
 <div
   bind:this={$ggg}
-  id="network-chart"
+  id="network-chart-interactive"
   bind:offsetWidth={width}
   bind:offsetHeight={height}
 >
+  <!-- layer -->
   <svg {width} height={height + marginScroll.top + marginScroll.bottom}>
     {#if visible}
       <!-- edges -->
@@ -101,6 +121,8 @@
         {#each positionElements($networkInteractive[layer], maxNumNeurons) as yPosition}
           {#if layer > 0}
             {#each positionElements($networkInteractive[layer - 1], maxNumNeurons) as prevYPosition, j}
+              {incrementCounter()}
+              {console.log("counter", counter)}
               <path
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}
@@ -124,8 +146,7 @@
                     startOffset="50%"
                     text-anchor="middle"
                     fill="#232F3E"
-                    dominant-baseline="middle"
-                    >{`${layer}, ${yPosition}, ${prevYPosition}`}</textPath
+                    dominant-baseline="middle">{`${prevYPosition}`}</textPath
                   >
                 </text>
               {/key}
@@ -153,7 +174,9 @@
                     opacity="0"
                     class="moving-text"
                     alignment-baseline="middle"
-                    >{`layer`}
+                  >
+                    {5}
+
                     <set
                       attributeName="opacity"
                       to="1"
@@ -225,7 +248,6 @@
                             M ${xScale(layer)} ${yScale(yPosition)}
                             L ${xScale(layer - 1)} ${yScale(prevYPosition)}
                           `}
-                    onend={console.log("Bac End!!!", layer)}
                   />
                 </g>
               {/each}
@@ -338,21 +360,26 @@
     justify-content: space-between;
   }
 
+  button:hover {
+    background-color: var(--darksquidink); /* Green */
+    border: 1px solid var(--darksquidink);
+    color: var(--white);
+  }
+
   .button-plus,
   .button-minus {
     background-color: var(--bb);
     border: 1px solid var(--squidink);
     color: var(--squidink);
-    /* border-radius: 3px; */
     padding: 5px 10px;
     font-size: 14px;
     cursor: pointer;
   }
   .weight-text-int {
-    font-size: 10px;
+    font-size: 15px;
     color: black;
     stroke: white;
-    stroke-width: 2;
+    stroke-width: 5px;
     paint-order: stroke fill;
     font-family: var(--font-main);
   }
@@ -386,9 +413,7 @@
     border-radius: 5;
     transition: all 0.45s;
     height: 100%;
-    /* background-color: rgb(255, 164, 209); */
     background-color: rgba(0, 0, 0, 0);
-    /* border: 1px solid red; */
   }
   .nn-text {
     font-size: 12px;
@@ -428,13 +453,12 @@
 
   .nn-node {
     stroke: var(--squidink);
-    /* fill: var(--paper); */
     stroke-width: 0.5;
     fill-opacity: 0.95;
     transition: all 0.45s;
   }
 
-  #network-chart {
+  #network-chart-interactive {
     width: 100%;
     max-height: 100%;
     height: 100%;

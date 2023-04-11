@@ -22,7 +22,7 @@
 <div id="layer-controls">
   <div>
     <p># Hidden Layers: {$numLayersInteractive - 2}</p>
-    <div id="add-buttons">
+    <div class="button-container">
       <button on:click={add}>+</button>
       <button on:click={subtract}>-</button>
     </div>
@@ -30,9 +30,13 @@
 </div>
 
 <style>
-  * {
-    /* border: 1px solid black; */
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: auto;
   }
+
   #layer-controls {
     display: flex;
     justify-content: center;
@@ -40,42 +44,18 @@
     height: 100%;
     /* border: 1px solid black; */
   }
-  #add-buttons {
-    display: flex;
-    justify-content: center;
-  }
 
   button {
-    background-color: var(--bg);
-    border: 2px solid var(--darksquidink);
-    color: var(--squidink);
-    padding: 7px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.2rem;
-    margin: 1rem;
-    transition: all 0.25s;
-  }
-  button:hover {
-    background-color: var(--darksquidink); /* Green */
-    border: 2px solid var(--darksquidink);
-    color: var(--white);
-    padding: 7px 16px;
-  }
-
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .button {
     background-color: var(--bb);
     border: 1px solid var(--squidink);
     color: var(--squidink);
-    /* border-radius: 3px; */
     padding: 5px 10px;
     font-size: 14px;
     cursor: pointer;
+  }
+  button:hover {
+    background-color: var(--darksquidink); /* Green */
+    border: 1px solid var(--darksquidink);
+    color: var(--white);
   }
 </style>

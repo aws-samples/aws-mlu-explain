@@ -29,15 +29,15 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    width: 32%;
+    width: 80%;
     height: 50px;
-    /* outline: 1px solid var(--squidink); */
-    margin-right: 1%;
+    /* margin-right: 1%; */
+    margin: auto;
   }
 
   .dataset-icon {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     opacity: 0.5;
   }
   .dataset-icon:hover {

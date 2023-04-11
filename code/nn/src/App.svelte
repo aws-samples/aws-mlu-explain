@@ -42,12 +42,12 @@
 <svelte:window on:resize={handleResize} />
 
 <Logo />
-<Title />
+<!-- <Title />
 <Intro />
 <NetworkScroll />
 <ActivationFunctions />
 <BackPropagation />
-<BackProp />
+<BackProp /> -->
 <VizNet />
 <!-- <CommonArchitectures /> -->
 <Resources />

@@ -17,6 +17,8 @@
     hexPreds,
     hexVals,
     interactiveDataset,
+    networkInteractiveWeights,
+    loopCount,
   } from "../../store";
   import { range } from "../../neuralnetCode/arrayUtils";
   import { circle_data } from "../../neuralnetCode/data";
@@ -71,6 +73,20 @@
     runBatch();
     toggleAnimation();
     toggleButton();
+    getUpdateModelParams();
+    // loopCount.set(0);
+  }
+
+  function getUpdateModelParams() {
+    const params = model.parameters();
+    const weights = params.filter((v) => v.param === "w");
+    const weightVals = weights.map((d) => {
+      return { data: d.data, grad: d.grad };
+    });
+    // console.log("model", model, "shape:", $networkInteractive);
+    console.log("model", weights);
+    console.log("model", weightVals);
+    $networkInteractiveWeights = [...weightVals];
   }
 
   let batchSize = 1;
@@ -228,6 +244,10 @@
   $: {
     console.log("model!", model);
   }
+
+  onMount(() => {
+    getUpdateModelParams();
+  });
 </script>
 
 <br /><br /><br />
@@ -251,18 +271,54 @@
     <div id="top-controls">
       <div id="architecture-input">
         <div>
-          <!-- <p>Network Architecture</p>
-          <input type="text" value={$networkInteractive.join(", ")} /> -->
-          <InteractiveControls />
+          <!-- <InteractiveControls /> -->
         </div>
       </div>
-      <DatasetIcons />
+      <!-- <DatasetIcons /> -->
     </div>
     <div id="lol-container">
       <div class="network-plot">
-        <NetworkVisual />
+        <div id="left">
+          <InteractiveControls />
+          <NetworkVisual />
+          <div id="animation-controls">
+            <div id="play-button">
+              <button
+                class:active={$playAnimation}
+                on:click={() => {
+                  buttonClick();
+                }}
+                disabled={buttonDisabled}>Run Epoch</button
+              >
+              <button
+                disabled={buttonDisabled}
+                class:active={$playAnimation}
+                on:click={() => {
+                  reset_model();
+                }}>Restart</button
+              >
+              <div id="animation-duration-input">
+                Animation Duration:
+                <input
+                  disabled={buttonDisabled}
+                  class="input-duration"
+                  type="range"
+                  min="0.05"
+                  max="2"
+                  step="0.05"
+                  bind:value={$animationDuration}
+                />
+              </div>
+              <!-- <div id="batch-button">
+                <p>Batch Size:</p>
+                <input type="number" bind:value={batchSize} min="1" max="8" />
+              </div> -->
+            </div>
+          </div>
+        </div>
       </div>
       <div id="eval-container">
+        <DatasetIcons />
         <div id="scatter-plot">
           <VizPredictionScatter data={$interactiveDataset} nnModel={model} />
         </div>
@@ -271,92 +327,58 @@
         </div>
       </div>
     </div>
-
-    <div id="animation-controls">
-      <div id="play-button">
-        <button
-          class:active={$playAnimation}
-          on:click={() => {
-            buttonClick();
-          }}
-          disabled={buttonDisabled}>Run Epoch</button
-        >
-        <button
-          class:active={$playAnimation}
-          on:click={() => {
-            reset_model();
-          }}>Restart</button
-        >
-      </div>
-      <!-- <div id="batch-button">
-        <p>Batch Size:</p>
-        <input type="number" bind:value={batchSize} min="1" max="8" />
-      </div> -->
-      <div>
-        Animation<br />
-        Duration:
-        <input
-          class="input-duration"
-          type="range"
-          min="0.05"
-          max="2"
-          step="0.05"
-          bind:value={$animationDuration}
-        />
-      </div>
-    </div>
   </section>
 </div>
 
 <style>
+  #left {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 8% 80% 8%;
+    row-gap: 5px;
+    /* outline: 2px solid hotpink; */
+  }
+  #animation-duration-input {
+    display: flex;
+    flex-direction: column;
+  }
   #top-controls {
-    /* border: 1px solid hotpink; */
     display: flex;
     width: 1000px;
     margin: auto;
   }
   #lol-container {
-    /* border: 1px solid var(--squidink); */
     display: grid;
-    height: 60vh;
-    width: 1000px;
+    height: var(--viz-height);
+    /* width: 1000px; */
     grid-template-columns: 70% 30%;
-    margin: auto;
+    /* margin: auto; */
   }
   .network-plot {
     width: 100%;
-    height: 60vh;
+    height: var(--viz-height);
     margin: auto;
-    background: conic-gradient(
-        from 90deg at 1px 1px,
-        #0000 90deg,
-        rgba(243, 240, 240, 0.05) 0
-      )
-      0 0/20px 20px;
   }
   #eval-container {
-    /* border: 1px solid var(--squidink); */
     display: grid;
-    grid-template-rows: 60% 40%;
+    grid-template-rows: 10% 50% 40%;
     grid-template-columns: 100%;
     grid-gap: 0%;
-    max-height: 60vh;
+    max-height: var(--viz-height);
     width: 100%;
   }
 
   #scatter-plot,
   #error-plot {
     height: 100%;
-    outline: 0px solid hotpink;
   }
 
-  button:hover {
-    color: white;
-    background-color: var(--squidink);
-  }
   button {
     opacity: 1;
     pointer-events: auto;
+    border: 1px solid var(--darksquidink);
   }
 
   button[disabled] {
@@ -366,26 +388,21 @@
   #animation-controls {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     align-items: center;
     max-width: 80%;
     margin: 0px auto;
     padding-top: 5px;
     font-size: var(--size-default);
     font-weight: bold;
-    text-transform: uppercase;
   }
   #play-button {
     margin-right: auto;
     display: flex;
   }
   #play-button button {
-    border: 1px solid var(--squidink);
     border-radius: 0;
     padding: 8px 24px;
     font-size: var(--size-default);
-    /* box-shadow: 4px 4px 0 0 #285555; */
-    /* text-transform: lowercase; */
     margin-right: 10px;
     opacity: 1;
   }
@@ -400,6 +417,8 @@
   section {
     max-width: 1200px;
     margin: auto;
+    height: var(--viz-height);
+    /* outline: 2px solid teal; */
   }
 
   #architecture-input {

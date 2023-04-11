@@ -54,6 +54,8 @@
 
   --max-width: 800px;
   --size-default: 17px;
+
+  --viz-height: 80vh;
 }
 
 body {

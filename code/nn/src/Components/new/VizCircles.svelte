@@ -4,8 +4,7 @@
   import { hexbin } from "d3-hexbin";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { draw } from "svelte/transition";
-  import { expoInOut, circOut } from "svelte/easing";
-  import { animationDuration, hexPreds, hexVals } from "../../store";
+  import { hexPreds, hexVals } from "../../store";
   import { circles } from "../../datasets";
 
   // props
@@ -56,9 +55,6 @@
       [width - margin.left - margin.right, height - margin.top - margin.bottom],
     ]);
 
-  // (xScale.invert(h.x - margin.left), yScale.invert(h.y - margin.top)
-  // $: console.log("centers", hexbins(hexbins.centers()));
-
   $: hexBins = hexbins(hexbins.centers()).map((h) => {
     return [xScale.invert(h.x + margin.left), yScale.invert(h.y + margin.top)];
   });
@@ -82,7 +78,6 @@
     </clipPath>
 
     <!-- data points -->
-    <!-- hex background todo: add clip-path="url(#clip)" -->
     <g
       clip-path="url(#clip-nn)"
       transform={`translate(${margin.left} ${margin.top})`}
@@ -112,23 +107,9 @@
     <!-- axis labels -->
     <text
       class="chart-title"
-      y={margin.top / 2}
+      y={margin.top / 2 + 5}
       x={(width + margin.left) / 2}
       text-anchor="middle">Classification Task</text
-    >
-
-    <text
-      class="axis-label"
-      y={margin.left / 2}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">Input 2</text
-    >
-    <text
-      class="axis-label"
-      y={height + margin.bottom + 11}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">Input 1</text
     >
   </svg>
 </div>
@@ -139,21 +120,11 @@
     stroke-width: 2px;
   }
 
-  .axis-label,
   .chart-title {
     font-size: 10px;
   }
   #nn-prediction-container {
     height: 100%;
     width: 100%;
-  }
-  .axis-line {
-    stroke-width: 3;
-    stroke: black;
-    fill: none;
-  }
-  .hex-cell {
-    /* stroke-width: 1;
-    opacity: 0.4; */
   }
 </style>

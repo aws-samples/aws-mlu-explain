@@ -106,23 +106,9 @@
     <!-- axis labels -->
     <text
       class="chart-title"
-      y={margin.top / 2}
+      y={margin.top / 2 + 5}
       x={(width + margin.left) / 2}
       text-anchor="middle">Classification Task</text
-    >
-
-    <text
-      class="axis-label"
-      y={margin.left / 2}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">Input 2</text
-    >
-    <text
-      class="axis-label"
-      y={height + margin.bottom + 11}
-      x={(width + margin.left) / 2}
-      text-anchor="middle">Input 1</text
     >
   </svg>
 </div>

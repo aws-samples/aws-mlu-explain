@@ -6,10 +6,11 @@ export const isValueInstance = (x) => x instanceof Value;
 export const ensureValue = (x) => (isNumber(x) ? new Value(x) : x);
 
 export class Value {
-  constructor(data, children = [], op = "") {
+  constructor(data, children = [], param = "w", op = "") {
     this.data = data;
     this.children = children;
     this.op = op;
+    this.param = param;
 
     this._backward = function () {
       return null;
@@ -130,6 +131,7 @@ export class Neuron extends Module {
       (x) => new Value(Math.random() * 2.0 - 1.0)
     );
     this.b = new Value(0.0);
+    this.b.param = "b";
     this.nonlin = nonlin;
   }
 
