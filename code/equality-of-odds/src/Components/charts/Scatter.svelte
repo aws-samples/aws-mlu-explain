@@ -127,7 +127,7 @@
   }
   .axis-tick {
     stroke-width: 1;
-    stroke: var(--sky);
+    stroke: var(--squidink);
     fill: none;
     opacity: 0.175;
     font-size: 12px;
