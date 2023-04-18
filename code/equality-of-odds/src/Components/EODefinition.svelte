@@ -55,13 +55,25 @@
         >[&#8505;]
       </span></sup
     >
-    of a classifier, or the combination of both those error rates.
+    of a classifier, or the combination of both those error rates<sup
+    ><span
+      class="info-tooltip"
+      title="In the EO literature, usually TPR and FPR are considered. This is possible because TPR can be calculated as 1 - FNR."
+      use:tooltip
+      >[&#8505;]
+    </span></sup
+  >.
     <br /><br />
     According to EO, a
     <span class="highlight"
-      >model is fair if the predictions it makes have the same FNR and FPR
-      across all groups
-    </span>in the dataset. Formally, this can be written as:
+      >model is fair if the predictions it makes have the same TPR<sup
+      ><span
+        class="info-tooltip"
+        title="TPR = 1 - FNR"
+        use:tooltip
+        >[&#8505;]
+      </span></sup
+    > and FPR across all groups </span>in the dataset. Formally, this can be written as:
     <br />
     <br />
   </p>
@@ -91,15 +103,14 @@
   </p>
   <br />
   <p class="body-text">
-    where {@html katexify(`\\hat{Y}`)} are the model predictions, {@html katexify(
+    where {@html katexify(`\\hat{Y}`)} denotes predictions (here: positive), {@html katexify(
       `A`
-    )} denotes the group membership and {@html katexify(`Y`)} represents the ground
+    )} refers to the group membership and {@html katexify(`Y`)} represents the ground
     truth.
-    <br /><br /> Equalized odds aims to enforce equal accuracy for all groups in
-    the dataset, punishing models that perform well only for the majority.
+    <br /><br /> Equalized odds aims to match TPR and FPR for different groups, punishing models that perform well for one group only.
     Unfortunately this can be very hard to achieve in practice, so it makes
     sense to relax the EO criterion and consider a modified version of the EO
-    equation with {@html katexify(`y=1`)} for equalizing FNR
+    equation with {@html katexify(`y=1`)} for equalizing TPR
     <span class="highlight">(equal opportunity)</span>, or {@html katexify(
       `y=0`
     )} for equalizing FPR.

@@ -82,7 +82,7 @@
 </p>
 <br />
 <p class="body-text">
-  The resulting value will be in the range [-1, 1], the closer to 0 the more
+  The resulting value will be in the range [-1, 1], the closer to 0, the more
   predictive equality the model achieves and we satisfy the EO equation where {@html katexify(
     ` y=0
     `,

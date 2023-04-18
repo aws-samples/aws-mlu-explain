@@ -39,7 +39,14 @@
       >[&#8505;]
     </span></sup
   >
-  per group and take the difference; this measure is also called equal opportunity:
+  per group and take the difference. It is also possible to rewrite this using TPR<sup
+  ><span
+    class="info-tooltip"
+    title="TPR = 1 - FNR"
+    use:tooltip
+    >[&#8505;]
+  </span></sup
+>:
   <br />
   <br />
 </p>
@@ -75,11 +82,78 @@
       Sorry, your browser does not support inline SVG.
     </svg></sub
   >
+  {@html katexify(
+    `= (1 \\,–\\, \\textrm{TPR}
+    `,
+    false
+  )}
+  <sub>
+    <svg height="16" width="16">
+      <circle
+        cx="8"
+        cy="10"
+        r="4"
+        stroke="var(--group_circles)"
+        stroke-width="1"
+        fill="var(--group_circles)"
+      />
+    </svg>
+  </sub>
+  {@html katexify(
+    `)\\,–\\,(1\\,–\\,\\textrm{TPR}
+    `,
+    false
+  )}
+  <sub>
+    <svg height="10" width="10">
+      <polygon
+        points="5,0 0,10 10,10"
+        style="fill:var(--group_triangles);stroke-width:1"
+      />
+      Sorry, your browser does not support inline SVG.
+    </svg></sub
+  >
+  {@html katexify(
+    `)=`,
+    false
+  )}
+  <br> 
+  <p class="equation-text">
+    {@html katexify(
+      `= \\textrm{TPR}
+      `,
+      false
+    )}<sub>
+      <svg height="10" width="10">
+        <polygon
+          points="5,0 0,10 10,10"
+          style="fill:var(--group_triangles);stroke-width:1"
+        />
+        Sorry, your browser does not support inline SVG.
+      </svg></sub
+    >
+    {@html katexify(
+      ` - \\, \\textrm{TPR} 
+      `,
+      false
+    )}<sub>
+      <svg height="16" width="16">
+        <circle
+          cx="8"
+          cy="10"
+          r="4"
+          stroke="var(--group_circles)"
+          stroke-width="1"
+          fill="var(--group_circles)"
+        />
+      </svg>
+    </sub>
+    
 </p>
 <br />
 <p class="body-text">
   The resulting value will be in the range [-1, 1], the closer to 0 the closer
-  to equal opportunity the groups are and we satisfy the EO equation where {@html katexify(
+  to equal opportunity the groups for EO equation where {@html katexify(
     ` y=1
     `,
     false
