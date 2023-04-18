@@ -52,18 +52,24 @@
     circleData1Reversed
   )} `;
   $: annotation1 = [
-    [xScale(0.22), yScale(0.35)],
-    [xScale(0.24), yScale(0.4)],
+    [xScale(0.22), yScale(0.5)],
+    [xScale(0.24), yScale(0.55)],
     [xScale(0.1625), yScale(0.745)],
   ];
-  // $: annotation2 = [
-  //   [xScale(0.38), yScale(0.69)],
-  //   [xScale(0.4), yScale(0.8)],
-  //   [xScale(0.3), yScale(0.85)],
-  // ];
-
+  $: annotation2 = [
+    [xScale(0.5), yScale(0.80)],
+    [xScale(0.55), yScale(0.75)],
+    [xScale(0.72), yScale(0.97)],
+  ];
+  $: annotation3 = [
+    [xScale(0.25), yScale(0.25)],
+    [xScale(0.15), yScale(0.05)],
+    [xScale(0.01), yScale(0.15)],
+  ];
   $: annotationSwoop1 = swoopAnnotation(annotation1);
-  // $: annotationSwoop2 = swoopAnnotation(annotation2);
+  $: annotationSwoop2 = swoopAnnotation(annotation2);
+  $: annotationSwoop3 = swoopAnnotation(annotation3);
+
 </script>
 
 <div
@@ -198,15 +204,15 @@
       text-anchor="start"
       dominant-baseline="middle"
     >
-      <tspan>At this point, </tspan>
-      <tspan class="title-rate fpr"> TPR </tspan>
+      <tspan>Here, </tspan>
+      <tspan class="title-rate fnr"> TPR </tspan>
       <tspan>and</tspan>
-      <tspan class="title-rate fnr"> FNR </tspan>
-      <tspan>of both groups match and EO is satisfied. </tspan>
+      <tspan class="title-rate fpr"> FPR </tspan>
+      <tspan> match for both groups (neither are 0) and EO is satisfied. </tspan>
     </text>
 
     <!-- Annotation 2 -->
-    <!-- <path
+    <path
       class="annotation-path"
       d={annotationSwoop2}
       fill="none"
@@ -224,9 +230,34 @@
       dominant-baseline="middle"
     >
       <tspan>In this region, </tspan>
-      <tspan class="title-rate fnr"> FNR </tspan>
-      <tspan>dominates </tspan>
-    </text> -->
+      <tspan class="title-rate fnr"> TPR </tspan>
+      <tspan>= 1 for both groups (lazy solution). </tspan>
+    </text>
+
+
+    <!-- Annotation 3 -->
+    <path
+      class="annotation-path"
+      d={annotationSwoop3}
+      fill="none"
+      stroke="black"
+      stroke-width="2"
+      marker-end="url(#arrow)"
+    />
+
+    <text
+      class="annotation-text"
+      x={annotation3[0][0]}
+      y={annotation3[0][1]}
+      dx="-24"
+      text-anchor="start"
+      dominant-baseline="middle"
+    >
+      <tspan>In this region, </tspan>
+      <tspan class="title-rate fpr"> FPR </tspan>
+      <tspan>= 0 for both groups (lazy solution). </tspan>
+    </text>
+
 
     <!-- Add arrow marker -->
     <defs>

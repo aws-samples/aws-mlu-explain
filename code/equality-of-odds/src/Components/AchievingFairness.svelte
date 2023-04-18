@@ -56,7 +56,7 @@
       Sorry, your browser does not support inline SVG.
     </svg>. We can see that for most probability thresholds the TPR and FPR
     values are different per group. For the dataset shown below, there is only
-    one point where TPR and FPR are equal for both groups; this is where the EO
+    one point where TPR and FPR are equal for both groups (and not lazy solutions); this is where the EO
     criterion is satisfied.
   </p>
   <br />
