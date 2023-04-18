@@ -9,7 +9,7 @@
     the help of algorithms, both of which can potentially be biased against
     different groups of people. Unwanted bias in machine learning can
     inadvertently harm, and negatively stereotype against underrepresented or
-    (historically and otherwise) disfavored groups. Therefor, it is crucial to <span
+    (historically and otherwise) disfavored groups. Therefore, it is crucial to <span
       class="highlight"
       >evaluate and control data and model predictions not only for general machine
       learning performance but also for bias</span
