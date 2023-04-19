@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { scaleLinear } from "d3-scale";
-  import { max } from "d3-array";
+  import { max, extent } from "d3-array";
   import {
     networkInteractive,
     numLayersInteractive,
@@ -10,10 +10,39 @@
     ggg,
     points,
     networkInteractiveWeights,
-    loopCount,
+    showText,
   } from "../../store";
   import { fade, fly, draw } from "svelte/transition";
+  import { format } from "d3-format";
+  import { numNeurons } from "../../utils";
 
+  function instantiateWeights() {
+    const numWeights = numNeurons($networkInteractive);
+
+    const weightVals = Array.from({ length: numWeights }, (_, index) => {
+      // Get the number of input neurons for the current weight
+      const inputNeurons =
+        $networkInteractive[index % ($networkInteractive.length - 1)];
+      // Apply He Initialization
+      const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
+
+      return { data: heInit, grad: 0 };
+    });
+
+    $networkInteractiveWeights = [...weightVals];
+  }
+
+  $: weightEdgeScale = scaleLinear().domain([-1, 0, 1]).range([15, 0.2, 15]);
+  $: gradEdgeScale = scaleLinear()
+    .domain(extent($networkInteractiveWeights, (d) => d.grad))
+    .range([15, 40]);
+
+  $: console.log(
+    "wwwww",
+    extent($networkInteractiveWeights, (d) => d.grad)
+  );
+
+  const wFormat = format("0.3f");
   function positionElements(numElements, maxNumNeurons) {
     const interval = (maxNumNeurons - 1 - numElements + 1) / 2;
 
@@ -35,7 +64,7 @@
   $: labels = [
     "input",
     ...Array($numLayersInteractive - 2).fill("reLu"),
-    "output",
+    "sigmoid",
   ];
 
   let docEl;
@@ -47,6 +76,7 @@
 
   // these don't matter, but make the stretching less obvious at load
   $: maxNumNeurons = max($networkInteractive) - 1;
+  $: console.log("max", maxNumNeurons);
 
   let height;
   let width;
@@ -68,9 +98,14 @@
 
   function add(layer) {
     if ($networkInteractive[layer] < 3) {
+      // resetCounter();
       let newNN = [...$networkInteractive];
       newNN[layer] += 1;
       $networkInteractive = [...newNN];
+      // prevent text from showing since no initial values
+      $showText = false;
+      instantiateWeights();
+      // instead - just instantiate weights directly to zero
     }
   }
   function subtract(layer) {
@@ -81,29 +116,27 @@
         newNN.splice(secondToLastLayerIndex, 1);
         $networkInteractive = [...newNN];
       }
+      // prevent text from showing since no initial values
+      $showText = false;
+      instantiateWeights();
     }
     if ($networkInteractive[layer] > 1) {
       let newNN = [...$networkInteractive];
       newNN[layer] -= 1;
       $networkInteractive = [...newNN];
+      // prevent text from showing since no initial values
+      $showText = false;
+      instantiateWeights();
     }
   }
 
-  function getWeightIndex(layer, prevIndex, currIndex, networkInteractive) {
+  function getIndex(i, j, y, networkInteractive) {
     let index = 0;
-    for (let i = 0; i < layer - 1; i++) {
-      index += networkInteractive[i] * networkInteractive[i + 1];
+    for (let k = 0; k < i - 1; k++) {
+      index += networkInteractive[k] * networkInteractive[k + 1];
     }
-    index += prevIndex * networkInteractive[layer - 1] + currIndex;
-    console.log("index", Math.abs(Math.ceil(index)));
-    return Math.abs(Math.ceil(index));
-  }
-
-  let counter = 0;
-
-  function incrementCounter() {
-    counter++;
-    console.log("counter", counter);
+    index += j * networkInteractive[i] + y;
+    return index;
   }
 </script>
 
@@ -117,57 +150,63 @@
   <svg {width} height={height + marginScroll.top + marginScroll.bottom}>
     {#if visible}
       <!-- edges -->
-      {#each Array($numLayersInteractive).fill(null) as i, layer}
-        {#each positionElements($networkInteractive[layer], maxNumNeurons) as yPosition}
-          {#if layer > 0}
-            {#each positionElements($networkInteractive[layer - 1], maxNumNeurons) as prevYPosition, j}
-              {incrementCounter()}
-              {console.log("counter", counter)}
+      {#each Array($numLayersInteractive).fill(null) as layer, i}
+        {#each positionElements($networkInteractive[i], maxNumNeurons) as yPosition, y}
+          {#if i > 0}
+            {#each positionElements($networkInteractive[i - 1], maxNumNeurons) as prevYPosition, j}
+              {@const index = getIndex(i, j, y, $networkInteractive)}
+
               <path
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}
                 d={`
-                        M ${xScale(layer - 1)} ${yScale(prevYPosition)}
-                        L ${xScale(layer)} ${yScale(yPosition)}
+                        M ${xScale(i - 1)} ${yScale(prevYPosition)}
+                        L ${xScale(i)} ${yScale(yPosition)}
                       `}
+                stroke-width={$showText
+                  ? weightEdgeScale($networkInteractiveWeights[index]["data"])
+                  : 0.5}
                 class="nn-edge-int"
-                id={`nn-edge-int-${layer}-${yPosition}-${prevYPosition}`}
+                class:animate-dash={$showText}
+                id={`nn-edge-int-${i}-${yPosition}-${prevYPosition}`}
               />
-              {#key $numLayersInteractive}
-                <text
-                  in:fly|local={{ x: 0, duration: 300 }}
-                  out:fade|local={{ duration: 0 }}
-                  dx={0 * xScale(1)}
-                  dy="0"
-                  class="weight-text-int"
-                >
-                  <textPath
-                    href={`#nn-edge-int-${layer}-${yPosition}-${prevYPosition}`}
-                    startOffset="50%"
-                    text-anchor="middle"
-                    fill="#232F3E"
-                    dominant-baseline="middle">{`${prevYPosition}`}</textPath
+              {#key `${$numLayersInteractive}-${$networkInteractive}`}
+                {#if $showText}
+                  <text
+                    in:fly|local={{ x: 50, duration: 500 }}
+                    out:fade|local={{ duration: 0 }}
                   >
-                </text>
+                    <textPath
+                      href={`#nn-edge-int-${i}-${yPosition}-${prevYPosition}`}
+                      class="weight-text-int"
+                      startOffset="50%"
+                      text-anchor="middle"
+                      dominant-baseline="middle"
+                      >{wFormat(
+                        $networkInteractiveWeights[index]["data"]
+                      )}</textPath
+                    >
+                  </text>
+                {/if}
               {/key}
-              <!-- {#if $playAnimation} -->
+
               <!-- forward-pass -->
               {#each $points as p}
                 <g transform={`translate(0, 0)`}>
                   <circle
                     opacity="0"
-                    id={`circle${layer}${p}`}
+                    id={`circle${i}${p}`}
                     class="moving-circle"
                   >
                     <set
                       attributeName="opacity"
                       to="1"
-                      begin={`animatePath${layer}${p}.begin`}
+                      begin={`animatePath${i}${p}.begin`}
                     />
                     <set
                       attributeName="opacity"
                       to="0"
-                      begin={`animatePath${layer}${p}.end`}
+                      begin={`animatePath${i}${p}.end`}
                     />
                   </circle>
                   <text
@@ -175,29 +214,27 @@
                     class="moving-text"
                     alignment-baseline="middle"
                   >
-                    {5}
-
                     <set
                       attributeName="opacity"
                       to="1"
-                      begin={`animatePath${layer}${p}.begin`}
+                      begin={`animatePath${i}${p}.begin`}
                     />
                     <set
                       attributeName="opacity"
                       to="0"
-                      begin={`animatePath${layer}${p}.end`}
+                      begin={`animatePath${i}${p}.end`}
                     />
                   </text>
                   <animateMotion
-                    id={`animatePath${layer}${p}`}
-                    dur={$animationDuration}
-                    begin={layer === 1
+                    id={`animatePath${i}${p}`}
+                    dur={$animationDuration / 2}
+                    begin={i === 1
                       ? `${0 + 0.1 * p}`
-                      : `animatePath${layer - 1}${p}.end`}
+                      : `animatePath${i - 1}${p}.end`}
                     restart="whenNotActive"
                     path={`
-                          M ${xScale(layer - 1)} ${yScale(prevYPosition)}
-                          L ${xScale(layer)} ${yScale(yPosition)}
+                          M ${xScale(i - 1)} ${yScale(prevYPosition)}
+                          L ${xScale(i)} ${yScale(yPosition)}
                         `}
                   />
                 </g>
@@ -205,48 +242,48 @@
               {#each $points as p}
                 <g>
                   <circle
-                    r="20"
+                    r={gradEdgeScale($networkInteractiveWeights[index]["grad"])}
                     opacity="0"
-                    id={`circle${layer}${p}`}
+                    id={`circle${i}${p}`}
                     class="moving-circle-back"
                   >
                     <set
                       attributeName="opacity"
                       to="1"
-                      begin={`animatePathBack${layer}${p}.begin`}
+                      begin={`animatePathBack${i}${p}.begin`}
                     />
                     <set
                       attributeName="opacity"
                       to="0"
-                      begin={`animatePathBack${layer}${p}.end`}
+                      begin={`animatePathBack${i}${p}.end`}
                     />
                   </circle>
                   <text
                     opacity="0"
                     class="moving-text"
                     alignment-baseline="middle"
-                    >{layer},{j}
+                    >{wFormat($networkInteractiveWeights[index]["grad"])}
                     <set
                       attributeName="opacity"
                       to="1"
-                      begin={`animatePathBack${layer}${p}.begin`}
+                      begin={`animatePathBack${i}${p}.begin`}
                     />
                     <set
                       attributeName="opacity"
                       to="0"
-                      begin={`animatePathBack${layer}${p}.end`}
+                      begin={`animatePathBack${i}${p}.end`}
                     />
                   </text>
                   <animateMotion
-                    id={`animatePathBack${layer}${p}`}
-                    begin={layer === $numLayersInteractive - 1
+                    id={`animatePathBack${i}${p}`}
+                    begin={i === $numLayersInteractive - 1
                       ? `animatePath${$numLayersInteractive - 1}${p}.end`
-                      : `animatePathBack${layer + 1}${p}.end`}
+                      : `animatePathBack${i + 1}${p}.end`}
                     dur={$animationDuration}
                     restart="whenNotActive"
                     path={`
-                            M ${xScale(layer)} ${yScale(yPosition)}
-                            L ${xScale(layer - 1)} ${yScale(prevYPosition)}
+                            M ${xScale(i)} ${yScale(yPosition)}
+                            L ${xScale(i - 1)} ${yScale(prevYPosition)}
                           `}
                   />
                 </g>
@@ -377,11 +414,13 @@
   }
   .weight-text-int {
     font-size: 15px;
-    color: black;
-    stroke: white;
-    stroke-width: 5px;
-    paint-order: stroke fill;
     font-family: var(--font-main);
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 4.4px;
+    /* pointer-events: none; */
+    stroke: var(--squidink);
+    fill: var(--white);
   }
   .moving-text {
     font-size: 21px;
@@ -406,7 +445,6 @@
     stroke: black;
     stroke-width: 4;
     fill: rgba(255, 80, 83, 0.5);
-    r: 25;
   }
 
   svg {
@@ -417,7 +455,6 @@
   }
   .nn-text {
     font-size: 12px;
-    /* text-transform: uppercase; */
     transition: all 0.45s;
     font-weight: bold;
   }
@@ -425,12 +462,14 @@
     transition: all 0.45s;
   }
   .nn-edge-int {
-    stroke: black;
-    stroke-width: 2.5;
-    stroke-dasharray: 5;
+    stroke: var(--darksquidink);
+    /* stroke-dasharray: 5; */
     opacity: 0.95;
-    animation: dash 30s infinite linear;
     transition: all 0.45s;
+  }
+
+  .animate-dash {
+    /* animation: dash 30s infinite linear; */
   }
 
   @keyframes dash {

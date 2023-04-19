@@ -7,6 +7,11 @@
     showSubScript,
     stepIndexBp,
     bpStage,
+    bpbind,
+    bpPlayAnimation,
+    drawErrorLine,
+    drawErrorCircle,
+    bpSlope,
   } from "../../store";
   import katexify from "../../katexify";
 
@@ -19,25 +24,32 @@
       $stepIndexBp = 0;
       $showSubScript = false;
       $bpStage = 0;
+      animation1();
+      $drawErrorLine = false;
     },
 
     1: () => {
-      $showLayerLine = false;
-      $networkBp = [1, 2, 1, 1];
-      $stepIndexBp = 1;
-      $showSubScript = false;
+      // $showLayerLine = false;
+      // $networkBp = [1, 2, 1, 1];
+      // $stepIndexBp = 1;
+      // $showSubScript = false;
       $bpStage = 1;
+      $drawErrorLine = true;
     },
     2: () => {
-      $showLayerLine = false;
-      $showSubScript = true;
-      $stepIndexBp = 1;
-      $bpStage = 0;
+      // $showLayerLine = false;
+      // $showSubScript = true;
+      // $stepIndexBp = 1;
+      $bpStage = 2;
+      // new
+      $drawErrorLine = true;
+      animation3();
     },
     3: () => {
       $stepIndexBp = 2;
       $showLayerLine = false;
       $bpStage = 1;
+      animation4();
     },
     4: () => {
       $stepIndexBp = 3;
@@ -48,17 +60,6 @@
       $showLayerLine = false;
 
       $networkBp = [2, 1, 1, 1];
-    },
-    6: () => {
-      $stepIndexBp = 5;
-      $showLayerLine = true;
-
-      $networkBp = [2, 2, 2, 1];
-    },
-    7: () => {
-      $stepIndexBp = 5;
-      $showLayerLine = true;
-      $networkBp = [2, 4, 2, 3, 1];
     },
   };
 
@@ -72,6 +73,80 @@
     console.log("bpStage", $bpStage);
   }
 
+  function animation2() {
+    $drawErrorLine = false;
+    setTimeout(() => {
+      $drawErrorLine = true;
+    }, 1000);
+    // $drawErrorLine = true;
+  }
+  function animation1() {
+    $bpPlayAnimation = !$bpPlayAnimation;
+    $drawErrorCircle = false;
+    let animationSelections = [];
+
+    const selector = `animateMotion#animatePathForward1`;
+    const selection = $bpbind.querySelectorAll(selector);
+    animationSelections.push({ selection: selection });
+    // trigger animation
+    animationSelections.forEach((element) => {
+      setTimeout(() => {
+        element.selection.forEach((selection) => {
+          selection.beginElement();
+        });
+      }, 100);
+    });
+    // draw circle at end of animation
+    setTimeout(() => {
+      $drawErrorCircle = true;
+    }, 3 * 1000);
+  }
+
+  function animation3() {
+    console.log("click");
+    $bpSlope = 0.7;
+    let animationSelections = [];
+
+    const selector = `animateMotion#animatePathBackward3`;
+    const selection = $bpbind.querySelectorAll(selector);
+    animationSelections.push({ selection: selection });
+    // trigger animation
+    animationSelections.forEach((element) => {
+      setTimeout(() => {
+        element.selection.forEach((selection) => {
+          selection.beginElement();
+        });
+      }, 100);
+    });
+
+    setTimeout(() => {
+      $bpSlope = 0.8;
+    }, 3000);
+  }
+
+  function animation4() {
+    console.log("click");
+    let animationSelections = [];
+
+    const selector1 = `animateMotion#animatePathForward1`;
+    const selection1 = $bpbind.querySelectorAll(selector1);
+    animationSelections.push({ selection: selection1 });
+    const selector = `animateMotion#animatePathBackward3`;
+    const selection = $bpbind.querySelectorAll(selector);
+    animationSelections.push({ selection: selection });
+    // trigger animation
+    animationSelections.forEach((element, i) => {
+      setTimeout(() => {
+        element.selection.forEach((selection) => {
+          selection.beginElement();
+        });
+      }, i * 3000);
+    });
+    setTimeout(() => {
+      $bpSlope = 1;
+    }, 6000);
+  }
+
   onMount(() => {
     // store elements to track
     const sections = [...document.querySelectorAll(".step-bp")];
@@ -81,10 +156,6 @@
     sections.forEach((section) => {
       observer.observe(section);
     });
-
-    // node to track
-    // const stepNode = select(".step[data-index='7']");
-    // console.log("stepNode", stepNode);
   });
 
   // options for intersection observer
@@ -144,6 +215,10 @@
               calculating the weighted sums and applying activation functions
               for each neuron in each layer.
             </p>
+            <br />
+            <button class="step-button" on:click={() => animation1()}
+              >Replay Animation</button
+            >
           </div>
         </div>
         <div class="step-bp" data-index="1">
@@ -158,6 +233,10 @@
               minimizing this error, the neural network learns to improve its
               predictions during training.
             </p>
+            <br />
+            <button class="step-button" on:click={() => animation2()}
+              >Replay Animation</button
+            >
           </div>
         </div>
         <div class="step-bp" data-index="2">
@@ -172,6 +251,10 @@
               the gradients of the error with respect to the weights, aims to
               minimize the overall error of the network.
             </p>
+            <br />
+            <button class="step-button" on:click={() => animation3()}
+              >Replay Animation</button
+            >
           </div>
         </div>
         <div class="step-bp" data-index="3">
@@ -187,6 +270,10 @@
               error with respect to the weights, backpropagation enables the
               network to learn and improve its predictions.
             </p>
+            <br />
+            <button class="step-button" on:click={() => animation4()}
+              >Replay Animation</button
+            >
           </div>
         </div>
       </div>
@@ -209,6 +296,16 @@
   .body-header,
   .body-text {
     color: var(--paper);
+  }
+  .step-button {
+    cursor: pointer;
+    padding: 10px 16px;
+  }
+
+  .step-button:hover {
+    color: var(--bg);
+    background-color: var(--squidink);
+    border: 1px solid var(--bg);
   }
 
   div#container {

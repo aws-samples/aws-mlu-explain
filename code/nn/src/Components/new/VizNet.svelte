@@ -18,29 +18,33 @@
     hexVals,
     interactiveDataset,
     networkInteractiveWeights,
-    loopCount,
+    showText,
   } from "../../store";
   import { range } from "../../neuralnetCode/arrayUtils";
-  import { circle_data } from "../../neuralnetCode/data";
   import { Value, MLP, ensureValue } from "../../neuralnetCode/ann";
   import { circles, moons } from "../../datasets";
-  import { makeJsonArray } from "../../utils";
+  import { makeJsonArray, numNeurons } from "../../utils";
+
+  function instantiateWeights() {
+    const numWeights = numNeurons($networkInteractive);
+
+    const weightVals = Array.from({ length: numWeights }, (_, index) => {
+      // Get the number of input neurons for the current weight
+      const inputNeurons =
+        $networkInteractive[index % ($networkInteractive.length - 1)];
+      // Apply He Initialization
+      const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
+
+      return { data: heInit, grad: 0 };
+    });
+
+    $networkInteractiveWeights = [...weightVals];
+  }
 
   // set default dataset to circles
   $interactiveDataset = circles;
 
   let buttonDisabled = false;
-
-  function updateNetwork(event) {
-    const hiddenLayerArchitecture = event.target.value
-      .split(",")
-      .map((x) => parseInt(x.trim()))
-      .filter((x) => !isNaN(x))
-      .slice(1, -1);
-
-    const newNetwork = [2, ...hiddenLayerArchitecture, 1];
-    // networkInteractive.set(newNetwork);
-  }
 
   function toggleAnimation() {
     $playAnimation = !$playAnimation;
@@ -70,11 +74,11 @@
   }
 
   function buttonClick() {
+    getUpdateModelParams();
     runBatch();
     toggleAnimation();
     toggleButton();
-    getUpdateModelParams();
-    // loopCount.set(0);
+    $showText = true;
   }
 
   function getUpdateModelParams() {
@@ -83,9 +87,7 @@
     const weightVals = weights.map((d) => {
       return { data: d.data, grad: d.grad };
     });
-    // console.log("model", model, "shape:", $networkInteractive);
-    console.log("model", weights);
-    console.log("model", weightVals);
+    console.log("new model weights:\n", weightVals);
     $networkInteractiveWeights = [...weightVals];
   }
 
@@ -95,7 +97,7 @@
   $: N_in = 2;
   // $: dims = [6, 4, 1];
   $: dims = $networkInteractive.slice(1);
-  var lr = 0.01;
+  var lr = 0.02;
   var alpha = 0.0001;
   var k = 0;
   $: model = new MLP(N_in, $networkInteractive.slice(1));
@@ -131,6 +133,8 @@
 
     // log errors
     $errorMetrics = [newError];
+
+    instantiateWeights($networkInteractive);
   }
 
   function runBatch() {
@@ -239,12 +243,6 @@
     reset_model();
   }
 
-  // runBatch();
-
-  $: {
-    console.log("model!", model);
-  }
-
   onMount(() => {
     getUpdateModelParams();
   });
@@ -295,7 +293,7 @@
                 class:active={$playAnimation}
                 on:click={() => {
                   reset_model();
-                }}>Restart</button
+                }}>Retrain</button
               >
               <div id="animation-duration-input">
                 Animation Duration:

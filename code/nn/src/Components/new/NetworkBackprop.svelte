@@ -10,8 +10,9 @@
     showSubScript,
     stepIndexBp,
     bpStage,
+    bpbind,
+    bpPlayAnimation,
   } from "../../store";
-  import { line } from "d3-shape";
   import { fade, fly, draw } from "svelte/transition";
   import BackPropOutput from "./BackPropOutput.svelte";
   import { positionElements } from "../../utils";
@@ -22,12 +23,7 @@
     visible = true;
   });
 
-  // these don't matter, but make the stretching less obvious at load
-  //   export let networkBp = [2, 5, 2];
-  //   $: numLayersBp = $numLayersBp;
   $: maxNumNeurons = max($networkBp) + 1;
-
-  $: console.log("tony5 ");
 
   let height = 100;
   let width = 100;
@@ -78,15 +74,15 @@
       return currentModel(inputs[0], inputs[1]);
     }
     return nnWeights[layer][yPosition];
-    // if layer == 1
-
-    // if .layer == 2
-    // ...
-    // layer is
   }
 </script>
 
-<div id="networkBp-chart" bind:offsetWidth={width} bind:offsetHeight={height}>
+<div
+  bind:this={$bpbind}
+  id="networkBp-chart"
+  bind:offsetWidth={width}
+  bind:offsetHeight={height}
+>
   <svg {width} height={height + $marginScroll.top + $marginScroll.bottom}>
     {#if visible}
       <!-- edges -->
@@ -124,13 +120,22 @@
                   </text>
                 {/key}
               {/if}
+              <!-- forward -->
               <g>
                 <!-- {#if animationBegin} -->
                 <circle class="moving-circlebp" opacity="0">
-                  <set attributeName="opacity" to="1" begin="{layer}s" />
-                  <set attributeName="opacity" to="0" begin="{0}s" />
+                  <set
+                    attributeName="opacity"
+                    to="1"
+                    begin={`animatePathForward${layer}.begin`}
+                  />
+                  <set
+                    attributeName="opacity"
+                    to="0"
+                    begin={`animatePathForward${layer}.end`}
+                  />
                 </circle>
-                {#if $stepIndexBp >= 1}
+                <!-- {#if $stepIndexBp >= 1}
                   <text
                     class="moving-textbp"
                     opacity="0"
@@ -139,37 +144,60 @@
                     <set attributeName="opacity" to="1" begin="{layer}s" />
                     <set attributeName="opacity" to="0" begin="{0}s" /></text
                   >
-                {/if}
-                <!-- {/if} -->
-                <!-- backward pass -->
-                {#if $bpStage == 1}
-                  <animateMotion
-                    id={`animatePathForward${layer}`}
-                    begin="{layer}s"
-                    dur="1s"
-                    repeatCount="indefinite"
-                    path={`
-                      M ${xScale(layer)} ${yScale(yPosition)}
-                      L ${xScale(layer - 1)} ${yScale(prevYPosition)}
-                    `}
-                  />
-                {/if}
-                <!-- end backward pass -->
+                {/if} -->
+
                 <!-- forward pass -->
-                {#if $bpStage == 0}
-                  <animateMotion
-                    id={`animatePathForward${layer}`}
-                    begin="{layer}s"
-                    dur="1s"
-                    repeatCount="indefinite"
-                    path={`
+                <!-- `animateMotion#animatePathForward0` -->
+                <!-- {#if $bpStage == 0} -->
+                <animateMotion
+                  id={`animatePathForward${layer}`}
+                  begin={i === 1 ? `0` : `animatePathForward${layer - 1}.end`}
+                  dur="1s"
+                  restart="whenNotActive"
+                  path={`
                       M ${xScale(layer - 1)} ${yScale(prevYPosition)}
                       L ${xScale(layer)} ${yScale(yPosition)}
                     `}
-                  />
-                {/if}
+                />
+                <!-- {/if} -->
                 <!-- end forward pass -->
               </g>
+
+              <!-- backward -->
+              <!-- {#if $stepIndexBp == 2} -->
+              <g>
+                <!-- {#if animationBegin} -->
+                <circle class="moving-circlebp" opacity="1">
+                  <set
+                    attributeName="opacity"
+                    to="1"
+                    begin={`animatePathBackward${layer}.begin`}
+                  />
+                  <set
+                    attributeName="opacity"
+                    to="0"
+                    begin={`animatePathBackward${layer}.end`}
+                  />
+                </circle>
+
+                <!-- backward pass -->
+                <!-- {#if $bpStage == 2} -->
+                <animateMotion
+                  id={`animatePathBackward${layer}`}
+                  begin={layer === 3
+                    ? `0s`
+                    : `animatePathBackward${layer + 1}.end`}
+                  dur="1s"
+                  restart="whenNotActive"
+                  path={`
+                         M ${xScale(layer)} ${yScale(yPosition)}
+                         L ${xScale(layer - 1)} ${yScale(prevYPosition)}
+                       `}
+                />
+                <!-- {/if} -->
+                <!-- end backward pass -->
+              </g>
+              <!-- {/if} -->
             {/each}
           {/if}
         {/each}
@@ -186,8 +214,6 @@
             })`}
           >
             {#if layer !== $numLayersBp - 1}
-              <!-- {@const nodWidth =
-                $labelsBp[layer].length == 1 ? 24 : $labelsBp[layer].length * 11} -->
               <rect
                 in:fly|local={{ x: -50, duration: 500 }}
                 out:fade|local={{ duration: 300 }}
@@ -218,18 +244,18 @@
           </g>
         {/each}
       {/each}
-
       <!-- manually draw final layer here, so it updates smoothly -->
-      <!-- {#each positionElements($networkBp[$numLayersBp - 1], maxNumNeurons) as yPosition}
+      {#each positionElements($networkBp[$numLayersBp - 1], maxNumNeurons) as yPosition}
         <g
           class="nn-g"
           transform={`translate(${
             xScale($numLayersBp - 1) - nodeWidth / 2
           } ${yScale(yPosition)})`}
-        > -->
-      <!-- <OutputNeuron {width} {height} /> -->
-      <!-- </g>
-      {/each} -->
+        >
+          {("e", console.log(xScale($numLayersBp - 1) - nodeWidth / 2))}
+          <BackPropOutput {width} {height} />
+        </g>
+      {/each}
     {/if}
 
     <!-- animate line -->
@@ -264,21 +290,10 @@
     fill: var(--paper);
     r: 10;
   }
-  .pp {
-    stroke: black;
-    stroke-width: 3;
-    fill: none;
-    /* opacity: 0; */
-  }
+
   svg {
     border: 4px solid var(--stone);
     border-radius: 5;
-    transition: all 0.45s;
-  }
-  .layer-underline {
-    stroke-width: 2.5;
-    stroke-dasharray: 0;
-    fill: none;
     transition: all 0.45s;
   }
 
@@ -294,7 +309,7 @@
     transition: all 0.45s;
   }
   .nn-edgebp {
-    stroke: var(--squidink);
+    stroke: var(--stone);
     stroke-width: 1.5;
     stroke-dasharray: 5;
     opacity: 0.95;

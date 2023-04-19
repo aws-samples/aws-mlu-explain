@@ -20,3 +20,11 @@ export function makeJsonArray(jsonArray) {
 
   return [xyValues, yValues];
 }
+
+export function numNeurons(network) {
+  let sum = 0;
+  for (let i = 0; i < network.length - 1; i++) {
+    sum += network[i] * network[i + 1];
+  }
+  return sum;
+}

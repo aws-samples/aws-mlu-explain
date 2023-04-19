@@ -1,11 +1,35 @@
 <script>
-  import { numLayersInteractive, networkInteractive } from "../../store";
+  import {
+    numLayersInteractive,
+    networkInteractive,
+    showText,
+    networkInteractiveWeights,
+  } from "../../store";
+  import { numNeurons } from "../../utils";
+
+  function instantiateWeights() {
+    const numWeights = numNeurons($networkInteractive);
+
+    const weightVals = Array.from({ length: numWeights }, (_, index) => {
+      // Get the number of input neurons for the current weight
+      const inputNeurons =
+        $networkInteractive[index % ($networkInteractive.length - 1)];
+      // Apply He Initialization
+      const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
+
+      return { data: heInit, grad: 0 };
+    });
+
+    $networkInteractiveWeights = [...weightVals];
+  }
 
   function add() {
     if ($numLayersInteractive < 6) {
       let newNN = [...$networkInteractive];
       newNN.splice(-1, 0, 1);
       $networkInteractive = [...newNN];
+      instantiateWeights();
+      $showText = false;
     }
   }
 
@@ -15,6 +39,8 @@
       let newNN = [...$networkInteractive];
       newNN.splice(secondToLastLayerIndex, 1);
       $networkInteractive = [...newNN];
+      instantiateWeights();
+      $showText = false;
     }
   }
 </script>
@@ -35,6 +61,7 @@
     justify-content: space-between;
     width: 50%;
     margin: auto;
+    padding-top: 5px;
   }
 
   #layer-controls {

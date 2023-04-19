@@ -33,6 +33,11 @@ export const numLayersBp = derived(
   networkBp,
   ($networkBp) => $networkBp.length
 );
+export const bpbind = writable();
+export const bpPlayAnimation = writable(true);
+export const drawErrorLine = writable(false);
+export const drawErrorCircle = writable(false);
+export const bpSlope = writable(0.7);
 
 // viz
 export const playAnimation = writable(true);
@@ -60,4 +65,4 @@ export const networkInteractiveWeights = writable([
 export const hexPreds = writable([]);
 export const hexVals = writable([]);
 export const interactiveDataset = writable([]);
-export const loopCount = writable(0);
+export const showText = writable(false);
