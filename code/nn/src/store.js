@@ -26,7 +26,7 @@ export const drawActivation = writable(false);
 export const stepIndex = writable(0);
 // backprop
 export const stepIndexBp = writable(0);
-export const labelsBp = writable(["X", "reLu", "linear"]);
+export const labelsBp = writable(["X", "reLu", "sigmoid"]);
 export const networkBp = writable([1, 2, 1, 1]);
 export const bpStage = writable(0);
 export const numLayersBp = derived(
@@ -38,6 +38,7 @@ export const bpPlayAnimation = writable(true);
 export const drawErrorLine = writable(false);
 export const drawErrorCircle = writable(false);
 export const bpSlope = writable(0.7);
+export const fillRule = writable(0);
 
 // viz
 export const playAnimation = writable(true);

@@ -1,25 +1,35 @@
 <script>
-  import { extent } from "d3-array";
+  import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { draw } from "svelte/transition";
-  import { scaleLinear } from "d3-scale";
-  import { line, curveBasis } from "d3-shape";
-  import { drawErrorLine, drawErrorCircle, bpSlope } from "../../store";
-  import { cubicOut } from "svelte/easing";
+  import { hexbin } from "d3-hexbin";
+  import { fillRule, bpStage } from "../../store";
 
-  let intercept = 2;
-
-  let data = [
-    { x: 1.3, y: 0 },
-    { x: 1.9, y: 1.43 },
-    { x: 2.2, y: 5.4 },
-    { x: 4, y: 8.71 },
-    { x: 6, y: 10.57 },
-    { x: 7, y: 6.32 },
-    { x: 8, y: 12.26 },
-    { x: 10, y: 6.5 },
-    { x: 12, y: 12.7 },
-    { x: 12, y: 16.12 },
-    { x: 14, y: 15.01 },
+  const data = [
+    { x: 0.05, y: 0.14, class: 1.0 },
+    { x: 0.86, y: 0.57, class: -1.0 },
+    { x: 0.41, y: 0.39, class: 1.0 },
+    { x: 1.0, y: 0.69, class: -1.0 },
+    { x: 0.27, y: 0.28, class: 1.0 },
+    { x: 0.57, y: 0.92, class: -1.0 },
+    { x: 0.18, y: 0.4, class: 1.0 },
+    { x: 0.09, y: 0.3, class: 1.0 },
+    { x: 0.52, y: 0.49, class: -1.0 },
+    { x: 0.33, y: 0.35, class: 1.0 },
+    { x: 0.88, y: 0.65, class: -1.0 },
+    { x: 0.16, y: 0.16, class: 1.0 },
+    { x: 0.94, y: 0.53, class: -1.0 },
+    { x: 0.34, y: 0.3, class: 1.0 },
+    { x: 0.71, y: 0.92, class: -1.0 },
+    { x: 0.15, y: 0.19, class: 1.0 },
+    { x: 0.59, y: 0.71, class: -1.0 },
+    { x: 0.11, y: 0.26, class: 1.0 },
+    { x: 0.82, y: 0.83, class: -1.0 },
+    { x: 0.14, y: 0.11, class: 1.0 },
+    { x: 0.2, y: 0.6, class: 1.0 },
+    { x: 0.4, y: 0.12, class: 1.0 },
+    { x: 0.7, y: 0.37, class: -1.0 },
+    { x: 0.75, y: 0.32, class: -1.0 },
+    { x: 0.85, y: 0.12, class: -1.0 },
   ];
 
   export let height = 200;
@@ -30,53 +40,89 @@
     bottom: 0,
     right: 20,
   };
+
+  const hexbinRadius = 5;
+
   // scales
   $: xScale = scaleLinear()
-    .domain([1, 15])
+    .domain([0, 1])
     .range([margin.left, width - margin.right]);
 
   $: yScale = scaleLinear()
-    .domain([0, 17])
+    .domain([0, 1])
     .range([height - margin.bottom, margin.top]);
 
-  // the path generator
-  $: pathLine = line()
-    .x((d) => xScale(d.x))
-    .y((d) => yScale(d.x * $bpSlope + intercept));
+  const colorScale = scaleOrdinal()
+    .domain([-1, 0, 1])
+    .range(["#f46ebb", "var(--darksquidink)", "#2074d5"]);
 
-  let drawErrorBackprop = true;
+  $: hexbins = hexbin()
+    .radius(hexbinRadius)
+    .extent([
+      [0, 0],
+      [width, height],
+    ]);
 
-  function radiusTransition(node, { duration = 300, from = 0, to = 8 }) {
-    const diff = to - from;
-    const easing = cubicOut;
-
-    return {
-      duration,
-      css: (t) => {
-        const eased_t = easing(t);
-        const r = from + eased_t * diff;
-        return `r: ${r};`;
-      },
-    };
-  }
+  let hexFillRules = {
+    0: (d) => 0,
+    1: (d) => (yScale.invert(d.y) > 0.2 ? -1 : 1),
+    2: (d) => (yScale.invert(d.y) > 0.5 ? -1 : 1),
+  };
+  let circleStrokeRules = {
+    0: () => "white",
+    1: (d) => {
+      if (d.y > 0.2) {
+        if (d.class === -1) {
+          return "white";
+        } else {
+          return "red";
+        }
+      } else {
+        if (d.class === 1) {
+          return "white";
+        } else {
+          return "red";
+        }
+      }
+    },
+    2: (d) => {
+      if (d.y > 0.5) {
+        if (d.class === -1) {
+          return "white";
+        } else {
+          return "red";
+        }
+      } else {
+        if (d.class === 1) {
+          return "white";
+        } else {
+          return "red";
+        }
+      }
+    },
+  };
 </script>
 
-<g class="nn-g" transform={`translate(${0} ${-height / 2})`}>
+<clipPath id="clip-bp">
   <rect id="bg-rect" {width} {height} />
-  <line
-    class="axis-line"
-    x1={margin.left}
-    x2={width - margin.right}
-    y1={height}
-    y2={height}
-  />
-  <line
-    class="axis-line"
-    x1={margin.left}
-    x2={margin.left}
-    y1={margin.top}
-    y2={height}
-  />
+</clipPath>
+
+<g
+  class="nn-g"
+  clip-path="url(#clip-bp)"
+  transform={`translate(${0} ${-height / 2})`}
+>
+  <!-- hexbins -->
+  {#each hexbins(hexbins.centers()) as h}
+    <path
+      in:draw={{ duration: 500 }}
+      out:draw={{ duration: 500 }}
+      class="hex-cell"
+      d={`M${h.x},${h.y}${hexbins.hexagon()}`}
+      fill={colorScale(hexFillRules[$fillRule](h))}
+      stroke={colorScale(hexFillRules[$fillRule](h))}
+    />
+  {/each}
   <!-- x-ticks -->
   {#each xScale.ticks() as tick}
     <g transform={`translate(${xScale(tick) + 0} ${height + margin.bottom})`}>
@@ -101,117 +147,47 @@
       />
     </g>
   {/each}
-  <path
-    class="outer-path"
-    d={pathLine(data.map((d) => ({ x: d.x, y: d.x * $bpSlope + intercept })))}
-  />
-  <path
-    class="inner-path"
-    d={pathLine(data.map((d) => ({ x: d.x, y: d.x * $bpSlope + intercept })))}
-  />
-
-  {#if $drawErrorLine}
-    {#each data as d, i}
-      {#if i > 0}
-        <path
-          transition:draw={{ duration: 1000 }}
-          class="error-line"
-          d={`M${xScale(d.x)} ${yScale(d.x * $bpSlope + intercept)} L${xScale(
-            d.x
-          )} ${yScale(d.y)}`}
-        />
-      {/if}
-    {/each}
-    <text
-      x={xScale(11)}
-      y={(yScale(6.5) + yScale(10 * $bpSlope + intercept)) / 2}
-      class="bp-error-text">ERROR</text
-    >
-  {/if}
 
   {#each data as d, i}
-    {#if i > 0}
-      <circle class="dot" cx={xScale(d.x)} cy={yScale(d.y)} r="3" />
-    {/if}
+    <circle
+      class="dot"
+      cx={xScale(d.x)}
+      cy={yScale(d.y)}
+      fill={colorScale(d.class)}
+      stroke={circleStrokeRules[$bpStage](d)}
+      r="3"
+    />
   {/each}
-
-  <!-- draw error line -->
-  {#if $drawErrorCircle}
-    {#each data as d, i}
-      {#if i > 0}
-        <circle
-          id="bpErrorCircle"
-          cx={xScale(d.x)}
-          cy={yScale(d.x * $bpSlope + intercept)}
-          r="6"
-          fill="var(--bg)"
-          stroke="red"
-          transition:radiusTransition={{ duration: 300, from: 0, to: 8 }}
-        />
-      {/if}
-    {/each}
-  {/if}
 </g>
 
 <style>
-  .error-line {
-    stroke: red;
-    fill: none;
-    stroke-width: 3;
-    transition: all 1s;
-  }
-  .bp-error-text {
-    paint-order: stroke fill;
-    stroke-width: 4;
-    stroke: red;
-    fill: white;
-    stroke-linecap: round;
-    font-size: 12px;
-    font-family: var(--font-heavy);
-  }
   * {
     color: white;
   }
   #bg-rect {
     fill: var(--darksquidink);
+    stroke: var(--squidink);
+    stroke-width: 2;
   }
-  .axis-line {
-    stroke-width: 3;
-    stroke: white;
-    fill: none;
+
+  .hex-cell {
+    transition: all 1s;
+    stroke-width: 0;
   }
+
   .axis-tick {
     stroke-width: 1;
     stroke: var(--white);
     fill: none;
     opacity: 0.05;
   }
-  .axis-text {
-    font-family: Arial;
-    font-size: 12px;
-    fill: var(--white);
-  }
+
   circle {
     transition: all 1s;
   }
   circle.dot {
-    fill: var(--magenta);
-    stroke: var(--bg);
-    stroke-width: 2;
+    /* stroke: var(--bg);
+    stroke-width: 0.5; */
     opacity: 0.85;
-  }
-  .inner-path {
-    stroke: yellow;
-    stroke-width: 4;
-    fill: none;
-    transition: all 1s;
-    stroke-linecap: round;
-  }
-  .outer-path {
-    stroke: var(--squidink);
-    stroke-width: 9;
-    fill: none;
-    transition: all 1s;
-    stroke-linecap: round;
   }
 </style>

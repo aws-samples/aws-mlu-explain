@@ -12,6 +12,7 @@
     drawErrorLine,
     drawErrorCircle,
     bpSlope,
+    fillRule,
   } from "../../store";
   import katexify from "../../katexify";
 
@@ -19,10 +20,12 @@
 
   const target2event = {
     0: () => {
-      $showLayerLine = false;
+      // $showLayerLine = false;
       $networkBp = [1, 2, 1, 1];
       $stepIndexBp = 0;
-      $showSubScript = false;
+      // $showSubScript = false;
+      $fillRule = 0;
+
       $bpStage = 0;
       animation1();
       $drawErrorLine = false;
@@ -35,17 +38,20 @@
       // $showSubScript = false;
       $bpStage = 1;
       $drawErrorLine = true;
+      $fillRule = 1;
     },
     2: () => {
       // $showLayerLine = false;
       // $showSubScript = true;
       // $stepIndexBp = 1;
+      $fillRule = 2;
       $bpStage = 2;
       // new
       $drawErrorLine = true;
       animation3();
     },
     3: () => {
+      $fillRule = 1;
       $stepIndexBp = 2;
       $showLayerLine = false;
       $bpStage = 1;
@@ -81,8 +87,8 @@
     // $drawErrorLine = true;
   }
   function animation1() {
-    $bpPlayAnimation = !$bpPlayAnimation;
     $drawErrorCircle = false;
+    $fillRule = 0;
     let animationSelections = [];
 
     const selector = `animateMotion#animatePathForward1`;
@@ -98,7 +104,7 @@
     });
     // draw circle at end of animation
     setTimeout(() => {
-      $drawErrorCircle = true;
+      $fillRule = 1;
     }, 3 * 1000);
   }
 
