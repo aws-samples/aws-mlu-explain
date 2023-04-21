@@ -12,6 +12,7 @@
     bpStage,
     bpbind,
     bpPlayAnimation,
+    bpWeights,
   } from "../../store";
   import { fade, fly, draw } from "svelte/transition";
   import BackPropOutput from "./BackPropOutput.svelte";
@@ -75,6 +76,15 @@
     }
     return nnWeights[layer][yPosition];
   }
+
+  function getIndex(layer, prev, curr, networkInteractive) {
+    let index = 0;
+    for (let k = 0; k < layer - 1; k++) {
+      index += networkInteractive[k] * networkInteractive[k + 1];
+    }
+    index += prev * networkInteractive[layer] + curr;
+    return index;
+  }
 </script>
 
 <div
@@ -86,40 +96,42 @@
   <svg {width} height={height + $marginScroll.top + $marginScroll.bottom}>
     {#if visible}
       <!-- edges -->
-      {#each Array($numLayersBp).fill(null) as i, layer}
-        {#each positionElements($networkBp[layer], maxNumNeurons) as yPosition}
-          {#if layer > 0}
-            {#each positionElements($networkBp[layer - 1], maxNumNeurons) as prevYPosition, j}
+      {#each Array($numLayersBp).fill(null) as layer, i}
+        {#each positionElements($networkBp[i], maxNumNeurons) as yPosition, y}
+          {#if i > 0}
+            {#each positionElements($networkBp[i - 1], maxNumNeurons) as prevYPosition, j}
+              {@const index = getIndex(i, j, y, $networkBp)}
               <path
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}
                 d={`
-                    M ${xScale(layer - 1)} ${yScale(prevYPosition)}
-                    L ${xScale(layer)} ${yScale(yPosition)}
+                    M ${xScale(i - 1)} ${yScale(prevYPosition)}
+                    L ${xScale(i)} ${yScale(yPosition)}
                   `}
                 class="nn-edgebp"
-                id={`nn-edgebp-${layer}-${yPosition}-${prevYPosition}-${$stepIndexBp}`}
+                id={`nn-edgebp-${i}-${yPosition}-${prevYPosition}-${$stepIndexBp}`}
+                stroke-width={$bpWeights[index]}
               />
               <!-- weights -->
-              {#if $stepIndexBp >= 1}
-                {#key $stepIndexBp}
-                  <text
-                    in:fly|local={{ x: 0, duration: 300 }}
-                    out:fade|local={{ duration: 300 }}
-                    dx={0 * xScale(1)}
-                    dy="0"
-                    class="weight-text"
+              <!-- {#if $stepIndexBp >= 1} -->
+              {#key $stepIndexBp}
+                <text
+                  in:fly|local={{ x: 0, duration: 300 }}
+                  out:fade|local={{ duration: 300 }}
+                  dx={0 * xScale(1)}
+                  dy="0"
+                  class="weight-text"
+                >
+                  <textPath
+                    href={`#nn-edgebp-${i}-${yPosition}-${prevYPosition}-${$stepIndexBp}`}
+                    startOffset="50%"
+                    text-anchor="middle"
+                    fill="#232F3E"
+                    dominant-baseline="middle">w</textPath
                   >
-                    <textPath
-                      href={`#nn-edgebp-${layer}-${yPosition}-${prevYPosition}-${$stepIndexBp}`}
-                      startOffset="50%"
-                      text-anchor="middle"
-                      fill="#232F3E"
-                      dominant-baseline="middle">w</textPath
-                    >
-                  </text>
-                {/key}
-              {/if}
+                </text>
+              {/key}
+              <!-- {/if} -->
               <!-- forward -->
               <g>
                 <!-- {#if animationBegin} -->
@@ -127,12 +139,12 @@
                   <set
                     attributeName="opacity"
                     to="1"
-                    begin={`animatePathForward${layer}.begin`}
+                    begin={`animatePathForward${i}.begin`}
                   />
                   <set
                     attributeName="opacity"
                     to="0"
-                    begin={`animatePathForward${layer}.end`}
+                    begin={`animatePathForward${i}.end`}
                   />
                 </circle>
                 <!-- {#if $stepIndexBp >= 1}
@@ -140,8 +152,8 @@
                     class="moving-textbp"
                     opacity="0"
                     alignment-baseline="middle"
-                    >{updateNeuron(layer, j)}
-                    <set attributeName="opacity" to="1" begin="{layer}s" />
+                    >{updateNeuron(i, j)}
+                    <set attributeName="opacity" to="1" begin="{i}s" />
                     <set attributeName="opacity" to="0" begin="{0}s" /></text
                   >
                 {/if} -->
@@ -150,13 +162,13 @@
                 <!-- `animateMotion#animatePathForward0` -->
                 <!-- {#if $bpStage == 0} -->
                 <animateMotion
-                  id={`animatePathForward${layer}`}
-                  begin={i === 1 ? `0` : `animatePathForward${layer - 1}.end`}
-                  dur="1s"
+                  id={`animatePathForward${i}`}
+                  begin={i === 1 ? `0` : `animatePathForward${i - 1}.end`}
+                  dur=".5s"
                   restart="whenNotActive"
                   path={`
-                      M ${xScale(layer - 1)} ${yScale(prevYPosition)}
-                      L ${xScale(layer)} ${yScale(yPosition)}
+                      M ${xScale(i - 1)} ${yScale(prevYPosition)}
+                      L ${xScale(i)} ${yScale(yPosition)}
                     `}
                 />
                 <!-- {/if} -->
@@ -167,31 +179,29 @@
               <!-- {#if $stepIndexBp == 2} -->
               <g>
                 <!-- {#if animationBegin} -->
-                <circle class="moving-circlebp" opacity="1">
+                <circle class="moving-circlebp" opacity="0">
                   <set
                     attributeName="opacity"
                     to="1"
-                    begin={`animatePathBackward${layer}.begin`}
+                    begin={`animatePathBackward${i}.begin`}
                   />
                   <set
                     attributeName="opacity"
                     to="0"
-                    begin={`animatePathBackward${layer}.end`}
+                    begin={`animatePathBackward${i}.end`}
                   />
                 </circle>
 
                 <!-- backward pass -->
                 <!-- {#if $bpStage == 2} -->
                 <animateMotion
-                  id={`animatePathBackward${layer}`}
-                  begin={layer === 3
-                    ? `0s`
-                    : `animatePathBackward${layer + 1}.end`}
-                  dur="1s"
+                  id={`animatePathBackward${i}`}
+                  begin={`animatePathBackward${i + 1}.end`}
+                  dur=".5s"
                   restart="whenNotActive"
                   path={`
-                         M ${xScale(layer)} ${yScale(yPosition)}
-                         L ${xScale(layer - 1)} ${yScale(prevYPosition)}
+                         M ${xScale(i)} ${yScale(yPosition)}
+                         L ${xScale(i - 1)} ${yScale(prevYPosition)}
                        `}
                 />
                 <!-- {/if} -->
@@ -310,10 +320,10 @@
   }
   .nn-edgebp {
     stroke: var(--stone);
-    stroke-width: 1.5;
-    stroke-dasharray: 5;
+    /* stroke-width: 1.5; */
+    /* stroke-dasharray: 5; */
     opacity: 0.95;
-    animation: dash 30s infinite linear;
+    /* animation: dash 30s infinite linear; */
     transition: all 0.45s;
   }
   .input {

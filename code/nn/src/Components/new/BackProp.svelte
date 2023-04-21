@@ -3,69 +3,50 @@
   import { onMount } from "svelte";
   import {
     networkBp,
-    showLayerLine,
-    showSubScript,
     stepIndexBp,
     bpStage,
     bpbind,
-    bpPlayAnimation,
-    drawErrorLine,
     drawErrorCircle,
     bpSlope,
+    bpIntercept,
     fillRule,
+    strokeRule,
+    bpWeights,
   } from "../../store";
   import katexify from "../../katexify";
 
-  $networkBp = [1, 2, 1, 1];
+  $networkBp = [2, 2, 1, 1];
+
+  const animationDuration = 500;
 
   const target2event = {
     0: () => {
-      // $showLayerLine = false;
-      $networkBp = [1, 2, 1, 1];
       $stepIndexBp = 0;
-      // $showSubScript = false;
       $fillRule = 0;
-
-      $bpStage = 0;
-      animation1();
-      $drawErrorLine = false;
+      $strokeRule = 0;
+      $bpStage = 0.2;
+      $bpSlope = 0;
+      $bpIntercept = 0.75;
+      animation0();
     },
 
     1: () => {
-      // $showLayerLine = false;
-      // $networkBp = [1, 2, 1, 1];
-      // $stepIndexBp = 1;
-      // $showSubScript = false;
       $bpStage = 1;
-      $drawErrorLine = true;
       $fillRule = 1;
+      $strokeRule = 1;
     },
     2: () => {
-      // $showLayerLine = false;
-      // $showSubScript = true;
-      // $stepIndexBp = 1;
-      $fillRule = 2;
+      $bpSlope = 0;
+      $bpIntercept = 0.55;
       $bpStage = 2;
-      // new
-      $drawErrorLine = true;
-      animation3();
+      animation2();
     },
     3: () => {
-      $fillRule = 1;
+      $bpSlope = 0;
+      $bpIntercept = 0.55;
       $stepIndexBp = 2;
-      $showLayerLine = false;
       $bpStage = 1;
-      animation4();
-    },
-    4: () => {
-      $stepIndexBp = 3;
-      $showLayerLine = false;
-    },
-    5: () => {
-      $stepIndexBp = 4;
-      $showLayerLine = false;
-
-      $networkBp = [2, 1, 1, 1];
+      animation3();
     },
   };
 
@@ -75,20 +56,16 @@
     }
   }
 
-  $: {
-    console.log("bpStage", $bpStage);
-  }
-
-  function animation2() {
-    $drawErrorLine = false;
-    setTimeout(() => {
-      $drawErrorLine = true;
-    }, 1000);
-    // $drawErrorLine = true;
-  }
   function animation1() {
+    $strokeRule = 0;
+    setTimeout(() => {
+      $strokeRule = 1;
+    }, animationDuration);
+  }
+  function animation0() {
     $drawErrorCircle = false;
     $fillRule = 0;
+    $strokeRule = 0;
     let animationSelections = [];
 
     const selector = `animateMotion#animatePathForward1`;
@@ -105,18 +82,15 @@
     // draw circle at end of animation
     setTimeout(() => {
       $fillRule = 1;
-    }, 3 * 1000);
+    }, 3 * animationDuration);
   }
 
-  function animation3() {
-    console.log("click");
-    $bpSlope = 0.7;
+  function animation2() {
     let animationSelections = [];
 
     const selector = `animateMotion#animatePathBackward3`;
     const selection = $bpbind.querySelectorAll(selector);
     animationSelections.push({ selection: selection });
-    // trigger animation
     animationSelections.forEach((element) => {
       setTimeout(() => {
         element.selection.forEach((selection) => {
@@ -126,37 +100,71 @@
     });
 
     setTimeout(() => {
-      $bpSlope = 0.8;
-    }, 3000);
+      $fillRule = 2;
+      $strokeRule = 2;
+      updateWeights();
+    }, 3 * animationDuration);
   }
 
-  function animation4() {
-    console.log("click");
-    let animationSelections = [];
+  function animation3() {
+    if ($bpSlope > -1.046) {
+      let animationSelections = [];
 
-    const selector1 = `animateMotion#animatePathForward1`;
-    const selection1 = $bpbind.querySelectorAll(selector1);
-    animationSelections.push({ selection: selection1 });
-    const selector = `animateMotion#animatePathBackward3`;
-    const selection = $bpbind.querySelectorAll(selector);
-    animationSelections.push({ selection: selection });
-    // trigger animation
-    animationSelections.forEach((element, i) => {
+      const selector1 = `animateMotion#animatePathForward1`;
+      const selection1 = $bpbind.querySelectorAll(selector1);
+      animationSelections.push({ selection: selection1 });
+      const selector = `animateMotion#animatePathBackward3`;
+      const selection = $bpbind.querySelectorAll(selector);
+      animationSelections.push({ selection: selection });
+      // trigger animation
+      animationSelections.forEach((element, i) => {
+        setTimeout(() => {
+          element.selection.forEach((selection) => {
+            selection.beginElement();
+          });
+        }, i * 3 * animationDuration);
+      });
       setTimeout(() => {
-        element.selection.forEach((selection) => {
-          selection.beginElement();
-        });
-      }, i * 3000);
+        $fillRule = 3;
+        $strokeRule = 3;
+        updateMetrics();
+      }, 6 * animationDuration);
+    } else {
+      return;
+    }
+  }
+
+  function restartAnimation3() {
+    $bpSlope = 0;
+    $bpIntercept = 0.55;
+    animation3();
+  }
+
+  function updateWeights() {
+    bpWeights.update((values) => {
+      return values.map((value) => {
+        const randomChange = Math.floor(Math.random() * 8); // generate a random integer between 0 and 5
+        const randomDirection = Math.random() < 0.5 ? -1 : 1; // randomly choose whether to add or subtract
+        return Math.max(
+          1,
+          Math.min(14, value + randomChange * randomDirection)
+        ); // ensure the value stays within the range of 1 to 10
+      });
     });
-    setTimeout(() => {
-      $bpSlope = 1;
-    }, 6000);
+  }
+
+  function updateMetrics() {
+    $bpIntercept += 0.1;
+    $bpSlope += -0.35;
+    // update these to trigger color updates without forced remount
+    $strokeRule += 1;
+    $fillRule += 1;
+    updateWeights();
   }
 
   onMount(() => {
     // store elements to track
     const sections = [...document.querySelectorAll(".step-bp")];
-    console.log("sections", sections);
 
     // observe elements to track
     sections.forEach((section) => {
@@ -222,7 +230,7 @@
               for each neuron in each layer.
             </p>
             <br />
-            <button class="step-button" on:click={() => animation1()}
+            <button class="step-button" on:click={() => animation0()}
               >Replay Animation</button
             >
           </div>
@@ -238,9 +246,13 @@
               neural network's predicted output and the actual target values. By
               minimizing this error, the neural network learns to improve its
               predictions during training.
+              <br /><br />
+              Notice those extra big circles in the chart, the ones that are colored
+              differently than their background? Those are the values that were falsely
+              predicted.
             </p>
             <br />
-            <button class="step-button" on:click={() => animation2()}
+            <button class="step-button" on:click={() => animation1()}
               >Replay Animation</button
             >
           </div>
@@ -251,14 +263,16 @@
             <hr />
             <br />
             <p>
-              In the backward pass, the error is propagated back through the
-              network, starting from the output layer, to adjust the weights and
-              biases of each neuron. This weight adjustment process, guided by
-              the gradients of the error with respect to the weights, aims to
-              minimize the overall error of the network.
+              The network will look at these mistakes and adjust the weights to
+              try and make them right. In the backward pass, the error is
+              propagated back through the network, starting from the output
+              layer, to adjust the weights and biases of each neuron. This
+              weight adjustment process, guided by the gradients of the error
+              with respect to the weights, aims to minimize the overall error of
+              the network.
             </p>
             <br />
-            <button class="step-button" on:click={() => animation3()}
+            <button class="step-button" on:click={() => animation2()}
               >Replay Animation</button
             >
           </div>
@@ -270,15 +284,25 @@
             <br />
 
             <p>
-              Backpropagation is a supervised learning algorithm used in neural
-              networks that optimizes their weights and biases through iterative
-              forward and backward passes. By computing the gradients of the
-              error with respect to the weights, backpropagation enables the
-              network to learn and improve its predictions.
+              In today's Neural Networks, this process is repeated thousands of
+              times: predictions flow forward, errors are observed and
+              backpropagated through the network, and the weights are adjusted.
+              This process is know as "Backpropagation." Backpropagation is a
+              supervised learning algorithm used in neural networks that
+              optimizes their weights and biases through iterative forward and
+              backward passes. By computing the gradients of the error with
+              respect to the weights, backpropagation enables the network to
+              learn and improve its predictions.
+              <br /><br />
+              Try clicking Run backprop 3 more times to see the model learn the optimal
+              boundary!
             </p>
             <br />
-            <button class="step-button" on:click={() => animation4()}
-              >Replay Animation</button
+            <button class="step-button" on:click={() => restartAnimation3()}
+              >Restart</button
+            >
+            <button class="step-button" on:click={() => animation3()}
+              >Run Backprop</button
             >
           </div>
         </div>

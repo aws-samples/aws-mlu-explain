@@ -27,7 +27,7 @@ export const stepIndex = writable(0);
 // backprop
 export const stepIndexBp = writable(0);
 export const labelsBp = writable(["X", "reLu", "sigmoid"]);
-export const networkBp = writable([1, 2, 1, 1]);
+export const networkBp = writable([2, 2, 1, 1]);
 export const bpStage = writable(0);
 export const numLayersBp = derived(
   networkBp,
@@ -37,8 +37,15 @@ export const bpbind = writable();
 export const bpPlayAnimation = writable(true);
 export const drawErrorLine = writable(false);
 export const drawErrorCircle = writable(false);
-export const bpSlope = writable(0.7);
+export const bpSlope = writable(0);
+export const bpIntercept = writable(0.4);
 export const fillRule = writable(0);
+export const strokeRule = writable(0);
+const randomArray = Array.from(
+  { length: 7 },
+  () => Math.floor(Math.random() * 10) + 1
+);
+export const bpWeights = writable(randomArray);
 
 // viz
 export const playAnimation = writable(true);

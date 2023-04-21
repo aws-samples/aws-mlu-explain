@@ -2,7 +2,7 @@
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { draw } from "svelte/transition";
   import { hexbin } from "d3-hexbin";
-  import { fillRule, bpStage } from "../../store";
+  import { bpSlope, bpIntercept, fillRule, strokeRule } from "../../store";
 
   const data = [
     { x: 0.05, y: 0.14, class: 1.0 },
@@ -63,44 +63,31 @@
       [width, height],
     ]);
 
-  let hexFillRules = {
-    0: (d) => 0,
-    1: (d) => (yScale.invert(d.y) > 0.2 ? -1 : 1),
-    2: (d) => (yScale.invert(d.y) > 0.5 ? -1 : 1),
+  const hexFillRules = (stage, d) => {
+    if (stage === 0) {
+      return 0;
+    } else {
+      return yScale.invert(d.y) > $bpIntercept + $bpSlope * xScale.invert(d.x)
+        ? -1
+        : 1;
+    }
   };
-  let circleStrokeRules = {
-    0: () => "white",
-    1: (d) => {
-      if (d.y > 0.2) {
-        if (d.class === -1) {
-          return "white";
-        } else {
-          return "red";
-        }
+
+  const rRules = (stage, d) => {
+    if (stage === 0) {
+      return false;
+    } else {
+      if (d.y > $bpIntercept + $bpSlope * d.x) {
+        return d.class === -1 ? false : true;
       } else {
-        if (d.class === 1) {
-          return "white";
-        } else {
-          return "red";
-        }
+        return d.class === 1 ? false : true;
       }
-    },
-    2: (d) => {
-      if (d.y > 0.5) {
-        if (d.class === -1) {
-          return "white";
-        } else {
-          return "red";
-        }
-      } else {
-        if (d.class === 1) {
-          return "white";
-        } else {
-          return "red";
-        }
-      }
-    },
+    }
   };
+
+  $: {
+    console.log("new values!", $bpSlope, $bpIntercept);
+  }
 </script>
 
 <clipPath id="clip-bp">
@@ -113,16 +100,18 @@
   transform={`translate(${0} ${-height / 2})`}
 >
   <!-- hexbins -->
+  <!-- {#key $bpSlope} -->
   {#each hexbins(hexbins.centers()) as h}
     <path
       in:draw={{ duration: 500 }}
       out:draw={{ duration: 500 }}
       class="hex-cell"
       d={`M${h.x},${h.y}${hexbins.hexagon()}`}
-      fill={colorScale(hexFillRules[$fillRule](h))}
-      stroke={colorScale(hexFillRules[$fillRule](h))}
+      fill={colorScale(hexFillRules($fillRule, h))}
+      stroke={colorScale(hexFillRules($fillRule, h))}
     />
   {/each}
+  <!-- {/key} -->
   <!-- x-ticks -->
   {#each xScale.ticks() as tick}
     <g transform={`translate(${xScale(tick) + 0} ${height + margin.bottom})`}>
@@ -148,22 +137,25 @@
     </g>
   {/each}
 
+  <!-- {#key $bpSlope} -->
   {#each data as d, i}
     <circle
       class="dot"
       cx={xScale(d.x)}
       cy={yScale(d.y)}
       fill={colorScale(d.class)}
-      stroke={circleStrokeRules[$bpStage](d)}
+      class:wrong={rRules($strokeRule, d)}
       r="3"
     />
   {/each}
+  <!-- {/key} -->
 </g>
 
 <style>
   * {
     color: white;
   }
+
   #bg-rect {
     fill: var(--darksquidink);
     stroke: var(--squidink);
@@ -172,7 +164,7 @@
 
   .hex-cell {
     transition: all 1s;
-    stroke-width: 0;
+    stroke-width: 2;
   }
 
   .axis-tick {
@@ -184,10 +176,15 @@
 
   circle {
     transition: all 1s;
+    stroke: var(--white);
   }
   circle.dot {
     /* stroke: var(--bg);
     stroke-width: 0.5; */
-    opacity: 0.85;
+  }
+  .wrong {
+    r: 7;
+    stroke: white;
+    stroke-width: 4;
   }
 </style>

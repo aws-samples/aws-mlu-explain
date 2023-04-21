@@ -130,12 +130,12 @@
     }
   }
 
-  function getIndex(i, j, y, networkInteractive) {
+  function getIndex(layer, prev, curr, networkInteractive) {
     let index = 0;
-    for (let k = 0; k < i - 1; k++) {
+    for (let k = 0; k < layer - 1; k++) {
       index += networkInteractive[k] * networkInteractive[k + 1];
     }
-    index += j * networkInteractive[i] + y;
+    index += prev * networkInteractive[layer] + curr;
     return index;
   }
 </script>
@@ -155,7 +155,6 @@
           {#if i > 0}
             {#each positionElements($networkInteractive[i - 1], maxNumNeurons) as prevYPosition, j}
               {@const index = getIndex(i, j, y, $networkInteractive)}
-
               <path
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}

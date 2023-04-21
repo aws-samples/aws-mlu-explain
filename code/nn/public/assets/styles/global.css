@@ -36,7 +36,10 @@
   --stone: #d4dada;
   --paper: #f1f3f3;
   --white: #ffffff;
-  --bananayellow: #ffe135;
+  --bananayellow: rgb(255, 223, 80);
+  --yellow: yellow;
+  --offpink: rgb(255, 164, 209);
+  --enjoi: darkorange;
 
   /* Z-Index */
   --z-bottom: -100;
@@ -63,7 +66,7 @@ body {
   font-family: var(--font-main);
   overflow-x: hidden;
   background-size: 20px 20px;
-  background-color: var(--paper);
+  background-color: var(--bg);
   /* background: conic-gradient(
       from 90deg at 1px 1px,
       #0000 90deg,
