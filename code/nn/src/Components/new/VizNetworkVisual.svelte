@@ -437,7 +437,11 @@
     stroke-width: 4;
     fill: rgba(138, 255, 80, 0.5);
     transition: r 1s;
-    r: 25;
+    r: 15;
+    /* stroke: var(--squidink);
+    stroke-width: 2;
+    fill: var(--paper);
+    r: 10; */
   }
 
   .moving-circle-back {
@@ -455,7 +459,11 @@
   .nn-text {
     font-size: 12px;
     transition: all 0.45s;
-    font-weight: bold;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 2px;
+    stroke: var(--bg);
+    letter-spacing: 1px;
   }
   .nn-g {
     transition: all 0.45s;
@@ -477,16 +485,16 @@
     }
   }
   .input {
-    fill: skyblue;
-    stroke: skyblue;
+    fill: var(--rind);
+    stroke: var(--rind);
   }
   .hidden {
     fill: var(--magenta);
     stroke: var(--magenta);
   }
   .output {
-    fill: yellow;
-    stroke: yellow;
+    fill: var(--bananayellow);
+    stroke: var(--bananayellow);
   }
 
   .nn-node {

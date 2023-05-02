@@ -245,6 +245,7 @@
 
   onMount(() => {
     getUpdateModelParams();
+    buttonClick();
   });
 </script>
 
@@ -274,7 +275,7 @@
       </div>
       <!-- <DatasetIcons /> -->
     </div>
-    <div id="lol-container">
+    <div id="network-interactive-container">
       <div class="network-plot">
         <div id="left">
           <InteractiveControls />
@@ -326,9 +327,23 @@
       </div>
     </div>
   </section>
+  <p class="body-text">
+    Notice how to this point, we've describe a specific neural network
+    architecture where values flow forward linearly through a network, and
+    gradients flow linearly backwards through a network. These a
+  </p>
+  <br />
+  <p class="body-text">
+    Notice how to this point, we've describe a specific neural network
+    architecture where values flow forward linearly through a network, and
+    gradients flow linearly backwards through a network. These a
+  </p>
 </div>
 
 <style>
+  section {
+    padding-bottom: 5rem;
+  }
   #left {
     width: 100%;
     height: 100%;
@@ -347,9 +362,11 @@
     width: 1000px;
     margin: auto;
   }
-  #lol-container {
+  #network-interactive-container {
     display: grid;
     height: var(--viz-height);
+    max-height: var(--max-viz-height);
+    /* border: 2px solid black; */
     /* width: 1000px; */
     grid-template-columns: 70% 30%;
     /* margin: auto; */
@@ -357,6 +374,7 @@
   .network-plot {
     width: 100%;
     height: var(--viz-height);
+    max-height: var(--max-viz-height);
     margin: auto;
   }
   #eval-container {
@@ -364,7 +382,7 @@
     grid-template-rows: 10% 50% 40%;
     grid-template-columns: 100%;
     grid-gap: 0%;
-    max-height: var(--viz-height);
+    max-height: var(--max-viz-height);
     width: 100%;
   }
 
@@ -415,7 +433,7 @@
   section {
     max-width: 1200px;
     margin: auto;
-    height: var(--viz-height);
+
     /* outline: 2px solid teal; */
   }
 

@@ -59,6 +59,7 @@
   --size-default: 16px;
 
   --viz-height: 80vh;
+  --max-viz-height: 750px;
 }
 
 body {

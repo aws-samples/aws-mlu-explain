@@ -18,6 +18,7 @@
   import Resources from "./Components/new/Resources.svelte";
   import BackProp from "./Components/new/BackProp.svelte";
   import VizNet from "./Components/new/VizNet.svelte";
+  import OtherArchitectures from "./Components/new/OtherArchitectures.svelte";
 
   function handleResize() {
     $mobile = window.innerWidth <= 950;
@@ -41,13 +42,13 @@
 
 <svelte:window on:resize={handleResize} />
 
-<!-- <Logo />
+<Logo />
 <Title />
 <Intro />
 <NetworkScroll />
-<ActivationFunctions /> -->
+<ActivationFunctions />
 <BackPropagation />
 <BackProp />
-<!-- <VizNet /> -->
-<!-- <CommonArchitectures /> -->
+<VizNet />
+<OtherArchitectures />
 <Resources />

@@ -31,8 +31,8 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  let nodeWidth = 12 * 1.33 * 4;
-  let nodeHeight = 12 * 2;
+  let nodeWidth = 12 * 1.33 * 4.5;
+  let nodeHeight = 12 * 3;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayersBp])
@@ -314,6 +314,11 @@
   .nn-text {
     font-size: 12px;
     transition: all 0.45s;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 2px;
+    stroke: var(--bg);
+    letter-spacing: 1px;
   }
   .nn-g {
     transition: all 0.45s;
@@ -359,11 +364,12 @@
   #networkBp-chart {
     width: 100%;
     max-height: 100%;
+    max-height: var(--max-viz-height);
     height: 100%;
     background: conic-gradient(
         from 90deg at 1px 1px,
-        #0000 90deg,
-        rgba(0, 0, 0, 0.05) 0
+        var(--darksquidink) 90deg,
+        #f1f3f31b 0
       )
       0 0/20px 20px;
   }

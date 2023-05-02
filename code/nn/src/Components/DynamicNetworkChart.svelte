@@ -355,8 +355,8 @@
   }
   #network-chart {
     width: 100%;
-    max-height: 100%;
     height: 100%;
+    max-height: var(--max-viz-height);
     background: conic-gradient(
         from 90deg at 1px 1px,
         #0000 90deg,

@@ -11,6 +11,8 @@
   export let width;
   // init to false so don't show drawing during rendering
 
+  const rectDim = 160;
+
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])
     .range([$marginScroll.left, width - $marginScroll.right]);
@@ -19,9 +21,9 @@
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
   // responsive dimensions for scatter plot
-  $: scatterWidth = xScale(1) - xScale(0);
+  $: scatterWidth = rectDim ? rectDim : xScale(1) - xScale(0);
   $: yVals = positionElements(3, maxNumNeurons);
-  $: scatterHeight = yScale(yVals[0]) - yScale(yVals[2]);
+  $: scatterHeight = 1 ? rectDim : yScale(yVals[0]) - yScale(yVals[1]);
 </script>
 
 <!-- scatterplot -->

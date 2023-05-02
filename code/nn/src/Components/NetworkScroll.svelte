@@ -391,6 +391,7 @@
   .chart-holder {
     width: 100%;
     height: 100%;
+    max-height: var(--max-viz-height);
   }
 
   .step {

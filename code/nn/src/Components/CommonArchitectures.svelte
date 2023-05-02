@@ -6,21 +6,22 @@
 
 <section>
   <hr />
-  <h1>Activation Functions</h1>
+  <h1>Going Forward: Other Neural Network Architectures</h1>
   <p class="body-text">
-    Linear Regression is a simple and powerful model for predicting a numeric
-    response from a set of one or more independent variables. This article will
-    focus mostly on how the method is used in machine learning, so we won't
-    cover common use cases like causal inference or experimental design. And
-    although it may seem like linear regression is overlooked in modern machine
-    learning's ever-increasing world of complex neural network architectures,
-    the algorithm is still widely used across a large number of domains because
-    it is effective, easy to interpret, and easy to extend. The key ideas in
-    linear regression are recycled everywhere, so understanding the algorithm is
-    a must-have for a strong foundation in machine learning.
+    Up to this point, we've describe a specific neural network architecture
+    where values flow forward linearly through a network, and gradients flow
+    linearly backwards through a network. These are often referred to as feed
+    <span class="bold">forward neural networks</span>, or
+    <span class="bold">artificial neural networks</span> (the word 'artificial' comes
+    from the network's composition of artificial neurons). However, this is just
+    the tip of the iceberg when it comes to the field of neural networks. While artificial
+    neural networks have been incredibly successful in a wide range of applications,
+    many other types of neural network architectures exist that can be used to solve
+    different types of problems. In this section, we will briefly explore some of
+    the other network architectures that are commonly used and why they are necessary
+    for solving different types of problems.
   </p>
 </section>
-<Table />
 
 <style>
   h1 {
