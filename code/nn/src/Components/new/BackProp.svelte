@@ -48,6 +48,13 @@
       $bpStage = 1;
       animation3();
     },
+    4: () => {
+      $bpSlope = 0;
+      $bpIntercept = 0.55;
+      $stepIndexBp = 2;
+      $bpStage = 1;
+      animation3();
+    },
   };
 
   function fireEvent(entryIndex) {
@@ -68,7 +75,7 @@
     $strokeRule = 0;
     let animationSelections = [];
 
-    const selector = `animateMotion#animatePathForward1`;
+    const selector = `animateMotion#animatePathForwardBp1`;
     const selection = $bpbind.querySelectorAll(selector);
     animationSelections.push({ selection: selection });
     // trigger animation
@@ -110,7 +117,7 @@
     if ($bpSlope > -1.046) {
       let animationSelections = [];
 
-      const selector1 = `animateMotion#animatePathForward1`;
+      const selector1 = `animateMotion#animatePathForwardBp1`;
       const selection1 = $bpbind.querySelectorAll(selector1);
       animationSelections.push({ selection: selection1 });
       const selector = `animateMotion#animatePathBackward3`;
@@ -196,27 +203,11 @@
   <section>
     <div class="scrolly-container-backprop">
       <div class="charts-container-backprop">
-        <!-- <h2 class="chart-title">{stepTitles[$stepIndexBp]}</h2> -->
         <div class="chart-holder-backprop">
           <NetworkBackProp />
         </div>
       </div>
       <div class="steps-container-backprop">
-        <!-- <div class="step-bp" data-index="0">
-          <div class="step-content">
-            <h2>That Is A Neural Network</h2>
-            <hr />
-            <br />
-            <p>
-              Today's hottest advancements in A.I., like ChatGPT, Stable
-              Diffusion,and midjourney have one thing in common: they're based on
-              neural networks, a sophisticated machine learning algorithm.Scroll
-              down to continue reading!
-            </p>
-            <br /><br />
-            <p style="margin:auto; text-align: center;">&#8595</p>
-          </div>
-        </div> -->
         <div class="step-bp" data-index="0">
           <div class="step-content">
             <h2>Forward Pass</h2>
@@ -296,6 +287,30 @@
               <br /><br />
               Try clicking Run backprop 3 more times to see the model learn the optimal
               boundary!
+            </p>
+            <br />
+            <button class="step-button" on:click={() => restartAnimation3()}
+              >Restart</button
+            >
+            <button class="step-button" on:click={() => animation3()}
+              >Run Backprop</button
+            >
+          </div>
+        </div>
+        <div class="step-bp" data-index="4">
+          <div class="step-content">
+            <h2>Mpre BackPropagation...</h2>
+            <hr />
+            <br />
+
+            <p>
+              Backpropagation doesn't occur just once! For a typical neural
+              network, backpropagation is repeated hundreds, if not thousands,
+              of times.
+              <br /><br />
+              To keep things simple, we animate only a couple more runs of backprop
+              here. The key thing to note is that, at each run, the weights update
+              and our model's classification region performs better.
             </p>
             <br />
             <button class="step-button" on:click={() => restartAnimation3()}

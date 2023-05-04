@@ -2,19 +2,19 @@
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { hexbin } from "d3-hexbin";
   import { onMount, onDestroy } from "svelte";
-  import { scatterData } from "../datasets";
+  import { scatterData } from "../../datasets";
   import { min, max } from "d3-array";
-
+  import ScatterRegression from "./ScatterRegression.svelte";
   import {
     labels,
     marginScroll,
     network,
     numLayers,
     stepIndex,
-  } from "../store";
+  } from "../../store";
   import { line } from "d3-shape";
   import { fade, fly, draw } from "svelte/transition";
-  import { logistic, perceptron } from "../outputModelWeights";
+  import { logistic, perceptron } from "../../outputModelWeights";
 
   export let height;
   export let width;
@@ -31,10 +31,10 @@
   const delay = 4000; // 4 seconds
   const interval = 1000; // 1 second
 
-  function generateRandomPosition() {
-    x = Math.floor(Math.random() * 17) - 4; // generates a random integer between -4 and 12
-    y = Math.floor(Math.random() * 17) - 4;
-  }
+  // function generateRandomPosition() {
+  //   x = Math.floor(Math.random() * 17) - 4; // generates a random integer between -4 and 12
+  //   y = Math.floor(Math.random() * 17) - 4;
+  // }
 
   let intervalId;
   // here
@@ -68,7 +68,7 @@
     ]);
 
   // responsive dimensions for scatter plot
-  $: scatterCondition = ![0, 1, 2].includes($stepIndex);
+  $: scatterCondition = ![0, 1].includes($stepIndex);
 
   $: model = $stepIndex < 5 ? logistic : perceptron;
 
@@ -81,54 +81,52 @@
   let delayFinished = false;
 
   let timeoutId = setTimeout(() => {
-    generateRandomPosition(); // generate initial position
-    delayFinished = true;
-    let intervalId = setInterval(generateRandomPosition, interval);
-  }, delay);
-  onDestroy(() => {
-    clearInterval(intervalId);
+    //   generateRandomPosition(); // generate initial position
+    //   delayFinished = true;
+    //   let intervalId = setInterval(generateRandomPosition, interval);
+    // }, delay);
+    // onDestroy(() => {
+    //   clearInterval(intervalId);
   });
 </script>
 
 <!-- scatterplot -->
 {#if scatterCondition}
-  <g clip-path="url(#clip)" transform={`translate(0 ${-height / 2})`}>
-    <!-- hexbins -->
-    {#each hexbins(hexbins.centers()) as h}
-      <path
-        in:draw={{ duration: 500 }}
-        out:draw={{ duration: 0 }}
-        class="hex-cell"
-        d={`M${h.x},${h.y}${hexbins.hexagon()}`}
-        fill={colorScale(
-          model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
-        )}
-        stroke={colorScale(
-          model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
-        )}
+  {#if $stepIndex === 2}
+    <ScatterRegression {width} {height} />
+  {:else}
+    <g clip-path="url(#clip)" transform={`translate(0 ${-height / 2})`}>
+      <!-- hexbins -->
+      {#each hexbins(hexbins.centers()) as h}
+        <path
+          in:draw={{ duration: 500 }}
+          out:draw={{ duration: 0 }}
+          class="hex-cell"
+          d={`M${h.x},${h.y}${hexbins.hexagon()}`}
+          fill={colorScale(
+            model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
+          )}
+          stroke={colorScale(
+            model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
+          )}
+        />
+      {/each}
+    </g>
+    <!-- circles -->
+    {#each scatterData as d, i}
+      <circle
+        in:fly={{ x: -50, duration: 500 }}
+        out:fade={{ duration: 200 }}
+        cx={xScale(d.x1)}
+        cy={yScale(d.x2)}
+        r="4"
+        fill={colorScale(d.y)}
       />
     {/each}
-  </g>
-  <!-- circles -->
-  {#each scatterData as d, i}
-    <circle
-      in:fly={{ x: -50, duration: 500 }}
-      out:fade={{ duration: 200 }}
-      cx={xScale(d.x1)}
-      cy={yScale(d.x2)}
-      r="4"
-      fill={colorScale(d.y)}
-    />
-  {/each}
-  {#if delayFinished}
+    <!-- {#if delayFinished}
     <circle class="prediction-circle" cx={xScale(x)} cy={yScale(y)} r="10" />
+  {/if} -->
   {/if}
-  <!-- {#each yScale.ticks() as tick}
-    <text x="10" y={yScale(tick)}>{tick}</text>
-  {/each}
-  {#each xScale.ticks() as tick}
-    <text y={100} x={xScale(tick)}>{tick}</text>
-  {/each} -->
 {/if}
 
 <style>
@@ -148,8 +146,4 @@
   circle {
     stroke: var(--bg);
   }
-
-  /* .output {
-      fill: var(--bananayellow);
-    } */
 </style>

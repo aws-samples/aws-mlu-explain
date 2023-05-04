@@ -3,7 +3,7 @@
   import { scaleLinear } from "d3-scale";
   import { max } from "d3-array";
   import { scatterData } from "../../datasets";
-  import Scatterplot from "../Scatterplot.svelte";
+  import Scatterplot from "./Scatterplot.svelte";
   import {
     drawActivation,
     labels,
@@ -26,10 +26,9 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  //   let nodeWidth = 70;
-  //   let nodeHeight = 40;
-  let nodeWidth = 12 * 1.33 * 4;
-  let nodeHeight = 12 * 2;
+  let nodeWidth = 12 * 1.33 * 4.5;
+  let nodeHeight = 12 * 3;
+  let rectDim = 160;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])
@@ -38,17 +37,22 @@
     .domain([-1, maxNumNeurons])
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
-  $: scatterCondition = ![0, 1, 2].includes($stepIndex);
+  $: scatterCondition = ![0, 1].includes($stepIndex);
+  $: manyNodesCondition = [6, 7].includes($stepIndex);
   $: console.log("stepindex,condition", $stepIndex, scatterCondition);
 
-  // responsive dimensions for scatter plot
-  $: scatterWidth = scatterCondition ? xScale(1) - xScale(0) : nodeWidth;
-  //   $: scatterWidth = scatterCondition ? 160 : nodeWidth;
+  $: scatterWidth = scatterCondition
+    ? manyNodesCondition
+      ? rectDim * 0.88
+      : rectDim
+    : nodeWidth;
   $: yVals = positionElements(3, maxNumNeurons);
+
   $: scatterHeight = scatterCondition
-    ? yScale(yVals[0]) - yScale(yVals[2])
+    ? manyNodesCondition
+      ? rectDim * 0.88
+      : rectDim
     : nodeHeight;
-  //   $: scatterHeight = scatterCondition ? 150 : nodeHeight;
 
   $: backgroundColor = scatterCondition ? "#f1f3f3" : "#ffe135";
   $: textYOffset = scatterCondition ? scatterHeight / 2 + 10 : 0;
@@ -80,7 +84,6 @@
 </text>
 
 <!-- scatterplot -->
-
 <Scatterplot width={scatterWidth} height={scatterHeight} />
 
 <style>
@@ -99,8 +102,4 @@
   .active {
     fill-opacity: 0;
   }
-
-  /* .output {
-      fill: var(--bananayellow);
-    } */
 </style>

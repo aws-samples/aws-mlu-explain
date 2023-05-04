@@ -1,6 +1,6 @@
 <script>
-  import katexify from "../katexify";
-  import { tooltip } from "../tooltip";
+  import katexify from "../../katexify";
+  import { tooltip } from "../../tooltip";
 </script>
 
 <section>
@@ -25,23 +25,9 @@
 <style>
   section {
     padding-top: 5rem;
-    /* padding-bottom: 5rem; */
     padding-left: 1rem;
     background-color: var(--darksquidink);
     color: var(--white);
-  }
-  #intro-hed {
-    font-size: 2rem;
-    margin-top: 5px;
-    margin-bottom: 0;
-    /* letter-spacing: 1.5px; */
-    text-transform: uppercase;
-    max-width: 100%;
-    max-width: var(--max-width);
-    margin: auto;
-    color: var(--squidink);
-    font-family: var(--font-heavy);
-    /* text-align: left; */
   }
 
   .body-text,

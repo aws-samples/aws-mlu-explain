@@ -16,15 +16,6 @@
   $network = [2, 1, 1];
 
   const target2event = {
-    // 0: () => {
-    //   $showLayerLine = false;
-    //   $network = [3, 1, 1];
-    //   $stepIndex = 0;
-    //   $showSubScript = false;
-    //   $drawActivation = false;
-    //   $labels = ["input", "function", "output"];
-    // },
-
     0: () => {
       $showLayerLine = false;
       $network = [2, 1, 1];
@@ -44,7 +35,7 @@
     2: () => {
       $stepIndex = 2;
       $showLayerLine = false;
-      $labels = ["X", "logistic", "y"];
+      $labels = ["X", "linear", "y"];
       $network = [2, 1, 1];
       $drawActivation = false;
     },
@@ -54,11 +45,6 @@
       $showLayerLine = false;
       $network = [2, 1, 1];
       $drawActivation = false;
-      // $stepIndex = 3;
-      // $labels = ["X", "step", "y"];
-      // $showLayerLine = false;
-      // $network = [2, 1, 1];
-      // $drawActivation = true;
     },
     4: () => {
       $stepIndex = 4;
@@ -66,23 +52,13 @@
       $drawActivation = true;
       $labels = ["input", "logistic", "y"];
       $network = [2, 1, 1];
-      // $stepIndex = 4;
-      // $showLayerLine = false;
-      // $drawActivation = false;
-      // $labels = ["input", "step", "step", "y"];
-      // $network = [2, 1, 1, 1];
     },
     5: () => {
       $stepIndex = 5;
       $showLayerLine = false;
-      $drawActivation = false;
+      $drawActivation = true;
       $labels = ["input", "step", "y"];
       $network = [2, 1, 1];
-      // $stepIndex = 5;
-      // $showLayerLine = true;
-      // $labels = ["input", "sigmoid", "sigmoid", "y"];
-      // $network = [2, 2, 2, 1];
-      // $drawActivation = false;
     },
     6: () => {
       $stepIndex = 6;
@@ -90,11 +66,6 @@
       $labels = ["input", "logistic", "logistic", "y"];
       $network = [2, 1, 1, 1];
       $drawActivation = false;
-      //   $stepIndex = 5;
-      //   $labels = ["input", "reLu", "reLu", "reLu", "y"];
-      //   $showLayerLine = true;
-      //   $network = [2, 4, 2, 3, 1];
-      //   $drawActivation = false;
     },
     7: () => {
       $stepIndex = 7;
@@ -102,11 +73,6 @@
       $labels = ["input", "reLu", "logistic", "y"];
       $network = [2, 3, 2, 1];
       $drawActivation = false;
-      //   $stepIndex = 5;
-      //   $labels = ["input", "reLu", "reLu", "reLu", "y"];
-      //   $showLayerLine = true;
-      //   $network = [2, 4, 2, 3, 1];
-      //   $drawActivation = false;
     },
   };
 
@@ -154,27 +120,11 @@
 <section>
   <div class="scrolly-container">
     <div class="charts-container">
-      <!-- <h2 class="chart-title">{stepTitles[stepIndex]}</h2> -->
       <div class="chart-holder">
         <ForwardNetwork />
       </div>
     </div>
     <div class="steps-container">
-      <!-- <div class="step" data-index="0">
-        <div class="step-content">
-          <h2>That Is A Neural Network</h2>
-          <hr />
-          <br />
-          <p>
-            Today's hottest advancements in A.I., like ChatGPT, Stable
-            Diffusion,and midjourney have one thing in common: they're based on
-            neural networks, a sophisticated machine learning algorithm.Scroll
-            down to continue reading!
-          </p>
-          <br /><br />
-          <p style="margin:auto; text-align: center;">&#8595</p>
-        </div>
-      </div> -->
       <div class="step" data-index="0">
         <div class="step-content">
           <h2>Building Blocks: Computational Graphs</h2>
@@ -216,6 +166,25 @@
       </div>
       <div class="step" data-index="2">
         <div class="step-content">
+          <h2>Model Outputs</h2>
+          <p>
+            What's our model actually outputting? It depends on the
+            architecture! Let's look at the output for a linear regression
+            model.
+            <br /><br />
+            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
+            <br /><br /> To represent this as a graph, we need only weight each
+            edge connecting our input nodes to our function node, and have our
+            function represent a linear function on a weighted sum:<br />
+            linear = {@html katexify(
+              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
+              false
+            )}
+          </p>
+        </div>
+      </div>
+      <div class="step" data-index="3">
+        <div class="step-content">
           <h2>Logistic Regression</h2>
           <hr />
           <br />
@@ -230,25 +199,6 @@
             {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
             <br /><br /> In this manner, our computational graph now represents
             the following:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
-          </p>
-        </div>
-      </div>
-      <div class="step" data-index="3">
-        <div class="step-content">
-          <h2>Model Outputs</h2>
-          <p>
-            What's our model actually outputting? It depends on the
-            architecture! Let's look at the output for a linear regression
-            model.
-            <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> To represent this as a graph, we need only weight each
-            edge connecting our input nodes to our function node, and have our
-            function represent a linear function on a weighted sum:<br />
             linear = {@html katexify(
               `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
               false
@@ -367,17 +317,16 @@
     padding-top: 0;
     flex-direction: row;
     padding-left: 1rem;
-    width: 85%;
+    width: 88%;
     margin: auto;
   }
 
   .charts-container {
     position: sticky;
     top: 25%;
-    width: 70%;
+    width: 100%;
     height: 45vh;
     margin-right: 2%;
-    /* border: 2px solid green; */
     flex: 0 0 60%; /* This item will take up 70% of the container's width */
   }
 

@@ -9,15 +9,15 @@ export const margin = writable({
   right: 3,
 });
 export const marginScroll = writable({
-  top: 3,
-  bottom: 3,
-  left: 3,
-  right: 3,
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
 });
 export const mobile = writable(true);
 
 export const network = writable([2, 1, 1]);
-export const labels = writable(["input", "function", "hidden"]);
+export const labels = writable(["input", "function", "output"]);
 export const numLayers = derived(network, ($network) => $network.length);
 
 export const showLayerLine = writable(false);

@@ -1,5 +1,5 @@
 <script>
-  import Table from "../Table.svelte";
+  import Table from "./Table.svelte";
   import katexify from "../../katexify";
   import { tooltip } from "../../tooltip";
 </script>

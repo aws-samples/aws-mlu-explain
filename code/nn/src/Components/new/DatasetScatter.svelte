@@ -76,7 +76,6 @@
     stroke-width: 2px;
   }
 
-  .axis-label,
   .chart-title {
     font-size: 10px;
   }

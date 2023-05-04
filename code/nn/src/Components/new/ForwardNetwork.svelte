@@ -36,12 +36,16 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  let nodeWidth = 12 * 1.33 * 4;
-  let nodeHeight = 12 * 2;
+  // let nodeWidth = 12 * 1.33 * 4;
+  // let nodeHeight = 12 * 2;
+
+  let nodeWidth = 12 * 1.33 * 4.5;
+  let nodeHeight = 12 * 3;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])
     .range([$marginScroll.left, width - $marginScroll.right]);
+
   $: yScale = scaleLinear()
     .domain([-1, maxNumNeurons])
     .range([height - $marginScroll.bottom, $marginScroll.top]);
@@ -140,13 +144,13 @@
               {/if}
               <g>
                 <!-- {#if animationBegin} -->
-                <circle class="moving-circle" opacity="0">
+                <circle class="moving-circle-forward" opacity="0">
                   <set attributeName="opacity" to="1" begin="{layer}s" />
                   <set attributeName="opacity" to="0" begin="{0}s" />
                 </circle>
                 {#if $stepIndex >= 1}
                   <text
-                    class="moving-text"
+                    class="moving-text-forward"
                     opacity="0"
                     alignment-baseline="middle"
                     >{updateNeuron(layer, j)}
@@ -309,7 +313,7 @@
     paint-order: stroke fill;
     font-family: var(--font-main);
   }
-  .moving-text {
+  .moving-text-forward {
     font-size: 10px;
     /* font-weight: bold; */
     color: black;
@@ -320,18 +324,13 @@
     text-anchor: middle;
     font-family: var(--font-mono);
   }
-  .moving-circle {
+  .moving-circle-forward {
     stroke: var(--squidink);
     stroke-width: 2;
     fill: var(--paper);
     r: 10;
   }
-  .pp {
-    stroke: black;
-    stroke-width: 3;
-    fill: none;
-    /* opacity: 0; */
-  }
+
   svg {
     border: 4px solid var(--stone);
     border-radius: 5;
@@ -358,9 +357,9 @@
   .nn-edge {
     stroke: var(--squidink);
     stroke-width: 1.5;
-    stroke-dasharray: 5;
+    /* stroke-dasharray: 5; */
     opacity: 0.95;
-    animation: dash 30s infinite linear;
+    /* animation: dash 30s infinite linear; */
     transition: all 0.45s;
   }
   .input {
@@ -407,14 +406,8 @@
 
   /* ipad */
   @media screen and (max-width: 950px) {
-    .axis-label {
-      font-size: 0.8rem;
-    }
   }
   /* mobile */
   @media screen and (max-width: 750px) {
-    .axis-label {
-      font-size: 0.75rem;
-    }
   }
 </style>

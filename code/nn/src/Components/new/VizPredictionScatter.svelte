@@ -119,7 +119,6 @@
     stroke-width: 2px;
   }
 
-  .axis-label,
   .chart-title {
     font-size: 10px;
   }
@@ -129,8 +128,6 @@
   }
 
   .hex-cell {
-    /* stroke-width: 1;
-    opacity: 0.4; */
     opacity: 0.5;
     stroke-width: 0;
   }

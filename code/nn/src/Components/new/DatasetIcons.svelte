@@ -31,7 +31,6 @@
     align-items: flex-end;
     width: 80%;
     height: 50px;
-    /* margin-right: 1%; */
     margin: auto;
   }
 
@@ -47,9 +46,5 @@
   .selected {
     outline: 3px solid var(--squidink);
     opacity: 1;
-  }
-  .dataset-icon > p {
-    font-family: var(--font-mono);
-    font-size: 10px;
   }
 </style>

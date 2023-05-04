@@ -139,12 +139,12 @@
                   <set
                     attributeName="opacity"
                     to="1"
-                    begin={`animatePathForward${i}.begin`}
+                    begin={`animatePathForwardBp${i}.begin`}
                   />
                   <set
                     attributeName="opacity"
                     to="0"
-                    begin={`animatePathForward${i}.end`}
+                    begin={`animatePathForwardBp${i}.end`}
                   />
                 </circle>
                 <!-- {#if $stepIndexBp >= 1}
@@ -159,11 +159,11 @@
                 {/if} -->
 
                 <!-- forward pass -->
-                <!-- `animateMotion#animatePathForward0` -->
+                <!-- `animateMotion#animatePathForwardBp0` -->
                 <!-- {#if $bpStage == 0} -->
                 <animateMotion
-                  id={`animatePathForward${i}`}
-                  begin={i === 1 ? `0` : `animatePathForward${i - 1}.end`}
+                  id={`animatePathForwardBp${i}`}
+                  begin={i === 1 ? `0` : `animatePathForwardBp${i - 1}.end`}
                   dur=".5s"
                   restart="whenNotActive"
                   path={`
@@ -355,12 +355,7 @@
     fill-opacity: 0.95;
     transition: all 0.45s;
   }
-  .activation-rect {
-    stroke: var(--squidink);
-    stroke-width: 5;
-    fill: none;
-    transition: all 0.45s;
-  }
+
   #networkBp-chart {
     width: 100%;
     max-height: 100%;
@@ -376,14 +371,8 @@
 
   /* ipad */
   @media screen and (max-width: 950px) {
-    .axis-label {
-      font-size: 0.8rem;
-    }
   }
   /* mobile */
   @media screen and (max-width: 750px) {
-    .axis-label {
-      font-size: 0.75rem;
-    }
   }
 </style>

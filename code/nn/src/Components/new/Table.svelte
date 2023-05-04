@@ -1,5 +1,5 @@
 <script>
-  import katexify from "../katexify";
+  import katexify from "../../katexify";
   import ReLu from "./Activations/ReLu.svelte";
   import Sigmoid from "./Activations/Sigmoid.svelte";
   import Step from "./Activations/Step.svelte";
