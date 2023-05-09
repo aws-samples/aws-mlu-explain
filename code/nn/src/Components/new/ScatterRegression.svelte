@@ -5,7 +5,17 @@
   import { line, curveBasis } from "d3-shape";
   import { cubicOut } from "svelte/easing";
 
-  let intercept = 2;
+  export let height = 200;
+  export let width = 200;
+  let margin = {
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  };
+
+  const slope = 1;
+  const intercept = 2;
 
   let data = [
     { x: 1.3, y: 0 },
@@ -21,16 +31,6 @@
     { x: 14, y: 15.01 },
   ];
 
-  export let height = 200;
-  export let width = 200;
-  let margin = {
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0,
-  };
-
-  const slope = 1;
   // scales
   $: xScale = scaleLinear()
     .domain([1, 15])
@@ -44,8 +44,6 @@
   $: pathLine = line()
     .x((d) => xScale(d.x))
     .y((d) => yScale(d.x * slope + intercept));
-
-  let drawErrorBackprop = true;
 
   function radiusTransition(node, { duration = 300, from = 0, to = 8 }) {
     const diff = to - from;
@@ -100,7 +98,13 @@
 
   {#each data as d, i}
     {#if i > 0}
-      <circle class="dot" cx={xScale(d.x)} cy={yScale(d.y)} r="3" />
+      <circle
+        class="dot"
+        cx={xScale(d.x)}
+        cy={yScale(d.y)}
+        r="3"
+        transition:radiusTransition={{ duration: 300, from: 0, to: 8 }}
+      />
     {/if}
   {/each}
 </g>
