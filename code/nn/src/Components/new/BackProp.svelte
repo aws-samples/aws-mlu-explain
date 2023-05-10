@@ -49,11 +49,14 @@
       animation3();
     },
     4: () => {
-      $bpSlope = 0;
-      $bpIntercept = 0.55;
+      //   $bpIntercept += 0.1;
+      // $bpSlope += -0.35;
+      $bpSlope = -0.35;
+      $bpIntercept = 0.65;
       $stepIndexBp = 2;
       $bpStage = 1;
-      animation3();
+      animation4(); // Call the function immediately
+      setTimeout(animation4, animationDuration * 2.2);
     },
   };
 
@@ -114,6 +117,33 @@
   }
 
   function animation3() {
+    if ($bpSlope > -1.046) {
+      let animationSelections = [];
+
+      const selector1 = `animateMotion#animatePathForwardBp1`;
+      const selection1 = $bpbind.querySelectorAll(selector1);
+      animationSelections.push({ selection: selection1 });
+      const selector = `animateMotion#animatePathBackward3`;
+      const selection = $bpbind.querySelectorAll(selector);
+      animationSelections.push({ selection: selection });
+      // trigger animation
+      animationSelections.forEach((element, i) => {
+        setTimeout(() => {
+          element.selection.forEach((selection) => {
+            selection.beginElement();
+          });
+        }, i * 3 * animationDuration);
+      });
+      setTimeout(() => {
+        $fillRule = 3;
+        $strokeRule = 3;
+        updateMetrics();
+      }, 6 * animationDuration);
+    } else {
+      return;
+    }
+  }
+  function animation4() {
     if ($bpSlope > -1.046) {
       let animationSelections = [];
 
@@ -292,9 +322,9 @@
             <button class="step-button" on:click={() => restartAnimation3()}
               >Restart</button
             >
-            <button class="step-button" on:click={() => animation3()}
+            <!-- <button class="step-button" on:click={() => animation3()}
               >Run Backprop</button
-            >
+            > -->
           </div>
         </div>
         <div class="step-bp" data-index="4">
@@ -316,9 +346,9 @@
             <button class="step-button" on:click={() => restartAnimation3()}
               >Restart</button
             >
-            <button class="step-button" on:click={() => animation3()}
+            <!-- <button class="step-button" on:click={() => animation3()}
               >Run Backprop</button
-            >
+            > -->
           </div>
         </div>
       </div>

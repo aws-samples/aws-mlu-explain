@@ -49,7 +49,7 @@ export const bpWeights = writable(randomArray);
 
 // viz
 export const playAnimation = writable(true);
-export const animationDuration = writable(0.25);
+export const animationDuration = writable(0.01);
 export const ggg = writable();
 export const points = writable([1]);
 export const modelParams = writable([]);

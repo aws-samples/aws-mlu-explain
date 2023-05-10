@@ -35,7 +35,7 @@
       // Apply He Initialization
       const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
 
-      return { data: heInit, grad: 0 };
+      return { data: Math.random(), grad: 0 };
     });
 
     $networkInteractiveWeights = [...weightVals];
@@ -97,9 +97,9 @@
   $: N_in = 2;
   // $: dims = [6, 4, 1];
   $: dims = $networkInteractive.slice(1);
-  var lr = 0.02;
-  var alpha = 0.0001;
-  var k = 0;
+  let lr = 0.02;
+  let alpha = 0.0001;
+  let k = 0;
   $: model = new MLP(N_in, $networkInteractive.slice(1));
 
   $: dataArr = makeJsonArray($interactiveDataset);
@@ -144,96 +144,88 @@
     //     return;
     //   }
 
-    // for (let k = 0; k < epochs; k++) {
+    for (let ep = 0; ep < 100; ep++) {
+      // --------------------------
+      // TRAIN LOOP
+      // --------------------------
+      // k++;
 
-    // --------------------------
-    // TRAIN LOOP
-    // --------------------------
-    // k++;
+      //  predictions
+      // loop through input X and call model prediction on it
+      let preds = inputs.map((row) => model.call(row));
 
-    //  predictions
-    // loop through input X and call model prediction on it
-    let preds = inputs.map(function (row) {
-      return model.call(row);
-    });
+      // svm max margin loss
+      let losses = range(0, preds.length).map((i) =>
+        preds[i][0].mul(-y[i]).add(+1.0).relu()
+      );
 
-    // svm max margin loss
-    let losses = range(0, preds.length).map(function (i) {
-      return preds[i][0].mul(-y[i]).add(+1.0).relu();
-    });
+      let data_loss = losses
+        .reduce((sum, current) => sum.add(current), new Value(0))
+        .mul(1 / losses.length);
 
-    let data_loss = losses
-      .reduce(function (sum, current) {
-        return sum.add(current);
-      }, new Value(0))
-      .mul(1 / losses.length);
+      let reg_loss = model
+        .parameters()
+        .map((e) => e.mul(e))
+        .reduce((sum, cur) => sum.add(cur), new Value(0))
+        .mul(alpha);
 
-    let reg_loss = model
-      .parameters()
-      .map(function (e) {
-        return e.mul(e);
-      })
-      .reduce(function (sum, cur) {
-        return sum.add(cur);
-      }, new Value(0))
-      .mul(alpha);
+      let total_loss = data_loss.add(reg_loss);
 
-    let total_loss = data_loss.add(reg_loss);
+      let accuracies = range(0, preds.length).map((i) =>
+        preds[i][0].data > 0.0 === y[i] > 0.0 ? 1.0 : 0.0
+      );
 
-    let accuracies = range(0, preds.length).map(function (i) {
-      return preds[i][0].data > 0.0 === y[i] > 0.0 ? 1.0 : 0.0;
-    });
+      let accuracy =
+        accuracies.reduce((sum, current) => sum + current, 0.0) /
+        accuracies.length;
 
-    let accuracy =
-      accuracies.reduce(function (sum, current) {
-        return sum + current;
-      }, 0.0) / accuracies.length;
+      // # backward
+      model.zero_grad();
+      total_loss.backward();
 
-    // # backward
-    model.zero_grad();
-    total_loss.backward();
+      // sgd
+      // let learning_rate = k <= 1 ? 0.05 : 1.0 - (0.9 * k) / 100;
+      let learning_rate = 0.0005;
 
-    // sgd
-    let learning_rate = k <= 1 ? 0.05 : 1.0 - (0.9 * k) / 100;
+      for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
+        let p = _b[_i];
+        // p.data -= lr * p.grad;
+        p.data -= learning_rate * p.grad;
+      }
 
-    for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
-      let p = _b[_i];
-      // p.data -= lr * p.grad;
-      p.data -= learning_rate * p.grad;
+      if (k % 1 === 0) {
+        // console.log(
+        //   "step " +
+        //     k +
+        //     " loss " +
+        //     total_loss.data +
+        //     ", accuracy " +
+        //     accuracy * 100 +
+        //     "%"
+        // );
+      }
+      // export const errorMetrics = [{ x: 0, loss: 0, accuracy: 0 }];
+      const newError = {
+        x: k + 1,
+        loss: total_loss.data,
+        y: accuracy * 100,
+      };
+
+      // update hex predictions
+      const newPreds = $hexVals.map(function (row) {
+        const pred = model.call(row);
+        return pred[0].data > 0 ? 1 : -1;
+      });
+
+      $hexPreds = [...newPreds];
+
+      // log errors
+      $errorMetrics = [...$errorMetrics, newError];
+
+      // increment epoch count
+      k++;
+      // });
     }
-
-    if (k % 1 === 0) {
-      // console.log(
-      //   "step " +
-      //     k +
-      //     " loss " +
-      //     total_loss.data +
-      //     ", accuracy " +
-      //     accuracy * 100 +
-      //     "%"
-      // );
-    }
-    // export const errorMetrics = [{ x: 0, loss: 0, accuracy: 0 }];
-    const newError = {
-      x: k + 1,
-      loss: total_loss.data,
-      y: accuracy * 100,
-    };
-
-    // update hex predictions
-    const newPreds = $hexVals.map(function (row) {
-      const pred = model.call(row);
-      return pred[0].data > 0 ? 1 : -1;
-    });
-
-    $hexPreds = [...newPreds];
-
-    // log errors
-    $errorMetrics = [...$errorMetrics, newError];
-
-    // increment epoch count
-    k++;
-    // });
   }
 
   // anytime dataset changes or nn changes, reset model
@@ -302,7 +294,7 @@
                   disabled={buttonDisabled}
                   class="input-duration"
                   type="range"
-                  min="0.05"
+                  min="0.01"
                   max="2"
                   step="0.05"
                   bind:value={$animationDuration}
