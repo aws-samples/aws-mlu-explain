@@ -33,9 +33,9 @@
       const inputNeurons =
         $networkInteractive[index % ($networkInteractive.length - 1)];
       // Apply He Initialization
-      const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
+      const heInit = Math.sqrt(2 / inputNeurons) * (Math.random() * 2 - 1);
 
-      return { data: Math.random(), grad: 0 };
+      return { data: heInit, grad: 0 };
     });
 
     $networkInteractiveWeights = [...weightVals];
@@ -94,28 +94,26 @@
   let batchSize = 1;
   $: $points = [...Array(batchSize).keys()];
 
-  $: N_in = 2;
-  // $: dims = [6, 4, 1];
+  const inputDim = 2;
   $: dims = $networkInteractive.slice(1);
-  let lr = 0.02;
-  let alpha = 0.0001;
+  let alpha = 0.00001;
   let k = 0;
-  $: model = new MLP(N_in, $networkInteractive.slice(1));
+  $: model = new MLP(inputDim, $networkInteractive.slice(1));
 
   $: dataArr = makeJsonArray($interactiveDataset);
 
   $: [X, y] = dataArr;
 
   // make sure each input is a Value
-  $: inputs = X.map(function (row) {
-    return row.map(function (x) {
+  $: inputs = X.map((row) => {
+    return row.map((x) => {
       return ensureValue(x);
     });
   });
 
   function reset_model() {
     k = 0;
-    model = new MLP(N_in, dims);
+    model = new MLP(inputDim, dims);
 
     const newError = {
       x: k,
@@ -134,99 +132,103 @@
     // log errors
     $errorMetrics = [newError];
 
-    instantiateWeights($networkInteractive);
+    instantiateWeights();
   }
 
   function runBatch() {
-    // return setInterval(function () {
-    //   if (k > epochs) {
-    //     clearInterval(train_interval);
-    //     return;
-    //   }
+    // basic scheduling lr (decay) below:
+    // let initial_learning_rate = 0.01; // set an appropriate initial learning rate
+    // let decay_rate = 0.001; // set an appropriate decay rate
 
-    for (let ep = 0; ep < 100; ep++) {
-      // --------------------------
-      // TRAIN LOOP
-      // --------------------------
-      // k++;
+    // for (let ep = 0; ep < 200; ep++) {
+    // basic scheduling lr (decay) below:
+    // let learning_rate = initial_learning_rate * (1 / (1 + decay_rate * ep));
 
-      //  predictions
-      // loop through input X and call model prediction on it
-      let preds = inputs.map((row) => model.call(row));
+    let initial_learning_rate = 0.01; // set an appropriate initial learning rate
+    const epsilon = 1e-8; // small constant to avoid division by zero
 
-      // svm max margin loss
-      let losses = range(0, preds.length).map((i) =>
-        preds[i][0].mul(-y[i]).add(+1.0).relu()
-      );
+    // Create a cache for the squared gradients
+    const grad_cache = model.parameters().map(() => new Value(0));
 
-      let data_loss = losses
-        .reduce((sum, current) => sum.add(current), new Value(0))
-        .mul(1 / losses.length);
+    console.log(
+      "inputs",
+      inputs.map((row) => row[1]["data"])
+    );
+    // loop through input X and call model prediction on it
+    let preds = inputs.map((row) => model.call(row));
 
-      let reg_loss = model
-        .parameters()
-        .map((e) => e.mul(e))
-        .reduce((sum, cur) => sum.add(cur), new Value(0))
-        .mul(alpha);
+    // svm max margin loss
+    let losses = range(0, preds.length).map((i) =>
+      preds[i][0].mul(-y[i]).add(+1.0).relu()
+    );
 
-      let total_loss = data_loss.add(reg_loss);
+    let data_loss = losses
+      .reduce((sum, current) => sum.add(current), new Value(0))
+      .mul(1 / losses.length);
 
-      let accuracies = range(0, preds.length).map((i) =>
-        preds[i][0].data > 0.0 === y[i] > 0.0 ? 1.0 : 0.0
-      );
+    let reg_loss = model
+      .parameters()
+      .map((e) => e.mul(e))
+      .reduce((sum, cur) => sum.add(cur), new Value(0))
+      .mul(alpha);
 
-      let accuracy =
-        accuracies.reduce((sum, current) => sum + current, 0.0) /
-        accuracies.length;
+    let total_loss = data_loss.add(reg_loss);
 
-      // # backward
-      model.zero_grad();
-      total_loss.backward();
+    let accuracies = range(0, preds.length).map((i) =>
+      preds[i][0].data > 0.0 === y[i] > 0.0 ? 1.0 : 0.0
+    );
 
-      // sgd
-      // let learning_rate = k <= 1 ? 0.05 : 1.0 - (0.9 * k) / 100;
-      let learning_rate = 0.0005;
+    // accuracy
+    let accuracy =
+      accuracies.reduce((sum, current) => sum + current, 0.0) /
+      accuracies.length;
 
-      for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
-        let p = _b[_i];
-        // p.data -= lr * p.grad;
-        p.data -= learning_rate * p.grad;
-      }
+    // backward pass
+    model.zero_grad();
+    total_loss.backward();
 
-      if (k % 1 === 0) {
-        // console.log(
-        //   "step " +
-        //     k +
-        //     " loss " +
-        //     total_loss.data +
-        //     ", accuracy " +
-        //     accuracy * 100 +
-        //     "%"
-        // );
-      }
-      // export const errorMetrics = [{ x: 0, loss: 0, accuracy: 0 }];
-      const newError = {
-        x: k + 1,
-        loss: total_loss.data,
-        y: accuracy * 100,
-      };
+    // sgd
+    // let learning_rate = k <= 1 ? 0.05 : 1.0 - (0.9 * k) / 100;
+    // let learning_rate = 0.0001;
 
-      // update hex predictions
-      const newPreds = $hexVals.map(function (row) {
-        const pred = model.call(row);
-        return pred[0].data > 0 ? 1 : -1;
-      });
+    // basic lr updates:
+    // for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
+    //   let p = _b[_i];
+    //   p.data -= learning_rate * p.grad;
+    // }
 
-      $hexPreds = [...newPreds];
-
-      // log errors
-      $errorMetrics = [...$errorMetrics, newError];
-
-      // increment epoch count
-      k++;
-      // });
+    // AdaGradlr  updates
+    for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
+      let p = _b[_i];
+      // Accumulate squared gradient
+      grad_cache[_i].data += p.grad * p.grad;
+      // Update parameter
+      p.data -=
+        (initial_learning_rate / Math.sqrt(grad_cache[_i].data + epsilon)) *
+        p.grad;
     }
+
+    const newError = {
+      x: k + 1,
+      loss: total_loss.data,
+      y: accuracy * 100,
+    };
+
+    // update hex predictions
+    const newPreds = $hexVals.map(function (row) {
+      const pred = model.call(row);
+      return pred[0].data > 0 ? 1 : -1;
+    });
+    // update background hexagons with new predictions
+    $hexPreds = [...newPreds];
+
+    // log errors
+    $errorMetrics = [...$errorMetrics, newError];
+
+    // increment epoch count
+    k++;
   }
+  // }
 
   // anytime dataset changes or nn changes, reset model
   $: {

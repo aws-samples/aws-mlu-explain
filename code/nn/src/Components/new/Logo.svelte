@@ -1,10 +1,10 @@
 <script>
-  import Difficulty from "./Difficulty.svelte";
+  // import Difficulty from "./Difficulty.svelte";
   export let aiLogoColor = "magenta";
   export let robotLogoColor = "black";
 </script>
 
-<Difficulty />
+<!-- <Difficulty /> -->
 <div id="intro-icon" style="--ai-color: {aiLogoColor}">
   <a href="https://mlu-explain.github.io"
     ><svg width="25" height="25" viewBox="0 0 234 216">

@@ -329,18 +329,24 @@
         </div>
         <div class="step-bp" data-index="4">
           <div class="step-content">
-            <h2>Mpre BackPropagation...</h2>
+            <h2>More BackPropagation...</h2>
             <hr />
             <br />
 
             <p>
               Backpropagation doesn't occur just once! For a typical neural
               network, backpropagation is repeated hundreds, if not thousands,
-              of times.
+              of times. To keep things simple, we animate only a couple more
+              runs of backprop here.
               <br /><br />
-              To keep things simple, we animate only a couple more runs of backprop
-              here. The key thing to note is that, at each run, the weights update
-              and our model's classification region performs better.
+
+              <span class="bold"
+                >The key thing to note is that, at each run, the network's
+                weights are updated in a manner that improves our model's
+                performance!</span
+              >. To see this directly, you can observe how the classification
+              region (the background colors) correspond correctly to the
+              circles.
             </p>
             <br />
             <button class="step-button" on:click={() => restartAnimation3()}

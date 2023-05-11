@@ -6,22 +6,23 @@
     networkInteractiveWeights,
   } from "../../store";
   import { numNeurons } from "../../utils";
+  import { instantiateWeights } from "./weights";
 
-  function instantiateWeights() {
-    const numWeights = numNeurons($networkInteractive);
+  // function instantiateWeights() {
+  //   const numWeights = numNeurons($networkInteractive);
 
-    const weightVals = Array.from({ length: numWeights }, (_, index) => {
-      // Get the number of input neurons for the current weight
-      const inputNeurons =
-        $networkInteractive[index % ($networkInteractive.length - 1)];
-      // Apply He Initialization
-      const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
+  //   const weightVals = Array.from({ length: numWeights }, (_, index) => {
+  //     // Get the number of input neurons for the current weight
+  //     const inputNeurons =
+  //       $networkInteractive[index % ($networkInteractive.length - 1)];
+  //     // Apply He Initialization
+  //     const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
 
-      return { data: heInit, grad: 0 };
-    });
+  //     return { data: heInit, grad: 0 };
+  //   });
 
-    $networkInteractiveWeights = [...weightVals];
-  }
+  //   $networkInteractiveWeights = [...weightVals];
+  // }
 
   function add() {
     if ($numLayersInteractive < 6) {

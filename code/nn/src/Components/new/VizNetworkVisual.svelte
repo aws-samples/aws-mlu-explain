@@ -15,22 +15,23 @@
   import { fade, fly, draw } from "svelte/transition";
   import { format } from "d3-format";
   import { numNeurons } from "../../utils";
+  import { instantiateWeights } from "./weights";
 
-  function instantiateWeights() {
-    const numWeights = numNeurons($networkInteractive);
+  // function instantiateWeights() {
+  //   const numWeights = numNeurons($networkInteractive);
 
-    const weightVals = Array.from({ length: numWeights }, (_, index) => {
-      // Get the number of input neurons for the current weight
-      const inputNeurons =
-        $networkInteractive[index % ($networkInteractive.length - 1)];
-      // Apply He Initialization
-      const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
+  //   const weightVals = Array.from({ length: numWeights }, (_, index) => {
+  //     // Get the number of input neurons for the current weight
+  //     const inputNeurons =
+  //       $networkInteractive[index % ($networkInteractive.length - 1)];
+  //     // Apply He Initialization
+  //     const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
 
-      return { data: heInit, grad: 0 };
-    });
+  //     return { data: heInit, grad: 0 };
+  //   });
 
-    $networkInteractiveWeights = [...weightVals];
-  }
+  //   $networkInteractiveWeights = [...weightVals];
+  // }
 
   $: weightEdgeScale = scaleLinear().domain([-1, 0, 1]).range([15, 0.2, 15]);
   $: gradEdgeScale = scaleLinear()
@@ -97,7 +98,7 @@
     .range([height - marginScroll.bottom, marginScroll.top]);
 
   function add(layer) {
-    if ($networkInteractive[layer] < 3) {
+    if ($networkInteractive[layer] < 10) {
       // resetCounter();
       let newNN = [...$networkInteractive];
       newNN[layer] += 1;

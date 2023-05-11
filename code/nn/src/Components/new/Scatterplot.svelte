@@ -69,7 +69,7 @@
     .range([height / 2 - margin, -height / 2 + margin]);
 
   const colorScale = scaleOrdinal()
-    .domain([0, 1])
+    .domain([-1, 1])
     .range(["#f46ebb", "#2074d5"]);
 
   $: hexbins = hexbin()
@@ -236,6 +236,9 @@
     <!-- <rect {width} {height} fill="red" /> -->
     {#if $stepIndex > 2}
       <!-- draw for hex -->
+      <!-- stroke={colorScale(
+            model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
+          )} -->
       {#each hexbins(hexbins.centers()) as h}
         <path
           in:draw={{ duration: 500 }}
@@ -243,9 +246,6 @@
           class="hex-cell"
           d={`M${h.x},${h.y}${hexbins.hexagon()}`}
           fill={colorScale(
-            model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
-          )}
-          stroke={colorScale(
             model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
           )}
         />
