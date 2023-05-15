@@ -51,20 +51,7 @@
     >
     <td>Anything less than 0 results in 0 activation.</td>
   </tr>
-  <tr>
-    <td>Step Function (Perceptron)</td>
-    <td><Step /></td>
-    <td
-      >{@html katexify(
-        `f(x) = \\begin{cases}
-         +1, \\text{if } x \\geq 0  \\\\
-         -1, \\text{if } x < 0
-        \\end{cases}`,
-        false
-      )}</td
-    >
-    <td>Returns only -1 or 1 (neuron fires or doesn't fire).</td>
-  </tr>
+
   <tr />
 </table>
 

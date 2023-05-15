@@ -9,14 +9,21 @@
   <h1 class="body-header">Backpropagation: How Networks Learn</h1>
   <hr />
   <p class="body-text">
-    We know how Neural Networks work, but how do they learn the correct weight?
-    Backpropagation is an important method that helps neural networks learn to
-    make better predictions. below, we will explore how backpropagation works by
-    looking at a simple example regression example. By focusing on this example,
-    you will learn how backpropagation helps a network adjust its inner parts
-    called weights and biases to improve its predictions. This will give you a
-    better understanding of how backpropagation plays a key role in a network's
-    ability to learn from information.
+    Now that we've grasped the concept of activation functions and their role in
+    neural networks, it's time to understand how these networks learn. The magic
+    behind this learning process is a technique known as backpropagation.
+    <br /><br />
+    Backpropagation is an algorithm used during the training of neural networks.
+    <span class="bold"
+      >The goal of backpropagation is to update the weights so that the Neural
+      Network makes better predictions.</span
+    >
+    Specifically, it calculates the gradient of the loss function with respect to
+    the weights of the network, updating the weights to minimize the network's prediction
+    error.
+    <br /><br />
+    To make the process as clear as possible, let's visualize it step-by-step.
+    <br /><br />
   </p>
   <br />
   <br />

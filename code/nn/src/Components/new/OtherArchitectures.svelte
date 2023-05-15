@@ -11,10 +11,12 @@
   <p class="body-text">
     Up to this point, we've describe a specific neural network architecture
     where values flow forward linearly through a network, and gradients flow
-    linearly backwards through a network. These are often referred to as feed
-    <span class="bold">forward neural networks</span>, or
+    linearly backwards through a network. These are often referred to as
+    <span class="bold">feed forward neural networks</span>, or
     <span class="bold">artificial neural networks</span> (the word 'artificial' comes
-    from the network's composition of artificial neurons).
+    from the network's composition of artificial neurons). (As mentioned previously,
+    these are also sometimes referred to as Multilayer Perceptrons, because of their
+    original compoistion of Perceptrons)
   </p>
   <br />
   <p class="body-text">
@@ -38,7 +40,7 @@
       next, thereby remembering previous information.
     </p>
   </div>
-  <hr class="splitter" />
+  <!-- <hr class="splitter" /> -->
   <div>
     <span class="bold">Convolutional Neural Networks (CNNs):</span>
     <p class="body-text">
@@ -50,7 +52,7 @@
       crucial.
     </p>
   </div>
-  <hr class="splitter" />
+  <!-- <hr class="splitter" /> -->
   <div>
     <span class="bold">Generative Adversarial Networks (GANs):</span>
     <p class="body-text">
@@ -62,7 +64,7 @@
       augmentation.
     </p>
   </div>
-  <hr class="splitter" />
+  <!-- <hr class="splitter" /> -->
   <div>
     <span class="bold">Graph Neural Networks:</span>
     <p class="body-text">
@@ -73,7 +75,7 @@
       analysis, molecular property prediction, and recommendation systems.
     </p>
   </div>
-  <hr class="splitter" />
+  <!-- <hr class="splitter" /> -->
   <div>
     <span class="bold">Transformer Architectures:</span>
     <p class="body-text">

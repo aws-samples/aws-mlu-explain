@@ -54,7 +54,7 @@ export const ggg = writable();
 export const points = writable([1]);
 export const modelParams = writable([]);
 export const show = writable(true);
-export const networkInteractive = writable([2, 2, 1, 1]);
+export const networkInteractive = writable([2, 3, 1, 1]);
 export const numLayersInteractive = derived(
   networkInteractive,
   ($networkInteractive) => $networkInteractive.length

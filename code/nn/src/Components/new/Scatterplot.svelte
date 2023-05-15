@@ -36,7 +36,7 @@
     1: logistic,
     2: logistic,
     3: logistic,
-    4: logistic,
+    4: perceptron,
     5: perceptron,
     6: neuralNetwork1,
     7: neuralNetwork2,
@@ -261,6 +261,7 @@
           cy={yScale(d.x2)}
           r="4"
           fill={colorScale(d.y)}
+          stroke-width={$stepIndex > 2 ? 2 : 0}
           in:draw={{ duration: 500 }}
           out:draw={{ duration: 0 }}
         />
@@ -335,8 +336,7 @@
     transition: all 1s;
   }
   circle.dot {
-    stroke: var(--bg);
-    stroke-width: 2;
+    stroke: var(--white);
     opacity: 0.85;
   }
   .inner-path {

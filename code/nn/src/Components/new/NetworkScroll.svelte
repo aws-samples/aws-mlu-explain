@@ -49,8 +49,8 @@
     4: () => {
       $stepIndex = 4;
       $showLayerLine = false;
-      $drawActivation = true;
-      $labels = ["input", "logistic", "y"];
+      $drawActivation = false;
+      $labels = ["input", "step", "y"];
       $network = [2, 1, 1];
     },
     5: () => {
@@ -62,13 +62,20 @@
     },
     6: () => {
       $stepIndex = 6;
-      $showLayerLine = true;
-      $labels = ["input", "logistic", "logistic", "y"];
+      $showLayerLine = false;
+      $labels = ["input", "step", "step", "y"];
       $network = [2, 1, 1, 1];
       $drawActivation = false;
     },
     7: () => {
       $stepIndex = 7;
+      $showLayerLine = true;
+      $labels = ["input", "step", "step", "y"];
+      $network = [2, 1, 1, 1];
+      $drawActivation = false;
+    },
+    8: () => {
+      $stepIndex = 8;
       $showLayerLine = true;
       $labels = ["input", "reLu", "logistic", "y"];
       $network = [2, 3, 2, 1];
@@ -114,6 +121,15 @@
       }
     });
   }, options);
+
+  const sigmoid =
+    "\\begin{aligned} \\text{logistic} = \\frac{1}{1+e^{-w_iX_i}} \\end{aligned}";
+  const linearEq = `\\begin{aligned} \\text{linear} = \\sum^{n}_{i=1}w_iX_i \\end{aligned}`;
+  const stepEq = `\\begin{aligned} \\text{step} = \\begin{cases}
+         +1, \\text{if } w_iX_i \\geq 0  \\\\
+         -1, \\text{if } w_iX_i < 0
+        \\end{cases} \\end{aligned}`;
+  const eq = `y=w_0+ w_1X_1  + w_2X_2`;
 </script>
 
 <!-- <h1 class='main-title'>Neural Networks</h1> -->
@@ -130,13 +146,13 @@
           <h2>Building Blocks: Computational Graphs</h2>
           <hr />
           <br />
-
           <p>
-            To build intuition, let's first revisit computational graphs.
-            <br /><br />A computational graph has an input node where data is
-            fed into the graph, a function node where the input data is
-            processed, and an output node where the result of the computation is
-            produced.
+            A computational graph has an input node where data is fed into the
+            graph, a function node where the input data is processed, and an
+            output node where the result of the computation is produced.
+            <br /><br />
+            As we can see, data flows in one direction, from inputs to output, through
+            the graph.
           </p>
         </div>
       </div>
@@ -147,39 +163,38 @@
           <br />
 
           <p>
-            We can represent all sorts of algorithms with this framework. For
-            example, let's look at an equation for <a
+            We can represent all sorts of algorithms with as computational
+            graphs. For example, we can easily represent <a
               href="https://mlu-explain.github.io/linear-regression/"
               >Linear Regression</a
-            >:
+            >
+            as a computational graph:
+            {@html katexify(eq, true)}
+            To do so, we need only change two things:
             <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> To represent this as a graph, we need only weight each
-            edge connecting our input nodes to our function node, and have our
-            function represent a linear function on a weighted sum:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
+            1. Add weights to each edge connecting the input nodes to the function
+            nodes.
+            <br /><br />
+            2. Update our function to represent a linear function of a weighted sum:
+            {@html katexify(linearEq, true)}
+            And just like that, we have a computational graph for linear regression!
           </p>
         </div>
       </div>
       <div class="step" data-index="2">
         <div class="step-content">
           <h2>Model Outputs</h2>
+          <hr />
+          <br />
           <p>
-            What's our model actually outputting? It depends on the
-            architecture! Let's look at the output for a linear regression
-            model.
+            To make the process extra clear, let's visualize the outputs of our
+            linear regression model.
             <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> To represent this as a graph, we need only weight each
-            edge connecting our input nodes to our function node, and have our
-            function represent a linear function on a weighted sum:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
+            Just as we'd expect, this model is outputting some predictions (the yellow
+            diagonal line) based on the input data.
+            <br /><br />
+            As we build up a more complex model for different applications, we will
+            see this output change to reflect the state of the corresponding model.
           </p>
         </div>
       </div>
@@ -189,63 +204,51 @@
           <hr />
           <br />
           <p>
-            Extending this representation to <a
+            What if change our problem to classification, and want to change our
+            model from linear regression to <a
               href="https://mlu-explain.github.io/logistic-regression/"
-              >Logistic Regression</a
-            >
-            is dead simple, we need only swap the linear function with a sigmoid
-            function:
+              >logistic regression</a
+            >?
             <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> In this manner, our computational graph now represents
-            the following:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
+            To do so, we just need to update the function in our computational graph,
+            changing the linear function to a sigmoid function:
+            {@html katexify(sigmoid, true)}
+            Now, we can see the model output (the decision region background) reflect
+            our new classification problem and dataset.
           </p>
         </div>
       </div>
       <div class="step" data-index="4">
         <div class="step-content">
-          <h2>Activation Functions & Artificial Neurons</h2>
+          <h2>Perceptrons</h2>
+          <hr />
+          <br />
           <p>
-            What's our model actually outputting? It depends on the
-            architecture! Let's look at the output for a linear regression
-            model.
-            <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> To represent this as a graph, we need only weight each
-            edge connecting our input nodes to our function node, and have our
-            function represent a linear function on a weighted sum:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
+            Our computational graph setup makes it trivial to model different
+            algorithms. For example, if we want to model a Perceptron instead of
+            logistic regression, we need only switch our logistic function to a
+            step function:
+            {@html katexify(stepEq, true)}
+            Note that the classification region in our model output changed as well,
+            to reflect the new model being represented.
           </p>
         </div>
       </div>
       <div class="step" data-index="5">
         <div class="step-content">
-          <h2>Perceptrons</h2>
+          <h2>Activation Functions & Artificial Neurons</h2>
           <hr />
           <br />
-
           <p>
-            Extending this representation to <a
-              href="https://mlu-explain.github.io/logistic-regression/"
-              >Logistic Regression</a
-            >
-            is dead simple, we need only swap out the linear function for the sigmoid
-            function:
+            In a neural network, this function node we're changing is very
+            special - we call it an <span class="bold">artificial neuron</span>.
             <br /><br />
-            {@html katexify(`y=w_0+ w_1X_1  + w_2X_2`, false)}
-            <br /><br /> In this manner, our computational graph now represents
-            the following:<br />
-            linear = {@html katexify(
-              `\\begin{aligned}  \\sum^{n}_{i=1}w_iX_i \\end{aligned}`,
-              false
-            )}
+            An artificial neuron is a fundamental computational element that receives
+            inputs, performs a weighted operation on these inputs, and passes the
+            result through a function.
+            <br /><br />In neural networks, these functions <i>must</i> be
+            non-linear, and are referred to as
+            <span class="bold">activation functions</span>.
           </p>
         </div>
       </div>
@@ -254,15 +257,16 @@
           <h2>Neural Networks</h2>
           <hr />
           <br />
-
           <p>
             Nothing is stopping us from chaining multiple aritifical neurons
-            together, feeding one to another. This is all a neural network is!
+            together, feeding one to another. <span class="bold"
+              >This is all a neural network is!</span
+            >
             <br /><br />
             In fact, the original neural networks were called
             <span class="bold">multilayer perceptrons</span> because they were composed
             of layers of perceptrons (artificial neurons with step functions) feeding
-            one into another! This is all a neural net
+            one into another!
           </p>
         </div>
       </div>
@@ -273,32 +277,40 @@
           <br />
 
           <p>
-            In general, a neural network architecture consists of an input
-            layer, a hidden layer full of artificial neurons, and an output
-            layer. The input layer receives the input data and sends it to the
-            hidden layer for processing. The output layer produces the final
-            result based on the input data and the processing done in the hidden
-            layer.
+            In general, a neural network architecture consists of three layer
+            types:
+            <br /><br /><span class="bold">input layer</span>: A layer with a
+            node for each network input.
+            <br /><br /><span class="bold">hidden layer(s)</span>: A layer full
+            of artificial neurons.
+            <br /><br /><span class="bold">output layer</span>: A layer
+            representing the network's output.
+            <br /><br />
+            There should only be one input and one output layer, but there may be
+            an arbitrary number of hidden layers.
           </p>
         </div>
       </div>
-      <!-- <div class="step" data-index="7">
+
+      <div class="step" data-index="8">
         <div class="step-content">
           <h2>No Limits</h2>
           <hr />
           <br />
 
           <p>
-            There is no limit to the number of artificial neurons that can be
-            present in the hidden layer! We cam adjust the number of neurons to
-            optimize the performance of the neural network for a specific task:
-            the more neurons, the more complex the model can be, allowing it to
-            learn more intricate patterns in the data. However, too many neurons
-            in the hidden layer also increases the risk of overfitting and the
-            computational cost to train the model.
+            Designing a neural network architecture is more of an art than a
+            science. The input and output layer will be selected for the
+            specific problem, but the hidden layer is fairly arbitrary. <br
+            /><br />
+            Neural networks can be <span class="bold">wide</span>: having many
+            neurons in a given hidden layer, or <span class="bold">deep</span>:
+            having many hidden layers in the network. Balancing neuron count
+            optimizes performance; more neurons enable complex learning, at the
+            cost of the risk of overfitting and more computational cost.
           </p>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </section>
@@ -362,9 +374,10 @@
     /* border: 4px solid var(--squidink); */
     font-size: var(--size-default);
     font-family: var(--font-light);
-    border-radius: 10px;
     padding-left: 1.5rem;
-    background-color: var(--paper);
+    background-color: var(--white);
+    border: 5px solid var(--squidink);
+    padding: 20px;
   }
 
   .step-content > h2 {

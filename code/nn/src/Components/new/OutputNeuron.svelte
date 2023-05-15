@@ -38,7 +38,7 @@
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
   $: scatterCondition = ![0, 1].includes($stepIndex);
-  $: manyNodesCondition = [6, 7].includes($stepIndex);
+  $: manyNodesCondition = [6, 7, 8].includes($stepIndex);
   $: console.log("stepindex,condition", $stepIndex, scatterCondition);
 
   $: scatterWidth = scatterCondition

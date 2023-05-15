@@ -249,6 +249,9 @@
               network's layers to produce a prediction. This process involves
               calculating the weighted sums and applying activation functions
               for each neuron in each layer.
+              <br /><br />
+              We can see that the classification boundaries for our current network
+              (the two-colored background region) isn't great.
             </p>
             <br />
             <button class="step-button" on:click={() => animation0()}
@@ -270,7 +273,8 @@
               <br /><br />
               Notice those extra big circles in the chart, the ones that are colored
               differently than their background? Those are the values that were falsely
-              predicted.
+              predicted. The goal of backpropagation is to update the model's weights
+              so that it learns to predict with less error.
             </p>
             <br />
             <button class="step-button" on:click={() => animation1()}
@@ -280,17 +284,19 @@
         </div>
         <div class="step-bp" data-index="2">
           <div class="step-content">
-            <h2>Adjusting Weights</h2>
+            <h2>Backward Pass</h2>
             <hr />
             <br />
             <p>
-              The network will look at these mistakes and adjust the weights to
-              try and make them right. In the backward pass, the error is
-              propagated back through the network, starting from the output
-              layer, to adjust the weights and biases of each neuron. This
-              weight adjustment process, guided by the gradients of the error
-              with respect to the weights, aims to minimize the overall error of
-              the network.
+              In the backward pass, the error is propagated back through the
+              network, starting from the output layer, to adjust the weights and
+              biases of each neuron. This weight adjustment process, guided by
+              the gradients of the error with respect to the weights, aims to
+              minimize the overall error of the network.
+              <br /><br />
+              In our example, the width of the lines connecting each neuron represent
+              the weights of the network. The weights will be adjusted to reduce
+              the prediction error of our Neural network.
             </p>
             <br />
             <button class="step-button" on:click={() => animation2()}
@@ -305,15 +311,17 @@
             <br />
 
             <p>
-              In today's Neural Networks, this process is repeated thousands of
-              times: predictions flow forward, errors are observed and
-              backpropagated through the network, and the weights are adjusted.
-              This process is know as "Backpropagation." Backpropagation is a
-              supervised learning algorithm used in neural networks that
-              optimizes their weights and biases through iterative forward and
-              backward passes. By computing the gradients of the error with
-              respect to the weights, backpropagation enables the network to
-              learn and improve its predictions.
+              Predictions flow forward through the network in the forward pass,
+              and errors flow backwards through the network, adjusting weights
+              along the way. <span class="bold"
+                >This process is know as Backpropagation.</span
+              >
+              <br /><br />
+              Backpropagation is a supervised learning algorithm used in neural networks
+              that optimizes their weights and biases through iterative forward and
+              backward passes. By computing the gradients of the error with respect
+              to the weights, backpropagation enables the network to learn and improve
+              its predictions.
               <br /><br />
               Try clicking Run backprop 3 more times to see the model learn the optimal
               boundary!
@@ -322,9 +330,6 @@
             <button class="step-button" on:click={() => restartAnimation3()}
               >Restart</button
             >
-            <!-- <button class="step-button" on:click={() => animation3()}
-              >Run Backprop</button
-            > -->
           </div>
         </div>
         <div class="step-bp" data-index="4">
@@ -332,7 +337,6 @@
             <h2>More BackPropagation...</h2>
             <hr />
             <br />
-
             <p>
               Backpropagation doesn't occur just once! For a typical neural
               network, backpropagation is repeated hundreds, if not thousands,
@@ -361,13 +365,17 @@
     </div>
   </section>
   <br />
-  <h3 class="body-header">A Note On Optimization</h3>
+  <h3 class="body-header">Backprop & Gradient Descent</h3>
   <hr />
   <p class="body-text">
-    Thanks for reading! We hope that the article is insightful no matter where
-    you are along your machine learning journey, and that you came away with a
-    better understanding of K-Fold Cross-Validation in the context of machine
-    learning.
+    Backpropagation efficiently computes the gradient of the loss function with
+    respect to each weight by propagating the loss backwards through the
+    network, from the output layer to the input layer. This gradient is then
+    used in a process called gradient descent to adjust the weights, reducing
+    the loss and improving the network's predictions. It's important to remember
+    that while backpropagation provides a method for determining how to adjust
+    the weights, the magnitude and direction of these adjustments are governed
+    by the learning rate, a crucial hyperparameter in the training process.
     <br /><br />
   </p>
   <br /><br /><br />
@@ -451,9 +459,10 @@
     text-align: left;
     font-size: var(--size-default);
     font-family: var(--font-light);
-    border-radius: 10px;
     padding-left: 1.5rem;
     background-color: var(--darksquidink);
+    padding: 20px;
+    border: 5px solid white;
   }
 
   .step-content > h2 {

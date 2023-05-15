@@ -322,9 +322,11 @@
     </div>
   </section>
   <p class="body-text">
-    Notice how to this point, we've describe a specific neural network
-    architecture where values flow forward linearly through a network, and
-    gradients flow linearly backwards through a network. These a
+    In the case of these specific problems, you may find that wider networks
+    (networks with more neurons in each layer) perform better than deeper ones
+    (networks with more hidden layers). This is because wider networks can
+    create more complex decision boundaries, which can better capture the
+    intricate patterns in the spiral and moon datasets.
   </p>
   <br />
   <p class="body-text">
