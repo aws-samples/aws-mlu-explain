@@ -1,6 +1,6 @@
 <script>
   import DatasetScatter from "./DatasetScatter.svelte";
-  import { circles, moons, spirals, scatterData } from "../../datasets";
+  import { circles, moons, spirals } from "../../datasets";
   import { interactiveDataset } from "../../store";
 
   function setData(dataset, i) {
@@ -12,7 +12,7 @@
 </script>
 
 <div class="dataset-icons">
-  {#each [circles, moons, spirals, scatterData] as data, i}
+  {#each [circles, moons, spirals] as data, i}
     <div
       class="dataset-icon"
       class:selected={clickedOption == i}
@@ -46,5 +46,19 @@
   .selected {
     outline: 3px solid var(--squidink);
     opacity: 1;
+  }
+  @media only screen and (max-width: 950px) {
+    .dataset-icons {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+      height: 40px;
+      margin: auto;
+    }
+    .dataset-icon {
+      width: 40px;
+      height: 40px;
+    }
   }
 </style>

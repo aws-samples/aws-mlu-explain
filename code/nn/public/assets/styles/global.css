@@ -188,6 +188,11 @@ hr {
 
 /* mobile */
 @media screen and (max-width: 950px) {
+  :root {
+    --viz-height: 60vh;
+    --max-viz-height: 475px;
+  }
+
   .body-text {
     max-width: 90%;
     font-size: 16px;
@@ -217,5 +222,12 @@ hr {
 
   .info-tooltip {
     display: none;
+  }
+
+  hr {
+    margin: 5px auto;
+    width: 80%;
+    border: 1px solid var(--squidink);
+    opacity: 0.6;
   }
 }

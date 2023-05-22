@@ -5,7 +5,6 @@
   import VizPredictionScatter from "./VizPredictionScatter.svelte";
   import DatasetIcons from "./DatasetIcons.svelte";
   import InteractiveControls from "./InteractiveControls.svelte";
-
   import {
     animationDuration,
     networkInteractive,
@@ -22,7 +21,7 @@
   } from "../../store";
   import { range } from "../../neuralnetCode/arrayUtils";
   import { Value, MLP, ensureValue } from "../../neuralnetCode/ann";
-  import { circles, moons } from "../../datasets";
+  import { circles } from "../../datasets";
   import { makeJsonArray, numNeurons } from "../../utils";
 
   function instantiateWeights() {
@@ -136,24 +135,13 @@
   }
 
   function runBatch() {
-    // basic scheduling lr (decay) below:
-    // let initial_learning_rate = 0.01; // set an appropriate initial learning rate
-    // let decay_rate = 0.001; // set an appropriate decay rate
-
     // for (let ep = 0; ep < 200; ep++) {
-    // basic scheduling lr (decay) below:
-    // let learning_rate = initial_learning_rate * (1 / (1 + decay_rate * ep));
-
     let initial_learning_rate = 0.01; // set an appropriate initial learning rate
     const epsilon = 1e-8; // small constant to avoid division by zero
 
     // Create a cache for the squared gradients
     const grad_cache = model.parameters().map(() => new Value(0));
 
-    console.log(
-      "inputs",
-      inputs.map((row) => row[1]["data"])
-    );
     // loop through input X and call model prediction on it
     let preds = inputs.map((row) => model.call(row));
 
@@ -186,16 +174,6 @@
     // backward pass
     model.zero_grad();
     total_loss.backward();
-
-    // sgd
-    // let learning_rate = k <= 1 ? 0.05 : 1.0 - (0.9 * k) / 100;
-    // let learning_rate = 0.0001;
-
-    // basic lr updates:
-    // for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
-    //   let p = _b[_i];
-    //   p.data -= learning_rate * p.grad;
-    // }
 
     // AdaGradlr  updates
     for (let _i = 0, _b = model.parameters(); _i < _b.length; _i++) {
@@ -239,7 +217,7 @@
 
   onMount(() => {
     getUpdateModelParams();
-    buttonClick();
+    setTimeout(buttonClick, 1000);
   });
 </script>
 
@@ -281,14 +259,21 @@
                 on:click={() => {
                   buttonClick();
                 }}
-                disabled={buttonDisabled}>Run Epoch</button
+                disabled={buttonDisabled}>Run 1 Epoch</button
               >
+              <!-- <button
+                class:active={$playAnimation}
+                on:click={() => {
+                  buttonClick();
+                }}
+                disabled={buttonDisabled}>Run 10 Epochs</button
+              > -->
               <button
                 disabled={buttonDisabled}
                 class:active={$playAnimation}
                 on:click={() => {
                   reset_model();
-                }}>Retrain</button
+                }}>Reset Weights</button
               >
               <div id="animation-duration-input">
                 Animation Duration:
@@ -302,10 +287,6 @@
                   bind:value={$animationDuration}
                 />
               </div>
-              <!-- <div id="batch-button">
-                <p>Batch Size:</p>
-                <input type="number" bind:value={batchSize} min="1" max="8" />
-              </div> -->
             </div>
           </div>
         </div>
@@ -347,7 +328,7 @@
     grid-template-columns: 100%;
     grid-template-rows: 8% 80% 8%;
     row-gap: 5px;
-    /* outline: 2px solid hotpink; */
+    outline: 2px solid hotpink;
   }
   #animation-duration-input {
     display: flex;
@@ -362,16 +343,15 @@
     display: grid;
     height: var(--viz-height);
     max-height: var(--max-viz-height);
-    /* border: 2px solid black; */
-    /* width: 1000px; */
     grid-template-columns: 70% 30%;
-    /* margin: auto; */
+    outline: 2px solid red;
   }
   .network-plot {
     width: 100%;
     height: var(--viz-height);
     max-height: var(--max-viz-height);
     margin: auto;
+    outline: 2px solid green;
   }
   #eval-container {
     display: grid;
@@ -380,11 +360,13 @@
     grid-gap: 0%;
     max-height: var(--max-viz-height);
     width: 100%;
+    outline: 2px solid teal;
   }
 
   #scatter-plot,
   #error-plot {
     height: 100%;
+    outline: 2px solid orange;
   }
 
   button {
@@ -406,6 +388,7 @@
     padding-top: 5px;
     font-size: var(--size-default);
     font-weight: bold;
+    outline: 2px solid purple;
   }
   #play-button {
     margin-right: auto;
@@ -429,8 +412,6 @@
   section {
     max-width: 1200px;
     margin: auto;
-
-    /* outline: 2px solid teal; */
   }
 
   #architecture-input {
@@ -441,6 +422,7 @@
     text-transform: uppercase;
     font-weight: bold;
     justify-content: center;
+    outline: 2px solid blue;
   }
   input {
     margin: auto;
@@ -448,5 +430,26 @@
 
   .active {
     opacity: 0.8;
+  }
+
+  @media only screen and (max-width: 950px) {
+    #animation-controls {
+      max-width: 100%;
+    }
+    #play-button button {
+      padding: 4px 12px;
+      margin-right: 5px;
+    }
+    #scatter-plot,
+    #error-plot {
+      height: 100%;
+      width: 100%;
+    }
+    #eval-container {
+      grid-template-rows: 10% 42% 40% 8%;
+      grid-gap: 0%;
+      max-height: var(--max-viz-height);
+      width: 100%;
+    }
   }
 </style>

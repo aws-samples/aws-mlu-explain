@@ -4,7 +4,7 @@
   import { hexbin } from "d3-hexbin";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { draw } from "svelte/transition";
-  import { hexPreds, hexVals } from "../../store";
+  import { hexPreds, hexVals, mobile } from "../../store";
   import { circles } from "../../datasets";
 
   // props
@@ -16,12 +16,19 @@
   let outerHeight = 300;
   let outerWidth = 300;
 
-  let margin = {
-    top: 25,
-    bottom: 5,
-    left: 20,
-    right: 0,
-  };
+  let margin = $mobile
+    ? {
+        top: 25,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }
+    : {
+        top: 25,
+        bottom: 5,
+        left: 20,
+        right: 0,
+      };
 
   const formatter = format(".0%");
 

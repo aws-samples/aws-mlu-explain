@@ -2,7 +2,7 @@
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { hexbin } from "d3-hexbin";
   import { onMount, onDestroy } from "svelte";
-  import { scatterData } from "../../datasets";
+  import { moons, scatterData } from "../../datasets";
   import { min, max } from "d3-array";
   import ScatterRegression from "./ScatterRegression.svelte";
   import {
@@ -26,10 +26,16 @@
   export let height = 160;
   export let width = 160;
 
-  const margin = 5;
+  // const margin = 5;
+  let margin = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  };
   const hexbinRadius = 5;
 
-  console.log("sd", scatterData);
+  console.log("sd", moons);
 
   const modelDict = {
     0: logistic,
@@ -39,7 +45,7 @@
     4: perceptron,
     5: perceptron,
     6: neuralNetwork1,
-    7: neuralNetwork2,
+    7: neuralNetwork1,
     8: neuralNetwork2,
   };
 
@@ -61,12 +67,26 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
+  // $: xScale = scaleLinear()
+  //   .domain([-1.5, 2.5])
+  //   .range([margin, width - margin]);
+  // $: yScale = scaleLinear()
+  //   .domain([0.25, 2.65])
+  //   .range([height / 2 - margin, -height / 2 + margin]);
+
   $: xScale = scaleLinear()
-    .domain([-1.5, 2.5])
-    .range([margin, width - margin]);
+    .domain([
+      1.2 * min(moons.map((d) => d.x1)),
+      max(moons.map((d) => d.x1)) * 1.2,
+    ])
+    .range([margin.left, width - margin.right]);
+
   $: yScale = scaleLinear()
-    .domain([0.25, 2.65])
-    .range([height / 2 - margin, -height / 2 + margin]);
+    .domain([
+      1.2 * min(moons.map((d) => d.x2)),
+      max(moons.map((d) => d.x2)) * 1.2,
+    ])
+    .range([height - margin.bottom, margin.top]);
 
   const colorScale = scaleOrdinal()
     .domain([-1, 1])
@@ -76,8 +96,12 @@
     .radius(hexbinRadius)
     .extent([
       [0, 0],
-      [width, height],
+      [width - margin.left - margin.right, height - margin.top - margin.bottom],
     ]);
+
+  $: hexBins = hexbins(hexbins.centers()).map((h) => {
+    return [xScale.invert(h.x + margin.left), yScale.invert(h.y + margin.top)];
+  });
 
   // responsive dimensions for scatter plot
   $: scatterCondition = ![0, 1].includes($stepIndex);
@@ -86,8 +110,6 @@
   $: model = modelDict[$stepIndex];
 
   // ml models
-
-  console.log(logistic(3, 4));
 
   onMount(() => {});
 
@@ -133,6 +155,8 @@
     { x1: 2.31, x2: 2.16 - 0.85, y: 1.0 },
     { x1: 2.4, x2: 2.15 - 0.85, y: 0.0 },
   ];
+  // let data = moons;
+  console.log("data", data);
 
   // the path generator
   $: pathLine = line()
@@ -154,7 +178,7 @@
   }
 
   // tween stuff
-  const maxLength = Math.max(scatterData.length, data.length);
+  const maxLength = Math.max(moons.length, data.length);
 
   const startingData = Array(maxLength)
     .fill(null)
@@ -172,12 +196,12 @@
     easing: linear,
   });
 
-  let isScatterData = false;
+  let ismoons = false;
 
   console.log("dataset", $dataset);
   // Create a function to update the tween
   function updateTween() {
-    if (isScatterData) {
+    if (ismoons) {
       // Map data to the desired format
       const mappedData = Array(maxLength)
         .fill(null)
@@ -192,30 +216,30 @@
       // Update the tween
       dataset.set(mappedData);
     } else {
-      // Reset the tween to the original scatterData with maxLength
+      // Reset the tween to the original moons with maxLength
       const resetData = Array(maxLength)
         .fill(null)
         .map((_, i) => {
           return {
-            x1: scatterData[i]?.x1 ?? 0,
-            x2: scatterData[i]?.x2 ?? 0,
-            y: scatterData[i]?.y ?? 1,
+            x1: moons[i]?.x1 ?? 0,
+            x2: moons[i]?.x2 ?? 0,
+            y: moons[i]?.y ?? 1,
           };
         });
 
       dataset.set(resetData);
     }
 
-    // // Toggle isScatterData
-    // isScatterData = !isScatterData;
+    // // Toggle ismoons
+    // ismoons = !ismoons;
   }
 
   $: {
     if ($stepIndex <= 2) {
-      isScatterData = true;
+      ismoons = true;
       updateTween();
     } else {
-      isScatterData = false;
+      ismoons = false;
       updateTween();
     }
   }
@@ -225,7 +249,7 @@
     dataset.stop();
   });
 
-  console.log("scattger", scatterData);
+  // console.log("scattger", $dataset);
 </script>
 
 <!-- scatterplot -->
@@ -246,7 +270,10 @@
           class="hex-cell"
           d={`M${h.x},${h.y}${hexbins.hexagon()}`}
           fill={colorScale(
-            model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
+            model(
+              xScale.invert(h.x + margin.left),
+              yScale.invert(h.y + margin.top)
+            )
           )}
         />
       {/each}
@@ -254,13 +281,24 @@
     {/if}
 
     {#each $dataset as d, i}
+      <!-- {console.log("here", d)} -->
       {#if i > 0}
-        <circle
+        <!-- <circle
           class="dot"
           cx={xScale(d.x1)}
           cy={yScale(d.x2)}
           r="4"
           fill={colorScale(d.y)}
+          stroke-width={$stepIndex > 2 ? 2 : 0}
+          in:draw={{ duration: 500 }}
+          out:draw={{ duration: 0 }}
+        /> -->
+        <circle
+          class="dot"
+          cx={xScale(d.x1)}
+          cy={yScale(d.x2)}
+          r="4"
+          fill={$stepIndex > 2 ? colorScale(d.y) : colorScale(1)}
           stroke-width={$stepIndex > 2 ? 2 : 0}
           in:draw={{ duration: 500 }}
           out:draw={{ duration: 0 }}
@@ -285,43 +323,12 @@
     {/if}
     <!-- end reg -->
   </g>
-{:else}
-  <!-- <g clip-path="url(#clip)" transform={`translate(0 ${-height / 2})`}>
-      {#each hexbins(hexbins.centers()) as h}
-        <path
-          in:draw={{ duration: 500 }}
-          out:draw={{ duration: 0 }}
-          class="hex-cell"
-          d={`M${h.x},${h.y}${hexbins.hexagon()}`}
-          fill={colorScale(
-            model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
-          )}
-          stroke={colorScale(
-            model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
-          )}
-        />
-      {/each}
-    </g>
-    {#each scatterData as d, i}
-      <circle
-        in:fly={{ x: -50, duration: 500 }}
-        out:fade={{ duration: 200 }}
-        cx={xScale(d.x1)}
-        cy={yScale(d.x2)}
-        r="4"
-        fill={colorScale(d.y)}
-      />
-    {/each} -->
-  <!-- {#if delayFinished}
-    <circle class="prediction-circle" cx={xScale(x)} cy={yScale(y)} r="10" />
-  {/if} -->
-  <!-- {/if} -->
 {/if}
 
 <style>
   /* reg */
   #bg-rect {
-    fill: var(--bg);
+    fill: var(--white);
     border: 2px solid var(--squidink);
   }
 

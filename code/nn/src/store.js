@@ -49,12 +49,12 @@ export const bpWeights = writable(randomArray);
 
 // viz
 export const playAnimation = writable(true);
-export const animationDuration = writable(0.01);
+export const animationDuration = writable(0.5);
 export const ggg = writable();
 export const points = writable([1]);
 export const modelParams = writable([]);
 export const show = writable(true);
-export const networkInteractive = writable([2, 3, 1, 1]);
+export const networkInteractive = writable([2, 3, 1]);
 export const numLayersInteractive = derived(
   networkInteractive,
   ($networkInteractive) => $networkInteractive.length

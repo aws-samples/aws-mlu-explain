@@ -84,10 +84,6 @@
       }
     }
   };
-
-  $: {
-    console.log("new values!", $bpSlope, $bpIntercept);
-  }
 </script>
 
 <clipPath id="clip-bp">
@@ -145,7 +141,7 @@
       cy={yScale(d.y)}
       fill={colorScale(d.class)}
       class:wrong={rRules($strokeRule, d)}
-      r="3"
+      r="4"
     />
   {/each}
   <!-- {/key} -->

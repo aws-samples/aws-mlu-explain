@@ -38,7 +38,7 @@
 <Intro />
 <NetworkScroll />
 <ActivationFunctions />
-<BackPropagation />
+<!-- <BackPropagation /> -->
 <BackProp />
 <VizNet />
 <OtherArchitectures />

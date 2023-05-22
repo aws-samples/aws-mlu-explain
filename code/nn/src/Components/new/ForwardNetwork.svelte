@@ -11,6 +11,7 @@
     showLayerLine,
     showSubScript,
     stepIndex,
+    mobile,
   } from "../../store";
   import { line } from "d3-shape";
   import { fade, fly, draw } from "svelte/transition";
@@ -39,8 +40,10 @@
   // let nodeWidth = 12 * 1.33 * 4;
   // let nodeHeight = 12 * 2;
 
-  let nodeWidth = 12 * 1.33 * 4.5;
-  let nodeHeight = 12 * 3;
+  // let nodeWidth = 12 * 1.33 * 4.5;
+  // let nodeHeight = 12 * 3;
+  let nodeWidth = $mobile ? 38 : 72;
+  let nodeHeight = $mobile ? 20 : 36;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])
@@ -137,39 +140,40 @@
                       startOffset="50%"
                       text-anchor="middle"
                       fill="#232F3E"
-                      dominant-baseline="middle">w=0.6</textPath
+                      dominant-baseline="middle">w</textPath
                     >
                   </text>
                 {/key}
               {/if}
               <g>
                 <!-- {#if animationBegin} -->
-                <circle class="moving-circle-forward" opacity="0">
+                <!-- <circle class="moving-circle-forward" opacity="0">
                   <set attributeName="opacity" to="1" begin="{layer}s" />
                   <set attributeName="opacity" to="0" begin="{0}s" />
-                </circle>
-                {#if $stepIndex >= 1}
-                  <text
-                    class="moving-text-forward"
-                    opacity="0"
-                    alignment-baseline="middle"
-                    >{updateNeuron(layer, j)}
-                    <set attributeName="opacity" to="1" begin="{layer}s" />
-                    <set attributeName="opacity" to="0" begin="{0}s" /></text
-                  >
-                {/if}
-                <!-- {/if} -->
-                <animateMotion
-                  id={`animatePathForward${layer}`}
-                  begin="{layer}s"
-                  dur="1s"
-                  repeatCount="indefinite"
-                  path={`
+                </circle> -->
+                <!-- {#if $stepIndex >= 1} -->
+                <text
+                  class="moving-text-forward"
+                  opacity="1"
+                  alignment-baseline="middle"
+                  >⬤
+                  <!-- <set attributeName="opacity" to="1" begin="{layer}s" />
+                  <set attributeName="opacity" to="0" begin="{0}s" /></text
+                > -->
+                  <!-- {/if} -->
+                  <!-- {/if} -->
+                  <animateMotion
+                    id={`animatePathForward${layer}`}
+                    begin="{layer}s"
+                    dur="1s"
+                    repeatCount="indefinite"
+                    path={`
                       M ${xScale(layer - 1)} ${yScale(prevYPosition)}
                       L ${xScale(layer)} ${yScale(yPosition)}
                     `}
-                />
-              </g>
+                  />
+                </text></g
+              >
             {/each}
           {/if}
         {/each}
@@ -299,12 +303,31 @@
     {/if}
 
     <!-- animate line -->
+    <!-- cover up text in non chrome browsers -->
+    <!-- <rect
+      stroke="black"
+      class='legend-rect'
+      stroke-width="2"
+      fill="#e5f7ff"
+      x="1"
+      y="1"
+      width="120"
+      height="30"
+    />
+    <text class="legend-text" x="4" y="20">⬤: Input Data</text> -->
+    <rect fill="#e5f7ff" x="0" y="0" width="15" height="15" />
 
     <!-- get path of entire network -->
   </svg>
 </div>
 
 <style>
+  .legend-text {
+    font-size: 10px;
+    font-family: var(--font-main);
+    letter-spacing: 2px;
+    fill: var(--darksquidink);
+  }
   .weight-text {
     font-size: 10px;
     color: black;
@@ -314,12 +337,12 @@
     font-family: var(--font-main);
   }
   .moving-text-forward {
-    font-size: 10px;
+    font-size: 12px;
     /* font-weight: bold; */
-    color: black;
+    color: red;
     text-anchor: middle;
     paint-order: stroke fill;
-    stroke: white;
+    stroke: var(--squidink);
     stroke-width: 4;
     text-anchor: middle;
     font-family: var(--font-mono);
@@ -350,6 +373,11 @@
   .nn-text {
     font-size: 12px;
     transition: all 0.45s;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 4px;
+    stroke: var(--bg);
+    letter-spacing: 1px;
   }
   .nn-g {
     transition: all 0.45s;

@@ -4,7 +4,7 @@
   import { scaleLinear } from "d3-scale";
   import { draw } from "svelte/transition";
   import { expoInOut, circOut } from "svelte/easing";
-  import { animationDuration, errorMetrics } from "../../store";
+  import { animationDuration, errorMetrics, mobile } from "../../store";
 
   // export const errorMetrics = [{ epoch: 0, loss: 0, accuracy: 0 }];
 
@@ -18,12 +18,19 @@
   let outerHeight = 300;
   let outerWidth = 300;
 
-  let margin = {
-    top: 25,
-    bottom: 5,
-    left: 55,
-    right: 0,
-  };
+  let margin = $mobile
+    ? {
+        top: 25,
+        bottom: 5,
+        left: 20,
+        right: 0,
+      }
+    : {
+        top: 25,
+        bottom: 5,
+        left: 55,
+        right: 0,
+      };
 
   const formatter = format(".0%");
 
@@ -159,13 +166,15 @@
       text-anchor="middle">Model Accuracy</text
     >
 
-    <text
-      class="axis-label"
-      y={margin.left / 2}
-      x={-(height / 2)}
-      text-anchor="middle"
-      transform="rotate(-90)">Accuracy (%)</text
-    >
+    {#if !$mobile}
+      <text
+        class="axis-label"
+        y={margin.left / 2}
+        x={-(height / 2)}
+        text-anchor="middle"
+        transform="rotate(-90)">Accuracy (%)</text
+      >
+    {/if}
     <text
       class="axis-label"
       y={height + margin.bottom + 11}

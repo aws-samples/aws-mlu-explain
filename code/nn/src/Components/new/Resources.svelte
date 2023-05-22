@@ -1,14 +1,13 @@
 <script></script>
 
-<section id="resources">
+<section>
   <br />
   <h3 class="body-header">Thanks For Reading</h3>
   <hr />
   <p class="body-text">
     Thanks for reading! We hope that the article is insightful no matter where
     you are along your machine learning journey, and that you came away with a
-    better understanding of K-Fold Cross-Validation in the context of machine
-    learning.
+    better understanding of Neural Networks.
     <br /><br />
     To learn more about machine learning, check out our
     <a class="on-end" href="https://aws.amazon.com/machine-learning/mlu/"
@@ -29,7 +28,11 @@
     <a class="on-end" href="https://github.com/aws-samples/aws-mlu-explain"
       >here</a
     >.
+    <br /><br />
+    Go forth and learn!
   </p>
+
+  <br /><br />
   <br /><br />
   <!-- <h3 class="body-header">References + Open Source</h3>
   <hr />
@@ -81,22 +84,6 @@
 </section>
 
 <style>
-  #resources {
-    background-color: var(--paper);
-    color: var(--squidink);
-    padding: 5rem;
-  }
-
-  .resource-item {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    text-align: left;
-    font-size: var(--size-default);
-    line-height: 1.5em;
-    font-family: var(--font-light);
-    color: var(--squidink);
-  }
-
   a.on-end {
     text-decoration: underline;
     color: var(--darksquidink);
@@ -105,13 +92,5 @@
   a.on-end:hover {
     color: var(--paper);
     text-decoration: none;
-  }
-
-  /* mobile */
-  @media screen and (max-width: 950px) {
-    .resource-item {
-      max-width: 90%;
-      font-size: 17px;
-    }
   }
 </style>

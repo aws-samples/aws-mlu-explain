@@ -13,6 +13,7 @@
     bpbind,
     bpPlayAnimation,
     bpWeights,
+    mobile,
   } from "../../store";
   import { fade, fly, draw } from "svelte/transition";
   import BackPropOutput from "./BackPropOutput.svelte";
@@ -31,8 +32,11 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  let nodeWidth = 12 * 1.33 * 4.5;
-  let nodeHeight = 12 * 3;
+  // let nodeWidth = 12 * 1.33 * 4.5;
+  // let nodeHeight = 12 * 3;
+
+  let nodeWidth = $mobile ? 36 : 72;
+  let nodeHeight = $mobile ? 16 : 36;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayersBp])
@@ -135,78 +139,61 @@
               <!-- forward -->
               <g>
                 <!-- {#if animationBegin} -->
-                <circle class="moving-circlebp" opacity="0">
-                  <set
-                    attributeName="opacity"
-                    to="1"
-                    begin={`animatePathForwardBp${i}.begin`}
-                  />
-                  <set
-                    attributeName="opacity"
-                    to="0"
-                    begin={`animatePathForwardBp${i}.end`}
-                  />
-                </circle>
-                <!-- {#if $stepIndexBp >= 1}
-                  <text
-                    class="moving-textbp"
-                    opacity="0"
-                    alignment-baseline="middle"
-                    >{updateNeuron(i, j)}
-                    <set attributeName="opacity" to="1" begin="{i}s" />
-                    <set attributeName="opacity" to="0" begin="{0}s" /></text
-                  >
-                {/if} -->
 
-                <!-- forward pass -->
-                <!-- `animateMotion#animatePathForwardBp0` -->
-                <!-- {#if $bpStage == 0} -->
-                <animateMotion
-                  id={`animatePathForwardBp${i}`}
-                  begin={i === 1 ? `0` : `animatePathForwardBp${i - 1}.end`}
-                  dur=".5s"
-                  restart="whenNotActive"
-                  path={`
+                <!-- {#if $stepIndexBp >= 1} -->
+                <text
+                  class="moving-text-bp"
+                  opacity="1"
+                  alignment-baseline="middle"
+                  >⬤
+
+                  <!-- {/if} -->
+
+                  <!-- forward pass -->
+                  <!-- `animateMotion#animatePathForwardBp0` -->
+                  <!-- {#if $bpStage == 0} -->
+                  <animateMotion
+                    id={`animatePathForwardBp${i}`}
+                    begin={i === 1 ? `0` : `animatePathForwardBp${i - 1}.end`}
+                    dur=".5s"
+                    restart="whenNotActive"
+                    path={`
                       M ${xScale(i - 1)} ${yScale(prevYPosition)}
                       L ${xScale(i)} ${yScale(yPosition)}
                     `}
-                />
-                <!-- {/if} -->
-                <!-- end forward pass -->
-              </g>
+                  />
+                  <!-- {/if} -->
+                  <!-- end forward pass -->
+                </text></g
+              >
 
               <!-- backward -->
               <!-- {#if $stepIndexBp == 2} -->
               <g>
                 <!-- {#if animationBegin} -->
-                <circle class="moving-circlebp" opacity="0">
-                  <set
-                    attributeName="opacity"
-                    to="1"
-                    begin={`animatePathBackward${i}.begin`}
-                  />
-                  <set
-                    attributeName="opacity"
-                    to="0"
-                    begin={`animatePathBackward${i}.end`}
-                  />
-                </circle>
 
-                <!-- backward pass -->
-                <!-- {#if $bpStage == 2} -->
-                <animateMotion
-                  id={`animatePathBackward${i}`}
-                  begin={`animatePathBackward${i + 1}.end`}
-                  dur=".5s"
-                  restart="whenNotActive"
-                  path={`
+                <text
+                  class="moving-text-bp"
+                  opacity="1"
+                  alignment-baseline="middle"
+                  >⬤
+
+                  <!-- backward pass -->
+                  <!-- {#if $bpStage == 2} -->
+                  <animateMotion
+                    id={`animatePathBackward${i}`}
+                    begin={`animatePathBackward${i + 1}.end`}
+                    dur=".5s"
+                    restart="whenNotActive"
+                    path={`
                          M ${xScale(i)} ${yScale(yPosition)}
                          L ${xScale(i - 1)} ${yScale(prevYPosition)}
                        `}
-                />
-                <!-- {/if} -->
-                <!-- end backward pass -->
-              </g>
+                  />
+                  <!-- {/if} -->
+                  <!-- end backward pass -->
+                </text></g
+              >
               <!-- {/if} -->
             {/each}
           {/if}
@@ -262,10 +249,11 @@
             xScale($numLayersBp - 1) - nodeWidth / 2
           } ${yScale(yPosition)})`}
         >
-          {("e", console.log(xScale($numLayersBp - 1) - nodeWidth / 2))}
           <BackPropOutput {width} {height} />
         </g>
       {/each}
+      <!-- cover up text in non chrome browsers -->
+      <rect fill="var(--darksquidink)" x="0" y="0" width="15" height="15" />
     {/if}
 
     <!-- animate line -->
@@ -283,7 +271,7 @@
     paint-order: stroke fill;
     font-family: var(--font-main);
   }
-  .moving-textbp {
+  .moving-text-bp {
     font-size: 10px;
     /* font-weight: bold; */
     color: black;
@@ -316,7 +304,7 @@
     transition: all 0.45s;
     stroke-linejoin: round;
     paint-order: stroke fill;
-    stroke-width: 2px;
+    stroke-width: 4px;
     stroke: var(--bg);
     letter-spacing: 1px;
   }

@@ -33,8 +33,13 @@
   section {
     padding-top: 5rem;
     padding-left: 1rem;
-    background-color: var(--darksquidink);
+    /* background-color: var(--darksquidink); */
     color: var(--white);
+    background: radial-gradient(
+      ellipse at center,
+      var(--darksquidink) 60%,
+      var(--squidink) 100%
+    );
   }
 
   .body-text,

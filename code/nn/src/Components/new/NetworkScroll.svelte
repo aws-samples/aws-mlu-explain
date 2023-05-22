@@ -1,7 +1,6 @@
 <script>
   import ForwardNetwork from "./ForwardNetwork.svelte";
   import { onMount } from "svelte";
-  import { select } from "d3-selection";
   import {
     drawActivation,
     network,
@@ -41,7 +40,7 @@
     },
     3: () => {
       $stepIndex = 3;
-      $labels = ["X", "logistic", "y"];
+      $labels = ["X", "sigmoid", "y"];
       $showLayerLine = false;
       $network = [2, 1, 1];
       $drawActivation = false;
@@ -77,7 +76,7 @@
     8: () => {
       $stepIndex = 8;
       $showLayerLine = true;
-      $labels = ["input", "reLu", "logistic", "y"];
+      $labels = ["input", "reLu", "sigmoid", "y"];
       $network = [2, 3, 2, 1];
       $drawActivation = false;
     },
@@ -92,16 +91,10 @@
   onMount(() => {
     // store elements to track
     const sections = [...document.querySelectorAll(".step")];
-    console.log("sections", sections);
-
     // observe elements to track
     sections.forEach((section) => {
       observer.observe(section);
     });
-
-    // node to track
-    // const stepNode = select(".step[data-index='7']");
-    // console.log("stepNode", stepNode);
   });
 
   // options for intersection observer
@@ -123,7 +116,7 @@
   }, options);
 
   const sigmoid =
-    "\\begin{aligned} \\text{logistic} = \\frac{1}{1+e^{-w_iX_i}} \\end{aligned}";
+    "\\begin{aligned} \\text{sigmoid} = \\frac{1}{1+e^{-w_iX_i}} \\end{aligned}";
   const linearEq = `\\begin{aligned} \\text{linear} = \\sum^{n}_{i=1}w_iX_i \\end{aligned}`;
   const stepEq = `\\begin{aligned} \\text{step} = \\begin{cases}
          +1, \\text{if } w_iX_i \\geq 0  \\\\
@@ -371,7 +364,6 @@
 
   .step-content {
     text-align: left;
-    /* border: 4px solid var(--squidink); */
     font-size: var(--size-default);
     font-family: var(--font-light);
     padding-left: 1.5rem;
@@ -401,4 +393,31 @@
       transition: opacity 800ms var(--delay),
         transform 800ms cubic-bezier(0.13, 0.07, 0.26, 0.99) var(--delay);
     } */
+
+  /* Comment out the following line to always make it 'text-on-top' */
+  @media screen and (max-width: 950px) {
+    .scrolly-container {
+      display: block;
+      top: 30%;
+      width: 95%;
+    }
+
+    .step {
+      height: 130vh;
+    }
+
+    .step-content {
+      text-align: left;
+      font-size: var(--size-default);
+      font-family: var(--font-light);
+      padding-left: 1.5rem;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 5px solid var(--squidink);
+      padding: 20px;
+      line-height: 1.3;
+    }
+    .steps-container {
+      pointer-events: none;
+    }
+  }
 </style>

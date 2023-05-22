@@ -56,12 +56,17 @@
 </table>
 
 <style>
+  .table-container {
+    overflow-x: auto;
+  }
+
   table {
     border-collapse: collapse;
     margin: auto;
     font-size: var(--size-default);
     font-family: var(--font-light);
     max-width: var(--max-width);
+    white-space: nowrap;
   }
 
   td,
@@ -83,8 +88,18 @@
   }
 
   @media screen and (max-width: 768px) {
+    .table-container {
+      max-width: 100%;
+    }
+
     table {
-      max-width: 95%;
+      font-size: 0.875em;
+      max-width: 100%;
+    }
+
+    td,
+    th {
+      padding: 2px;
     }
   }
 </style>

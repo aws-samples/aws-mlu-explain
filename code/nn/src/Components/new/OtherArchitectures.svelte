@@ -30,8 +30,9 @@
   </p>
   <br />
   <div>
-    <span class="bold">Recurrent Neural Networks (RNNs):</span>
     <p class="body-text">
+      <span class="bold">Recurrent Neural Networks (RNNs):</span>
+
       Recurrent Neural Networks (RNNs) differ from feed-forward neural networks
       as they have a built-in memory, allowing them to process sequences of
       data. This makes RNNs well-suited for tasks like natural language
@@ -42,8 +43,9 @@
   </div>
   <!-- <hr class="splitter" /> -->
   <div>
-    <span class="bold">Convolutional Neural Networks (CNNs):</span>
     <p class="body-text">
+      <span class="bold">Convolutional Neural Networks (CNNs):</span>
+
       Convolutional Neural Networks (CNNs) are specifically designed for
       processing grid-like data, such as images. Unlike feed-forward networks,
       CNNs use convolutional layers to scan and identify local patterns within
@@ -54,8 +56,9 @@
   </div>
   <!-- <hr class="splitter" /> -->
   <div>
-    <span class="bold">Generative Adversarial Networks (GANs):</span>
     <p class="body-text">
+      <span class="bold">Generative Adversarial Networks (GANs):</span>
+
       Generative Adversarial Networks (GANs) consist of two distinct neural
       networks, a generator and a discriminator, that compete against each
       other. Unlike feed-forward networks, GANs learn to generate new data
@@ -66,8 +69,9 @@
   </div>
   <!-- <hr class="splitter" /> -->
   <div>
-    <span class="bold">Graph Neural Networks:</span>
     <p class="body-text">
+      <span class="bold">Graph Neural Networks:</span>
+
       Graph Neural Networks are a type of neural network that operate on
       graph-structured data, which is not easily handled by feed-forward
       networks. They are designed to learn and encode the relationships between
@@ -77,8 +81,9 @@
   </div>
   <!-- <hr class="splitter" /> -->
   <div>
-    <span class="bold">Transformer Architectures:</span>
     <p class="body-text">
+      <span class="bold">Transformer Architectures:</span>
+
       Transformer architectures differ from feed-forward networks as they rely
       on a self-attention mechanism to process input data, allowing them to
       handle long-range dependencies more effectively. They have been especially
@@ -87,7 +92,7 @@
       contextual information across large sequences.
     </p>
   </div>
-  <hr class="splitter" />
+  <!-- <hr class="splitter" /> -->
 
   <!-- <Cnn />
   <hr class="splitter" />

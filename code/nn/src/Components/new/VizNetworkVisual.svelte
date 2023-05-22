@@ -5,43 +5,25 @@
   import {
     networkInteractive,
     numLayersInteractive,
-    playAnimation,
     animationDuration,
     ggg,
     points,
     networkInteractiveWeights,
     showText,
+    mobile,
   } from "../../store";
   import { fade, fly, draw } from "svelte/transition";
   import { format } from "d3-format";
-  import { numNeurons } from "../../utils";
   import { instantiateWeights } from "./weights";
 
-  // function instantiateWeights() {
-  //   const numWeights = numNeurons($networkInteractive);
+  $: maxEdgeSize = $mobile ? 10 : 15;
 
-  //   const weightVals = Array.from({ length: numWeights }, (_, index) => {
-  //     // Get the number of input neurons for the current weight
-  //     const inputNeurons =
-  //       $networkInteractive[index % ($networkInteractive.length - 1)];
-  //     // Apply He Initialization
-  //     const heInit = Math.random() * Math.sqrt(2 / inputNeurons);
-
-  //     return { data: heInit, grad: 0 };
-  //   });
-
-  //   $networkInteractiveWeights = [...weightVals];
-  // }
-
-  $: weightEdgeScale = scaleLinear().domain([-1, 0, 1]).range([15, 0.2, 15]);
+  $: weightEdgeScale = scaleLinear()
+    .domain([-1, 0, 1])
+    .range([maxEdgeSize, 0.2, maxEdgeSize]);
   $: gradEdgeScale = scaleLinear()
     .domain(extent($networkInteractiveWeights, (d) => d.grad))
-    .range([15, 40]);
-
-  $: console.log(
-    "wwwww",
-    extent($networkInteractiveWeights, (d) => d.grad)
-  );
+    .range([15, 25]);
 
   const wFormat = format("0.3f");
   function positionElements(numElements, maxNumNeurons) {
@@ -87,8 +69,11 @@
   //   let nodeWidth = 76;
   //   let nodeHeight = 40;
 
-  let nodeWidth = 12 * 1.33 * 4.5;
-  let nodeHeight = 12 * 3;
+  // let nodeWidth = 12 * 1.33 * 4.5;
+  // let nodeHeight = 12 * 3;
+
+  let nodeWidth = $mobile ? 38 : 72;
+  let nodeHeight = $mobile ? 20 : 36;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayersInteractive])
@@ -372,7 +357,9 @@
             in:fly|local={{ x: -50, duration: 500 }}
             out:fade|local={{ duration: 300 }}
             class="nn-node output"
-            width={nodeWidth}
+            width={labels[$numLayersInteractive - 1] == "sigmoid"
+              ? nodeWidth + 4
+              : nodeWidth}
             height={nodeHeight}
           />
           <text
@@ -387,11 +374,37 @@
           </text>
         </g>
       {/each}
+
+      <!-- cover up text in non chrome browsers -->
+      <!-- <rect
+        stroke="black"
+        stroke-width="2"
+        fill="white"
+        x="1"
+        y="1"
+        width="170"
+        height="60"
+      />
+      <circle cx="15" cy="17" r="10" fill="green" />
+      <text class="legend-text" alignment-baseline="middle" x="30" y="17"
+        >Forward Epoch</text
+      >
+      <circle cx="15" cy="42" r="10" fill="red" />
+      <text class="legend-text" alignment-baseline="middle" x="30" y="42"
+        >Backward Gradient</text
+      > -->
+      <rect fill="#f3fbff" x="0" y="0" width="20" height="20" />
     {/if}
   </svg>
 </div>
 
 <style>
+  .legend-text {
+    font-size: 10px;
+    font-family: var(--font-main);
+    letter-spacing: 2px;
+    fill: var(--darksquidink);
+  }
   .button-container {
     display: flex;
     justify-content: space-between;
@@ -418,7 +431,6 @@
     stroke-linejoin: round;
     paint-order: stroke fill;
     stroke-width: 4.4px;
-    /* pointer-events: none; */
     stroke: var(--squidink);
     fill: var(--white);
   }
@@ -462,7 +474,7 @@
     transition: all 0.45s;
     stroke-linejoin: round;
     paint-order: stroke fill;
-    stroke-width: 2px;
+    stroke-width: 4px;
     stroke: var(--bg);
     letter-spacing: 1px;
   }
