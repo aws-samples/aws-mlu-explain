@@ -1,19 +1,12 @@
 <script>
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { hexbin } from "d3-hexbin";
-  import { onMount, onDestroy } from "svelte";
-  import { moons, scatterData } from "../../datasets";
+  import { onDestroy } from "svelte";
+  import { moons } from "../../datasets";
   import { min, max } from "d3-array";
-  import ScatterRegression from "./ScatterRegression.svelte";
-  import {
-    labels,
-    marginScroll,
-    network,
-    numLayers,
-    stepIndex,
-  } from "../../store";
+  import { stepIndex } from "../../store";
   import { line } from "d3-shape";
-  import { fade, fly, draw } from "svelte/transition";
+  import { draw } from "svelte/transition";
   import {
     logistic,
     perceptron,
@@ -35,8 +28,6 @@
   };
   const hexbinRadius = 5;
 
-  console.log("sd", moons);
-
   const modelDict = {
     0: logistic,
     1: logistic,
@@ -49,30 +40,8 @@
     8: neuralNetwork2,
   };
 
-  // here
-  let x = 0;
-  let y = 0;
-
-  const delay = 4000; // 4 seconds
-  const interval = 1000; // 1 second
-
-  // function generateRandomPosition() {
-  //   x = Math.floor(Math.random() * 17) - 4; // generates a random integer between -4 and 12
-  //   y = Math.floor(Math.random() * 17) - 4;
-  // }
-
-  let intervalId;
-  // here
-
   // init to false so don't show drawing during rendering
   $: visible = false;
-
-  // $: xScale = scaleLinear()
-  //   .domain([-1.5, 2.5])
-  //   .range([margin, width - margin]);
-  // $: yScale = scaleLinear()
-  //   .domain([0.25, 2.65])
-  //   .range([height / 2 - margin, -height / 2 + margin]);
 
   $: xScale = scaleLinear()
     .domain([
@@ -109,23 +78,7 @@
   // $: model = $stepIndex < 5 ? logistic : perceptron;
   $: model = modelDict[$stepIndex];
 
-  // ml models
-
-  onMount(() => {});
-
-  let delayFinished = false;
-
-  let timeoutId = setTimeout(() => {
-    //   generateRandomPosition(); // generate initial position
-    //   delayFinished = true;
-    //   let intervalId = setInterval(generateRandomPosition, interval);
-    // }, delay);
-    // onDestroy(() => {
-    //   clearInterval(intervalId);
-  });
-
   // regression stuff
-
   const slope = 0.45;
   const intercept = -0.1;
   let data = [
@@ -155,8 +108,6 @@
     { x1: 2.31, x2: 2.16 - 0.85, y: 1.0 },
     { x1: 2.4, x2: 2.15 - 0.85, y: 0.0 },
   ];
-  // let data = moons;
-  console.log("data", data);
 
   // the path generator
   $: pathLine = line()
@@ -229,9 +180,6 @@
 
       dataset.set(resetData);
     }
-
-    // // Toggle ismoons
-    // ismoons = !ismoons;
   }
 
   $: {
@@ -248,21 +196,12 @@
   onDestroy(() => {
     dataset.stop();
   });
-
-  // console.log("scattger", $dataset);
 </script>
 
 <!-- scatterplot -->
 {#if scatterCondition}
-  <!-- {#if $stepIndex === 2} -->
-  <!-- <ScatterRegression {width} {height} /> -->
   <g clip-path="url(#clip)" transform={`translate(0 ${-height / 2})`}>
-    <!-- <rect {width} {height} fill="red" /> -->
     {#if $stepIndex > 2}
-      <!-- draw for hex -->
-      <!-- stroke={colorScale(
-            model(xScale.invert(h.x), yScale.invert(h.y - height / 2))
-          )} -->
       {#each hexbins(hexbins.centers()) as h}
         <path
           in:draw={{ duration: 500 }}
@@ -281,18 +220,7 @@
     {/if}
 
     {#each $dataset as d, i}
-      <!-- {console.log("here", d)} -->
       {#if i > 0}
-        <!-- <circle
-          class="dot"
-          cx={xScale(d.x1)}
-          cy={yScale(d.x2)}
-          r="4"
-          fill={colorScale(d.y)}
-          stroke-width={$stepIndex > 2 ? 2 : 0}
-          in:draw={{ duration: 500 }}
-          out:draw={{ duration: 0 }}
-        /> -->
         <circle
           class="dot"
           cx={xScale(d.x1)}
@@ -326,19 +254,6 @@
 {/if}
 
 <style>
-  /* reg */
-  #bg-rect {
-    fill: var(--white);
-    border: 2px solid var(--squidink);
-  }
-
-  .axis-tick {
-    stroke: var(--squidink);
-    stroke-width: 1;
-    fill: none;
-    opacity: 0.05;
-  }
-
   circle {
     transition: all 1s;
   }
@@ -360,19 +275,10 @@
     transition: all 1s;
     stroke-linecap: round;
   }
-  /* class */
-  .prediction-circle {
-    stroke: var(--squidink);
-    stroke-width: 2;
-    fill: var(--paper);
-    r: 5;
-  }
+
   .hex-cell {
-    /* fill: none; */
-    /* stroke: rgba(0, 0, 0, 0.0344); */
     stroke-width: 0;
     opacity: 0.4;
-    /* transition: all 1s; */
   }
   circle {
     stroke: var(--bg);

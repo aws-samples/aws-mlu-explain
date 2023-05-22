@@ -11,7 +11,7 @@
   // export let nnModel;
   export let data = circles;
 
-  const hexbinRadius = 5;
+  const hexbinRadius = 6;
 
   let outerHeight = 300;
   let outerWidth = 300;
@@ -35,12 +35,6 @@
   $: width = outerWidth - margin.left - margin.right;
   $: height = outerHeight - margin.top - margin.bottom;
 
-  //   $: xScale = scaleLinear()
-  //   .domain([-1.5, 2.5])
-  //   .range([margin, width - margin]);
-  // $: yScale = scaleLinear()
-  //   .domain([0.25, 2.65])
-  //   .range([height / 2 - margin, -height / 2 + margin]);
   $: xScale = scaleLinear()
     .domain([
       1.1 * min(data.map((d) => d.x1)),
@@ -111,7 +105,8 @@
       <circle
         cx={xScale(d.x1)}
         cy={yScale(d.x2)}
-        r="5"
+        r={$mobile ? 3 : 5}
+        stroke-width={$mobile ? 1 : 2}
         fill={colorScale(d.y)}
       />
     {/each}
@@ -129,7 +124,6 @@
 <style>
   circle {
     stroke: var(--bg);
-    stroke-width: 2px;
   }
 
   .chart-title {

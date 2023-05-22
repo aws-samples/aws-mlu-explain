@@ -314,6 +314,8 @@
                 and biases of each neuron. This weight adjustment process,
                 guided by the gradients of the error with respect to the
                 weights, aims to minimize the overall error of the network.
+                (This process uses the Chain Rule from calculus to update the
+                weights layer-by-layer, but we won't go into detail here.)
                 <br /><br />
                 In our example, the width of the lines connecting each neuron represent
                 the weights of the network. The weights will be adjusted to reduce
@@ -389,15 +391,15 @@
     <h3 class="body-header">Backprop & Gradient Descent</h3>
     <hr />
     <p class="body-text">
-      Backpropagation efficiently computes the gradient of the loss function
-      with respect to each weight by propagating the loss backwards through the
-      network, from the output layer to the input layer. This gradient is then
-      used in a process called gradient descent to adjust the weights, reducing
-      the loss and improving the network's predictions. It's important to
-      remember that while backpropagation provides a method for determining how
-      to adjust the weights, the magnitude and direction of these adjustments
-      are governed by the learning rate, a crucial hyperparameter in the
-      training process.
+      We just went over backpropagation, the process by which Neural Networks
+      try to find the optimal weights for the given prediction task (optimal
+      here meaning the weights that result in the lowest error value). To recap,
+      <br /><br />
+      It's important to note that this process is not perfect! Many issues may occur
+      when training a neural network, even one as simple as above. These issues include
+      while backpropagation provides a method for determining how to adjust the weights,
+      the magnitude and direction of these adjustments are governed by the learning
+      rate, a crucial hyperparameter in the training process.
       <br /><br />
     </p>
     <br /><br /><br />

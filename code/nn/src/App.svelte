@@ -1,6 +1,5 @@
 <script>
   import { margin, mobile } from "./store";
-  import BackPropagation from "./Components/new/BackPropagation.svelte";
   import Logo from "./Components/new/Logo.svelte";
   import Title from "./Components/new/Title.svelte";
   import Intro from "./Components/new/Intro.svelte";
@@ -10,6 +9,7 @@
   import BackProp from "./Components/new/BackProp.svelte";
   import VizNet from "./Components/new/VizNet.svelte";
   import OtherArchitectures from "./Components/new/OtherArchitectures.svelte";
+  import OtherArticles from "./Components/new/OtherArticles.svelte";
 
   function handleResize() {
     $mobile = window.innerWidth <= 950;
@@ -37,9 +37,9 @@
 <Title />
 <Intro />
 <NetworkScroll />
-<ActivationFunctions />
-<!-- <BackPropagation /> -->
+<!-- <ActivationFunctions /> -->
 <BackProp />
 <VizNet />
 <OtherArchitectures />
 <Resources />
+<OtherArticles />

@@ -6,7 +6,7 @@
   import Tanh from "./Activations/Tanh.svelte";
 </script>
 
-<table>
+<table class="table-container">
   <tr>
     <th class="table-head">Name</th>
     <th class="table-head">Plot</th>
@@ -49,7 +49,7 @@
         false
       )}</td
     >
-    <td>Anything less than 0 results in 0 activation.</td>
+    <td>Only keep positive values.</td>
   </tr>
 
   <tr />
@@ -87,19 +87,23 @@
     border: none;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 950px) {
     .table-container {
       max-width: 100%;
     }
 
     table {
-      font-size: 0.875em;
+      font-size: 0.55em;
       max-width: 100%;
+    }
+
+    .table-head {
+      font-size: 0.65em;
     }
 
     td,
     th {
-      padding: 2px;
+      padding: 4px;
     }
   }
 </style>

@@ -42,8 +42,8 @@
 
   // let nodeWidth = 12 * 1.33 * 4.5;
   // let nodeHeight = 12 * 3;
-  let nodeWidth = $mobile ? 38 : 72;
-  let nodeHeight = $mobile ? 20 : 36;
+  $: nodeWidth = $mobile ? 38 : 72;
+  $: nodeHeight = $mobile ? 20 : 36;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])

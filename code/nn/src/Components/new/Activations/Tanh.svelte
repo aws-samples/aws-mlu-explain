@@ -2,6 +2,7 @@
   import { draw } from "svelte/transition";
   import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
+  import { mobile } from "../../../store";
 
   // props
   export let show = true;
@@ -39,9 +40,9 @@
     { x: 4.0, y: 0.999 },
   ];
 
-  let width = 70;
-  let height = width;
-  const padding = 10;
+  $: width = $mobile ? 50 : 70;
+  $: height = width;
+  $: padding = $mobile ? 5 : 10;
 
   const xDomain = [-4, 4];
   const yDomain = [-1, 1];

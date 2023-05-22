@@ -228,14 +228,26 @@
   <h3 class="body-header">See for yourself</h3>
   <hr />
   <p class="body-text">
-    Thanks for reading! We hope that the article is insightful no matter where
-    you are along your machine learning journey, and that you came away with a
-    better understanding of K-Fold Cross-Validation in the context of machine
-    learning.
+    As they say, talk is cheap! So let's train our own Neural Network.
     <br /><br />
-    Thanks for reading! We hope that the article is insightful no matter where you
-    are along your machine learning journey, and that you came away with a better
-    understanding of K-Fold Cross-Validation in the context of machine learning.
+    Below we show the architecture for a fully-interactive feed-forward Neural Network.
+    By selecting the <span class="box">+</span> and
+    <span class="box">-</span>
+    buttons, you can make the network wider, deeper, or both. On the righthand side,
+    you can select from three unique classification datasets for the network to try
+    and classify. The network's accuracy at each epoch is shown below the network's
+    predictions; hopefully the accuracy goes up each time you train!
+    <br /><br />
+    To train the model, we use batch gradient descent: every item in our data is
+    run via a forward pass through the data, the error is calculated, and the weights
+    are then adjusted. This occurs everytime you click
+    <span class="bold">Run 1 Epoch</span>. This forward pass is shown via the
+    green circle: . The backpropagation gradients for each weight are sized by
+    magnitude, and shown via the red circle: .
+    <br /><br />
+    Even for simple classification problems like these, neural networks can be hard
+    to train! If you're network accuracy doesn't improve after a few epochs, try
+    reinitializing the weights, or changing the network's architecture.
   </p>
   <br /><br />
   <section>
@@ -303,17 +315,26 @@
     </div>
   </section>
   <p class="body-text">
-    In the case of these specific problems, you may find that wider networks
-    (networks with more neurons in each layer) perform better than deeper ones
-    (networks with more hidden layers). This is because wider networks can
-    create more complex decision boundaries, which can better capture the
-    intricate patterns in the spiral and moon datasets.
+    How did you do? For these specific problems, you may have found that wider
+    networks (networks with more neurons in each layer) perform better than
+    deeper ones (networks with more hidden layers). This is because wider
+    networks can create more complex decision boundaries, which can better
+    capture the intricate patterns in the spiral and moon datasets.
   </p>
   <br />
   <p class="body-text">
-    Notice how to this point, we've describe a specific neural network
-    architecture where values flow forward linearly through a network, and
-    gradients flow linearly backwards through a network. These a
+    You may also have noticed that the neural network doesn't always, well, <i
+      >learn</i
+    >. This may be occuring for a number of reasons, including inadequate weight
+    initialization, a suboptimal learning rate, or even an insufficient number
+    of training epochs. In some cases, the network architecture itself might not
+    be suitable for the complexity of the data at hand. Overcoming these issues
+    may involve fine-tuning these parameters, trying different weight
+    initialization strategies, or experimenting with more complex network
+    architectures.
+    <br /><br />
+    In any case, the key takeaway here is simple:
+    <span class="bold">training neural networks isn't easy!</span>
   </p>
 </div>
 
@@ -328,7 +349,7 @@
     grid-template-columns: 100%;
     grid-template-rows: 8% 80% 8%;
     row-gap: 5px;
-    outline: 2px solid hotpink;
+    /* outline: 2px solid hotpink; */
   }
   #animation-duration-input {
     display: flex;
@@ -344,14 +365,14 @@
     height: var(--viz-height);
     max-height: var(--max-viz-height);
     grid-template-columns: 70% 30%;
-    outline: 2px solid red;
+    /* outline: 2px solid red; */
   }
   .network-plot {
     width: 100%;
     height: var(--viz-height);
     max-height: var(--max-viz-height);
     margin: auto;
-    outline: 2px solid green;
+    /* outline: 2px solid green; */
   }
   #eval-container {
     display: grid;
@@ -360,19 +381,20 @@
     grid-gap: 0%;
     max-height: var(--max-viz-height);
     width: 100%;
-    outline: 2px solid teal;
+    /* outline: 2px solid teal; */
   }
 
   #scatter-plot,
   #error-plot {
     height: 100%;
-    outline: 2px solid orange;
+    /* outline: 2px solid orange; */
   }
 
   button {
     opacity: 1;
     pointer-events: auto;
     border: 1px solid var(--darksquidink);
+    background-color: var(--white);
   }
 
   button[disabled] {
@@ -388,13 +410,14 @@
     padding-top: 5px;
     font-size: var(--size-default);
     font-weight: bold;
-    outline: 2px solid purple;
+    /* outline: 2px solid purple; */
   }
   #play-button {
     margin-right: auto;
     display: flex;
   }
   #play-button button {
+    background-color: var(--white);
     border-radius: 0;
     padding: 8px 24px;
     font-size: var(--size-default);
@@ -406,9 +429,6 @@
     color: var(--bg);
   }
 
-  p {
-    font-weight: bold;
-  }
   section {
     max-width: 1200px;
     margin: auto;
@@ -422,7 +442,7 @@
     text-transform: uppercase;
     font-weight: bold;
     justify-content: center;
-    outline: 2px solid blue;
+    /* outline: 2px solid blue; */
   }
   input {
     margin: auto;

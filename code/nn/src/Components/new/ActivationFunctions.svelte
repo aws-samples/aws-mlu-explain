@@ -25,6 +25,9 @@
       >Simply put, an activation function decides how much signal to pass onto
       the next layer based on the input it receives.</span
     >
+    This idea of chaining many weighted signals together is what allows neural networks
+    to learn very complex relationships. [in fact, the univeral theorem says they
+    can learn basially anything!]
     <br /><br />
     The non-linear nature of these functions is essential for neural networks to
     learn from complex data. If we only used linear activation functions, no matter
@@ -71,5 +74,11 @@
   section {
     max-width: 80%;
     margin: auto;
+  }
+
+  @media screen and (max-width: 950px) {
+    section {
+      max-width: 98%;
+    }
   }
 </style>

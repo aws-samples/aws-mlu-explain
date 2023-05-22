@@ -93,13 +93,10 @@ body {
   max-width: var(--max-width);
   margin: auto;
   text-align: left;
-  font-size: var(--size-default);
+  font-size: 20px;
   line-height: 1.5em;
   font-family: var(--font-heavy);
-  /* font-weight: 100; */
   text-transform: uppercase;
-  /* padding-top: 2rem;
-  padding-bottom: 0.5rem; */
   text-decoration-color: var(--smile);
 }
 
@@ -226,7 +223,7 @@ hr {
 
   hr {
     margin: 5px auto;
-    width: 80%;
+    width: 90%;
     border: 1px solid var(--squidink);
     opacity: 0.6;
   }

@@ -1,52 +1,24 @@
 <script>
-  import { onMount } from "svelte";
-  import { scaleLinear } from "d3-scale";
   import { max } from "d3-array";
-  import { scatterData } from "../../datasets";
   import Scatterplot from "./Scatterplot.svelte";
-  import {
-    drawActivation,
-    labels,
-    marginScroll,
-    network,
-    numLayers,
-    showLayerLine,
-    showSubScript,
-    stepIndex,
-    show,
-  } from "../../store";
-  import { line } from "d3-shape";
-  import { fade, fly, draw } from "svelte/transition";
+  import { labels, network, numLayers, stepIndex } from "../../store";
+  import { fade, fly } from "svelte/transition";
   import { positionElements } from "../../utils";
 
   $: maxNumNeurons = max($network) + 1;
-
-  export let height;
-  export let width;
-  // init to false so don't show drawing during rendering
-  $: visible = false;
 
   let nodeWidth = 12 * 1.33 * 4.5;
   let nodeHeight = 12 * 3;
   let rectDim = 160;
 
-  $: xScale = scaleLinear()
-    .domain([-1, $numLayers])
-    .range([$marginScroll.left, width - $marginScroll.right]);
-  $: yScale = scaleLinear()
-    .domain([-1, maxNumNeurons])
-    .range([height - $marginScroll.bottom, $marginScroll.top]);
-
   $: scatterCondition = ![0, 1].includes($stepIndex);
   $: manyNodesCondition = [6, 7, 8].includes($stepIndex);
-  $: console.log("stepindex,condition", $stepIndex, scatterCondition);
 
   $: scatterWidth = scatterCondition
     ? manyNodesCondition
       ? rectDim * 0.88
       : rectDim
     : nodeWidth;
-  $: yVals = positionElements(3, maxNumNeurons);
 
   $: scatterHeight = scatterCondition
     ? manyNodesCondition
@@ -54,7 +26,7 @@
       : rectDim
     : nodeHeight;
 
-  $: backgroundColor = scatterCondition ? "#f1f3f3" : "#ffe135";
+  $: backgroundColor = scatterCondition ? "white" : "#ffe135";
   $: textYOffset = scatterCondition ? scatterHeight / 2 + 10 : 0;
 </script>
 
@@ -95,11 +67,12 @@
   }
 
   .nn-text {
-    font-size: 0.8rem;
-    transition: 0.45s ease;
-  }
-
-  .active {
-    fill-opacity: 0;
+    font-size: 12px;
+    transition: all 0.45s;
+    stroke-linejoin: round;
+    paint-order: stroke fill;
+    stroke-width: 4px;
+    stroke: var(--bg);
+    letter-spacing: 1px;
   }
 </style>
