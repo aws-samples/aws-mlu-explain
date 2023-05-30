@@ -17,13 +17,15 @@
   import { instantiateWeights } from "./weights";
 
   $: maxEdgeSize = $mobile ? 10 : 15;
+  $: minCircleRadius = $mobile ? 5 : 15;
+  $: maxCircleRadius = $mobile ? 15 : 25;
 
   $: weightEdgeScale = scaleLinear()
     .domain([-1, 0, 1])
     .range([maxEdgeSize, 0.2, maxEdgeSize]);
   $: gradEdgeScale = scaleLinear()
     .domain(extent($networkInteractiveWeights, (d) => d.grad))
-    .range([15, 25]);
+    .range([minCircleRadius, maxCircleRadius]);
 
   const wFormat = format("0.3f");
   function positionElements(numElements, maxNumNeurons) {
@@ -59,25 +61,26 @@
 
   // these don't matter, but make the stretching less obvious at load
   $: maxNumNeurons = max($networkInteractive) - 1;
-  $: console.log("max", maxNumNeurons);
 
-  let height;
-  let width;
+  $: height = 500;
+  $: width = 500;
   // init to false so don't show drawing during rendering
   $: visible = true;
 
-  //   let nodeWidth = 76;
-  //   let nodeHeight = 40;
-
-  // let nodeWidth = 12 * 1.33 * 4.5;
-  // let nodeHeight = 12 * 3;
-
-  $: nodeWidth = $mobile ? 38 : 72;
+  $: nodeWidth = $mobile ? 34 : 72;
   $: nodeHeight = $mobile ? 20 : 36;
+  $: wideNodeOffset = $mobile ? 12 : 0;
 
-  $: xScale = scaleLinear()
-    .domain([-1, $numLayersInteractive])
-    .range([marginScroll.left, width - marginScroll.right]);
+  $: xScale = !$mobile
+    ? scaleLinear()
+        .domain([-1, $numLayersInteractive])
+        .range([marginScroll.left, width - marginScroll.right])
+    : scaleLinear()
+        .domain([0, $numLayersInteractive])
+        .range([
+          marginScroll.left + nodeWidth / 2 + 4,
+          width - marginScroll.right,
+        ]);
   $: yScale = scaleLinear()
     .domain([-1, maxNumNeurons])
     .range([height - marginScroll.bottom, marginScroll.top]);
@@ -178,37 +181,12 @@
               <!-- forward-pass -->
               {#each $points as p}
                 <g transform={`translate(0, 0)`}>
-                  <circle
-                    opacity="0"
-                    id={`circle${i}${p}`}
-                    class="moving-circle"
-                  >
-                    <set
-                      attributeName="opacity"
-                      to="1"
-                      begin={`animatePath${i}${p}.begin`}
-                    />
-                    <set
-                      attributeName="opacity"
-                      to="0"
-                      begin={`animatePath${i}${p}.end`}
-                    />
-                  </circle>
                   <text
-                    opacity="0"
+                    opacity="1"
                     class="moving-text"
                     alignment-baseline="middle"
                   >
-                    <set
-                      attributeName="opacity"
-                      to="1"
-                      begin={`animatePath${i}${p}.begin`}
-                    />
-                    <set
-                      attributeName="opacity"
-                      to="0"
-                      begin={`animatePath${i}${p}.end`}
-                    />
+                    ⬤
                   </text>
                   <animateMotion
                     id={`animatePath${i}${p}`}
@@ -327,7 +305,12 @@
                 yScale(maxNumNeurons) - nodeHeight / 2
               })`}
             >
-              <foreignObject x={0} y={nodeHeight} width={nodeWidth} height="40">
+              <foreignObject
+                x={0}
+                y={nodeHeight}
+                width={$mobile ? nodeWidth + 2 : nodeWidth}
+                height="30"
+              >
                 <div
                   xmlns="http://www.w3.org/1999/xhtml"
                   class="button-container"
@@ -358,7 +341,7 @@
             out:fade|local={{ duration: 300 }}
             class="nn-node output"
             width={labels[$numLayersInteractive - 1] == "sigmoid"
-              ? nodeWidth + 4
+              ? nodeWidth + wideNodeOffset
               : nodeWidth}
             height={nodeHeight}
           />
@@ -368,43 +351,27 @@
             class="nn-text"
             text-anchor="middle"
             alignment-baseline="middle"
-            dx={nodeWidth / 2}
+            dx={labels[$numLayersInteractive - 1] == "sigmoid"
+              ? (nodeWidth + wideNodeOffset) / 2
+              : nodeWidth / 2}
             dy={nodeHeight / 2}
             >{labels[$numLayersInteractive - 1]}
           </text>
         </g>
       {/each}
 
-      <!-- cover up text in non chrome browsers -->
-      <!-- <rect
-        stroke="black"
-        stroke-width="2"
-        fill="white"
-        x="1"
-        y="1"
-        width="170"
-        height="60"
+      <rect
+        fill={$mobile ? "#e5f7ff" : "#f3fbff"}
+        x="0"
+        y="0"
+        width="30"
+        height="30"
       />
-      <circle cx="15" cy="17" r="10" fill="green" />
-      <text class="legend-text" alignment-baseline="middle" x="30" y="17"
-        >Forward Epoch</text
-      >
-      <circle cx="15" cy="42" r="10" fill="red" />
-      <text class="legend-text" alignment-baseline="middle" x="30" y="42"
-        >Backward Gradient</text
-      > -->
-      <rect fill="#f3fbff" x="0" y="0" width="20" height="20" />
     {/if}
   </svg>
 </div>
 
 <style>
-  .legend-text {
-    font-size: 10px;
-    font-family: var(--font-main);
-    letter-spacing: 2px;
-    fill: var(--darksquidink);
-  }
   .button-container {
     display: flex;
     justify-content: space-between;
@@ -437,29 +404,18 @@
   .moving-text {
     font-size: 21px;
     /* font-weight: bold; */
-    color: black;
+    color: var(--darksquidink);
     text-anchor: middle;
     paint-order: stroke fill;
     stroke: white;
     stroke-width: 4;
     text-anchor: middle;
-    font-family: Arial;
-  }
-  .moving-circle {
-    stroke: black;
-    stroke-width: 4;
-    fill: rgba(138, 255, 80, 0.5);
-    transition: r 1s;
-    r: 15;
-    /* stroke: var(--squidink);
-    stroke-width: 2;
-    fill: var(--paper);
-    r: 10; */
+    font-family: var(--font-main);
   }
 
   .moving-circle-back {
-    stroke: black;
-    stroke-width: 4;
+    stroke: var(--squidink);
+    stroke-width: 1;
     fill: rgba(255, 80, 83, 0.5);
   }
 
@@ -483,13 +439,8 @@
   }
   .nn-edge-int {
     stroke: var(--darksquidink);
-    /* stroke-dasharray: 5; */
     opacity: 0.95;
     transition: all 0.45s;
-  }
-
-  .animate-dash {
-    /* animation: dash 30s infinite linear; */
   }
 
   @keyframes dash {
@@ -521,5 +472,37 @@
     width: 100%;
     max-height: 100%;
     height: 100%;
+  }
+
+  @media only screen and (max-width: 950px) {
+    .moving-text {
+      font-size: 8px;
+      color: var(--darksquidink);
+      stroke: white;
+      stroke-width: 2px;
+      font-family: var(--font-main);
+    }
+
+    .weight-text-int {
+      font-size: 8px;
+      stroke-width: 2px;
+    }
+
+    .nn-text {
+      font-size: 8px;
+      transition: all 0.45s;
+      stroke-linejoin: round;
+      paint-order: stroke fill;
+      stroke-width: 0px;
+      stroke: var(--bg);
+      letter-spacing: 1px;
+    }
+
+    .button-plus,
+    .button-minus {
+      padding: 3px 6px;
+      font-size: 8px;
+      cursor: pointer;
+    }
   }
 </style>

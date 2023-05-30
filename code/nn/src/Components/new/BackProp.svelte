@@ -137,7 +137,14 @@
       setTimeout(() => {
         $fillRule = 3;
         $strokeRule = 3;
-        updateMetrics();
+        //     $bpIntercept += 0.1;
+        // $bpSlope += -0.3;
+        $bpSlope = -0.3;
+        $bpIntercept = 0.56;
+        $strokeRule += 1;
+        $fillRule += 1;
+        updateWeights();
+        // updateMetrics();
       }, 6 * animationDuration);
     } else {
       return;
@@ -174,7 +181,21 @@
   function restartAnimation3() {
     $bpSlope = 0;
     $bpIntercept = 0.55;
+    $strokeRule += 1;
+    $fillRule += 1;
+    updateWeights();
     animation3();
+  }
+
+  function restartAnimation4() {
+    $bpSlope = -0.3;
+    $bpIntercept = 0.56;
+
+    $strokeRule += 1;
+    $fillRule += 1;
+    updateWeights();
+    animation4();
+    setTimeout(animation4, animationDuration * 2.2);
   }
 
   function updateWeights() {
@@ -241,9 +262,9 @@
       >The goal of backpropagation is to update the weights so that the Neural
       Network makes better predictions.</span
     >
-    Specifically, it calculates the gradient of the loss function with respect to
-    the weights of the network, updating the weights to minimize the network's prediction
-    error.
+    Specifically, backpropagation will calculate the gradient of the loss function
+    with respect to the weights of the network, updating the weights layer-by-layer
+    to minimize the network's prediction error.
     <br /><br />
     To make the process as clear as possible, let's visualize it step-by-step.
     <br /><br />
@@ -351,7 +372,7 @@
               </p>
               <br />
               <button class="step-button" on:click={() => restartAnimation3()}
-                >Restart</button
+                >Replay Animation</button
               >
             </div>
           </div>
@@ -376,12 +397,9 @@
                 circles.
               </p>
               <br />
-              <button class="step-button" on:click={() => restartAnimation3()}
-                >Restart</button
+              <button class="step-button" on:click={() => restartAnimation4()}
+                >Replay Animation</button
               >
-              <!-- <button class="step-button" on:click={() => animation3()}
-              >Run Backprop</button
-            > -->
             </div>
           </div>
         </div>
@@ -433,9 +451,6 @@
     border: 1px solid var(--bg);
   }
 
-  div#container {
-    /* background-color: var(--darksquidink); */
-  }
   section {
     padding-bottom: 5rem;
     /* background-color: var(--darksquidink); */
@@ -529,7 +544,8 @@
     .scrolly-container-backprop {
       display: block;
       top: 30%;
-      width: 95%;
+      width: 99%;
+      padding-left: 0;
     }
 
     .charts-container-backprop {
@@ -539,22 +555,34 @@
       height: 50vh;
       margin-right: 0;
     }
+
     .step-bp {
-      height: 130vh;
+      height: 120vh;
+      padding: 0;
+      padding-right: 0;
+      margin-bottom: 50vh;
     }
+
     .step-content-bp {
       text-align: left;
       font-size: var(--size-default);
       font-family: var(--font-light);
-      padding-left: 1.5rem;
       background-color: #161e2ddc;
-      padding: 20px;
-      line-height: 1.3;
-      border: 5px solid white;
+      padding-left: 0;
+      padding: 10px;
+      line-height: 1.1;
+      border: 3px solid white;
     }
 
     .steps-container-backprop {
       pointer-events: none;
+    }
+    .charts-container-backprop {
+      top: 25%;
+      width: 100%;
+      height: 45vh;
+      margin-right: 0%;
+      flex: 0 0 100%;
     }
   }
 </style>

@@ -2,7 +2,7 @@
   import { scaleLinear } from "d3-scale";
   import { max } from "d3-array";
   import BackpropScattter from "./BackpropScatter.svelte";
-  import { marginScroll, network, numLayers, stepIndex } from "../../store";
+  import { marginScroll, network, numLayers, mobile } from "../../store";
   import { positionElements } from "../../utils";
 
   $: maxNumNeurons = max($network) + 1;
@@ -11,7 +11,7 @@
   export let width;
   // init to false so don't show drawing during rendering
 
-  const rectDim = 160;
+  $: rectDim = $mobile ? 100 : 160;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])

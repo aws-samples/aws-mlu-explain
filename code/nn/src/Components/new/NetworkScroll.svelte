@@ -8,11 +8,14 @@
     labels,
     showSubScript,
     stepIndex,
+    hideWeights,
   } from "../../store";
   import katexify from "../../katexify";
 
   $stepIndex = 0;
   $network = [2, 1, 1];
+
+  // $: console.log("stepIndex", $stepIndex);
 
   const target2event = {
     0: () => {
@@ -22,6 +25,7 @@
       $stepIndex = 0;
       $showSubScript = false;
       $drawActivation = false;
+      $hideWeights = 2;
     },
     1: () => {
       $showLayerLine = false;
@@ -30,6 +34,7 @@
       $showSubScript = true;
       $drawActivation = false;
       $stepIndex = 1;
+      $hideWeights = 2;
     },
     2: () => {
       $stepIndex = 2;
@@ -37,6 +42,7 @@
       $labels = ["X", "linear", "y"];
       $network = [2, 1, 1];
       $drawActivation = false;
+      $hideWeights = 2;
     },
     3: () => {
       $stepIndex = 3;
@@ -44,6 +50,7 @@
       $showLayerLine = false;
       $network = [2, 1, 1];
       $drawActivation = false;
+      $hideWeights = 2;
     },
     4: () => {
       $stepIndex = 4;
@@ -51,6 +58,7 @@
       $drawActivation = false;
       $labels = ["input", "step", "y"];
       $network = [2, 1, 1];
+      $hideWeights = 2;
     },
     5: () => {
       $stepIndex = 5;
@@ -58,6 +66,7 @@
       $drawActivation = true;
       $labels = ["input", "step", "y"];
       $network = [2, 1, 1];
+      $hideWeights = 2;
     },
     6: () => {
       $stepIndex = 6;
@@ -65,6 +74,7 @@
       $labels = ["input", "step", "step", "y"];
       $network = [2, 1, 1, 1];
       $drawActivation = false;
+      $hideWeights = 3;
     },
     7: () => {
       $stepIndex = 7;
@@ -72,6 +82,7 @@
       $labels = ["input", "step", "step", "y"];
       $network = [2, 1, 1, 1];
       $drawActivation = false;
+      $hideWeights = 3;
     },
     8: () => {
       $stepIndex = 8;
@@ -79,6 +90,7 @@
       $labels = ["input", "reLu", "sigmoid", "y"];
       $network = [2, 3, 2, 1];
       $drawActivation = false;
+      $hideWeights = 12;
     },
   };
 
@@ -197,14 +209,14 @@
           <hr />
           <br />
           <p>
-            What if change our problem to classification, and want to change our
-            model from linear regression to <a
+            What if our problem changes, and want to switch our model from
+            linear regression to <a
               href="https://mlu-explain.github.io/logistic-regression/"
               >logistic regression</a
             >?
             <br /><br />
-            To do so, we just need to update the function in our computational graph,
-            changing the linear function to a sigmoid function:
+            We can just add another input,and update the function in our computational
+            graph, changing the linear function to a sigmoid function:
             {@html katexify(sigmoid, true)}
             Now, we can see the model output (the decision region background) reflect
             our new classification problem and dataset.
@@ -399,7 +411,60 @@
     .scrolly-container {
       display: block;
       top: 30%;
+      width: 99%;
+      padding-left: 0;
+    }
+
+    .step {
+      height: 120vh;
+      padding: 0;
+      padding-right: 0;
+      margin-bottom: 50vh;
+    }
+
+    .step-content {
+      text-align: left;
+      font-size: var(--size-default);
+      font-family: var(--font-light);
+      padding-left: 0;
+      background-color: rgba(255, 255, 255, 0.93);
+      border: 3px solid var(--squidink);
+      padding: 10px;
+      line-height: 1.1;
+    }
+    .steps-container {
+      pointer-events: none;
+    }
+    .charts-container {
+      top: 25%;
+      width: 100%;
+      height: 45vh;
+      margin-right: 0%;
+      flex: 0 0 100%;
+    }
+  }
+  /* 
+  @media screen and (max-width: 950px) {
+    .scrolly-container {
+      display: block;
+      flex-direction: column-reverse;
+      top: 30%;
+      width: 99%;
+      padding-left: 0;
+    }
+
+    .steps-container {
+      pointer-events: none;
+    }
+
+    .charts-container {
+      top: 20.5%;
       width: 95%;
+      margin: auto;
+      top: 25%;
+      width: 100%;
+      height: 45vh;
+      margin-right: 0%;
     }
 
     .step {
@@ -407,17 +472,18 @@
     }
 
     .step-content {
-      text-align: left;
-      font-size: var(--size-default);
-      font-family: var(--font-light);
-      padding-left: 1.5rem;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 5px solid var(--squidink);
-      padding: 20px;
+      width: 95%;
+      max-width: 768px;
+      font-size: 15px;
       line-height: 1.3;
+      background: rgba(241, 243, 243, 0.913);
     }
-    .steps-container {
-      pointer-events: none;
+    .charts-container {
+      top: 25%;
+      width: 100%;
+      height: 45vh;
+      margin-right: 0%;
+      flex: 0 0 100%;
     }
-  }
+  } */
 </style>

@@ -1,8 +1,5 @@
 <script>
-  import Rnn from "./Architectures/RNN.svelte";
-  import Cnn from "./Architectures/CNN.svelte";
-  import Gan from "./Architectures/GAN.svelte";
-  import Transformer from "./Architectures/Transformer.svelte";
+  import { tooltip } from "../../tooltip";
 </script>
 
 <section>
@@ -13,10 +10,25 @@
     where values flow forward linearly through a network, and gradients flow
     linearly backwards through a network. These are often referred to as
     <span class="bold">feed forward neural networks</span>, or
-    <span class="bold">artificial neural networks</span> (the word 'artificial' comes
-    from the network's composition of artificial neurons). (As mentioned previously,
-    these are also sometimes referred to as Multilayer Perceptrons, because of their
-    original compoistion of Perceptrons)
+    <span class="bold">artificial neural networks</span> (ANN's
+    <sup
+      ><span
+        class="info-tooltip"
+        title="The word 'artificial' comes
+      from the network's composition of artificial neurons."
+        use:tooltip
+        >[&#8505;]
+      </span></sup
+    >). You may even see them referred to as Multilayer Perceptrons, a callback
+    to the early Neural Network compositions of Perceptrons
+    <sup
+      ><span
+        class="info-tooltip"
+        title="Indeed, this notion of a network of step-functions 'firing' or not is deeply inspired by the workings of biological neurons in the human brain, thus giving rise to the brain-like analogy often used to describe neural networks."
+        use:tooltip
+        >[&#8505;]
+      </span></sup
+    >.
   </p>
   <br />
   <p class="body-text">
@@ -24,9 +36,9 @@
     neural networks. While feed forward neural networks have been incredibly
     successful in a wide range of applications, many other types of neural
     network architectures exist that can be used to solve different types of
-    problems. To get you started on your journey into the world ofneural
-    network's [and up your buzzword game ;)], below we list and briefly explain
-    a few of the most popular.
+    problems. To get you started on your journey into the world of neural
+    network's, and to up your buzzword game in today's world of AI obsession,
+    the most popular architectures are listed and briefly explained below.
   </p>
   <br />
   <div>
@@ -72,7 +84,6 @@
     </p>
   </div>
   <br />
-  <!-- <hr class="splitter" /> -->
   <div>
     <p class="body-text">
       <span class="bold">Graph Neural Networks:</span>
@@ -85,7 +96,6 @@
     </p>
   </div>
   <br />
-  <!-- <hr class="splitter" /> -->
   <div>
     <p class="body-text">
       <span class="bold">Transformer Architectures:</span>
@@ -102,16 +112,7 @@
     </p>
   </div>
   <br />
-  <!-- <hr class="splitter" /> -->
 
-  <!-- <Cnn />
-  <hr class="splitter" />
-  <Rnn />
-  <hr class="splitter" />
-  <Gan />
-  <hr class="splitter" />
-  <Transformer /> -->
-  <!-- <hr class="splitter" /> -->
   <p class="body-text">
     This is not an exhaustive list of network architectures. Rather, these are
     high-level architectures with many variants - more are developed every day!
@@ -125,9 +126,5 @@
     padding-top: 5rem;
     max-width: var(--max-width);
     margin: auto;
-  }
-  .splitter {
-    margin: 2% auto;
-    width: 10%;
   }
 </style>

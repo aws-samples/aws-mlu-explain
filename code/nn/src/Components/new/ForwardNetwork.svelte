@@ -12,38 +12,29 @@
     showSubScript,
     stepIndex,
     mobile,
+    hideWeights,
   } from "../../store";
-  import { line } from "d3-shape";
   import { fade, fly, draw } from "svelte/transition";
-  import { drawPath } from "../../animations";
   import OutputNeuron from "./OutputNeuron.svelte";
   import { positionElements } from "../../utils";
-  import { logistic, perceptron } from "../../outputModelWeights";
+  import ReLu from "./Activations/ReLu.svelte";
+  import NetworkRelu from "./NetworkRelu.svelte";
 
   onMount(() => {
     // render elements after drawn to canvas
     visible = true;
   });
 
-  // these don't matter, but make the stretching less obvious at load
-  //   export let network = [2, 5, 2];
-  //   $: numLayers = $numLayers;
   $: maxNumNeurons = max($network) + 1;
 
-  $: console.log("index", $stepIndex);
-
-  let height;
-  let width;
+  let height = 500;
+  let width = 500;
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  // let nodeWidth = 12 * 1.33 * 4;
-  // let nodeHeight = 12 * 2;
-
-  // let nodeWidth = 12 * 1.33 * 4.5;
-  // let nodeHeight = 12 * 3;
-  $: nodeWidth = $mobile ? 38 : 72;
-  $: nodeHeight = $mobile ? 20 : 36;
+  $: nodeWidth = $mobile ? 42 : 72;
+  $: nodeHeight = $mobile ? 26 : 36;
+  $: wideNodeOffset = $mobile ? 12 : 0;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayers])
@@ -53,57 +44,15 @@
     .domain([-1, maxNumNeurons])
     .range([height - $marginScroll.bottom, $marginScroll.top]);
 
-  $: pathLine = line()
-    .x((d) => xScale(d.x))
-    .y((d) => yScale(d.y))
-    .curve();
-
   let activationOffset = 50;
 
-  let animationBegin = false;
-  $: layerValue = 4;
-
-  $: nnWeights = [
-    [1, 0.2, 1, 1, 1], // layer 1
-    [1, 0.2, 1, 1, 1], // layer 1
-    [0.4, 1, 1, 1, 1], // layer 1
-    [1, 1, 1, 1, 1], // layer 1
-    [1, 1, 1, 1, 1], // layer 1
-    [1, 1, 1, 1, 1], // layer 1
-    [1, 1, 1, 1, 1], // layer 1
-  ];
-
-  let input1 = 2;
-  let input2 = 4;
-  let inputs = [2, 4];
-  let weights = [10, 10];
-  inputs.reverse();
-
-  // define model
-  let currentModel = perceptron;
-
-  function updateNeuron(layer, yPosition) {
-    // return `${layer}\n${yPosition}`;
-    if (layer === 1) {
-      return inputs[yPosition];
+  function getIndex(layer, prev, curr, networkInteractive) {
+    let index = 0;
+    for (let k = 0; k < layer - 1; k++) {
+      index += networkInteractive[k] * networkInteractive[k + 1];
     }
-    if (layer === 2) {
-      let weightedSum = 0;
-      for (let i = 0; i < inputs.length; i++) {
-        const product = inputs[i] * weights[i];
-        weightedSum += product;
-      }
-      return weightedSum;
-    }
-    if (layer === 3) {
-      return currentModel(inputs[0], inputs[1]);
-    }
-    return nnWeights[layer][yPosition];
-    // if layer == 1
-
-    // if .layer == 2
-    // ...
-    // layer is
+    index += prev * networkInteractive[layer] + curr;
+    return index;
   }
 </script>
 
@@ -112,9 +61,11 @@
     {#if visible}
       <!-- edges -->
       {#each Array($numLayers).fill(null) as i, layer}
-        {#each positionElements($network[layer], maxNumNeurons) as yPosition}
+        {#each positionElements($network[layer], maxNumNeurons) as yPosition, y}
           {#if layer > 0}
             {#each positionElements($network[layer - 1], maxNumNeurons) as prevYPosition, j}
+              {@const index = getIndex(layer, j, y, $network)}
+
               <path
                 in:draw|local={{ duration: 500 }}
                 out:draw|local={{ duration: 400 }}
@@ -140,28 +91,19 @@
                       startOffset="50%"
                       text-anchor="middle"
                       fill="#232F3E"
-                      dominant-baseline="middle">w</textPath
+                      dominant-baseline="middle"
+                      >{index < $hideWeights ? "w" : ""}</textPath
                     >
                   </text>
                 {/key}
               {/if}
               <g>
-                <!-- {#if animationBegin} -->
-                <!-- <circle class="moving-circle-forward" opacity="0">
-                  <set attributeName="opacity" to="1" begin="{layer}s" />
-                  <set attributeName="opacity" to="0" begin="{0}s" />
-                </circle> -->
-                <!-- {#if $stepIndex >= 1} -->
                 <text
                   class="moving-text-forward"
                   opacity="1"
                   alignment-baseline="middle"
                   >⬤
-                  <!-- <set attributeName="opacity" to="1" begin="{layer}s" />
-                  <set attributeName="opacity" to="0" begin="{0}s" /></text
-                > -->
-                  <!-- {/if} -->
-                  <!-- {/if} -->
+
                   <animateMotion
                     id={`animatePathForward${layer}`}
                     begin="{layer}s"
@@ -190,6 +132,7 @@
             })`}
           >
             {#if layer !== $numLayers - 1}
+              <NetworkRelu />
               <!-- {@const nodWidth =
                 $labels[layer].length == 1 ? 24 : $labels[layer].length * 11} -->
               <rect
@@ -200,7 +143,9 @@
                   : layer == $numLayers - 1
                   ? 'output'
                   : 'hidden'}"
-                width={nodeWidth}
+                width={$labels[layer].length < 6
+                  ? nodeWidth
+                  : nodeWidth + wideNodeOffset}
                 height={nodeHeight}
               />
               <text
@@ -209,13 +154,15 @@
                 class="nn-text"
                 text-anchor="middle"
                 alignment-baseline="middle"
-                dx={nodeWidth / 2}
+                dx={$labels[layer].length < 6
+                  ? nodeWidth / 2
+                  : (nodeWidth + wideNodeOffset) / 2}
                 dy={nodeHeight / 2}
                 >{$labels[layer]}
                 {#if layer === 0 && $showSubScript}
-                  <tspan class="subscript" dy="4"
+                  <!-- <tspan class="subscript" dy="4"
                     >{Math.abs(yPosition - 2.5)}</tspan
-                  >
+                  > -->
                 {/if}</text
               >
             {/if}
@@ -301,33 +248,12 @@
         </g>
       {/each}
     {/if}
-
-    <!-- animate line -->
-    <!-- cover up text in non chrome browsers -->
-    <!-- <rect
-      stroke="black"
-      class='legend-rect'
-      stroke-width="2"
-      fill="#e5f7ff"
-      x="1"
-      y="1"
-      width="120"
-      height="30"
-    />
-    <text class="legend-text" x="4" y="20">⬤: Input Data</text> -->
     <rect fill="#e5f7ff" x="0" y="0" width="15" height="15" />
-
     <!-- get path of entire network -->
   </svg>
 </div>
 
 <style>
-  .legend-text {
-    font-size: 10px;
-    font-family: var(--font-main);
-    letter-spacing: 2px;
-    fill: var(--darksquidink);
-  }
   .weight-text {
     font-size: 10px;
     color: black;
@@ -338,7 +264,6 @@
   }
   .moving-text-forward {
     font-size: 12px;
-    /* font-weight: bold; */
     color: red;
     text-anchor: middle;
     paint-order: stroke fill;
@@ -346,12 +271,6 @@
     stroke-width: 4;
     text-anchor: middle;
     font-family: var(--font-mono);
-  }
-  .moving-circle-forward {
-    stroke: var(--squidink);
-    stroke-width: 2;
-    fill: var(--paper);
-    r: 10;
   }
 
   svg {
@@ -376,7 +295,7 @@
     stroke-linejoin: round;
     paint-order: stroke fill;
     stroke-width: 4px;
-    stroke: var(--bg);
+    stroke: var(--white);
     letter-spacing: 1px;
   }
   .nn-g {
@@ -385,9 +304,7 @@
   .nn-edge {
     stroke: var(--squidink);
     stroke-width: 1.5;
-    /* stroke-dasharray: 5; */
     opacity: 0.95;
-    /* animation: dash 30s infinite linear; */
     transition: all 0.45s;
   }
   .input {
@@ -434,6 +351,15 @@
 
   /* ipad */
   @media screen and (max-width: 950px) {
+    .nn-text {
+      font-size: 10px;
+      transition: all 0.45s;
+      stroke-linejoin: round;
+      paint-order: stroke fill;
+      stroke-width: 4px;
+      stroke: var(--bg);
+      letter-spacing: 1px;
+    }
   }
   /* mobile */
   @media screen and (max-width: 750px) {

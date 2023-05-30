@@ -86,7 +86,6 @@
     const weightVals = weights.map((d) => {
       return { data: d.data, grad: d.grad };
     });
-    console.log("new model weights:\n", weightVals);
     $networkInteractiveWeights = [...weightVals];
   }
 
@@ -233,21 +232,22 @@
     Below we show the architecture for a fully-interactive feed-forward Neural Network.
     By selecting the <span class="box">+</span> and
     <span class="box">-</span>
-    buttons, you can make the network wider, deeper, or both. On the righthand side,
-    you can select from three unique classification datasets for the network to try
-    and classify. The network's accuracy at each epoch is shown below the network's
-    predictions; hopefully the accuracy goes up each time you train!
+    buttons, you can make the network wider, deeper, or both. On the right-hand side,
+    select from three unique classification datasets for the network to classify.
+    The network's accuracy at each epoch is shown below the network's predictions
+    - hopefully the accuracy goes up each time you train!
     <br /><br />
-    To train the model, we use batch gradient descent: every item in our data is
-    run via a forward pass through the data, the error is calculated, and the weights
-    are then adjusted. This occurs everytime you click
-    <span class="bold">Run 1 Epoch</span>. This forward pass is shown via the
-    green circle: . The backpropagation gradients for each weight are sized by
-    magnitude, and shown via the red circle: .
+    To train the model, we use batch gradient descent: every item in our training
+    data (the blue and pink circles) is run via a forward pass through the data (⬤),
+    the error is calculated, and the weights are then adjusted via backpropagation
+    (<span class="red">⬤</span>). This occurs everytime you click
+    <span class="bold">Run 1 Epoch</span>.
     <br /><br />
     Even for simple classification problems like these, neural networks can be hard
     to train! If you're network accuracy doesn't improve after a few epochs, try
-    reinitializing the weights, or changing the network's architecture.
+    reinitializing the weights by clicking
+    <span class="bold">Reset Weights</span>, or try changing the network's
+    architecture.
   </p>
   <br /><br />
   <section>
@@ -273,13 +273,7 @@
                 }}
                 disabled={buttonDisabled}>Run 1 Epoch</button
               >
-              <!-- <button
-                class:active={$playAnimation}
-                on:click={() => {
-                  buttonClick();
-                }}
-                disabled={buttonDisabled}>Run 10 Epochs</button
-              > -->
+
               <button
                 disabled={buttonDisabled}
                 class:active={$playAnimation}
@@ -316,10 +310,9 @@
   </section>
   <p class="body-text">
     How did you do? For these specific problems, you may have found that wider
-    networks (networks with more neurons in each layer) perform better than
-    deeper ones (networks with more hidden layers). This is because wider
-    networks can create more complex decision boundaries, which can better
-    capture the intricate patterns in the spiral and moon datasets.
+    networks perform better than deeper networks. This is because wider networks
+    can create more complex decision boundaries, which can better capture the
+    intricate patterns in the spiral and moon datasets.
   </p>
   <br />
   <p class="body-text">
@@ -328,17 +321,19 @@
     >. This may be occuring for a number of reasons, including inadequate weight
     initialization, a suboptimal learning rate, or even an insufficient number
     of training epochs. In some cases, the network architecture itself might not
-    be suitable for the complexity of the data at hand. Overcoming these issues
-    may involve fine-tuning these parameters, trying different weight
-    initialization strategies, or experimenting with more complex network
-    architectures.
+    be suitable for the complexity of the data at hand.
     <br /><br />
     In any case, the key takeaway here is simple:
-    <span class="bold">training neural networks isn't easy!</span>
+    <span class="bold">training neural networks isn't easy!</span> Even for small,
+    relatively simple datasets such as those shown here, training a neural network
+    can take some care and finesse.
   </p>
 </div>
 
 <style>
+  .red {
+    color: rgba(255, 80, 83, 0.75);
+  }
   section {
     padding-bottom: 5rem;
   }
@@ -349,7 +344,6 @@
     grid-template-columns: 100%;
     grid-template-rows: 8% 80% 8%;
     row-gap: 5px;
-    /* outline: 2px solid hotpink; */
   }
   #animation-duration-input {
     display: flex;
@@ -365,14 +359,12 @@
     height: var(--viz-height);
     max-height: var(--max-viz-height);
     grid-template-columns: 70% 30%;
-    /* outline: 2px solid red; */
   }
   .network-plot {
     width: 100%;
     height: var(--viz-height);
     max-height: var(--max-viz-height);
     margin: auto;
-    /* outline: 2px solid green; */
   }
   #eval-container {
     display: grid;
@@ -381,13 +373,11 @@
     grid-gap: 0%;
     max-height: var(--max-viz-height);
     width: 100%;
-    /* outline: 2px solid teal; */
   }
 
   #scatter-plot,
   #error-plot {
     height: 100%;
-    /* outline: 2px solid orange; */
   }
 
   button {
@@ -442,7 +432,6 @@
     text-transform: uppercase;
     font-weight: bold;
     justify-content: center;
-    /* outline: 2px solid blue; */
   }
   input {
     margin: auto;
@@ -453,6 +442,20 @@
   }
 
   @media only screen and (max-width: 950px) {
+    #play-button button {
+      font-size: 12px;
+      padding: 4px 1px;
+      margin-right: 10px;
+      opacity: 1;
+    }
+
+    #network-interactive-container {
+      display: grid;
+      height: var(--viz-height);
+      max-height: var(--max-viz-height);
+      grid-template-columns: 74% 26%;
+    }
+
     #animation-controls {
       max-width: 100%;
     }

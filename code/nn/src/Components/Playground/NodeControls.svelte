@@ -16,8 +16,8 @@
 
   $: maxNumNeurons = max($networkInteractive) + 1;
 
-  let height;
-  let width;
+  $: height = 500;
+  $: width = 500;
   // init to false so don't show drawing during rendering
 
   let nodeWidth = 65;

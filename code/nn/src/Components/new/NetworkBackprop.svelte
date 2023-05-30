@@ -18,7 +18,6 @@
   import { fade, fly, draw } from "svelte/transition";
   import BackPropOutput from "./BackPropOutput.svelte";
   import { positionElements } from "../../utils";
-  import { logistic, perceptron } from "../../outputModelWeights";
 
   onMount(() => {
     // render elements after drawn to canvas
@@ -32,11 +31,9 @@
   // init to false so don't show drawing during rendering
   $: visible = false;
 
-  // let nodeWidth = 12 * 1.33 * 4.5;
-  // let nodeHeight = 12 * 3;
-
-  $: nodeWidth = $mobile ? 36 : 72;
-  $: nodeHeight = $mobile ? 16 : 36;
+  $: nodeWidth = $mobile ? 42 : 72;
+  $: nodeHeight = $mobile ? 26 : 36;
+  $: wideNodeOffset = $mobile ? 12 : 0;
 
   $: xScale = scaleLinear()
     .domain([-1, $numLayersBp])
@@ -44,42 +41,6 @@
   $: yScale = scaleLinear()
     .domain([-1, maxNumNeurons])
     .range([height - $marginScroll.bottom, $marginScroll.top]);
-
-  $: nnWeights = [
-    [1, 0.2, 1, 1, 1], // layer 1
-    [1, 0.2, 1, 1, 1], // layer 1
-    [0.4, 1, 1, 1, 1], // layer 1
-    [1, 1, 1, 1, 1], // layer 1
-    [1, 1, 1, 1, 1], // layer 1
-    [1, 1, 1, 1, 1], // layer 1
-    [1, 1, 1, 1, 1], // layer 1
-  ];
-
-  let inputs = [2, 4];
-  let weights = [10, 10];
-  inputs.reverse();
-
-  // define model
-  let currentModel = perceptron;
-
-  function updateNeuron(layer, yPosition) {
-    // return `${layer}\n${yPosition}`;
-    if (layer === 1) {
-      return inputs[yPosition];
-    }
-    if (layer === 2) {
-      let weightedSum = 0;
-      for (let i = 0; i < inputs.length; i++) {
-        const product = inputs[i] * weights[i];
-        weightedSum += product;
-      }
-      return weightedSum;
-    }
-    if (layer === 3) {
-      return currentModel(inputs[0], inputs[1]);
-    }
-    return nnWeights[layer][yPosition];
-  }
 
   function getIndex(layer, prev, curr, networkInteractive) {
     let index = 0;
@@ -135,23 +96,14 @@
                   >
                 </text>
               {/key}
-              <!-- {/if} -->
               <!-- forward -->
               <g>
-                <!-- {#if animationBegin} -->
-
-                <!-- {#if $stepIndexBp >= 1} -->
                 <text
                   class="moving-text-bp"
                   opacity="1"
                   alignment-baseline="middle"
                   >⬤
 
-                  <!-- {/if} -->
-
-                  <!-- forward pass -->
-                  <!-- `animateMotion#animatePathForwardBp0` -->
-                  <!-- {#if $bpStage == 0} -->
                   <animateMotion
                     id={`animatePathForwardBp${i}`}
                     begin={i === 1 ? `0` : `animatePathForwardBp${i - 1}.end`}
@@ -162,16 +114,11 @@
                       L ${xScale(i)} ${yScale(yPosition)}
                     `}
                   />
-                  <!-- {/if} -->
-                  <!-- end forward pass -->
                 </text></g
               >
 
               <!-- backward -->
-              <!-- {#if $stepIndexBp == 2} -->
               <g>
-                <!-- {#if animationBegin} -->
-
                 <text
                   class="moving-text-bp"
                   opacity="1"
@@ -179,7 +126,6 @@
                   >⬤
 
                   <!-- backward pass -->
-                  <!-- {#if $bpStage == 2} -->
                   <animateMotion
                     id={`animatePathBackward${i}`}
                     begin={`animatePathBackward${i + 1}.end`}
@@ -190,11 +136,9 @@
                          L ${xScale(i - 1)} ${yScale(prevYPosition)}
                        `}
                   />
-                  <!-- {/if} -->
                   <!-- end backward pass -->
                 </text></g
               >
-              <!-- {/if} -->
             {/each}
           {/if}
         {/each}
@@ -219,7 +163,9 @@
                   : layer == $numLayersBp - 1
                   ? 'output'
                   : 'hidden'}"
-                width={nodeWidth}
+                width={$labelsBp[layer].length < 6
+                  ? nodeWidth
+                  : nodeWidth + wideNodeOffset}
                 height={nodeHeight}
               />
               <text
@@ -228,7 +174,9 @@
                 class="nn-text"
                 text-anchor="middle"
                 alignment-baseline="middle"
-                dx={nodeWidth / 2}
+                dx={$labelsBp[layer].length < 6
+                  ? nodeWidth / 2
+                  : (nodeWidth + wideNodeOffset) / 2}
                 dy={nodeHeight / 2}
                 >{$labelsBp[layer]}
                 {#if layer === 0 && $showSubScript}
@@ -255,10 +203,6 @@
       <!-- cover up text in non chrome browsers -->
       <rect fill="var(--darksquidink)" x="0" y="0" width="15" height="15" />
     {/if}
-
-    <!-- animate line -->
-
-    <!-- get path of entire networkBp -->
   </svg>
 </div>
 
@@ -281,12 +225,6 @@
     stroke-width: 4;
     text-anchor: middle;
     font-family: var(--font-mono);
-  }
-  .moving-circlebp {
-    stroke: var(--squidink);
-    stroke-width: 2;
-    fill: var(--paper);
-    r: 10;
   }
 
   svg {
@@ -313,10 +251,7 @@
   }
   .nn-edgebp {
     stroke: var(--stone);
-    /* stroke-width: 1.5; */
-    /* stroke-dasharray: 5; */
     opacity: 0.95;
-    /* animation: dash 30s infinite linear; */
     transition: all 0.45s;
   }
   .input {
@@ -338,7 +273,7 @@
     }
   }
   .nn-node {
-    stroke: var(--darksquidink);
+    stroke: var(--squidink);
     stroke-width: 2.5;
     fill-opacity: 0.95;
     transition: all 0.45s;
@@ -359,6 +294,15 @@
 
   /* ipad */
   @media screen and (max-width: 950px) {
+    .nn-text {
+      font-size: 10px;
+      transition: all 0.45s;
+      stroke-linejoin: round;
+      paint-order: stroke fill;
+      stroke-width: 4px;
+      stroke: var(--bg);
+      letter-spacing: 1px;
+    }
   }
   /* mobile */
   @media screen and (max-width: 750px) {

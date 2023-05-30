@@ -24,6 +24,7 @@ export const showLayerLine = writable(false);
 export const showSubScript = writable(false);
 export const drawActivation = writable(false);
 export const stepIndex = writable(0);
+export const hideWeights = writable(0);
 // backprop
 export const stepIndexBp = writable(0);
 export const labelsBp = writable(["X", "reLu", "sigmoid"]);

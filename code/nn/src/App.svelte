@@ -37,9 +37,9 @@
 <Title />
 <Intro />
 <NetworkScroll />
-<!-- <ActivationFunctions /> -->
+<ActivationFunctions />
 <BackProp />
 <VizNet />
 <OtherArchitectures />
 <Resources />
-<OtherArticles />
+<!-- <OtherArticles /> -->

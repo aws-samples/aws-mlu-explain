@@ -132,8 +132,9 @@ p {
 }
 
 .info-tooltip {
-  color: var(--smile);
-  font-size: 0.9rem;
+  color: var(--darksquidink);
+  font-size: 16px;
+  font-family: var(--font-light);
 }
 
 .interpretation-header {
@@ -149,7 +150,8 @@ p {
   background: var(--squidink);
   color: var(--white);
   margin: 10px 4px;
-  font-size: 14px;
+  font-size: var(--size-default);
+  font-family: var(--font-light);
 }
 
 hr {
@@ -197,7 +199,7 @@ hr {
 
   .body-header {
     max-width: 90%;
-    font-size: 30px;
+    font-size: 20px;
   }
 
   .tab-text {

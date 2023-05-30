@@ -14,7 +14,7 @@
     <th class="table-head">Description</th>
   </tr>
   <tr>
-    <td>Logistic (sigmoid)</td>
+    <td>Sigmoid (logistic)</td>
     <td><Sigmoid /></td>
     <td
       >{@html katexify(

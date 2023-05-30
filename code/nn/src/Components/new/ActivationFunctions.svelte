@@ -26,8 +26,15 @@
       the next layer based on the input it receives.</span
     >
     This idea of chaining many weighted signals together is what allows neural networks
-    to learn very complex relationships. [in fact, the univeral theorem says they
-    can learn basially anything!]
+    to learn very complex relationships.
+    <sup
+      ><span
+        class="info-tooltip"
+        title="In fact, the Universal Approximation Theorem essentially says that a properly structured and configured neural network is theoretically capable of modeling any complex relationship, but practically, it can be challenging to find the right parameters to achieve this."
+        use:tooltip
+        >[&#8505;]
+      </span></sup
+    >
     <br /><br />
     The non-linear nature of these functions is essential for neural networks to
     learn from complex data. If we only used linear activation functions, no matter
@@ -45,29 +52,32 @@
   <Table />
   <br /><br />
   <p class="body-text">
-    <span class="bold">The sigmoid function</span>, which ranges from 0 to 1, is
-    particularly useful in the output layer of binary classification models,
-    representing the probability of a binary event. However, it can suffer from
-    the vanishing gradients problem during backpropagation.
+    <span class="bold">The sigmoid</span> (or logistic) function, which ranges
+    from 0 to 1, is particularly useful in the output layer of binary
+    classification models, representing the probability of a binary event.
+    However, it can suffer from the vanishing gradients problem during
+    backpropagation.
     <br /><br />
-    <span class="bold">The hyperbolic tangent</span> or 'tanh' function, which
-    ranges from -1 to 1, providing a zero-centered output that can make learning
-    for the next layer easier. Yet, it also faces the vanishing gradients issue
-    like sigmoid.
-    <br /><br />
-    <span class="bold">The Rectified Linear Unit</span> or 'ReLU' function is a
-    popular choice in hidden layers due to its efficiency. It activates a node
+    <span class="bold">The hyperbolic tangent</span> (or 'tanh') function, which
+    ranges from -1 to 1, provides a zero-centered output designed to make
+    learning for the next layer easier. Yet, like sigmoid, it also faces the
+    vanishing gradients issue. <br /><br />
+    <span class="bold">The Rectified Linear Unit</span> (or 'ReLU') function is
+    a popular choice in hidden layers due to its efficiency. It activates a node
     if its input is positive, otherwise, it outputs zero. This simplicity
     reduces computational cost and mitigates the vanishing gradients problem,
     but it can lead to dead neurons where some neurons never activate.
     <br /><br />
-    It's crucial to remember that there's no one-size-fits-all solution when it comes
-    to choosing activation functions. The best choice often depends on the specific
-    characteristics of the problem at hand, the nature of the input and output data,
-    and the architecture of the network. Thus, understanding these functions and
-    their implications is key to building effective and efficient neural networks.
-    <br /><br />
+    Despite their simplicity, chaining these functions together in a neural network
+    can have magical results. That said, it's crucial to remember that there's no
+    one-size-fits-all solution when it comes to choosing activation functions. The
+    best choice often depends on the specific characteristics of the problem at hand,
+    the nature of the input and output data, and the architecture of the network.
+    Thus, understanding these functions and their implications is key to building
+    effective and efficient neural networks.
   </p>
+  <br /><br />
+  <br /><br />
 </section>
 
 <style>

@@ -2,10 +2,7 @@
   import { draw } from "svelte/transition";
   import { scaleLinear } from "d3-scale";
   import { line, curveBasis } from "d3-shape";
-  import { mobile } from "../../../store";
-
-  // props
-  export let show = true;
+  import { mobile } from "../../store";
 
   let data = [
     { x: -4.0, y: 0.0 },
@@ -40,8 +37,8 @@
     { x: 4.0, y: 4.0 },
   ];
 
-  $: width = $mobile ? 50 : 70;
-  $: height = width;
+  $: width = $mobile ? 42 : 72;
+  $: height = width / 1.3;
   $: padding = $mobile ? 5 : 10;
 
   const xDomain = [-4, 4];
@@ -63,30 +60,25 @@
     .curve(curveBasis);
 </script>
 
-<div id="relu-chart">
-  <svg {width} {height}>
-    {#if show}
-      <path
-        class="activation-path"
-        transition:draw={{ duration: 1000 }}
-        d={pathLine(data)}
-      />
-    {/if}
-  </svg>
-</div>
+<path
+  class="activation-path-outer"
+  transition:draw={{ duration: 1000 }}
+  d={pathLine(data)}
+/>
+<path
+  class="activation-path-inner"
+  transition:draw={{ duration: 1000 }}
+  d={pathLine(data)}
+/>
 
 <style>
-  #relu-chart {
-    margin: auto;
-    background: conic-gradient(
-        from 90deg at 1px 1px,
-        #0000 90deg,
-        rgba(0, 0, 0, 0.05) 0
-      )
-      0 0/20px 20px;
+  .activation-path-outer {
+    stroke: var(--white);
+    stroke-width: 4;
+    fill: none;
   }
 
-  .activation-path {
+  .activation-path-inner {
     stroke: var(--darksquidink);
     stroke-width: 2;
     fill: none;

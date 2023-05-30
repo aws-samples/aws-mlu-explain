@@ -107,7 +107,6 @@
       stroke={colorScale(hexFillRules($fillRule, h))}
     />
   {/each}
-  <!-- {/key} -->
   <!-- x-ticks -->
   {#each xScale.ticks() as tick}
     <g transform={`translate(${xScale(tick) + 0} ${height + margin.bottom})`}>
@@ -133,7 +132,6 @@
     </g>
   {/each}
 
-  <!-- {#key $bpSlope} -->
   {#each data as d, i}
     <circle
       class="dot"
@@ -144,7 +142,7 @@
       r="4"
     />
   {/each}
-  <!-- {/key} -->
+  <rect id="bg2-rect" {width} {height} />
 </g>
 
 <style>
@@ -154,8 +152,14 @@
 
   #bg-rect {
     fill: var(--darksquidink);
-    stroke: var(--squidink);
+    stroke: var(--white);
     stroke-width: 2;
+  }
+
+  #bg2-rect {
+    fill-opacity: 0;
+    stroke: var(--white);
+    stroke-width: 4;
   }
 
   .hex-cell {
@@ -174,10 +178,7 @@
     transition: all 1s;
     stroke: var(--white);
   }
-  circle.dot {
-    /* stroke: var(--bg);
-    stroke-width: 0.5; */
-  }
+
   .wrong {
     r: 7;
     stroke: white;

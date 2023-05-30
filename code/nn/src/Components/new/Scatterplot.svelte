@@ -41,7 +41,6 @@
   };
 
   // init to false so don't show drawing during rendering
-  $: visible = false;
 
   $: xScale = scaleLinear()
     .domain([
@@ -149,7 +148,6 @@
 
   let ismoons = false;
 
-  console.log("dataset", $dataset);
   // Create a function to update the tween
   function updateTween() {
     if (ismoons) {

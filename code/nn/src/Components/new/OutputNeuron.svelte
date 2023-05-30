@@ -1,15 +1,18 @@
 <script>
   import { max } from "d3-array";
   import Scatterplot from "./Scatterplot.svelte";
-  import { labels, network, numLayers, stepIndex } from "../../store";
+  import { labels, network, numLayers, stepIndex, mobile } from "../../store";
   import { fade, fly } from "svelte/transition";
   import { positionElements } from "../../utils";
 
   $: maxNumNeurons = max($network) + 1;
 
-  let nodeWidth = 12 * 1.33 * 4.5;
-  let nodeHeight = 12 * 3;
-  let rectDim = 160;
+  // let nodeWidth = 12 * 1.33 * 4.5;
+  // let nodeHeight = 12 * 3;
+  // let rectDim = 160;
+  $: nodeWidth = $mobile ? 42 : 72;
+  $: nodeHeight = $mobile ? 22 : 36;
+  $: rectDim = $mobile ? 100 : 160;
 
   $: scatterCondition = ![0, 1].includes($stepIndex);
   $: manyNodesCondition = [6, 7, 8].includes($stepIndex);

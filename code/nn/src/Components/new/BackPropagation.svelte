@@ -18,9 +18,9 @@
       >The goal of backpropagation is to update the weights so that the Neural
       Network makes better predictions.</span
     >
-    Specifically, it calculates the gradient of the loss function with respect to
-    the weights of the network, updating the weights to minimize the network's prediction
-    error.
+    Specifically, backpropagation will calculate the gradient of the loss function
+    with respect to the weights of the network, updating the weights layer-by-layer
+    to minimize the network's prediction error.
     <br /><br />
     To make the process as clear as possible, let's visualize it step-by-step.
     <br /><br />

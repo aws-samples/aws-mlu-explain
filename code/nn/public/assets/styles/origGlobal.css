@@ -140,11 +140,12 @@ p {
 .tooltip-div {
   padding: 4px;
   position: absolute;
-  width: 400px;
-  background: var(--squidink);
+  max-width: 300px;
+  background: var(--white);
   color: var(--white);
   margin: 10px 4px;
-  font-size: 14px;
+  font-size: var(--size-default);
+  line-height: 1.2;
 }
 
 hr {

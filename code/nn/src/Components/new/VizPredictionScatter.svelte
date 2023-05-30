@@ -1,6 +1,5 @@
 <script>
   import { max, min } from "d3-array";
-  import { format } from "d3-format";
   import { hexbin } from "d3-hexbin";
   import { scaleLinear, scaleOrdinal } from "d3-scale";
   import { draw } from "svelte/transition";
@@ -29,8 +28,6 @@
         left: 20,
         right: 0,
       };
-
-  const formatter = format(".0%");
 
   $: width = outerWidth - margin.left - margin.right;
   $: height = outerHeight - margin.top - margin.bottom;
@@ -65,8 +62,6 @@
   });
 
   $: $hexVals = [...hexBins];
-
-  // $: console.log("hexPreds", $hexPreds);
 </script>
 
 <div
@@ -83,7 +78,6 @@
     </clipPath>
 
     <!-- data points -->
-    <!-- hex background todo: add clip-path="url(#clip)" -->
     <g
       clip-path="url(#clip-nn)"
       transform={`translate(${margin.left} ${margin.top})`}
