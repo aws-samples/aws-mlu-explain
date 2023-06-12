@@ -4,8 +4,8 @@
   */
   --font-mono: "Amazon Ember Mono";
   --font-heavy: "Amazon Ember Display Heavy";
-  --font-main: "Amazon Ember";
-  --font-light: "Amazon Ember Display Light";
+  --font-main: var(--font-mono);
+  --font-light: var(--font-mono);
 
   /* Colors 
   see: https://brand.amazon.com/aws/visual-guidelines-ob/colors/
@@ -36,10 +36,7 @@
   --stone: #d4dada;
   --paper: #f1f3f3;
   --white: #ffffff;
-  --bananayellow: rgb(255, 223, 80);
-  --yellow: yellow;
-  --offpink: rgb(255, 164, 209);
-  --enjoi: darkorange;
+  --bananayellow: #ffe135;
 
   /* Z-Index */
   --z-bottom: -100;
@@ -55,28 +52,24 @@
   --primary: var(--darksquidink);
   --secondary: var(--darksquidink);
 
-  --max-width: 800px;
+  --max-width: 600px;
   --size-default: 16px;
-
-  --viz-height: 80vh;
-  --max-viz-height: 600px;
 }
 
 body {
   margin: auto;
   font-family: var(--font-main);
   overflow-x: hidden;
-  background-size: 20px 20px;
   background-color: var(--bg);
-  background: radial-gradient(ellipse at center, #ffffff 0%, #e5f7ff 100%);
-
-  /* background: conic-gradient(
+  /* background: linear-gradient(90deg, var(--paper) 19px, transparent 1%) center,
+    linear-gradient(var(--paper) 19px, transparent 1%) center, black;
+  background-size: 20px 20px;
+  background: conic-gradient(
       from 90deg at 1px 1px,
       #0000 90deg,
-      rgba(0, 0, 0, 0.025) 0
+      rgba(0, 0, 0, 0.05) 0
     )
-    0 0/20px 20px;
-  background-color: var(--paper); */
+    0 0/20px 20px; */
 }
 
 /* Global Reusable Styles For Convenience */
@@ -86,17 +79,19 @@ body {
   text-align: left;
   font-size: var(--size-default);
   line-height: 1.5em;
-  font-family: var(--font-light);
+  font-family: var(--font-main);
 }
 
 .body-header {
   max-width: var(--max-width);
-  margin: auto;
+  margin: 0 auto;
   text-align: left;
-  font-size: 20px;
+  font-size: 35px;
   line-height: 1.5em;
   font-family: var(--font-heavy);
-  text-transform: uppercase;
+  padding-top: 2rem;
+  padding-bottom: 0.5rem;
+  text-decoration: underline;
   text-decoration-color: var(--smile);
 }
 
@@ -132,9 +127,8 @@ p {
 }
 
 .info-tooltip {
-  color: var(--darksquidink);
-  font-size: 16px;
-  font-family: var(--font-light);
+  color: var(--smile);
+  font-size: 0.9rem;
 }
 
 .interpretation-header {
@@ -146,19 +140,19 @@ p {
 .tooltip-div {
   padding: 4px;
   position: absolute;
-  width: 400px;
-  background: var(--squidink);
+  max-width: 300px;
+  background: var(--white);
   color: var(--white);
   margin: 10px 4px;
   font-size: var(--size-default);
-  font-family: var(--font-light);
+  line-height: 1.2;
 }
 
 hr {
-  margin: 5px auto;
-  width: var(--max-width);
-  border: 1px solid var(--squidink);
-  opacity: 0.6;
+  margin: 3rem auto;
+  width: 3%;
+  border: 3px solid var(--smile);
+  opacity: 0;
 }
 
 .slider {
@@ -187,11 +181,6 @@ hr {
 
 /* mobile */
 @media screen and (max-width: 950px) {
-  :root {
-    --viz-height: 60vh;
-    --max-viz-height: 475px;
-  }
-
   .body-text {
     max-width: 90%;
     font-size: 16px;
@@ -199,7 +188,7 @@ hr {
 
   .body-header {
     max-width: 90%;
-    font-size: 20px;
+    font-size: 30px;
   }
 
   .tab-text {
@@ -221,12 +210,5 @@ hr {
 
   .info-tooltip {
     display: none;
-  }
-
-  hr {
-    margin: 5px auto;
-    width: 90%;
-    border: 1px solid var(--squidink);
-    opacity: 0.6;
   }
 }
