@@ -72,18 +72,19 @@
     >
     More specifically, r-squared measures the percentage of variance explained normalized
     against the baseline variance of our model (which is just the variance of the
-    mean):
+    the trivial model that always predicts the mean):
     {@html katexify(
       `\\begin{aligned} R^2 = 1 - \\frac{\\Sigma^{n}_{i=1}(y_i - \\hat{y_i})^2 }{\\Sigma^{n}_{i=1}(y_i - \\bar{y})^2 }  \\end{aligned}`,
       true
     )}
     The highest possible value for r-squared is 1, representing a model that captures
     100% of the variance. A negative r-squared means that our model is doing worse
-    (capturing less variance) than a flat line through mean of our data would.
+    (capturing less variance) than a flat line through mean of our data would. (The name
+    "r-<em>squared</em>" falsely implies that it would not have a negative value.)
 
     <br /><br />To build intuition for yourself, try changing the weight and
-    bias terms below to see how the MSE and r-squared change across different
-    model fits:
+    intercept terms below to see how the MSE and r-squared change across different
+    possible models for a toy dataset (click Shuffle Data to make a new toy dataset):
   </p>
   <br /><br />
   <div id="mse-container">
@@ -93,10 +94,10 @@
           >Shuffle Data</button
         >
       </div>
-      <div id="bias-slider">
+      <div id="intercept-slider">
         <div class="input-container">
           <p>
-            Bias ({@html katexify(`\\hat{\\beta_0}`, false)}): {formatter(
+            Intercept ({@html katexify(`\\hat{\\beta_0}`, false)}): {formatter(
               $mseBias
             )}
           </p>
@@ -181,7 +182,7 @@
     <a href="https://en.wikipedia.org/wiki/Root-mean-square_deviation">RMSE</a
     >). If instead we wanted our error to reflect the linear distance between
     what we predicted and what is correct, or we wanted our data minimized by
-    the median, we could try something like Mean Abosulte Error (<a
+    the median, we could try something like Mean Absolute Error (<a
       href="https://en.wikipedia.org/wiki/Mean_absolute_error">MAE</a
     >). Whatever the case, you should be thinking of your evaluation metric as
     part of your modeling process, and select the best metric based on the

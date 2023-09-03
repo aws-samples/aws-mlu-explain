@@ -32,6 +32,8 @@
       $lineType = "regressionLineFlat";
       $showRegressionLine = true;
       $showResiduals = true;
+      $coeff = 0;
+      $intercept = 293683;
     },
 
     2: () => {
@@ -169,7 +171,7 @@
             Once we've fit our model, predicting future values is super easy! We
             just plug in any {@html katexify(`x_i`, false)} values into our equation!
             <br /><br />For our simple model, that means plugging in a value for
-            {@html katexify(`sqft`, false)} into our model:
+            {@html katexify(`sqft`, false)} into our model (try adjusting the slider):
           </p>
           <br />
           <div id="input-container">
