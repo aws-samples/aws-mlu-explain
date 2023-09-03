@@ -96,7 +96,7 @@ This material exists as supplementary educational material for [Machine Learning
 
 **Title**: [The Bias Variance Tradeoff](https://mlu-explain.github.io/bias-variance/)
 
-**Summary**: Understand the tradeoff between under- and over-fitting models, how it relates to bias and variance, and explore interactive examples related to LASSO and KNN.
+**Summary**: Understand the tradeoff between under- and over-fitting models, how it relates to bias and variance, and explore interactive examples related to LOESS and KNN.
 
 **Code**: [/code/bias-variance/](/code/bias-variance)
 
@@ -116,7 +116,7 @@ This material exists as supplementary educational material for [Machine Learning
 
 ## Double Descent 2: A Mathematical Explanation
 
-<img src="./assets/gifs/double-desent2.gif" alt="Double Descent 2 Article Image" width="400"/>
+<img src="./assets/gifs/double-descent2.gif" alt="Double Descent 2 Article Image" width="400"/>
 
 **Title**: [Double Descent 2](https://mlu-explain.github.io/double-descent2/)
 
@@ -128,7 +128,7 @@ This material exists as supplementary educational material for [Machine Learning
 
 ## Running Locally
 
-This article holds code for each articles, as well as the generated builds from the code (e.g. the static assets comprising the articles).
+This article holds code for each articles (under the `code` directory), as well as the generated builds from the code (e.g. the static assets comprising the articles).
 
 First, clone this repo.
 
@@ -151,7 +151,7 @@ Now, to run the development version:
 npm start
 ```
 
-To build and view the static assests:
+To build and view the static assets:
 
 ```bash
 # build assets
