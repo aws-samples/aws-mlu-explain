@@ -38,7 +38,7 @@
     </tr>
     <tr>
       <td class="table-head">Actual: 0</td>
-      <td>False Poisitive (<span class="bold">FP</span>)</td>
+      <td>False Positive (<span class="bold">FP</span>)</td>
       <td>True Negative (<span class="bold">TN</span>)</td>
     </tr>
   </table>
