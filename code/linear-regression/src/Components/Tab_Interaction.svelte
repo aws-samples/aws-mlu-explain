@@ -175,10 +175,10 @@
     `sqft`,
     false
   )} should differ between houses that do have pools and houses that do not, we can
-  add an interaction term to our model, {@html katexify(`(sqft:pool) `, false)}.
+  add an interaction term to our model, {@html katexify(`(sqft*pool) `, false)}.
   <br /><br />
   The coefficient of the interaction term {@html katexify(
-    `(sqft:pool)`,
+    `(sqft*pool)`,
     false
   )}, {formatter(Math.round(slopeInteraction))}, represents the difference in
   the slope for {@html katexify(`sqft`, false)}, comparing houses that do and 
@@ -191,7 +191,7 @@
   housing price for houses with no pools and a square-footage of zero.<sup
     ><span
       class="info-tooltip"
-      title="Because this value doesn't make much intuitive sense, it's common for the features to be centered at zero."
+      title="Because this value doesn't make much intuitive sense, it's common to preprocess the data so that the features are centered at zero."
       use:tooltip
     >
       [&#8505;]

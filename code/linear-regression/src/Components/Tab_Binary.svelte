@@ -174,9 +174,9 @@
     class="dot-without"
   />) and houses with swimming pools (<span class="dot-with" />).
   <br /><br /> The intercept, {formatter(Math.round(intercept))}, is the average
-  predicted price for houses that do not have swimming pools (to see this,
-  simply set {@html katexify(`pool`, false)} to 0 and solve the equation). 
-  To find the average price predicted price for houses with pools, we simply plug 
+  predicted price for houses that <em>do not</em> have swimming pools (to see this,
+  set {@html katexify(`pool`, false)} to 0 and simplify the equation). 
+  To find the average price predicted price for houses that <em>do</em> have pools, we plug 
   in {@html katexify(`pool=1`, false)} to obtain 
   {formatter(
     Math.round(intercept)

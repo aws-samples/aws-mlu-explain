@@ -91,7 +91,7 @@
         ><span
           class="info-tooltip"
           title="The coefficient B<sub>0</sub> represents the
-      intercept of our model, and each other coefficient 
+      intercept or bias of our model, and each other coefficient 
       B<sub>i</sub> (i > 0) is a slope defining how variable 
       x<sub>i</sub> contributes to the model. We discuss how to
       interpret regression coefficients later in the article."
@@ -101,15 +101,15 @@
       >
     </li>
     <li>
-      {@html katexify(`\\epsilon`, false)}: the irreducible error in our model.
-      A term that collects together all the unmodeled parts of our data.
+      {@html katexify(`\\epsilon`, false)}: the residual (or "error") of our model.
+      Our model will not make perfect predictions, so we compute this term by subtracting the predicted value from the actual value.
     </li>
   </ul>
   <br />
 
   <p class="body-text">
     Fitting a linear regression model is all about finding the set of
-    cofficients that best model {@html katexify(`y`, false)} as a function of our
+    coefficients that best model {@html katexify(`y`, false)} as a function of our
     features. We may never know the true parameters for our model, but we can estimate
     them (more on this later). Once we've estimated these coefficients, {@html katexify(
       `\\hat{\\beta_i}`,
